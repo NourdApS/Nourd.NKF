@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nkf.bundle/v1",
+  "title": "NKF 0.1 bundle manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "nkf_version",
+    "contract",
+    "id",
+    "product_record",
+    "markdown_root",
+    "records_root",
+    "record_contract",
+    "non_records"
+  ],
+  "properties": {
+    "nkf_version": {
+      "const": "0.1"
+    },
+    "contract": {
+      "const": "nkf.bundle/v1"
+    },
+    "id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "product_record": {
+      "$ref": "#/$defs/identifier"
+    },
+    "markdown_root": {
+      "$ref": "#/$defs/manifestRelativePath"
+    },
+    "records_root": {
+      "$ref": "#/$defs/manifestRelativePath"
+    },
+    "record_contract": {
+      "const": "nkf.record/v1"
+    },
+    "required_extensions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/contractIdentifier"
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/contractIdentifier"
+      },
+      "additionalProperties": true
+    },
+    "non_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "kind"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/distributionPath"
+          },
+          "kind": {
+            "$ref": "#/$defs/identifier"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "contractIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9.-]*/[a-z0-9.-]+$"
+    },
+    "manifestRelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*\\$\\{).+$"
+    },
+    "distributionPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*\\$\\{)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    }
+  }
+}

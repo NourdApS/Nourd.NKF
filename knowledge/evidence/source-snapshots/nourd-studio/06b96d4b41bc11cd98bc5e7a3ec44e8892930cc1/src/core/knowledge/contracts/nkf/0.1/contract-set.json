@@ -1,0 +1,437 @@
+{
+  "contract": "nkf.checker.contract-set/v1",
+  "nkf_version": "0.1",
+  "specification": {
+    "accepted_base_revision": "13a82fbc1b72c1350e9765f59d1538c375f3fa69",
+    "source_digest_algorithm": "sha-256",
+    "source_digest": "1719d2521057c9b0b44b059ea9cd7fb3c1588fe102d6097de2c9360636a87989",
+    "amendment_task": "NKF-002",
+    "authority_state": "proposal-awaiting-acceptance"
+  },
+  "bundle_contract": "nkf.bundle/v1",
+  "record_contract": "nkf.record/v1",
+  "relationship_types": [
+    "part-of",
+    "defines",
+    "governs",
+    "applies-to",
+    "depends-on",
+    "extends",
+    "supersedes",
+    "rationale-for",
+    "realizes",
+    "evidences",
+    "references"
+  ],
+  "section_authorities": [
+    "accepted-meaning",
+    "proposal",
+    "unresolved",
+    "evidence"
+  ],
+  "entity_kinds": [
+    "product",
+    "principle",
+    "concept",
+    "actor",
+    "beneficiary",
+    "stage",
+    "decision-point",
+    "transition",
+    "outcome",
+    "domain-concept",
+    "domain-entity",
+    "capability-input",
+    "capability-outcome",
+    "component",
+    "interface",
+    "information-flow",
+    "state",
+    "policy",
+    "decision-scope",
+    "system",
+    "source",
+    "process",
+    "asset",
+    "agreement",
+    "implementation",
+    "claim",
+    "observation"
+  ],
+  "entity_relationship_types": [
+    "part-of",
+    "defines",
+    "depends-on",
+    "governs",
+    "flows-to",
+    "transitions-to",
+    "realizes",
+    "evidences",
+    "references"
+  ],
+  "binding_kinds": [
+    "source",
+    "system",
+    "process",
+    "asset",
+    "agreement",
+    "implementation",
+    "provider",
+    "namespace",
+    "deployment",
+    "data",
+    "interface"
+  ],
+  "supported_extensions": [],
+  "body_contracts": {
+    "nkf.product/v1": {
+      "type": "product",
+      "required_responsibilities": [
+        "product-definition",
+        "purpose",
+        "vision",
+        "people-served",
+        "needs-and-outcomes",
+        "boundaries",
+        "product-map"
+      ],
+      "optional_responsibilities": [
+        "vision-portfolio",
+        "offering-and-commercial-model",
+        "operating-and-support-model",
+        "external-authority-boundaries",
+        "risks-and-obligations",
+        "product-measures",
+        "evolution-and-retirement",
+        "unresolved-matters"
+      ],
+      "allowed_roles": [
+        "definition",
+        "governing",
+        "boundary",
+        "catalogue",
+        "evolution",
+        "interface",
+        "obligation",
+        "measure",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.principle/v1": {
+      "type": "principle",
+      "required_responsibilities": [
+        "principle-statement",
+        "rationale",
+        "applicability",
+        "required-behaviour",
+        "boundaries",
+        "decision-and-trade-off-implications"
+      ],
+      "optional_responsibilities": [
+        "examples",
+        "counterexamples",
+        "supporting-evidence",
+        "principle-tensions",
+        "known-exceptions",
+        "unresolved-questions"
+      ],
+      "allowed_roles": [
+        "principle",
+        "rationale",
+        "applicability",
+        "behaviour",
+        "boundary",
+        "trade-off",
+        "evidence",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.concept/v1": {
+      "type": "concept",
+      "required_responsibilities": [
+        "definition",
+        "purpose-and-product-relevance",
+        "distinguishing-characteristics",
+        "inclusion-exclusion-and-ambiguity-boundaries",
+        "product-and-knowledge-relationships",
+        "current-maturity"
+      ],
+      "optional_responsibilities": [
+        "alternative-names",
+        "examples",
+        "scenarios",
+        "competing-interpretations",
+        "supporting-evidence",
+        "possible-evolution",
+        "open-questions"
+      ],
+      "allowed_roles": [
+        "definition",
+        "governing",
+        "boundary",
+        "catalogue",
+        "evolution",
+        "evidence",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.journey/v1": {
+      "type": "journey",
+      "required_responsibilities": [
+        "purpose-and-desired-outcome",
+        "actors-and-beneficiaries",
+        "trigger-and-operating-context",
+        "start-end-and-scope-boundaries",
+        "meaningful-stages-decisions-and-transitions",
+        "needs-expectations-and-consequential-moments",
+        "success-failure-interruption-and-recovery",
+        "related-domains-and-capabilities"
+      ],
+      "optional_responsibilities": [
+        "variants",
+        "channels",
+        "accessibility-needs",
+        "support-paths",
+        "supporting-evidence",
+        "measures",
+        "risks",
+        "external-authority-boundaries",
+        "unresolved-questions"
+      ],
+      "allowed_roles": [
+        "governing",
+        "actor",
+        "trigger",
+        "boundary",
+        "transition",
+        "obligation",
+        "outcome",
+        "interface",
+        "measure",
+        "evidence",
+        "risk",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.domain/v1": {
+      "type": "domain",
+      "required_responsibilities": [
+        "responsibility-and-product-purpose",
+        "value-and-people-served",
+        "scope-and-boundaries",
+        "owned-concepts-and-semantic-entities",
+        "capability-map",
+        "dependencies-interfaces-and-external-authority",
+        "obligations-risks-and-measures"
+      ],
+      "optional_responsibilities": [
+        "commercial-concerns",
+        "operational-concerns",
+        "support-concerns",
+        "policy",
+        "data",
+        "evolution",
+        "retirement",
+        "unresolved-concerns"
+      ],
+      "allowed_roles": [
+        "governing",
+        "boundary",
+        "catalogue",
+        "interface",
+        "obligation",
+        "risk",
+        "measure",
+        "evolution",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.capability/v1": {
+      "type": "capability",
+      "required_responsibilities": [
+        "ability-statement",
+        "people-actors-and-outcomes",
+        "conditions-inputs-and-resulting-outcome",
+        "scope-and-non-capability-boundaries",
+        "governing-constraints-and-authority",
+        "dependencies-and-related-journeys",
+        "success-and-failure-conditions"
+      ],
+      "optional_responsibilities": [
+        "variants",
+        "policies",
+        "measures",
+        "supporting-evidence",
+        "risks",
+        "designs",
+        "realizations",
+        "unresolved-questions"
+      ],
+      "allowed_roles": [
+        "governing",
+        "actor",
+        "condition",
+        "outcome",
+        "boundary",
+        "obligation",
+        "dependency",
+        "measure",
+        "evidence",
+        "risk",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.design/v1": {
+      "type": "design",
+      "required_responsibilities": [
+        "design-kind-problem-and-scope",
+        "governing-inputs-and-constraints",
+        "proposed-or-accepted-design",
+        "responsibilities-interactions-and-information-flows",
+        "alternatives-and-trade-offs",
+        "failure-safety-recovery-and-operations",
+        "validation-and-acceptance-evidence",
+        "unresolved-matters"
+      ],
+      "optional_responsibilities": [
+        "experience-states",
+        "diagrams",
+        "contracts",
+        "data-treatment",
+        "accessibility",
+        "security",
+        "privacy",
+        "commercial-implications",
+        "migration",
+        "rollout",
+        "retirement"
+      ],
+      "allowed_roles": [
+        "context",
+        "boundary",
+        "governing",
+        "responsibility",
+        "interface",
+        "alternative",
+        "trade-off",
+        "risk",
+        "recovery",
+        "validation",
+        "evidence",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.decision/v1": {
+      "type": "decision",
+      "required_responsibilities": [
+        "context-and-problem",
+        "decision",
+        "scope-and-applicability",
+        "rationale",
+        "alternatives-considered",
+        "consequences-and-trade-offs"
+      ],
+      "optional_responsibilities": [
+        "evidence",
+        "compatibility",
+        "migration",
+        "recovery",
+        "supersession",
+        "matters-not-decided"
+      ],
+      "allowed_roles": [
+        "context",
+        "governing",
+        "applicability",
+        "rationale",
+        "alternative",
+        "consequence",
+        "trade-off",
+        "evidence",
+        "recovery",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.realization/v1": {
+      "type": "realization",
+      "required_responsibilities": [
+        "realization-identity-and-kind",
+        "product-meaning-realized",
+        "durable-mapping",
+        "responsibilities-and-ownership-boundaries",
+        "interfaces-dependencies-locators-and-resolution",
+        "external-authority-and-operational-state-boundaries",
+        "compatibility-verification-and-recovery"
+      ],
+      "optional_responsibilities": [
+        "environments",
+        "configuration-classes",
+        "migration",
+        "deployment-model",
+        "support-model",
+        "security",
+        "privacy",
+        "retention",
+        "retirement",
+        "unresolved-questions"
+      ],
+      "allowed_roles": [
+        "identity",
+        "mapping",
+        "responsibility",
+        "boundary",
+        "interface",
+        "dependency",
+        "obligation",
+        "evidence",
+        "recovery",
+        "unresolved",
+        "content"
+      ]
+    },
+    "nkf.evidence/v1": {
+      "type": "evidence",
+      "required_responsibilities": [
+        "question-claim-or-decision-context",
+        "sources-or-primary-observation-method",
+        "observations-and-findings",
+        "interpretation",
+        "limitations-and-uncertainty",
+        "applicability-and-boundaries",
+        "relevance-to-product-knowledge"
+      ],
+      "optional_responsibilities": [
+        "methodology-detail",
+        "samples",
+        "competing-evidence",
+        "confidence",
+        "reproducibility",
+        "ethical-or-privacy-constraints",
+        "recommended-investigation",
+        "unresolved-questions"
+      ],
+      "allowed_roles": [
+        "context",
+        "source",
+        "method",
+        "observation",
+        "finding",
+        "interpretation",
+        "limitation",
+        "boundary",
+        "relevance",
+        "evidence",
+        "unresolved",
+        "content"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "nourd-studio",
+  "private": true,
+  "workspaces": [
+    "src/core/knowledge"
+  ],
+  "scripts": {
+    "knowledge:validate": "npm run validate --workspace @nourd/knowledge-core --",
+    "knowledge:reconcile": "npm run reconcile --workspace @nourd/knowledge-core --",
+    "knowledge:inspect": "npm run inspect --workspace @nourd/knowledge-core --",
+    "knowledge:build:portable": "npm run build:portable --workspace @nourd/knowledge-core",
+    "knowledge:test": "npm run test --workspace @nourd/knowledge-core",
+    "knowledge:typecheck": "npm run typecheck --workspace @nourd/knowledge-core",
+    "knowledge:check": "npm run knowledge:typecheck && npm run knowledge:test && npm run knowledge:validate"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

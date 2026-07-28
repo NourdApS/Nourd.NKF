@@ -1,0 +1,28 @@
+{
+  "name": "@nourd/knowledge-core",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node --import tsx src/cli.ts validate",
+    "reconcile": "node --import tsx src/cli.ts reconcile",
+    "inspect": "node --import tsx src/cli.ts inspect",
+    "build:portable": "node scripts/build-portable.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "esbuild": "^0.28.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

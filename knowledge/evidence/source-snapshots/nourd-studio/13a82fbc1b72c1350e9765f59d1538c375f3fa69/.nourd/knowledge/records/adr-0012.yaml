@@ -1,0 +1,97 @@
+contract: nourd.knowledge.record/v1
+id: adr-0012
+type: architecture-decision
+body_contract: nourd.knowledge.architecture-decision/v1
+title: "ADR 0012: Adopt NKF 0.1 as the initial Product knowledge format"
+source:
+  path: knowledge/decisions/0012-initial-knowledge-declaration-contracts.md
+  digest:
+    algorithm: sha-256
+    value: 7855c4c9ff603ab658e19f0f0d47e27d7d882ba0be057ed9b2e76d310895a60b
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+  accepted_on: 2026-07-28
+scope:
+  product: product
+  subjects:
+    - nourd-knowledge-format
+    - nkf-0-1
+    - product-knowledge-standard
+    - okf-0-2
+    - canonical-record
+    - semantic-entities
+    - realizations
+    - authority
+    - provenance
+sections:
+  - id: context
+    heading_path:
+      - Context
+    role: context
+    occurrence: 1
+    authority: accepted-meaning
+  - id: proposed-decision
+    heading_path:
+      - Decision
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: consequences
+    heading_path:
+      - Consequences
+    role: consequence
+    occurrence: 1
+    authority: accepted-meaning
+  - id: not-decided
+    heading_path:
+      - Not decided here
+    role: unresolved
+    occurrence: 1
+    authority: unresolved
+  - id: pre-mortem
+    heading_path:
+      - Pre-mortem
+    role: rationale
+    occurrence: 1
+    authority: accepted-meaning
+relationships:
+  - type: extends
+    target: adr-0001
+    source_section: proposed-decision
+  - type: depends-on
+    target: adr-0006
+    source_section: proposed-decision
+  - type: depends-on
+    target: adr-0008
+    source_section: proposed-decision
+  - type: depends-on
+    target: adr-0009
+    source_section: proposed-decision
+  - type: depends-on
+    target: adr-0010
+    source_section: proposed-decision
+  - type: depends-on
+    target: adr-0011
+    source_section: proposed-decision
+  - type: governs
+    target: design-nkf-0-1
+    source_section: proposed-decision
+  - type: references
+    target: design-knowledge-semantic-model-v2
+    source_section: proposed-decision
+external_authorities:
+  - authority: google-cloud-platform
+    locator: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+    relationship: references
+presentation:
+  short_label: ADR 0012
+  entry_section: context
+  featured_sections:
+    - context
+    - proposed-decision
+    - consequences
+    - not-decided
+  initial_depth: standard

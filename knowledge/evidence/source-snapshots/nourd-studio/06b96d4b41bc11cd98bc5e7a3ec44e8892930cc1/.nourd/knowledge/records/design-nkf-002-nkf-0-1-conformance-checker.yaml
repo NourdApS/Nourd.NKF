@@ -1,0 +1,144 @@
+contract: nourd.knowledge.record/v1
+id: design-nkf-002-nkf-0-1-conformance-checker
+type: design
+body_contract: nourd.knowledge.design/v1
+title: "NKF-002: Implement the NKF 0.1 conformance checker"
+source:
+  path: knowledge/designs/plans/nkf-002-nkf-0-1-conformance-checker.md
+  digest:
+    algorithm: sha-256
+    value: c49a9ff4c336aa9aeac1ab61dca8942b6673f21f0fe1a1ef5647b475da2e12c6
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+  proposed_on: 2026-07-28
+scope:
+  product: product
+  subjects:
+    - nkf-002
+    - nourd-knowledge-format
+    - conformance
+    - validation
+    - shredwise-pilot
+sections:
+  - id: objective
+    heading_path:
+      - Objective
+    role: context
+    occurrence: 1
+    authority: proposal
+  - id: accepted-requirement
+    heading_path:
+      - Accepted requirement
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: authority-and-current-state
+    heading_path:
+      - Authority and current state
+    role: evidence
+    occurrence: 1
+    authority: evidence
+  - id: conformance-scope
+    heading_path:
+      - Conformance scope
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: first-increment
+    heading_path:
+      - First increment
+    role: guidance
+    occurrence: 1
+    authority: proposal
+  - id: work-sequence
+    heading_path:
+      - Work sequence
+    role: guidance
+    occurrence: 1
+    authority: proposal
+  - id: deliverables
+    heading_path:
+      - Deliverables
+    role: boundary
+    occurrence: 1
+    authority: proposal
+  - id: failure-and-repair-policy
+    heading_path:
+      - Failure and repair policy
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: migration-and-compatibility-boundary
+    heading_path:
+      - Migration and compatibility boundary
+    role: boundary
+    occurrence: 1
+    authority: proposal
+  - id: validation-and-review
+    heading_path:
+      - Validation and review
+    role: guidance
+    occurrence: 1
+    authority: proposal
+  - id: exclusions
+    heading_path:
+      - Exclusions
+    role: boundary
+    occurrence: 1
+    authority: proposal
+  - id: pre-mortem
+    heading_path:
+      - Pre-mortem
+    role: rationale
+    occurrence: 1
+    authority: proposal
+  - id: first-increment-audit
+    heading_path:
+      - First-increment audit
+    role: evidence
+    occurrence: 1
+    authority: evidence
+  - id: implementation-recommendation
+    heading_path:
+      - Implementation recommendation
+    role: guidance
+    occurrence: 1
+    authority: proposal
+  - id: implementation-result
+    heading_path:
+      - Implementation result
+    role: evidence
+    occurrence: 1
+    authority: evidence
+relationships:
+  - type: applies-to
+    target: product
+    source_section: objective
+  - type: depends-on
+    target: adr-0009
+    source_section: authority-and-current-state
+  - type: depends-on
+    target: adr-0011
+    source_section: authority-and-current-state
+  - type: depends-on
+    target: adr-0012
+    source_section: authority-and-current-state
+  - type: references
+    target: adr-0013
+    source_section: authority-and-current-state
+  - type: depends-on
+    target: design-nkf-0-1
+    source_section: authority-and-current-state
+external_authorities: []
+presentation:
+  short_label: NKF-002 plan
+  entry_section: objective
+  featured_sections:
+    - objective
+    - accepted-requirement
+    - conformance-scope
+    - failure-and-repair-policy
+  initial_depth: standard

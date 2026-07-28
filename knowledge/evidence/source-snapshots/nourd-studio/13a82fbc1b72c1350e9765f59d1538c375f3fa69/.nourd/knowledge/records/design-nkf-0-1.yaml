@@ -1,0 +1,197 @@
+contract: nourd.knowledge.record/v1
+id: design-nkf-0-1
+type: design
+body_contract: nourd.knowledge.design/v1
+title: NKF 0.1 — Product knowledge format
+source:
+  path: knowledge/designs/nkf-0.1.md
+  digest:
+    algorithm: sha-256
+    value: 77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a
+governance:
+  lifecycle: living
+  status: accepted
+  authority:
+    - human-product-owner
+  accepted_on: 2026-07-28
+scope:
+  product: product
+  subjects:
+    - nourd-knowledge-format
+    - nkf-0-1
+    - product-knowledge-standard
+    - okf-0-2
+    - knowledge-bundle
+    - knowledge-record
+    - body-contracts
+    - semantic-entities
+    - realizations
+    - authority
+    - provenance
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    role: context
+    occurrence: 1
+    authority: accepted-meaning
+  - id: normative-status
+    heading_path:
+      - Normative status
+    role: boundary
+    occurrence: 1
+    authority: accepted-meaning
+  - id: drafting-provenance
+    heading_path:
+      - Drafting provenance
+    role: evidence
+    occurrence: 1
+    authority: evidence
+  - id: scope
+    heading_path:
+      - Scope
+    role: boundary
+    occurrence: 1
+    authority: accepted-meaning
+  - id: core-model
+    heading_path:
+      - Core model
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: versioning
+    heading_path:
+      - Versioning
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: bundle-contract
+    heading_path:
+      - Bundle contract
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: record-contract
+    heading_path:
+      - Record contract
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: identity
+    heading_path:
+      - Identity
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: section-authority
+    heading_path:
+      - Section authority
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: relationships
+    heading_path:
+      - Relationships
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: provenance-and-roles
+    heading_path:
+      - Provenance and roles
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: semantic-entities-and-bindings
+    heading_path:
+      - Semantic entities and bindings
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: body-contracts
+    heading_path:
+      - Body contracts
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: nourd-repository-profile
+    heading_path:
+      - Nourd repository profile
+    role: guidance
+    occurrence: 1
+    authority: accepted-meaning
+  - id: okf-interoperability
+    heading_path:
+      - OKF 0.2 interoperability
+    role: guidance
+    occurrence: 1
+    authority: accepted-meaning
+  - id: conformance
+    heading_path:
+      - Conformance
+    role: governing
+    occurrence: 1
+    authority: accepted-meaning
+  - id: security-and-privacy
+    heading_path:
+      - Security and privacy
+    role: boundary
+    occurrence: 1
+    authority: accepted-meaning
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved matters
+    role: unresolved
+    occurrence: 1
+    authority: unresolved
+  - id: minimal-example
+    heading_path:
+      - Minimal example
+    role: guidance
+    occurrence: 1
+    authority: accepted-meaning
+  - id: pre-mortem
+    heading_path:
+      - Pre-mortem
+    role: rationale
+    occurrence: 1
+    authority: accepted-meaning
+relationships:
+  - type: realizes
+    target: adr-0012
+    source_section: purpose
+  - type: depends-on
+    target: adr-0001
+    source_section: scope
+  - type: depends-on
+    target: adr-0006
+    source_section: record-contract
+  - type: depends-on
+    target: adr-0008
+    source_section: normative-status
+  - type: depends-on
+    target: adr-0009
+    source_section: record-contract
+  - type: depends-on
+    target: adr-0010
+    source_section: nourd-repository-profile
+  - type: depends-on
+    target: adr-0011
+    source_section: conformance
+  - type: supersedes
+    target: design-knowledge-semantic-model-v2
+    source_section: core-model
+external_authorities:
+  - authority: google-cloud-platform
+    locator: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+    relationship: references
+presentation:
+  short_label: NKF 0.1
+  entry_section: purpose
+  featured_sections:
+    - purpose
+    - core-model
+    - record-contract
+    - body-contracts
+    - okf-interoperability
+    - unresolved-matters
+  initial_depth: standard
