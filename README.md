@@ -33,6 +33,12 @@ exact accepted revision and the subsequent checker work remain source
 provenance during migration; they must not be silently rewritten or treated as
 already migrated.
 
-The direction to support Product and Shared Technology profiles through a
-shared NKF core is accepted. Its exact contract realization and Nourd Agent SDK
+Current contract work remains grounded in the accepted Product knowledge
+format. It is expected to cover Shared Technology use without a separate
+Shared Technology model in NKF. Exact contract realization and Nourd Agent SDK
 conformance are not yet confirmed.
+
+NKF remains open to evidence-driven change before its first stable release.
+Real-project findings must move through governed reproduction, classification,
+validation, confirmation, authoritative updates, release, and deliberate
+consumer migration; pre-stable does not permit silent contract drift.

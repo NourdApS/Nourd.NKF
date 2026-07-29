@@ -19,8 +19,61 @@ The root [`README.md`](../README.md) owns repository identity and scope.
 
 [ADR 0001](decisions/0001-establish-independent-nkf-authority.md) establishes
 this independent repository as the NKF Shared Technology authority.
+[ADR 0002](decisions/0002-establish-body-responsibility-bindings.md)
+establishes source-bound responsibility declarations and their deterministic
+conformance limit. [ADR 0003](decisions/0003-accept-product-responsibility-identifiers.md)
+accepts the stable identifiers for all 69 required NKF 0.1 Product
+responsibilities. The historical record-version framing in ADRs 0002–0005 is
+superseded in part by [ADR 0009](decisions/0009-establish-single-nkf-0-1-version-namespace.md),
+which makes the binding structure the sole NKF 0.1 record definition.
+[ADR 0006](decisions/0006-establish-governed-pre-stable-evolution.md)
+establishes the evidence-driven change process before the first stable
+release. [ADR 0007](decisions/0007-establish-markdown-and-yaml-contract-authority.md)
+establishes normative Markdown and its complete executable YAML companion as a
+digest-bound governed pair. [ADR 0008](decisions/0008-accept-nkf-0-1-artifact-identities.md)
+accepts the NKF 0.1 artifact paths; ADR 0009 supersedes its versioned
+contract-set identity. [ADR 0012](decisions/0012-reconcile-single-version-artifact-authority.md)
+preserves ADR 0007's Markdown/YAML authority model while superseding its
+remaining independent contract-version requirements.
+[ADR 0013](decisions/0013-accept-nkf-0-1-native-record-serialization.md)
+accepts the exact native record object shape while leaving its controlled
+vocabularies and other listed semantic boundaries for separate decisions.
+[ADR 0014](decisions/0014-accept-nkf-0-1-section-role-vocabularies.md)
+accepts the shared section-role meanings and body-specific allowed subsets for
+the ten core NKF 0.1 Product bodies.
+[ADR 0015](decisions/0015-accept-nkf-0-1-semantic-topology-and-binding-vocabularies.md)
+accepts the core semantic-entity, entity-relationship, and durable-binding
+vocabularies and their semantic-layer guardrails.
+[ADR 0016](decisions/0016-accept-nkf-0-1-extension-declaration-and-resolution.md)
+accepts the native extension identity, digest binding, declaration, support,
+round-trip, and fail-closed rules without accepting any concrete extension.
+[ADR 0017](decisions/0017-accept-nkf-0-1-acceptance-provenance-boundary.md)
+keeps acceptance proof outside native core and separates declared governance,
+authority-binding verification, NKF conformance, and Realization confirmation.
+[ADR 0018](decisions/0018-accept-nkf-0-1-project-path-and-knowledge-coverage.md)
+fixes `.nourd` at the project root, makes the knowledge entry point
+configurable inside the project, and requires one `.nourd` representation for
+every Markdown file under it.
+[ADR 0019](decisions/0019-accept-nkf-0-1-enforcement-and-diagnostics.md)
+accepts the deterministic enforcement layers, validation phases, stable
+diagnostics, and result semantics under explicitly delegated technical
+authority without claiming line-by-line Human Product Owner review.
+[ADR 0020](decisions/0020-establish-current-presentation-guidance-boundary.md)
+keeps presentation settings outside native NKF, uses Markdown as the default
+readable form, and permits a separately governed optional extension. The
+boundary is explicitly revisitable through
+[`NKF-004`](tasks/NKF-004-define-portable-presentation-guidance-extension.md)
+without allowing Task work to change accepted meaning by implication.
+[ADR 0021](decisions/0021-accept-nkf-0-1-native-bundle-serialization.md)
+accepts the closed native bundle object, its extension fields, and exact
+non-record representation.
 
 Task [`NKF-003`](tasks/NKF-003-establish-independent-nkf-authority.md) governs
 the source migration. Until its acceptance criteria are satisfied, every
 imported source must expose whether it is an exact accepted snapshot, a
 proposal, implementation evidence, or a new unconfirmed realization.
+
+Deferred Task
+[`NKF-004`](tasks/NKF-004-define-portable-presentation-guidance-extension.md)
+preserves the intended future NKF-owned portable presentation-guidance
+extension and its evidence threshold without claiming current support.

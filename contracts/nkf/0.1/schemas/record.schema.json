@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nkf.record.schema.json",
+  "title": "NKF 0.1 record (derived proposal)",
+  "x-nkf-authority": "proposal",
+  "x-nkf-source": {
+    "markdown_sha256": "a0096d74fc444d197ce9c4c4fce78181c80fdb5bd633e2fd605b659a610f1151",
+    "yaml_sha256": "9b7fe0f8bd241b8d50cc2d8adc4151feed356b892eb97e10903d881ea37c1aa3"
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["contract", "id", "type", "body_contract", "title", "source", "governance", "scope", "sections", "relationships"],
+  "properties": {
+    "contract": {"const": "nkf.record"},
+    "id": {"$ref": "#/$defs/identifier"},
+    "type": {"enum": ["product", "principle", "concept", "journey", "domain", "capability", "design", "decision", "realization", "evidence"]},
+    "body_contract": {"enum": ["nkf.product", "nkf.principle", "nkf.concept", "nkf.journey", "nkf.domain", "nkf.capability", "nkf.design", "nkf.decision", "nkf.realization", "nkf.evidence"]},
+    "title": {"type": "string", "minLength": 1},
+    "source": {"type": "object"},
+    "governance": {"type": "object"},
+    "scope": {"type": "object"},
+    "relationships": {"type": "array"},
+    "sections": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/section"}}
+  },
+  "$defs": {
+    "identifier": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "section": {
+      "type": "object",
+      "required": ["id", "heading_path", "occurrence", "authority", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "heading_path": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "occurrence": {"type": "integer", "minimum": 1},
+        "authority": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "responsibilities": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}}
+      }
+    }
+  }
+}

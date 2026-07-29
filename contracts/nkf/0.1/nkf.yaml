@@ -1,0 +1,101 @@
+contract: nkf.contract-set
+nkf_version: "0.1"
+status: proposal
+authority:
+  markdown_path: knowledge/specifications/nkf-0.1.md
+  markdown_digest:
+    algorithm: sha-256
+    value: a0096d74fc444d197ce9c4c4fce78181c80fdb5bd633e2fd605b659a610f1151
+  accepted_by:
+    - ADR-0010
+  governing_decisions:
+    - ADR-0001
+    - ADR-0002
+    - ADR-0003
+    - ADR-0005
+    - ADR-0006
+    - ADR-0007
+    - ADR-0009
+    - ADR-0010
+
+# This is an executable-companion proposal. Markdown above remains authoritative.
+# No schema, checker, fixture, or conformance realization is implied by this file.
+contracts:
+  bundle:
+    identity: nkf.bundle
+    required:
+      - nkf_version
+      - contract
+      - id
+      - product_record
+      - markdown_root
+      - records_root
+      - non_records
+    constraints:
+      one_product_root: true
+      paths_within_distribution_boundary: true
+      explicit_non_records: true
+  record:
+    identity: nkf.record
+    required:
+      - contract
+      - id
+      - type
+      - body_contract
+      - title
+      - source
+      - governance
+      - scope
+      - sections
+      - relationships
+    constraints:
+      one_canonical_markdown_source: true
+      exact_source_digest: true
+      complete_semantic_section_map: true
+      responsibility_coverage: true
+      unsupported_required_meaning: fail-closed
+    section_responsibilities:
+      field: responsibilities
+      required_coverage: true
+      per_section:
+        optional: true
+        min_items_when_present: 1
+        unique_items: true
+        values_supported_by_body_contract: true
+      semantics:
+        binding_order: no-semantic-meaning
+        multiple_responsibilities_per_section: true
+        multiple_sections_per_responsibility: true
+        proves_semantic_adequacy: false
+        proves_acceptance: false
+  body_contracts:
+    nkf.product:
+      type: product
+      required_responsibilities: [product-definition, purpose, vision, people-served, needs-and-outcomes, boundaries, product-map]
+    nkf.principle:
+      type: principle
+      required_responsibilities: [principle-statement, rationale, applicability, required-behaviour, boundaries, decision-and-trade-off-implications]
+    nkf.concept:
+      type: concept
+      required_responsibilities: [definition, purpose-and-product-relevance, distinguishing-characteristics, inclusion-exclusion-and-ambiguity-boundaries, product-and-knowledge-relationships, current-maturity]
+    nkf.journey:
+      type: journey
+      required_responsibilities: [purpose-and-desired-outcome, actors-and-beneficiaries, trigger-and-operating-context, start-end-and-scope-boundaries, meaningful-stages-decisions-and-transitions, needs-expectations-and-consequential-moments, success-failure-interruption-and-recovery, related-domains-and-capabilities]
+    nkf.domain:
+      type: domain
+      required_responsibilities: [responsibility-and-product-purpose, value-and-people-served, scope-and-boundaries, owned-concepts-and-semantic-entities, capability-map, dependencies-interfaces-and-external-authority, obligations-risks-and-measures]
+    nkf.capability:
+      type: capability
+      required_responsibilities: [ability-statement, people-actors-and-outcomes, conditions-inputs-and-resulting-outcome, scope-and-non-capability-boundaries, governing-constraints-and-authority, dependencies-and-related-journeys, success-and-failure-conditions]
+    nkf.design:
+      type: design
+      required_responsibilities: [design-kind-problem-and-scope, governing-inputs-and-constraints, proposed-or-accepted-design, responsibilities-interactions-and-information-flows, alternatives-and-trade-offs, failure-safety-recovery-and-operations, validation-and-acceptance-evidence, unresolved-matters]
+    nkf.decision:
+      type: decision
+      required_responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]
+    nkf.realization:
+      type: realization
+      required_responsibilities: [realization-identity-and-kind, product-meaning-realized, durable-mapping, responsibilities-and-ownership-boundaries, interfaces-dependencies-locators-and-resolution, external-authority-and-operational-state-boundaries, compatibility-verification-and-recovery]
+    nkf.evidence:
+      type: evidence
+      required_responsibilities: [question-claim-or-decision-context, sources-or-primary-observation-method, observations-and-findings, interpretation, limitations-and-uncertainty, applicability-and-boundaries, relevance-to-product-knowledge]

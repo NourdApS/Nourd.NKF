@@ -31,7 +31,7 @@ human acceptance.
 NKF owns:
 
 - normative format and profile specifications;
-- versioned bundle, record, body, extension, and compatibility contracts;
+- NKF-versioned bundle, record, body, extension, and compatibility definitions;
 - conformance levels, deterministic checks, diagnostics, and fixtures;
 - checker distribution and integrity;
 - migrations between supported NKF contracts; and
@@ -79,6 +79,20 @@ Do not edit or delete the originals as a shortcut.
 Later NKF-002 checker work is proposal and implementation evidence until its
 exact authority and compatibility are reconciled here. Do not present migrated
 code as accepted normative meaning.
+
+# Pre-stable evolution
+
+NKF remains open to evidence-driven change before its first stable release.
+Implementation and exercise in consumer projects may expose shortcomings, but
+consumer behavior, checker code, fixtures, and passing tests cannot change NKF
+by implication.
+
+Classify every finding as a specification or contract issue, checker or
+distribution bug, migration issue, or consumer nonconformance. Consequential
+changes require evidence, reproduction, compatibility analysis, Human Product
+Owner confirmation, authoritative specification updates, derived
+implementation and fixture changes, a versioned release, and deliberate
+consumer migration.
 
 # Git boundary
 

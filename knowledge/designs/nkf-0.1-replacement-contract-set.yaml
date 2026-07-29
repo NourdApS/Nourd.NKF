@@ -1,0 +1,1182 @@
+contract: nkf.contract-set
+nkf_version: "0.1"
+
+authority:
+  precedence: normative-markdown
+  markdown_path: knowledge/specifications/nkf-0.1.md
+  executable_path: contracts/nkf/0.1/nkf.yaml
+  markdown_digest:
+    algorithm: sha-256
+    value: 9e90fc712df661b7c008b47a8392a180c5418346f8c3a5a1f2c344c6cbeb3b97
+  accepted_baseline:
+    markdown_path: knowledge/specifications/nkf-0.1.md
+    markdown_digest:
+      algorithm: sha-256
+      value: a0096d74fc444d197ce9c4c4fce78181c80fdb5bd633e2fd605b659a610f1151
+    executable_path: contracts/nkf/0.1/nkf.yaml
+    executable_digest:
+      algorithm: sha-256
+      value: 9b7fe0f8bd241b8d50cc2d8adc4151feed356b892eb97e10903d881ea37c1aa3
+  governing_decisions:
+    - ADR-0001
+    - ADR-0002
+    - ADR-0003
+    - ADR-0005
+    - ADR-0006
+    - ADR-0007
+    - ADR-0008
+    - ADR-0009
+    - ADR-0010
+    - ADR-0011
+    - ADR-0012
+    - ADR-0013
+    - ADR-0014
+    - ADR-0015
+    - ADR-0016
+    - ADR-0017
+    - ADR-0018
+    - ADR-0019
+    - ADR-0020
+    - ADR-0021
+  conflict_behavior: fail-closed
+  semantic_acceptance_from_validation: false
+  realization_confirmation_from_validation: false
+
+yaml_data_model:
+  encoding: UTF-8
+  yaml_version: "1.2"
+  model: JSON-compatible
+  document_count: 1
+  root_type: mapping
+  string_keys_only: true
+  permitted_values:
+    - "null"
+    - boolean
+    - finite-number
+    - string
+    - array
+    - mapping
+  duplicate_keys: forbidden
+  custom_tags: forbidden
+  merge_keys: forbidden
+  anchors: forbidden
+  aliases: forbidden
+  comments_semantic: false
+  whitespace_semantic: false
+  constructors: forbidden
+  environment_interpolation: forbidden
+  parse_time_external_resolution: forbidden
+
+common:
+  identifier:
+    type: string
+    min_length: 1
+    lexical_grammar: unspecified
+  digest:
+    closed: true
+    required_fields: [algorithm, value]
+    fields:
+      algorithm:
+        const: sha-256
+      value:
+        type: string
+        pattern: "^[0-9a-f]{64}$"
+  entity_reference:
+    closed: true
+    required_fields: [record, entity]
+    fields:
+      record:
+        ref: common.identifier
+      entity:
+        ref: common.identifier
+    resolution: same-bundle-declared-entity
+  extension_use:
+    closed: true
+    required_fields: [contract, requirement, payload]
+    fields:
+      contract:
+        ref: extensions.identifier
+      requirement:
+        enum: [required, optional]
+      payload:
+        type: any-json-compatible-value
+
+bundle:
+  identity: nkf.bundle
+  manifest_path: .nourd/knowledge/bundle.yaml
+  closed: true
+  required_fields:
+    - nkf_version
+    - contract
+    - id
+    - product_record
+    - knowledge_root
+    - non_records
+  optional_fields:
+    - extension_contracts
+    - extensions
+  forbidden_legacy_fields:
+    - record_contract
+    - markdown_root
+    - records_root
+    - required_extensions
+  fields:
+    nkf_version:
+      const: "0.1"
+    contract:
+      const: nkf.bundle
+    id:
+      ref: common.identifier
+    product_record:
+      ref: common.identifier
+      resolves_to: unique-product-record
+    knowledge_root:
+      ref: paths.knowledge_root
+    non_records:
+      type: array
+      required: true
+      may_be_empty: true
+      order_semantic: false
+      items:
+        ref: bundle.non_record
+    extension_contracts:
+      ref: extensions.catalog
+      omit_when_empty: true
+    extensions:
+      type: array
+      unique_by: contract
+      items:
+        ref: common.extension_use
+      omit_when_empty: true
+  non_record:
+    closed: true
+    required_fields: [path, kind]
+    optional_fields: [reason]
+    fields:
+      path:
+        ref: paths.knowledge_relative_file
+        must_exist: true
+        file_kind: regular-file
+      kind:
+        enum: [navigation, generated, redirect, other]
+      reason:
+        type: string
+        min_length: 1
+        required_when:
+          field: kind
+          equals: other
+    path_unique_after_resolution: true
+    may_conflict_with_record_source: false
+  constraints:
+    exactly_one_product_root: true
+    every_markdown_exactly_one_representation: true
+    non_markdown_enumeration_required: false
+    non_markdown_enumeration_permitted: true
+    array_order_semantic: false
+
+paths:
+  project_root:
+    definition: directory-directly-containing-.nourd
+    identity: false
+    git_repository_required: false
+  declaration_directory:
+    path: .nourd/knowledge/records
+    flat: true
+    files:
+      encoding: UTF-8
+      suffix: .yaml
+      regular_files_only: true
+      one_record_per_file: true
+      filename_convention: <record-id>.yaml
+      filename_mismatch: warning
+      identity_source: record.id
+  knowledge_root:
+    type: string
+    min_length: 1
+    base: project-root
+    target_kind: directory
+    must_be_inside_project: true
+    must_be_outside_nourd: true
+    forbidden:
+      absolute: true
+      empty_segment: true
+      dot_segment: true
+      parent_segment: true
+      environment_expansion: true
+      tilde_expansion: true
+  knowledge_relative_file:
+    type: string
+    min_length: 1
+    base: knowledge-root
+    separator: /
+    must_resolve_inside_knowledge_root: true
+    forbidden:
+      absolute: true
+      leading_slash: true
+      windows_drive_prefix: true
+      unc_prefix: true
+      backslash_separator: true
+      empty_segment: true
+      dot_segment: true
+      parent_segment: true
+      nul: true
+      ascii_control: true
+      environment_expansion: true
+      tilde_expansion: true
+    spelling: exact
+    case: exact
+    windows_reserved_names_rule: none
+    unicode_case_folding_rule: none
+  symlinks:
+    policy: generally-prohibited
+    broken: error
+    cyclic: error
+    target_outside_project: error
+    target_outside_knowledge_root_for_knowledge_path: error
+    contained: warning
+    contained_read_permitted: true
+    final_target_kind_enforced: true
+    duplicate_physical_file_checks: true
+  locators:
+    are_paths: false
+    are_identity: false
+    universal_syntax: unspecified
+    automatic_unsafe_dereference: forbidden
+
+record:
+  identity: nkf.record
+  closed: true
+  required_fields:
+    - contract
+    - id
+    - type
+    - body_contract
+    - title
+    - source
+    - governance
+    - scope
+    - sections
+    - relationships
+  optional_fields:
+    - provenance
+    - external_authorities
+    - entities
+    - entity_relationships
+    - bindings
+    - extensions
+  fields:
+    contract:
+      const: nkf.record
+    id:
+      ref: common.identifier
+      unique_scope: bundle
+    type:
+      enum: [product, principle, concept, journey, domain, capability, design, decision, realization, evidence]
+      extension_defined_namespaced_values: permitted-through-required-extension
+    body_contract:
+      enum: [nkf.product, nkf.principle, nkf.concept, nkf.journey, nkf.domain, nkf.capability, nkf.design, nkf.decision, nkf.realization, nkf.evidence]
+      extension_defined_namespaced_values: permitted-through-required-extension
+    title:
+      type: string
+      min_length: 1
+      equals: markdown-h1
+    source:
+      ref: record.source
+    governance:
+      ref: record.governance
+    scope:
+      ref: record.scope
+    sections:
+      type: array
+      min_items: 1
+      items:
+        ref: record.section
+    relationships:
+      type: array
+      required: true
+      may_be_empty: true
+      items:
+        ref: record.relationship
+    provenance:
+      ref: record.provenance
+      omit_when_empty: true
+    external_authorities:
+      type: array
+      items:
+        ref: record.external_authority
+      unique_by: id
+      omit_when_empty: true
+    entities:
+      type: array
+      items:
+        ref: record.entity
+      unique_by: id
+      omit_when_empty: true
+    entity_relationships:
+      type: array
+      items:
+        ref: record.entity_relationship
+      exact_duplicates: forbidden
+      omit_when_empty: true
+    bindings:
+      type: array
+      items:
+        ref: record.binding
+      exact_duplicates: forbidden
+      omit_when_empty: true
+    extensions:
+      type: array
+      unique_by: contract
+      items:
+        ref: common.extension_use
+      omit_when_empty: true
+  type_body_contract:
+    product: nkf.product
+    principle: nkf.principle
+    concept: nkf.concept
+    journey: nkf.journey
+    domain: nkf.domain
+    capability: nkf.capability
+    design: nkf.design
+    decision: nkf.decision
+    realization: nkf.realization
+    evidence: nkf.evidence
+  source:
+    closed: true
+    required_fields: [path, digest]
+    fields:
+      path:
+        ref: paths.knowledge_relative_file
+        suffix: .md
+        must_exist: true
+        file_kind: regular-file
+      digest:
+        ref: common.digest
+  governance:
+    closed: true
+    required_fields: [lifecycle, status, authority]
+    optional_fields: [accepted_at]
+    fields:
+      lifecycle:
+        enum: [living, immutable]
+      status:
+        enum: [draft, accepted, superseded, retired]
+      authority:
+        type: array
+        min_items: 1
+        unique_items: true
+        items:
+          ref: common.identifier
+      accepted_at:
+        type: string
+        format: iso-8601-date
+    declared_status_proves_acceptance: false
+    accepted_at_proves_acceptance: false
+  scope:
+    closed: true
+    required_fields: [product]
+    optional_fields: [subjects]
+    fields:
+      product:
+        ref: common.identifier
+        equals: bundle.product_record
+      subjects:
+        type: array
+        items:
+          ref: common.identifier
+        omit_when_empty: true
+  section:
+    closed: true
+    required_fields: [id, heading_path, occurrence, authority, role]
+    optional_fields: [responsibilities]
+    fields:
+      id:
+        ref: common.identifier
+        unique_scope: record
+      heading_path:
+        type: array
+        min_items: 1
+        items:
+          type: string
+          min_length: 1
+        order_semantic: true
+      occurrence:
+        type: integer
+        minimum: 1
+      authority:
+        enum: [accepted-meaning, proposal, unresolved, evidence]
+      role:
+        ref: vocabularies.section_roles
+        allowed_by: record.body_contract
+      responsibilities:
+        type: array
+        min_items: 1
+        unique_items: true
+        items:
+          ref: common.identifier
+        allowed_by: record.body_contract
+        omit_when_empty: true
+    semantic_h2_h3_mapping_complete: true
+    one_mapping_per_semantic_heading: true
+  relationship:
+    closed: true
+    required_fields: [type, target, source_section]
+    fields:
+      type:
+        ref: vocabularies.record_relationship_types
+      target:
+        ref: common.identifier
+        resolves_to: same-bundle-record
+      source_section:
+        ref: common.identifier
+        resolves_to: declaring-record-section
+    exact_duplicates: forbidden
+  provenance:
+    closed: true
+    optional_fields: [producers, verifiers, sources, primary_observation]
+    fields:
+      producers:
+        type: array
+        items:
+          ref: record.actor_event
+      verifiers:
+        type: array
+        items:
+          ref: record.actor_event
+      sources:
+        type: array
+        items:
+          ref: record.provenance_source
+        unique_non_null_by: id
+      primary_observation:
+        ref: record.primary_observation
+    omit_when_empty: true
+  actor_event:
+    closed: true
+    required_fields: [actor]
+    optional_fields: [at, method]
+    fields:
+      actor:
+        ref: common.identifier
+      at:
+        type: string
+        min_length: 1
+        lexical_format: not-specified-by-nkf-0.1
+      method:
+        type: string
+        min_length: 1
+  provenance_source:
+    closed: true
+    required_fields: [locator]
+    optional_fields: [id, title, author, observed_at, revision, last_modified_at, digest]
+    fields:
+      locator:
+        type: string
+        min_length: 1
+      id:
+        ref: common.identifier
+      title:
+        type: string
+        min_length: 1
+      author:
+        type: string
+        min_length: 1
+      observed_at:
+        type: string
+        min_length: 1
+        lexical_format: not-specified-by-nkf-0.1
+      revision:
+        type: string
+        min_length: 1
+      last_modified_at:
+        type: string
+        min_length: 1
+        lexical_format: not-specified-by-nkf-0.1
+      digest:
+        ref: common.digest
+  primary_observation:
+    closed: true
+    required_fields: [method, source_section]
+    optional_fields: [observed_at]
+    fields:
+      method:
+        type: string
+        min_length: 1
+      source_section:
+        ref: common.identifier
+        resolves_to: declaring-record-section
+      observed_at:
+        type: string
+        min_length: 1
+        lexical_format: not-specified-by-nkf-0.1
+  external_authority:
+    closed: true
+    required_fields: [id, authority, relationship, source_section]
+    optional_fields: [locator, resolution_rule]
+    at_least_one: [locator, resolution_rule]
+    fields:
+      id:
+        ref: common.identifier
+      authority:
+        type: string
+        min_length: 1
+      relationship:
+        type: string
+        min_length: 1
+      source_section:
+        ref: common.identifier
+        resolves_to: declaring-record-section
+      locator:
+        type: string
+        min_length: 1
+      resolution_rule:
+        type: string
+        min_length: 1
+  entity:
+    closed: true
+    required_fields: [id, kind, defining_section]
+    optional_fields: [address]
+    fields:
+      id:
+        ref: common.identifier
+        unique_scope: record
+      kind:
+        ref: vocabularies.entity_kinds
+        allowed_by: record.body_contract
+      defining_section:
+        ref: common.identifier
+        resolves_to: declaring-record-section
+      address:
+        type: string
+        min_length: 1
+        identity: false
+  entity_relationship:
+    closed: true
+    required_fields: [type, source, target, source_section]
+    fields:
+      type:
+        ref: vocabularies.entity_relationship_types
+      source:
+        ref: common.entity_reference
+        owner: declaring-record
+      target:
+        ref: common.entity_reference
+      source_section:
+        ref: common.identifier
+        resolves_to: declaring-record-section
+    self_relationship: forbidden
+    exact_duplicates: forbidden
+  binding:
+    closed: true
+    required_fields: [entity, realization, kind, source_section]
+    optional_fields: [locator, resolution_rule, external_authority]
+    at_least_one: [locator, resolution_rule]
+    fields:
+      entity:
+        ref: common.entity_reference
+      realization:
+        ref: common.identifier
+        equals: declaring-record-id
+      kind:
+        ref: vocabularies.binding_kinds
+      source_section:
+        ref: common.identifier
+        resolves_to: declaring-record-section
+      locator:
+        type: string
+        min_length: 1
+      resolution_rule:
+        type: string
+        min_length: 1
+      external_authority:
+        ref: common.identifier
+        resolves_to: declaring-record-external-authority
+    declaring_body_contract: nkf.realization
+  constraints:
+    one_markdown_source: true
+    source_digest_exact: true
+    markdown_h1_count: 1
+    title_matches_h1: true
+    required_responsibility_coverage: true
+    relationship_source_bound: true
+    array_order_semantic:
+      only: [section.heading_path]
+    responsibility_emit_order: body-contract-order
+    optional_empty_structures: omit
+    presentation_field: forbidden
+
+vocabularies:
+  section_authority:
+    accepted-meaning: governs-only-when-exact-record-revision-accepted
+    proposal: candidate-non-governing-meaning
+    unresolved: explicit-open-or-undecided-meaning
+    evidence: source-grounded-support-not-product-intent
+  record_relationship_types:
+    part-of: source-is-governed-part-of-target
+    defines: source-canonically-defines-meaning-used-by-target
+    governs: source-constrains-target
+    applies-to: source-is-applicable-to-target
+    depends-on: source-requires-target-meaning
+    extends: source-adds-compatible-meaning-to-target
+    supersedes: source-replaces-target-for-declared-scope
+    rationale-for: source-explains-target
+    realizes: source-maps-target-to-durable-realization
+    evidences: source-supplies-evidence-relevant-to-target
+    references: source-points-without-stronger-relation
+  section_roles:
+    meanings:
+      actor: participant-in-or-served-by-subject
+      alternative: materially-relevant-other-option
+      applicability: contexts-or-scope-where-meaning-applies
+      behaviour: required-permitted-or-prohibited-conduct
+      boundary: inclusion-exclusion-limit-non-goal-or-authority-boundary
+      catalogue: organized-inventory-classification-portfolio-or-map
+      condition: prerequisite-input-state-or-condition
+      consequence: effect-or-implication-of-choice
+      content: source-meaning-with-no-narrower-accurate-role
+      context: background-circumstance-problem-or-operating-situation
+      definition: statement-of-meaning-and-distinction
+      dependency: required-reliance
+      evidence: supporting-material
+      evolution: maturity-change-migration-compatibility-or-retirement
+      finding: source-supported-conclusion
+      governing: governing-constraint-input-policy-rule-or-authority
+      identity: stable-realization-identity-kind-or-characteristic
+      interface: interaction-exchange-contract-boundary-or-connection
+      interpretation: reasoned-meaning-from-observation-or-finding
+      limitation: uncertainty-caveat-gap-or-applicability-limit
+      mapping: durable-correspondence-to-realization
+      measure: success-failure-effectiveness-health-or-progress-criterion
+      method: observation-collection-analysis-or-verification-procedure
+      obligation: duty-requirement-compliance-or-commitment
+      observation: directly-observed-or-source-reported-fact
+      outcome: desired-expected-achieved-failed-or-recovered-result
+      principle: concise-normative-product-principle
+      rationale: reason-for-principle-decision-design-or-direction
+      recovery: failure-rollback-interruption-restoration-or-safe-recovery
+      relevance: bearing-on-product-knowledge-claim-decision-or-question
+      responsibility: ownership-accountability-or-responsibility-boundary
+      risk: uncertainty-exposure-hazard-or-failure-mode
+      source: origin-of-evidence
+      trade-off: tension-cost-benefit-or-compromise
+      transition: stage-decision-state-change-or-journey-movement
+      trigger: initiating-event-or-circumstance
+      unresolved: open-question-ambiguity-conflict-or-unsettled-matter
+      validation: approach-criteria-or-proof-for-validation
+    allowed_by_body:
+      nkf.product: [definition, governing, boundary, catalogue, evolution, interface, obligation, measure, unresolved, content]
+      nkf.principle: [principle, rationale, applicability, behaviour, boundary, trade-off, evidence, unresolved, content]
+      nkf.concept: [definition, governing, boundary, catalogue, evolution, evidence, unresolved, content]
+      nkf.journey: [governing, actor, trigger, boundary, transition, obligation, outcome, interface, measure, evidence, risk, unresolved, content]
+      nkf.domain: [governing, boundary, catalogue, interface, obligation, risk, measure, evolution, unresolved, content]
+      nkf.capability: [governing, actor, condition, outcome, boundary, obligation, dependency, measure, evidence, risk, unresolved, content]
+      nkf.design: [context, boundary, governing, responsibility, interface, alternative, trade-off, risk, recovery, validation, evidence, unresolved, content]
+      nkf.decision: [context, governing, applicability, rationale, alternative, consequence, trade-off, evidence, recovery, unresolved, content]
+      nkf.realization: [identity, mapping, responsibility, boundary, interface, dependency, obligation, evidence, recovery, unresolved, content]
+      nkf.evidence: [context, source, method, observation, finding, interpretation, limitation, boundary, relevance, evidence, unresolved, content]
+    constraints:
+      unresolved_role_requires_authority: unresolved
+      content_role_responsibilities: forbidden
+      role_proves_responsibility: false
+      role_proves_semantic_adequacy: false
+  entity_kinds:
+    product:
+      allowed_by: [nkf.product]
+    principle:
+      allowed_by: [nkf.principle]
+    concept:
+      allowed_by: [nkf.concept]
+    actor:
+      allowed_by: [nkf.product, nkf.concept, nkf.journey, nkf.domain, nkf.capability]
+    beneficiary:
+      allowed_by: [nkf.product, nkf.concept, nkf.journey, nkf.domain, nkf.capability]
+    stage:
+      allowed_by: [nkf.journey]
+    decision-point:
+      allowed_by: [nkf.journey]
+    transition:
+      allowed_by: [nkf.journey]
+    outcome:
+      allowed_by: [nkf.product, nkf.journey, nkf.capability]
+    domain-concept:
+      allowed_by: [nkf.concept, nkf.domain]
+    domain-entity:
+      allowed_by: [nkf.concept, nkf.domain]
+    capability-input:
+      allowed_by: [nkf.capability]
+    capability-outcome:
+      allowed_by: [nkf.capability]
+    component:
+      allowed_by: [nkf.design]
+    interface:
+      allowed_by: [nkf.domain, nkf.capability, nkf.design, nkf.realization]
+    information-flow:
+      allowed_by: [nkf.design]
+    state:
+      allowed_by: [nkf.concept, nkf.design]
+    policy:
+      allowed_by: [nkf.principle, nkf.domain, nkf.design, nkf.decision]
+    decision-scope:
+      allowed_by: [nkf.decision]
+    system:
+      allowed_by: [nkf.design, nkf.realization]
+    source:
+      allowed_by: [nkf.realization, nkf.evidence]
+    process:
+      allowed_by: [nkf.design, nkf.realization]
+    asset:
+      allowed_by: [nkf.realization]
+    agreement:
+      allowed_by: [nkf.realization]
+    implementation:
+      allowed_by: [nkf.realization]
+    claim:
+      allowed_by: [nkf.evidence]
+    observation:
+      allowed_by: [nkf.evidence]
+  entity_relationship_types:
+    part-of:
+      acyclic: true
+    defines: {}
+    depends-on: {}
+    governs: {}
+    flows-to:
+      cycles_permitted: true
+    transitions-to:
+      cycles_permitted: true
+      source_kinds: [stage, transition, state]
+      target_kinds: [stage, transition, state]
+    realizes:
+      source_body: nkf.realization
+    evidences:
+      source_body: nkf.evidence
+    observes:
+      source_body: nkf.evidence
+      source_kind: observation
+    references:
+      stronger_known_type_preferred: true
+  binding_kinds:
+    source: source-controlled-location-or-artifact
+    system: system-service-application-or-platform
+    process: organizational-or-technical-process
+    asset: durable-asset
+    agreement: governed-agreement-contract-or-commitment
+    implementation: code-configuration-infrastructure-or-artifact
+    provider:
+      target: provider-owned-capability-registration-tenant-or-resource
+      external_authority_required: true
+    namespace: durable-namespace-or-resolution-domain
+    deployment: durable-deployment-target-class-or-address
+    data: dataset-schema-store-or-data-access-surface
+    interface: api-event-integration-ui-or-interaction-surface
+
+body_contracts:
+  nkf.product:
+    type: product
+    required_responsibilities: [product-definition, purpose, vision, people-served, needs-and-outcomes, boundaries, product-map]
+    lifecycle:
+      required: living
+    unique_product_root: true
+  nkf.principle:
+    type: principle
+    required_responsibilities: [principle-statement, rationale, applicability, required-behaviour, boundaries, decision-and-trade-off-implications]
+  nkf.concept:
+    type: concept
+    required_responsibilities: [definition, purpose-and-product-relevance, distinguishing-characteristics, inclusion-exclusion-and-ambiguity-boundaries, product-and-knowledge-relationships, current-maturity]
+  nkf.journey:
+    type: journey
+    required_responsibilities: [purpose-and-desired-outcome, actors-and-beneficiaries, trigger-and-operating-context, start-end-and-scope-boundaries, meaningful-stages-decisions-and-transitions, needs-expectations-and-consequential-moments, success-failure-interruption-and-recovery, related-domains-and-capabilities]
+  nkf.domain:
+    type: domain
+    required_responsibilities: [responsibility-and-product-purpose, value-and-people-served, scope-and-boundaries, owned-concepts-and-semantic-entities, capability-map, dependencies-interfaces-and-external-authority, obligations-risks-and-measures]
+    hierarchy:
+      part_of: product
+      ultimately_reaches: product
+  nkf.capability:
+    type: capability
+    required_responsibilities: [ability-statement, people-actors-and-outcomes, conditions-inputs-and-resulting-outcome, scope-and-non-capability-boundaries, governing-constraints-and-authority, dependencies-and-related-journeys, success-and-failure-conditions]
+    hierarchy:
+      part_of_exactly_one: domain
+  nkf.design:
+    type: design
+    required_responsibilities: [design-kind-problem-and-scope, governing-inputs-and-constraints, proposed-or-accepted-design, responsibilities-interactions-and-information-flows, alternatives-and-trade-offs, failure-safety-recovery-and-operations, validation-and-acceptance-evidence, unresolved-matters]
+  nkf.decision:
+    type: decision
+    required_responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]
+    governance:
+      accepted_lifecycle: immutable
+  nkf.realization:
+    type: realization
+    required_responsibilities: [realization-identity-and-kind, product-meaning-realized, durable-mapping, responsibilities-and-ownership-boundaries, interfaces-dependencies-locators-and-resolution, external-authority-and-operational-state-boundaries, compatibility-verification-and-recovery]
+  nkf.evidence:
+    type: evidence
+    required_responsibilities: [question-claim-or-decision-context, sources-or-primary-observation-method, observations-and-findings, interpretation, limitations-and-uncertainty, applicability-and-boundaries, relevance-to-product-knowledge]
+    provenance_minimum:
+      any_of: [provenance.sources, provenance.primary_observation]
+
+hierarchy:
+  record_part_of:
+    acyclic: true
+    product_parent: forbidden
+    domain_parent: product
+    domain_ultimately_reaches: product
+    capability_parent_exactly_one: domain
+    other_type_participation: requires-body-or-supported-extension
+  every_record_scope_product: bundle.product_record
+  every_record_reaches_product: true
+
+extensions:
+  executable_identity: nkf.extension
+  identifier:
+    type: string
+    pattern: "^[a-z][a-z0-9]*(?:\\.[a-z](?:[a-z0-9-]*[a-z0-9])?){2,}$"
+    reserved_first_namespace: nkf
+    independent_version: forbidden
+  core_supported_set: []
+  authority_pair:
+    markdown_precedence: true
+    digest_bound: true
+    required_executable_fields:
+      - contract
+      - nkf_version
+      - id
+      - application_sites
+      - payload_shape
+      - vocabularies
+      - constraints
+      - deterministic_validation
+  catalog:
+    type: array
+    min_items_when_present: 1
+    unique_by: id
+    items:
+      closed: true
+      required_fields: [id, specification, executable]
+      fields:
+        id:
+          ref: extensions.identifier
+        specification:
+          ref: extensions.artifact_reference
+        executable:
+          ref: extensions.artifact_reference
+    artifacts_require:
+      - exact-digest-resolution
+      - executable-extension-id-match
+      - executable-nkf-version-match
+  artifact_reference:
+    closed: true
+    required_fields: [locator, digest]
+    fields:
+      locator:
+        type: string
+        min_length: 1
+      digest:
+        ref: common.digest
+  support_requires:
+    - resolve-specification
+    - resolve-executable
+    - verify-both-digests
+    - verify-identity
+    - verify-nkf-version
+    - recognize-exact-executable-digest
+    - implement-all-required-boundaries
+  use:
+    any_use_requires_non_empty_bundle_catalog: true
+    contract_resolves_uniquely_through_catalog: true
+    unique_by_contract_within_application_site: true
+    order_semantic: false
+    required_when_needed_for:
+      - type
+      - body-contract
+      - authority
+      - responsibility
+      - relationship
+      - governing-meaning
+      - consequential-use
+    namespaced_type_or_body_contract_requires_owner: true
+    optional_may_supply_only:
+      - nonessential-display
+      - discovery
+      - interoperability
+      - advisory-data
+  required_unsupported: fail-conformance-and-governing-use
+  required_payload_invalid: fail-conformance
+  optional_unsupported: preserve-report-unvalidated-and-continue-core
+  supported_optional_payload_invalid: fail-conformance
+  core_conflict: fail
+  round_trip:
+    json_data_model_loss: forbidden
+    comments_required: false
+    anchors_required: false
+    aliases_required: false
+    scalar_style_required: false
+    whitespace_required: false
+    key_order_required: false
+    unable_to_preserve: read-only-or-fail
+
+acceptance:
+  universal_core_proof_field: none
+  declarations_prove_acceptance: false
+  verification:
+    optional_operation: true
+    required_evidence:
+      - authoritative-event-or-immutable-decision-exists
+      - actor-has-declared-authority
+      - outcome-matches-claimed-status
+      - exact-bundle-and-record-bound
+      - exact-markdown-digest-bound
+      - exact-declaration-revision-or-digest-bound
+      - not-superseded-revoked-or-contradicted
+    unavailable_result: not-verified
+    conflicting_result: contradicted
+  independent_axes:
+    - declared-governance
+    - acceptance-binding-verification
+    - nkf-conformance
+    - realization-confirmation
+  governing_use_ready_requires:
+    - applicable-accepted-status
+    - acceptance-binding-verified
+    - required-conformance-passed
+    - no-governing-use-blocker
+
+presentation:
+  native_record_field: forbidden
+  default_readable_form: canonical-markdown
+  portable_metadata: separately-governed-optional-extension
+  future_task: NKF-004
+  may_add_or_suppress_product_meaning: false
+  required_for_consequential_interpretation: false
+
+enforcement:
+  schema:
+    dialect: https://json-schema.org/draft/2020-12/schema
+    paths:
+      bundle: contracts/nkf/0.1/schemas/bundle.schema.json
+      record: contracts/nkf/0.1/schemas/record.schema.json
+    ids:
+      bundle: urn:nkf:0.1:schema:bundle
+      record: urn:nkf:0.1:schema:record
+    source_metadata:
+      - nkf_version
+      - markdown_path
+      - markdown_digest
+      - executable_path
+      - executable_digest
+    schema_self_digest_location: release-metadata
+  layers:
+    - json-schema
+    - bundle-aware-checker
+    - artifact-and-authority-resolver
+    - human-semantic-review
+  phases:
+    - contracts
+    - parse
+    - schema
+    - project
+    - source
+    - extension-resolution
+    - bundle-graph
+    - record-contract
+    - security
+    - authority-binding
+    - result
+  phase_states: [passed, failed, not-evaluated]
+  unsafe_or_meaningless_later_phase: not-evaluated
+  conformance_levels:
+    structural:
+      required_phases: [contracts, parse, schema, project, source, extension-resolution, bundle-graph, security]
+      extension_scope: bundle-and-structurally-required-record-uses
+    contract:
+      includes: structural
+      required_phases: [record-contract]
+      extension_scope: requested-record
+    full-bundle:
+      includes: structural
+      required_phases: [record-contract]
+      record_scope: every-record
+      extension_scope: every-record
+  warnings_fail_native_conformance: false
+  passing_secret_scan_proves_absence: false
+
+diagnostics:
+  shape:
+    required_fields: [rule_id, severity, blocking, phase, message]
+    optional_fields: [artifact, record_id, instance_pointer, source_section, remediation]
+    fields:
+      severity:
+        enum: [error, warning]
+      blocking:
+        enum: [conformance, governing-use, none]
+      phase:
+        enum: [contracts, parse, schema, project, source, extension-resolution, bundle-graph, record-contract, security, authority-binding, result]
+  stable_behavior: [rule_id, severity, blocking, semantic-trigger]
+  non_stable_behavior: [message, remediation]
+  warning_blocking: none
+  sort_order: [phase, normalized-artifact, record-id, instance-pointer, source-section, rule-id]
+  implies_acceptance: false
+  rules:
+    contract-set.unavailable: {severity: error, blocking: conformance, phase: contracts}
+    contract-set.binding-mismatch: {severity: error, blocking: conformance, phase: contracts}
+    schema.unavailable: {severity: error, blocking: conformance, phase: contracts}
+    schema.binding-mismatch: {severity: error, blocking: conformance, phase: contracts}
+    bundle.manifest.missing: {severity: error, blocking: conformance, phase: parse}
+    yaml.utf8.invalid: {severity: error, blocking: conformance, phase: parse}
+    yaml.document-count.invalid: {severity: error, blocking: conformance, phase: parse}
+    yaml.root.invalid: {severity: error, blocking: conformance, phase: parse}
+    yaml.key.duplicate: {severity: error, blocking: conformance, phase: parse}
+    yaml.key.non-string: {severity: error, blocking: conformance, phase: parse}
+    yaml.value.non-json: {severity: error, blocking: conformance, phase: parse}
+    yaml.tag.unsupported: {severity: error, blocking: conformance, phase: parse}
+    yaml.merge-key.unsupported: {severity: error, blocking: conformance, phase: parse}
+    yaml.anchor.unsupported: {severity: error, blocking: conformance, phase: parse}
+    yaml.alias.unsupported: {severity: error, blocking: conformance, phase: parse}
+    yaml.parse.invalid: {severity: error, blocking: conformance, phase: parse}
+    schema.bundle.invalid: {severity: error, blocking: conformance, phase: schema}
+    schema.record.invalid: {severity: error, blocking: conformance, phase: schema}
+    project.nourd.missing: {severity: error, blocking: conformance, phase: project}
+    project.records-directory.missing: {severity: error, blocking: conformance, phase: project}
+    project.records-directory.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.root.missing: {severity: error, blocking: conformance, phase: project}
+    knowledge.root.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.root.outside-project: {severity: error, blocking: conformance, phase: project}
+    knowledge.root.inside-nourd: {severity: error, blocking: conformance, phase: project}
+    path.invalid: {severity: error, blocking: conformance, phase: project}
+    path.outside-root: {severity: error, blocking: conformance, phase: project}
+    path.file-kind.invalid: {severity: error, blocking: conformance, phase: project}
+    path.symlink.invalid: {severity: error, blocking: conformance, phase: project}
+    path.symlink.discouraged: {severity: warning, blocking: none, phase: project}
+    record.declaration.non-yaml: {severity: error, blocking: conformance, phase: project}
+    record.id.duplicate: {severity: error, blocking: conformance, phase: project}
+    record.source.missing: {severity: error, blocking: conformance, phase: source}
+    record.source.non-markdown: {severity: error, blocking: conformance, phase: source}
+    record.source.duplicate: {severity: error, blocking: conformance, phase: source}
+    record.source.digest-mismatch: {severity: error, blocking: conformance, phase: source}
+    record.h1-count.invalid: {severity: error, blocking: conformance, phase: source}
+    record.title.mismatch: {severity: error, blocking: conformance, phase: source}
+    record.filename.nonconventional: {severity: warning, blocking: none, phase: project}
+    knowledge.markdown.unrepresented: {severity: error, blocking: conformance, phase: project}
+    knowledge.markdown.multiple-representations: {severity: error, blocking: conformance, phase: project}
+    non-record.missing: {severity: error, blocking: conformance, phase: project}
+    non-record.duplicate: {severity: error, blocking: conformance, phase: project}
+    non-record.conflict: {severity: error, blocking: conformance, phase: project}
+    section.id.duplicate: {severity: error, blocking: conformance, phase: record-contract}
+    section.heading.unresolved: {severity: error, blocking: conformance, phase: source}
+    section.heading.duplicate-mapping: {severity: error, blocking: conformance, phase: source}
+    section.heading.unrepresented: {severity: error, blocking: conformance, phase: source}
+    section.authority.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    section.role.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    section.unresolved.authority-mismatch: {severity: error, blocking: conformance, phase: record-contract}
+    section.content.responsibility-forbidden: {severity: error, blocking: conformance, phase: record-contract}
+    body.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    body.type-mismatch: {severity: error, blocking: conformance, phase: record-contract}
+    body.responsibility.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    body.responsibility.missing: {severity: error, blocking: conformance, phase: record-contract}
+    governance.product.lifecycle: {severity: error, blocking: conformance, phase: record-contract}
+    governance.decision.lifecycle: {severity: error, blocking: conformance, phase: record-contract}
+    provenance.source-id.duplicate: {severity: error, blocking: conformance, phase: record-contract}
+    provenance.observation-section.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    evidence.provenance.missing: {severity: error, blocking: conformance, phase: record-contract}
+    external-authority.id.duplicate: {severity: error, blocking: conformance, phase: record-contract}
+    external-authority.section.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    relationship.type.unsupported: {severity: error, blocking: conformance, phase: bundle-graph}
+    relationship.target.unresolved: {severity: error, blocking: conformance, phase: bundle-graph}
+    relationship.section.unresolved: {severity: error, blocking: conformance, phase: bundle-graph}
+    relationship.duplicate: {severity: error, blocking: conformance, phase: bundle-graph}
+    bundle.product.missing: {severity: error, blocking: conformance, phase: bundle-graph}
+    bundle.product.multiple: {severity: error, blocking: conformance, phase: bundle-graph}
+    bundle.product.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
+    scope.product.mismatch: {severity: error, blocking: conformance, phase: bundle-graph}
+    hierarchy.product-parent.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
+    hierarchy.domain-parent.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
+    hierarchy.capability-parent.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
+    hierarchy.part-of.cycle: {severity: error, blocking: conformance, phase: bundle-graph}
+    hierarchy.product-unreachable: {severity: error, blocking: conformance, phase: bundle-graph}
+    hierarchy.participation.unsupported: {severity: error, blocking: conformance, phase: bundle-graph}
+    entity.id.duplicate: {severity: error, blocking: conformance, phase: record-contract}
+    entity.kind.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    entity.section.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    entity-reference.record.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    entity-reference.entity.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.type.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.section.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.source-owner.invalid: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.self: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.duplicate: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.part-of.cycle: {severity: error, blocking: conformance, phase: record-contract}
+    entity-relationship.type-constraint: {severity: error, blocking: conformance, phase: record-contract}
+    binding.kind.unsupported: {severity: error, blocking: conformance, phase: record-contract}
+    binding.entity.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    binding.realization.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    binding.realization-owner.invalid: {severity: error, blocking: conformance, phase: record-contract}
+    binding.section.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    binding.external-authority.unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    binding.locator.missing: {severity: error, blocking: conformance, phase: record-contract}
+    binding.duplicate: {severity: error, blocking: conformance, phase: record-contract}
+    binding.provider-authority.missing: {severity: error, blocking: conformance, phase: record-contract}
+    extension.catalog-id.duplicate: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.use-id.duplicate: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.required.contract-unresolved: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.required.contract-digest-mismatch: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.required.contract-identity-mismatch: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.required.unsupported: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.payload.invalid: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.core-conflict: {severity: error, blocking: conformance, phase: extension-resolution}
+    extension.optional.unvalidated: {severity: warning, blocking: none, phase: extension-resolution}
+    security.secret-pattern: {severity: error, blocking: conformance, phase: security}
+    authority.binding.unavailable: {severity: warning, blocking: none, phase: authority-binding}
+    authority.binding.contradicted: {severity: error, blocking: governing-use, phase: authority-binding}
+
+validation_result:
+  identity: nkf.validation-result
+  nkf_version: "0.1"
+  governed_knowledge: false
+  required_content:
+    - execution-id
+    - runner-identity
+    - started-at
+    - completed-at
+    - checker-identity-and-digest
+    - markdown-digest
+    - executable-yaml-digest
+    - schema-digests
+    - requested-conformance-level
+    - every-phase-state
+    - overall-conformance
+    - declared-governance
+    - acceptance-binding-verification
+    - governing-use-readiness
+    - ordered-diagnostics
+  conformance_values: [passed, failed]
+  governing_use_values: [ready, not-ready, not-evaluated]
+  excludes:
+    - absolute-project-paths
+    - credentials
+    - secrets
+    - copied-operational-payloads
+
+security:
+  prohibited:
+    - live-credentials
+    - access-tokens
+    - private-keys
+    - secrets
+  high_confidence_finding_fails_conformance: true
+  passing_scan_proves_absence: false
+  sensitive_bundle_access_policy: out-of-scope
+
+human_review:
+  deterministic_validation_cannot_establish:
+    - semantic-role-accuracy
+    - responsibility-binding-accuracy
+    - markdown-truth
+    - markdown-adequacy
+    - markdown-safety
+    - product-completeness
+    - evidence-support
+    - deserved-acceptance
+    - external-authority-currency
+    - locator-currency
+    - design-quality
+    - realization-existence
+    - realization-behavior

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nkf.bundle.schema.json",
+  "title": "NKF 0.1 bundle (derived proposal)",
+  "x-nkf-authority": "proposal",
+  "x-nkf-source": {
+    "markdown_sha256": "a0096d74fc444d197ce9c4c4fce78181c80fdb5bd633e2fd605b659a610f1151",
+    "yaml_sha256": "9b7fe0f8bd241b8d50cc2d8adc4151feed356b892eb97e10903d881ea37c1aa3"
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["nkf_version", "contract", "id", "product_record", "markdown_root", "records_root", "non_records"],
+  "properties": {
+    "nkf_version": {"const": "0.1"},
+    "contract": {"const": "nkf.bundle"},
+    "id": {"$ref": "#/$defs/identifier"},
+    "product_record": {"$ref": "#/$defs/identifier"},
+    "markdown_root": {"type": "string", "minLength": 1},
+    "records_root": {"type": "string", "minLength": 1},
+    "non_records": {"type": "array"}
+  },
+  "$defs": {
+    "identifier": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}
+  }
+}
