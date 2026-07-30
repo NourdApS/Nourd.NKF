@@ -2025,8 +2025,11 @@ derived realization.
   validation-result assertion graphs are unchanged after source metadata is
   removed. The release-manifest schema is release-package enforcement only and
   does not expand the project checker's three-schema boundary.
-- Checker rebinding, release tooling, artifact confirmation, and package
-  reproducibility work remain in progress.
+- ADR 0047 confirms the rebound project checker at source checkpoint
+  `0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f` and portable checker SHA-256
+  `f71226e5f632cdd0918a0eedae1cbbc5d5f17b450395d98e744ae572dfd73579`.
+- Release tooling, artifact confirmation, and package reproducibility work
+  remain in progress.
 
 ## Initial source anchors
 
