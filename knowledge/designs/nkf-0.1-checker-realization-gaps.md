@@ -322,7 +322,7 @@ delegated technical acceptance and contingent Human Product Owner
 confirmation. A governed replacement of the accepted Markdown/YAML pair
 remains required before checker implementation.
 
-## Gap 2: `security.secret-pattern` Trigger
+## Gap 2: Security.secret-Pattern Trigger
 
 ### Accepted Requirement
 
@@ -381,7 +381,7 @@ in
 The canonical Markdown/YAML pair and checker fixtures have not yet been
 updated to realize it.
 
-## Gap 3: `nkf.validation-result` Serialization
+## Gap 3: Nkf.validation-Result Serialization
 
 ### Accepted Requirement
 

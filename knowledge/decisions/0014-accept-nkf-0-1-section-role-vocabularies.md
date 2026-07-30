@@ -1,4 +1,4 @@
-# ADR 0014: Accept NKF 0.1 section-role vocabularies
+# ADR 0014: Accept NKF 0.1 Section-Role Vocabularies
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -59,7 +59,7 @@ analogy.
 Changing a role meaning, removing a role, changing an allowed subset, or
 weakening a guardrail is an NKF format change governed by ADR 0006.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept replacement Markdown or YAML bytes, entity or
 binding vocabularies, extensions, acceptance proof, path resolution, schemas,

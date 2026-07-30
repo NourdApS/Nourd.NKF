@@ -1,0 +1,136 @@
+contract: nkf.record
+id: design-nkf-0-1-product-technology-common-comparison
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Product–Technology Common Comparison
+source:
+  path: designs/nkf-0.1-product-technology-common-comparison.md
+  digest:
+    algorithm: sha-256
+    value: 9ab8c7d35fdced20f291b13db92387c9797b1cdf615831914255bbea4f97b774
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+  - id: comparison-test
+    heading_path:
+      - Comparison Test
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: common-mechanism-candidates
+    heading_path:
+      - Common Mechanism Candidates
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: record-body-allocation
+    heading_path:
+      - Record-Body Allocation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: record-body-allocation-proposed-common-bodies
+    heading_path:
+      - Record-Body Allocation
+      - Proposed Common Bodies
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: record-body-allocation-product-profile-bodies
+    heading_path:
+      - Record-Body Allocation
+      - Product Profile Bodies
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: record-body-allocation-technology-profile-bodies
+    heading_path:
+      - Record-Body Allocation
+      - Technology Profile Bodies
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: record-body-allocation-bodies-not-yet-shared
+    heading_path:
+      - Record-Body Allocation
+      - Bodies Not Yet Shared
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: root-and-hierarchy-allocation
+    heading_path:
+      - Root And Hierarchy Allocation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: relationship-allocation
+    heading_path:
+      - Relationship Allocation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: entity-allocation
+    heading_path:
+      - Entity Allocation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: section-role-allocation
+    heading_path:
+      - Section-Role Allocation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: binding-kind-allocation
+    heading_path:
+      - Binding-Kind Allocation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: governed-validation-input-allocation
+    heading_path:
+      - Governed Validation Input Allocation
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: items-not-yet-proven-common
+    heading_path:
+      - Items Not Yet Proven Common
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-resulting-specification-shape
+    heading_path:
+      - Proposed Resulting Specification Shape
+    occurrence: 1
+    authority: proposal
+    role: evidence
+  - id: compatibility-and-next-decision
+    heading_path:
+      - Compatibility And Next Decision
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - proposed-or-accepted-design
+      - unresolved-matters
+relationships: []

@@ -1,4 +1,4 @@
-# ADR 0003: Accept Product responsibility identifiers
+# ADR 0003: Accept Product Responsibility Identifiers
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -59,7 +59,7 @@ body-contract compatibility decision. Existing accepted NKF 0.1 declarations
 predate these identifiers and require explicit migration before claiming
 conformance with the amended contract realization.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept:
 

@@ -7,12 +7,12 @@
     "markdown_path": "knowledge/specifications/nkf-0.1.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "67beed2a380e719573175d3dfd70b05c59cbe51274c9975f863a58f7083ddba4"
+      "value": "8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50"
     },
     "executable_path": "contracts/nkf/0.1/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b"
+      "value": "fd60ad052ff5b58a20b285fec03aede560cd84d18221f7b2d88b7db7fdf67dbd"
     }
   },
   "type": "object",
@@ -228,10 +228,10 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "product"
+        "root"
       ],
       "properties": {
-        "product": {
+        "root": {
           "$ref": "#/$defs/identifier"
         },
         "subjects": {

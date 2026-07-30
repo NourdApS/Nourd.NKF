@@ -1,4 +1,4 @@
-# ADR 0020: Establish current presentation-guidance boundary
+# ADR 0020: Establish Current Presentation-Guidance Boundary
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -43,7 +43,7 @@ Therefore:
 The supporting proposal remains at
 [`../designs/nkf-0.1-presentation-guidance-boundary.md`](../designs/nkf-0.1-presentation-guidance-boundary.md).
 
-## Explicit future reconsideration
+## Explicit Future Reconsideration
 
 This boundary is intentionally current rather than permanent. Task
 [`NKF-004`](../tasks/NKF-004-define-portable-presentation-guidance-extension.md)
@@ -55,7 +55,7 @@ implementation, fixture, or successful demonstration. Any consequential
 change must follow ADR 0006 and be accepted in a later Decision that preserves
 ADR 0020 as historical provenance.
 
-## Not established
+## Not Established
 
 This Decision does not establish:
 

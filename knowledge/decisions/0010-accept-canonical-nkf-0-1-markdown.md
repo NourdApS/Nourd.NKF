@@ -1,4 +1,4 @@
-# ADR 0010: Accept canonical NKF 0.1 Markdown
+# ADR 0010: Accept Canonical NKF 0.1 Markdown
 
 - **Status:** Accepted
 - **Task:** `NKF-003`

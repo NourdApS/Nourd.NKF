@@ -1,0 +1,58 @@
+contract: nkf.record
+id: adr-0027
+type: decision
+body_contract: nkf.decision
+title: "ADR 0027: Accept Pre-Checker NKF 0.1 Authority Pair"
+source:
+  path: decisions/0027-accept-pre-checker-nkf-0-1-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: 6ab864c1597d1a3270707d9bcbe610027aa519fbb6c27451248b1638c2bd7f89
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: supersession-and-compatibility
+    heading_path:
+      - Supersession And Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

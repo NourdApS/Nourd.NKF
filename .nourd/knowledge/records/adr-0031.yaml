@@ -1,0 +1,81 @@
+contract: nkf.record
+id: adr-0031
+type: decision
+body_contract: nkf.decision
+title: "ADR 0031: Establish Checker Development Layout And Identity"
+source:
+  path: decisions/0031-establish-checker-development-layout-and-identity.md
+  digest:
+    algorithm: sha-256
+    value: 6afdad08463896f31655446565adc9a8fee95e22a36444da97622d83d5e94ea4
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-package-and-runtime
+    heading_path:
+      - Decision
+      - Package And Runtime
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-repository-layout
+    heading_path:
+      - Decision
+      - Repository Layout
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-checker-identity-and-digest
+    heading_path:
+      - Decision
+      - Checker Identity And Digest
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-responsibility-boundary
+    heading_path:
+      - Decision
+      - Responsibility Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

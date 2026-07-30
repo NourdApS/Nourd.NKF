@@ -1,0 +1,78 @@
+contract: nkf.record
+id: design-nkf-record-v2-responsibility-bindings
+type: design
+body_contract: nkf.design
+title: NKF Record V2 Responsibility Bindings
+source:
+  path: designs/nkf-record-v2-responsibility-bindings.md
+  digest:
+    algorithm: sha-256
+    value: 34831c9ef11ff6573b072608c8ebab642e757f254ad860c59a5a4073f26e1574
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+  - id: proposed-representation
+    heading_path:
+      - Proposed Representation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: field-rules
+    heading_path:
+      - Field Rules
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: authority-boundary
+    heading_path:
+      - Authority Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: reconciliation-and-migration
+    heading_path:
+      - Reconciliation And Migration
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: deferred
+    heading_path:
+      - Deferred
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-outcome
+    heading_path:
+      - Decision Outcome
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

@@ -1,4 +1,4 @@
-# NKF-003 source authority and compatibility reconciliation
+# NKF-003 Source Authority And Compatibility Reconciliation
 
 - **Task:** `NKF-003`
 - **Status:** Evidence
@@ -17,16 +17,16 @@ This record does not accept, reject, amend, or supersede NKF meaning. Checker
 code, schemas, tests, Git state, and this reconciliation cannot provide Human
 Product Owner acceptance.
 
-## Source sets
+## Source Sets
 
 | Source set | Declared source | Local contents | Authority classification |
 | --- | --- | --- | --- |
 | Accepted NKF 0.1 | `kaveh6202/Nourd.Studio@13a82fbc1b72c1350e9765f59d1538c375f3fa69` | Accepted specification, ADR 0012, and their governed declarations | Immutable accepted Product-format provenance |
 | NKF-002 checker | `kaveh6202/Nourd.Studio@06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Task plan, amended specification proposal, declarations, schemas, TypeScript implementation, tests, and package integration | Immutable proposal and implementation evidence |
 
-## Provenance verification
+## Provenance Verification
 
-### Accepted snapshot
+### Accepted Snapshot
 
 All four files declared by the accepted snapshot manifest are present. Their
 current SHA-256 digests exactly match the manifest:
@@ -38,7 +38,7 @@ current SHA-256 digests exactly match the manifest:
 | `.nourd/knowledge/records/design-nkf-0-1.yaml` | `0d4a465f29ee13888bed61cb22c96e64bd826e2b5152593511b4ac3ede4c020d` |
 | `.nourd/knowledge/records/adr-0012.yaml` | `a60c9de20bfe373d5a53645254290c821fa0ebeee5e3ebf8801897c59564cf04` |
 
-### Checker snapshot
+### Checker Snapshot
 
 The checker snapshot contains exactly the 22 source-relative files declared
 by its manifest, excluding the local snapshot `README.md`. Its amended
@@ -52,7 +52,7 @@ but does not preserve that archive or per-file source digests. The local
 22-file set is internally complete; the recorded archive digest cannot be
 reproduced from the current evidence alone.
 
-### External source reachability
+### External Source Reachability
 
 On 29 July 2026, GitHub access to the declared private repository
 `kaveh6202/Nourd.Studio` succeeded, but the following source identities were
@@ -77,7 +77,7 @@ membership. Before final authority handover, NKF-003 requires either reachable
 source objects, a preserved source archive matching the recorded digest, or a
 Human Product Owner decision accepting the limited provenance basis.
 
-## Accepted baseline
+## Accepted Baseline
 
 The exact accepted NKF 0.1 source defines a Product-only format. Its accepted
 meaning includes:
@@ -99,7 +99,7 @@ The accepted specification does not yet define Shared Technology meaning.
 It also deliberately leaves some realization details open, including exact
 acceptance-provenance fields and a universal distribution boundary.
 
-## Exact specification delta
+## Exact Specification Delta
 
 The later NKF-002 specification changes the accepted Markdown in one material
 area only:
@@ -120,7 +120,7 @@ specification amendment. Its governance status remains `accepted`, but this
 copied status cannot accept the later bytes. The exact amendment is therefore
 a proposal awaiting explicit acceptance in this repository.
 
-## Checker-work classification
+## Checker-Work Classification
 
 | Material | Classification | Migration disposition |
 | --- | --- | --- |
@@ -137,7 +137,7 @@ a proposal awaiting explicit acceptance in this repository.
 | Shredwise validation and its reported 92 missing-responsibility errors | Consumer-specific operational evidence | Does not accept NKF contracts or alter Shredwise meaning |
 | Passing typecheck and 26-test claim | Imported implementation-result claim | Not reproduced in this reconciliation slice |
 
-## Material unresolved boundaries
+## Material Unresolved Boundaries
 
 The source reconciliation leaves these decisions open:
 
@@ -154,7 +154,7 @@ The source reconciliation leaves these decisions open:
 8. the final treatment of source commits that are not reachable from the
     declared remote.
 
-## First decision boundary
+## First Decision Boundary
 
 The first consequential boundary should be the responsibility mechanism,
 because the proposed executable body contracts depend on it.
@@ -176,7 +176,7 @@ That Decision accepts the generic mechanism and its conformance limit, not the
 exact Product responsibility vocabularies, serialization, or checker
 implementation.
 
-## Checker snapshot file digests
+## Checker Snapshot File Digests
 
 These digests identify the locally preserved 22-file checker evidence set.
 They do not replace the unverified source archive digest.

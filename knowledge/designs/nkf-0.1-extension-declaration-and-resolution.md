@@ -1,4 +1,4 @@
-# NKF 0.1 extension declaration and resolution
+# NKF 0.1 Extension Declaration And Resolution
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -9,13 +9,13 @@
   `extensions`, and `supported_extensions` shapes and checker behavior; none
   is authority
 
-## Decision sought
+## Decision Sought
 
 Whether the following extension identity, contract binding, declaration,
 support, round-trip, and fail-closed rules are the native NKF 0.1 extension
 mechanism.
 
-## Extension boundary
+## Extension Boundary
 
 An extension may add namespaced types, body contracts, vocabularies,
 declaration payloads, deterministic constraints, or interoperability data for
@@ -50,7 +50,7 @@ Extension identifiers have no `/v1`, `/v2`, or other independent version.
 `nkf_version: "0.1"` is the only version coordinate. Exact extension
 revisions are identified by artifact digests.
 
-## Extension contract authority
+## Extension Contract Authority
 
 Every used extension is governed by its own digest-bound pair:
 
@@ -68,7 +68,7 @@ Acceptance of an extension contract belongs to its stated authority. NKF core
 acceptance is required only for an `nkf`-owned extension or for presenting
 external extension meaning as native core meaning.
 
-## Bundle extension catalog
+## Bundle Extension Catalog
 
 When any extension is used, the bundle manifest contains
 `extension_contracts`, a non-empty duplicate-free list with this exact shape:
@@ -100,7 +100,7 @@ unsupported.
 The catalog is bundle-local resolution metadata, not a public extension
 registry. A public registry and its compatibility policy remain out of scope.
 
-## Extension use
+## Extension Use
 
 The bundle manifest and each record may contain an `extensions` list. Each
 entry has this exact shape:
@@ -135,7 +135,7 @@ A record using a profile-defined type or body contract must declare the
 owning extension as `required`. The bundle must also declare that extension as
 `required` when interpreting the bundle itself depends on the profile.
 
-## Support and validation
+## Support And Validation
 
 A consumer supports an extension use only when it:
 
@@ -167,7 +167,7 @@ An unsupported optional extension does not by itself prevent native core
 contract conformance. A validator must not claim that extension's semantic
 validation or use its payload for a consequential decision.
 
-## Round-trip requirement
+## Round-Trip Requirement
 
 An unsupported extension's catalog entry, use metadata, and payload must remain
 visible and must be preserved without data-model loss when a consumer reads
@@ -179,7 +179,7 @@ YAML comments, anchors, aliases, scalar style, whitespace, or key order.
 Consumers unable to preserve the payload must operate read-only or fail rather
 than silently dropping it.
 
-## Deliberate differences from imported checker evidence
+## Deliberate Differences From Imported Checker Evidence
 
 This proposal does not adopt the checker model unchanged:
 
@@ -192,7 +192,7 @@ This proposal does not adopt the checker model unchanged:
 - extension identity uses the single NKF version namespace without `/v1`; and
 - the absence of currently supported core extensions is explicit.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the extension identifier grammar, digest-bound extension authority
 > pair, bundle catalog, bundle/record extension-use shape, support rules,

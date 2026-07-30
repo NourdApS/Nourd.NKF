@@ -27,48 +27,33 @@ function markdownRules(source: string): Map<string, "error" | "warning"> {
 }
 
 describe("canonical NKF 0.1 authority realization", () => {
-  it("keeps the promoted authority pair byte-identical to its accepted proposals", async () => {
-    const [specification, executable, specificationProposal, executableProposal] =
+  it("keeps the accepted dynamic-root authority pair bound to ADR 0050", async () => {
+    const [specification, executable, acceptanceDecision] =
       await Promise.all([
         readFile(specificationPath),
         readFile(executablePath),
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/designs/nkf-0.1-release-contract-specification-proposal.md",
+            "knowledge/decisions/0050-accept-product-and-technology-root-profiles.md",
           ),
-        ),
-        readFile(
-          path.join(
-            repositoryRoot,
-            "knowledge/designs/nkf-0.1-release-contract-proposal.yaml",
-          ),
+          "utf8",
         ),
       ]);
-    expect(specification).toEqual(specificationProposal);
-    expect(executable).toEqual(executableProposal);
     expect(sha256(specification)).toBe(CORE_BINDINGS.specification.sha256);
     expect(sha256(executable)).toBe(CORE_BINDINGS.executable.sha256);
+    expect(acceptanceDecision).toContain(CORE_BINDINGS.specification.sha256);
+    expect(acceptanceDecision).toContain(CORE_BINDINGS.executable.sha256);
   });
 
-  it("keeps all promoted schemas byte-identical to their confirmed proposals", async () => {
+  it("keeps all derived schemas bound to their confirmed exact digests", async () => {
     for (const schema of CORE_BINDINGS.schemas) {
       const canonical = await readFile(path.join(schemaRoot, schema.file));
-      const proposal = await readFile(
-        path.join(
-          repositoryRoot,
-          `knowledge/designs/nkf-0.1-release-contract-${schema.file.replace(
-            ".schema.json",
-            "-schema-proposal.json",
-          )}`,
-        ),
-      );
-      expect(canonical).toEqual(proposal);
       expect(sha256(canonical)).toBe(schema.sha256);
     }
   });
 
-  it("keeps strict executable parsing, Markdown binding, and 115-rule severity parity", async () => {
+  it("keeps strict executable parsing, Markdown binding, and 130-rule severity parity", async () => {
     const [specificationBytes, executableBytes] = await Promise.all([
       readFile(specificationPath),
       readFile(executablePath),
@@ -89,14 +74,14 @@ describe("canonical NKF 0.1 authority realization", () => {
       ).map(([id, rule]) => [id, rule.severity]),
     );
     const specificationRules = markdownRules(specificationBytes.toString("utf8"));
-    expect(executableRules.size).toBe(115);
+    expect(executableRules.size).toBe(130);
     expect(specificationRules).toEqual(executableRules);
   });
 
   it("keeps every participating canonical heading in Unicode 17 Title Case", async () => {
     const specification = await readFile(specificationPath, "utf8");
     const headings = parseMarkdown(specification).headings;
-    expect(headings).toHaveLength(41);
+    expect(headings).toHaveLength(42);
     for (const heading of headings) {
       const ranges = protectedCanonicalRanges(
         heading.text,

@@ -1,4 +1,4 @@
-# NKF 0.1 semantic-topology and binding vocabularies
+# NKF 0.1 Semantic-Topology And Binding Vocabularies
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -10,7 +10,7 @@
   SHA-256
   `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8`
 
-## Decision sought
+## Decision Sought
 
 Whether the following entity kinds, entity-relationship types, binding kinds,
 and constraints are the complete core semantic-topology and durable-binding
@@ -21,7 +21,7 @@ or body-specific entity-kind ownership. This proposal uses those lists as
 evidence, reconciles them with the accepted NKF semantic layers, and states
 every deliberate difference.
 
-## Semantic-entity model
+## Semantic-Entity Model
 
 A semantic entity is independently addressable Product meaning defined by one
 exact section and owned canonically by one record. It is not a record, file,
@@ -38,7 +38,7 @@ The core body contract does not require a record-root entity merely because a
 record exists. Entity declarations are used only when independently
 addressable meaning is real.
 
-## Entity kinds
+## Entity Kinds
 
 | Kind | Exact meaning | Allowed defining body contracts |
 | --- | --- | --- |
@@ -74,7 +74,7 @@ An entity kind does not prove that the defining prose is adequate or that the
 entity should have been declared. Unknown kinds and kinds unsupported by the
 declared body contract fail closed.
 
-## Entity references and ownership
+## Entity References And Ownership
 
 An entity reference contains `record` and `entity`. Both identifiers resolve
 inside the same bundle in NKF 0.1. The referenced record must declare that
@@ -85,7 +85,7 @@ by the record declaring the relationship. The target may be an entity in that
 record or another record in the same bundle. This prevents a third record from
 becoming an undeclared authority for relationships between two other owners.
 
-## Entity-relationship types
+## Entity-Relationship Types
 
 | Type | Directional meaning |
 | --- | --- |
@@ -119,7 +119,7 @@ Additional type-specific constraints:
 A `realizes` entity relationship states semantic topology. It does not replace
 a durable binding when a locator or resolution rule is claimed.
 
-## Binding model
+## Binding Model
 
 A binding maps one resolved semantic entity to one Realization record and a
 durable way to locate or resolve the mapped reality. It does not assert that
@@ -135,7 +135,7 @@ When `external_authority` is present, it resolves to an
 `external_authorities` declaration in the same Realization record. At least
 one non-empty `locator` or `resolution_rule` is required.
 
-## Binding kinds
+## Binding Kinds
 
 | Kind | Exact mapping target |
 | --- | --- |
@@ -165,7 +165,7 @@ instance state, or time-varying observations. When the resolved resource,
 permission, account, or state has an authority outside NKF, that authority
 must remain explicit even when deterministic validation cannot infer it.
 
-## Deliberate differences from imported checker evidence
+## Deliberate Differences From Imported Checker Evidence
 
 The proposed semantics do not adopt the checker globally:
 
@@ -188,7 +188,7 @@ separately accepted extension boundary. Unknown required meaning fails closed.
 Changing a value's meaning, removing a value, changing body ownership, or
 weakening a constraint is an NKF format change governed by ADR 0006.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the 27 core entity kinds and body-contract ownership matrix, the ten
 > entity-relationship types and constraints, and the eleven binding kinds and

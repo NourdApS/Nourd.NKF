@@ -1,0 +1,59 @@
+contract: nkf.record
+id: design-nkf-0-1-native-bundle-serialization
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Native Bundle Serialization
+source:
+  path: designs/nkf-0.1-native-bundle-serialization.md
+  digest:
+    algorithm: sha-256
+    value: 0dfaaef987346e8bfa47b88edf242625ac5460f78ed49597e52de01ece96a1d2
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: gap
+    heading_path:
+      - Gap
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: proposed-bundle-shape
+    heading_path:
+      - Proposed Bundle Shape
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: non-record-entries
+    heading_path:
+      - Non-Record Entries
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: bundle-constraints
+    heading_path:
+      - Bundle Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

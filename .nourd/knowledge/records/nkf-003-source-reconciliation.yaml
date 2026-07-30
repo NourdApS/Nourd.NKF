@@ -1,0 +1,109 @@
+contract: nkf.record
+id: nkf-003-source-reconciliation
+type: evidence
+body_contract: nkf.evidence
+title: NKF-003 Source Authority And Compatibility Reconciliation
+source:
+  path: evidence/nkf-003-source-reconciliation.md
+  digest:
+    algorithm: sha-256
+    value: a06f32d1b48de0bba4d96a99f6b775df42cedf075805a6830fe18fd5009b854c
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: evidence
+    role: context
+    responsibilities:
+      - question-claim-or-decision-context
+      - observations-and-findings
+      - interpretation
+      - relevance-to-governed-knowledge
+  - id: source-sets
+    heading_path:
+      - Source Sets
+    occurrence: 1
+    authority: evidence
+    role: source
+    responsibilities:
+      - sources-or-primary-observation-method
+  - id: provenance-verification
+    heading_path:
+      - Provenance Verification
+    occurrence: 1
+    authority: evidence
+    role: source
+  - id: provenance-verification-accepted-snapshot
+    heading_path:
+      - Provenance Verification
+      - Accepted Snapshot
+    occurrence: 1
+    authority: evidence
+    role: context
+  - id: provenance-verification-checker-snapshot
+    heading_path:
+      - Provenance Verification
+      - Checker Snapshot
+    occurrence: 1
+    authority: evidence
+    role: context
+  - id: provenance-verification-external-source-reachability
+    heading_path:
+      - Provenance Verification
+      - External Source Reachability
+    occurrence: 1
+    authority: evidence
+    role: source
+  - id: accepted-baseline
+    heading_path:
+      - Accepted Baseline
+    occurrence: 1
+    authority: evidence
+    role: context
+  - id: exact-specification-delta
+    heading_path:
+      - Exact Specification Delta
+    occurrence: 1
+    authority: evidence
+    role: context
+  - id: checker-work-classification
+    heading_path:
+      - Checker-Work Classification
+    occurrence: 1
+    authority: evidence
+    role: context
+  - id: material-unresolved-boundaries
+    heading_path:
+      - Material Unresolved Boundaries
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+  - id: first-decision-boundary
+    heading_path:
+      - First Decision Boundary
+    occurrence: 1
+    authority: evidence
+    role: boundary
+    responsibilities:
+      - limitations-and-uncertainty
+      - applicability-and-boundaries
+  - id: checker-snapshot-file-digests
+    heading_path:
+      - Checker Snapshot File Digests
+    occurrence: 1
+    authority: evidence
+    role: context
+relationships: []
+provenance:
+  sources:
+    - id: nourd-studio-source-baseline
+      locator: knowledge/evidence/source-snapshots/
+      title: Nourd Studio NKF Source Snapshots

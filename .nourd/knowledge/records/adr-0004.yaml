@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0004
+type: decision
+body_contract: nkf.decision
+title: "ADR 0004: Introduce NKF Record V2"
+source:
+  path: decisions/0004-introduce-nkf-record-v2.md
+  digest:
+    algorithm: sha-256
+    value: 3f420907c575dc1448d394dfabbf1e69d761f15d9d26a8e8069308ad4055ced7
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility-and-migration
+    heading_path:
+      - Compatibility And Migration
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

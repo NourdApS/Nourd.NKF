@@ -8,11 +8,19 @@ export const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
 export const contractRoot = path.join(repositoryRoot, "contracts/nkf/0.1");
 export const checkerArtifact = fileURLToPath(new URL("../src/checker/checker.ts", import.meta.url));
 export const validFixture = path.join(repositoryRoot, "fixtures/valid/minimal");
+export const validTechnologyFixture = path.join(repositoryRoot, "fixtures/valid/technology");
 
 export async function copyValidFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-checker-test-"));
   const project = path.join(parent, "project");
   await cp(validFixture, project, { recursive: true });
+  return project;
+}
+
+export async function copyValidTechnologyFixture(): Promise<string> {
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-technology-test-"));
+  const project = path.join(parent, "project");
+  await cp(validTechnologyFixture, project, { recursive: true });
   return project;
 }
 

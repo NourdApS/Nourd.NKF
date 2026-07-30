@@ -1,0 +1,68 @@
+contract: nkf.record
+id: adr-0052
+type: decision
+body_contract: nkf.decision
+title: "ADR 0052: Confirm Dynamic Root And Self-Hosting Realization"
+source:
+  path: decisions/0052-confirm-dynamic-root-and-self-hosting-realization.md
+  digest:
+    algorithm: sha-256
+    value: 8000ee0909c3b71abf45d1bbb4e803a7b9251a140accf973deb6f771021db226
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: confirmed-derived-schemas
+    heading_path:
+      - Confirmed Derived Schemas
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: confirmed-checker-behavior
+    heading_path:
+      - Confirmed Checker Behavior
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: confirmed-fixtures-and-gates
+    heading_path:
+      - Confirmed Fixtures And Gates
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: confirmed-self-hosting-realization
+    heading_path:
+      - Confirmed Self-Hosting Realization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: separation-of-claims
+    heading_path:
+      - Separation Of Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

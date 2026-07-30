@@ -1,4 +1,4 @@
-# ADR 0007: Establish Markdown and YAML contract authority
+# ADR 0007: Establish Markdown And YAML Contract Authority
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -42,7 +42,7 @@ YAML may make accepted deterministic constraints explicit. It must not add,
 strengthen, weaken, reinterpret, or accept Product meaning absent from the
 bound Markdown and governing Decisions.
 
-## Conflict handling
+## Conflict Handling
 
 Markdown and YAML are a governed pair, not independent authorities.
 
@@ -57,7 +57,7 @@ If they conflict:
 
 A passing generated schema or checker test cannot resolve the conflict.
 
-## Derived artifacts
+## Derived Artifacts
 
 JSON Schemas, checker dispatch tables, types, fixtures, documentation
 projections, and packaged distributions are derived from or verified against
@@ -67,7 +67,7 @@ Every released derived artifact must identify the exact YAML contract-set
 version and digest and the bound Markdown specification revision and digest.
 Generated artifacts cannot become a second writable contract authority.
 
-## Change process
+## Change Process
 
 A change to normative meaning begins in accepted Markdown or a governing
 Decision and is then realized in YAML.
@@ -79,7 +79,7 @@ governed normative confirmation before implementation.
 
 All changes follow the pre-stable evolution process in ADR 0006.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept:
 

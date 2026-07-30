@@ -1,4 +1,4 @@
-# NKF 0.1 project path and knowledge coverage
+# NKF 0.1 Project Path And Knowledge Coverage
 
 - **Status:** Accepted proposal; recorded separately by ADR 0018
 - **Task:** `NKF-003`
@@ -11,12 +11,12 @@
   distribution-root, fixed `knowledge/`, variable records-root, no-symlink,
   and cross-platform filename proposals
 
-## Accepted boundary
+## Accepted Boundary
 
 Native NKF 0.1 fixes `.nourd` at the project root while allowing the canonical
 knowledge directory to be configured inside that project.
 
-## Project layout
+## Project Layout
 
 ```text
 <project-root>/
@@ -40,7 +40,7 @@ The project root is the directory that directly contains `.nourd/`.
 The project root is the containment boundary. It need not be a Git repository,
 and its absolute machine path is not identity or authority.
 
-## Knowledge entry point
+## Knowledge Entry Point
 
 The bundle manifest contains:
 
@@ -62,7 +62,7 @@ knowledge_root: knowledge
 Because the declaration location is fixed by the format,
 `records_root` is removed from the native bundle manifest.
 
-## Paths inside the knowledge root
+## Paths Inside The Knowledge Root
 
 Record `source.path` and each `non_records[].path` are relative to
 `knowledge_root`, not the project root or manifest directory.
@@ -101,7 +101,7 @@ Path spelling and case are exact. NKF core adds no Windows-reserved-name or
 Unicode case-folding conformance rule. Packaging tools may warn about paths
 that are not portable to a target platform.
 
-## One Markdown file, one representation
+## One Markdown File, One Representation
 
 Every `.md` file recursively contained in `knowledge_root` has exactly one
 representation in `.nourd`:
@@ -117,7 +117,7 @@ declaration, listed more than once, or both governed and non-governing.
 Non-Markdown assets under `knowledge_root`, such as images, do not need to be
 enumerated by NKF 0.1 unless another accepted contract governs them.
 
-## One declaration, many sections
+## One Declaration, Many Sections
 
 One governed Markdown file has one record identity and one declaration. That
 declaration maps every semantic level-two and level-three heading through its
@@ -160,7 +160,7 @@ target must also remain inside the resolved `knowledge_root`.
 The final target must have the required file or directory kind, and duplicate
 physical-file checks still apply.
 
-## Locators remain separate
+## Locators Remain Separate
 
 Provenance, external-authority, Realization binding, and extension-contract
 locators remain locators rather than knowledge-relative paths or identity.
@@ -188,7 +188,7 @@ The currently accepted Markdown and YAML artifacts remain immutable snapshots.
 Realizing this boundary requires exact replacement revisions, adjusted derived
 artifacts, and deliberate consumer migration.
 
-## Not accepted by this boundary
+## Not Accepted By This Boundary
 
 This boundary does not:
 

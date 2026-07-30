@@ -44,30 +44,71 @@ function hasCycle(nodes: string[], edges: Array<[string, string]>): boolean {
 export function validateGraph(
   bundle: Record<string, any>,
   records: RecordUnit[],
+  executable: Record<string, any>,
   emitter: RuleEmitter,
 ): void {
   const byId = new Map(records.map((unit) => [String(unit.declaration.id), unit]));
-  const productRecords = records.filter((unit) => unit.declaration.type === "product");
-  if (productRecords.length === 0) emitter.emit("bundle.product.missing", "The bundle has no Product record.");
-  if (productRecords.length > 1) emitter.emit("bundle.product.multiple", "The bundle has more than one Product record.");
-  const root = byId.get(String(bundle.product_record));
-  if (
-    root === undefined ||
-    root.declaration.type !== "product" ||
-    root.declaration.body_contract !== "nkf.product"
-  ) {
-    emitter.emit("bundle.product.invalid", "The declared Product root does not resolve to the unique Product record.");
+  const profileIdentity = typeof bundle.root?.profile === "string" ? bundle.root.profile : null;
+  const profiles = executable.root_profiles?.selectable ?? {};
+  const profile = profileIdentity === null ? undefined : profiles[profileIdentity];
+  if (profileIdentity === "nkf.common") {
+    emitter.emit("profile.common.not-selectable", "The Common Specification applies automatically and cannot be selected as a Root Profile.", {
+      artifact: ".nourd/knowledge/bundle.yaml",
+      instance_pointer: "/root/profile",
+    });
+  } else if (profile === undefined) {
+    emitter.emit("profile.unsupported", "The selected Root Profile is unsupported.", {
+      artifact: ".nourd/knowledge/bundle.yaml",
+      instance_pointer: "/root/profile",
+    });
+  }
+
+  if (profile !== undefined) {
+    const rootRecords = records.filter((unit) => unit.declaration.type === profile.root?.type);
+    if (rootRecords.length === 0) {
+      emitter.emit("bundle.root.missing", "The bundle has no record of the selected profile's root type.");
+    }
+    if (rootRecords.length > 1) {
+      emitter.emit("bundle.root.multiple", "The bundle has more than one record of the selected profile's root type.");
+    }
+    const root = byId.get(String(bundle.root?.record));
+    if (
+      root === undefined ||
+      root.declaration.type !== profile.root?.type ||
+      root.declaration.body_contract !== profile.root?.body_contract ||
+      rootRecords.length !== 1
+    ) {
+      emitter.emit("bundle.root.invalid", "The declared root does not resolve to the unique record required by the selected profile.");
+    }
+    const allowedBodies = new Set<string>(values<string>(profile.allowed_body_contracts));
+    for (const unit of records) {
+      if (!allowedBodies.has(String(unit.declaration.body_contract))) {
+        emitter.emit("profile.record.unsupported", "The record body is not permitted by the selected Root Profile.", {
+          artifact: unit.artifact,
+          record_id: String(unit.declaration.id),
+          instance_pointer: "/body_contract",
+        });
+      }
+    }
+    for (const body of values<string>(profile.required_body_contracts)) {
+      if (!records.some((unit) => unit.declaration.body_contract === body)) {
+        emitter.emit("profile.specification.missing", "The selected Technology Profile requires at least one Specification record.", {
+          artifact: ".nourd/knowledge/bundle.yaml",
+          instance_pointer: "/root/profile",
+        });
+      }
+    }
   }
 
   const partOf: Array<[string, string]> = [];
   for (const unit of records) {
     const record = unit.declaration;
     const id = String(record.id);
-    if (record.scope?.product !== bundle.product_record) {
-      emitter.emit("scope.product.mismatch", "Record scope does not match the bundle Product root.", {
+    if (record.scope?.root !== bundle.root?.record) {
+      emitter.emit("scope.root.mismatch", "Record scope does not match the bundle root.", {
         artifact: unit.artifact,
         record_id: id,
-        instance_pointer: "/scope/product",
+        instance_pointer: "/scope/root",
       });
     }
     const relationships = values<Record<string, any>>(record.relationships);
@@ -104,57 +145,68 @@ export function validateGraph(
       if (relationship.type === "part-of") partOf.push([id, String(relationship.target)]);
     });
 
-    const parents = partOf.filter(([source]) => source === id).map(([, target]) => target);
-    if (record.type === "product" && parents.length > 0) {
-      emitter.emit("hierarchy.product-parent.invalid", "The Product root cannot have a part-of parent.", {
-        artifact: unit.artifact,
-        record_id: id,
-      });
-    }
-    if (
-      record.type === "domain" &&
-      (parents.length !== 1 || byId.get(parents[0] ?? "")?.declaration.type !== "product")
-    ) {
-      emitter.emit("hierarchy.domain-parent.invalid", "A Domain must have one Product parent.", {
-        artifact: unit.artifact,
-        record_id: id,
-      });
-    }
-    if (
-      record.type === "capability" &&
-      (parents.length !== 1 || byId.get(parents[0] ?? "")?.declaration.type !== "domain")
-    ) {
-      emitter.emit("hierarchy.capability-parent.invalid", "A Capability must have exactly one Domain parent.", {
-        artifact: unit.artifact,
-        record_id: id,
-      });
-    }
-    if (!["product", "domain", "capability"].includes(String(record.type)) && parents.length > 0) {
-      emitter.emit(
-        "hierarchy.participation.unsupported",
-        "This core body contract does not define part-of hierarchy participation.",
-        { artifact: unit.artifact, record_id: id },
-      );
-    }
   }
 
   const ids = records.map((unit) => String(unit.declaration.id));
   if (hasCycle(ids, partOf)) emitter.emit("hierarchy.part-of.cycle", "The record part-of graph contains a cycle.");
-  for (const unit of records) {
-    if (!["domain", "capability"].includes(String(unit.declaration.type))) continue;
-    const id = String(unit.declaration.id);
-    let cursor = id;
-    const visited = new Set<string>();
-    while (cursor !== bundle.product_record && !visited.has(cursor)) {
-      visited.add(cursor);
-      const parent = partOf.find(([source]) => source === cursor)?.[1];
-      if (parent === undefined) break;
-      cursor = parent;
+
+  if (profileIdentity === "nkf.profile.product") {
+    for (const unit of records) {
+      const record = unit.declaration;
+      const id = String(record.id);
+      const parents = partOf.filter(([source]) => source === id).map(([, target]) => target);
+      if (record.type === "product" && parents.length > 0) {
+        emitter.emit("hierarchy.product-parent.invalid", "The Product root cannot have a part-of parent.", {
+          artifact: unit.artifact,
+          record_id: id,
+        });
+      } else if (
+        record.type === "domain" &&
+        (parents.length !== 1 || byId.get(parents[0] ?? "")?.declaration.type !== "product")
+      ) {
+        emitter.emit("hierarchy.domain-parent.invalid", "A Domain must have one Product parent.", {
+          artifact: unit.artifact,
+          record_id: id,
+        });
+      } else if (
+        record.type === "capability" &&
+        (parents.length !== 1 || byId.get(parents[0] ?? "")?.declaration.type !== "domain")
+      ) {
+        emitter.emit("hierarchy.capability-parent.invalid", "A Capability must have exactly one Domain parent.", {
+          artifact: unit.artifact,
+          record_id: id,
+        });
+      } else if (!["product", "domain", "capability"].includes(String(record.type)) && parents.length > 0) {
+        emitter.emit("hierarchy.participation.unsupported", "This Product body does not participate in record hierarchy.", {
+          artifact: unit.artifact,
+          record_id: id,
+        });
+      }
     }
-    if (cursor !== bundle.product_record) {
-      emitter.emit("hierarchy.product-unreachable", "The record does not reach the Product root.", {
-        artifact: unit.artifact,
-        record_id: id,
+    for (const unit of records) {
+      if (!["domain", "capability"].includes(String(unit.declaration.type))) continue;
+      const id = String(unit.declaration.id);
+      let cursor = id;
+      const visited = new Set<string>();
+      while (cursor !== bundle.root?.record && !visited.has(cursor)) {
+        visited.add(cursor);
+        const parent = partOf.find(([source]) => source === cursor)?.[1];
+        if (parent === undefined) break;
+        cursor = parent;
+      }
+      if (cursor !== bundle.root?.record) {
+        emitter.emit("hierarchy.root-unreachable", "The record does not reach the selected root.", {
+          artifact: unit.artifact,
+          record_id: id,
+        });
+      }
+    }
+  } else if (profileIdentity === "nkf.profile.technology") {
+    for (const [source] of partOf) {
+      const unit = byId.get(source);
+      emitter.emit("hierarchy.participation.unsupported", "Technology Profile records cannot declare record-level part-of relationships.", {
+        ...(unit === undefined ? {} : { artifact: unit.artifact }),
+        record_id: source,
       });
     }
   }
@@ -177,12 +229,14 @@ function resolveEntity(
 export function validateRecordContracts(
   records: RecordUnit[],
   inScope: Set<string>,
+  bundle: Record<string, any>,
   executable: Record<string, any>,
   emitter: RuleEmitter,
 ): void {
   const byId = new Map(records.map((unit) => [String(unit.declaration.id), unit]));
   const relationshipTypes = executable.vocabularies?.entity_relationship_types ?? {};
-  const bindingKinds = executable.vocabularies?.binding_kinds ?? {};
+  const profile = executable.root_profiles?.selectable?.[bundle.root?.profile];
+  const bindingKinds = new Set<string>(values<string>(profile?.binding_kinds));
   const partOfEdges: Array<[string, string]> = [];
   for (const unit of records) {
     const record = unit.declaration;
@@ -272,8 +326,8 @@ export function validateRecordContracts(
         }
       }
     }
-    if (record.type === "product" && record.governance?.lifecycle !== "living") {
-      emitter.emit("governance.product.lifecycle", "The Product root must be living.", {
+    if (record.id === bundle.root?.record && record.governance?.lifecycle !== "living") {
+      emitter.emit("governance.root.lifecycle", "The selected root record must be living.", {
         artifact: unit.artifact,
         record_id: id,
         instance_pointer: "/governance/lifecycle",
@@ -285,6 +339,17 @@ export function validateRecordContracts(
       record.governance?.lifecycle !== "immutable"
     ) {
       emitter.emit("governance.decision.lifecycle", "An accepted Decision must be immutable.", {
+        artifact: unit.artifact,
+        record_id: id,
+        instance_pointer: "/governance/lifecycle",
+      });
+    }
+    if (
+      record.type === "specification" &&
+      record.governance?.status === "accepted" &&
+      record.governance?.lifecycle !== "immutable"
+    ) {
+      emitter.emit("governance.specification.lifecycle", "An accepted Specification must be immutable.", {
         artifact: unit.artifact,
         record_id: id,
         instance_pointer: "/governance/lifecycle",
@@ -418,7 +483,7 @@ export function validateRecordContracts(
     }
     bindings.forEach((binding, index) => {
       const pointer = `/bindings/${index}`;
-      if (!(binding.kind in bindingKinds)) emitter.emit("binding.kind.unsupported", "The binding kind is unsupported.", { artifact: unit.artifact, record_id: id, instance_pointer: `${pointer}/kind` });
+      if (!bindingKinds.has(String(binding.kind))) emitter.emit("binding.kind.unsupported", "The binding kind is unsupported by the selected Root Profile.", { artifact: unit.artifact, record_id: id, instance_pointer: `${pointer}/kind` });
       if (resolveEntity(byId, binding.entity) === null) emitter.emit("binding.entity.unresolved", "The bound semantic entity does not resolve.", { artifact: unit.artifact, record_id: id, instance_pointer: `${pointer}/entity` });
       const realization = byId.get(String(binding.realization));
       if (realization === undefined) emitter.emit("binding.realization.unresolved", "The realization record does not resolve.", { artifact: unit.artifact, record_id: id, instance_pointer: `${pointer}/realization` });
@@ -435,6 +500,36 @@ export function validateRecordContracts(
         emitter.emit("binding.provider-authority.missing", "A provider binding requires an external authority.", { artifact: unit.artifact, record_id: id, instance_pointer: `${pointer}/external_authority` });
       }
     });
+  }
+  for (const [index, artifact] of values<Record<string, any>>(bundle.governed_artifacts).entries()) {
+    const recordId = String(artifact.record);
+    const record = byId.get(recordId);
+    if (record === undefined) {
+      if (inScope.size === records.length) {
+        emitter.emit("artifact.record.unresolved", "The governed artifact Realization record does not resolve.", {
+          artifact: ".nourd/knowledge/bundle.yaml",
+          record_id: recordId,
+          instance_pointer: `/governed_artifacts/${index}/record`,
+        });
+      }
+      continue;
+    }
+    if (!inScope.has(recordId)) continue;
+    if (record.declaration.body_contract !== "nkf.realization") {
+      emitter.emit("artifact.record.invalid", "A governed artifact must be bound to an NKF Realization record.", {
+        artifact: ".nourd/knowledge/bundle.yaml",
+        record_id: recordId,
+        instance_pointer: `/governed_artifacts/${index}/record`,
+      });
+    }
+    const sectionIds = new Set(values<Record<string, any>>(record.declaration.sections).map((section) => section.id));
+    if (!sectionIds.has(artifact.source_section)) {
+      emitter.emit("artifact.section.unresolved", "The governed artifact source section does not resolve in its Realization.", {
+        artifact: ".nourd/knowledge/bundle.yaml",
+        record_id: recordId,
+        instance_pointer: `/governed_artifacts/${index}/source_section`,
+      });
+    }
   }
   if (hasCycle([...new Set(partOfEdges.flat())], partOfEdges)) {
     emitter.emit(

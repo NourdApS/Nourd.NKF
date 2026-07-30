@@ -7,12 +7,12 @@
     "markdown_path": "knowledge/specifications/nkf-0.1.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "67beed2a380e719573175d3dfd70b05c59cbe51274c9975f863a58f7083ddba4"
+      "value": "8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50"
     },
     "executable_path": "contracts/nkf/0.1/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b"
+      "value": "fd60ad052ff5b58a20b285fec03aede560cd84d18221f7b2d88b7db7fdf67dbd"
     }
   },
   "type": "object",
@@ -21,7 +21,7 @@
     "nkf_version",
     "contract",
     "id",
-    "product_record",
+    "root",
     "knowledge_root",
     "non_records"
   ],
@@ -35,8 +35,8 @@
     "id": {
       "$ref": "#/$defs/identifier"
     },
-    "product_record": {
-      "$ref": "#/$defs/identifier"
+    "root": {
+      "$ref": "#/$defs/root"
     },
     "knowledge_root": {
       "type": "string",
@@ -56,6 +56,13 @@
         "type": "string",
         "minLength": 1,
         "pattern": "^[^\\s\\u0000-\\u001f\\u007f]+(?: [^\\s\\u0000-\\u001f\\u007f]+)*$"
+      }
+    },
+    "governed_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/governedArtifact"
       }
     },
     "extension_contracts": {
@@ -92,6 +99,63 @@
         "value": {
           "type": "string",
           "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record",
+        "profile"
+      ],
+      "properties": {
+        "record": {
+          "$ref": "#/$defs/identifier"
+        },
+        "profile": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "governedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "path",
+        "digest",
+        "record",
+        "source_section"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "executable-contract",
+            "schema",
+            "checker-source",
+            "test",
+            "fixture",
+            "build-tool",
+            "project-configuration"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "record": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_section": {
+          "$ref": "#/$defs/identifier"
         }
       }
     },

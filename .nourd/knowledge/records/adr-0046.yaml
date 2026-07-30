@@ -1,0 +1,51 @@
+contract: nkf.record
+id: adr-0046
+type: decision
+body_contract: nkf.decision
+title: "ADR 0046: Confirm Release Contract Json Schema Bindings"
+source:
+  path: decisions/0046-confirm-release-contract-json-schema-bindings.md
+  digest:
+    algorithm: sha-256
+    value: 873329cf9b662af5b4dbc4178d47a3bb24c8bfcee310163b9f332a128dea7963
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

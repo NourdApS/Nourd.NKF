@@ -1,0 +1,71 @@
+contract: nkf.record
+id: design-nkf-0-1-authoritative-artifacts
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Authoritative Artifacts
+source:
+  path: designs/nkf-0.1-authoritative-artifacts.md
+  digest:
+    algorithm: sha-256
+    value: fe3697408faf66bb620fce059911a541fb4cd48b4d4f6d02151abf980146cd32
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: proposed-identities
+    heading_path:
+      - Proposed Identities
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: initial-supported-contracts
+    heading_path:
+      - Initial Supported Contracts
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: creation-sequence
+    heading_path:
+      - Creation Sequence
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-outcome
+    heading_path:
+      - Decision Outcome
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

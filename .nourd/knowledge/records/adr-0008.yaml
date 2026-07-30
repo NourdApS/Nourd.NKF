@@ -1,0 +1,58 @@
+contract: nkf.record
+id: adr-0008
+type: decision
+body_contract: nkf.decision
+title: "ADR 0008: Accept NKF 0.1 Artifact Identities"
+source:
+  path: decisions/0008-accept-nkf-0-1-artifact-identities.md
+  digest:
+    algorithm: sha-256
+    value: 094f1bafc903cc5e0865cc3828fbb8d291f78697d8971fa94a1b81641e2400f3
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: initial-contract-representation
+    heading_path:
+      - Initial Contract Representation
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

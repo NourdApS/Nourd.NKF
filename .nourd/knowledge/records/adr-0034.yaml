@@ -1,0 +1,79 @@
+contract: nkf.record
+id: adr-0034
+type: decision
+body_contract: nkf.decision
+title: "ADR 0034: Accept Checker-Derived Mechanical Completions"
+source:
+  path: decisions/0034-accept-checker-derived-mechanical-completions.md
+  digest:
+    algorithm: sha-256
+    value: ba6d02c3ba33facf6b33ebbc0d6f1a5c2ce9bdb1a82c4a88d77df3341d29f15b
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-invalid-markdown-utf-8
+    heading_path:
+      - Decision
+      - Invalid Markdown UTF-8
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-unresolved-contract-request-target
+    heading_path:
+      - Decision
+      - Unresolved Contract Request Target
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+  - id: decision-minimal-example
+    heading_path:
+      - Decision
+      - Minimal Example
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: realization
+    heading_path:
+      - Realization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

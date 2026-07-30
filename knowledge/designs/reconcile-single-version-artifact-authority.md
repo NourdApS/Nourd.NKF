@@ -1,4 +1,4 @@
-# Reconcile single-version artifact authority
+# Reconcile Single-Version Artifact Authority
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -13,7 +13,7 @@ currently `0.1`. ADR 0007 still requires independent versions for the YAML
 contract set and each supported bundle, record, body, and extension contract.
 Both cannot govern current NKF simultaneously.
 
-## Proposed reconciliation
+## Proposed Reconciliation
 
 Preserve ADR 0007's accepted authority model:
 
@@ -35,7 +35,7 @@ Supersede only ADR 0007's independent version-coordinate requirements:
 An exact digest identifies an artifact revision. It is not another semantic
 version namespace.
 
-## Compatibility effect
+## Compatibility Effect
 
 This correction does not change NKF 0.1 Product meaning, responsibility
 vocabularies, declaration structure, or conformance intent. It removes an
@@ -45,7 +45,7 @@ ADR 0009.
 Historical imported and superseded `/v1` and `/v2` identifiers remain evidence
 only. They are not supported current NKF contracts.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Keep `nkf_version` as NKF's only version coordinate. Preserve ADR 0007's
 > complete Markdown/YAML authority pair, but supersede its requirements for
@@ -58,7 +58,7 @@ Acceptance would resolve only this authority/version contradiction. It would
 not accept corrected Markdown or YAML bytes, schemas, checker behavior,
 fixtures, distribution, a release, or consumer conformance.
 
-## Decision outcome
+## Decision Outcome
 
 The Human Product Owner accepted the exact reconciliation on 29 July 2026. The
 immutable result is

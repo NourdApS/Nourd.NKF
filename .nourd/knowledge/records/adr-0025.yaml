@@ -1,0 +1,123 @@
+contract: nkf.record
+id: adr-0025
+type: decision
+body_contract: nkf.decision
+title: "ADR 0025: Accept NKF 0.1 Validation Result Contract"
+source:
+  path: decisions/0025-accept-nkf-0-1-validation-result-contract.md
+  digest:
+    algorithm: sha-256
+    value: 1f941dbec242cc130337021233b1d3ebd89d60f9d7623afa58d4c73647650261
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-identity-encoding-and-storage
+    heading_path:
+      - Decision
+      - Identity, Encoding, And Storage
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-closed-top-level-object
+    heading_path:
+      - Decision
+      - Closed Top-Level Object
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-execution-and-checker-identity
+    heading_path:
+      - Decision
+      - Execution And Checker Identity
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-request-semantics
+    heading_path:
+      - Decision
+      - Request Semantics
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-contract-artifact-bindings
+    heading_path:
+      - Decision
+      - Contract Artifact Bindings
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-governed-validation-inputs-and-snapshot
+    heading_path:
+      - Decision
+      - Governed Validation Inputs And Snapshot
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-phases-and-conformance
+    heading_path:
+      - Decision
+      - Phases And Conformance
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-record-results-and-governing-use
+    heading_path:
+      - Decision
+      - Record Results And Governing Use
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-diagnostics
+    heading_path:
+      - Decision
+      - Diagnostics
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-currentness
+    heading_path:
+      - Decision
+      - Currentness
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: authority-and-realization-boundary
+    heading_path:
+      - Authority And Realization Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: compatibility-and-non-claims
+    heading_path:
+      - Compatibility And Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+relationships: []

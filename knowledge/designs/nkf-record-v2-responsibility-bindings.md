@@ -1,4 +1,4 @@
-# NKF record v2 responsibility bindings
+# NKF Record V2 Responsibility Bindings
 
 - **Status:** Accepted by ADR 0005
 - **Task:** `NKF-003`
@@ -6,13 +6,13 @@
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
-## Decision sought
+## Decision Sought
 
 Whether `nkf.record/v2` should represent responsibility bindings as a
 section-local YAML list named `responsibilities` and enforce complete
 body-contract coverage across the record.
 
-## Proposed representation
+## Proposed Representation
 
 Each entry in `sections` may contain `responsibilities`:
 
@@ -40,7 +40,7 @@ The field is section-local because a binding asserts where the canonical
 Markdown addresses a responsibility. A top-level list would separate the
 assertion from its exact source section.
 
-## Field rules
+## Field Rules
 
 For each section:
 
@@ -63,7 +63,7 @@ Across the record:
    deterministic review; and
 5. an unsupported identifier or body contract fails closed.
 
-## Authority boundary
+## Authority Boundary
 
 A binding is a declaration assertion that an exact Markdown section addresses
 a responsibility. It does not add missing Markdown meaning.
@@ -78,7 +78,7 @@ It cannot prove that the prose is semantically sufficient, true, safe, or
 accepted. Section `authority`, record governance, and human acceptance remain
 separate.
 
-## Reconciliation and migration
+## Reconciliation And Migration
 
 Reconciliation may reorder an already valid list deterministically. It must
 not add, remove, or change responsibility identifiers.
@@ -100,7 +100,7 @@ This proposal does not decide:
 - package layout; or
 - consumer migration.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > In `nkf.record/v2`, a section may declare a non-empty, duplicate-free
 > `responsibilities` list containing only identifiers supported by its exact
@@ -113,7 +113,7 @@ This proposal does not decide:
 Acceptance would approve these logical YAML semantics only. It would not
 approve executable schemas, checker code, bundle versioning, or migration.
 
-## Decision outcome
+## Decision Outcome
 
 The Human Product Owner accepted the exact logical YAML semantics on 29 July
 2026. The immutable result is

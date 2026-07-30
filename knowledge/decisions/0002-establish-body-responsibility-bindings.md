@@ -1,4 +1,4 @@
-# ADR 0002: Establish body-responsibility bindings
+# ADR 0002: Establish Body-Responsibility Bindings
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -47,7 +47,7 @@ classifies where a declaration asserts that the Markdown addresses a
 contract responsibility; it does not introduce missing meaning or become a
 second semantic authority.
 
-## Deterministic conformance boundary
+## Deterministic Conformance Boundary
 
 For a supported body contract, deterministic conformance may verify that:
 
@@ -96,7 +96,7 @@ A governed specification revision and consumer migration are required.
 - The exact Product responsibility vocabularies remain unaccepted until
   confirmed separately.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept:
 

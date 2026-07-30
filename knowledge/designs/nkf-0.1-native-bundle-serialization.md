@@ -1,4 +1,4 @@
-# NKF 0.1 native bundle serialization
+# NKF 0.1 Native Bundle Serialization
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -13,7 +13,7 @@ coverage, and declaration directory, but not the exact bundle object or
 `non_records` entry shape. The executable companion and schemas cannot choose
 those details by implication.
 
-## Proposed bundle shape
+## Proposed Bundle Shape
 
 The native manifest at `.nourd/knowledge/bundle.yaml` has these required
 fields:
@@ -36,7 +36,7 @@ Unknown top-level fields fail closed. There is no `record_contract`,
 `markdown_root`, `records_root`, `required_extensions`, or free-form
 top-level extension field.
 
-## Non-record entries
+## Non-Record Entries
 
 `non_records` is required and may be empty. Each entry has:
 
@@ -67,7 +67,7 @@ When a project chooses to list one, the same entry shape, existence,
 containment, uniqueness, and classification rules apply. Another accepted
 contract may govern an asset when required.
 
-## Bundle constraints
+## Bundle Constraints
 
 - `id` and `product_record` are non-empty identifiers.
 - `product_record` resolves to the bundle's one `product` record.
@@ -80,7 +80,7 @@ contract may govern an asset when required.
 This proposal does not introduce a new identifier grammar; accepted identity
 semantics remain unchanged.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the closed native bundle shape, required fields, optional ADR 0016
 > extension fields, exact `non_records` object, four non-record kinds, and

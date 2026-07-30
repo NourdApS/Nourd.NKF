@@ -1,0 +1,64 @@
+contract: nkf.record
+id: adr-0006
+type: decision
+body_contract: nkf.decision
+title: "ADR 0006: Establish Governed Pre-Stable Evolution"
+source:
+  path: decisions/0006-establish-governed-pre-stable-evolution.md
+  digest:
+    algorithm: sha-256
+    value: dcd95e36b0140fd36347db0832edce63b9f8a61a8b3c391139ac61c1e331d1f6
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: classification-controls
+    heading_path:
+      - Classification Controls
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: versioning-and-compatibility
+    heading_path:
+      - Versioning And Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: authority
+    heading_path:
+      - Authority
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+relationships: []

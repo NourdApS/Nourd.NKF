@@ -2,9 +2,9 @@
 
 This directory owns accepted normative NKF format and profile specifications.
 
-[`nkf-0.1.md`](nkf-0.1.md) is the accepted canonical NKF 0.1 Product
-specification. ADR 0039 accepts its current exact revision and digest-bound
-strict-YAML executable companion under delegated technical authority. ADR
-0040 confirms the current exact source-bound JSON Schemas. Earlier accepted
-authority pairs and schema realizations, together with the Studio source
-baseline, remain immutable historical provenance.
+[`nkf-0.1.md`](nkf-0.1.md) is the accepted canonical NKF 0.1 specification.
+ADR 0050 accepts its automatic non-selectable Common Specification and its
+Product and Technology Root Profiles, together with the exact digest-bound
+strict-YAML executable companion. Earlier Product-only authority pairs and
+schema realizations, together with the Studio source baseline, remain
+immutable historical provenance.

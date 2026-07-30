@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0048
+type: decision
+body_contract: nkf.decision
+title: "ADR 0048: Confirm Initial Release Package Realization"
+source:
+  path: decisions/0048-confirm-initial-release-package-realization.md
+  digest:
+    algorithm: sha-256
+    value: 12221491a16991d0b104f9bf066b621e33c93e622f65e1d49d15b97fdabc79c0
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: confirmed-realization
+    heading_path:
+      - Confirmed Realization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: audit-evidence
+    heading_path:
+      - Audit Evidence
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

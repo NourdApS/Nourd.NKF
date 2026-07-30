@@ -1,4 +1,4 @@
-# ADR 0019: Accept NKF 0.1 enforcement and diagnostics
+# ADR 0019: Accept NKF 0.1 Enforcement And Diagnostics
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -51,7 +51,7 @@ The accepted boundary includes:
 - governing-use readiness separate from deterministic conformance; and
 - explicit matters that deterministic validation cannot establish.
 
-## Authority and non-claims
+## Authority And Non-Claims
 
 This delegated technical acceptance establishes NKF enforcement semantics. It
 does not establish Product acceptance, truth, semantic adequacy, confirmed

@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0022
+type: decision
+body_contract: nkf.decision
+title: "ADR 0022: Accept Coherent NKF 0.1 Authority Pair"
+source:
+  path: decisions/0022-accept-coherent-nkf-0-1-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: 59aec0f29bfd050df96a84ed95e67e69e541deb2e5703ee65beb09670f79f399
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: supersession-and-compatibility
+    heading_path:
+      - Supersession And Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: authority-provenance-and-non-claims
+    heading_path:
+      - Authority Provenance And Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

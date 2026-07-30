@@ -1,0 +1,39 @@
+contract: nkf.record
+id: adr-0011
+type: decision
+body_contract: nkf.decision
+title: "ADR 0011: Accept NKF 0.1 YAML Companion"
+source:
+  path: decisions/0011-accept-nkf-0-1-yaml-companion.md
+  digest:
+    algorithm: sha-256
+    value: 3597232856e1324d26b50b28e6b335a76ff21357af0f54996b13d453a3acefbc
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+    responsibilities:
+      - consequences-and-trade-offs
+relationships: []

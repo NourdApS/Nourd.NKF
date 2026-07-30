@@ -130,13 +130,25 @@ an immutable Decision or normative specification.
   are the exact current source-bound schemas confirmed and promoted by ADR
   0040.
 
+## Dynamic Root Resolution
+
+- [`nkf-0.1-common-and-root-profile-proposal.md`](nkf-0.1-common-and-root-profile-proposal.md),
+  [`nkf-0.1-technology-root-profile-specification-proposal.md`](nkf-0.1-technology-root-profile-specification-proposal.md),
+  and
+  [`nkf-0.1-product-technology-common-comparison.md`](nkf-0.1-product-technology-common-comparison.md)
+  contain the evidence and comparison accepted in exact normative form
+  through ADR 0050. They remain proposal provenance rather than competing
+  authority.
+
 ## Active Proposals
 
 All five checker-derived authority findings are accepted through ADRs 0034,
 0035, and 0038. ADRs 0039 and 0040 reflect their exact semantics in the
 current canonical authority pair and source-bound schemas. Checker updates
-and the complete 115-rule fixture-reference matrix are confirmed as the exact
-development Realization through ADR 0041.
+and their historical 115-rule fixture-reference matrix are confirmed as the
+prior development Realization through ADR 0041. ADR 0050 supersedes the
+Product-only authority boundary; its current realization is confirmed
+separately.
 
 Checker distribution and release realization have not yet been proposed or
 accepted as an exact contract or implementation. ADR 0042 accepts one
@@ -165,6 +177,29 @@ Release has been created or published.
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by
 NKF-005.
+
+[`nkf-0.1-common-and-root-profile-proposal.md`](nkf-0.1-common-and-root-profile-proposal.md)
+develops the architecture accepted by ADR 0049. It proposes the
+Common-versus-profile responsibility boundary, one concrete profile selection,
+Technology-first comparison method, profile validation, artifact choices, and
+compatibility. Its exact contracts remain unaccepted proposal rather than
+canonical authority or confirmed realization.
+
+[`nkf-0.1-technology-root-profile-specification-proposal.md`](nkf-0.1-technology-root-profile-specification-proposal.md)
+derives the first Technology candidate independently from NKF's own
+repository, authority, specification, design, realization, evidence,
+distribution, compatibility, security, and lifecycle needs. It proposes the
+Technology root, Specification body, minimal record set, lack of a mandatory
+record hierarchy, governed technical artifacts, validation, and an NKF
+self-hosting mapping without accepting them.
+
+[`nkf-0.1-product-technology-common-comparison.md`](nkf-0.1-product-technology-common-comparison.md)
+compares the accepted Product specification with that independent Technology
+candidate. It classifies proposed Common mechanisms and bodies, Product-only
+meaning, Technology-only meaning, and unresolved vocabularies without changing
+canonical authority.
+
+Broader root-model investigation remains deferred through NKF-006.
 
 ## Superseded proposals
 

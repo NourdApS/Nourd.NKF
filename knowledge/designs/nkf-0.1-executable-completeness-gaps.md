@@ -1,4 +1,4 @@
-# NKF 0.1 executable completeness gaps
+# NKF 0.1 Executable Completeness Gaps
 
 - **Status:** Living audit; all nine identified boundaries accepted
 - **Task:** `NKF-003`
@@ -11,7 +11,7 @@
 Identify accepted Markdown requirements that cannot yet be represented as a
 complete executable YAML contract without inventing normative details.
 
-## Confirmed deterministic coverage
+## Confirmed Deterministic Coverage
 
 The accepted Markdown already determines:
 
@@ -30,9 +30,9 @@ The accepted Markdown already determines:
 
 These should be represented in the replacement YAML.
 
-## Missing executable definitions
+## Missing Executable Definitions
 
-### 1. Exact record serialization
+### 1. Exact Record Serialization
 
 The Markdown gives logical responsibilities and one example, but does not
 fully define exact object fields and cardinality for governance, acceptance
@@ -42,7 +42,7 @@ entities, entity relationships, bindings, and presentation.
 **Resolution:** ADR 0013 accepts the record serialization except for the
 explicitly deferred presentation-guidance boundary.
 
-### 2. Section-role vocabularies
+### 2. Section-Role Vocabularies
 
 Section `role` is controlled and body-contract-specific. The Markdown uses
 examples such as `governing`, `boundary`, and `catalogue`, but does not define
@@ -51,7 +51,7 @@ the complete allowed role set for each body kind.
 **Resolution:** ADR 0014 accepts the exact core role vocabulary and
 body-specific subsets.
 
-### 3. Entity and binding vocabularies
+### 3. Entity And Binding Vocabularies
 
 Entity kinds, entity-relationship types, and binding kinds are declared
 controlled by a body contract or supported profile, but NKF 0.1 defines no
@@ -69,7 +69,7 @@ current supported-extension set.
 **Resolution:** ADR 0016 accepts the extension mechanism and an empty native
 core supported-extension set. It accepts no concrete extension.
 
-### 5. Acceptance provenance
+### 5. Acceptance Provenance
 
 Acceptance must bind an exact proposed revision, but standardized
 acceptance-event storage and exact declaration fields are deliberately
@@ -80,7 +80,7 @@ acceptance evidence is therefore not fully defined.
 native core and separates declared governance from optional authority-binding
 verification.
 
-### 6. Path and distribution boundary
+### 6. Path And Distribution Boundary
 
 Paths must remain inside a distribution boundary after normalization and
 symlink resolution, but the universal boundary and resolution base remain
@@ -90,7 +90,7 @@ unresolved outside the Nourd repository profile.
 `.nourd`, a configurable in-project `knowledge_root`, and complete Markdown
 representation rules.
 
-### 7. Diagnostics and enforcement partition
+### 7. Diagnostics And Enforcement Partition
 
 The specification defines conformance obligations but not which are expressible
 in JSON Schema, which require a bundle-aware checker, or stable diagnostic rule
@@ -100,7 +100,7 @@ identifiers.
 [`nkf-0.1-enforcement-and-diagnostics.md`](nkf-0.1-enforcement-and-diagnostics.md)
 is accepted by ADR 0019 under explicitly delegated technical authority.
 
-### 8. Presentation guidance
+### 8. Presentation Guidance
 
 The accepted specification permits deterministic, non-authoritative
 presentation guidance, while ADR 0013 deliberately reserves no field until
@@ -112,7 +112,7 @@ presentation to an extension.
 permits it only through a separately governed optional extension. The boundary
 is explicitly revisitable through deferred Task NKF-004.
 
-### 9. Exact bundle serialization
+### 9. Exact Bundle Serialization
 
 Replacement-pair authoring exposed that the accepted bundle responsibilities
 do not determine the exact manifest object, `non_records` entry shape and
@@ -122,7 +122,7 @@ classification vocabulary, or unknown-field handling.
 [`nkf-0.1-native-bundle-serialization.md`](nkf-0.1-native-bundle-serialization.md)
 is accepted by ADR 0021.
 
-## Recommended decision order
+## Recommended Decision Order
 
 1. author and accept coherent replacement Markdown and YAML revisions; and
 2. derive, review, and test exact schema and checker bytes.
@@ -131,7 +131,7 @@ Only after the replacement authority pair is accepted can one YAML file
 honestly claim to be the complete current executable NKF 0.1 companion
 required by ADR 0007 and ADR 0012.
 
-## Next realization boundary
+## Next Realization Boundary
 
 The current boundary is the coherent replacement Markdown/YAML pair.
 Presentation extension design remains deferred under NKF-004 and must not be

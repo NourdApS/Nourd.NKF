@@ -1,0 +1,175 @@
+contract: nkf.record
+id: design-nkf-0-1-technology-root-profile-specification-proposal
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Technology Root Profile Specification Proposal
+source:
+  path: designs/nkf-0.1-technology-root-profile-specification-proposal.md
+  digest:
+    algorithm: sha-256
+    value: 66f0c25729cbc999a4a397dcf2b98ecef029534d1e6a59b91c1df1da0974ba90
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - unresolved-matters
+  - id: evidence-basis
+    heading_path:
+      - Evidence Basis
+    occurrence: 1
+    authority: proposal
+    role: evidence
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: technology-definition
+    heading_path:
+      - Technology Definition
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: technology-semantic-layers
+    heading_path:
+      - Technology Semantic Layers
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: technology-root
+    heading_path:
+      - Technology Root
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: technology-root-required-root-responsibilities
+    heading_path:
+      - Technology Root
+      - Required Root Responsibilities
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: technology-record-model
+    heading_path:
+      - Technology Record Model
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: section-roles
+    heading_path:
+      - Section Roles
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: specification-body
+    heading_path:
+      - Specification Body
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: specification-body-required-specification-responsibilities
+    heading_path:
+      - Specification Body
+      - Required Specification Responsibilities
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+  - id: decision-design-realization-and-evidence-bodies
+    heading_path:
+      - Decision, Design, Realization, And Evidence Bodies
+    occurrence: 1
+    authority: proposal
+    role: evidence
+    responsibilities:
+      - proposed-or-accepted-design
+  - id: decision-design-realization-and-evidence-bodies-technology-decision
+    heading_path:
+      - Decision, Design, Realization, And Evidence Bodies
+      - Technology Decision
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-design-realization-and-evidence-bodies-technology-design
+    heading_path:
+      - Decision, Design, Realization, And Evidence Bodies
+      - Technology Design
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-design-realization-and-evidence-bodies-technology-realization
+    heading_path:
+      - Decision, Design, Realization, And Evidence Bodies
+      - Technology Realization
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-design-realization-and-evidence-bodies-technology-evidence
+    heading_path:
+      - Decision, Design, Realization, And Evidence Bodies
+      - Technology Evidence
+    occurrence: 1
+    authority: proposal
+    role: evidence
+  - id: scope-and-structural-topology
+    heading_path:
+      - Scope And Structural Topology
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: technology-semantic-entities
+    heading_path:
+      - Technology Semantic Entities
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: durable-bindings
+    heading_path:
+      - Durable Bindings
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: governed-technical-artifacts
+    heading_path:
+      - Governed Technical Artifacts
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: technology-profile-validation
+    heading_path:
+      - Technology Profile Validation
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: nkf-self-hosting-exercise
+    heading_path:
+      - NKF Self-Hosting Exercise
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: fitness-result
+    heading_path:
+      - Fitness Result
+    occurrence: 1
+    authority: proposal
+    role: evidence
+  - id: compatibility-and-non-claims
+    heading_path:
+      - Compatibility And Non-Claims
+    occurrence: 1
+    authority: proposal
+    role: boundary
+relationships: []

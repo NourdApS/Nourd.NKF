@@ -1,0 +1,53 @@
+contract: nkf.record
+id: design-nkf-0-1-presentation-guidance-boundary
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Presentation-Guidance Boundary
+source:
+  path: designs/nkf-0.1-presentation-guidance-boundary.md
+  digest:
+    algorithm: sha-256
+    value: de2b244675469cd802eab0dfd78dd1fd73137527fb832d4beb920e02470295b1
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: recommendation
+    heading_path:
+      - Recommendation
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: boundary
+    heading_path:
+      - Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

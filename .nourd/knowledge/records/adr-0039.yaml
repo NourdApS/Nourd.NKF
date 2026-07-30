@@ -1,0 +1,64 @@
+contract: nkf.record
+id: adr-0039
+type: decision
+body_contract: nkf.decision
+title: "ADR 0039: Accept Invocation-Precondition Authority Pair"
+source:
+  path: decisions/0039-accept-invocation-precondition-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: 15108059b0de414619268c356889424b9b043d3a6ba0b408ade9ab9bda104c4a
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: verification
+    heading_path:
+      - Verification
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: schema-effect
+    heading_path:
+      - Schema Effect
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

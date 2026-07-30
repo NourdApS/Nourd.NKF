@@ -1,0 +1,66 @@
+contract: nkf.record
+id: design-nkf-0-1-native-record-serialization
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Native Record Serialization
+source:
+  path: designs/nkf-0.1-native-record-serialization.md
+  digest:
+    algorithm: sha-256
+    value: a26e8ce9d21a68a8b5955d587d216a446aa0bcb1529e1ecaca87cadd198b9120
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+  - id: required-top-level-fields
+    heading_path:
+      - Required Top-Level Fields
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: required-nested-shapes
+    heading_path:
+      - Required Nested Shapes
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: optional-source-bound-structures
+    heading_path:
+      - Optional Source-Bound Structures
+    occurrence: 1
+    authority: proposal
+    role: interface
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: explicitly-deferred-from-this-boundary
+    heading_path:
+      - Explicitly Deferred From This Boundary
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - governing-inputs-and-constraints
+      - unresolved-matters
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

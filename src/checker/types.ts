@@ -136,6 +136,10 @@ export interface ValidationResult {
   contract_artifacts: ContractArtifacts;
   request: ValidationRequest;
   bundle_id: string | null;
+  profile: {
+    identity: string | null;
+    binding: "verified" | "unsupported" | "not-evaluated";
+  };
   validated_snapshot: {
     algorithm: "sha-256";
     canonicalization: "rfc8785-jcs";

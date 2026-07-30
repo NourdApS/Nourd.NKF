@@ -1,4 +1,4 @@
-# NKF 0.1 enforcement and diagnostics
+# NKF 0.1 Enforcement And Diagnostics
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -9,13 +9,13 @@
   imported NKF-002 schemas, checker phases, diagnostics, and result type;
   imported implementation remains evidence only
 
-## Decision sought
+## Decision Sought
 
 Whether the following YAML parse boundary, schema/checker/resolver/reviewer
 partition, validation phases, diagnostic contract, rule registry, and result
 semantics are the deterministic enforcement model for native NKF 0.1.
 
-## Authority model
+## Authority Model
 
 Normative Markdown and its accepted executable YAML companion remain the
 governed NKF authority pair.
@@ -29,7 +29,7 @@ are derived realization. They:
 - may not confirm a Realization; and
 - must fail closed when required meaning or a bound contract is unsupported.
 
-## YAML parse boundary
+## YAML Parse Boundary
 
 Native NKF YAML is UTF-8 and uses the YAML 1.2 JSON-compatible data model.
 Each manifest, record declaration, or executable contract file:
@@ -46,7 +46,7 @@ Comments and presentation whitespace are permitted but carry no meaning.
 Parsing must not execute constructors, interpolate environment variables, or
 resolve external content.
 
-## Enforcement partition
+## Enforcement Partition
 
 | Layer | Owns deterministic enforcement of | Must not claim |
 | --- | --- | --- |
@@ -58,7 +58,7 @@ resolve external content.
 A rule has one primary enforcement layer. A later layer may rely on an earlier
 result but must not maintain a competing copy of the rule's normative meaning.
 
-## Derived schema layout
+## Derived Schema Layout
 
 The first derived schema realization uses JSON Schema 2020-12:
 
@@ -99,7 +99,7 @@ Markdown/YAML bytes, no schema or checker realized against that older pair may
 claim current native NKF 0.1 conformance. Realization follows acceptance of a
 coherent replacement authority pair.
 
-## Validation phases
+## Validation Phases
 
 The checker executes these phases in order:
 
@@ -135,7 +135,7 @@ performed, its phase is `not-evaluated`. That state does not fail deterministic
 conformance, but it prevents `governing-use: ready` when verified acceptance is
 required.
 
-## Conformance levels
+## Conformance Levels
 
 The accepted levels remain hierarchical:
 
@@ -155,7 +155,7 @@ Warnings do not fail native conformance. If a supported profile makes a
 warning condition consequential, it defines a separate profile rule with its
 own error identifier rather than silently changing the native rule's severity.
 
-## Diagnostic contract
+## Diagnostic Contract
 
 Each diagnostic has:
 
@@ -187,9 +187,9 @@ Rules:
 
 Diagnostics never record or imply Product acceptance.
 
-## Stable native rule registry
+## Stable Native Rule Registry
 
-### Contract, parse, and schema
+### Contract, Parse, And Schema
 
 | Rule ID | Severity |
 | --- | --- |
@@ -214,7 +214,7 @@ Diagnostics never record or imply Product acceptance.
 
 All rules above block conformance.
 
-### Project, path, source, and representation
+### Project, Path, Source, And Representation
 
 | Rule ID | Severity |
 | --- | --- |
@@ -247,7 +247,7 @@ All rules above block conformance.
 
 Errors above block conformance; warnings are non-blocking.
 
-### Sections, bodies, and governance
+### Sections, Bodies, And Governance
 
 | Rule ID | Severity |
 | --- | --- |
@@ -273,7 +273,7 @@ Errors above block conformance; warnings are non-blocking.
 
 All rules above block conformance.
 
-### Record relationships and bundle graph
+### Record Relationships And Bundle Graph
 
 | Rule ID | Severity |
 | --- | --- |
@@ -294,7 +294,7 @@ All rules above block conformance.
 
 All rules above block conformance.
 
-### Semantic entities and durable bindings
+### Semantic Entities And Durable Bindings
 
 | Rule ID | Severity |
 | --- | --- |
@@ -322,7 +322,7 @@ All rules above block conformance.
 
 All rules above block conformance.
 
-### Extensions, security, and authority verification
+### Extensions, Security, And Authority Verification
 
 | Rule ID | Severity | Blocking |
 | --- | --- | --- |
@@ -343,7 +343,7 @@ An unresolved, digest-mismatched, identity-mismatched, or otherwise unsupported
 optional extension emits only `extension.optional.unvalidated` and remains
 subject to ADR 0016's visibility, round-trip, and non-consequential-use rules.
 
-## Validation result
+## Validation Result
 
 The checker emits an operational result with identity
 `nkf.validation-result` and `nkf_version: "0.1"`. It is not a governed
@@ -370,7 +370,7 @@ governing-use blocker. It does not confirm a Realization.
 Absolute project paths, credentials, secrets, and copied operational payloads
 must not appear in a portable result.
 
-## Human review boundary
+## Human Review Boundary
 
 No deterministic layer can establish:
 
@@ -386,7 +386,7 @@ These require human review and, where applicable, external Evidence. A
 validator may surface review needs but must not generate a passing semantic
 judgment.
 
-## Deliberate differences from imported checker evidence
+## Deliberate Differences From Imported Checker Evidence
 
 This proposal:
 
@@ -400,7 +400,7 @@ This proposal:
 - treats imported diagnostic names as evidence rather than stable current
   contract behavior.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the YAML parse boundary, JSON Schema 2020-12 layout, four-layer
 > enforcement partition, ordered validation phases, hierarchical conformance

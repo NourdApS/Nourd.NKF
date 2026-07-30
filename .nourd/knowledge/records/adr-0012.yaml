@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0012
+type: decision
+body_contract: nkf.decision
+title: "ADR 0012: Reconcile Single-Version Artifact Authority"
+source:
+  path: decisions/0012-reconcile-single-version-artifact-authority.md
+  digest:
+    algorithm: sha-256
+    value: ca69edcc8a487a41facd04eeef0beeb885e8ac8733896cc9562b9aa60c83ef4e
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility-and-authority
+    heading_path:
+      - Compatibility And Authority
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

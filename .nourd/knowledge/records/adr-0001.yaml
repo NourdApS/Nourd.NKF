@@ -1,0 +1,59 @@
+contract: nkf.record
+id: adr-0001
+type: decision
+body_contract: nkf.decision
+title: "ADR 0001: Establish Independent NKF Shared Technology Authority"
+source:
+  path: decisions/0001-establish-independent-nkf-authority.md
+  digest:
+    algorithm: sha-256
+    value: ffcd9508961afc3e9a9b797f3626a8bdf9721f2cc12e0f51efaf9fed3d479790
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: migration-boundary
+    heading_path:
+      - Migration Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: deferred
+    heading_path:
+      - Deferred
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+relationships: []

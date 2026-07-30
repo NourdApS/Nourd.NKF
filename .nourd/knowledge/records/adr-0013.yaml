@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0013
+type: decision
+body_contract: nkf.decision
+title: "ADR 0013: Accept NKF 0.1 Native Record Serialization"
+source:
+  path: decisions/0013-accept-nkf-0-1-native-record-serialization.md
+  digest:
+    algorithm: sha-256
+    value: 8fee3d17cf1744fbf19162bb5e80e2a460be6aa167407297742015bb13a63013
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: explicitly-deferred
+    heading_path:
+      - Explicitly Deferred
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+relationships: []

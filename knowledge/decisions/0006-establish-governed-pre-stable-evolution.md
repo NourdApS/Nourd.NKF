@@ -1,4 +1,4 @@
-# ADR 0006: Establish governed pre-stable evolution
+# ADR 0006: Establish Governed Pre-Stable Evolution
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -53,7 +53,7 @@ Every consequential change follows a governed feedback loop:
 10. **Migrate:** Move consumers deliberately through pinned versions,
     validation, and recorded results rather than silently updating them.
 
-## Classification controls
+## Classification Controls
 
 An implementation bug may be fixed without changing normative meaning when
 the accepted specification already determines the correct behavior. The fix
@@ -70,7 +70,7 @@ Refactoring that preserves accepted external behavior is implementation work.
 If behavior, diagnostics relied upon as contracts, compatibility, or accepted
 meaning changes, it enters the governed loop.
 
-## Versioning and compatibility
+## Versioning And Compatibility
 
 Breaking changes are possible before `1.0`, but they must be explicit,
 versioned, justified by evidence, and accompanied by migration and

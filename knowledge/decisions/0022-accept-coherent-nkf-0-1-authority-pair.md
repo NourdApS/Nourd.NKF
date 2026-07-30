@@ -1,4 +1,4 @@
-# ADR 0022: Accept coherent NKF 0.1 authority pair
+# ADR 0022: Accept Coherent NKF 0.1 Authority Pair
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -67,7 +67,7 @@ because the accepted object is the exact digest-locked review revision. This
 Decision supplies its acceptance state; the retained wording must not be
 misread as overriding this later acceptance event.
 
-## Supersession and compatibility
+## Supersession And Compatibility
 
 This pair realizes ADRs 0013 through 0021 and is the current NKF 0.1
 specification and executable companion. It supersedes the exact revisions
@@ -81,7 +81,7 @@ compatibility claim. Consumers of older structures or exact historical
 digests require deliberate onboarding or migration before they may claim
 current native NKF 0.1 conformance.
 
-## Authority provenance and non-claims
+## Authority Provenance And Non-Claims
 
 This is delegated technical acceptance. It must not be restated as
 line-by-line Human Product Owner review.

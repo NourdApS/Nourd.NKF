@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0047
+type: decision
+body_contract: nkf.decision
+title: "ADR 0047: Confirm Release-Bound Checker Realization"
+source:
+  path: decisions/0047-confirm-release-bound-checker-realization.md
+  digest:
+    algorithm: sha-256
+    value: 74f4c96da139ba9f478232bc0583e6b69404695548f3da4d23af245acc931aa1
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: confirmed-realization
+    heading_path:
+      - Confirmed Realization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: verification
+    heading_path:
+      - Verification
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

@@ -1,4 +1,4 @@
-# ADR 0015: Accept NKF 0.1 semantic-topology and binding vocabularies
+# ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -56,7 +56,7 @@ accepted extension boundary. Unknown required meaning fails closed.
 Changing a value's meaning, removing a value, changing body ownership, or
 weakening a constraint is an NKF format change governed by ADR 0006.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept replacement Markdown or YAML bytes, extension
 contracts, acceptance proof, path resolution, schemas, checker behavior,

@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0015
+type: decision
+body_contract: nkf.decision
+title: "ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies"
+source:
+  path: decisions/0015-accept-nkf-0-1-semantic-topology-and-binding-vocabularies.md
+  digest:
+    algorithm: sha-256
+    value: ff4582959ec58e5bcdfdc596a6f4a27fa9a20b52c1476ad32e7d00f40cfc438b
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

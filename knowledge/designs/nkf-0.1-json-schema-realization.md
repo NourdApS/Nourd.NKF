@@ -1,4 +1,4 @@
-# NKF 0.1 JSON Schema realization
+# NKF 0.1 JSON Schema Realization
 
 - **Status:** Superseded proposal
 - **Task:** `NKF-003`
@@ -14,12 +14,12 @@ It retains the earlier `markdown_root` and `records_root` model and omits later
 accepted serialization and vocabulary boundaries. It must not guide current
 schema realization.
 
-## Decision sought
+## Decision Sought
 
 Whether NKF should realize the accepted executable YAML companion as JSON
 Schema files at the proposed paths below, using the stated structural mapping.
 
-## Proposed derived artifact layout
+## Proposed Derived Artifact Layout
 
 ```text
 contracts/nkf/0.1/
@@ -33,7 +33,7 @@ The schemas would identify the bound YAML digest and Markdown digest in
 non-normative `x-nkf-source` metadata. They would be derived artifacts, not a
 second writable authority.
 
-## Accepted constraints represented
+## Accepted Constraints Represented
 
 The proposed `bundle.schema.json` would represent the accepted fields
 `nkf_version`, `contract`, `id`, `product_record`, `markdown_root`,
@@ -48,7 +48,7 @@ YAML. A schema can prove structure, identifier support, and duplicate-free
 lists; it cannot prove Markdown semantic adequacy, acceptance, or confirmed
 realization.
 
-## Concrete choices requiring confirmation
+## Concrete Choices Requiring Confirmation
 
 The accepted pair does not yet choose all of these representation details:
 
@@ -68,7 +68,7 @@ Two preliminary schema files were subsequently created at the proposed paths.
 They retain this proposal's stale open-field and root-path assumptions and are
 therefore superseded realization evidence, not current NKF schemas.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Author JSON Schema 2020-12 proposals at
 > `contracts/nkf/0.1/schemas/bundle.schema.json` and

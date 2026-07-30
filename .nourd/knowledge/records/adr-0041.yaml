@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0041
+type: decision
+body_contract: nkf.decision
+title: "ADR 0041: Confirm Native Checker Development Realization"
+source:
+  path: decisions/0041-confirm-native-checker-development-realization.md
+  digest:
+    algorithm: sha-256
+    value: d7c669f64a75021d2c7cd76a427e4d60cab1c8091b1f8c7c7a5a71b23f98c13d
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: confirmed-binding
+    heading_path:
+      - Confirmed Binding
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: review-evidence
+    heading_path:
+      - Review Evidence
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

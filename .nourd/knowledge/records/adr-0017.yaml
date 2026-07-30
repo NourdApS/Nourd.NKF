@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0017
+type: decision
+body_contract: nkf.decision
+title: "ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary"
+source:
+  path: decisions/0017-accept-nkf-0-1-acceptance-provenance-boundary.md
+  digest:
+    algorithm: sha-256
+    value: 2faac4575add5009591dfe945f908869edf8a115683842a44d6122623b48f942
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

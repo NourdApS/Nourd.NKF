@@ -1,0 +1,51 @@
+contract: nkf.record
+id: adr-0033
+type: decision
+body_contract: nkf.decision
+title: "ADR 0033: Confirm Yaml Grammar-Corrected Json Schema Bindings"
+source:
+  path: decisions/0033-confirm-yaml-grammar-corrected-json-schema-bindings.md
+  digest:
+    algorithm: sha-256
+    value: 064e0300e108a766b796404e9d21cdf1e91b180f85e73ef20b98933919ffc8c4
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

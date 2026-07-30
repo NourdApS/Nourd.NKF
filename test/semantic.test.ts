@@ -33,7 +33,7 @@ function unit(
         status: "draft",
         authority: ["human-product-owner"],
       },
-      scope: { product: "product" },
+      scope: { root: "product" },
       sections: [{
         id: "section",
         authority: "proposal",
@@ -55,15 +55,21 @@ function graphRules(
 ): string[] {
   const emitter = new RuleEmitter(executable);
   attachCoreVocabularies(records, executable);
-  validateGraph(bundle, records, emitter);
+  validateGraph(bundle, records, executable, emitter);
   return emitter.diagnostics.map((diagnostic) => diagnostic.rule_id);
 }
 
-function contractRules(records: RecordUnit[]): string[] {
+function contractRules(
+  records: RecordUnit[],
+  bundle: Record<string, unknown> = {
+    root: { record: "product", profile: "nkf.profile.product" },
+  },
+): string[] {
   const emitter = new RuleEmitter(executable);
   validateRecordContracts(
     records,
     new Set(records.map((record) => String(record.declaration.id))),
+    bundle,
     executable,
     emitter,
   );
@@ -72,30 +78,30 @@ function contractRules(records: RecordUnit[]): string[] {
 
 describe("bundle graph semantics", () => {
   it("reports missing, multiple, and invalid Product roots", () => {
-    expect(graphRules({ product_record: "product" }, [])).toEqual(
-      expect.arrayContaining(["bundle.product.missing", "bundle.product.invalid"]),
+    expect(graphRules({ root: { record: "product", profile: "nkf.profile.product" } }, [])).toEqual(
+      expect.arrayContaining(["bundle.root.missing", "bundle.root.invalid"]),
     );
     const first = unit("product", "product", "nkf.product");
     const second = unit("other-product", "product", "nkf.product");
     expect(
-      graphRules({ product_record: "product" }, [first, second]),
-    ).toContain("bundle.product.multiple");
+      graphRules({ root: { record: "product", profile: "nkf.profile.product" } }, [first, second]),
+    ).toContain("bundle.root.multiple");
     expect(
-      graphRules({ product_record: "missing" }, [first]),
-    ).toContain("bundle.product.invalid");
+      graphRules({ root: { record: "missing", profile: "nkf.profile.product" } }, [first]),
+    ).toContain("bundle.root.invalid");
   });
 
   it("checks record relationships, scope, and exact duplicates", () => {
     const product = unit("product", "product", "nkf.product", {
-      scope: { product: "other" },
+      scope: { root: "other" },
       relationships: [
         { type: "unknown", target: "missing", source_section: "missing" },
         { type: "unknown", target: "missing", source_section: "missing" },
       ],
     });
-    expect(graphRules({ product_record: "product" }, [product])).toEqual(
+    expect(graphRules({ root: { record: "product", profile: "nkf.profile.product" } }, [product])).toEqual(
       expect.arrayContaining([
-        "scope.product.mismatch",
+        "scope.root.mismatch",
         "relationship.type.unsupported",
         "relationship.target.unresolved",
         "relationship.section.unresolved",
@@ -122,7 +128,7 @@ describe("bundle graph semantics", () => {
       ],
     });
     const rules = graphRules(
-      { product_record: "product" },
+      { root: { record: "product", profile: "nkf.profile.product" } },
       [product, domain, capability, principle],
     );
     expect(rules).toEqual(
@@ -130,7 +136,7 @@ describe("bundle graph semantics", () => {
         "hierarchy.product-parent.invalid",
         "hierarchy.domain-parent.invalid",
         "hierarchy.capability-parent.invalid",
-        "hierarchy.product-unreachable",
+        "hierarchy.root-unreachable",
         "hierarchy.participation.unsupported",
       ]),
     );
@@ -150,7 +156,7 @@ describe("bundle graph semantics", () => {
     });
     expect(
       graphRules(
-        { product_record: "product" },
+        { root: { record: "product", profile: "nkf.profile.product" } },
         [product, domain, capability],
       ),
     ).toContain("hierarchy.part-of.cycle");
@@ -207,7 +213,7 @@ describe("record contract semantics", () => {
         "body.type-mismatch",
         "body.responsibility.unsupported",
         "body.responsibility.missing",
-        "governance.product.lifecycle",
+        "governance.root.lifecycle",
         "governance.decision.lifecycle",
       ]),
     );

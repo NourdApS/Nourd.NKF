@@ -1,0 +1,72 @@
+contract: nkf.record
+id: design-nkf-0-1-replacement-json-schemas
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Replacement JSON Schemas
+source:
+  path: designs/nkf-0.1-replacement-json-schemas.md
+  digest:
+    algorithm: sha-256
+    value: b028fda7144da9725a3fae905301cffe1d7d30322f50f02f3c8f88e45e67fb96
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - unresolved-matters
+  - id: exact-proposal-artifacts
+    heading_path:
+      - Exact Proposal Artifacts
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - proposed-or-accepted-design
+  - id: schema-owned-enforcement
+    heading_path:
+      - Schema-Owned Enforcement
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: deliberate-checker-owned-boundaries
+    heading_path:
+      - Deliberate Checker-Owned Boundaries
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: verification-performed
+    heading_path:
+      - Verification Performed
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: compatibility-and-non-claims
+    heading_path:
+      - Compatibility And Non-Claims
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

@@ -1,4 +1,4 @@
-# ADR 0018: Accept NKF 0.1 project path and knowledge coverage
+# ADR 0018: Accept NKF 0.1 Project Path And Knowledge Coverage
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -49,7 +49,7 @@ The accepted boundary includes:
   warning and broken, cyclic, or escaping links failing structural
   conformance.
 
-## Supersession and preservation
+## Supersession And Preservation
 
 This Decision supersedes the conflicting location-independent path rules in
 the accepted NKF 0.1 specification and the earlier `markdown_root` and
@@ -68,7 +68,7 @@ The accepted Markdown and YAML artifacts remain immutable historical
 snapshots. This Decision requires later replacement revisions; it does not
 change those bytes in place.
 
-## Not decided
+## Not Decided
 
 This Decision does not define universal local or external locator syntax,
 accept replacement Markdown or YAML bytes, implement schemas or checker

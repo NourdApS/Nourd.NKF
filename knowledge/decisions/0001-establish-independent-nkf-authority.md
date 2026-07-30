@@ -1,4 +1,4 @@
-# ADR 0001: Establish independent NKF Shared Technology authority
+# ADR 0001: Establish Independent NKF Shared Technology Authority
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -51,7 +51,7 @@ consumer's canonical meaning, operational state, external systems, or
 consequential actions. Nourd Knowledge Engine and a possible future Nourd
 Knowledge Protocol remain distinct concerns.
 
-## Migration boundary
+## Migration Boundary
 
 The accepted Nourd Studio ADR and exact NKF 0.1 Product specification remain
 immutable source provenance. They must be imported or referenced with exact

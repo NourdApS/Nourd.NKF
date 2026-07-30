@@ -1,4 +1,4 @@
-# NKF 0.1 — Product knowledge format
+# NKF 0.1 — Product Knowledge Format
 
 - **Status:** Proposal to replace the accepted canonical NKF 0.1 revision
 - **Task:** `NKF-003`
@@ -36,7 +36,7 @@ acceptance protocol is reserved under the name **Nourd Knowledge Protocol
 (NKP)**. The Nourd Knowledge Engine is an implementation that may consume NKF;
 it does not define the format.
 
-## Normative status
+## Normative Status
 
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
@@ -64,7 +64,7 @@ A conformant Draft remains a proposal. An accepted record that becomes
 structurally invalid is still part of accepted history, but a consumer MUST
 surface the defect and MUST NOT silently reinterpret it.
 
-## Source drafting provenance
+## Source Drafting Provenance
 
 The Human Product Owner directly confirmed the NKF name; eventual public
 direction; Product-only 0.1 scope; Shredwise pilot; deliberate OKF 0.2 rebase;
@@ -122,7 +122,7 @@ NKF 0.1 does not define:
 - public governance, registry hosting, or licensing; or
 - a universal freshness policy.
 
-## Core model
+## Core Model
 
 NKF separates four layers:
 
@@ -196,7 +196,7 @@ contracts. NKF 0.1 does not silently rename or reinterpret them. A controlled
 migration or verified profile mapping is required before a repository using
 those identifiers can claim native NKF contract conformance.
 
-## Bundle contract
+## Bundle Contract
 
 The project root is the directory that directly contains `.nourd/`. Native NKF
 0.1 fixes:
@@ -274,7 +274,7 @@ path target must also remain inside resolved `knowledge_root`. The final target
 must have the required file kind and duplicate-physical-file rules still
 apply.
 
-## Record contract
+## Record Contract
 
 Every governed record MUST have exactly one canonical Markdown source and one
 YAML declaration.
@@ -333,7 +333,7 @@ Empty optional structures SHOULD be omitted by a native NKF serializer.
 Profiles MAY require explicit empty collections for compatibility, but those
 collections carry no meaning.
 
-### Native record serialization
+### Native Record Serialization
 
 The native declaration is closed to unknown top-level fields except for the
 accepted `extensions` field. It requires:
@@ -472,7 +472,7 @@ Cross-bundle identity and typed relationships are deferred in NKF 0.1.
 External material and authority are addressed through provenance locators and
 external-authority bindings instead.
 
-## Section authority
+## Section Authority
 
 Every semantic Markdown section MUST be classified as exactly one of:
 
@@ -519,7 +519,7 @@ does not by itself prove body-contract coverage. A consumer that does not
 understand a declared responsibility or cannot prove complete required
 coverage MUST fail closed for contract conformance.
 
-### Section-role vocabulary
+### Section-Role Vocabulary
 
 Every declared section has exactly one role from its body contract's allowed
 subset. Repeated role names have one meaning across contracts. The role
@@ -626,7 +626,7 @@ Filesystem placement, ordinary Markdown links, generated backlinks,
 similarity, tags, model classifications, and runtime correlations do not
 create typed relationships. Backlinks and graph projections are derived.
 
-## Provenance and roles
+## Provenance And Roles
 
 NKF separates four roles:
 
@@ -641,7 +641,7 @@ Producing and verifying content do not accept it. Human verification is not a
 substitute for Product acceptance unless the same actor separately exercises
 an explicitly granted acceptance role.
 
-### Acceptance provenance
+### Acceptance Provenance
 
 Core governance values are declarations, not proof. `status` states the
 claimed state; `authority` names who may decide it; and optional `accepted_at`
@@ -708,7 +708,7 @@ NKF MAY record factual production, verification, observation, and
 last-modified times. NKF 0.1 does not define `stale_after` or a universal
 freshness policy.
 
-## Semantic entities and bindings
+## Semantic Entities And Bindings
 
 A record MAY define semantic entities when independently addressable meaning
 is needed for relationships, navigation, architecture, or Realization
@@ -842,7 +842,7 @@ MUST NOT enumerate live users, resorts, activities, devices, sessions,
 deployments, accounts, or provider resources as canonical knowledge merely
 because a binding can resolve them.
 
-## Body contracts
+## Body Contracts
 
 Every record MUST declare a `body_contract`. A body contract
 defines required semantic responsibilities, allowed section roles, valid
@@ -1100,7 +1100,7 @@ from interpretation and MUST NOT overstate applicability. A fixed study or
 review MAY be immutable; a maintained synthesis MAY be living. Raw runtime
 events and current status remain in their authoritative operational stores.
 
-## Extension contract
+## Extension Contract
 
 An extension may add namespaced types, body contracts, vocabularies,
 declaration payloads, deterministic constraints, or interoperability data for
@@ -1200,7 +1200,7 @@ Native NKF 0.1 accepts no concrete extension. Portable presentation guidance
 is deliberately outside the native record; future NKF-owned presentation work
 is deferred under NKF-004.
 
-## Native project organization
+## Native Project Organization
 
 The fixed `.nourd` layout in the bundle contract is native NKF 0.1, not a
 separate Nourd repository profile. The configured `knowledge_root` may be
@@ -1216,7 +1216,7 @@ declaration tree. Existing `nourd.knowledge.*` bootstrap consumers require
 deliberate migration and do not become native merely because their logical
 model is similar.
 
-## OKF 0.2 interoperability
+## OKF 0.2 Interoperability
 
 OKF 0.2 is an intentionally permissive directory of Markdown documents with
 YAML frontmatter. It requires only a `type`, treats paths as concept identity,
@@ -1266,7 +1266,7 @@ OKF 0.2 supersedes `timestamp` with `generated.at` and the body
 
 ## Conformance
 
-### YAML parse boundary
+### YAML Parse Boundary
 
 Native NKF YAML is UTF-8 and uses the YAML 1.2 JSON-compatible data model.
 Each manifest, record declaration, or executable contract file contains
@@ -1277,7 +1277,7 @@ custom tags, merge keys, anchors, and aliases are invalid.
 Comments and presentation whitespace carry no meaning. Parsing cannot execute
 constructors, interpolate environment variables, or resolve external content.
 
-### Enforcement layers
+### Enforcement Layers
 
 | Layer | Deterministic responsibility | Cannot establish |
 | --- | --- | --- |
@@ -1302,7 +1302,7 @@ non-normative source metadata for `nkf_version`, exact Markdown path/digest,
 and exact YAML path/digest. Release metadata carries the schema's own digest.
 Exact schema bytes remain derived realization.
 
-### Validation phases
+### Validation Phases
 
 The checker executes:
 
@@ -1331,7 +1331,7 @@ phase prevents the requested conformance level from passing.
 `authority-binding` is optional; when absent it does not fail conformance but
 prevents `governing-use: ready` when verified acceptance is required.
 
-### Conformance levels
+### Conformance Levels
 
 - `structural` requires `contracts`, `parse`, `schema`, `project`, `source`,
   `bundle-graph`, `security`, and `extension-resolution` for the catalog,
@@ -1355,7 +1355,7 @@ Reconciliation may update deterministic values such as a source digest. It
 cannot invent or change roles, authority, relationships, scope, entities,
 bindings, external authority, or presentation meaning.
 
-### Diagnostic contract
+### Diagnostic Contract
 
 Each diagnostic contains:
 
@@ -1379,7 +1379,7 @@ block consequential use without changing conformance; warnings are
 non-blocking. Diagnostics sort by phase, normalized artifact, record ID,
 instance pointer, source section, and rule ID. They never imply acceptance.
 
-### Stable native rule registry
+### Stable Native Rule Registry
 
 Unless a table says otherwise, every listed error blocks conformance and every
 warning is non-blocking.
@@ -1516,7 +1516,7 @@ An unsupported optional extension emits only
 `extension.optional.unvalidated` and remains visible, round-trippable, and
 excluded from consequential interpretation.
 
-### Validation result
+### Validation Result
 
 The checker emits operational `nkf.validation-result` with
 `nkf_version: "0.1"`. It is not governed knowledge. It identifies execution
@@ -1535,7 +1535,7 @@ Markdown, evidence support, deserved acceptance, current external authority,
 Design quality, or Realization existence and behavior. Those require human
 review and, where applicable, external Evidence.
 
-## Security and privacy
+## Security And Privacy
 
 NKF bundles are durable, reviewable Product knowledge and may be distributed.
 A bundle MUST NOT contain live credentials, access tokens, private keys, or
@@ -1555,7 +1555,7 @@ A locator MUST NOT be dereferenced automatically when doing so could disclose
 information, trigger an operation, incur cost, or cross an authorization
 boundary.
 
-## Unresolved matters
+## Unresolved Matters
 
 The following remain deliberately unresolved in NKF 0.1:
 
@@ -1576,7 +1576,7 @@ These omissions MUST be visible to consumers. A profile MAY resolve one for
 its own scope, but MUST identify the extension and MUST NOT claim that the
 profile decision is part of NKF 0.1 core.
 
-## Minimal example
+## Minimal Example
 
 A logical NKF 0.1 manifest:
 
@@ -1695,7 +1695,7 @@ Derived schemas enforce the exact native serialization. They cannot add
 fields, responsibilities, or meaning. A supported extension supplies its own
 separately governed executable contract.
 
-## Pre-mortem
+## Pre-Mortem
 
 | Failure mode | Consequence | Required response |
 | --- | --- | --- |

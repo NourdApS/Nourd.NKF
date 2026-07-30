@@ -1,4 +1,4 @@
-# ADR 0017: Accept NKF 0.1 acceptance-provenance boundary
+# ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -62,7 +62,7 @@ authority verification is not performed or its source is unavailable, the
 binding is not verified rather than rejected. A resolved contradiction fails
 closed for governing use.
 
-## Not decided
+## Not Decided
 
 This Decision does not verify any record's acceptance, accept an
 authority-specific extension, define universal path resolution, accept

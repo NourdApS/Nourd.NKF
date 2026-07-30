@@ -1,4 +1,4 @@
-# ADR 0005: Accept record v2 responsibility bindings
+# ADR 0005: Accept Record V2 Responsibility Bindings
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -43,7 +43,7 @@ Across the record:
 An empty `responsibilities` sequence is invalid and should be omitted.
 Sections that do not fulfill a controlled body responsibility omit the field.
 
-## Conformance boundary
+## Conformance Boundary
 
 Deterministic validation may establish that:
 
@@ -70,7 +70,7 @@ must not add or alter bindings, or change the declaration to
 Deterministic reconciliation may reorder an already valid list. It must not
 invent, remove, or reinterpret bindings.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept:
 

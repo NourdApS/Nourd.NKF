@@ -1,0 +1,63 @@
+contract: nkf.record
+id: adr-0007
+type: decision
+body_contract: nkf.decision
+title: "ADR 0007: Establish Markdown And YAML Contract Authority"
+source:
+  path: decisions/0007-establish-markdown-and-yaml-contract-authority.md
+  digest:
+    algorithm: sha-256
+    value: fe97c21a99dfc87cf6e6b62e84b6bbbf150655c530415627d94b4ff92dcef2b1
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: conflict-handling
+    heading_path:
+      - Conflict Handling
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: derived-artifacts
+    heading_path:
+      - Derived Artifacts
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: change-process
+    heading_path:
+      - Change Process
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

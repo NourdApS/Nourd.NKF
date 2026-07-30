@@ -1,0 +1,101 @@
+contract: nkf.record
+id: adr-0024
+type: decision
+body_contract: nkf.decision
+title: "ADR 0024: Accept Deterministic Markdown Structure And Title Case"
+source:
+  path: decisions/0024-accept-deterministic-markdown-structure-and-title-case.md
+  digest:
+    algorithm: sha-256
+    value: 51612750b7fb6e97e933e0859d088d9ba82f43be2b8a1d5f25d1dc26a9a5da43
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-structural-markdown-grammar
+    heading_path:
+      - Decision
+      - Structural Markdown Grammar
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-heading-comparison-string
+    heading_path:
+      - Decision
+      - Heading Comparison String
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-heading-coverage-and-addressing
+    heading_path:
+      - Decision
+      - Heading Coverage And Addressing
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-title-case
+    heading_path:
+      - Decision
+      - Title Case
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-canonical-terms
+    heading_path:
+      - Decision
+      - Canonical Terms
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-mermaid
+    heading_path:
+      - Decision
+      - Mermaid
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: diagnostic-additions
+    heading_path:
+      - Diagnostic Additions
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: authority-and-realization-boundary
+    heading_path:
+      - Authority And Realization Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+relationships: []

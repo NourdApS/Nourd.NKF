@@ -1,0 +1,51 @@
+contract: nkf.record
+id: adr-0037
+type: decision
+body_contract: nkf.decision
+title: "ADR 0037: Confirm Checker-Findings-Resolved Json Schema Bindings"
+source:
+  path: decisions/0037-confirm-checker-findings-resolved-json-schema-bindings.md
+  digest:
+    algorithm: sha-256
+    value: f27ac88789acc77cf92a0e4ae161d8c8490f0c48a252fa6f9ed72d921987a347
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

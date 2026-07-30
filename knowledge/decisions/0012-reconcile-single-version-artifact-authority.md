@@ -1,4 +1,4 @@
-# ADR 0012: Reconcile single-version artifact authority
+# ADR 0012: Reconcile Single-Version Artifact Authority
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -34,7 +34,7 @@ Its independent contract-version requirements are superseded:
 An artifact digest identifies an exact revision. It is not another semantic
 version namespace.
 
-## Compatibility and authority
+## Compatibility And Authority
 
 This Decision changes no NKF 0.1 Product meaning, responsibility vocabulary,
 declaration structure, or conformance intent. Historical `/v1` and `/v2`
@@ -43,7 +43,7 @@ identities remain evidence only and are not current NKF support.
 ADRs 0007 and 0009 remain immutable historical snapshots. This later Decision
 governs where their version language conflicts.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept corrected Markdown or YAML bytes, schemas,
 checker behavior, fixtures, distribution, a release, or consumer conformance.

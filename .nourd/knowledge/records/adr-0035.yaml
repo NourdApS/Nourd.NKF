@@ -1,0 +1,79 @@
+contract: nkf.record
+id: adr-0035
+type: decision
+body_contract: nkf.decision
+title: "ADR 0035: Clarify Product Scope And Structural Hierarchy"
+source:
+  path: decisions/0035-clarify-product-scope-and-structural-hierarchy.md
+  digest:
+    algorithm: sha-256
+    value: 4ba9e8d750df0a73e4dbd74314be6262aa0b8bb6c309f209ad51787f309484a8
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-product-membership
+    heading_path:
+      - Decision
+      - Product Membership
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-structural-hierarchy
+    heading_path:
+      - Decision
+      - Structural Hierarchy
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-other-typed-relationships
+    heading_path:
+      - Decision
+      - Other Typed Relationships
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: realization
+    heading_path:
+      - Realization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

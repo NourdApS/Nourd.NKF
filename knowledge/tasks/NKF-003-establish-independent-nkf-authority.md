@@ -2078,6 +2078,369 @@ derived realization.
 - Treat Git and Github as authority for publication state; do not infer format
   acceptance or conformance from the release.
 
+## AI Execution Slice: Investigate Extensible Root Support
+
+- **Recorded:** 30 July 2026
+- **Scope:** Investigate how NKF could support its own repository and later
+  Nourd Agent SDK without Product misclassification while keeping future
+  root-specific specifications, hierarchies, validators, and protocols easy to
+  add
+- **Decision Authority:** Human Product Owner for root-model and semantic
+  meaning; Codex technical reviewer for proposal consistency, derived
+  serialization analysis, and realization planning
+- **Authority Effect:** None. The Human Product Owner explicitly paused
+  acceptance pending discussion of an extensible root mechanism. No root type,
+  root serialization, body contract, validator composition, canonical
+  authority, realization, or migration direction is accepted.
+
+### Plan
+
+1. Keep the current Product-only NKF 0.1 authority unchanged while root
+   extensibility is discussed.
+2. Create a deferred Task for evidence-driven investigation of additional
+   root types, root-specific hierarchies, validators, protocols, profiles, and
+   compatibility.
+3. Use the Product-and-Technology proposal as one candidate, not as accepted
+   direction.
+4. Identify every Product-specific responsibility, vocabulary entry,
+   diagnostic, schema assertion, checker rule, fixture, and release binding
+   affected by the proposal.
+5. Compare root-dispatched specifications and validation with a fixed native
+   root enumeration, profiles, and extensions.
+6. Return the architecture choices and trade-offs for discussion before
+   accepting semantic direction or changing canonical authority.
+
+### Guardrails
+
+- Keep `nkf_version: "0.1"` as the only NKF version coordinate.
+- Preserve the existing `nkf.product` meaning and requirements while the
+  replacement is unresolved.
+- Do not introduce `Shared Technology` as NKF vocabulary merely because Nourd
+  ApS uses that organizational classification.
+- Do not claim that Product and Technology exhaust all possible knowledge
+  roots or that their provisional hierarchy is universally correct.
+- Do not use a generic root to weaken Product requirements or silently
+  reinterpret existing Product declarations.
+- Keep Task lifecycle and operational state outside native NKF in this slice.
+- Do not promote canonical authority, derive or confirm realization, publish a
+  release, self-host this repository, migrate Nourd Agent SDK, or claim
+  conformance before the exact proposal is reviewed and accepted.
+
+### Current Result
+
+Deferred broader root-model work is recorded as
+[`NKF-006`](NKF-006-define-extensible-root-knowledge-models.md).
+
+The initial fixed-root candidate explored:
+
+- `root_record` and `scope.root` as the one native root-neutral shape;
+- root types `product`/`nkf.product` and
+  `technology`/`nkf.technology`;
+- provisional Product-or-Technology to Domain to Capability hierarchy;
+- seven required Technology responsibilities;
+- native `specification`/`nkf.specification` with eight required
+  responsibilities;
+- six subject-neutral replacements for Product-bound non-root responsibility
+  identifiers;
+- Technology and Specification entity-vocabulary additions; and
+- seven root-neutral diagnostic replacements.
+
+The Human Product Owner then identified that the root mechanism itself must
+make future root-specific specifications and validation easy. Acceptance was
+explicitly paused before any direction was locked. The initial candidate must
+therefore be compared with a root-dispatched architecture rather than treated
+as the chosen design.
+
+The current checker gate still passes type-checking, all 81 tests in 13 files,
+build, and portable-build verification. That validates only the unchanged
+current Product-only realization; it does not accept or confirm the proposal.
+
+No canonical Markdown/YAML, schema, checker source, fixture, package, release,
+NKF declaration, Agent SDK declaration, or conformance result was changed.
+Work is paused for root-architecture discussion before any semantic
+acceptance, canonical promotion, or derived realization.
+
+## AI Execution Slice: Define Common And Concrete Root Profiles
+
+- **Recorded:** 30 July 2026
+- **Scope:** Record and develop the Human Product Owner's accepted architecture
+  for one non-selectable Common Specification and exactly one concrete Root
+  Profile per bundle
+- **Decision Authority:** Human Product Owner for the architecture and semantic
+  division; Codex technical reviewer for proposal consistency, impact
+  analysis, and derived realization planning
+- **Authority Effect:** The Common-Specification and concrete-Root-Profile
+  architecture is accepted. Exact artifact paths, profile identities,
+  serialization fields, common contract contents, Product extraction,
+  Technology responsibilities, validator interface, diagnostics, schemas,
+  checker behavior, fixtures, and migration remain unresolved until separately
+  reviewed and accepted or confirmed.
+
+### Plan
+
+1. Record the accepted architecture in an immutable Decision without reviving
+   the rejected selectable generic profile or fixed native root enumeration.
+2. Replace the initial Product-and-Technology candidate with a proposal in
+   which a non-selectable Common Specification applies automatically and every
+   bundle selects exactly one concrete Root Profile.
+3. Define the responsibility boundary among Common, concrete profile
+   specification, profile validation, and trusted checker realization.
+4. Preserve the existing Product specification as the semantic source from
+   which common rules and the Product Profile are extracted without weakening
+   Product meaning.
+5. Keep Technology, Specification-record, serialization, artifact-layout, and
+   migration details proposed until their exact boundaries are separately
+   reviewed.
+6. Reconcile NKF-006 and repository indexes with the accepted architecture.
+7. Audit fail-closed profile resolution, validator trust, compatibility,
+   authority binding, and future-profile extensibility.
+8. Return the next single consequential semantic decision before changing
+   canonical authority or derived realization.
+
+### Guardrails
+
+- The Common Specification is abstract and cannot be selected, declared, or
+  used as a fallback Root Profile.
+- Every bundle must explicitly select exactly one accepted concrete Root
+  Profile.
+- A concrete profile may add requirements but cannot weaken or redefine Common
+  requirements.
+- Extract only genuinely identical semantics into Common; superficial
+  similarity is insufficient.
+- Do not load or execute arbitrary profile validator code from a project.
+- Preserve `nkf_version: "0.1"` as the only NKF version coordinate.
+- Do not change canonical Markdown/YAML, schemas, checker source, fixtures,
+  releases, self-hosting declarations, Agent SDK declarations, or conformance
+  claims in this slice.
+
+### Result
+
+The Human Product Owner accepted the exact architectural boundary after
+clarifying that Common is a non-selectable specification rather than a generic
+Root Profile. The immutable Decision is
+[`ADR 0049`](../decisions/0049-establish-common-specification-and-concrete-root-profiles.md).
+
+The current exact realization proposal is
+[`../designs/nkf-0.1-common-and-root-profile-proposal.md`](../designs/nkf-0.1-common-and-root-profile-proposal.md).
+It keeps exact serialization, profile identities, Common extraction, Product
+Profile realization, Technology Profile meaning, Specification-body
+ownership, artifact layout, schema composition, validator interface,
+diagnostics, results, release, and migration unaccepted.
+
+No canonical authority, schema, checker source, fixture, package, release,
+consumer declaration, or conformance result was changed.
+
+The consistency audit confirms:
+
+- the canonical Markdown remains SHA-256
+  `67beed2a380e719573175d3dfd70b05c59cbe51274c9975f863a58f7083ddba4`;
+- the canonical YAML remains SHA-256
+  `7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b`;
+- no specification, contract, schema, checker, test, fixture, or release-tooling
+  file is modified; and
+- whitespace and index-link checks pass.
+
+The next consequential boundary is the exact Common extraction: which current
+rules are truly profile-independent mechanisms and which remain Product
+Profile semantics. No extraction is accepted yet.
+
+## AI Execution Slice: Derive Technology Before Common
+
+- **Recorded:** 30 July 2026
+- **Scope:** Correct the derivation order by defining a Technology Profile from
+  NKF's actual knowledge needs before comparing it with the accepted Product
+  specification
+- **Decision Authority:** Human Product Owner for Technology, Common, and
+  Product Profile meaning; Codex technical reviewer for independent derivation,
+  comparison, and consistency analysis
+- **Authority Effect:** None. The comparison method is accepted, but the
+  Technology specification, Common contents, Product extraction, profile
+  identities, serialization, validation, and realization remain proposals.
+
+### Accepted Method
+
+```text
+Product Specification ∩ Technology Specification = Common Specification
+Product remainder = Product Profile
+Technology remainder = Technology Profile
+```
+
+Common is discovered only from rules proven semantically identical in the two
+independently defined concrete specifications. It is not produced by
+generalizing Product terminology first.
+
+### Plan
+
+1. Use the NKF repository's identity, authority, normative specification,
+   Decisions, Designs, Evidence, release, compatibility, security, and
+   lifecycle needs as the primary Technology evidence.
+2. Derive a Technology root body, record model, hierarchy, validation,
+   governed inputs, and conformance boundary without copying or renaming the
+   Product specification by default.
+3. Test whether the proposed Technology specification can govern the NKF
+   repository honestly, including its canonical Specification.
+4. Keep Nourd Agent SDK as a later second Technology exercise rather than
+   silently designing from its unconfirmed assumptions.
+5. Compare every Product and Technology rule by exact meaning, enforcement
+   layer, and compatibility effect.
+6. Classify only exact intersections as proposed Common; retain every other
+   rule in Product or Technology.
+7. Return the Technology specification and comparison for review before
+   accepting Common contents or changing canonical authority.
+
+### Guardrails
+
+- `Shared Technology` remains outside NKF vocabulary.
+- Do not infer Technology semantics from directory naming or the Product body.
+- Similar wording or data shape does not establish Common meaning.
+- Do not weaken Product requirements to increase the apparent intersection.
+- Do not broaden Technology merely to fit hypothetical future roots.
+- Preserve Common as non-selectable and require one concrete Root Profile.
+- Do not change canonical Markdown/YAML, schemas, checker source, fixtures,
+  release artifacts, NKF declarations, Agent SDK declarations, or conformance
+  claims in this slice.
+
+### Result
+
+The independent Technology candidate is recorded in
+[`../designs/nkf-0.1-technology-root-profile-specification-proposal.md`](../designs/nkf-0.1-technology-root-profile-specification-proposal.md).
+It derives Technology meaning from NKF's actual authority, specification,
+decision, design, realization, evidence, compatibility, distribution,
+security, and lifecycle needs rather than by renaming Product.
+
+The candidate has:
+
+- one living Technology root with nine proposed responsibilities;
+- a required Specification body;
+- Decision, Design, Realization, and Evidence as the only other initially
+  supported bodies;
+- no mandatory record-level hierarchy and no record-level `part-of`;
+- declaratively governed technical artifacts as additional validation inputs;
+  and
+- an explicit self-hosting mapping and gap list for this repository.
+
+The Product–Technology comparison is recorded in
+[`../designs/nkf-0.1-product-technology-common-comparison.md`](../designs/nkf-0.1-product-technology-common-comparison.md).
+It proposes Common mechanics plus Decision, Design, Realization, and Evidence;
+keeps Product, Principle, Concept, Journey, Domain, Capability, and the
+Product hierarchy in Product; and keeps Technology, Specification, governed
+technical artifacts, and Technology validation in Technology.
+
+The comparison identifies two Product responsibility identifiers and two
+Product-bound role definitions that would require an explicit breaking
+pre-stable migration if their shared Common meanings are accepted. Exact role,
+entity, binding, OKF-export, artifact-layout, and diagnostic allocations remain
+unresolved.
+
+No Technology or Common meaning is accepted by this result. No canonical
+authority, executable contract, schema, checker, fixture, release, project
+declaration, consumer declaration, or conformance result was changed.
+
+## AI Execution Slice: Realize Dynamic Product And Technology Roots
+
+- **Recorded:** 30 July 2026
+- **Scope:** Complete the accepted dynamic-root architecture as a usable,
+  self-hosted NKF 0.1 contract
+- **Direction And Authority:** The Human Product Owner directs completion and
+  authorizes Codex to audit, accept, and confirm only the exact changes needed
+  for this feature
+- **Terminology:** `General` means the automatically applicable,
+  non-selectable Common Specification. Product and Technology are the only
+  selectable concrete Root Profiles in this slice.
+- **Authority Effect:** Exact normative meaning will be accepted only after
+  internal reconciliation. Derived schemas, checker behavior, fixtures, and
+  self-hosting will be separately confirmed and must not be confused with
+  acceptance or conformance.
+
+### Desired Result
+
+NKF 0.1 supports:
+
+```text
+Common / General (automatic, non-selectable)
+        +
+exactly one of:
+        ├── Product
+        └── Technology
+```
+
+The NKF repository itself must contain a complete project-root `.nourd`
+declaration using the Technology Profile and must pass the resulting checker
+without claiming that validation supplies semantic acceptance or confirmed
+Realization.
+
+### Execution Plan
+
+1. Reconcile the current Product-only canonical Markdown and YAML into one
+   Common Specification, one Product Profile, and one Technology Profile while
+   preserving one `nkf_version: "0.1"` coordinate.
+2. Define exact root/profile selection, root-neutral scope, Common bodies,
+   Product-only bodies and hierarchy, Technology-only bodies and artifact
+   rules, vocabularies, diagnostics, and compatibility.
+3. Accept the exact reconciled normative Markdown and executable YAML under
+   the existing Markdown-over-YAML authority model.
+4. Derive and confirm source-bound JSON Schemas, checker dispatch and semantic
+   enforcement, positive and negative fixtures, and complete rule coverage.
+5. Create a Technology root and the necessary Realization knowledge for NKF,
+   represent every Markdown file under `knowledge_root`, and bind governed
+   technical artifacts.
+6. Generate and retain only the latest validation result in `.nourd`.
+7. Run structural, unit, fixture, build, integrity, self-hosting, and
+   reproducibility gates.
+8. Record exact acceptance, confirmed realization, self-hosting conformance,
+   compatibility, and remaining non-claims separately.
+
+### Guardrails
+
+- Common/General cannot be selected, declared as a root, or used as fallback.
+- Product and Technology are the only supported concrete profiles in this
+  slice.
+- A bundle declares exactly one root record and exactly one concrete profile.
+- Profile rules may add but cannot weaken or reinterpret Common.
+- Architecture remains Design meaning; source and executable artifacts remain
+  Realizations rather than root meaning.
+- Preserve `.nourd` directly at project root and a configurable
+  project-contained `knowledge_root`.
+- Preserve Markdown as canonical human meaning and YAML as its executable
+  companion.
+- Preserve the sole NKF 0.1 version namespace.
+- Preserve acceptance, confirmed realization, conformance, and operational
+  validation state as separate facts.
+- Do not publish, push, tag, create a Github Release, or migrate another
+  consumer in this slice.
+
+### Result
+
+The slice is realized through ADRs 0050 through 0052:
+
+- ADR 0050 accepts the exact Common, Product, and Technology authority pair;
+- ADR 0051 governs the heading-only source revision required for honest native
+  self-hosting while preserving predecessor provenance; and
+- ADR 0052 confirms the derived schemas, checker, fixtures, build,
+  declaration generator, and self-hosting realization separately from
+  acceptance and conformance.
+
+The native bundle now selects `nkf.profile.technology`, represents every
+Markdown file under `knowledge/`, and binds validation-relevant technical
+files to the NKF 0.1 Native Realization as governed artifacts.
+
+The local development gate passes 90 tests in 15 files, type checking,
+deterministic build, and build-integrity verification. Product and Technology
+positive fixtures pass; profile, hierarchy, lifecycle, artifact, source,
+security, extension, authority, and validation-result failures have negative
+coverage.
+
+An attempted direct heading normalization of older accepted Decisions was
+identified during audit as an ungoverned immutable-snapshot change. It was
+reverted, governed explicitly through ADR 0051, then reapplied as the accepted
+current serialization revision. This preserves the distinction between a
+mechanical migration and a silent edit.
+
+The final persisted `.nourd/validation-result.json` is regenerated only after
+all governed sources and declarations are current. No release, tag, upload,
+push, public distribution, or external consumer migration is performed by
+this slice.
+
 ## Initial source anchors
 
 | Source | Revision | Authority state |

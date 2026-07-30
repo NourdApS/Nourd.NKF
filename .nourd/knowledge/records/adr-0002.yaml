@@ -1,0 +1,65 @@
+contract: nkf.record
+id: adr-0002
+type: decision
+body_contract: nkf.decision
+title: "ADR 0002: Establish Body-Responsibility Bindings"
+source:
+  path: decisions/0002-establish-body-responsibility-bindings.md
+  digest:
+    algorithm: sha-256
+    value: 9c818ec8fe0d28926451ca1524d95a739b950941ef42867df4add98b90e49730
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: deterministic-conformance-boundary
+    heading_path:
+      - Deterministic Conformance Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

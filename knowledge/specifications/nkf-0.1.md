@@ -1,6 +1,6 @@
-# NKF 0.1 — Product Knowledge Format
+# NKF 0.1 — Product And Technology Knowledge Format
 
-- **Status:** Proposed exact replacement; accepted only through ADR 0045
+- **Status:** Accepted
 - **Task:** `NKF-003`
 - **Version:** `0.1`
 - **Prepared:** 30 July 2026
@@ -12,26 +12,33 @@
 - **Accepted canonical digest:** `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`
 - **Canonical destination:** `knowledge/specifications/nkf-0.1.md`
 - **Proposed executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
-- **Acceptance Decision:** ADR 0045
-- **Independent governing inputs:** ADRs 0001 through 0044
+- **Acceptance Decisions:** ADR 0045 and ADR 0050
+- **Independent governing inputs:** ADRs 0001 through 0050
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
-> This exact revision becomes the current canonical NKF 0.1 specification only
-> if ADR 0045 accepts it and promotes its bytes unchanged. Before that
-> Decision, it is a proposal. It realizes the release contract accepted
-> through ADR 0044 and is not the public stable NKF 1.0 release.
+> This exact revision is the current canonical NKF 0.1 specification when
+> bound by ADR 0050 and its executable companion. It
+> is not the public stable NKF 1.0 release.
 
 ## Purpose
 
 The **Nourd Knowledge Format (NKF)** is a human-readable, machine-verifiable
-format for durable Product knowledge. It lets people and machines identify
-what a Product means, which parts govern, how narrower knowledge relates,
-what evidence supports it, how it is realized, and where external or
-operational authority remains.
+format for durable governed knowledge. NKF 0.1 supports Product and Technology
+knowledge through two concrete Root Profiles.
 
-NKF is designed for the whole Product. It covers Product and business meaning
-as well as experience, design, technology, operations, risk, evidence,
-evolution, and retirement. It does not make software the center of the model.
+The automatically applicable **Common Specification**, also called General in
+architectural discussion, owns only the mechanics and semantic contracts
+shared by both profiles. It is not a selectable profile. Every bundle selects
+exactly one of:
+
+- `nkf.profile.product`; or
+- `nkf.profile.technology`.
+
+The Product Profile governs whole-Product meaning. The Technology Profile
+governs a durable technical subject that supplies technical capabilities,
+contracts, or both to consumers and evolves independently of any one
+consumer. `Shared Technology` remains organizational vocabulary rather than
+an NKF profile name.
 
 NKF remains a **format**. A possible future interaction, synchronization, or
 acceptance protocol is reserved under the name **Nourd Knowledge Protocol
@@ -43,27 +50,24 @@ it does not define the format.
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
 
-NKF 0.1 is an accepted pre-stable format. ADR 0039 accepts the current
-canonical Markdown and its strict-YAML executable companion, ADR 0040 confirms
-the current derived schemas, and ADR 0041 confirms the native checker
-development Realization. ADRs 0042 through 0044 accept the initial
-content-addressed distribution, native release-manifest boundary, and exact
-release contract. Before ADR 0045, this exact composite revision is a proposal.
-If ADR 0045 accepts and promotes it unchanged, it is the current canonical
-revision.
+NKF 0.1 is an accepted pre-stable format. ADR 0045 accepted the prior
+Product-only canonical Markdown and strict-YAML executable companion. ADR 0049
+accepted one automatically applicable non-selectable Common Specification and
+exactly one concrete Root Profile per bundle. ADR 0050 accepts this exact
+replacement with Product and Technology as the only selectable profiles.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
 cannot accept a later revision. Only the applicable Human Product Owner or
-another explicitly authorized acceptance authority can accept changed Product
-meaning.
+another explicitly authorized acceptance authority can accept changed
+governed meaning.
 
 Conformance and acceptance are different:
 
 - **conformance** means that a bundle satisfies the structural and semantic
   declaration requirements of a supported NKF contract; and
 - **acceptance** means that an authorized actor has accepted an exact proposed
-  revision as governing Product meaning.
+  revision as governing meaning.
 
 A conformant Draft remains a proposal. An accepted record that becomes
 structurally invalid is still part of accepted history, but a consumer MUST
@@ -71,35 +75,29 @@ surface the defect and MUST NOT silently reinterpret it.
 
 ## Source Drafting Provenance
 
-The Human Product Owner directly confirmed the NKF name; eventual public
-direction; Product-only 0.1 scope; Shredwise pilot; deliberate OKF 0.2 rebase;
-Markdown-plus-YAML composite record; core record vocabulary; stable identity;
-section-authority classes; typed record relationships; four authority roles;
-provenance and external-authority separation; semantic entity, Realization,
-instance, and observation layers; Nourd repository profile; Product body
-contract; Principle body contract; and the decision to leave freshness and
-enforcement unresolved.
+The original accepted Nourd Studio source established NKF 0.1 for Product
+knowledge. The independent NKF repository later established the single
+version namespace, Markdown-plus-YAML authority pair, deterministic
+declarations, body responsibilities, validation, release, security, and
+pre-stable evolution rules.
 
-The precise Concept, Journey, Domain, Capability, Design, Decision,
-Realization, and Evidence body-contract wording was drafted under the Human
-Product Owner's delegation to complete NKF 0.1 without contract-by-contract
-confirmation. Later independent Decisions accept the exact `nkf.*` contract
-identifiers, conformance levels, extension behaviour, external-authority
-minimum fields, security and privacy boundary, and deterministic enforcement
-model incorporated here.
+ADR 0049 and the Technology-first NKF self-hosting exercise establish the
+Common, Product, and Technology division. The Human Product Owner authorizes
+technical audit and exact acceptance or confirmation only for changes
+necessary to realize this dynamic-root feature. That authority does not
+accept a future profile, extension, consumer meaning, or unrelated format
+change.
 
-This distinction records the provenance and authority of the Studio source
-baseline; it does not create partial authority. The Human Product Owner
-accepted that exact Studio composite on 28 July 2026 and later canonical
-independent revisions through ADR 0039. Later independent Decisions accept
-specific changed boundaries, including the release contract through ADR 0044,
-but neither those Decisions nor an earlier baseline accepts this composite
-revision by implication. Exact acceptance requires ADR 0045.
+Earlier Product-only revisions remain immutable provenance. This replacement
+does not rewrite their historical meaning; it deliberately migrates the
+current NKF 0.1 authority and requires consumers to migrate to the new root
+declaration.
 
 ## Scope
 
-NKF 0.1 defines Product knowledge only. Company and Organization knowledge may
-be added in later NKF versions after their requirements are understood.
+NKF 0.1 defines Common contracts and two concrete Root Profiles: Product and
+Technology. Company, Organization, and other root knowledge remain unsupported
+until their requirements are understood and accepted.
 
 NKF 0.1 defines:
 
@@ -107,7 +105,9 @@ NKF 0.1 defines:
   configurable canonical knowledge root;
 - one canonical Markdown source and one YAML declaration per governed record;
 - stable bundle, record, section, and semantic-entity identity;
-- Product record types and their minimum body contracts;
+- Common record types and their minimum body contracts;
+- Product and Technology root-specific record types, bodies, vocabularies,
+  hierarchy, and validation;
 - lifecycle, authority, provenance, and acceptance semantics;
 - typed record and semantic-entity relationships;
 - Realization and external-authority bindings;
@@ -137,12 +137,16 @@ NKF separates four layers:
 Semantic entity → Realization → Operational instance → Observation
 ```
 
-A **Knowledge Bundle** is a distributable set of Product knowledge with one
-stable identity and exactly one Product root record.
+A **Knowledge Bundle** is a distributable set of governed knowledge with one
+stable identity, exactly one root record, and exactly one concrete Root
+Profile.
 
-A **Record** is a governed unit of Product knowledge. It is a composite of:
+The Common Specification applies automatically. `nkf.common` cannot be
+selected, instantiated, used as a fallback, or accepted as `root.profile`.
 
-1. one Markdown source that owns the human Product meaning; and
+A **Record** is a governed unit of knowledge. It is a composite of:
+
+1. one Markdown source that owns the human meaning; and
 2. one YAML declaration that identifies, binds, classifies, and relates that
    meaning.
 
@@ -154,7 +158,7 @@ An earlier Nourd-specific Knowledge semantic-model draft was an input to this
 model. Acceptance of NKF 0.1 supersedes that standalone draft for overlapping
 scope rather than leaving two semantic-model authorities.
 
-A **Realization** is a durable mapping from Product meaning to a Source,
+A **Realization** is a durable mapping from governed meaning to a Source,
 system, service, process, agreement, asset, integration, or implementation.
 It may define how real instances are found or governed, but it does not own
 their live state.
@@ -180,9 +184,10 @@ NKF format versions use `<major>.<minor>`.
 
 NKF has one version namespace: the NKF format version. A bundle MUST declare
 `nkf_version`. NKF 0.1 uses the unversioned canonical identities `nkf.bundle`,
-`nkf.record`, `nkf.contract-set`, `nkf.release-manifest`, and `nkf.product`
-through `nkf.evidence`. They are all governed by the one NKF version
-coordinate, `0.1`.
+`nkf.record`, `nkf.contract-set`, `nkf.release-manifest`, `nkf.common`,
+`nkf.profile.product`, `nkf.profile.technology`, and the supported body
+identities. They are all governed by the one NKF version coordinate, `0.1`.
+Profile identity is not an independent version coordinate.
 
 The sole NKF 0.1 record definition includes explicit responsibility bindings.
 Older external record structures are legacy-consumer formats, not supported
@@ -238,14 +243,28 @@ The manifest is a closed object with these required fields:
 | `nkf_version` | Constant NKF version `"0.1"` |
 | `contract` | Constant bundle identity `nkf.bundle` |
 | `id` | Non-empty stable bundle identity |
-| `product_record` | Non-empty record ID of the unique Product root |
+| `root` | Closed object selecting one root record and one concrete Root Profile |
 | `knowledge_root` | Canonical knowledge directory relative to the project root |
 | `non_records` | Explicit non-governing file declarations; present and possibly empty |
 
-It may additionally contain only `canonical_terms`, `extension_contracts`, and
-`extensions` under the contracts below. Unknown top-level fields fail closed.
-Native NKF 0.1 has no `record_contract`, `markdown_root`, `records_root`,
-`required_extensions`, or free-form top-level extension field.
+It may additionally contain only `canonical_terms`, `governed_artifacts`,
+`extension_contracts`, and `extensions` under the contracts below. Unknown
+top-level fields fail closed. Native NKF 0.1 has no `product_record`,
+`record_contract`, `markdown_root`, `records_root`, `required_extensions`, or
+free-form top-level extension field.
+
+`root` contains exactly:
+
+```yaml
+root:
+  record: <root record ID>
+  profile: nkf.profile.product | nkf.profile.technology
+```
+
+`nkf.common` applies automatically and MUST NOT appear as `root.profile`.
+Unknown, missing, unavailable, or unsupported profiles fail closed. The root
+record resolves uniquely, has the type and body required by the selected
+profile, and is the only record of that root type.
 
 `knowledge_root` is a non-empty project-root-relative directory path. It is
 not relative to the manifest, must resolve inside the project root and outside
@@ -275,6 +294,32 @@ Every Markdown file recursively under `knowledge_root` has exactly one
 representation: one record declaration or one `non_records` entry.
 Non-Markdown assets need not be listed; listed assets follow the same
 existence, containment, uniqueness, and classification rules.
+
+The Technology Profile may additionally declare `governed_artifacts`. Each
+entry is a closed object containing:
+
+```yaml
+- id: <bundle-unique artifact ID>
+  kind: executable-contract | schema | checker-source | test | fixture | build-tool | project-configuration
+  path: <project-root-relative regular-file path>
+  digest:
+    algorithm: sha-256
+    value: <64 lowercase hexadecimal characters>
+  record: <Technology Realization record ID>
+  source_section: <section ID in that Realization>
+```
+
+Artifact IDs, lexical paths, resolved physical files, and exact entries are
+unique. The path remains inside the project, is not inside `.nourd`, resolves
+to a regular file, and follows the same unsafe and generally prohibited
+symlink rules. `record` resolves to an `nkf.realization`, and
+`source_section` resolves there.
+
+Every declared governed artifact is a Governed Validation Input and
+contributes its structural state and exact bytes to the validated snapshot.
+Existence and digest validation establish binding integrity only. They do not
+establish semantic adequacy, implementation correctness, acceptance, or
+confirmed Realization. Product bundles MUST omit `governed_artifacts`.
 
 `canonical_terms` is omitted when empty. When present it is a non-empty,
 order-insensitive array of unique, non-empty comparison strings. A term has no
@@ -310,9 +355,9 @@ The Markdown source:
 
 - MUST be UTF-8 Markdown;
 - MUST contain exactly one level-one title;
-- MUST own all human Product meaning asserted by the record;
+- MUST own all human meaning asserted by the record;
 - MUST use headings to make semantic sections addressable; and
-- MUST NOT require the declaration to complete an otherwise absent Product
+- MUST NOT require the declaration to complete an otherwise absent semantic
   claim.
 
 A safely readable declared record source whose exact bytes are not valid UTF-8
@@ -394,7 +439,7 @@ A record declaration MUST contain these logical responsibilities:
 | Title | Title agreeing with the Markdown level-one title |
 | Source binding | Source path, digest algorithm, and digest of the exact Markdown bytes |
 | Governance | Lifecycle, authority state, and acceptance authority |
-| Scope | Product root and optional narrower subjects |
+| Scope | Declared root and optional narrower subjects |
 | Sections | Complete semantic section map with explicit body-responsibility bindings |
 | Relationships | Source-bound typed record relationships |
 
@@ -411,9 +456,9 @@ at least one acceptance authority. An acceptance date MAY be recorded for an
 accepted revision, but the authoritative acceptance event and exact revision
 binding remain outside a copied status field.
 
-The Product root MUST be living. An accepted Decision MUST be immutable.
-Other body contracts MAY support living or immutable records according to the
-meaning they contain.
+Every root MUST be living. An accepted Decision MUST be immutable. An accepted
+version-specific Specification MUST be immutable. Other body contracts MAY
+support living or immutable records according to the meaning they contain.
 
 Empty optional structures SHOULD be omitted by a native NKF serializer.
 Profiles MAY require explicit empty collections for compatibility, but those
@@ -441,7 +486,7 @@ governance:
   authority: [<one or more acceptance-authority identifiers>]
   accepted_at: <optional ISO 8601 date>
 scope:
-  product: <Product record ID>
+  root: <root record ID>
   subjects: [<optional narrower subject IDs>]
 sections:
   - id: <record-scoped section ID>
@@ -456,8 +501,9 @@ relationships:
     source_section: <declared section ID>
 ```
 
-`relationships` is required and is empty when none exist. Optional
-`scope.subjects` is omitted when empty. The `type` and `body_contract` pair
+`relationships` is required and is empty when none exist. `scope.root` equals
+`bundle.root.record`. Optional `scope.subjects` is omitted when empty. The
+`type` and `body_contract` pair
 must correspond exactly. Every required body responsibility occurs in at least
 one section.
 
@@ -495,7 +541,14 @@ readable form. Portable display metadata uses a separately governed optional
 extension and remains subject to ADR 0020 and future governed reconsideration
 through NKF-004.
 
-The core Product record types are:
+Common defines these record types:
+
+- `design`
+- `decision`
+- `realization`
+- `evidence`
+
+The Product Profile additionally defines:
 
 - `product`
 - `principle`
@@ -503,20 +556,29 @@ The core Product record types are:
 - `journey`
 - `domain`
 - `capability`
-- `design`
-- `decision`
-- `realization`
-- `evidence`
+
+The Technology Profile additionally defines:
+
+- `technology`
+- `specification`
+
+A Product bundle permits the six Product types plus the four Common types. A
+Technology bundle permits the two Technology types plus the four Common types.
+A record type or body unsupported by the selected profile fails closed even
+when another profile supports it.
+
+The Technology Profile requires at least one Specification record. It defines
+no mandatory record-level hierarchy and prohibits record-level `part-of`.
 
 A Product vision is not a separate core type. Durable direction belongs in
 the Product record; exploratory visions and investigations belong in Concept
 and Evidence records until a Decision, Capability, Design, or Realization is
 justified.
 
-Profiles MAY introduce namespaced types and body contracts. Unknown
-extensions MUST remain visible and round-trippable, but a consumer that does
-not understand a required extension MUST NOT claim complete semantic
-validation or perform a consequential governing action from it.
+Only an accepted extension may introduce a namespaced type or body contract.
+Unknown extensions MUST remain visible and round-trippable, but a consumer
+that does not understand a required extension MUST NOT claim complete
+semantic validation or perform a consequential governing action from it.
 
 ## Identity
 
@@ -550,13 +612,46 @@ An identity MUST NOT be reused for materially different meaning. Moving a
 canonical definition owner MUST preserve the stable identity, provenance,
 incoming relationships, and accepted history through a governed migration.
 
-A bundle MUST have exactly one Product root. Every governed record MUST
-resolve to that Product through its scope and, where applicable, `part-of`
-relationships.
+A bundle MUST have exactly one root of the type required by its selected
+profile. Every governed record MUST resolve to that root through
+`scope.root`. Scope membership does not itself create a semantic relationship.
 
 Cross-bundle identity and typed relationships are deferred in NKF 0.1.
 External material and authority are addressed through provenance locators and
 external-authority bindings instead.
+
+## Root Profiles
+
+The Common Specification has identity `nkf.common`. It applies automatically
+to every bundle, owns shared declaration and semantic mechanics, and is not a
+Root Profile.
+
+The Product Root Profile has identity `nkf.profile.product`. It requires:
+
+- root type `product` with body `nkf.product`;
+- permitted bodies `nkf.product`, `nkf.principle`, `nkf.concept`,
+  `nkf.journey`, `nkf.domain`, `nkf.capability`, `nkf.design`,
+  `nkf.decision`, `nkf.realization`, and `nkf.evidence`;
+- the Product–Domain–Capability record hierarchy; and
+- omission of `governed_artifacts`.
+
+The Technology Root Profile has identity `nkf.profile.technology`. It requires:
+
+- root type `technology` with body `nkf.technology`;
+- at least one `specification` record with body `nkf.specification`;
+- permitted bodies `nkf.technology`, `nkf.specification`, `nkf.design`,
+  `nkf.decision`, `nkf.realization`, and `nkf.evidence`;
+- no record-level `part-of` relationship; and
+- the governed-artifact rules when non-Markdown technical artifacts
+  participate in validation.
+
+A profile can add requirements to Common but cannot remove, weaken, override,
+or reinterpret Common. A bundle cannot select several profiles. There is no
+profile ordering, fallback, implicit default, `general`, or `generic` root.
+
+The Common, Product, and Technology modules are separately identified within
+this one normative Markdown and executable YAML authority pair. Their module
+identities do not create independent artifacts or version namespaces.
 
 ## Section Authority
 
@@ -567,13 +662,13 @@ Every semantic Markdown section MUST be classified as exactly one of:
 | `accepted-meaning` | Governing meaning when its exact record revision has been accepted |
 | `proposal` | Candidate meaning that does not govern |
 | `unresolved` | An explicit question, ambiguity, conflict, or undecided matter |
-| `evidence` | Observation, source-grounded analysis, or factual support that does not itself govern Product intent |
+| `evidence` | Observation, source-grounded analysis, or factual support that does not itself govern intent |
 
 Section authority and section role are separate. A section may, for example,
 have the role `boundary` while its authority remains `proposal`.
 
 Accepting a record revision MUST NOT promote `proposal`, `unresolved`, or
-`evidence` sections into accepted Product meaning. A Draft record may contain
+`evidence` sections into accepted meaning. A Draft record may contain
 sections prepared as `accepted-meaning`, but they do not govern until the
 exact revision is accepted.
 
@@ -635,7 +730,7 @@ safety, acceptance, or conformance.
 | `interface` | An interaction, exchange, contract boundary, or point of connection with another subject. |
 | `interpretation` | Reasoned meaning drawn from observations or findings, kept distinct from the observations themselves. |
 | `limitation` | A known uncertainty, caveat, evidence gap, method constraint, or applicability limit. |
-| `mapping` | A durable correspondence between Product meaning and a realization. |
+| `mapping` | A durable correspondence between governed meaning and a realization. |
 | `measure` | A criterion or indicator for success, failure, effectiveness, health, or progress. |
 | `method` | The procedure used to observe, collect, analyze, compare, or verify evidence. |
 | `obligation` | A duty, requirement, compliance constraint, or commitment borne by the subject or an actor. |
@@ -644,7 +739,7 @@ safety, acceptance, or conformance.
 | `principle` | The concise normative statement of a Product principle. |
 | `rationale` | The reason why a principle, decision, design, or direction exists or was chosen. |
 | `recovery` | Failure handling, rollback, interruption response, restoration, or safe recovery. |
-| `relevance` | How evidence bears on Product knowledge, a claim, a decision, or a governed question. |
+| `relevance` | How evidence bears on governed knowledge, a claim, a decision, or a governed question. |
 | `responsibility` | An assignment or boundary of responsibility, ownership, or accountability. |
 | `risk` | A material uncertainty, exposure, hazard, or failure mode and its possible impact. |
 | `source` | Material, data, testimony, or another origin from which evidence is derived. |
@@ -658,6 +753,8 @@ The core body-specific subsets are:
 
 | Body contract | Allowed roles |
 | --- | --- |
+| `nkf.technology` | `definition`, `context`, `actor`, `governing`, `boundary`, `catalogue`, `evolution`, `interface`, `obligation`, `risk`, `measure`, `unresolved`, `content` |
+| `nkf.specification` | `definition`, `governing`, `applicability`, `boundary`, `interface`, `validation`, `evolution`, `obligation`, `risk`, `unresolved`, `content` |
 | `nkf.product` | `definition`, `governing`, `boundary`, `catalogue`, `evolution`, `interface`, `obligation`, `measure`, `unresolved`, `content` |
 | `nkf.principle` | `principle`, `rationale`, `applicability`, `behaviour`, `boundary`, `trade-off`, `evidence`, `unresolved`, `content` |
 | `nkf.concept` | `definition`, `governing`, `boundary`, `catalogue`, `evolution`, `evidence`, `unresolved`, `content` |
@@ -697,22 +794,29 @@ Every typed relationship MUST declare its source section. A consumer MUST be
 able to trace the relationship to exact Markdown meaning. When a stronger
 known relationship applies, `references` SHOULD NOT be used as a substitute.
 
-`part-of` creates the structural Product hierarchy. The core hierarchy is:
+Record-level `part-of` is controlled by the selected profile.
+
+The Product Profile hierarchy is:
 
 ```text
 Product → Domain → Capability
 ```
 
-`part-of` MUST be acyclic. The Product root has no parent. A Domain has exactly
+For Product, `part-of` MUST be acyclic. The Product root has no parent. A
+Domain has exactly
 one Product parent, and a Capability has exactly one Domain parent. Every
 Domain and Capability reaches the Product through those accepted edges.
 
-Every record remains a member of the bundle Product through
-`record.scope.product == bundle.product_record`. Product scope does not create
-a `part-of` edge. Another type neither requires nor may invent a native
-`part-of` relationship unless its body contract or a supported extension
-defines the meaning. `hierarchy.product-unreachable` therefore applies only to
-a record required or permitted to participate in the structural hierarchy.
+For Technology, no record type may declare `part-of`. Technology topology uses
+the other typed relationships and semantic entities without converting
+repository or package layout into record hierarchy.
+
+Every record remains a member of its bundle through
+`record.scope.root == bundle.root.record`. Root scope does not create a
+`part-of` edge. Another type neither requires nor may invent a native
+`part-of` relationship unless its selected profile or a supported extension
+defines the meaning. `hierarchy.root-unreachable` therefore applies only to a
+record required or permitted to participate in structural hierarchy.
 
 Filesystem placement, ordinary Markdown links, generated backlinks,
 similarity, tags, model classifications, and runtime correlations do not
@@ -726,11 +830,11 @@ NKF separates four roles:
 | --- | --- |
 | **Producer** | Created or materially changed the record content |
 | **Verifier** | Checked the content against its sources, method, or referenced reality |
-| **Acceptance authority** | May accept the exact proposed revision as governing Product meaning |
+| **Acceptance authority** | May accept the exact proposed revision as governing meaning |
 | **External authority** | Owns external accounts, data, permissions, resources, or operations |
 
 Producing and verifying content do not accept it. Human verification is not a
-substitute for Product acceptance unless the same actor separately exercises
+substitute for acceptance unless the same actor separately exercises
 an explicitly granted acceptance role.
 
 ### Acceptance Provenance
@@ -790,7 +894,7 @@ Provenance answers “what was this derived from?” External authority answers
 “who or what owns the external datum, permission, resource, or operation?”
 They MUST be represented separately. Citing an external source does not
 transfer its authority to NKF, and recording an external authority does not
-make that authority a Producer, Verifier, or Product acceptance authority.
+make that authority a Producer, Verifier, or acceptance authority.
 
 An external-authority declaration MUST identify the authority, its
 relationship to the record, a durable locator or resolution rule, and the
@@ -821,9 +925,14 @@ Core entity kinds and allowed defining bodies are:
 | Kind | Exact meaning | Allowed defining body contracts |
 | --- | --- | --- |
 | `product` | The Product as independently addressable governed meaning. | `nkf.product` |
+| `technology` | The Technology as independently addressable governed meaning. | `nkf.technology` |
+| `specification` | An independently addressable normative technical specification. | `nkf.specification` |
+| `contract` | A governed technical contract or contract family. | `nkf.technology`, `nkf.specification` |
+| `rule` | A governed normative rule. | `nkf.specification`, `nkf.decision` |
+| `diagnostic` | A stable diagnostic meaning. | `nkf.specification` |
 | `principle` | A specific normative Product principle. | `nkf.principle` |
 | `concept` | A named Product concept not more accurately classified by a narrower kind. | `nkf.concept` |
-| `actor` | A person, role, group, system, or external participant that acts in the described Product context. | `nkf.product`, `nkf.concept`, `nkf.journey`, `nkf.domain`, `nkf.capability` |
+| `actor` | A person, role, group, system, or external participant that acts in the governed context. | `nkf.product`, `nkf.concept`, `nkf.journey`, `nkf.domain`, `nkf.capability`, `nkf.technology`, `nkf.specification` |
 | `beneficiary` | A person, group, or other subject intended to receive a Product outcome or value. | `nkf.product`, `nkf.concept`, `nkf.journey`, `nkf.domain`, `nkf.capability` |
 | `stage` | A meaningful segment of a journey. | `nkf.journey` |
 | `decision-point` | A point in a journey where an actor or governing rule selects among consequential paths. | `nkf.journey` |
@@ -834,10 +943,10 @@ Core entity kinds and allowed defining bodies are:
 | `capability-input` | Information, material, permission, or condition consumed by a capability. | `nkf.capability` |
 | `capability-outcome` | A result produced or enabled by a capability. | `nkf.capability` |
 | `component` | A design-level constituent with a defined responsibility or interaction. | `nkf.design` |
-| `interface` | A defined semantic boundary through which subjects interact or exchange information. | `nkf.domain`, `nkf.capability`, `nkf.design`, `nkf.realization` |
+| `interface` | A defined semantic boundary through which subjects interact or exchange information. | `nkf.domain`, `nkf.capability`, `nkf.technology`, `nkf.specification`, `nkf.design`, `nkf.realization` |
 | `information-flow` | A design-level movement of information between defined subjects. | `nkf.design` |
 | `state` | A meaningful design or concept state, not the current state of an operational instance. | `nkf.concept`, `nkf.design` |
-| `policy` | A defined rule set governing behavior, applicability, or decisions. | `nkf.principle`, `nkf.domain`, `nkf.design`, `nkf.decision` |
+| `policy` | A defined rule set governing behavior, applicability, or decisions. | `nkf.principle`, `nkf.domain`, `nkf.technology`, `nkf.specification`, `nkf.design`, `nkf.decision` |
 | `decision-scope` | The independently addressable scope to which a Decision applies. | `nkf.decision` |
 | `system` | A durable system or service definition, not a live system instance. | `nkf.design`, `nkf.realization` |
 | `source` | A durable source definition, distinct from a provenance citation and from current source state. | `nkf.realization`, `nkf.evidence` |
@@ -875,7 +984,7 @@ Core entity-relationship types are:
 | `governs` | Source entity constrains target entity. |
 | `flows-to` | Information, value, material, or control moves from source entity to target entity. |
 | `transitions-to` | Source stage or state may move to target stage or state. |
-| `realizes` | Source entity in a Realization record maps target Product meaning to a durable realization. |
+| `realizes` | Source entity in a Realization record maps target governed meaning to a durable realization. |
 | `evidences` | Source entity in an Evidence record supplies support relevant to target entity. |
 | `observes` | Source `observation` entity in an Evidence record records an observation about target entity. |
 | `references` | Source entity deliberately points to target entity without asserting a stronger core relationship. |
@@ -906,7 +1015,7 @@ reference resolves in the same bundle. A present `external_authority` resolves
 to that record's declaration. At least one non-empty `locator` or
 `resolution_rule` is required.
 
-Core binding kinds are:
+Common binding kinds are:
 
 | Kind | Exact mapping target |
 | --- | --- |
@@ -914,18 +1023,23 @@ Core binding kinds are:
 | `system` | A system, service, application, or platform. |
 | `process` | An organizational or technical process. |
 | `asset` | A durable asset not more accurately classified by another binding kind. |
-| `agreement` | An agreement, contract, service commitment, or equivalent governed instrument. |
 | `implementation` | Code, configuration, infrastructure definition, or another implementation artifact. |
 | `provider` | A provider-owned capability, registration, tenant, or resource boundary; an applicable `external_authority` is required. |
 | `namespace` | A durable namespace or resolution domain. |
-| `deployment` | A durable deployment target, class, or address, not current deployment state. |
 | `data` | A dataset, schema, data store, or durable data-access surface, not copied live data. |
 | `interface` | An API, event, integration, UI, or other durable interaction surface. |
 
-Unknown binding kinds fail closed. Bindings are order-insensitive and exact
-duplicate objects are invalid. Multiple distinct mappings may target the same
-entity through the same Realization when their kind, locator, or resolution
-rule differs.
+The Product Profile additionally permits:
+
+| Kind | Exact mapping target |
+| --- | --- |
+| `agreement` | An agreement, contract, service commitment, or equivalent governed instrument. |
+| `deployment` | A durable deployment target, class, or address, not current deployment state. |
+
+Unknown or profile-unsupported binding kinds fail closed. Bindings are
+order-insensitive and exact duplicate objects are invalid. Multiple distinct
+mappings may target the same entity through the same Realization when their
+kind, locator, or resolution rule differs.
 
 NKF owns semantic entities, Realizations, durable binding definitions,
 resolution rules, locators, and authority boundaries. Nourd Studio or another
@@ -950,6 +1064,72 @@ A supported body contract MAY allow additional declared and classified
 sections. A consumer MAY display an unsupported body contract generically,
 but MUST NOT claim complete validation or use it for a consequential governing
 action.
+
+**Technology — `nkf.technology`**
+
+Required responsibilities:
+
+1. `technology-definition` — Name, stable identity, maintainer or owner, and
+   the kind of Technology.
+2. `purpose-and-problem` — Why the Technology exists and the technical problem
+   or class of problems it addresses.
+3. `consumers-and-use-contexts` — Intended consumers, integration contexts,
+   and the circumstances in which they rely on it.
+4. `capabilities-and-contracts` — The technical abilities, guarantees,
+   interfaces, or contracts the Technology supplies.
+5. `scope-authority-and-boundaries` — What meaning and behavior the Technology
+   owns, what it does not own, and its external-authority and
+   operational-state boundaries.
+6. `technology-map` — Links to governing Specifications, Decisions, Designs,
+   Realizations, Evidence, interfaces, and other material Technology
+   knowledge.
+7. `versioning-compatibility-and-migration` — Version coordinates,
+   compatibility policy, supported transitions, and deliberate consumer
+   migration.
+8. `distribution-support-and-security` — Distribution and integrity
+   boundaries, support expectations, and security and privacy obligations.
+9. `evolution-and-retirement` — Change, deprecation, and retirement.
+
+Optional responsibilities include licensing, contribution governance,
+portability, adoption Evidence, known risks, measures, and unresolved matters.
+
+A Technology record MUST be unique and living. It describes the whole
+Technology, not merely its repository, package, executable, deployment, or
+current implementation. Detailed architecture belongs in Design records and
+is linked through the Technology map.
+
+**Specification — `nkf.specification`**
+
+Required responsibilities:
+
+1. `specification-definition` — Specification identity, subject, purpose, and
+   the technical contract or behavior it defines.
+2. `authority-and-normative-status` — Normative authority, acceptance state,
+   precedence, and the distinction between normative and explanatory content.
+3. `scope-and-applicability` — Included and excluded subjects, supported
+   contexts, assumptions, and applicability boundaries.
+4. `model-vocabulary-and-semantics` — Normative model, vocabulary, identities,
+   and semantic rules.
+5. `requirements-constraints-and-interfaces` — Required, permitted, and
+   prohibited behavior, structural constraints, and interfaces.
+6. `validation-and-conformance` — Deterministic checks, semantic-review
+   boundaries, diagnostics, conformance meaning, and what validation cannot
+   prove.
+7. `versioning-compatibility-and-migration` — Version meaning, compatibility,
+   deprecation, replacement, and migration.
+8. `security-authority-and-operational-boundaries` — Security, privacy,
+   external-authority, and operational-state boundaries.
+9. `unresolved-and-deferred-matters` — Known omissions, deferred decisions,
+   unsupported cases, and their visible consequences.
+
+Optional responsibilities include examples, counterexamples, rationale,
+interoperability, clearly non-normative implementation guidance, test and
+fixture traceability, change history, and unresolved questions.
+
+An accepted Specification for an exact Technology version MUST be immutable.
+A later correction, extension, replacement, or reversal requires a governed
+revision with explicit provenance and compatibility. A Specification states
+normative meaning; it does not prove a Realization or consumer conforms.
 
 **Product — `nkf.product`**
 
@@ -1116,7 +1296,9 @@ migration, rollout, and retirement.
 
 A Design MAY describe experience, business, service, operating, policy, or
 technical realization. It MUST distinguish Product requirements from chosen
-solutions. It MUST NOT claim implementation or conformance without a
+solutions in a Product bundle and Technology requirements from chosen
+solutions in a Technology bundle. It MUST NOT claim implementation or
+conformance without a
 Realization and Evidence. A material choice that must remain historically
 stable SHOULD be captured by a Decision.
 
@@ -1134,20 +1316,21 @@ Required responsibilities:
 Optional responsibilities include evidence, compatibility, migration,
 recovery, supersession, and matters deliberately not decided.
 
-A Decision applies across the whole Product and is not limited to
-architecture. An accepted Decision MUST be immutable. Correction, extension,
-replacement, or reversal requires a later Decision with a typed relationship,
-normally `supersedes` or `extends`. A draft Decision may evolve until its
-exact revision is accepted. Rejection remains review, Task, and Git history;
-it does not create an alternate governing record.
+A Decision governs its declared root scope and is not limited to architecture.
+The Product Profile additionally requires Product Decisions to apply across
+the whole Product. An accepted Decision MUST be immutable. Correction,
+extension, replacement, or reversal requires a later Decision with a typed
+relationship, normally `supersedes` or `extends`. A draft Decision may evolve
+until its exact revision is accepted. Rejection remains review, Task, and Git
+history; it does not create an alternate governing record.
 
 **Realization — `nkf.realization`**
 
 Required responsibilities:
 
 1. `realization-identity-and-kind` — Realization identity and kind.
-2. `product-meaning-realized` — Product meaning, entities, Designs, or
-   Decisions realized.
+2. `governed-meaning-realized` — Product or Technology meaning, entities,
+   Designs, Decisions, or Specifications realized.
 3. `durable-mapping` — Durable Source, system, process, asset, agreement, or
    implementation mapping.
 4. `responsibilities-and-ownership-boundaries` — Responsibilities and
@@ -1180,24 +1363,25 @@ Required responsibilities:
 4. `interpretation` — Interpretation.
 5. `limitations-and-uncertainty` — Limitations and uncertainty.
 6. `applicability-and-boundaries` — Applicability and boundaries.
-7. `relevance-to-product-knowledge` — Relevance to Product knowledge.
+7. `relevance-to-governed-knowledge` — Relevance to governed knowledge.
 
 Optional responsibilities include methodology detail, samples, competing
 evidence, confidence, reproducibility, ethical or privacy constraints,
 recommended investigation, and unresolved questions.
 
-Evidence carries evidence authority; it does not become Product intent,
-Design, or a Decision by being convincing. It MUST distinguish observation
-from interpretation and MUST NOT overstate applicability. A fixed study or
-review MAY be immutable; a maintained synthesis MAY be living. Raw runtime
-events and current status remain in their authoritative operational stores.
+Evidence carries evidence authority; it does not become governing intent,
+a Specification, Design, or Decision by being convincing. It MUST distinguish
+observation from interpretation and MUST NOT overstate applicability. A fixed
+study or review MAY be immutable; a maintained synthesis MAY be living. Raw
+runtime events and current status remain in their authoritative operational
+stores.
 
 ## Extension Contract
 
 An extension may add namespaced types, body contracts, vocabularies,
 declaration payloads, deterministic constraints, or interoperability data for
 an explicitly governed scope. It cannot change or weaken core fields or rules;
-introduce source-absent Product claims; make metadata or conformance prove
+introduce source-absent semantic claims; make metadata or conformance prove
 acceptance; create another NKF version coordinate; hide operational state or
 secrets; or claim core support from one consumer's implementation.
 
@@ -1315,7 +1499,7 @@ YAML frontmatter. It requires only a `type`, treats paths as concept identity,
 uses ordinary untyped Markdown links, and makes provenance, production,
 verification, lifecycle, freshness, and attestation optional.
 
-NKF is stricter because it must represent governing Product meaning, stable
+NKF is stricter because it must represent governing meaning, stable
 identity independent of path, typed and source-bound relationships,
 section-level authority, explicit acceptance, Realizations, and external
 authority.
@@ -1374,7 +1558,7 @@ constructors, interpolate environment variables, or resolve external content.
 | Layer | Deterministic responsibility | Cannot establish |
 | --- | --- | --- |
 | JSON Schema 2020-12 | Local closed shapes, required fields, primitives, constants, enums, cardinality, duplicate-free scalar arrays, conditions, lexical formats | Files, containment, source bytes, headings, graphs, authority verification, semantic adequacy |
-| Bundle-aware checker | Project layout, paths, sources, Markdown coverage, cross-record resolution, responsibilities, hierarchy, extension-use consistency, resolver outcomes, bundle conformance | Acceptance, truth, design quality, Product completeness, confirmed Realization |
+| Bundle-aware checker | Project layout, paths, sources, Markdown coverage, root-profile resolution, cross-record resolution, responsibilities, hierarchy, governed artifacts, extension-use consistency, resolver outcomes, bundle conformance | Acceptance, truth, design quality, semantic completeness, confirmed Realization |
 | Artifact and authority resolver | Exact extension artifacts and optional acceptance-authority binding | Core acceptance, unsafe automatic dereference |
 | Human semantic review | Adequacy and acceptability of meaning, classification, evidence, boundaries, and decisions | Deterministic conformance merely from judgment |
 
@@ -1421,8 +1605,9 @@ after it passes, the checker executes:
 5. `source` — verify Markdown bytes, digests, H1, title, and headings;
 6. `extension-resolution` — validate catalogs/uses, safely resolve exact
    artifacts, verify identity/digests/support, and validate supported payloads;
-7. `bundle-graph` — resolve identities, Product root, scope, hierarchy,
-   references, cycles, and bundle constraints;
+7. `bundle-graph` — resolve Common and the selected concrete Root Profile,
+   root identity, scope, permitted bodies, hierarchy, references, cycles, and
+   bundle constraints;
 8. `record-contract` — validate body, role, responsibility, governance,
    provenance, entity, relationship, binding, and extension rules;
 9. `security` — report high-confidence prohibited-material findings;
@@ -1548,6 +1733,16 @@ warning is non-blocking.
 | `non-record.missing` | error |
 | `non-record.duplicate` | error |
 | `non-record.conflict` | error |
+| `artifact.id.duplicate` | error |
+| `artifact.path.duplicate` | error |
+| `artifact.path.invalid` | error |
+| `artifact.missing` | error |
+| `artifact.file-kind.invalid` | error |
+| `artifact.digest-mismatch` | error |
+| `artifact.record.unresolved` | error |
+| `artifact.record.invalid` | error |
+| `artifact.section.unresolved` | error |
+| `artifact.profile.unsupported` | error |
 
 | Sections, bodies, and governance rule | Severity |
 | --- | --- |
@@ -1566,8 +1761,9 @@ warning is non-blocking.
 | `body.type-mismatch` | error |
 | `body.responsibility.unsupported` | error |
 | `body.responsibility.missing` | error |
-| `governance.product.lifecycle` | error |
+| `governance.root.lifecycle` | error |
 | `governance.decision.lifecycle` | error |
+| `governance.specification.lifecycle` | error |
 | `provenance.source-id.duplicate` | error |
 | `provenance.observation-section.unresolved` | error |
 | `evidence.provenance.missing` | error |
@@ -1580,16 +1776,20 @@ warning is non-blocking.
 | `relationship.target.unresolved` | error |
 | `relationship.section.unresolved` | error |
 | `relationship.duplicate` | error |
-| `bundle.product.missing` | error |
-| `bundle.product.multiple` | error |
-| `bundle.product.invalid` | error |
+| `profile.unsupported` | error |
+| `profile.common.not-selectable` | error |
+| `profile.record.unsupported` | error |
+| `profile.specification.missing` | error |
+| `bundle.root.missing` | error |
+| `bundle.root.multiple` | error |
+| `bundle.root.invalid` | error |
 | `request.record.unresolved` | error |
-| `scope.product.mismatch` | error |
+| `scope.root.mismatch` | error |
 | `hierarchy.product-parent.invalid` | error |
 | `hierarchy.domain-parent.invalid` | error |
 | `hierarchy.capability-parent.invalid` | error |
 | `hierarchy.part-of.cycle` | error |
-| `hierarchy.product-unreachable` | error |
+| `hierarchy.root-unreachable` | error |
 | `hierarchy.participation.unsupported` | error |
 
 | Entity and binding rule | Severity |
@@ -1644,12 +1844,12 @@ Unknown fields, comments, duplicate keys, byte-order marks, and non-JSON
 values are invalid. Member order and insignificant whitespace carry no
 meaning.
 
-The object contains exactly thirteen required fields:
+The object contains exactly fourteen required fields:
 
 ```text
 contract, nkf_version, execution, checker, contract_artifacts, request,
-bundle_id, validated_snapshot, phases, conformance, records, governing_use,
-diagnostics
+bundle_id, profile, validated_snapshot, phases, conformance, records,
+governing_use, diagnostics
 ```
 
 `execution` contains a lowercase UUID, portable runner identity, and
@@ -1684,11 +1884,27 @@ Structural and contract results are transient. Only a completed full-bundle
 result atomically replaces `.nourd/validation-result.json`, whether it passes
 or fails. NKF Core stores no local result history.
 
+`profile` contains nullable `identity` and `binding`. A uniquely resolved
+supported Product or Technology profile reports its exact identity and
+`verified`. A syntactically available but unsupported or non-selectable
+identity reports that identity and `unsupported`. A missing, ambiguous, or
+unevaluated profile reports null and `not-evaluated`. Profile binding reports
+only resolution against the exact executable companion already represented by
+`contract_artifacts`; it does not duplicate artifacts or imply acceptance.
+
 **Governed Validation Inputs** are the exact project resources whose observed
 state participates in the requested validation. NKF Core defines the initial
 set; accepted extensions may add resource kinds. A checker cannot add inputs
 ad hoc. Each input contributes only structural facts, exact bytes, or both as
 required by applicable accepted rules.
+
+NKF Core inputs are the fixed `.nourd` path observations, manifest and direct
+record-declaration candidates, every recursively discovered Markdown file
+under `knowledge_root`, every explicitly listed `non_records` file, and every
+Technology `governed_artifacts` file. Required accepted extension artifacts
+and resources governed by a supported extension also participate. Unlisted
+non-Markdown knowledge assets do not participate unless an accepted rule or
+extension makes them governed inputs.
 
 The checker represents those inputs internally as closed
 `nkf.validation-snapshot` JSON with `nkf_version: "0.1"` and one entry per
@@ -1736,8 +1952,10 @@ unique. Message and remediation wording are non-contractual.
 `NKF Verified` means current full-bundle conformance only. A passing receipt
 remains current only while its Governed Validation Inputs still produce the
 snapshot, its core artifact bindings match the current accepted NKF 0.1
-revision, and its checker remains recognized and supported for that revision.
-Otherwise it is historical evidence with status **verification outdated**.
+revision, its recorded profile identity still matches the bundle-selected
+supported profile, and its checker remains recognized and supported for that
+revision. Otherwise it is historical evidence with status **verification
+outdated**.
 
 Normal acceptance changes alter governed inputs through the governed change
 process. NKF 0.1 does not infer a hidden acceptance change, poll an authority,
@@ -1759,7 +1977,7 @@ review and, where applicable, external Evidence.
 
 NKF 0.1 uses one content-addressed archive attached to a Github Release in
 `kaveh6202/Nourd.NKF` as its initial native checker distribution. The archive
-is release metadata and tooling, not Product knowledge, a project declaration,
+is release metadata and tooling, not governed knowledge, a project declaration,
 an acceptance record, or a conformance result.
 
 The release, tag, asset name, source commit, archive digest, checker digest,
@@ -1943,11 +2161,11 @@ control does not alter the NKF 0.1 format.
 
 ## Security And Privacy
 
-NKF bundles are durable, reviewable Product knowledge and may be distributed.
+NKF bundles are durable, reviewable governed knowledge and may be distributed.
 A bundle MUST NOT contain live credentials, access tokens, private keys, or
 secrets.
 
-Sensitive Product knowledge MAY require a restricted bundle or access policy,
+Sensitive governed knowledge MAY require a restricted bundle or access policy,
 but NKF 0.1 does not define that policy. A consumer MUST NOT hide missing
 governing knowledge and then present the remaining view as complete.
 
@@ -2008,6 +2226,7 @@ The following remain deliberately unresolved in NKF 0.1:
 - migration from current `nourd.knowledge.*` bootstrap contracts;
 - cross-bundle semantic identity and relationships;
 - Company and Organization knowledge contracts;
+- additional Root Profiles beyond Product and Technology;
 - public governance, contribution process, trademark position, and license;
 - an NKF extension registry and compatibility policy;
 - a future NKP runtime protocol;
@@ -2027,7 +2246,9 @@ A logical NKF 0.1 manifest:
 nkf_version: "0.1"
 contract: nkf.bundle
 id: example-product
-product_record: product
+root:
+  record: product
+  profile: nkf.profile.product
 knowledge_root: knowledge
 non_records:
   - path: README.md
@@ -2087,7 +2308,7 @@ governance:
   authority:
     - human-product-owner
 scope:
-  product: product
+  root: product
 sections:
   - id: product-definition
     heading_path: [Product Definition]
@@ -2142,8 +2363,8 @@ separately governed executable contract.
 
 | Failure mode | Consequence | Required response |
 | --- | --- | --- |
-| NKF attempts to model every kind of knowledge immediately | The first version becomes unusable and untestable | Keep 0.1 Product-only and add Company or Organization contracts from real needs |
-| Metadata becomes more authoritative than Markdown | Human review no longer sees complete Product meaning | Reject declarations that assert meaning without exact source sections |
+| NKF attempts to model every kind of knowledge immediately | The first version becomes unusable and untestable | Keep 0.1 limited to evidence-backed Product and Technology profiles and add later roots from real needs |
+| Metadata becomes more authoritative than Markdown | Human review no longer sees complete governed meaning | Reject declarations that assert meaning without exact source sections |
 | Stable identity follows paths or provider resources | Moves and integration changes break history | Preserve bundle, record, section, and entity identity independently |
 | Real instances are copied into Markdown | Operational truth becomes stale and conflicts with its owner | Keep durable bindings in NKF and resolve live state from authoritative systems |
 | Permissive interoperability weakens governance | Consumers treat OKF verification as Product acceptance | Keep the OKF export derived and preserve NKF authority extensions |

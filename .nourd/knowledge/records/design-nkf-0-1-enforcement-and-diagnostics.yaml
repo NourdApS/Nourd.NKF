@@ -1,0 +1,151 @@
+contract: nkf.record
+id: design-nkf-0-1-enforcement-and-diagnostics
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Enforcement And Diagnostics
+source:
+  path: designs/nkf-0.1-enforcement-and-diagnostics.md
+  digest:
+    algorithm: sha-256
+    value: 629067b6c766c6ec8525e5ed1a17a2adab95c485946ca1f28ff9463d86cb366d
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - unresolved-matters
+  - id: authority-model
+    heading_path:
+      - Authority Model
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: yaml-parse-boundary
+    heading_path:
+      - YAML Parse Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: enforcement-partition
+    heading_path:
+      - Enforcement Partition
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: derived-schema-layout
+    heading_path:
+      - Derived Schema Layout
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: validation-phases
+    heading_path:
+      - Validation Phases
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: conformance-levels
+    heading_path:
+      - Conformance Levels
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: diagnostic-contract
+    heading_path:
+      - Diagnostic Contract
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry
+    heading_path:
+      - Stable Native Rule Registry
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry-contract-parse-and-schema
+    heading_path:
+      - Stable Native Rule Registry
+      - Contract, Parse, And Schema
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry-project-path-source-and-representation
+    heading_path:
+      - Stable Native Rule Registry
+      - Project, Path, Source, And Representation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry-sections-bodies-and-governance
+    heading_path:
+      - Stable Native Rule Registry
+      - Sections, Bodies, And Governance
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry-record-relationships-and-bundle-graph
+    heading_path:
+      - Stable Native Rule Registry
+      - Record Relationships And Bundle Graph
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry-semantic-entities-and-durable-bindings
+    heading_path:
+      - Stable Native Rule Registry
+      - Semantic Entities And Durable Bindings
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: stable-native-rule-registry-extensions-security-and-authority-verification
+    heading_path:
+      - Stable Native Rule Registry
+      - Extensions, Security, And Authority Verification
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-result
+    heading_path:
+      - Validation Result
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: human-review-boundary
+    heading_path:
+      - Human Review Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: deliberate-differences-from-imported-checker-evidence
+    heading_path:
+      - Deliberate Differences From Imported Checker Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

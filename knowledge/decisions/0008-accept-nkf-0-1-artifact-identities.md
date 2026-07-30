@@ -1,4 +1,4 @@
-# ADR 0008: Accept NKF 0.1 artifact identities
+# ADR 0008: Accept NKF 0.1 Artifact Identities
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -33,7 +33,7 @@ The independent canonical artifacts are:
 The YAML identity is owned by NKF. It is not checker-specific and must not use
 the imported proposal identity `nkf.checker.contract-set/v1`.
 
-## Initial contract representation
+## Initial Contract Representation
 
 The first complete YAML contract set must represent:
 
@@ -55,7 +55,7 @@ remaining serialization shapes, or executable schemas.
 - The Markdown/YAML pair still requires exact revision and digest binding
   under ADR 0007.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept:
 

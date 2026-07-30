@@ -214,7 +214,7 @@ describe("bundle-aware checker", () => {
           status: "draft",
           authority: ["human-product-owner"],
         },
-        scope: { product: "product" },
+        scope: { root: "product" },
         sections: [{
           id: "decision",
           heading_path: ["Decision"],
@@ -239,7 +239,7 @@ describe("bundle-aware checker", () => {
     expect(result.conformance).toBe("passed");
     expect(result.records.map((record) => record.record_id)).toEqual(["decision", "product"]);
     expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).not.toContain(
-      "hierarchy.product-unreachable",
+      "hierarchy.root-unreachable",
     );
   });
 
@@ -304,7 +304,7 @@ describe("bundle-aware checker", () => {
     expect(result.records).toEqual([]);
     expect(result.governing_use).toBe("not-ready");
     expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).toEqual(
-      expect.arrayContaining(["bundle.product.missing", "bundle.product.invalid"]),
+      expect.arrayContaining(["bundle.root.missing", "bundle.root.invalid"]),
     );
   });
 });

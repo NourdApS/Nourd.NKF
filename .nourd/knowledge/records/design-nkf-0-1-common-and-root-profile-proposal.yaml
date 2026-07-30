@@ -1,0 +1,103 @@
+contract: nkf.record
+id: design-nkf-0-1-common-and-root-profile-proposal
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Common And Root Profile Proposal
+source:
+  path: designs/nkf-0.1-common-and-root-profile-proposal.md
+  digest:
+    algorithm: sha-256
+    value: 12857d58088d2f7b858575d174a143c7b6fa226f03e30ccf90f39720e18c1c07
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+  - id: conceptual-layers
+    heading_path:
+      - Conceptual Layers
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-bundle-selection
+    heading_path:
+      - Proposed Bundle Selection
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-common-specification
+    heading_path:
+      - Proposed Common Specification
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-concrete-profile-contract
+    heading_path:
+      - Proposed Concrete Profile Contract
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - proposed-or-accepted-design
+  - id: technology-first-comparison-method
+    heading_path:
+      - Technology-First Comparison Method
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: candidate-technology-profile
+    heading_path:
+      - Candidate Technology Profile
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: profile-validation
+    heading_path:
+      - Profile Validation
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: profile-specifications-and-packaging
+    heading_path:
+      - Profile Specifications And Packaging
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: adding-a-future-profile
+    heading_path:
+      - Adding A Future Profile
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: deferred
+    heading_path:
+      - Deferred
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships: []

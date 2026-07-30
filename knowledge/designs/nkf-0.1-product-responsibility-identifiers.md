@@ -1,4 +1,4 @@
-# NKF 0.1 Product responsibility identifiers
+# NKF 0.1 Product Responsibility Identifiers
 
 - **Status:** Accepted by ADR 0003
 - **Task:** `NKF-003`
@@ -6,7 +6,7 @@
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
-## Decision sought
+## Decision Sought
 
 Whether to accept the 69 contract-scoped identifiers proposed by NKF-002 as
 stable labels for the already accepted NKF 0.1 Product body responsibilities.
@@ -36,7 +36,7 @@ specific Evidence record is required rather than evidence in the general
 sense. This proposal rejects that silent change and retains the exact accepted
 lowercase wording.
 
-## Proposed identifiers
+## Proposed Identifiers
 
 Identifiers are scoped by their body contract. Repeating an identifier such
 as `boundaries` or `rationale` in another contract does not create shared
@@ -55,7 +55,7 @@ identity.
 | `nkf.realization/v1` | `realization-identity-and-kind`, `product-meaning-realized`, `durable-mapping`, `responsibilities-and-ownership-boundaries`, `interfaces-dependencies-locators-and-resolution`, `external-authority-and-operational-state-boundaries`, `compatibility-verification-and-recovery` |
 | `nkf.evidence/v1` | `question-claim-or-decision-context`, `sources-or-primary-observation-method`, `observations-and-findings`, `interpretation`, `limitations-and-uncertainty`, `applicability-and-boundaries`, `relevance-to-product-knowledge` |
 
-## Meaning and authority
+## Meaning And Authority
 
 Each identifier labels its same-position responsibility in the exact accepted
 NKF 0.1 Product specification. The accepted prose remains authoritative.
@@ -75,7 +75,7 @@ body-contract compatibility decision. Existing accepted NKF 0.1 declarations
 do not contain these identifiers and require an explicit migration before
 claiming conformance with the amended contract realization.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the 69 identifiers listed above as stable, contract-scoped labels for
 > the corresponding required responsibilities in the exact accepted NKF 0.1
@@ -86,7 +86,7 @@ claiming conformance with the amended contract realization.
 Acceptance would not approve a YAML field, JSON Schema, checker
 implementation, version change, package layout, or consumer migration.
 
-## Decision outcome
+## Decision Outcome
 
 The Human Product Owner accepted the exact identifier set on 29 July 2026.
 The immutable result is

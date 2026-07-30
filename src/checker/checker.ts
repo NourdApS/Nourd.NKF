@@ -19,6 +19,7 @@ import {
   observationDiagnostics,
   SnapshotCollector,
   validKnowledgePath,
+  validProjectPath,
   validKnowledgeRootLexical,
   type Observation,
 } from "./project.js";
@@ -443,6 +444,76 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       }
     });
 
+    const governedArtifacts = values<Record<string, any>>(bundle.governed_artifacts);
+    if (governedArtifacts.length > 0 && bundle.root?.profile !== "nkf.profile.technology") {
+      emitter.emit("artifact.profile.unsupported", "Only the Technology Profile may declare governed artifacts.", {
+        artifact: ".nourd/knowledge/bundle.yaml",
+        instance_pointer: "/governed_artifacts",
+      });
+    }
+    const artifactIds = new Map<string, number>();
+    const artifactPaths = new Map<string, number>();
+    const artifactPhysicalPaths = new Map<string, number>();
+    for (const [index, artifact] of governedArtifacts.entries()) {
+      const id = String(artifact.id);
+      const artifactPath = artifact.path;
+      if (artifactIds.has(id)) {
+        emitter.emit("artifact.id.duplicate", "A governed artifact ID is duplicated.", {
+          artifact: ".nourd/knowledge/bundle.yaml",
+          instance_pointer: `/governed_artifacts/${index}/id`,
+        });
+      } else {
+        artifactIds.set(id, index);
+      }
+      if (!validProjectPath(artifactPath)) {
+        emitter.emit("artifact.path.invalid", "The governed artifact path is not a safe project-relative path outside .nourd.", {
+          artifact: ".nourd/knowledge/bundle.yaml",
+          instance_pointer: `/governed_artifacts/${index}/path`,
+        });
+        continue;
+      }
+      if (artifactPaths.has(artifactPath)) {
+        emitter.emit("artifact.path.duplicate", "A governed artifact path is declared more than once.", {
+          artifact: artifactPath,
+          instance_pointer: `/governed_artifacts/${index}/path`,
+        });
+      } else {
+        artifactPaths.set(artifactPath, index);
+      }
+      const observation = await collector.observe(artifactPath, { content: true });
+      symlinkDiagnostics(emitter, observation, "regular-file", false);
+      if (observation.entry.direct_kind === "missing" || observation.entry.final_kind === null) {
+        emitter.emit("artifact.missing", "The governed artifact file is missing.", {
+          artifact: artifactPath,
+          instance_pointer: `/governed_artifacts/${index}/path`,
+        });
+        continue;
+      }
+      if (observation.entry.final_kind !== "regular-file") {
+        emitter.emit("artifact.file-kind.invalid", "The governed artifact must resolve to a regular file.", {
+          artifact: artifactPath,
+          instance_pointer: `/governed_artifacts/${index}/path`,
+        });
+        continue;
+      }
+      if (observation.resolvedAbsolute !== null) {
+        if (artifactPhysicalPaths.has(observation.resolvedAbsolute)) {
+          emitter.emit("artifact.path.duplicate", "Two governed artifact paths resolve to the same physical file.", {
+            artifact: artifactPath,
+            instance_pointer: `/governed_artifacts/${index}/path`,
+          });
+        } else {
+          artifactPhysicalPaths.set(observation.resolvedAbsolute, index);
+        }
+      }
+      if (observation.bytes !== null && sha256(observation.bytes) !== artifact.digest?.value) {
+        emitter.emit("artifact.digest-mismatch", "The governed artifact bytes do not match the declared digest.", {
+          artifact: artifactPath,
+          instance_pointer: `/governed_artifacts/${index}/digest/value`,
+        });
+      }
+    }
+
     const groupsById = new Map<string, ParsedRecord[]>();
     for (const record of parsedRecords.filter((candidate) => candidate.value !== null && candidate.schemaValid)) {
       const id = String(record.value?.id);
@@ -657,7 +728,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   }
   if (phasePassed("extension-resolution")) {
     evaluated.add("bundle-graph");
-    validateGraph(bundle ?? {}, recordUnits, emitter);
+    validateGraph(bundle ?? {}, recordUnits, loaded.executable, emitter);
     if (options.request.level === "contract" && requestedScope.size !== 1) {
       emitter.emit(
         "request.record.unresolved",
@@ -671,7 +742,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     phasePassed("bundle-graph")
   ) {
     evaluated.add("record-contract");
-    validateRecordContracts(recordUnits, requestedScope, loaded.executable, emitter);
+    validateRecordContracts(recordUnits, requestedScope, bundle ?? {}, loaded.executable, emitter);
   }
 
   if (phasePassed("project")) {
@@ -824,6 +895,12 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     contract_artifacts: loaded.artifacts,
     request: options.request,
     bundle_id: typeof bundle?.id === "string" ? bundle.id : null,
+    profile:
+      typeof bundle?.root?.profile !== "string"
+        ? { identity: null, binding: "not-evaluated" }
+        : loaded.executable.root_profiles?.selectable?.[bundle.root.profile] !== undefined
+          ? { identity: bundle.root.profile, binding: "verified" }
+          : { identity: bundle.root.profile, binding: "unsupported" },
     validated_snapshot: snapshot(collector.values()),
     phases: PHASES.map((id) => ({ id, state: state(id) })),
     conformance,

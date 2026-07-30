@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0014
+type: decision
+body_contract: nkf.decision
+title: "ADR 0014: Accept NKF 0.1 Section-Role Vocabularies"
+source:
+  path: decisions/0014-accept-nkf-0-1-section-role-vocabularies.md
+  digest:
+    algorithm: sha-256
+    value: a57ce4ea9883d209b22d027e2551f0b37f1020386d1e23368ac347ed9e0ab2ea
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

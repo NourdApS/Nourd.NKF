@@ -1,0 +1,59 @@
+contract: nkf.record
+id: design-nkf-0-1-json-schema-realization
+type: design
+body_contract: nkf.design
+title: NKF 0.1 JSON Schema Realization
+source:
+  path: designs/nkf-0.1-json-schema-realization.md
+  digest:
+    algorithm: sha-256
+    value: d8552c83670c3111ecb6409489940afdc84a81d9710eb5fafdf9c8ddb0d3878b
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: proposed-derived-artifact-layout
+    heading_path:
+      - Proposed Derived Artifact Layout
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: accepted-constraints-represented
+    heading_path:
+      - Accepted Constraints Represented
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: concrete-choices-requiring-confirmation
+    heading_path:
+      - Concrete Choices Requiring Confirmation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

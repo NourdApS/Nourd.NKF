@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0038
+type: decision
+body_contract: nkf.decision
+title: "ADR 0038: Establish Nourd Invocation Precondition"
+source:
+  path: decisions/0038-establish-nourd-invocation-precondition.md
+  digest:
+    algorithm: sha-256
+    value: 0a8f5008b871fc9bc31ef9818f21e4369aab5f2f8869215ccc5ce0e6e3b3b677
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

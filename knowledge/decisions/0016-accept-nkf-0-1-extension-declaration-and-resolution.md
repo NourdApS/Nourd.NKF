@@ -1,4 +1,4 @@
-# ADR 0016: Accept NKF 0.1 extension declaration and resolution
+# ADR 0016: Accept NKF 0.1 Extension Declaration And Resolution
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -61,7 +61,7 @@ contract conformance and governing action.
 The bundle-local catalog is resolution metadata, not a public extension
 registry. A public registry and its compatibility policy remain out of scope.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept any concrete extension, the universal locator
 and distribution boundary, standardized acceptance proof, replacement

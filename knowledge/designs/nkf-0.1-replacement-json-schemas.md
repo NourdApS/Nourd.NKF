@@ -1,4 +1,4 @@
-# NKF 0.1 replacement JSON Schemas
+# NKF 0.1 Replacement JSON Schemas
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -15,7 +15,7 @@ replaces the obsolete `markdown_root`, `records_root`, open-object, and shallow
 record assumptions in the preliminary schema files without treating schema
 code as normative meaning.
 
-## Exact proposal artifacts
+## Exact Proposal Artifacts
 
 | Proposed artifact | Canonical destination | SHA-256 |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ Their `$id` values are the accepted
 digest remains release metadata and is deliberately not embedded recursively
 inside its bytes.
 
-## Schema-owned enforcement
+## Schema-Owned Enforcement
 
 The proposals enforce only local deterministic structure assigned to JSON
 Schema by ADR 0019 and the accepted authority pair:
@@ -61,7 +61,7 @@ Unknown native fields fail closed. Extension payload remains any
 JSON-compatible value because its separately governed extension contract owns
 the payload shape.
 
-## Deliberate checker-owned boundaries
+## Deliberate Checker-Owned Boundaries
 
 The record schema intentionally represents semantic controlled values such as
 record type, body contract, section authority and role, responsibility,
@@ -97,7 +97,7 @@ This partition prevents a generic `schema.record.invalid` result from becoming
 a second implementation of rules whose accepted primary layer and diagnostic
 identity belong elsewhere.
 
-## Verification performed
+## Verification Performed
 
 The proposals:
 
@@ -117,7 +117,7 @@ The proposals:
 The current verification used 23 focused instances. They are audit probes,
 not the accepted conformance fixture suite and make no conformance claim.
 
-## Compatibility and non-claims
+## Compatibility And Non-Claims
 
 The proposal is a breaking replacement for the preliminary schema bytes, but
 it does not change NKF format version `0.1` or any accepted meaning. The
@@ -128,7 +128,7 @@ and allow the next checker/fixture implementation step. It would not accept
 knowledge, establish a checker package or release, verify a consumer,
 confirm a Realization, or produce NKF conformance.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Confirm the two exact JSON Schema proposal revisions and digests above as
 > the derived schema realization of the NKF 0.1 authority pair accepted by ADR

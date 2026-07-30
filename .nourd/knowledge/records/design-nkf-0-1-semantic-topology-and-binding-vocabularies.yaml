@@ -1,0 +1,89 @@
+contract: nkf.record
+id: design-nkf-0-1-semantic-topology-and-binding-vocabularies
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Semantic-Topology And Binding Vocabularies
+source:
+  path: designs/nkf-0.1-semantic-topology-and-binding-vocabularies.md
+  digest:
+    algorithm: sha-256
+    value: 01fdd28e008efa9d243aef8531ccf25f4beed85acd25d0f2c8a14de43eb643f4
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - unresolved-matters
+  - id: semantic-entity-model
+    heading_path:
+      - Semantic-Entity Model
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: entity-kinds
+    heading_path:
+      - Entity Kinds
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: entity-references-and-ownership
+    heading_path:
+      - Entity References And Ownership
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+  - id: entity-relationship-types
+    heading_path:
+      - Entity-Relationship Types
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: binding-model
+    heading_path:
+      - Binding Model
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: binding-kinds
+    heading_path:
+      - Binding Kinds
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: deliberate-differences-from-imported-checker-evidence
+    heading_path:
+      - Deliberate Differences From Imported Checker Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

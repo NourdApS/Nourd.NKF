@@ -1,0 +1,51 @@
+contract: nkf.record
+id: adr-0040
+type: decision
+body_contract: nkf.decision
+title: "ADR 0040: Confirm Invocation-Precondition Json Schema Bindings"
+source:
+  path: decisions/0040-confirm-invocation-precondition-json-schema-bindings.md
+  digest:
+    algorithm: sha-256
+    value: 84a28dcd492f5f6385fdb180b6a043d2253e6dff5a08cce593579afb06faf34a
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

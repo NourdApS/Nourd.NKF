@@ -1,0 +1,103 @@
+contract: nkf.record
+id: design-nkf-0-1-initial-release-distribution
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Initial Release Distribution
+source:
+  path: designs/nkf-0.1-initial-release-distribution.md
+  digest:
+    algorithm: sha-256
+    value: b11a5952bf53135cc38cea9b83211aa2df377cc04644204a1a03717b62d9c09b
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - unresolved-matters
+  - id: proposed-archive
+    heading_path:
+      - Proposed Archive
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-release-manifest
+    heading_path:
+      - Proposed Release Manifest
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-manifest-encoding
+    heading_path:
+      - Proposed Manifest Encoding
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-deterministic-packaging
+    heading_path:
+      - Proposed Deterministic Packaging
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-consumer-verification
+    heading_path:
+      - Proposed Consumer Verification
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-github-release-workflow
+    heading_path:
+      - Proposed Github Release Workflow
+    occurrence: 1
+    authority: proposal
+    role: interface
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: external-platform-evidence
+    heading_path:
+      - External Platform Evidence
+    occurrence: 1
+    authority: proposal
+    role: evidence
+    responsibilities:
+      - validation-and-acceptance-evidence
+  - id: proposed-normative-markdown-delta
+    heading_path:
+      - Proposed Normative Markdown Delta
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-executable-yaml-delta
+    heading_path:
+      - Proposed Executable YAML Delta
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: authority-reconciliation-required
+    heading_path:
+      - Authority Reconciliation Required
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: review-findings
+    heading_path:
+      - Review Findings
+    occurrence: 1
+    authority: proposal
+    role: evidence
+relationships: []

@@ -1,4 +1,4 @@
-# NKF 0.1 section-role vocabularies
+# NKF 0.1 Section-Role Vocabularies
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -10,7 +10,7 @@
   SHA-256
   `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8`
 
-## Decision sought
+## Decision Sought
 
 Whether the following shared role meanings and body-specific allowed subsets
 are the complete controlled section-role vocabulary for the ten core NKF 0.1
@@ -19,7 +19,7 @@ Product body contracts.
 The imported checker supplied the role names and subsets but not authoritative
 role meanings. This proposal does not infer acceptance from that checker.
 
-## Role model
+## Role Model
 
 Every declared section has exactly one lowercase role from the allowed subset
 of its declared body contract. A repeated role name has one meaning across all
@@ -40,7 +40,7 @@ Role classification:
 - is not inferred from heading text; and
 - remains source-bound to the declared section.
 
-## Shared role meanings
+## Shared Role Meanings
 
 | Role | Exact classification meaning |
 | --- | --- |
@@ -83,7 +83,7 @@ Role classification:
 | `unresolved` | An explicit open question, ambiguity, conflict, missing decision, or unsettled matter. |
 | `validation` | The approach, criteria, or required proof for validating a design or its acceptance conditions. |
 
-## Allowed roles by core body contract
+## Allowed Roles By Core Body Contract
 
 Order is editorial only and carries no semantic meaning.
 
@@ -100,7 +100,7 @@ Order is editorial only and carries no semantic meaning.
 | `nkf.realization` | `identity`, `mapping`, `responsibility`, `boundary`, `interface`, `dependency`, `obligation`, `evidence`, `recovery`, `unresolved`, `content` |
 | `nkf.evidence` | `context`, `source`, `method`, `observation`, `finding`, `interpretation`, `limitation`, `boundary`, `relevance`, `evidence`, `unresolved`, `content` |
 
-## Fail-closed and semantic guardrails
+## Fail-Closed And Semantic Guardrails
 
 - A role outside the allowed subset for the declared body contract is invalid.
 - An unknown role is invalid for native NKF 0.1.
@@ -131,7 +131,7 @@ weakening a guardrail is an NKF format change. It requires the pre-stable
 change process in ADR 0006, an accepted replacement authority pair, compatible
 derived artifacts, and deliberate consumer migration.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the 38 shared section-role meanings, the ten body-specific allowed
 > subsets, and the fail-closed and semantic guardrails exactly as stated above

@@ -1,0 +1,65 @@
+contract: nkf.record
+id: adr-0028
+type: decision
+body_contract: nkf.decision
+title: "ADR 0028: Confirm Pre-Checker NKF 0.1 Json Schema Realization"
+source:
+  path: decisions/0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md
+  digest:
+    algorithm: sha-256
+    value: 11686b6b60d0954c4b4ea46ea11b5b6707ec017fec2bfb5686182f69181b59cc
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: enforcement-boundary
+    heading_path:
+      - Enforcement Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: supersession-and-compatibility
+    heading_path:
+      - Supersession And Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

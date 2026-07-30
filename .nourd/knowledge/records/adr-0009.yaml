@@ -1,0 +1,58 @@
+contract: nkf.record
+id: adr-0009
+type: decision
+body_contract: nkf.decision
+title: "ADR 0009: Establish The Single NKF 0.1 Version Namespace"
+source:
+  path: decisions/0009-establish-single-nkf-0-1-version-namespace.md
+  digest:
+    algorithm: sha-256
+    value: aaf1e4ea82051af7b49f0a830b8b8611262a9d0657a18a0b5467c5ed3cd54f44
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: supersession-and-preservation
+    heading_path:
+      - Supersession And Preservation
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0029
+type: decision
+body_contract: nkf.decision
+title: "ADR 0029: Reconcile NKF 0.1 Schema Realization Status"
+source:
+  path: decisions/0029-reconcile-nkf-0-1-schema-realization-status.md
+  digest:
+    algorithm: sha-256
+    value: 579bdce27b4851e6df16df309203e809aa3fc961ca925fe465be731faf98f334
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: supersession-and-rebinding
+    heading_path:
+      - Supersession And Rebinding
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

@@ -1,0 +1,52 @@
+contract: nkf.record
+id: adr-0003
+type: decision
+body_contract: nkf.decision
+title: "ADR 0003: Accept Product Responsibility Identifiers"
+source:
+  path: decisions/0003-accept-product-responsibility-identifiers.md
+  digest:
+    algorithm: sha-256
+    value: a464a1f84817deadddd88090c2f7bf101d34c19c3a2a99480c39c386d9e0c62f
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

@@ -138,6 +138,11 @@ export function validKnowledgePath(value: unknown): value is string {
   return true;
 }
 
+export function validProjectPath(value: unknown): value is string {
+  if (!validKnowledgePath(value)) return false;
+  return value !== ".nourd" && !value.startsWith(".nourd/");
+}
+
 export interface MarkdownDiscovery {
   paths: string[];
   observations: Map<string, Observation>;

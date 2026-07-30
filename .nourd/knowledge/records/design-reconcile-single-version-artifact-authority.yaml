@@ -1,0 +1,59 @@
+contract: nkf.record
+id: design-reconcile-single-version-artifact-authority
+type: design
+body_contract: nkf.design
+title: Reconcile Single-Version Artifact Authority
+source:
+  path: designs/reconcile-single-version-artifact-authority.md
+  digest:
+    algorithm: sha-256
+    value: 3d73f7c19f1f43220762793a48b5666e580ea403bf1627bfa002f1d1af396e59
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: problem
+    heading_path:
+      - Problem
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: proposed-reconciliation
+    heading_path:
+      - Proposed Reconciliation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: compatibility-effect
+    heading_path:
+      - Compatibility Effect
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-outcome
+    heading_path:
+      - Decision Outcome
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - proposed-or-accepted-design
+relationships: []

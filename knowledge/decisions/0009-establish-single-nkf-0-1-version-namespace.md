@@ -1,4 +1,4 @@
-# ADR 0009: Establish the single NKF 0.1 version namespace
+# ADR 0009: Establish The Single NKF 0.1 Version Namespace
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -39,7 +39,7 @@ not supported parallel NKF contracts. They must deliberately onboard or migrate
 to NKF 0.1; no automatic conversion or external migration is required or
 authorized by this Decision.
 
-## Supersession and preservation
+## Supersession And Preservation
 
 This Decision supersedes the versioned-contract identity and parallel-contract
 model in ADR 0002, ADR 0003, ADR 0004, ADR 0005, and ADR 0008. It preserves
@@ -65,7 +65,7 @@ for a separate contract version.
 - Any future semantic or structural change requires a later NKF format version
   under ADR 0006.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept the exact independent Markdown composite, YAML
 contents or digest, schemas, checker behavior, fixture set, packaging, release,

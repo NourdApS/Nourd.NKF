@@ -1,0 +1,88 @@
+contract: nkf.record
+id: design-nkf-0-1-path-and-distribution-boundary
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Project Path And Knowledge Coverage
+source:
+  path: designs/nkf-0.1-path-and-distribution-boundary.md
+  digest:
+    algorithm: sha-256
+    value: eaf5e082814eb8c73c9ae6fabec733542211f5554f6be184139d21012230d5ad
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: accepted-boundary
+    heading_path:
+      - Accepted Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: project-layout
+    heading_path:
+      - Project Layout
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: knowledge-entry-point
+    heading_path:
+      - Knowledge Entry Point
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: paths-inside-the-knowledge-root
+    heading_path:
+      - Paths Inside The Knowledge Root
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: one-markdown-file-one-representation
+    heading_path:
+      - One Markdown File, One Representation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: one-declaration-many-sections
+    heading_path:
+      - One Declaration, Many Sections
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: symlinks
+    heading_path:
+      - Symlinks
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: locators-remain-separate
+    heading_path:
+      - Locators Remain Separate
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: not-accepted-by-this-boundary
+    heading_path:
+      - Not Accepted By This Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+relationships: []

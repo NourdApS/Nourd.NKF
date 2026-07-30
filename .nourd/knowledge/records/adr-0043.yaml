@@ -1,0 +1,73 @@
+contract: nkf.record
+id: adr-0043
+type: decision
+body_contract: nkf.decision
+title: "ADR 0043: Establish Native Release Manifest Contract"
+source:
+  path: decisions/0043-establish-native-release-manifest-contract.md
+  digest:
+    algorithm: sha-256
+    value: 8adf5cdfa25292ff3855ed498c5a63ff57a8ed8e16218ce2ab504782bef7c723
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-native-identity
+    heading_path:
+      - Decision
+      - Native Identity
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-authority
+    heading_path:
+      - Decision
+      - Authority
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-enforcement
+    heading_path:
+      - Decision
+      - Enforcement
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

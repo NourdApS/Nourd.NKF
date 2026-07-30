@@ -1,0 +1,70 @@
+contract: nkf.record
+id: design-nkf-0-1-section-role-vocabularies
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Section-Role Vocabularies
+source:
+  path: designs/nkf-0.1-section-role-vocabularies.md
+  digest:
+    algorithm: sha-256
+    value: cf176e5a5b04e6e2de6044638acc996ca41ceec474061378c4ae2091ce7664bd
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - governing-inputs-and-constraints
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: role-model
+    heading_path:
+      - Role Model
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: shared-role-meanings
+    heading_path:
+      - Shared Role Meanings
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: allowed-roles-by-core-body-contract
+    heading_path:
+      - Allowed Roles By Core Body Contract
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: fail-closed-and-semantic-guardrails
+    heading_path:
+      - Fail-Closed And Semantic Guardrails
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

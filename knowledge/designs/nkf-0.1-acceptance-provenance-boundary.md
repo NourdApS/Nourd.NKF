@@ -1,4 +1,4 @@
-# NKF 0.1 acceptance-provenance boundary
+# NKF 0.1 Acceptance-Provenance Boundary
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -9,13 +9,13 @@
   imported NKF-002 `governance.acceptance_source` Git-revision check; the
   imported field and checker are not authority
 
-## Decision sought
+## Decision Sought
 
 Whether native NKF 0.1 should deliberately define no universal
 acceptance-event or acceptance-proof field and instead establish the exact
 authority, confirmation, conformance, and extension boundary below.
 
-## Core governance declaration
+## Core Governance Declaration
 
 Native NKF 0.1 retains only the already accepted core governance shape:
 
@@ -41,7 +41,7 @@ or event identifier cannot create acceptance.
 Native NKF 0.1 adds no core `acceptance_source`, `acceptance_event`,
 `proposal_revision`, or equivalent proof field.
 
-## Why proof remains outside core
+## Why Proof Remains Outside Core
 
 Acceptance authorities may operate through immutable Decision records, Git
 history, signed events, databases, review systems, or other governed sources.
@@ -58,7 +58,7 @@ A universal core reference would either:
 NKF therefore defines the evidence required to verify acceptance, but not one
 storage representation for every authority.
 
-## Acceptance and verification
+## Acceptance And Verification
 
 Acceptance is an act of the declared authority in its authoritative system.
 It does not occur inside a checker.
@@ -83,7 +83,7 @@ governing use fails closed.
 Verification confirms the binding of an authority decision. It does not
 perform acceptance, validate semantic adequacy, or confirm a Realization.
 
-## Independent result axes
+## Independent Result Axes
 
 Consumers must keep these results separate:
 
@@ -106,7 +106,7 @@ acceptance binding verified, and required NKF conformance. A superseded or
 retired record is not current governing authority even when its historical
 acceptance remains verified.
 
-## Portable authority-specific evidence
+## Portable Authority-Specific Evidence
 
 When a bundle must carry portable acceptance evidence or a deterministic
 resolver configuration, it uses an authority-owned extension governed by
@@ -124,7 +124,7 @@ and must define:
 The extension remains authority-specific and does not become core NKF meaning.
 The native NKF 0.1 supported-extension set remains empty.
 
-## Deterministic core validation
+## Deterministic Core Validation
 
 Core validation may establish:
 
@@ -143,7 +143,7 @@ An unsupported imported `acceptance_source` or similar field is not native NKF
 0.1. It must be removed during deliberate migration or carried through a
 supported extension; it cannot be silently interpreted as core proof.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept that native NKF 0.1 defines no universal acceptance-event or proof
 > field; retains governance status, authority, and optional acceptance date as

@@ -1,4 +1,4 @@
-# NKF 0.1 native record serialization
+# NKF 0.1 Native Record Serialization
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -8,12 +8,12 @@
 - **Implementation evidence:** imported NKF-002 record schema and TypeScript
   types; neither is authority
 
-## Decision sought
+## Decision Sought
 
 Whether the following YAML object shape is the exact native serialization of
 the logical NKF 0.1 record defined by the accepted Markdown.
 
-## Required top-level fields
+## Required Top-Level Fields
 
 | Field | Exact shape |
 | --- | --- |
@@ -31,7 +31,7 @@ the logical NKF 0.1 record defined by the accepted Markdown.
 Unknown top-level fields fail closed unless owned by a separately supported
 extension decision.
 
-## Required nested shapes
+## Required Nested Shapes
 
 ```yaml
 source:
@@ -69,7 +69,7 @@ Every required body responsibility must occur in at least one section. The
 meaning except `heading_path`; native serialization emits responsibilities in
 body-contract order for deterministic review.
 
-## Optional source-bound structures
+## Optional Source-Bound Structures
 
 When present, these use the following exact minimum shapes:
 
@@ -91,7 +91,7 @@ When present, these use the following exact minimum shapes:
 
 Optional empty structures are omitted.
 
-## Explicitly deferred from this boundary
+## Explicitly Deferred From This Boundary
 
 - complete section-role vocabularies;
 - entity kinds, entity-relationship types, and binding kinds;
@@ -105,7 +105,7 @@ is accepted. A copied `governance.status: accepted` or `accepted_at` value does
 not prove acceptance; authoritative acceptance remains externally bound to an
 exact revision.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Accept the required and optional NKF 0.1 native record field shapes above,
 > including closed unknown-field handling, exact type/body correspondence,

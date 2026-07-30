@@ -1,0 +1,82 @@
+contract: nkf.record
+id: adr-0050
+type: decision
+body_contract: nkf.decision
+title: "ADR 0050: Accept Product And Technology Root Profiles"
+source:
+  path: decisions/0050-accept-product-and-technology-root-profiles.md
+  digest:
+    algorithm: sha-256
+    value: 0ba1e156bea4f51dbac13abc8c33d40234af7f1a56a08a5787f1423eb77f96c6
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: common-allocation
+    heading_path:
+      - Common Allocation
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: product-allocation
+    heading_path:
+      - Product Allocation
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: technology-allocation
+    heading_path:
+      - Technology Allocation
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: validation-result
+    heading_path:
+      - Validation Result
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

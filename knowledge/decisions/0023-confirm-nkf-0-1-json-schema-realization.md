@@ -1,4 +1,4 @@
-# ADR 0023: Confirm NKF 0.1 JSON Schema realization
+# ADR 0023: Confirm NKF 0.1 JSON Schema Realization
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -60,7 +60,7 @@ Promotion copies those reviewed bytes unchanged. Both schemas identify:
 Schema self-digests remain release metadata and are not embedded recursively
 inside the schema bytes.
 
-## Enforcement boundary
+## Enforcement Boundary
 
 The schemas confirm local closed shapes, required fields, primitives,
 constants, static local enums, local cardinality, duplicate-free scalar
@@ -74,7 +74,7 @@ extension resolution, security scanning, authority verification, acceptance,
 Realization confirmation, and semantic adequacy remain in their accepted
 checker, resolver, or human-review layers.
 
-## Supersession and compatibility
+## Supersession And Compatibility
 
 These exact revisions replace the preliminary schema bytes as the current
 canonical schema realization. The preliminary revisions and their digests
@@ -84,7 +84,7 @@ This confirmation changes no NKF meaning and introduces no schema sub-version.
 NKF retains the sole `0.1` version coordinate and exact artifact-digest
 binding.
 
-## Non-claims
+## Non-Claims
 
 This Decision confirms only the derived schema realization. It does not:
 

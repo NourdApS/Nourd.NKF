@@ -1,0 +1,64 @@
+contract: nkf.record
+id: adr-0036
+type: decision
+body_contract: nkf.decision
+title: "ADR 0036: Accept Checker-Findings-Resolved Authority Pair"
+source:
+  path: decisions/0036-accept-checker-findings-resolved-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: d126c2d9157db6c18f02902b23654e45d81b1f475b73b0cc377869cc6b040bb6
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: verification
+    heading_path:
+      - Verification
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: schema-effect
+    heading_path:
+      - Schema Effect
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

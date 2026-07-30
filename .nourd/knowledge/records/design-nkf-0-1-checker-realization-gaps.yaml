@@ -1,0 +1,289 @@
+contract: nkf.record
+id: design-nkf-0-1-checker-realization-gaps
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Checker-Realization Gaps
+source:
+  path: designs/nkf-0.1-checker-realization-gaps.md
+  digest:
+    algorithm: sha-256
+    value: af03f76626aa8c9263a0434b2fc996c9b5490380dbbe91e6fb140d3f474793eb
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - alternatives-and-trade-offs
+      - unresolved-matters
+  - id: verified-implementation-boundary
+    heading_path:
+      - Verified Implementation Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: gap-1-markdown-heading-interpretation-and-coverage
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-1-markdown-heading-interpretation-and-coverage-accepted-requirement
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Accepted Requirement
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: gap-1-markdown-heading-interpretation-and-coverage-missing-deterministic-behavior
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Missing Deterministic Behavior
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-1-markdown-heading-interpretation-and-coverage-concrete-example
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Concrete Example
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-1-markdown-heading-interpretation-and-coverage-resolution-choices
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Resolution Choices
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-1-markdown-heading-interpretation-and-coverage-exact-reviewed-boundary
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Exact Reviewed Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: gap-1-markdown-heading-interpretation-and-coverage-confirmed-casing-direction
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Confirmed Casing Direction
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - proposed-or-accepted-design
+  - id: gap-1-markdown-heading-interpretation-and-coverage-confirmed-markdown-grammar-and-mermaid-boundary
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Confirmed Markdown Grammar And Mermaid Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: gap-1-markdown-heading-interpretation-and-coverage-confirmed-coverage-and-addressing
+    heading_path:
+      - "Gap 1: Markdown Heading Interpretation And Coverage"
+      - Confirmed Coverage And Addressing
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-2-security-secret-pattern-trigger
+    heading_path:
+      - "Gap 2: Security.secret-Pattern Trigger"
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: gap-2-security-secret-pattern-trigger-accepted-requirement
+    heading_path:
+      - "Gap 2: Security.secret-Pattern Trigger"
+      - Accepted Requirement
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: gap-2-security-secret-pattern-trigger-missing-deterministic-behavior
+    heading_path:
+      - "Gap 2: Security.secret-Pattern Trigger"
+      - Missing Deterministic Behavior
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-2-security-secret-pattern-trigger-accepted-resolution
+    heading_path:
+      - "Gap 2: Security.secret-Pattern Trigger"
+      - Accepted Resolution
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+    occurrence: 1
+    authority: proposal
+    role: interface
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+      - validation-and-acceptance-evidence
+  - id: gap-3-nkf-validation-result-serialization-accepted-requirement
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Accepted Requirement
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: gap-3-nkf-validation-result-serialization-missing-deterministic-behavior
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Missing Deterministic Behavior
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-recommended-resolution
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Recommended Resolution
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-bounded-technical-review-delegation
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Bounded Technical-Review Delegation
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-confirmed-current-result-storage-boundary
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Current-Result Storage Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: gap-3-nkf-validation-result-serialization-confirmed-verification-meaning
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Verification Meaning
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-confirmed-governing-use-aggregation
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Governing-Use Aggregation
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: gap-3-nkf-validation-result-serialization-confirmed-validation-request-model
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Validation Request Model
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: gap-3-nkf-validation-result-serialization-confirmed-execution-and-checker-identity
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Execution And Checker Identity
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: gap-3-nkf-validation-result-serialization-confirmed-contract-artifact-binding
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Contract-Artifact Binding
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-confirmed-phase-serialization
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Phase Serialization
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: gap-3-nkf-validation-result-serialization-confirmed-diagnostic-serialization
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Diagnostic Serialization
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: gap-3-nkf-validation-result-serialization-reviewer-confirmed-record-summaries
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Reviewer-Confirmed Record Summaries
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-reviewer-confirmed-result-container-and-encoding
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Reviewer-Confirmed Result Container And Encoding
+    occurrence: 1
+    authority: proposal
+    role: evidence
+  - id: gap-3-nkf-validation-result-serialization-confirmed-snapshot-input-boundary
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Snapshot Input Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: gap-3-nkf-validation-result-serialization-confirmed-snapshot-calculation-model
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Snapshot Calculation Model
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-confirmed-closed-snapshot-inventory
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Confirmed Closed Snapshot Inventory
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: gap-3-nkf-validation-result-serialization-consequential-freshness-review
+    heading_path:
+      - "Gap 3: Nkf.validation-Result Serialization"
+      - Consequential Freshness Review
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: non-blocking-extension-boundary
+    heading_path:
+      - Non-Blocking Extension Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: repository-realization-boundary
+    heading_path:
+      - Repository-Realization Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: decision-and-implementation-order
+    heading_path:
+      - Decision And Implementation Order
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: current-conclusion
+    heading_path:
+      - Current Conclusion
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

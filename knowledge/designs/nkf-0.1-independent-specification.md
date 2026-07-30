@@ -1,4 +1,4 @@
-# NKF 0.1 — Product knowledge format
+# NKF 0.1 — Product Knowledge Format
 
 - **Status:** Proposal for independent NKF authority
 - **Task:** `NKF-003`
@@ -33,7 +33,7 @@ acceptance protocol is reserved under the name **Nourd Knowledge Protocol
 (NKP)**. The Nourd Knowledge Engine is an implementation that may consume NKF;
 it does not define the format.
 
-## Normative status
+## Normative Status
 
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
@@ -58,7 +58,7 @@ A conformant Draft remains a proposal. An accepted record that becomes
 structurally invalid is still part of accepted history, but a consumer MUST
 surface the defect and MUST NOT silently reinterpret it.
 
-## Source drafting provenance
+## Source Drafting Provenance
 
 The Human Product Owner directly confirmed the NKF name; eventual public
 direction; Product-only 0.1 scope; Shredwise pilot; deliberate OKF 0.2 rebase;
@@ -113,7 +113,7 @@ NKF 0.1 does not define:
 - public governance, registry hosting, or licensing; or
 - a universal freshness policy.
 
-## Core model
+## Core Model
 
 NKF separates four layers:
 
@@ -187,7 +187,7 @@ contracts. NKF 0.1 does not silently rename or reinterpret them. A controlled
 migration or verified profile mapping is required before a repository using
 those identifiers can claim native NKF contract conformance.
 
-## Bundle contract
+## Bundle Contract
 
 The logical NKF bundle is location-independent. NKF does not require
 `.nourd`, `.nkf`, a fixed Markdown root, or a fixed records directory. A bundle
@@ -216,7 +216,7 @@ explicit rather than inferred from a filename.
 The filename of a declaration SHOULD be `<record-id>.yaml`. This is a
 deterministic navigation convention, not identity or authority.
 
-## Record contract
+## Record Contract
 
 Every governed record MUST have exactly one canonical Markdown source and one
 YAML declaration.
@@ -338,7 +338,7 @@ Cross-bundle identity and typed relationships are deferred in NKF 0.1.
 External material and authority are addressed through provenance locators and
 external-authority bindings instead.
 
-## Section authority
+## Section Authority
 
 Every semantic Markdown section MUST be classified as exactly one of:
 
@@ -422,7 +422,7 @@ Filesystem placement, ordinary Markdown links, generated backlinks,
 similarity, tags, model classifications, and runtime correlations do not
 create typed relationships. Backlinks and graph projections are derived.
 
-## Provenance and roles
+## Provenance And Roles
 
 NKF separates four roles:
 
@@ -463,7 +463,7 @@ NKF MAY record factual production, verification, observation, and
 last-modified times. NKF 0.1 does not define `stale_after` or a universal
 freshness policy.
 
-## Semantic entities and bindings
+## Semantic Entities And Bindings
 
 A record MAY define semantic entities when independently addressable meaning
 is needed for relationships, navigation, architecture, or Realization
@@ -508,7 +508,7 @@ MUST NOT enumerate live users, resorts, activities, devices, sessions,
 deployments, accounts, or provider resources as canonical knowledge merely
 because a binding can resolve them.
 
-## Body contracts
+## Body Contracts
 
 Every record MUST declare a `body_contract`. A body contract
 defines required semantic responsibilities, optional roles, valid authority
@@ -766,7 +766,7 @@ from interpretation and MUST NOT overstate applicability. A fixed study or
 review MAY be immutable; a maintained synthesis MAY be living. Raw runtime
 events and current status remain in their authoritative operational stores.
 
-## Nourd repository profile
+## Nourd Repository Profile
 
 The Nourd repository profile realizes the location-independent NKF bundle as:
 
@@ -811,7 +811,7 @@ migration. Such a repository is governed by its accepted Nourd contracts; it
 does not become natively NKF-conformant solely because its logical model is
 similar.
 
-## OKF 0.2 interoperability
+## OKF 0.2 Interoperability
 
 OKF 0.2 is an intentionally permissive directory of Markdown documents with
 YAML frontmatter. It requires only a `type`, treats paths as concept identity,
@@ -903,7 +903,7 @@ NKF 0.1 defines these obligations but does not decide the validator,
 continuous-integration gate, agent skill, review interface, or enforcement
 policy that carries them out.
 
-## Security and privacy
+## Security And Privacy
 
 NKF bundles are durable, reviewable Product knowledge and may be distributed.
 A bundle MUST NOT contain live credentials, access tokens, private keys, or
@@ -923,7 +923,7 @@ A locator MUST NOT be dereferenced automatically when doing so could disclose
 information, trigger an operation, incur cost, or cross an authorization
 boundary.
 
-## Unresolved matters
+## Unresolved Matters
 
 The following remain deliberately unresolved in NKF 0.1:
 
@@ -943,7 +943,7 @@ These omissions MUST be visible to consumers. A profile MAY resolve one for
 its own scope, but MUST identify the extension and MUST NOT claim that the
 profile decision is part of NKF 0.1 core.
 
-## Minimal example
+## Minimal Example
 
 A logical NKF 0.1 manifest:
 
@@ -1063,7 +1063,7 @@ Concrete serialization schemas may add deterministic fields such as heading
 occurrence and explicit empty collections. Those profile details MUST
 preserve this logical model and MUST NOT introduce competing Product meaning.
 
-## Pre-mortem
+## Pre-Mortem
 
 | Failure mode | Consequence | Required response |
 | --- | --- | --- |

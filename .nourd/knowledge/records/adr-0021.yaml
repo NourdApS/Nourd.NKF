@@ -1,0 +1,45 @@
+contract: nkf.record
+id: adr-0021
+type: decision
+body_contract: nkf.decision
+title: "ADR 0021: Accept NKF 0.1 Native Bundle Serialization"
+source:
+  path: decisions/0021-accept-nkf-0-1-native-bundle-serialization.md
+  digest:
+    algorithm: sha-256
+    value: 339ac908c87cd921ceca170992f01efa788365bb3d5b737b5d22ed0f1262641f
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: not-established
+    heading_path:
+      - Not Established
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

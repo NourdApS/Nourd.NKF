@@ -1,0 +1,64 @@
+contract: nkf.record
+id: adr-0045
+type: decision
+body_contract: nkf.decision
+title: "ADR 0045: Accept Release Contract Authority Pair"
+source:
+  path: decisions/0045-accept-release-contract-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: 6d736756d4cb904dfca02f3e907b50ad2aa02e3c2b09abb5ff70c4c91198afb5
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: accepted-artifacts
+    heading_path:
+      - Accepted Artifacts
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: review
+    heading_path:
+      - Review
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

@@ -1,0 +1,58 @@
+contract: nkf.record
+id: adr-0005
+type: decision
+body_contract: nkf.decision
+title: "ADR 0005: Accept Record V2 Responsibility Bindings"
+source:
+  path: decisions/0005-accept-record-v2-responsibility-bindings.md
+  digest:
+    algorithm: sha-256
+    value: 50539a2a0cf3073909e5aba07cf6c906b3df7a0b5fa25938ae530ae443548213
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: conformance-boundary
+    heading_path:
+      - Conformance Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - scope-and-applicability
+  - id: migration
+    heading_path:
+      - Migration
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

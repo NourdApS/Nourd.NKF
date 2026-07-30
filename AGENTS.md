@@ -58,6 +58,8 @@ The knowledge map begins at [`knowledge/README.md`](knowledge/README.md).
 - `knowledge/decisions/` owns immutable accepted decisions.
 - `knowledge/specifications/` owns accepted normative NKF specifications and
   profile contracts.
+- `knowledge/realizations/` owns durable mappings from accepted NKF meaning to
+  schemas, checker source, fixtures, tooling, and other technical artifacts.
 - `knowledge/evidence/` owns reviewed source and migration evidence when it
   must remain part of the governed technical record.
 

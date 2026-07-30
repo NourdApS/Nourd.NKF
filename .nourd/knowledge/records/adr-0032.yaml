@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0032
+type: decision
+body_contract: nkf.decision
+title: "ADR 0032: Correct NKF 0.1 Yaml Flow Scalar Grammar"
+source:
+  path: decisions/0032-correct-nkf-0-1-yaml-flow-scalar-grammar.md
+  digest:
+    algorithm: sha-256
+    value: 5839385670df07319704ed87bb4a47e38d225064885a7269a0a5e24ee8702076
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: classification
+    heading_path:
+      - Classification
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: rebinding
+    heading_path:
+      - Rebinding
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

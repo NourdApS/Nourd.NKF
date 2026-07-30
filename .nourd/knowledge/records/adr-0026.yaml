@@ -1,0 +1,88 @@
+contract: nkf.record
+id: adr-0026
+type: decision
+body_contract: nkf.decision
+title: "ADR 0026: Accept Deterministic Secret Pattern Registry"
+source:
+  path: decisions/0026-accept-deterministic-secret-pattern-registry.md
+  digest:
+    algorithm: sha-256
+    value: 83e961cb94485e45e0a2409165e2e597137d21d383dd953cac65b3f779ce09c7
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - rationale
+      - alternatives-considered
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: decision-native-scan-scope
+    heading_path:
+      - Decision
+      - Native Scan Scope
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+    responsibilities:
+      - scope-and-applicability
+  - id: decision-exact-minimum-registry
+    heading_path:
+      - Decision
+      - Exact Minimum Registry
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-exclusions-and-examples
+    heading_path:
+      - Decision
+      - Exclusions And Examples
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-diagnostic-behavior
+    heading_path:
+      - Decision
+      - Diagnostic Behavior
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-supplemental-detectors-and-evolution
+    heading_path:
+      - Decision
+      - Supplemental Detectors And Evolution
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

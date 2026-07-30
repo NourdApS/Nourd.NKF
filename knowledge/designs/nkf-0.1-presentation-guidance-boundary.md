@@ -1,4 +1,4 @@
-# NKF 0.1 presentation-guidance boundary
+# NKF 0.1 Presentation-Guidance Boundary
 
 - **Status:** Proposal
 - **Task:** `NKF-003`
@@ -45,7 +45,7 @@ The replacement NKF 0.1 specification would clarify that its earlier allowance
 for deterministic presentation guidance is realized only through a supported
 optional extension. ADR 0013's native record shape remains unchanged.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Keep presentation guidance out of the native NKF 0.1 record. Use canonical
 > Markdown as the default readable presentation and a separately governed

@@ -1,0 +1,71 @@
+contract: nkf.record
+id: design-nkf-0-1-product-responsibility-identifiers
+type: design
+body_contract: nkf.design
+title: NKF 0.1 Product Responsibility Identifiers
+source:
+  path: designs/nkf-0.1-product-responsibility-identifiers.md
+  digest:
+    algorithm: sha-256
+    value: 3a73386184f8268f55cde5d3f0052bc85a417779580a5745efd6597b0ade0806
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision-sought
+    heading_path:
+      - Decision Sought
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+      - proposed-or-accepted-design
+      - responsibilities-interactions-and-information-flows
+      - alternatives-and-trade-offs
+      - failure-safety-recovery-and-operations
+      - validation-and-acceptance-evidence
+      - unresolved-matters
+  - id: verification
+    heading_path:
+      - Verification
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: proposed-identifiers
+    heading_path:
+      - Proposed Identifiers
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: meaning-and-authority
+    heading_path:
+      - Meaning And Authority
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: exact-confirmation-requested
+    heading_path:
+      - Exact Confirmation Requested
+    occurrence: 1
+    authority: proposal
+    role: context
+  - id: decision-outcome
+    heading_path:
+      - Decision Outcome
+    occurrence: 1
+    authority: proposal
+    role: context
+relationships: []

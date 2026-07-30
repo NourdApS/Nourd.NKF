@@ -1,4 +1,4 @@
-# ADR 0013: Accept NKF 0.1 native record serialization
+# ADR 0013: Accept NKF 0.1 Native Record Serialization
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -46,7 +46,7 @@ Optional empty structures are omitted. A copied
 acceptance remains externally bound to an exact revision by its governing
 authority.
 
-## Explicitly deferred
+## Explicitly Deferred
 
 This Decision does not define or accept:
 

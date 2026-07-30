@@ -1,4 +1,4 @@
-# ADR 0011: Accept NKF 0.1 YAML companion
+# ADR 0011: Accept NKF 0.1 YAML Companion
 
 - **Status:** Accepted
 - **Task:** `NKF-003`

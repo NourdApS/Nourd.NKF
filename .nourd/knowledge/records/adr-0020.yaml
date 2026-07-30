@@ -1,0 +1,51 @@
+contract: nkf.record
+id: adr-0020
+type: decision
+body_contract: nkf.decision
+title: "ADR 0020: Establish Current Presentation-Guidance Boundary"
+source:
+  path: decisions/0020-establish-current-presentation-guidance-boundary.md
+  digest:
+    algorithm: sha-256
+    value: aefc3eace93f780a7602fe1672f0482e87d8332ef50f30ae0cdd0d6fb7ada739
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: explicit-future-reconsideration
+    heading_path:
+      - Explicit Future Reconsideration
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: not-established
+    heading_path:
+      - Not Established
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

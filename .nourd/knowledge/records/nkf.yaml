@@ -1,0 +1,96 @@
+contract: nkf.record
+id: nkf
+type: technology
+body_contract: nkf.technology
+title: Nourd Knowledge Format
+source:
+  path: nkf.md
+  digest:
+    algorithm: sha-256
+    value: 70bc4ed863f2821898c92c57020190ba040f05ee0158c4963775ca4745fd06fb
+governance:
+  lifecycle: living
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: technology-definition
+    heading_path:
+      - Technology Definition
+    occurrence: 1
+    authority: accepted-meaning
+    role: definition
+    responsibilities:
+      - technology-definition
+      - technology-map
+  - id: purpose-and-problem
+    heading_path:
+      - Purpose And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - purpose-and-problem
+  - id: consumers-and-use-contexts
+    heading_path:
+      - Consumers And Use Contexts
+    occurrence: 1
+    authority: accepted-meaning
+    role: actor
+    responsibilities:
+      - consumers-and-use-contexts
+  - id: capabilities-and-contracts
+    heading_path:
+      - Capabilities And Contracts
+    occurrence: 1
+    authority: accepted-meaning
+    role: catalogue
+    responsibilities:
+      - capabilities-and-contracts
+  - id: scope-authority-and-boundaries
+    heading_path:
+      - Scope Authority And Boundaries
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+    responsibilities:
+      - scope-authority-and-boundaries
+  - id: technology-map
+    heading_path:
+      - Technology Map
+    occurrence: 1
+    authority: accepted-meaning
+    role: catalogue
+  - id: versioning-compatibility-and-migration
+    heading_path:
+      - Versioning Compatibility And Migration
+    occurrence: 1
+    authority: accepted-meaning
+    role: evolution
+    responsibilities:
+      - versioning-compatibility-and-migration
+  - id: distribution-support-and-security
+    heading_path:
+      - Distribution Support And Security
+    occurrence: 1
+    authority: accepted-meaning
+    role: obligation
+    responsibilities:
+      - distribution-support-and-security
+  - id: evolution-and-retirement
+    heading_path:
+      - Evolution And Retirement
+    occurrence: 1
+    authority: accepted-meaning
+    role: evolution
+    responsibilities:
+      - evolution-and-retirement
+relationships:
+  - type: references
+    target: nkf-0.1-specification
+    source_section: technology-map
+  - type: references
+    target: nkf-0.1-native-realization
+    source_section: technology-map

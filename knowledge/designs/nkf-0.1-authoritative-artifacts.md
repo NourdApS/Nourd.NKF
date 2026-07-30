@@ -1,4 +1,4 @@
-# NKF 0.1 authoritative artifacts
+# NKF 0.1 Authoritative Artifacts
 
 - **Status:** Accepted by ADR 0008
 - **Task:** `NKF-003`
@@ -6,12 +6,12 @@
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
-## Decision sought
+## Decision Sought
 
 The exact version, paths, and contract-set identity for the independent
 normative Markdown specification and its complete executable YAML companion.
 
-## Proposed identities
+## Proposed Identities
 
 | Responsibility | Proposed value |
 | --- | --- |
@@ -36,7 +36,7 @@ The imported proposal uses `nkf.checker.contract-set/v1`. That identity makes
 the contract set appear owned by one checker implementation. NKF owns the
 contract set, so the neutral identity is `nkf.contract-set/v1`.
 
-## Initial supported contracts
+## Initial Supported Contracts
 
 The first YAML contract set will describe already established identities:
 
@@ -49,7 +49,7 @@ This statement identifies the contracts that require representation. It does
 not yet decide the bundle's default record contract, mixed v1/v2 bundle
 behavior, or unconfirmed field shapes.
 
-## Creation sequence
+## Creation Sequence
 
 1. Prepare the independent Markdown specification by preserving the accepted
    Studio source meaning and applying only accepted ADRs with exact
@@ -64,7 +64,7 @@ behavior, or unconfirmed field shapes.
 
 The Studio source snapshots remain immutable evidence and are not edited.
 
-## Exact confirmation requested
+## Exact Confirmation Requested
 
 > Keep the current NKF format at `0.1`. Place its canonical normative Markdown
 > at `knowledge/specifications/nkf-0.1.md` and its complete executable YAML
@@ -75,7 +75,7 @@ Acceptance would approve these identities and paths only. It would not yet
 accept the composite Markdown bytes, YAML contents, bundle default, mixed
 record versions, schemas, or checker code.
 
-## Decision outcome
+## Decision Outcome
 
 The Human Product Owner accepted these artifact identities on 29 July 2026.
 The immutable result is

@@ -14,7 +14,7 @@ governance:
   authority:
     - human-product-owner
 scope:
-  product: product
+  root: product
 sections:
   - id: product-definition
     heading_path: [Product Definition]

@@ -1,4 +1,4 @@
-# ADR 0004: Introduce NKF record v2
+# ADR 0004: Introduce NKF Record V2
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -46,7 +46,7 @@ The ten accepted Product body contracts remain:
 Their required responsibility meaning remains unchanged. ADR 0003 supplies
 stable identifiers for those existing responsibilities.
 
-## Compatibility and migration
+## Compatibility And Migration
 
 `nkf.record/v2` is a breaking record-contract revision relative to
 `nkf.record/v1` because v2 requires reviewed responsibility bindings that v1
@@ -66,7 +66,7 @@ Migration from v1 to v2 must:
 Deterministic reconciliation may not invent responsibility bindings or perform
 the contract upgrade automatically.
 
-## Not decided
+## Not Decided
 
 This Decision does not accept:
 

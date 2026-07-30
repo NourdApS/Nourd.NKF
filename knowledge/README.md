@@ -10,10 +10,12 @@ This directory is the authority entry point for Nourd Knowledge Format.
 | [`designs/`](designs/) | Evolving proposals; never accepted merely because they validate |
 | [`decisions/`](decisions/) | Immutable accepted NKF decisions |
 | [`specifications/`](specifications/) | Accepted normative NKF format and profile specifications |
+| [`realizations/`](realizations/) | Durable mappings from NKF meaning to schemas, checker source, fixtures, tooling, and technical artifacts |
 | [`evidence/`](evidence/) | Governed evidence and migration provenance |
 
 The root [`README.md`](../README.md) owns repository identity and scope.
 [`AGENTS.md`](../AGENTS.md) owns working rules.
+[`nkf.md`](nkf.md) is the living Technology root for this bundle.
 
 ## Current authority state
 
@@ -155,6 +157,23 @@ confirms the release-bound checker source and portable bytes.
 [ADR 0048](decisions/0048-confirm-initial-release-package-realization.md)
 confirms the reproducible release package and bootstrap verifier without
 claiming a tag, upload, Github Release, consumer migration, or conformance.
+[ADR 0049](decisions/0049-establish-common-specification-and-concrete-root-profiles.md)
+accepts one non-selectable Common Specification and exactly one concrete Root
+Profile per bundle. Common applies automatically and cannot be selected or
+used as a fallback; each profile owns its root-specific specification and
+validation without weakening Common.
+[ADR 0050](decisions/0050-accept-product-and-technology-root-profiles.md)
+accepts the exact current Common, Product, and Technology allocation; the
+`root` and root-neutral `scope.root` serialization; Technology Specification
+and governed-artifact contracts; profile-aware validation result; and the
+deliberate breaking pre-stable migration from Product-only declarations.
+[ADR 0051](decisions/0051-govern-self-hosting-heading-migration.md)
+governs the heading-only source revision required to onboard earlier NKF
+records without weakening Title Case or hiding predecessor bytes.
+[ADR 0052](decisions/0052-confirm-dynamic-root-and-self-hosting-realization.md)
+separately confirms the derived schemas, checker, fixtures, build, declaration
+generator, and repository self-hosting realization without treating that
+confirmation as semantic acceptance or conformance.
 
 Task [`NKF-003`](tasks/NKF-003-establish-independent-nkf-authority.md) governs
 the source migration. Until its acceptance criteria are satisfied, every
@@ -171,3 +190,10 @@ Deferred Task
 preserves the future investigation of universal validation expiry and
 authority-specific freshness without adding a current NKF 0.1 expiry, polling,
 or external-authority requirement.
+
+Deferred Task
+[`NKF-006`](tasks/NKF-006-define-extensible-root-knowledge-models.md)
+preserves the evidence threshold and investigation path for additional root
+types, root-specific hierarchies, validators, protocols, profiles, and
+compatibility. Product and Technology are accepted through ADR 0050; no
+additional profile is accepted merely because the Task exists.

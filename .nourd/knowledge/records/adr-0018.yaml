@@ -1,0 +1,51 @@
+contract: nkf.record
+id: adr-0018
+type: decision
+body_contract: nkf.decision
+title: "ADR 0018: Accept NKF 0.1 Project Path And Knowledge Coverage"
+source:
+  path: decisions/0018-accept-nkf-0-1-project-path-and-knowledge-coverage.md
+  digest:
+    algorithm: sha-256
+    value: 215a22182dee40ee853b18c9d0997354916952ee616564d19c55683a06db371d
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: supersession-and-preservation
+    heading_path:
+      - Supersession And Preservation
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: not-decided
+    heading_path:
+      - Not Decided
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+relationships: []

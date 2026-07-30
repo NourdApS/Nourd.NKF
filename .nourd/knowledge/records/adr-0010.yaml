@@ -1,0 +1,39 @@
+contract: nkf.record
+id: adr-0010
+type: decision
+body_contract: nkf.decision
+title: "ADR 0010: Accept Canonical NKF 0.1 Markdown"
+source:
+  path: decisions/0010-accept-canonical-nkf-0-1-markdown.md
+  digest:
+    algorithm: sha-256
+    value: faf1242f330a49ae1e5abde487a1355302cbbc29a08a3a2c3d2979b13b4622e9
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+  - id: consequences
+    heading_path:
+      - Consequences
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+    responsibilities:
+      - consequences-and-trade-offs
+relationships: []

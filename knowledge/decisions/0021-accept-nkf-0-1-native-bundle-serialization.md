@@ -1,4 +1,4 @@
-# ADR 0021: Accept NKF 0.1 native bundle serialization
+# ADR 0021: Accept NKF 0.1 Native Bundle Serialization
 
 - **Status:** Accepted
 - **Task:** `NKF-003`
@@ -42,7 +42,7 @@ The accepted boundary includes:
 
 This Decision introduces no new identifier grammar.
 
-## Not established
+## Not Established
 
 This Decision does not accept replacement Markdown or YAML bytes, schemas,
 checker code, fixtures, a distribution, release, conformance result, or
