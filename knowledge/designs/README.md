@@ -147,8 +147,13 @@ normative Markdown delta, and executable YAML delta accepted by ADR 0044 under
 explicit Human Product Owner delegation. Its accepted structural schema design
 is
 [`nkf-0.1-release-manifest-schema-proposal.json`](nkf-0.1-release-manifest-schema-proposal.json).
-Canonical authority, source-bound schemas, checker rebinding, and package
-Realization remain pending.
+The coherent full authority pair accepted and promoted by ADR 0045 is preserved
+in
+[`nkf-0.1-release-contract-specification-proposal.md`](nkf-0.1-release-contract-specification-proposal.md)
+and
+[`nkf-0.1-release-contract-proposal.yaml`](nkf-0.1-release-contract-proposal.yaml).
+Source-bound schemas, checker rebinding, and package Realization remain
+pending.
 
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by

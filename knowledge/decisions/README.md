@@ -52,3 +52,4 @@ and compatibility.
 | [ADR 0042](0042-establish-initial-release-distribution-boundary.md) | Accepted | One content-addressed Github Release archive as the initial pinned NKF checker distribution |
 | [ADR 0043](0043-establish-native-release-manifest-contract.md) | Accepted | Unversioned native NKF 0.1 release-manifest identity, authority, schema, and project-validation separation |
 | [ADR 0044](0044-accept-nkf-0-1-release-contract.md) | Accepted under explicit Human Product Owner delegation | Exact six-field release manifest, deterministic USTAR package, consumer pin, provenance, and verification contract |
+| [ADR 0045](0045-accept-release-contract-authority-pair.md) | Accepted under explicit Human Product Owner delegation | Current canonical NKF 0.1 Markdown/YAML pair with the native release contract |
