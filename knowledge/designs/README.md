@@ -52,20 +52,60 @@ an immutable Decision or normative specification.
 - [`nkf-0.1-native-bundle-serialization.md`](nkf-0.1-native-bundle-serialization.md)
   records the closed native manifest and exact non-record representation
   accepted by ADR 0021.
-
-## Active proposals
-
 - [`nkf-0.1-replacement-specification.md`](nkf-0.1-replacement-specification.md)
-  is the proposed authority-coherent replacement for the accepted canonical
-  NKF 0.1 Markdown revision; its Product meaning is intended to remain
-  unchanged. Its exact executable companion proposal is
-  [`nkf-0.1-replacement-contract-set.yaml`](nkf-0.1-replacement-contract-set.yaml).
+  is the exact review revision accepted and promoted by ADR 0022. It is now a
+  historical accepted snapshot after ADR 0027.
 - [`nkf-0.1-replacement-contract-set.yaml`](nkf-0.1-replacement-contract-set.yaml)
-  is the proposed complete executable companion bound to the exact replacement
-  Markdown digest. It is non-authoritative until the pair is accepted.
+  is the exact digest-bound executable companion accepted and promoted by ADR
+  0022, now historical after ADR 0027.
 - [`nkf-0.1-executable-completeness-gaps.md`](nkf-0.1-executable-completeness-gaps.md)
-  records the normative gaps that prevent an honest complete YAML realization
-  and the proposed order for resolving them.
+  records the gaps subsequently resolved through ADRs 0013 through 0021 and
+  the coherent pair accepted by ADR 0022.
+- [`nkf-0.1-replacement-json-schemas.md`](nkf-0.1-replacement-json-schemas.md)
+  records the historical derived JSON Schema realization confirmed by ADR
+  0023. Its exact bundle and record review artifacts are
+  [`nkf-0.1-bundle-schema-proposal.json`](nkf-0.1-bundle-schema-proposal.json)
+  and
+  [`nkf-0.1-record-schema-proposal.json`](nkf-0.1-record-schema-proposal.json).
+- [`nkf-0.1-checker-realization-gaps.md`](nkf-0.1-checker-realization-gaps.md)
+  records the three conformance-critical gaps resolved through ADRs 0024
+  through 0030 before checker implementation.
+- [`nkf-0.1-validation-result-schema-proposal.json`](nkf-0.1-validation-result-schema-proposal.json)
+  is the structural precursor reviewed for ADR 0025. Its positive review
+  example is
+  [`nkf-0.1-validation-result-example.json`](nkf-0.1-validation-result-example.json).
+- [`nkf-0.1-pre-checker-specification-proposal.md`](nkf-0.1-pre-checker-specification-proposal.md)
+  and
+  [`nkf-0.1-pre-checker-contract-proposal.yaml`](nkf-0.1-pre-checker-contract-proposal.yaml)
+  are the exact authority revisions accepted and promoted by ADR 0027, now
+  historical after ADR 0029.
+- [`nkf-0.1-pre-checker-bundle-schema-proposal.json`](nkf-0.1-pre-checker-bundle-schema-proposal.json),
+  [`nkf-0.1-pre-checker-record-schema-proposal.json`](nkf-0.1-pre-checker-record-schema-proposal.json),
+  and
+  [`nkf-0.1-pre-checker-validation-result-schema-proposal.json`](nkf-0.1-pre-checker-validation-result-schema-proposal.json)
+  are the exact source-bound schemas confirmed and promoted by ADR 0028, now
+  historical after ADR 0030.
+- [`nkf-0.1-schema-status-reconciled-specification-proposal.md`](nkf-0.1-schema-status-reconciled-specification-proposal.md)
+  and
+  [`nkf-0.1-schema-status-reconciled-contract-proposal.yaml`](nkf-0.1-schema-status-reconciled-contract-proposal.yaml)
+  are the exact current authority revisions accepted and promoted by ADR
+  0029.
+- [`nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json`](nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json),
+  [`nkf-0.1-schema-status-reconciled-record-schema-proposal.json`](nkf-0.1-schema-status-reconciled-record-schema-proposal.json),
+  and
+  [`nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json`](nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json)
+  are the exact current source-bound schemas confirmed and promoted by ADR
+  0030.
+
+## Active Proposals
+
+No unresolved normative checker gap remains. Checker repository layout,
+development artifact identity, fixture architecture, distribution, and release
+realization have not yet been proposed or accepted.
+
+Deferred presentation-extension work remains governed separately by NKF-004.
+Deferred expiry and authority-freshness investigation remains governed by
+NKF-005.
 
 ## Superseded proposals
 

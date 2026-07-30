@@ -934,9 +934,10 @@ vocabulary meanings, a presentation-labelled required-extension example,
 unjustified date-time narrowing for optional factual-time strings, and missing
 executable catalog-resolution and declaration-filename rules.
 
-The pair remains a proposal. The accepted canonical Markdown/YAML bytes,
-preliminary schemas, checker, fixtures, package, release, consumers, and any
-conformance result remain unchanged and unconfirmed.
+At that proposal-review boundary, the pair remained a proposal. The then
+accepted canonical Markdown/YAML bytes, preliminary schemas, checker, fixtures,
+package, release, consumers, and any conformance result were unchanged and
+unconfirmed. The later delegated acceptance and promotion are recorded below.
 
 ## Accepted realization order
 
@@ -966,6 +967,539 @@ accept repository knowledge, confirm semantic adequacy, prove release
 readiness by itself, or authorize external consumer migration. Any
 specification, contract, checker, distribution, migration, or consumer defect
 found during self-hosting is classified and governed through ADR 0006.
+
+## AI execution slice: authority-pair acceptance and promotion
+
+- **Recorded:** 29 July 2026
+- **Scope:** Independently review the exact replacement pair and, only if
+  approved, record delegated acceptance and promote the reviewed bytes
+- **Authority effect:** The Human Product Owner explicitly delegated authority
+  to the Codex technical reviewer to accept the pair if the reviewer approves
+  it
+
+### Plan
+
+1. Reverify the repository boundary and preserved Git checkpoint.
+2. Reverify the proposal digests, exact Markdown-to-YAML binding,
+   JSON-compatible YAML data model, accepted-input digests, responsibility
+   preservation, vocabulary coverage, diagnostic parity, links, and
+   single-version rules.
+3. Reject the pair if any material authority, coherence, completeness, or
+   enforceability defect remains.
+4. If approved, record an immutable delegated-acceptance Decision and promote
+   the exact reviewed bytes to the canonical paths.
+5. Verify that promotion changed neither reviewed digest, update the authority
+   indexes, and preserve all realization and conformance non-claims.
+
+### Guardrails
+
+- Delegated technical approval is not restated as line-by-line Human Product
+  Owner review.
+- Markdown remains authoritative human meaning; YAML remains its executable
+  companion.
+- Acceptance does not confirm schemas, checker code, fixtures, distribution,
+  release, consumer migration, Realization, or conformance.
+- The preliminary schemas remain non-current until separately replaced and
+  accepted as a confirmed realization.
+
+### Result
+
+The independent review passed and the delegated authority was exercised.
+[`ADR 0022`](../decisions/0022-accept-coherent-nkf-0-1-authority-pair.md)
+accepts the exact pair recorded above. The reviewed bytes were promoted
+unchanged to `knowledge/specifications/nkf-0.1.md` and
+`contracts/nkf/0.1/nkf.yaml`; their SHA-256 digests remain
+`9e90fc712df661b7c008b47a8392a180c5418346f8c3a5a1f2c344c6cbeb3b97`
+and
+`ebb8c98dfb4611cffe4c19eeebd5fcd932d48332067393c0c7ee7a6f07ac6e87`.
+
+This establishes the accepted current authority pair only. Replacement schema
+derivation is the next realization step and has not begun in this slice.
+
+## AI execution slice: replacement JSON Schema derivation
+
+- **Recorded:** 29 July 2026
+- **Scope:** Derive exact JSON Schema 2020-12 proposals from the authority pair
+  accepted by ADR 0022
+- **Authority effect:** None; the exact schema bytes remain proposed derived
+  realization until separately reviewed and confirmed
+
+### Plan
+
+1. Reconcile every local shape, required field, constant, primitive,
+   cardinality, condition, lexical constraint, and controlled-value boundary
+   in the accepted YAML with the enforcement partition in the normative
+   Markdown.
+2. Keep project layout, filesystem containment, Markdown/source resolution,
+   graph rules, body-responsibility coverage, extension resolution, authority
+   binding, and semantic adequacy outside JSON Schema where the accepted
+   checker or human-review layer owns them.
+3. Author exact bundle and record schema proposals outside the canonical
+   schema paths, using the accepted schema IDs and complete source metadata.
+4. Validate both proposals as JSON and JSON Schema 2020-12, exercise positive
+   and targeted negative instances, compare their represented structures with
+   the accepted YAML, and audit for accidental overreach or under-enforcement.
+5. Record exact proposal digests and request separate confirmation before
+   replacing the preliminary canonical schema files.
+
+### Guardrails
+
+- Schema validation cannot accept knowledge, verify an acceptance binding,
+  confirm a Realization, or establish full NKF conformance.
+- A schema cannot invent an identifier grammar, extension meaning, path rule,
+  diagnostic, or semantic constraint absent from accepted authority.
+- The current preliminary files under `contracts/nkf/0.1/schemas/` remain
+  unchanged until the replacement proposal is confirmed.
+- Checker code, fixture-suite layout, packaging, release metadata, and
+  consumer migration remain later realization work.
+
+### Result
+
+The exact derived proposal and enforcement-partition audit are recorded in
+[`../designs/nkf-0.1-replacement-json-schemas.md`](../designs/nkf-0.1-replacement-json-schemas.md).
+
+| Proposed artifact | SHA-256 |
+| --- | --- |
+| `knowledge/designs/nkf-0.1-bundle-schema-proposal.json` | `daf7b15f8b6edc143be10f6d832dc740b0f36292fdace0198495a9e51bb94574` |
+| `knowledge/designs/nkf-0.1-record-schema-proposal.json` | `f22a9ed1a8a4d2e56003e7c50e757bcb8bd5a7f09169f817e29dbcb85388502a` |
+
+Both schemas parse with unique JSON keys, compile in strict JSON Schema
+2020-12 mode, bind the exact accepted Markdown/YAML digests, match all
+accepted local object fields, and passed 23 focused positive, negative, and
+enforcement-partition probes.
+
+The canonical preliminary schema files remain unchanged. Work is paused for
+separate confirmation of these exact derived bytes before promotion.
+
+## AI execution slice: schema acceptance and promotion
+
+- **Recorded:** 29 July 2026
+- **Scope:** Reverify, approve, and promote the exact replacement JSON Schema
+  proposals
+- **Authority effect:** The Human Product Owner explicitly delegated approval
+  of the exact schemas to the Codex technical reviewer
+
+### Plan
+
+1. Reverify both proposal digests, their accepted authority-pair bindings,
+   accepted schema IDs, strict JSON Schema 2020-12 compilation, and clean
+   repository diff.
+2. Reject promotion if either reviewed proposal or bound authority artifact
+   changed.
+3. If approved, record an immutable delegated-confirmation Decision and copy
+   the exact proposal bytes to their accepted canonical schema paths.
+4. Recompile the canonical files, verify byte equality and digests, and update
+   the repository authority indexes.
+
+### Guardrails
+
+- This technical confirmation establishes the derived schema realization
+  only.
+- It does not accept consumer knowledge, implement the bundle-aware checker or
+  fixture suite, confirm a Realization, establish distribution, or produce an
+  NKF conformance result.
+- Checker-owned and human-review-owned rules remain outside the schemas.
+
+### Result
+
+The final review passed and the delegated technical authority was exercised.
+[`ADR 0023`](../decisions/0023-confirm-nkf-0-1-json-schema-realization.md)
+confirms the exact schema pair. The reviewed bytes were promoted unchanged to:
+
+- `contracts/nkf/0.1/schemas/bundle.schema.json` at SHA-256
+  `daf7b15f8b6edc143be10f6d832dc740b0f36292fdace0198495a9e51bb94574`;
+  and
+- `contracts/nkf/0.1/schemas/record.schema.json` at SHA-256
+  `f22a9ed1a8a4d2e56003e7c50e757bcb8bd5a7f09169f817e29dbcb85388502a`.
+
+This confirms the derived schema realization only. Bundle-aware checker and
+fixture implementation is the next realization step and has not begun in this
+slice.
+
+## AI execution slice: checker-realization boundary
+
+- **Recorded:** 29 July 2026
+- **Scope:** Inspect the accepted authority pair, confirmed schemas, and
+  imported checker evidence before choosing checker behavior or repository
+  structure
+- **Authority effect:** None; this slice may identify and propose resolutions
+  for gaps but cannot change accepted NKF 0.1 meaning or implement those
+  resolutions by implication
+
+### Plan
+
+1. Extract every checker-owned requirement from the accepted Markdown/YAML
+   pair and confirmed JSON Schemas.
+2. Compare those requirements with the imported NKF-002 implementation as
+   technical evidence only.
+3. Identify any stable diagnostic trigger, parsing behavior, or required
+   output that cannot be implemented deterministically from accepted
+   authority.
+4. Classify each finding through ADR 0006 and propose one consequential
+   boundary at a time for Human Product Owner confirmation.
+5. Defer checker source, fixture, package, and distribution structure until
+   the governing behavior is sufficiently determined.
+
+### Guardrails
+
+- Imported code and tests cannot supply missing normative meaning.
+- A checker implementation choice cannot silently become a stable diagnostic
+  trigger or portable result contract.
+- Partial implementation must not be presented as full NKF 0.1 conformance.
+- Extension resolution may remain an injected boundary where no concrete core
+  extension exists, but required unsupported meaning must fail closed.
+
+### Result
+
+The inspection found three conformance-critical gaps:
+
+1. the exact Markdown heading interpretation and the deterministic boundary
+   between semantic and non-semantic H2/H3 headings are not defined;
+2. the stable high-confidence trigger for `security.secret-pattern` is not
+   defined; and
+3. the required content of `nkf.validation-result` is named, but its exact
+   portable serialization is not defined.
+
+These are specification or contract gaps, not checker bugs. Implementing them
+now would make checker code a second source of normative behavior. The exact
+findings and resolution order are recorded in
+[`../designs/nkf-0.1-checker-realization-gaps.md`](../designs/nkf-0.1-checker-realization-gaps.md).
+At the inspection boundary, checker and fixture implementation was deferred
+at the first decision: Markdown heading interpretation and coverage.
+
+Review of that first boundary has established a Human Product Owner direction
+for Title Case across verifier-addressed H1/H2/H3 text, `title`, and
+`heading_path`, with exact NKF-owned and project-declared canonical-term
+exceptions. The Product Owner subsequently confirmed the exact mechanical
+word, hyphen, acronym, longest-match, neutral-character, and inline-code
+rules; the optional `canonical_terms` bundle field; and the initial NKF-owned
+canonical list containing only `NKF`. The complete Markdown boundary remains
+unresolved until its parsing, normalization, and coverage behavior are
+confirmed together.
+
+The Product Owner then confirmed CommonMark 0.31.2 for structural source
+parsing and the recorded visible-heading normalization and exact-title rule.
+Mermaid fenced code is permitted as governed literal content within a mapped
+section, remains opaque to native structural and casing checks, and may be
+optionally rendered without becoming an NKF extension or the sole
+machine-readable carrier of essential meaning.
+
+On 30 July 2026, the Human Product Owner delegated final confirmation of the
+remaining Markdown boundary to the Codex technical reviewer and confirmed it
+contingent on the reviewer's approval. The final review added only necessary
+deterministic clarification: structural headings are direct children of the
+CommonMark document root, and Title Case uses pinned Unicode 17.0.0 default
+word boundaries and case conversion.
+
+The reviewer approves the exact boundary.
+[`ADR 0024`](../decisions/0024-accept-deterministic-markdown-structure-and-title-case.md)
+records accepted CommonMark structure, complete top-level H2/H3 coverage,
+path/occurrence behavior, Title Case, the optional `canonical_terms` bundle
+field, the initial NKF-owned term `NKF`, Mermaid treatment, and four required
+diagnostic additions.
+
+The canonical Markdown/YAML pair and derived schemas do not yet realize ADR
+0024 and remain unchanged. Checker and fixture implementation stays deferred.
+The next decision boundary is exact `nkf.validation-result` serialization;
+the `security.secret-pattern` trigger remains open after it.
+
+Review of the validation-result boundary began on 30 July 2026. The Human
+Product Owner confirmed one current operational receipt at
+`.nourd/validation-result.json`, with no NKF-managed local history, and later
+refined it to the latest completed `full-bundle` validation. A failed
+full-bundle validation replaces a prior pass. `structural` and single-record
+`contract` validations return results to their callers but never write or
+replace the project receipt. The result remains outside governed knowledge and
+self-validation, and its `validated_snapshot` must distinguish current,
+stale, and missing verification.
+
+The Human Product Owner confirmed that **NKF Verified** is only a current
+project-level conformance statement: the latest stored `full-bundle` result
+passed NKF 0.1 and its snapshot matches the current Governed Validation
+Inputs. It does not establish acceptance, semantic adequacy, Governing Use
+Ready, or a confirmed Realization. Draft knowledge may be NKF Verified.
+Governing Use Ready remains a separate result with the already accepted
+acceptance-binding requirements.
+
+The Human Product Owner confirmed strict full-bundle governing-use
+aggregation: the project is `ready` only when every applicable governed record
+is individually ready; any known Draft, contradicted, superseded, retired,
+conformance-blocked, or governing-use-blocked record makes the project
+`not-ready`; and unperformed or unavailable required acceptance verification
+makes it `not-evaluated`. Per-record readiness remains visible, so a
+project-level blocker does not erase ready status for unaffected records. The
+confirmed aggregate precedence is: any `not-ready` record makes the project
+`not-ready`; otherwise any `not-evaluated` record makes it `not-evaluated`;
+otherwise the project is `ready`.
+
+The confirmed per-record acceptance-binding states are `not-applicable`,
+`not-verified`, `verified`, and `contradicted`. Draft, superseded, and retired
+records are `not-applicable` and `not-ready`; an accepted record with
+unperformed or unavailable verification is `not-verified` and
+`not-evaluated`; contradiction is `not-ready`; and only an accepted,
+binding-verified, conformant, unblocked record is `ready`. Any known
+conformance or governing-use blocker takes precedence and produces
+`not-ready`.
+
+The Human Product Owner confirmed a closed validation request object with
+required `level`, `record_id`, and `acceptance_binding`. `structural` targets
+the whole project, requires a null record ID and `not-requested` binding, and
+is never stored. `contract` requires exactly one record ID, may request
+binding, and is never stored. `full-bundle` targets the whole project with a
+null record ID, may request binding, and is the only result permitted to write
+`.nourd/validation-result.json`. When binding is not requested, accepted
+records are `not-verified` and their readiness is `not-evaluated`.
+
+The Human Product Owner confirmed closed `execution` and `checker` objects.
+Execution carries a unique lowercase UUID, portable runner identity, and
+fixed UTC RFC 3339 millisecond start/completion times. Checker identity is
+separate and carries an exact SHA-256 artifact digest. Results exclude
+usernames, hostnames, absolute paths, credentials, and copied operational
+payloads. The concrete checker package identity and digest-bearing released
+artifact remain deferred to checker distribution design.
+
+The Human Product Owner confirmed expected-versus-observed SHA-256 bindings
+for the canonical NKF Markdown, executable YAML, all three core schemas, and
+both authority artifacts for every involved extension contract. Binding state
+is exactly `verified`, `unavailable`, or `mismatched`, with required
+expected digest and nullable observed digest. Results include neither artifact
+content nor absolute artifact locations. Exact grouping, identities, and
+ordering were then confirmed: `contract_artifacts.core` contains the
+specification, executable, and exactly the bundle, record, and
+validation-result schemas in that fixed order. `extensions` contains each
+uniquely identified involved extension with its specification and executable
+bindings, sorted by exact extension ID, or is empty. Invalid or ambiguous
+extension declarations fail through diagnostics and cannot acquire an
+invented identity.
+
+The Human Product Owner confirmed that every result contains all eleven
+phases, exactly once and in the accepted phase order, as closed `id`/`state`
+entries. State is `passed`, `failed`, or `not-evaluated`. Unrequested
+authority binding is not evaluated; a requested authority-binding failure may
+block governing use without failing conformance. Every conforming emitted
+receipt has a passed `result` phase. If the checker cannot construct and
+validate the receipt, no completed result exists; this is distinct from a
+completed conformance failure, which still emits a valid result.
+
+The Human Product Owner confirmed closed diagnostic JSON objects with the five
+accepted required fields and only the accepted optional location/remediation
+fields, omitted rather than null when unknown. Artifact paths are
+project-relative. Diagnostics exclude secrets and operational payloads, use
+the accepted phase/location/rule ordering with absent optional values first,
+and prohibit duplicate phase/location/rule identity. Message and remediation
+text remain non-contractual and do not determine ordering.
+
+## AI execution slice: close exact validation-result serialization
+
+- **Recorded:** 30 July 2026
+- **Scope:** Gap 3 in
+  [`../designs/nkf-0.1-checker-realization-gaps.md`](../designs/nkf-0.1-checker-realization-gaps.md)
+- **Decision authority:** Human Product Owner for consequential semantics;
+  Codex technical reviewer for remaining trivial structural serialization
+  under direct delegation
+- **Authority effect:** May confirm only the mechanical serialization derived
+  from already confirmed result semantics; cannot realize a checker or update
+  the canonical authority pair by implication
+
+### Plan
+
+1. Record the bounded delegation and preserve every confirmed semantic
+   boundary.
+2. Close the record summary, top-level object, null/omission behavior, array
+   order, JSON encoding, and schema mechanics.
+3. Author a non-authoritative JSON Schema proposal and validate its positive
+   and negative structural examples.
+4. Review the complete result contract for internal consistency, fail-closed
+   behavior, authority separation, and compatibility.
+5. Record the accepted exact serialization in an immutable Decision without
+   claiming canonical-pair realization, checker code, fixtures, packaging, or
+   conformance.
+
+### Guardrails
+
+- Return any change to meaning, authority, conformance, compatibility,
+  extension capability, or security policy to the Human Product Owner.
+- Do not infer result semantics from the schema or an implementation.
+- Keep the proposal outside the canonical schema path until the Markdown/YAML
+  authority pair is replaced and rebound.
+- Preserve the distinctions between NKF Verified, declared governance,
+  acceptance-binding verification, Governing Use Ready, and confirmed
+  Realization.
+
+### Result
+
+Under the delegated technical boundary, the reviewer confirmed a five-field
+per-record result (`record_id`, nullable valid `declared_governance`,
+level-relative `conformance`, `acceptance_binding`, and `governing_use`),
+deterministic record scope and ordering, a thirteen-field closed top-level
+result, nullable parsed `bundle_id`, the four-field stored snapshot binding,
+UTF-8 JSON encoding, and the absence of frozen `current`, `verified`,
+`accepted`, `stored`, or Realization claims. The non-authoritative derived
+schema review artifact is
+[`../designs/nkf-0.1-validation-result-schema-proposal.json`](../designs/nkf-0.1-validation-result-schema-proposal.json).
+
+The Human Product Owner then defined **Governed Validation Inputs** as the set
+of project resources participating in NKF validation. NKF Core defines the
+initial set, and accepted extension contracts may add resource kinds. The
+validated snapshot is calculated solely from those inputs; checker
+implementations cannot add inputs ad hoc. Checker-relevant `.nourd`
+configuration, declarations, paths, and exact file content are included
+except for the result itself. Under `knowledge_root`, exact content hashing
+always covers recursive Markdown paths and Markdown content. Other resources
+contribute only the structural facts or bytes examined by an applicable
+accepted rule. A non-Markdown path explicitly listed in `non_records`
+therefore contributes the structural facts NKF validates, but its bytes are
+included only if an applicable accepted rule validates those bytes.
+Independent symlink rules remain enforceable.
+
+The Human Product Owner confirmed the snapshot calculation model on 30 July
+2026: form one internal JSON inventory of the Governed Validation Inputs;
+let the applicable rule select each resource and participating aspect, record
+its logical path and structural state with a SHA-256 content digest when bytes
+matter, sort entries deterministically, canonicalize the inventory as UTF-8
+using RFC 8785 JCS, and apply SHA-256 to the canonical bytes. The result stores
+only the final digest and inventory entry count, not the inventory. The exact
+closed entry vocabulary and ordering were then confirmed: one closed entry per
+logical project path with required `path`, `direct_kind`, `resolution`,
+`resolved_path`, `final_kind`, and `content_sha256` fields; merge multiple
+selectors for the same path; sort by exact path using the RFC 8785 unsigned
+UTF-16 comparator without normalization or case folding; then apply JCS and
+SHA-256 as confirmed. This closes the snapshot algorithm. The reviewer also
+mechanically enumerated Core's initial safely discoverable inputs in the
+active design.
+
+The structural review surfaced two consequential freshness questions outside
+the delegation. The Human Product Owner confirmed the first: current NKF
+Verified status additionally requires the stored core specification,
+executable YAML, and schema bindings to match the currently accepted NKF 0.1
+artifact revision and the checker artifact to remain recognized and
+supported. Otherwise the passing receipt remains historical evidence but
+status is **verification outdated** until a new full-bundle validation.
+
+The Human Product Owner clarified the second question: acceptance changes
+normally pass through the governed change process and therefore change the
+applicable Governed Validation Inputs. When no governed resource changes, NKF
+does not infer a hidden acceptance change or poll an external authority.
+Current NKF 0.1 therefore has no universal expiry or separate
+authority-freshness requirement, and this no longer blocks completion of the
+validation-result boundary.
+
+The possibility that later real-project evidence may justify universal expiry
+or a separate authority-freshness mechanism remains explicitly deferred under
+[`NKF-005`](NKF-005-investigate-validation-expiry-and-authority-freshness.md).
+That Task does not change the current result proposal by implication.
+
+## AI Execution Slice: Close Pre-Checker Normative Authority
+
+- **Recorded:** 30 July 2026
+- **Scope:** Complete the validation-result and native secret-pattern
+  boundaries, then replace and rebind the NKF 0.1 authority pair and derived
+  schemas before checker implementation
+- **Decision Authority:** Human Product Owner for consequential result and
+  security semantics; Codex technical reviewer for previously delegated
+  result serialization mechanics and mechanics derived directly from the
+  confirmed security boundary
+- **Authority Effect:** Accepted Decisions may close the reviewed boundaries;
+  no checker, fixture suite, distribution, release, consumer migration, or
+  conformance result may be claimed
+
+### Plan
+
+1. Complete the internal consistency review of the exact validation-result
+   serialization and record its accepted semantic and delegated mechanical
+   boundary.
+2. Convert the confirmed native secret-pattern decision into a deterministic
+   scan scope, minimum detector registry, exclusion policy, diagnostic
+   behavior, and governed-evolution rule.
+3. Record the result and security decisions as immutable accepted snapshots
+   with exact provenance and non-claims.
+4. Derive one coherent replacement of the canonical Markdown/YAML authority
+   pair incorporating ADR 0024, the validation-result contract, and the
+   secret-pattern trigger.
+5. Rebind and validate the bundle, record, and validation-result schemas
+   against the replacement authority pair.
+6. Stop before checker implementation and report the remaining realization
+   boundary.
+
+### Guardrails
+
+- Do not treat a schema, example, detector implementation, or passing check as
+  semantic acceptance.
+- Do not let an external secret-scanning library or changing provider rule
+  alter native NKF conformance.
+- Do not include matched secret material in diagnostics, fixtures, or
+  validation results.
+- Do not restore the imported AWS access-key-identifier-only failure: an
+  identifier alone is not the secret credential.
+- Do not add universal validation expiry or external authority polling through
+  this slice; that question remains deferred under NKF-005.
+- Do not implement checker code, package identity, fixtures, CI, distribution,
+  releases, or consumer migration.
+
+### Result
+
+Completed.
+
+The Human Product Owner confirmed the native security boundary, and the
+reviewer closed the exact mechanics without restoring the imported
+access-key-identifier-only false positive.
+
+The immutable accepted results are:
+
+- [`ADR 0025`](../decisions/0025-accept-nkf-0-1-validation-result-contract.md),
+  accepting the exact operational result, Governed Validation Inputs,
+  snapshot, persistence, readiness, diagnostics, and currentness boundary;
+- [`ADR 0026`](../decisions/0026-accept-deterministic-secret-pattern-registry.md),
+  accepting the exact native scan scope, three-detector registry, exclusions,
+  diagnostic behavior, and governed evolution;
+- [`ADR 0027`](../decisions/0027-accept-pre-checker-nkf-0-1-authority-pair.md),
+  accepting and promoting the exact canonical Markdown at SHA-256
+  `5b0aa9c6851217f0c88a97de03f8d7fce0c495053d6e411a317946fda749092e`
+  and YAML at SHA-256
+  `8ef4ff36f6d2ab1eb8e58704d8d16929e1c07a2b6f617a626dbce1769c52ac66`;
+  and
+- [`ADR 0028`](../decisions/0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md),
+  confirming and promoting bundle, record, and validation-result schemas at
+  SHA-256
+  `946a310fe1de2bdfae7297e3c80183f2d85e40397c7a5374b35c5ddbe241e8d4`,
+  `b0662b8019b14a9d20c8866cb68e6232b0ca4a3573860088e262430e692257ac`,
+  and
+  `59c44cb56001343aa8d7438827a00ebc56896fe86ab12ece03f6b62e65155fca`.
+
+The authority-pair audit passed exact digest binding, duplicate-free and
+alias-free YAML parsing, 35 participating Title Case headings, 114-rule
+Markdown/YAML parity, link resolution, and secret-registry self-trigger
+checks. The three schemas compiled strictly with Ajv 8.17.1 and ajv-formats
+3.0.1 and passed 32 focused positive, negative, and enforcement-partition
+probes. Canonical promotions are byte-identical to reviewed proposals.
+
+A final coherence audit then found that the accepted specification still
+listed exact schema bytes as unresolved after ADR 0028 had confirmed them. The
+reviewer corrected that false realization-status statement through the
+governed replacement process rather than editing accepted meaning silently:
+
+- [`ADR 0029`](../decisions/0029-reconcile-nkf-0-1-schema-realization-status.md)
+  accepts and promotes the current Markdown at SHA-256
+  `b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c`
+  and YAML at SHA-256
+  `e9cc92676d8f61855e1dea47ccc7eaa926c43003596158e15c7550ea14e6da41`
+  without changing an NKF 0.1 format rule; and
+- [`ADR 0030`](../decisions/0030-confirm-rebound-nkf-0-1-json-schemas.md)
+  confirms the exact rebound bundle, record, and validation-result schemas at
+  SHA-256
+  `f7e230ad7b2067b63e95c994e9a93d6f80761a335dae9b53d81a61058ffa08b1`,
+  `a64cc7c23f8695499d999ce7b913481fd5ae61d2b2ae1601710a0343914caec3`,
+  and
+  `4398e81d9cb5d1b51aa65859d13952454e6ce548ab867c85a4e42d0fa58ebae2`.
+
+The rebound schemas are duplicate-free JSON, compile strictly, retain
+byte-structurally identical assertion graphs after removing source metadata,
+and pass 32 renewed focused probes. The ADR 0027 pair and ADR 0028 schemas
+remain immutable historical accepted and confirmed snapshots.
+
+No checker, fixture suite, package, CI, distribution, release, consumer
+migration, or conformance result is claimed. The next decision boundary is
+checker repository layout and development artifact identity.
 
 ## Initial source anchors
 

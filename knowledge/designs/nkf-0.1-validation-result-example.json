@@ -1,0 +1,129 @@
+{
+  "contract": "nkf.validation-result",
+  "nkf_version": "0.1",
+  "execution": {
+    "id": "3f51dcab-7e3a-4ea8-9668-627a1989f885",
+    "runner": "nourd-knowledge-engine",
+    "started_at": "2026-07-30T14:30:00.000Z",
+    "completed_at": "2026-07-30T14:30:02.417Z"
+  },
+  "checker": {
+    "identity": "nourd-nkf-checker",
+    "digest": {
+      "algorithm": "sha-256",
+      "value": "1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  },
+  "contract_artifacts": {
+    "core": {
+      "specification": {
+        "expected_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "observed_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "binding": "verified"
+      },
+      "executable": {
+        "expected_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "observed_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+        "binding": "verified"
+      },
+      "schemas": [
+        {
+          "identity": "urn:nkf:0.1:schema:bundle",
+          "expected_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "observed_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "binding": "verified"
+        },
+        {
+          "identity": "urn:nkf:0.1:schema:record",
+          "expected_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+          "observed_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+          "binding": "verified"
+        },
+        {
+          "identity": "urn:nkf:0.1:schema:validation-result",
+          "expected_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+          "observed_sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+          "binding": "verified"
+        }
+      ]
+    },
+    "extensions": []
+  },
+  "request": {
+    "level": "full-bundle",
+    "record_id": null,
+    "acceptance_binding": "not-requested"
+  },
+  "bundle_id": "example-product",
+  "validated_snapshot": {
+    "algorithm": "sha-256",
+    "canonicalization": "rfc8785-jcs",
+    "value": "7777777777777777777777777777777777777777777777777777777777777777",
+    "entry_count": 7
+  },
+  "phases": [
+    {
+      "id": "contracts",
+      "state": "passed"
+    },
+    {
+      "id": "parse",
+      "state": "passed"
+    },
+    {
+      "id": "schema",
+      "state": "passed"
+    },
+    {
+      "id": "project",
+      "state": "passed"
+    },
+    {
+      "id": "source",
+      "state": "passed"
+    },
+    {
+      "id": "extension-resolution",
+      "state": "passed"
+    },
+    {
+      "id": "bundle-graph",
+      "state": "passed"
+    },
+    {
+      "id": "record-contract",
+      "state": "passed"
+    },
+    {
+      "id": "security",
+      "state": "passed"
+    },
+    {
+      "id": "authority-binding",
+      "state": "not-evaluated"
+    },
+    {
+      "id": "result",
+      "state": "passed"
+    }
+  ],
+  "conformance": "passed",
+  "records": [
+    {
+      "record_id": "product",
+      "declared_governance": {
+        "lifecycle": "living",
+        "status": "accepted",
+        "authority": [
+          "human-product-owner"
+        ],
+        "accepted_at": "2026-07-30"
+      },
+      "conformance": "passed",
+      "acceptance_binding": "not-verified",
+      "governing_use": "not-evaluated"
+    }
+  ],
+  "governing_use": "not-evaluated",
+  "diagnostics": []
+}

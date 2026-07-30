@@ -1,6 +1,6 @@
 # NKF 0.1 — Product Knowledge Format
 
-- **Status:** Accepted only through ADR 0029; otherwise a proposal
+- **Status:** Accepted only through ADR 0027; otherwise a proposal
 - **Task:** `NKF-003`
 - **Version:** `0.1`
 - **Prepared:** 30 July 2026
@@ -9,18 +9,18 @@
 - **Accepted source digest:** `77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a`
 - **Source acceptance:** [Nourd Studio ADR 0012](../evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md)
 - **Accepted canonical baseline:** `knowledge/specifications/nkf-0.1.md`
-- **Accepted canonical digest:** `5b0aa9c6851217f0c88a97de03f8d7fce0c495053d6e411a317946fda749092e`
+- **Accepted canonical digest:** `9e90fc712df661b7c008b47a8392a180c5418346f8c3a5a1f2c344c6cbeb3b97`
 - **Canonical destination:** `knowledge/specifications/nkf-0.1.md`
 - **Proposed executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
-- **Acceptance Decision:** ADR 0029
-- **Independent governing inputs:** ADRs 0001 through 0028
+- **Acceptance Decision:** ADR 0027
+- **Independent governing inputs:** ADRs 0001 through 0026
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision becomes the current canonical NKF 0.1 specification only
-> if ADR 0029 accepts it and promotes its bytes unchanged. Before that
-> Decision, it is a proposal. It reconciles the accepted ADR 0027 authority
-> pair with the schema-confirmation status in ADR 0028 and is not the public
-> stable NKF 1.0 release.
+> if ADR 0027 accepts it and promotes its bytes unchanged. Before that
+> Decision, it is a proposal. It integrates the accepted baseline with the
+> later governed changes through ADR 0026 and is not the public stable NKF 1.0
+> release.
 
 ## Purpose
 
@@ -44,12 +44,11 @@ it does not define the format.
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
 
-NKF 0.1 is an accepted pre-stable format. The exact canonical revision and YAML
-companion accepted in ADR 0027 remain the accepted current baseline. ADR 0028
-confirms the exact derived schemas and requires this replacement pair to
-reconcile the specification's realization-status statement. Before ADR 0029,
-this exact revision is a proposal. If ADR 0029 accepts and promotes it
-unchanged, it is the current canonical revision.
+NKF 0.1 is an accepted pre-stable format. The exact canonical revision in ADR
+0010 and its YAML companion in ADR 0011 remain accepted historical snapshots.
+ADRs 0013 through 0026 establish later changes that require this coherent
+replacement pair. Before ADR 0027, this exact revision is a proposal. If ADR
+0027 accepts and promotes it unchanged, it is the current canonical revision.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
@@ -90,10 +89,10 @@ model incorporated here.
 This distinction records the provenance and authority of the Studio source
 baseline; it does not create partial authority. The Human Product Owner
 accepted that exact Studio composite on 28 July 2026 and the current canonical
-independent revision under ADR 0027. Later independent Decisions accept
+independent revision under ADR 0010. Later independent Decisions accept
 specific changed boundaries, but neither those Decisions nor the baseline
 accepts this composite revision by implication. Exact acceptance requires ADR
-0029.
+0027.
 
 ## Scope
 
@@ -1774,7 +1773,7 @@ The following remain deliberately unresolved in NKF 0.1:
 
 - universal freshness and staleness policy;
 - required repository and continuous-integration gates;
-- checker implementation bytes, schema/checker packaging, and public distribution;
+- exact schema/checker bytes, packaging, and public distribution;
 - migration from current `nourd.knowledge.*` bootstrap contracts;
 - cross-bundle semantic identity and relationships;
 - Company and Organization knowledge contracts;

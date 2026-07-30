@@ -1,0 +1,912 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nkf:0.1:schema:validation-result",
+  "title": "NKF 0.1 validation result",
+  "x-nkf-source": {
+    "nkf_version": "0.1",
+    "markdown_path": "knowledge/specifications/nkf-0.1.md",
+    "markdown_digest": {
+      "algorithm": "sha-256",
+      "value": "b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c"
+    },
+    "executable_path": "contracts/nkf/0.1/nkf.yaml",
+    "executable_digest": {
+      "algorithm": "sha-256",
+      "value": "e9cc92676d8f61855e1dea47ccc7eaa926c43003596158e15c7550ea14e6da41"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "nkf_version",
+    "execution",
+    "checker",
+    "contract_artifacts",
+    "request",
+    "bundle_id",
+    "validated_snapshot",
+    "phases",
+    "conformance",
+    "records",
+    "governing_use",
+    "diagnostics"
+  ],
+  "properties": {
+    "contract": {
+      "const": "nkf.validation-result"
+    },
+    "nkf_version": {
+      "const": "0.1"
+    },
+    "execution": {
+      "$ref": "#/$defs/execution"
+    },
+    "checker": {
+      "$ref": "#/$defs/checker"
+    },
+    "contract_artifacts": {
+      "$ref": "#/$defs/contractArtifacts"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "bundle_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/identifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "validated_snapshot": {
+      "$ref": "#/$defs/validatedSnapshot"
+    },
+    "phases": {
+      "$ref": "#/$defs/phases"
+    },
+    "conformance": {
+      "$ref": "#/$defs/conformance"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recordResult"
+      }
+    },
+    "governing_use": {
+      "$ref": "#/$defs/governingUse"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "portableIdentity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:(?:[0-5][0-9]|60)\\.[0-9]{3}Z$"
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "runner",
+        "started_at",
+        "completed_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "runner": {
+          "$ref": "#/$defs/portableIdentity"
+        },
+        "started_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "value": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "checker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "digest"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/portableIdentity"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "artifactBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_sha256",
+        "observed_sha256",
+        "binding"
+      ],
+      "properties": {
+        "expected_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "observed_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding": {
+          "enum": [
+            "verified",
+            "unavailable",
+            "mismatched"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "enum": [
+                  "verified",
+                  "mismatched"
+                ]
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "schemaBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "expected_sha256",
+        "observed_sha256",
+        "binding"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "observed_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding": {
+          "enum": [
+            "verified",
+            "unavailable",
+            "mismatched"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "enum": [
+                  "verified",
+                  "mismatched"
+                ]
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "schemaBundleBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:bundle"
+            }
+          }
+        }
+      ]
+    },
+    "schemaRecordBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:record"
+            }
+          }
+        }
+      ]
+    },
+    "schemaValidationResultBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:validation-result"
+            }
+          }
+        }
+      ]
+    },
+    "coreArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "specification",
+        "executable",
+        "schemas"
+      ],
+      "properties": {
+        "specification": {
+          "$ref": "#/$defs/artifactBinding"
+        },
+        "executable": {
+          "$ref": "#/$defs/artifactBinding"
+        },
+        "schemas": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/schemaBundleBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaRecordBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaValidationResultBinding"
+            }
+          ],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        }
+      }
+    },
+    "extensionArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "specification",
+        "executable"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z](?:[a-z0-9-]*[a-z0-9])?){2,}$"
+        },
+        "specification": {
+          "$ref": "#/$defs/artifactBinding"
+        },
+        "executable": {
+          "$ref": "#/$defs/artifactBinding"
+        }
+      }
+    },
+    "contractArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "core",
+        "extensions"
+      ],
+      "properties": {
+        "core": {
+          "$ref": "#/$defs/coreArtifacts"
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/extensionArtifacts"
+          }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "record_id",
+        "acceptance_binding"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "structural",
+            "contract",
+            "full-bundle"
+          ]
+        },
+        "record_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptance_binding": {
+          "enum": [
+            "requested",
+            "not-requested"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "level": {
+              "const": "structural"
+            },
+            "record_id": {
+              "type": "null"
+            },
+            "acceptance_binding": {
+              "const": "not-requested"
+            }
+          }
+        },
+        {
+          "properties": {
+            "level": {
+              "const": "contract"
+            },
+            "record_id": {
+              "$ref": "#/$defs/identifier"
+            }
+          }
+        },
+        {
+          "properties": {
+            "level": {
+              "const": "full-bundle"
+            },
+            "record_id": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "validatedSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "canonicalization",
+        "value",
+        "entry_count"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "canonicalization": {
+          "const": "rfc8785-jcs"
+        },
+        "value": {
+          "$ref": "#/$defs/sha256"
+        },
+        "entry_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "phaseState": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-evaluated"
+      ]
+    },
+    "phaseContracts": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "contracts"
+        }
+      }
+    },
+    "phaseParse": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "parse"
+        }
+      }
+    },
+    "phaseSchema": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "schema"
+        }
+      }
+    },
+    "phaseProject": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "project"
+        }
+      }
+    },
+    "phaseSource": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "source"
+        }
+      }
+    },
+    "phaseExtensionResolution": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "extension-resolution"
+        }
+      }
+    },
+    "phaseBundleGraph": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "bundle-graph"
+        }
+      }
+    },
+    "phaseRecordContract": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "record-contract"
+        }
+      }
+    },
+    "phaseSecurity": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "security"
+        }
+      }
+    },
+    "phaseAuthorityBinding": {
+      "type": "object",
+      "$ref": "#/$defs/phase",
+      "properties": {
+        "id": {
+          "const": "authority-binding"
+        }
+      }
+    },
+    "phaseResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "const": "result"
+        },
+        "state": {
+          "const": "passed"
+        }
+      }
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/$defs/phaseState"
+        }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/phaseContracts"
+        },
+        {
+          "$ref": "#/$defs/phaseParse"
+        },
+        {
+          "$ref": "#/$defs/phaseSchema"
+        },
+        {
+          "$ref": "#/$defs/phaseProject"
+        },
+        {
+          "$ref": "#/$defs/phaseSource"
+        },
+        {
+          "$ref": "#/$defs/phaseExtensionResolution"
+        },
+        {
+          "$ref": "#/$defs/phaseBundleGraph"
+        },
+        {
+          "$ref": "#/$defs/phaseRecordContract"
+        },
+        {
+          "$ref": "#/$defs/phaseSecurity"
+        },
+        {
+          "$ref": "#/$defs/phaseAuthorityBinding"
+        },
+        {
+          "$ref": "#/$defs/phaseResult"
+        }
+      ],
+      "items": false,
+      "minItems": 11,
+      "maxItems": 11
+    },
+    "conformance": {
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "recordConformance": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-evaluated"
+      ]
+    },
+    "acceptanceBinding": {
+      "enum": [
+        "not-applicable",
+        "not-verified",
+        "verified",
+        "contradicted"
+      ]
+    },
+    "governingUse": {
+      "enum": [
+        "ready",
+        "not-ready",
+        "not-evaluated"
+      ]
+    },
+    "declaredGovernance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifecycle",
+        "status",
+        "authority"
+      ],
+      "properties": {
+        "lifecycle": {
+          "enum": [
+            "living",
+            "immutable"
+          ]
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "accepted",
+            "superseded",
+            "retired"
+          ]
+        },
+        "authority": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "accepted_at": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "recordResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_id",
+        "declared_governance",
+        "conformance",
+        "acceptance_binding",
+        "governing_use"
+      ],
+      "properties": {
+        "record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "declared_governance": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/declaredGovernance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conformance": {
+          "$ref": "#/$defs/recordConformance"
+        },
+        "acceptance_binding": {
+          "$ref": "#/$defs/acceptanceBinding"
+        },
+        "governing_use": {
+          "$ref": "#/$defs/governingUse"
+        }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "severity",
+        "blocking",
+        "phase",
+        "message"
+      ],
+      "properties": {
+        "rule_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ]
+        },
+        "blocking": {
+          "enum": [
+            "conformance",
+            "governing-use",
+            "none"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "contracts",
+            "parse",
+            "schema",
+            "project",
+            "source",
+            "extension-resolution",
+            "bundle-graph",
+            "record-contract",
+            "security",
+            "authority-binding",
+            "result"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "instance_pointer": {
+          "type": "string",
+          "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+        },
+        "source_section": {
+          "$ref": "#/$defs/identifier"
+        },
+        "remediation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "severity": {
+                "const": "warning"
+              }
+            },
+            "required": [
+              "severity"
+            ]
+          },
+          "then": {
+            "properties": {
+              "blocking": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "blocking": {
+                "enum": [
+                  "conformance",
+                  "governing-use"
+                ]
+              }
+            },
+            "required": [
+              "blocking"
+            ]
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "error"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

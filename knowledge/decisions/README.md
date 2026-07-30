@@ -29,3 +29,12 @@ and compatibility.
 | [ADR 0019](0019-accept-nkf-0-1-enforcement-and-diagnostics.md) | Accepted under delegated technical authority | Deterministic enforcement layers, phases, diagnostics, and result semantics |
 | [ADR 0020](0020-establish-current-presentation-guidance-boundary.md) | Accepted, explicitly revisitable through NKF-004 | No native presentation field; Markdown default; optional extension boundary |
 | [ADR 0021](0021-accept-nkf-0-1-native-bundle-serialization.md) | Accepted | Closed native bundle shape and exact non-record representation |
+| [ADR 0022](0022-accept-coherent-nkf-0-1-authority-pair.md) | Accepted, superseded as current authority by ADR 0027 | Historical canonical NKF 0.1 Markdown/YAML authority pair |
+| [ADR 0023](0023-confirm-nkf-0-1-json-schema-realization.md) | Accepted, superseded as current realization by ADR 0028 | Historical derived bundle and record JSON Schemas |
+| [ADR 0024](0024-accept-deterministic-markdown-structure-and-title-case.md) | Accepted under delegated technical authority and contingent Human Product Owner confirmation | CommonMark structure, complete heading coverage, Title Case, canonical terms, and Mermaid boundary |
+| [ADR 0025](0025-accept-nkf-0-1-validation-result-contract.md) | Accepted through Human Product Owner confirmation and bounded delegated technical authority | Exact operational validation-result contract, snapshot, persistence, readiness, and freshness |
+| [ADR 0026](0026-accept-deterministic-secret-pattern-registry.md) | Accepted through Human Product Owner confirmation and derived technical mechanics | Exact native secret scan scope, blocking registry, exclusions, diagnostics, and evolution |
+| [ADR 0027](0027-accept-pre-checker-nkf-0-1-authority-pair.md) | Accepted, superseded as current authority by ADR 0029 | Historical canonical pre-checker NKF 0.1 Markdown/YAML authority pair |
+| [ADR 0028](0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md) | Accepted, superseded as current realization by ADR 0030 | Historical derived bundle, record, and validation-result JSON Schemas |
+| [ADR 0029](0029-reconcile-nkf-0-1-schema-realization-status.md) | Accepted under delegated technical authority | Exact current canonical NKF 0.1 Markdown/YAML authority pair with reconciled realization status |
+| [ADR 0030](0030-confirm-rebound-nkf-0-1-json-schemas.md) | Accepted under delegated technical authority | Exact current source-bound bundle, record, and validation-result JSON Schemas |

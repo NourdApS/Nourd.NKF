@@ -34,9 +34,13 @@ provenance during migration; they must not be silently rewritten or treated as
 already migrated.
 
 Current contract work remains grounded in the accepted Product knowledge
-format. It is expected to cover Shared Technology use without a separate
-Shared Technology model in NKF. Exact contract realization and Nourd Agent SDK
-conformance are not yet confirmed.
+format. ADR 0029 accepts the current exact canonical Markdown/YAML authority
+pair, incorporating the CommonMark, heading coverage, Title Case,
+canonical-term, validation-result, and deterministic secret-registry
+boundaries accepted through ADRs 0024–0026. ADR 0030 confirms the exact
+source-bound bundle, record, and validation-result JSON Schemas for that pair.
+No checker, fixture suite, package, continuous-integration gate, distribution,
+release, consumer migration, or conformance result is yet realized.
 
 NKF remains open to evidence-driven change before its first stable release.
 Real-project findings must move through governed reproduction, classification,

@@ -7,16 +7,16 @@ authority:
   executable_path: contracts/nkf/0.1/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c
+    value: 5b0aa9c6851217f0c88a97de03f8d7fce0c495053d6e411a317946fda749092e
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
       algorithm: sha-256
-      value: 5b0aa9c6851217f0c88a97de03f8d7fce0c495053d6e411a317946fda749092e
+      value: 9e90fc712df661b7c008b47a8392a180c5418346f8c3a5a1f2c344c6cbeb3b97
     executable_path: contracts/nkf/0.1/nkf.yaml
     executable_digest:
       algorithm: sha-256
-      value: 8ef4ff36f6d2ab1eb8e58704d8d16929e1c07a2b6f617a626dbce1769c52ac66
+      value: ebb8c98dfb4611cffe4c19eeebd5fcd932d48332067393c0c7ee7a6f07ac6e87
   governing_decisions:
     - ADR-0001
     - ADR-0002
@@ -43,8 +43,6 @@ authority:
     - ADR-0025
     - ADR-0026
     - ADR-0027
-    - ADR-0028
-    - ADR-0029
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false

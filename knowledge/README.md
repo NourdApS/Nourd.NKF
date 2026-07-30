@@ -67,6 +67,43 @@ without allowing Task work to change accepted meaning by implication.
 [ADR 0021](decisions/0021-accept-nkf-0-1-native-bundle-serialization.md)
 accepts the closed native bundle object, its extension fields, and exact
 non-record representation.
+[ADR 0022](decisions/0022-accept-coherent-nkf-0-1-authority-pair.md)
+accepts and promotes an exact historical coherent Markdown/YAML pair under
+explicitly delegated technical authority. The earlier ADR 0010/0011 revisions
+also remain historical accepted snapshots.
+[ADR 0023](decisions/0023-confirm-nkf-0-1-json-schema-realization.md)
+confirms the exact historical bundle and record JSON Schema realization of
+that pair under separately delegated technical authority.
+[ADR 0024](decisions/0024-accept-deterministic-markdown-structure-and-title-case.md)
+accepts CommonMark structural parsing, complete top-level heading coverage,
+Title Case with governed canonical terms, and the Mermaid boundary under
+delegated technical authority and contingent Human Product Owner
+confirmation. Replacement authority-pair and schema realization was
+subsequently completed.
+[ADR 0025](decisions/0025-accept-nkf-0-1-validation-result-contract.md)
+accepts the exact operational validation-result contract, persistence rule,
+Governed Validation Inputs snapshot, readiness, diagnostics, and currentness
+boundary through Human Product Owner confirmation and bounded delegated
+technical authority.
+[ADR 0026](decisions/0026-accept-deterministic-secret-pattern-registry.md)
+accepts the exact native secret scan scope, minimum blocking registry,
+exclusions, diagnostic behavior, and governed evolution rule without claiming
+comprehensive secret detection.
+[ADR 0027](decisions/0027-accept-pre-checker-nkf-0-1-authority-pair.md)
+accepts and promotes the exact coherent pre-checker Markdown/YAML replacement
+as an accepted historical NKF 0.1 authority pair. The schemas confirmed by ADR
+0023 became historical realization of the prior pair.
+[ADR 0028](decisions/0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md)
+confirms the exact historical source-bound bundle, record, and
+validation-result JSON Schemas for the ADR 0027 pair.
+[ADR 0029](decisions/0029-reconcile-nkf-0-1-schema-realization-status.md)
+accepts and promotes the exact current Markdown/YAML authority pair after
+reconciling its schema-realization status without changing NKF 0.1 format
+meaning.
+[ADR 0030](decisions/0030-confirm-rebound-nkf-0-1-json-schemas.md)
+confirms the exact current source-bound bundle, record, and validation-result
+JSON Schemas without changing their assertion graphs or claiming checker or
+conformance realization.
 
 Task [`NKF-003`](tasks/NKF-003-establish-independent-nkf-authority.md) governs
 the source migration. Until its acceptance criteria are satisfied, every
@@ -77,3 +114,9 @@ Deferred Task
 [`NKF-004`](tasks/NKF-004-define-portable-presentation-guidance-extension.md)
 preserves the intended future NKF-owned portable presentation-guidance
 extension and its evidence threshold without claiming current support.
+
+Deferred Task
+[`NKF-005`](tasks/NKF-005-investigate-validation-expiry-and-authority-freshness.md)
+preserves the future investigation of universal validation expiry and
+authority-specific freshness without adding a current NKF 0.1 expiry, polling,
+or external-authority requirement.
