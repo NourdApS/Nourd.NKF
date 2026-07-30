@@ -2016,6 +2016,18 @@ derived realization.
 - Do not push, publish, tag, create a Github Release, self-host, migrate a
   consumer, or claim consumer conformance.
 
+### Execution Record
+
+- ADR 0044 records delegated acceptance of the exact release contract.
+- Commit `fbdb42f` and ADR 0045 preserve the exact accepted canonical
+  Markdown/YAML authority pair separately from derived realization.
+- ADR 0046 confirms four exact source-bound schemas. The bundle, record, and
+  validation-result assertion graphs are unchanged after source metadata is
+  removed. The release-manifest schema is release-package enforcement only and
+  does not expand the project checker's three-schema boundary.
+- Checker rebinding, release tooling, artifact confirmation, and package
+  reproducibility work remain in progress.
+
 ## Initial source anchors
 
 | Source | Revision | Authority state |

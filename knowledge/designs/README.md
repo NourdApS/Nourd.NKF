@@ -152,8 +152,13 @@ in
 [`nkf-0.1-release-contract-specification-proposal.md`](nkf-0.1-release-contract-specification-proposal.md)
 and
 [`nkf-0.1-release-contract-proposal.yaml`](nkf-0.1-release-contract-proposal.yaml).
-Source-bound schemas, checker rebinding, and package Realization remain
-pending.
+The exact source-bound schemas confirmed by ADR 0046 are
+[`nkf-0.1-release-contract-bundle-schema-proposal.json`](nkf-0.1-release-contract-bundle-schema-proposal.json),
+[`nkf-0.1-release-contract-record-schema-proposal.json`](nkf-0.1-release-contract-record-schema-proposal.json),
+[`nkf-0.1-release-contract-release-manifest-schema-proposal.json`](nkf-0.1-release-contract-release-manifest-schema-proposal.json),
+and
+[`nkf-0.1-release-contract-validation-result-schema-proposal.json`](nkf-0.1-release-contract-validation-result-schema-proposal.json).
+Checker rebinding and package Realization remain pending.
 
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by

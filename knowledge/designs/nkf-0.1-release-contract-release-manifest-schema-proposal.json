@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nkf:0.1:schema:release-manifest",
+  "title": "NKF 0.1 release manifest",
+  "x-nkf-source": {
+    "nkf_version": "0.1",
+    "markdown_path": "knowledge/specifications/nkf-0.1.md",
+    "markdown_digest": {
+      "algorithm": "sha-256",
+      "value": "67beed2a380e719573175d3dfd70b05c59cbe51274c9975f863a58f7083ddba4"
+    },
+    "executable_path": "contracts/nkf/0.1/nkf.yaml",
+    "executable_digest": {
+      "algorithm": "sha-256",
+      "value": "7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "nkf_version",
+    "source",
+    "checker",
+    "authority",
+    "schemas"
+  ],
+  "properties": {
+    "contract": {
+      "const": "nkf.release-manifest"
+    },
+    "nkf_version": {
+      "const": "0.1"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "checker": {
+      "$ref": "#/$defs/checker"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "schemas": {
+      "$ref": "#/$defs/schemas"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "value": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "checkerConfirmation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision",
+        "path",
+        "digest",
+        "checker_source_commit"
+      ],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "pattern": "^ADR-[0-9]{4}$"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^knowledge/decisions/[0-9]{4}-[a-z0-9]+(?:-[a-z0-9]+)*\\.md$"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "checker_source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "release_commit",
+        "checker_confirmation"
+      ],
+      "properties": {
+        "repository": {
+          "const": "https://github.com/kaveh6202/Nourd.NKF.git"
+        },
+        "release_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "checker_confirmation": {
+          "$ref": "#/$defs/checkerConfirmation"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "minimum_major"
+      ],
+      "properties": {
+        "name": {
+          "const": "node"
+        },
+        "minimum_major": {
+          "const": 22
+        }
+      }
+    },
+    "checker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "path",
+        "digest",
+        "runtime"
+      ],
+      "properties": {
+        "identity": {
+          "const": "nourd-nkf-checker"
+        },
+        "path": {
+          "const": "dist/nourd-nkf-checker.mjs"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtime"
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "digest"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "markdownArtifact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/artifact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "path": {
+              "const": "knowledge/specifications/nkf-0.1.md"
+            }
+          }
+        }
+      ]
+    },
+    "executableArtifact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/artifact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "path": {
+              "const": "contracts/nkf/0.1/nkf.yaml"
+            }
+          }
+        }
+      ]
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "precedence",
+        "markdown",
+        "executable"
+      ],
+      "properties": {
+        "precedence": {
+          "const": "normative-markdown"
+        },
+        "markdown": {
+          "$ref": "#/$defs/markdownArtifact"
+        },
+        "executable": {
+          "$ref": "#/$defs/executableArtifact"
+        }
+      }
+    },
+    "schemaArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "path",
+        "digest"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "bundleSchema": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaArtifact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:bundle"
+            },
+            "path": {
+              "const": "contracts/nkf/0.1/schemas/bundle.schema.json"
+            }
+          }
+        }
+      ]
+    },
+    "recordSchema": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaArtifact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:record"
+            },
+            "path": {
+              "const": "contracts/nkf/0.1/schemas/record.schema.json"
+            }
+          }
+        }
+      ]
+    },
+    "releaseManifestSchema": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaArtifact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:release-manifest"
+            },
+            "path": {
+              "const": "contracts/nkf/0.1/schemas/release-manifest.schema.json"
+            }
+          }
+        }
+      ]
+    },
+    "validationResultSchema": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaArtifact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.1:schema:validation-result"
+            },
+            "path": {
+              "const": "contracts/nkf/0.1/schemas/validation-result.schema.json"
+            }
+          }
+        }
+      ]
+    },
+    "schemas": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/bundleSchema"
+        },
+        {
+          "$ref": "#/$defs/recordSchema"
+        },
+        {
+          "$ref": "#/$defs/releaseManifestSchema"
+        },
+        {
+          "$ref": "#/$defs/validationResultSchema"
+        }
+      ],
+      "items": false
+    }
+  }
+}

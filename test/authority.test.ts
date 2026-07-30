@@ -35,13 +35,13 @@ describe("canonical NKF 0.1 authority realization", () => {
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/designs/nkf-0.1-invocation-precondition-specification-proposal.md",
+            "knowledge/designs/nkf-0.1-release-contract-specification-proposal.md",
           ),
         ),
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/designs/nkf-0.1-invocation-precondition-contract-proposal.yaml",
+            "knowledge/designs/nkf-0.1-release-contract-proposal.yaml",
           ),
         ),
       ]);
@@ -57,7 +57,7 @@ describe("canonical NKF 0.1 authority realization", () => {
       const proposal = await readFile(
         path.join(
           repositoryRoot,
-          `knowledge/designs/nkf-0.1-invocation-precondition-${schema.file.replace(
+          `knowledge/designs/nkf-0.1-release-contract-${schema.file.replace(
             ".schema.json",
             "-schema-proposal.json",
           )}`,
@@ -96,7 +96,7 @@ describe("canonical NKF 0.1 authority realization", () => {
   it("keeps every participating canonical heading in Unicode 17 Title Case", async () => {
     const specification = await readFile(specificationPath, "utf8");
     const headings = parseMarkdown(specification).headings;
-    expect(headings).toHaveLength(35);
+    expect(headings).toHaveLength(41);
     for (const heading of headings) {
       const ranges = protectedCanonicalRanges(
         heading.text,
