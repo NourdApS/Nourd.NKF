@@ -1858,7 +1858,9 @@ Markdown/YAML pair, release-package schema, and checker before packaging.
 That recommendation is not yet accepted. No canonical authority artifact,
 schema, checker source, package, tag, release, consumer, or conformance result
 was changed by this slice. Work is paused at this exact release-contract
-boundary for Human Product Owner review.
+boundary for Human Product Owner review. The Human Product Owner later
+accepted that boundary through ADR 0043; the exact realization remained
+separately reviewable.
 
 ## AI Execution Slice: Reconcile Native Release Contract
 
@@ -1905,6 +1907,61 @@ boundary for Human Product Owner review.
   release checker without independent rebinding and confirmation.
 - Do not promote proposals, publish, push, tag, create a Github Release,
   self-host, migrate a consumer, or claim conformance in this slice.
+
+### Result
+
+The Human Product Owner's accepted native release-contract boundary is
+recorded in
+[`ADR 0043`](../decisions/0043-establish-native-release-manifest-contract.md).
+ADRs 0042 and 0043, the Task record, and the initial distribution proposal are
+preserved separately at Git checkpoint
+`271714dba90ffb688e674d46828978059e4891db`.
+
+The evolving exact proposal now defines:
+
+- one closed six-field `nkf.release-manifest` object;
+- exact source, checker-confirmation, checker, authority, and four-schema
+  bindings;
+- an uncompressed deterministic USTAR archive with eight regular files and no
+  compressor-version dependency;
+- a repository-plus-full-SHA-256 consumer pin outside `bundle.yaml`;
+- a bootstrap-safe verification order that authenticates the archive and
+  release-manifest schema before using the checker;
+- one lightweight content-derived tag and one uploaded NKF distribution asset,
+  excluding Github-generated source archives from supported coordinates; and
+- execution-level failure without a project validation result when release
+  verification fails.
+
+The non-authoritative structural realization is
+[`../designs/nkf-0.1-release-manifest-schema-proposal.json`](../designs/nkf-0.1-release-manifest-schema-proposal.json).
+It is duplicate-free JSON, compiles in strict JSON Schema 2020-12 mode, accepts
+one complete positive manifest, and rejects 29 focused negative mutations.
+The executable YAML delta parses strictly with unique keys and no aliases; it
+has six manifest fields, four exact package schemas, eight unique ASCII-sorted
+archive files, and preserves the three-schema project-validation boundary.
+
+The exact review artifacts are bound as:
+
+- distribution design SHA-256
+  `b11a5952bf53135cc38cea9b83211aa2df377cc04644204a1a03717b62d9c09b`;
+  and
+- release-manifest schema proposal SHA-256
+  `437736d30c39f7a918ecdcb0c9d018b2d9e815964340e73798af2eb1ad094433`.
+
+The audit found no digest cycle. The archive digest binds the manifest; the
+manifest binds every other archive file plus the checker-confirmation Decision
+path and digest; the release-manifest schema binds only release-package
+structure; and the tag and asset names are derived outside the archive. The
+current payload is approximately 1.13 MB before the proposed manifest and
+schema, so uncompressed USTAR materially simplifies deterministic bytes
+without creating a significant distribution burden.
+
+The exact fields, Markdown/YAML delta, schema proposal, USTAR mechanics,
+consumer pin, and Github release workflow remain unaccepted proposal material.
+No canonical specification, executable contract, canonical schema, checker
+source, package, tag, release, consumer, or conformance result was changed.
+Work is paused for exact Human Product Owner acceptance before promotion and
+derived realization.
 
 ## Initial source anchors
 
