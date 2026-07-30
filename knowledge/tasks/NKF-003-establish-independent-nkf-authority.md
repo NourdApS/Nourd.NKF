@@ -2035,6 +2035,49 @@ derived realization.
 - This execution slice is complete. No push, tag, asset upload, Github Release,
   self-hosting, consumer migration, or consumer conformance was performed.
 
+## AI Execution Slice: Publish Initial Private Prerelease
+
+- **Recorded:** 30 July 2026
+- **Scope:** Exercise the Human Product Owner's explicit instruction to
+  continue from the confirmed local release-package boundary by publishing the
+  exact initial NKF 0.1 package through the accepted Github Release channel
+- **Decision Authority:** Human Product Owner for external publication;
+  accepted release mechanics from ADRs 0042 through 0048
+- **Repository Visibility:** Private at execution start; publication therefore
+  remains limited to authorized repository users and does not resolve public
+  distribution
+
+### Plan
+
+1. Reverify repository identity, clean local state, Github authentication,
+   remote default branch, visibility, existing tags, and existing releases.
+2. Push the governed `master` history without rewriting it.
+3. Reverify the exact confirmed archive at SHA-256
+   `c8d0df6e68889d5be0c4ca9e215188748d28399f10d10d03728d0561eaf86b4d`.
+4. Create and push the lightweight tag
+   `release-sha256-c8d0df6e68889d5be0c4ca9e215188748d28399f10d10d03728d0561eaf86b4d`
+   targeting release source
+   `50fbc53c7ec1022598029780b5159d5a91c4a087`.
+5. Create one draft prerelease with exactly the confirmed archive as its only
+   uploaded distribution asset.
+6. Download the uploaded asset independently and repeat archive, manifest,
+   artifact, source-provenance, and verified-checker execution checks.
+7. Confirm tag kind and target, asset name and digest, draft and prerelease
+   state, release source, and absence of additional uploaded assets.
+8. Publish the verified draft as a prerelease and reverify its final Github
+   state.
+
+### Guardrails
+
+- Do not retarget or annotate the release tag.
+- Do not rebuild from the later confirmation commit or change the confirmed
+  archive bytes.
+- Do not upload Github-generated source archives as NKF distribution assets.
+- Do not change repository visibility, resolve public distribution, migrate a
+  consumer, or claim project conformance.
+- Treat Git and Github as authority for publication state; do not infer format
+  acceptance or conformance from the release.
+
 ## Initial source anchors
 
 | Source | Revision | Authority state |
