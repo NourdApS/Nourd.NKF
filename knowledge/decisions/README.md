@@ -37,4 +37,14 @@ and compatibility.
 | [ADR 0027](0027-accept-pre-checker-nkf-0-1-authority-pair.md) | Accepted, superseded as current authority by ADR 0029 | Historical canonical pre-checker NKF 0.1 Markdown/YAML authority pair |
 | [ADR 0028](0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md) | Accepted, superseded as current realization by ADR 0030 | Historical derived bundle, record, and validation-result JSON Schemas |
 | [ADR 0029](0029-reconcile-nkf-0-1-schema-realization-status.md) | Accepted under delegated technical authority | Exact current canonical NKF 0.1 Markdown/YAML authority pair with reconciled realization status |
-| [ADR 0030](0030-confirm-rebound-nkf-0-1-json-schemas.md) | Accepted under delegated technical authority | Exact current source-bound bundle, record, and validation-result JSON Schemas |
+| [ADR 0030](0030-confirm-rebound-nkf-0-1-json-schemas.md) | Accepted, superseded as current realization by ADR 0033 | Historical source-bound bundle, record, and validation-result JSON Schemas |
+| [ADR 0031](0031-establish-checker-development-layout-and-identity.md) | Accepted through Human Product Owner confirmation | Root private checker package, validation-only responsibility, and portable artifact identity |
+| [ADR 0032](0032-correct-nkf-0-1-yaml-flow-scalar-grammar.md) | Accepted under delegated technical authority | Strict YAML 1.2 grammar correction for three literal hyphen scalars |
+| [ADR 0033](0033-confirm-yaml-grammar-corrected-json-schema-bindings.md) | Accepted under delegated technical authority | Exact current schema bindings after the YAML grammar correction |
+| [ADR 0034](0034-accept-checker-derived-mechanical-completions.md) | Accepted under delegated technical authority; canonical realization pending | Missing Markdown UTF-8 and contract-target diagnostics plus minimal-example casing repair |
+| [ADR 0035](0035-clarify-product-scope-and-structural-hierarchy.md) | Accepted through Human Product Owner confirmation | Product scope for every record and `part-of` limited to Product, Domain, Capability |
+| [ADR 0036](0036-accept-checker-findings-resolved-authority-pair.md) | Accepted, superseded as current authority by ADR 0039 | Historical checker-findings-resolved Markdown/YAML authority pair |
+| [ADR 0037](0037-confirm-checker-findings-resolved-json-schema-bindings.md) | Accepted, superseded as current realization by ADR 0040 | Historical source-bound schemas for the checker-findings-resolved authority pair |
+| [ADR 0038](0038-establish-nourd-invocation-precondition.md) | Accepted through Human Product Owner confirmation | Project-root `.nourd` invocation precondition and retirement of the unreachable missing-directory diagnostic |
+| [ADR 0039](0039-accept-invocation-precondition-authority-pair.md) | Accepted under delegated technical authority | Current invocation-precondition Markdown/YAML authority pair |
+| [ADR 0040](0040-confirm-invocation-precondition-json-schema-bindings.md) | Accepted under delegated technical authority | Exact current source-bound schemas for the invocation-precondition authority pair |

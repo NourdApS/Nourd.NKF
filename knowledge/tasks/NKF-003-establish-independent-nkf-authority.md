@@ -1501,6 +1501,280 @@ No checker, fixture suite, package, CI, distribution, release, consumer
 migration, or conformance result is claimed. The next decision boundary is
 checker repository layout and development artifact identity.
 
+## AI Execution Slice: Realize The Native Checker
+
+- **Recorded:** 30 July 2026
+- **Scope:** Record the confirmed checker development boundary, implement the
+  native NKF 0.1 checker and its complete conformance fixture matrix, and stop
+  before distribution or release
+- **Decision Authority:** Human Product Owner for checker layout and identity;
+  Codex technical reviewer for implementation mechanics derived from accepted
+  NKF 0.1 authority
+- **Authority Effect:** The confirmed layout and identity may be recorded as
+  accepted realization architecture; code, tests, and passing results remain
+  realization evidence until independently confirmed
+
+### Plan
+
+1. Record the confirmed root-package layout, development package name,
+   portable checker identity, validation-only responsibility, and exact
+   built-artifact digest boundary in an immutable Decision.
+2. Scaffold one private Node.js 22 TypeScript ESM package containing the
+   checker library, thin CLI, tests, fixtures, and ignored generated output.
+3. Implement exact contract loading, digest verification, safe YAML parsing,
+   project discovery, source coverage, JSON Schema validation, extension
+   resolution, bundle graph, record body contracts, security, authority
+   binding, deterministic diagnostics, Governed Validation Inputs snapshot,
+   and result serialization.
+4. Create a comprehensive positive and negative fixture matrix covering every
+   native diagnostic trigger and checker-owned invariant.
+5. Verify type checking, unit tests, fixture tests, portable building,
+   built-artifact identity, deterministic reruns, and exact result-schema
+   validity.
+6. Perform an independent implementation audit and stop before public
+   packaging, distribution, release, support, consumer migration, or any claim
+   that a consumer is conformant.
+
+### Guardrails
+
+- The checker implements accepted Markdown/YAML authority; it cannot invent,
+  widen, narrow, or silently migrate NKF meaning.
+- The checker validates only. It does not reconcile, rewrite, migrate, accept,
+  or repair consumer knowledge.
+- The imported `@nourd/knowledge-core` remains evidence and is not copied as
+  current architecture or compatibility behavior.
+- `checker.identity` is stable and separate from runner identity and package
+  publication coordinates.
+- `checker.digest` binds the exact generated executable artifact used for a
+  validation result.
+- Development success does not establish distribution integrity, release,
+  support, consumer migration, acceptance, confirmed Realization, or
+  conformance.
+
+### Result
+
+Historical implementation checkpoint. Its open findings and verification
+counts are superseded by the completed invocation-boundary execution slice
+below.
+
+The first implementation slice now has:
+
+- one private Node.js 22 TypeScript ESM package;
+- the portable checker identity `nourd-nkf-checker`;
+- strict accepted Markdown/YAML/schema digest binding;
+- safe YAML parsing and JSON Schema validation;
+- project, source, CommonMark, Unicode 17 Title Case, graph, body, entity,
+  binding, extension, security, acceptance-binding, snapshot, result, and
+  persistence mechanics;
+- one valid checked-in project fixture and a positive/negative automated test
+  suite; and
+- one bundled development executable whose exact bytes are hashed at build
+  verification time.
+
+Implementation feedback also exposed four authority questions recorded in
+[`nkf-0.1-native-checker-realization-findings.md`](../designs/nkf-0.1-native-checker-realization-findings.md).
+The development checker fails closed instead of reporting false conformance
+for invalid Markdown UTF-8 or an unresolved contract-validation target. The
+hierarchy contradiction and nonconforming canonical example remain unresolved
+until reviewed.
+
+No checker completeness, confirmed Realization, distribution, release,
+consumer migration, or consumer conformance is claimed.
+
+### Accepted Finding-Closure Plan
+
+The Human Product Owner confirmed ADR 0035's exact hierarchy boundary on 30
+July 2026. Together with the delegated mechanical completions in ADR 0034,
+all four checker-derived authority findings now have accepted resolutions.
+
+The next execution sequence is:
+
+1. derive one exact composite Markdown/YAML replacement containing only the
+   four accepted resolutions;
+2. audit Markdown/YAML semantic parity, stable diagnostics, examples, and
+   exact source binding;
+3. accept and promote the exact pair under delegated technical authority;
+4. rebind and independently re-audit the three derived JSON Schemas;
+5. update checker behavior and fixtures only from the promoted authority;
+6. run the complete local verification and independent implementation audit;
+   and
+7. stop before distribution, release, consumer migration, or consumer
+   conformance.
+
+### First Authority Promotion And Implementation Audit Update
+
+This section records the historical audit checkpoint before Finding 5 was
+resolved. The later invocation-boundary execution slice supersedes its
+then-current counts, digests, and open-finding status.
+
+ADRs 0036 and 0037 complete the accepted finding-closure authority work:
+
+- canonical Markdown SHA-256:
+  `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`;
+- executable YAML SHA-256:
+  `8e6ffdfdbe70915b8d0baf07da7aa0464327ef7ccb9857383a96d380bdfec1bc`;
+- bundle schema SHA-256:
+  `8ca3d5238a209381cb00865aed91095a13df6fd93c57b447182e2e8ae2a155a2`;
+- record schema SHA-256:
+  `105193cdc8b89a36d5efd780dfc90b2001d116c8838c4b9aa805d38c9d099882`;
+  and
+- validation-result schema SHA-256:
+  `c5a48b2e31039ca7e2dc0e3de532612fc9ffc76d499b439c64d9a73d0fd1ac14`.
+
+The rebound schemas compile strictly, have unchanged assertion graphs after
+removing source metadata, and pass 32 renewed focused probes.
+
+The checker now implements the two added diagnostics and the clarified
+Product-scope/structural-hierarchy boundary. Its independent audit also fixed
+implementation defects in exact extension-byte parsing, ambiguous extension
+catalog resolution, resolver failure handling, cross-record entity hierarchy
+cycle detection, and empty failing-bundle readiness.
+
+Local verification passes type checking and 69 tests across canonical
+authority binding, safe YAML, project/source coverage, CommonMark and Unicode
+17 Title Case, graph and record semantics, extensions, security,
+authority-binding, deterministic diagnostics, snapshots, result persistence,
+and a reproducible portable build. The current development executable SHA-256
+is
+`c7fcdeeef9b9148fcdf247b3f66153e7ddefe4133ebe3fcf1d0cb3eda3669626`.
+The built CLI validates the minimal fixture with all required phases passed,
+zero diagnostics, and a checker digest equal to its exact executable bytes.
+
+The audit exercises 115 of the 116 stable native diagnostic triggers. The
+remaining `project.nourd.missing` rule is unreachable in a completed result
+under the accepted phase and persistence model: missing `.nourd` necessarily
+makes the earlier fixed manifest missing and leaves `project` not evaluated,
+while a persisted full-bundle result cannot create its absent destination
+directory. Finding 5 in
+[`../designs/nkf-0.1-native-checker-realization-findings.md`](../designs/nkf-0.1-native-checker-realization-findings.md)
+records the exact conflict and resolution choices.
+
+The native checker and complete diagnostic fixture matrix remain unconfirmed
+while that accepted-behavior boundary is open. Distribution, release,
+consumer migration, and consumer conformance remain outside this execution
+slice.
+
+## AI Execution Slice: Close The Nourd Invocation Boundary
+
+- **Recorded:** 30 July 2026
+- **Scope:** Realize ADR 0038 in the exact NKF 0.1 authority pair, derived
+  schemas, checker invocation behavior, and diagnostic fixture matrix
+- **Decision Authority:** Human Product Owner for the invocation and
+  diagnostic boundary; Codex technical reviewer for exact derived artifacts
+  and implementation mechanics
+- **Authority Effect:** ADR 0038 accepts the semantic boundary; exact
+  replacement artifacts and derived schema bytes require governed review
+
+### Plan
+
+1. Record the confirmed `.nourd` invocation precondition and retirement of
+   `project.nourd.missing`.
+2. Derive one exact Markdown/YAML replacement from the current canonical pair
+   containing only the accepted boundary and required provenance.
+3. Audit strict YAML, exact binding, stable-rule parity, Title Case, links,
+   secret self-trigger, and semantic diff.
+4. Accept and promote the exact pair under delegated technical authority.
+5. Rebind all three schemas, prove unchanged assertion graphs, compile
+   strictly, rerun focused probes, and promote exact reviewed bytes.
+6. Implement fail-closed precondition behavior without creating `.nourd`,
+   update the fixture matrix to the resulting 115-rule registry, and rerun
+   complete package, CLI, reproducibility, and repository checks.
+7. Stop before distribution, release, consumer migration, or consumer
+   conformance.
+
+### Guardrails
+
+- Do not represent invocation failure as native conformance.
+- Do not create, repair, or write through a missing or unsafe `.nourd` path.
+- Do not change phase order, manifest location, result persistence, or any
+  unrelated diagnostic.
+- Do not edit historical accepted proposal artifacts.
+- Preserve acceptance, confirmed Realization, and conformance as separate
+  states.
+
+### Result
+
+Completed as accepted authority, confirmed derived schemas, and unconfirmed
+checker realization evidence on 30 July 2026.
+
+- ADR 0039 accepts and promotes the exact current Markdown/YAML pair:
+  - Markdown SHA-256
+    `2274d569d147eadd658de8e8f00a790630be1f30a5303f3c608b085fac020f48`;
+  - YAML SHA-256
+    `7fc193f8622f8068c56a24fc5f4cfbe11ea2787f3bba3bb612f9a39d49f8e413`.
+- ADR 0040 confirms and promotes the exact source-metadata-only schema
+  rebindings:
+  - bundle SHA-256
+    `7718ad7ffdc5cf8884b68b163edef58cb3b080eec6316ec4edc7e79de52208b4`;
+  - record SHA-256
+    `3e28f6549e1139a813102f4786b491a02af2c5e0c92eedf06290d59a79206273`;
+  - validation-result SHA-256
+    `33386af81143415adbb48a365d6b00571cfed31fa3072c1e30ecd9d306802e12`.
+- The authority pair passes strict YAML parsing, exact digest binding,
+  115-rule identity and severity parity, 35-heading Title Case, local-link,
+  secret self-trigger, and accepted-boundary-only semantic-diff audits.
+- The schemas have zero assertion-graph changes after removing
+  `x-nkf-source`, compile strictly with Ajv `8.20.0` and `ajv-formats`
+  `3.0.1`, and pass 32 focused probes.
+- The checker evaluates the `.nourd` precondition before validation, returns
+  an execution-level error when it fails, creates no result or directory,
+  retains `bundle.manifest.missing` after successful preflight, and contains
+  no retired diagnostic emission.
+- `npm run check` passes type checking, 74 tests in 11 files, a portable build,
+  and reproducibility verification.
+- The built CLI passes the minimal fixture with zero diagnostics and exits
+  with status `2` without mutation for an uninitialized project.
+- Two consecutive builds produce executable SHA-256
+  `f64d772cb628d6c1fe7dd337baceecb75007fdabe74f91bd87971e063a362d0c`.
+
+The complete 115-rule fixture-reference matrix is locally verified. The
+checker remains unconfirmed realization evidence until an immutable source
+checkpoint and separate confirmation bind its exact implementation.
+Distribution, release, consumer migration, and consumer conformance remain
+outside this execution slice.
+
+## AI Execution Slice: Checkpoint And Confirm Development Realization
+
+- **Recorded:** 30 July 2026
+- **Scope:** Bind the completed native checker implementation and fixture
+  matrix to an immutable Git checkpoint, audit that exact state, and record a
+  bounded development-Realization confirmation if it passes
+- **Decision Authority:** Codex technical reviewer under the Human Product
+  Owner's prior authorization to confirm the technical realization after
+  independent review
+- **Authority Effect:** None on NKF format meaning; any confirmation applies
+  only to the exact implementation checkpoint and reproducible development
+  artifact
+
+### Plan
+
+1. Verify the independent NKF repository identity and review the complete
+   intended checkpoint.
+2. Commit the accepted authority, confirmed schemas, checker source, fixtures,
+   tests, and supporting governed records without pushing.
+3. Rebuild and rerun the package, authority, schema, fixture, CLI,
+   reproducibility, security, link, and repository-integrity audits from the
+   exact committed state.
+4. If the audit passes, record a separate immutable Decision confirming the
+   exact development Realization and explicitly excluding distribution,
+   release, support, consumer migration, and consumer conformance.
+5. Commit the confirmation record and current-state indexes separately,
+   without changing the confirmed checker source checkpoint.
+
+### Guardrails
+
+- A commit cannot accept format meaning or prove consumer conformance.
+- Confirmation must bind the exact source commit, authority digests, schema
+  digests, and development executable digest.
+- Do not confirm release packaging, installation, provenance distribution,
+  CI, support, or compatibility beyond the current NKF 0.1 authority.
+- Do not push, tag, publish, release, migrate, or validate a consumer.
+- If the exact committed state fails audit, record no confirmation.
+
+### Result
+
+In progress.
+
 ## Initial source anchors
 
 | Source | Revision | Authority state |

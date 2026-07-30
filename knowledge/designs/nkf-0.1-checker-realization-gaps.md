@@ -1,6 +1,7 @@
 # NKF 0.1 Checker-Realization Gaps
 
-- **Status:** Resolved by ADRs 0024 through 0030
+- **Status:** Authority gaps resolved; subsequent checker findings governed
+  through ADRs 0034 through 0040
 - **Task:** `NKF-003`
 - **Prepared:** 29 July 2026
 - **Decision authority:** Human Product Owner, Nourd ApS
@@ -1060,8 +1061,9 @@ and does not block the current result contract.
 The complete validation-result meaning and exact structural serialization are
 accepted by
 [`ADR 0025`](../decisions/0025-accept-nkf-0-1-validation-result-contract.md).
-ADR 0029 accepts the current replacement authority pair, and
-[`ADR 0030`](../decisions/0030-confirm-rebound-nkf-0-1-json-schemas.md)
+[`ADR 0039`](../decisions/0039-accept-invocation-precondition-authority-pair.md)
+accepts the current normative Markdown and strict-YAML executable companion.
+[`ADR 0040`](../decisions/0040-confirm-invocation-precondition-json-schema-bindings.md)
 confirms the exact current source-bound validation-result schema together with
 the bundle and record schemas.
 
@@ -1106,24 +1108,30 @@ Completed pre-checker authority work:
 6. ADR 0029 reconciles the specification's schema-realization status.
 7. ADR 0030 rebinds and confirms all three schemas without changing their
    assertion graphs.
+8. ADR 0032 corrects three invalid YAML flow scalars without changing their
+   parsed meaning.
+9. ADR 0033 rebinds and reconfirms all three schemas.
+10. ADR 0031 establishes the checker development layout and artifact identity.
+11. ADRs 0034 through 0040 govern all five findings exposed by native checker
+    implementation and establish the current authority and schema bindings.
 
 Remaining realization order:
 
-1. confirm checker development layout and identity;
-2. implement phase-oriented checker code and the complete positive/negative
-   fixture matrix;
-3. verify deterministic results without claiming acceptance, confirmed
-   Realization, release readiness, or consumer conformance; and
-4. separately establish distribution, integrity, release, support, and
+1. bind the implemented checker and complete 115-rule fixture-reference matrix
+   to an immutable source checkpoint;
+2. independently confirm that exact development Realization without claiming
+   release readiness or consumer conformance; and
+3. separately establish distribution, integrity, release, support, and
    deliberate consumer migration.
 
 ## Current Conclusion
 
 All three conformance-critical authority gaps found by this review are now
-resolved. ADRs 0029 and 0030 establish the current canonical pair and exact
+resolved. ADRs 0039 and 0040 establish the current canonical pair and exact
 derived schemas.
 
-Checker implementation remains deferred. The next boundary is repository
-realization: checker development layout and artifact identity. No checker,
-fixture suite, distribution, release, consumer migration, or conformance
-result exists yet.
+The native checker and its complete 115-rule fixture-reference matrix now
+exist as locally verified, unconfirmed development-Realization evidence. The
+next boundary is an immutable source checkpoint and separate technical
+confirmation. Distribution, release, consumer migration, and consumer
+conformance remain later work.

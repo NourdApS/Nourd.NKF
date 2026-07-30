@@ -104,6 +104,40 @@ meaning.
 confirms the exact current source-bound bundle, record, and validation-result
 JSON Schemas without changing their assertion graphs or claiming checker or
 conformance realization.
+[ADR 0031](decisions/0031-establish-checker-development-layout-and-identity.md)
+accepts the root private Node.js 22 TypeScript ESM checker package,
+validation-only responsibility, and stable `nourd-nkf-checker` portable
+artifact identity without claiming implementation or distribution.
+[ADR 0032](decisions/0032-correct-nkf-0-1-yaml-flow-scalar-grammar.md)
+corrects three invalid standalone hyphen scalars in the executable companion
+without changing normative or parsed meaning.
+[ADR 0033](decisions/0033-confirm-yaml-grammar-corrected-json-schema-bindings.md)
+confirms the three exact source-metadata-only schema rebindings after that
+grammar correction.
+[ADR 0034](decisions/0034-accept-checker-derived-mechanical-completions.md)
+accepts the mechanically missing Markdown UTF-8 and contract-target
+diagnostics plus the editorial minimal-example casing repair, with canonical
+realization pending the separate hierarchy decision.
+[ADR 0035](decisions/0035-clarify-product-scope-and-structural-hierarchy.md)
+keeps every record Product-scoped while limiting native `part-of` to the
+Product–Domain–Capability structural hierarchy.
+[ADR 0036](decisions/0036-accept-checker-findings-resolved-authority-pair.md)
+accepts and promotes the historical Markdown/YAML pair realizing ADRs 0034
+and 0035 without claiming schema or checker confirmation.
+[ADR 0037](decisions/0037-confirm-checker-findings-resolved-json-schema-bindings.md)
+confirms the historical source-bound bundle, record, and validation-result
+JSON Schemas for the ADR 0036 pair without changing their assertion graphs or
+claiming checker completeness.
+[ADR 0038](decisions/0038-establish-nourd-invocation-precondition.md)
+establishes project-root `.nourd` as a native-checker invocation precondition
+and retires the unreachable `project.nourd.missing` diagnostic.
+[ADR 0039](decisions/0039-accept-invocation-precondition-authority-pair.md)
+accepts and promotes the exact current Markdown/YAML pair realizing ADR 0038
+without claiming schema or checker confirmation.
+[ADR 0040](decisions/0040-confirm-invocation-precondition-json-schema-bindings.md)
+confirms the exact current source-bound bundle, record, and validation-result
+JSON Schemas for the ADR 0039 pair without changing their assertion graphs or
+claiming checker completeness.
 
 Task [`NKF-003`](tasks/NKF-003-establish-independent-nkf-authority.md) governs
 the source migration. Until its acceptance criteria are satisfied, every

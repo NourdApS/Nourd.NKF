@@ -1,6 +1,6 @@
 # NKF 0.1 — Product Knowledge Format
 
-- **Status:** Proposed exact replacement; accepted only through ADR 0039
+- **Status:** Proposed exact replacement; accepted only through ADR 0036
 - **Task:** `NKF-003`
 - **Version:** `0.1`
 - **Prepared:** 30 July 2026
@@ -9,17 +9,17 @@
 - **Accepted source digest:** `77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a`
 - **Source acceptance:** [Nourd Studio ADR 0012](../evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md)
 - **Accepted canonical baseline:** `knowledge/specifications/nkf-0.1.md`
-- **Accepted canonical digest:** `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`
+- **Accepted canonical digest:** `b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c`
 - **Canonical destination:** `knowledge/specifications/nkf-0.1.md`
 - **Proposed executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
-- **Acceptance Decision:** ADR 0039
-- **Independent governing inputs:** ADRs 0001 through 0038
+- **Acceptance Decision:** ADR 0036
+- **Independent governing inputs:** ADRs 0001 through 0035
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision becomes the current canonical NKF 0.1 specification only
-> if ADR 0039 accepts it and promotes its bytes unchanged. Before that
-> Decision, it is a proposal. It realizes the native-checker invocation
-> boundary accepted through ADR 0038 and is not the public stable NKF 1.0
+> if ADR 0036 accepts it and promotes its bytes unchanged. Before that
+> Decision, it is a proposal. It realizes only the checker-derived resolutions
+> accepted through ADRs 0034 and 0035 and is not the public stable NKF 1.0
 > release.
 
 ## Purpose
@@ -44,13 +44,13 @@ it does not define the format.
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
 
-NKF 0.1 is an accepted pre-stable format. ADR 0036 accepts the current
-canonical Markdown and its strict-YAML executable companion, and ADR 0037
-confirms the current derived schemas. ADR 0038 establishes the project-root
-`.nourd` native-checker invocation precondition and retires one unreachable
-diagnostic. Before ADR 0039, this exact composite revision is a proposal. If
-ADR 0039 accepts and promotes it unchanged, it is the current canonical
-revision.
+NKF 0.1 is an accepted pre-stable format. ADR 0029 accepts the current
+canonical Markdown, ADR 0032 accepts its strict-YAML executable companion, and
+ADR 0033 confirms the current derived schemas. ADR 0034 accepts two missing
+diagnostic mechanics and an editorial example correction. ADR 0035 clarifies
+Product scope and structural hierarchy. Before ADR 0036, this exact composite
+revision is a proposal. If ADR 0036 accepts and promotes it unchanged, it is
+the current canonical revision.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
@@ -94,7 +94,7 @@ accepted that exact Studio composite on 28 July 2026 and later canonical
 independent revisions through ADR 0029. Later independent Decisions accept
 specific changed boundaries, but neither those Decisions nor an earlier
 baseline accepts this composite revision by implication. Exact acceptance
-requires ADR 0039.
+requires ADR 0036.
 
 ## Scope
 
@@ -204,16 +204,8 @@ those identifiers can claim native NKF contract conformance.
 
 ## Bundle Contract
 
-The native checker is invoked with a candidate project-root directory. Before
-validation begins, its direct `.nourd/` entry MUST already exist and safely
-resolve to a directory inside that candidate project root. When this
-precondition is not met, the checker MUST report an execution-level failure
-outside the native diagnostic contract, MUST NOT construct or persist an
-`nkf.validation-result`, MUST NOT create, replace, or repair `.nourd/`, and
-MUST NOT follow an unsafe `.nourd/` path.
-
-After the invocation precondition passes, the project root is the directory
-that directly contains `.nourd/`. Native NKF 0.1 fixes:
+The project root is the directory that directly contains `.nourd/`. Native NKF
+0.1 fixes:
 
 ```text
 <project-root>/
@@ -226,8 +218,6 @@ that directly contains `.nourd/`. Native NKF 0.1 fixes:
 
 The manifest is `.nourd/knowledge/bundle.yaml`. Record declarations are UTF-8
 `.yaml` files in the flat `.nourd/knowledge/records/` directory.
-When the invocation precondition passes but the fixed manifest is absent,
-`bundle.manifest.missing` remains the native parse diagnostic.
 
 The manifest is a closed object with these required fields:
 
@@ -1396,9 +1386,7 @@ Exact schema bytes remain derived realization.
 
 ### Validation Phases
 
-The project-root `.nourd/` invocation precondition is evaluated before
-validation and is not a validation phase or conformance diagnostic. Only
-after it passes, the checker executes:
+The checker executes:
 
 1. `contracts` — verify exact Markdown/YAML/schema bindings;
 2. `parse` — locate and safely parse manifest and declaration YAML;
@@ -1508,6 +1496,7 @@ warning is non-blocking.
 
 | Project, path, source, and representation rule | Severity |
 | --- | --- |
+| `project.nourd.missing` | error |
 | `project.records-directory.missing` | error |
 | `project.records-directory.invalid` | error |
 | `knowledge.root.missing` | error |
@@ -1624,12 +1613,10 @@ excluded from consequential interpretation.
 
 ### Validation Result
 
-Failure of the project-root `.nourd/` invocation precondition produces no
-validation result. After that precondition passes, the checker emits one
-closed UTF-8 JSON `nkf.validation-result` object with `nkf_version: "0.1"`.
-Unknown fields, comments, duplicate keys, byte-order marks, and non-JSON
-values are invalid. Member order and insignificant whitespace carry no
-meaning.
+The checker emits one closed UTF-8 JSON `nkf.validation-result` object with
+`nkf_version: "0.1"`. Unknown fields, comments, duplicate keys, byte-order
+marks, and non-JSON values are invalid. Member order and insignificant
+whitespace carry no meaning.
 
 The object contains exactly thirteen required fields:
 

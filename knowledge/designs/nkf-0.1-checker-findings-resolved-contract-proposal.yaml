@@ -7,16 +7,16 @@ authority:
   executable_path: contracts/nkf/0.1/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 2274d569d147eadd658de8e8f00a790630be1f30a5303f3c608b085fac020f48
+    value: 099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
       algorithm: sha-256
-      value: 099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d
+      value: b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c
     executable_path: contracts/nkf/0.1/nkf.yaml
     executable_digest:
       algorithm: sha-256
-      value: 8e6ffdfdbe70915b8d0baf07da7aa0464327ef7ccb9857383a96d380bdfec1bc
+      value: 763fb7cb86f6d2a5f71672593a9f14262790c0ae3d8e9fbebf7c90cab20ea53b
   governing_decisions:
     - ADR-0001
     - ADR-0002
@@ -49,31 +49,9 @@ authority:
     - ADR-0034
     - ADR-0035
     - ADR-0036
-    - ADR-0038
-    - ADR-0039
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
-
-native_checker_invocation:
-  candidate_project_root:
-    type: directory
-  project_nourd_precondition:
-    path: .nourd
-    base: candidate-project-root
-    evaluated_before_validation: true
-    required_direct_entry: true
-    resolution:
-      must_be_safe: true
-      final_kind: directory
-      must_be_inside_candidate_project_root: true
-    failure:
-      classification: execution-level
-      native_diagnostic: none
-      validation_result_construction: forbidden
-      validation_result_persistence: forbidden
-      create_replace_or_repair: forbidden
-      unsafe_path_following: forbidden
 
 yaml_data_model:
   encoding: UTF-8
@@ -1177,6 +1155,7 @@ diagnostics:
     yaml.parse.invalid: {severity: error, blocking: conformance, phase: parse}
     schema.bundle.invalid: {severity: error, blocking: conformance, phase: schema}
     schema.record.invalid: {severity: error, blocking: conformance, phase: schema}
+    project.nourd.missing: {severity: error, blocking: conformance, phase: project}
     project.records-directory.missing: {severity: error, blocking: conformance, phase: project}
     project.records-directory.invalid: {severity: error, blocking: conformance, phase: project}
     knowledge.root.missing: {severity: error, blocking: conformance, phase: project}

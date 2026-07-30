@@ -88,20 +88,58 @@ an immutable Decision or normative specification.
 - [`nkf-0.1-schema-status-reconciled-specification-proposal.md`](nkf-0.1-schema-status-reconciled-specification-proposal.md)
   and
   [`nkf-0.1-schema-status-reconciled-contract-proposal.yaml`](nkf-0.1-schema-status-reconciled-contract-proposal.yaml)
-  are the exact current authority revisions accepted and promoted by ADR
-  0029.
+  are the exact authority revisions accepted and promoted by ADR 0029. The
+  Markdown remains current; the YAML is historical after ADR 0032.
 - [`nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json`](nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json),
   [`nkf-0.1-schema-status-reconciled-record-schema-proposal.json`](nkf-0.1-schema-status-reconciled-record-schema-proposal.json),
   and
   [`nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json`](nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json)
+  are the exact source-bound schemas confirmed by ADR 0030, now historical
+  after ADR 0033.
+- [`nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml`](nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml)
+  is the historical strict-YAML executable companion accepted and promoted by
+  ADR 0032, now superseded as current authority by ADR 0036.
+- [`nkf-0.1-yaml-grammar-corrected-bundle-schema-proposal.json`](nkf-0.1-yaml-grammar-corrected-bundle-schema-proposal.json),
+  [`nkf-0.1-yaml-grammar-corrected-record-schema-proposal.json`](nkf-0.1-yaml-grammar-corrected-record-schema-proposal.json),
+  and
+  [`nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json`](nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json)
+  are the exact source-bound schemas confirmed and promoted by ADR 0033, now
+  historical after ADR 0037.
+- [`nkf-0.1-native-checker-realization-findings.md`](nkf-0.1-native-checker-realization-findings.md)
+  records five conformance-critical findings exposed by native checker
+  realization. All five are resolved through ADRs 0034 through 0040.
+- [`nkf-0.1-checker-findings-resolved-specification-proposal.md`](nkf-0.1-checker-findings-resolved-specification-proposal.md)
+  and
+  [`nkf-0.1-checker-findings-resolved-contract-proposal.yaml`](nkf-0.1-checker-findings-resolved-contract-proposal.yaml)
+  are the exact authority pair accepted and promoted by ADR 0036, now
+  historical after ADR 0039.
+- [`nkf-0.1-checker-findings-resolved-bundle-schema-proposal.json`](nkf-0.1-checker-findings-resolved-bundle-schema-proposal.json),
+  [`nkf-0.1-checker-findings-resolved-record-schema-proposal.json`](nkf-0.1-checker-findings-resolved-record-schema-proposal.json),
+  and
+  [`nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json`](nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json)
+  are the exact source-bound schemas confirmed and promoted by ADR 0037, now
+  historical after ADR 0040.
+- [`nkf-0.1-invocation-precondition-specification-proposal.md`](nkf-0.1-invocation-precondition-specification-proposal.md)
+  and
+  [`nkf-0.1-invocation-precondition-contract-proposal.yaml`](nkf-0.1-invocation-precondition-contract-proposal.yaml)
+  are the exact current authority pair accepted and promoted by ADR 0039.
+- [`nkf-0.1-invocation-precondition-bundle-schema-proposal.json`](nkf-0.1-invocation-precondition-bundle-schema-proposal.json),
+  [`nkf-0.1-invocation-precondition-record-schema-proposal.json`](nkf-0.1-invocation-precondition-record-schema-proposal.json),
+  and
+  [`nkf-0.1-invocation-precondition-validation-result-schema-proposal.json`](nkf-0.1-invocation-precondition-validation-result-schema-proposal.json)
   are the exact current source-bound schemas confirmed and promoted by ADR
-  0030.
+  0040.
 
 ## Active Proposals
 
-No unresolved normative checker gap remains. Checker repository layout,
-development artifact identity, fixture architecture, distribution, and release
-realization have not yet been proposed or accepted.
+All five checker-derived authority findings are accepted through ADRs 0034,
+0035, and 0038. ADRs 0039 and 0040 reflect their exact semantics in the
+current canonical authority pair and source-bound schemas. Checker updates
+and the complete 115-rule fixture-reference matrix are locally verified as
+unconfirmed realization evidence.
+
+Checker distribution and release realization have not yet been proposed or
+accepted.
 
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by

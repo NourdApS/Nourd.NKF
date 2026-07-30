@@ -1,0 +1,8 @@
+nkf_version: "0.1"
+contract: nkf.bundle
+id: example-product
+product_record: product
+knowledge_root: knowledge
+non_records:
+  - path: README.md
+    kind: navigation

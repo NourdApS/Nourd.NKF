@@ -7,16 +7,16 @@ authority:
   executable_path: contracts/nkf/0.1/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 2274d569d147eadd658de8e8f00a790630be1f30a5303f3c608b085fac020f48
+    value: b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
       algorithm: sha-256
-      value: 099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d
+      value: b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c
     executable_path: contracts/nkf/0.1/nkf.yaml
     executable_digest:
       algorithm: sha-256
-      value: 8e6ffdfdbe70915b8d0baf07da7aa0464327ef7ccb9857383a96d380bdfec1bc
+      value: e9cc92676d8f61855e1dea47ccc7eaa926c43003596158e15c7550ea14e6da41
   governing_decisions:
     - ADR-0001
     - ADR-0002
@@ -46,34 +46,9 @@ authority:
     - ADR-0028
     - ADR-0029
     - ADR-0032
-    - ADR-0034
-    - ADR-0035
-    - ADR-0036
-    - ADR-0038
-    - ADR-0039
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
-
-native_checker_invocation:
-  candidate_project_root:
-    type: directory
-  project_nourd_precondition:
-    path: .nourd
-    base: candidate-project-root
-    evaluated_before_validation: true
-    required_direct_entry: true
-    resolution:
-      must_be_safe: true
-      final_kind: directory
-      must_be_inside_candidate_project_root: true
-    failure:
-      classification: execution-level
-      native_diagnostic: none
-      validation_result_construction: forbidden
-      validation_result_persistence: forbidden
-      create_replace_or_repair: forbidden
-      unsafe_path_following: forbidden
 
 yaml_data_model:
   encoding: UTF-8
@@ -306,10 +281,6 @@ paths:
 
 markdown:
   grammar: CommonMark-0.31.2
-  source_encoding:
-    required: UTF-8
-    invalid_diagnostic: markdown.utf8.invalid
-    copied_invalid_bytes: forbidden
   participating_headings:
     container: direct-child-of-document-root
     levels: [1, 2, 3]
@@ -954,9 +925,7 @@ hierarchy:
     capability_parent_exactly_one: domain
     other_type_participation: requires-body-or-supported-extension
   every_record_scope_product: bundle.product_record
-  hierarchy_participants_reach_product: true
-  native_required_participants: [domain, capability]
-  product_scope_creates_part_of: false
+  every_record_reaches_product: true
 
 extensions:
   executable_identity: nkf.extension
@@ -1177,6 +1146,7 @@ diagnostics:
     yaml.parse.invalid: {severity: error, blocking: conformance, phase: parse}
     schema.bundle.invalid: {severity: error, blocking: conformance, phase: schema}
     schema.record.invalid: {severity: error, blocking: conformance, phase: schema}
+    project.nourd.missing: {severity: error, blocking: conformance, phase: project}
     project.records-directory.missing: {severity: error, blocking: conformance, phase: project}
     project.records-directory.invalid: {severity: error, blocking: conformance, phase: project}
     knowledge.root.missing: {severity: error, blocking: conformance, phase: project}
@@ -1194,7 +1164,6 @@ diagnostics:
     record.source.non-markdown: {severity: error, blocking: conformance, phase: source}
     record.source.duplicate: {severity: error, blocking: conformance, phase: source}
     record.source.digest-mismatch: {severity: error, blocking: conformance, phase: source}
-    markdown.utf8.invalid: {severity: error, blocking: conformance, phase: source}
     record.h1-count.invalid: {severity: error, blocking: conformance, phase: source}
     record.title.mismatch: {severity: error, blocking: conformance, phase: source}
     record.title.case-invalid: {severity: error, blocking: conformance, phase: source}
@@ -1233,7 +1202,6 @@ diagnostics:
     bundle.product.missing: {severity: error, blocking: conformance, phase: bundle-graph}
     bundle.product.multiple: {severity: error, blocking: conformance, phase: bundle-graph}
     bundle.product.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
-    request.record.unresolved: {severity: error, blocking: conformance, phase: bundle-graph}
     scope.product.mismatch: {severity: error, blocking: conformance, phase: bundle-graph}
     hierarchy.product-parent.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
     hierarchy.domain-parent.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
@@ -1516,9 +1484,6 @@ validation_result:
         persistence: transient
       contract:
         record_id: required-non-null
-        target_resolution: exactly-one-uniquely-identified-governed-record
-        unresolved_diagnostic: request.record.unresolved
-        unresolved_record_result: omitted
         acceptance_binding: [requested, not-requested]
         persistence: transient
       full-bundle:

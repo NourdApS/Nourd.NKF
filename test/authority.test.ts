@@ -1,0 +1,129 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+import { CORE_BINDINGS } from "../src/checker/bindings.js";
+import { parseMarkdown } from "../src/checker/markdown.js";
+import {
+  protectedCanonicalRanges,
+  toUnicode17TitleCase,
+} from "../src/checker/titlecase.js";
+import { sha256 } from "../src/checker/util.js";
+import { parseNativeYaml } from "../src/checker/yaml.js";
+import { repositoryRoot } from "./helpers.js";
+
+const specificationPath = path.join(repositoryRoot, CORE_BINDINGS.specification.path);
+const executablePath = path.join(repositoryRoot, CORE_BINDINGS.executable.path);
+const schemaRoot = path.join(repositoryRoot, "contracts/nkf/0.1/schemas");
+
+function markdownRules(source: string): Map<string, "error" | "warning"> {
+  const rules = new Map<string, "error" | "warning">();
+  for (const line of source.split("\n")) {
+    const match = line.match(/^\| `([^`]+)` \| (error|warning)(?: \||$)/);
+    if (match?.[1] !== undefined && match[2] !== undefined) {
+      rules.set(match[1], match[2] as "error" | "warning");
+    }
+  }
+  return rules;
+}
+
+describe("canonical NKF 0.1 authority realization", () => {
+  it("keeps the promoted authority pair byte-identical to its accepted proposals", async () => {
+    const [specification, executable, specificationProposal, executableProposal] =
+      await Promise.all([
+        readFile(specificationPath),
+        readFile(executablePath),
+        readFile(
+          path.join(
+            repositoryRoot,
+            "knowledge/designs/nkf-0.1-invocation-precondition-specification-proposal.md",
+          ),
+        ),
+        readFile(
+          path.join(
+            repositoryRoot,
+            "knowledge/designs/nkf-0.1-invocation-precondition-contract-proposal.yaml",
+          ),
+        ),
+      ]);
+    expect(specification).toEqual(specificationProposal);
+    expect(executable).toEqual(executableProposal);
+    expect(sha256(specification)).toBe(CORE_BINDINGS.specification.sha256);
+    expect(sha256(executable)).toBe(CORE_BINDINGS.executable.sha256);
+  });
+
+  it("keeps all promoted schemas byte-identical to their confirmed proposals", async () => {
+    for (const schema of CORE_BINDINGS.schemas) {
+      const canonical = await readFile(path.join(schemaRoot, schema.file));
+      const proposal = await readFile(
+        path.join(
+          repositoryRoot,
+          `knowledge/designs/nkf-0.1-invocation-precondition-${schema.file.replace(
+            ".schema.json",
+            "-schema-proposal.json",
+          )}`,
+        ),
+      );
+      expect(canonical).toEqual(proposal);
+      expect(sha256(canonical)).toBe(schema.sha256);
+    }
+  });
+
+  it("keeps strict executable parsing, Markdown binding, and 115-rule severity parity", async () => {
+    const [specificationBytes, executableBytes] = await Promise.all([
+      readFile(specificationPath),
+      readFile(executablePath),
+    ]);
+    const parsed = parseNativeYaml(executableBytes, CORE_BINDINGS.executable.path);
+    expect(parsed.diagnostics).toEqual([]);
+    expect(parsed.value).not.toBeNull();
+    expect(parsed.value?.authority.markdown_digest.value).toBe(
+      CORE_BINDINGS.specification.sha256,
+    );
+
+    const executableRules = new Map(
+      Object.entries(
+        parsed.value?.diagnostics.rules as Record<
+          string,
+          { severity: "error" | "warning" }
+        >,
+      ).map(([id, rule]) => [id, rule.severity]),
+    );
+    const specificationRules = markdownRules(specificationBytes.toString("utf8"));
+    expect(executableRules.size).toBe(115);
+    expect(specificationRules).toEqual(executableRules);
+  });
+
+  it("keeps every participating canonical heading in Unicode 17 Title Case", async () => {
+    const specification = await readFile(specificationPath, "utf8");
+    const headings = parseMarkdown(specification).headings;
+    expect(headings).toHaveLength(35);
+    for (const heading of headings) {
+      const ranges = protectedCanonicalRanges(
+        heading.text,
+        ["NKF"],
+        heading.protectedRanges,
+      );
+      expect(toUnicode17TitleCase(heading.text, ranges)).toBe(heading.text);
+    }
+  });
+
+  it("keeps every schema bound to the current exact authority pair", async () => {
+    for (const schema of CORE_BINDINGS.schemas) {
+      const value = JSON.parse(
+        await readFile(path.join(schemaRoot, schema.file), "utf8"),
+      );
+      expect(value.$id).toBe(schema.identity);
+      expect(value["x-nkf-source"]).toMatchObject({
+        nkf_version: "0.1",
+        markdown_digest: {
+          algorithm: "sha-256",
+          value: CORE_BINDINGS.specification.sha256,
+        },
+        executable_digest: {
+          algorithm: "sha-256",
+          value: CORE_BINDINGS.executable.sha256,
+        },
+      });
+    }
+  });
+});
