@@ -139,7 +139,11 @@ and the complete 115-rule fixture-reference matrix are confirmed as the exact
 development Realization through ADR 0041.
 
 Checker distribution and release realization have not yet been proposed or
-accepted.
+accepted as an exact contract or implementation. ADR 0042 accepts one
+content-addressed Github Release archive as the initial distribution boundary.
+[`nkf-0.1-initial-release-distribution.md`](nkf-0.1-initial-release-distribution.md)
+proposes the exact archive, manifest, integrity, pinning, and release mechanics
+and isolates the remaining native release-manifest contract decision.
 
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by

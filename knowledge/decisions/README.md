@@ -49,3 +49,5 @@ and compatibility.
 | [ADR 0039](0039-accept-invocation-precondition-authority-pair.md) | Accepted under delegated technical authority | Current invocation-precondition Markdown/YAML authority pair |
 | [ADR 0040](0040-confirm-invocation-precondition-json-schema-bindings.md) | Accepted under delegated technical authority | Exact current source-bound schemas for the invocation-precondition authority pair |
 | [ADR 0041](0041-confirm-native-checker-development-realization.md) | Accepted under delegated technical authority | Exact native checker development Realization at source checkpoint `f06ebb5` |
+| [ADR 0042](0042-establish-initial-release-distribution-boundary.md) | Accepted | One content-addressed Github Release archive as the initial pinned NKF checker distribution |
+| [ADR 0043](0043-establish-native-release-manifest-contract.md) | Accepted | Unversioned native NKF 0.1 release-manifest identity, authority, schema, and project-validation separation |

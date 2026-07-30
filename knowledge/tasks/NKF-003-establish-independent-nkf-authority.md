@@ -1789,6 +1789,123 @@ The confirmation does not establish distribution, release, CI, support,
 consumer migration, consumer conformance, or acceptance of consumer
 knowledge. Those remain separately governed work.
 
+## AI Execution Slice: Define Initial Release Distribution
+
+- **Recorded:** 30 July 2026
+- **Scope:** Step 6 of the accepted realization order, limited to the initial
+  checker distribution boundary, deterministic archive contents,
+  release-manifest design, and exact consumer-pinning model
+- **Decision Authority:** Human Product Owner for the distribution boundary;
+  Codex technical reviewer for a non-authoritative exact mechanics proposal
+- **Authority Effect:** The confirmed boundary may be recorded in an immutable
+  Decision. Archive layout, manifest serialization, packaging implementation,
+  and release realization remain proposals until separately reviewed and
+  confirmed.
+
+### Plan
+
+1. Record the Human Product Owner's accepted choice of one content-addressed
+   Github Release archive containing the native checker, exact canonical
+   authority pair, exact source-bound schemas, and a release manifest.
+2. Inspect the confirmed checker checkpoint and its runtime contract-loading
+   behavior so the proposed archive preserves the required relative paths.
+3. Define an exact deterministic archive layout and closed release-manifest
+   serialization that bind the source checkpoint and every distributed file.
+4. Define the archive, manifest, Git tag, Github Release, and consumer-pin
+   identities without creating another NKF format-version namespace.
+5. Audit the proposal for circular digests, mutable references, false
+   conformance or release claims, path ambiguity, and offline verification.
+6. Stop at the next consequential release-mechanics boundary for Human Product
+   Owner review before implementing packaging or changing Github state.
+
+### Guardrails
+
+- `nkf_version: "0.1"` remains NKF's only version coordinate.
+- A Git tag, Github Release label, archive name, manifest digest, source
+  commit, or checker digest is a distribution or integrity identity, not an
+  NKF format or contract version.
+- Markdown remains authoritative human meaning; the distributed YAML and
+  schemas remain exact executable companions and confirmed Realizations.
+- Distribution acceptance cannot claim release realization, checker
+  installation, repository self-hosting, consumer migration, or conformance.
+- Do not push, tag, publish, create a Github Release, or begin the self-hosting
+  step in this slice.
+
+### Result
+
+The accepted channel boundary is recorded in
+[`ADR 0042`](../decisions/0042-establish-initial-release-distribution-boundary.md).
+It selects one content-addressed Github Release archive as the initial pinned
+consumer distribution without creating a release or another NKF version
+coordinate.
+
+The exact non-authoritative mechanics are recorded in
+[`../designs/nkf-0.1-initial-release-distribution.md`](../designs/nkf-0.1-initial-release-distribution.md).
+The proposed archive has one stable root and eight deterministic regular-file
+entries. Its full SHA-256 digest is the consumer pin; its closed manifest binds
+the source, checker, Markdown/YAML authority pair, and schemas. The layout
+preserves the confirmed checker's relative contract-resolution paths and has
+no digest cycle.
+
+Review identified one consequential authority dependency. The current
+canonical pair does not define a release-manifest contract and still calls
+schema/checker packaging unresolved. Implementing the manifest only in a
+packager would create an ungoverned parallel contract. The proposal therefore
+recommends adding unversioned native identity `nkf.release-manifest` and
+`urn:nkf:0.1:schema:release-manifest`, then replacing and rebinding the
+Markdown/YAML pair, release-package schema, and checker before packaging.
+
+That recommendation is not yet accepted. No canonical authority artifact,
+schema, checker source, package, tag, release, consumer, or conformance result
+was changed by this slice. Work is paused at this exact release-contract
+boundary for Human Product Owner review.
+
+## AI Execution Slice: Reconcile Native Release Contract
+
+- **Recorded:** 30 July 2026
+- **Scope:** Record the accepted release-manifest authority boundary, preserve
+  it in a Git checkpoint, and prepare the exact authority, schema, and checker
+  reconciliation required before deterministic packaging
+- **Decision Authority:** Human Product Owner for release-contract meaning;
+  Codex technical reviewer for derived serialization, schema, checker binding,
+  fixtures, and reproducibility mechanics
+- **Authority Effect:** ADR 0043 accepts the native contract boundary. Exact
+  fields and canonical replacement bytes remain proposals until reviewed and
+  separately accepted; derived schemas and checker bytes remain unconfirmed
+  until separately audited and bound to immutable checkpoints.
+
+### Plan
+
+1. Record the accepted unversioned `nkf.release-manifest` identity, canonical
+   Markdown/YAML authority, release-package schema identity, and separation
+   from project validation.
+2. Commit the accepted distribution Decisions, proposal, Task record, and
+   indexes as one pre-realization checkpoint without pushing.
+3. Draft an exact coherent Markdown/YAML replacement defining the closed
+   release manifest, deterministic archive, consumer pin, and release
+   verification behavior.
+4. Derive the release-manifest schema and rebind the existing schemas without
+   adding release metadata to project-validation schema results.
+5. Update the checker only where the replaced authority digests require it;
+   keep release packaging and verification outside project-validation
+   responsibilities.
+6. Audit semantic scope, rule parity, schema assertions, fixture coverage,
+   checker behavior, build reproducibility, digest topology, links, and native
+   security triggers.
+7. Return the exact replacement and audit result for acceptance before
+   canonical promotion, packaging implementation, or release.
+
+### Guardrails
+
+- Keep `nkf_version: "0.1"` as the only version coordinate.
+- Do not add a release-manifest declaration to `bundle.yaml`, project
+  Governed Validation Inputs, or the validation-result schema list.
+- Do not let packager implementation define normative release behavior.
+- Do not mutate ADR 0041 or treat its development artifact as the future
+  release checker without independent rebinding and confirmation.
+- Do not promote proposals, publish, push, tag, create a Github Release,
+  self-host, migrate a consumer, or claim conformance in this slice.
+
 ## Initial source anchors
 
 | Source | Revision | Authority state |
