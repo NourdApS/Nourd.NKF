@@ -1773,7 +1773,21 @@ outside this execution slice.
 
 ### Result
 
-In progress.
+Completed on 30 July 2026.
+
+Commit `f06ebb5c514f9549b0dfb34a910dbdb3d4349edd` is the immutable source
+checkpoint. The exact committed state passed the package, authority, schema,
+fixture-reference, CLI, reproducibility, dependency-security, link,
+secret-pattern, and Git-integrity audits defined above.
+
+[`ADR 0041`](../decisions/0041-confirm-native-checker-development-realization.md)
+confirms that checkpoint and reproducible executable SHA-256
+`f64d772cb628d6c1fe7dd337baceecb75007fdabe74f91bd87971e063a362d0c`
+as the bounded native NKF 0.1 development Realization.
+
+The confirmation does not establish distribution, release, CI, support,
+consumer migration, consumer conformance, or acceptance of consumer
+knowledge. Those remain separately governed work.
 
 ## Initial source anchors
 

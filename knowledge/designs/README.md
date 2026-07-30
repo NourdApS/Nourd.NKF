@@ -135,8 +135,8 @@ an immutable Decision or normative specification.
 All five checker-derived authority findings are accepted through ADRs 0034,
 0035, and 0038. ADRs 0039 and 0040 reflect their exact semantics in the
 current canonical authority pair and source-bound schemas. Checker updates
-and the complete 115-rule fixture-reference matrix are locally verified as
-unconfirmed realization evidence.
+and the complete 115-rule fixture-reference matrix are confirmed as the exact
+development Realization through ADR 0041.
 
 Checker distribution and release realization have not yet been proposed or
 accepted.

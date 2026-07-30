@@ -138,6 +138,10 @@ without claiming schema or checker confirmation.
 confirms the exact current source-bound bundle, record, and validation-result
 JSON Schemas for the ADR 0039 pair without changing their assertion graphs or
 claiming checker completeness.
+[ADR 0041](decisions/0041-confirm-native-checker-development-realization.md)
+confirms the exact native checker development Realization at source checkpoint
+`f06ebb5c514f9549b0dfb34a910dbdb3d4349edd` without establishing
+distribution, release, consumer migration, or consumer conformance.
 
 Task [`NKF-003`](tasks/NKF-003-establish-independent-nkf-authority.md) governs
 the source migration. Until its acceptance criteria are satisfied, every

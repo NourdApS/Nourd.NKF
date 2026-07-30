@@ -48,3 +48,4 @@ and compatibility.
 | [ADR 0038](0038-establish-nourd-invocation-precondition.md) | Accepted through Human Product Owner confirmation | Project-root `.nourd` invocation precondition and retirement of the unreachable missing-directory diagnostic |
 | [ADR 0039](0039-accept-invocation-precondition-authority-pair.md) | Accepted under delegated technical authority | Current invocation-precondition Markdown/YAML authority pair |
 | [ADR 0040](0040-confirm-invocation-precondition-json-schema-bindings.md) | Accepted under delegated technical authority | Exact current source-bound schemas for the invocation-precondition authority pair |
+| [ADR 0041](0041-confirm-native-checker-development-realization.md) | Accepted under delegated technical authority | Exact native checker development Realization at source checkpoint `f06ebb5` |

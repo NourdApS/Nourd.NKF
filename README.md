@@ -40,14 +40,15 @@ through ADRs 0034, 0035, and 0038. ADR 0040 confirms the exact source-bound
 bundle, record, and validation-result JSON Schemas for that pair.
 
 ADR 0031 governs a private development checker package. Its first
-implementation and fixture suite now exist as unconfirmed realization
-evidence. All five authority findings exposed by that implementation are now
+implementation and fixture suite are confirmed as the exact development
+Realization at source checkpoint `f06ebb5` through ADR 0041. All five
+authority findings exposed by that implementation are now
 governed and reflected in the current authority, schemas, checker, and
 115-rule fixture matrix. Local verification passes 74 tests and produces the
 reproducible development executable SHA-256
 `f64d772cb628d6c1fe7dd337baceecb75007fdabe74f91bd87971e063a362d0c`.
-No confirmed checker Realization, continuous-integration gate, distribution,
-release, consumer migration, or consumer conformance result is claimed.
+No continuous-integration gate, distribution, release, consumer migration,
+or consumer conformance result is claimed.
 
 NKF remains open to evidence-driven change before its first stable release.
 Real-project findings must move through governed reproduction, classification,
