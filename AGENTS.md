@@ -1,3 +1,7 @@
+---
+created_at: 2026-07-28T22:01:17Z
+---
+
 # Repository identity
 
 This directory is the independent Git repository for **Nourd Knowledge Format
@@ -54,7 +58,8 @@ The knowledge map begins at [`knowledge/README.md`](knowledge/README.md).
 
 - `knowledge/tasks/` owns durable Task intent, constraints, acceptance
   criteria, and execution plans.
-- `knowledge/designs/` owns evolving proposals.
+- `knowledge/designs/` owns governed proposals with an explicit Active,
+  Adopted, Rejected, Superseded, or Withdrawn disposition.
 - `knowledge/decisions/` owns immutable accepted decisions.
 - `knowledge/specifications/` owns accepted normative NKF specifications and
   profile contracts.
@@ -62,6 +67,20 @@ The knowledge map begins at [`knowledge/README.md`](knowledge/README.md).
   schemas, checker source, fixtures, tooling, and other technical artifacts.
 - `knowledge/evidence/` owns reviewed source and migration evidence when it
   must remain part of the governed technical record.
+
+Begin system review with
+[`knowledge/realizations/current-system.md`](knowledge/realizations/current-system.md).
+Follow Decisions or Designs selectively when governing rationale,
+alternatives, trade-offs, or predecessor state is needed.
+
+A Design remains proposal knowledge. `accepted` describes authority over an
+exact record revision; `adopted` describes the Design disposition established
+when a Decision selects the proposed direction. Neither makes the Design
+current normative authority.
+
+Use `propose`, `adopt`, `reject`, `supersede`, and `withdraw` for a Design
+direction. Reserve `accept` for an authority accepting an exact record
+revision.
 
 Resolve an immutable Task identifier before Git-backed work. Record every AI
 execution plan in the owning Task before executing it. Keep operational Git,

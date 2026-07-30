@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0004: Introduce NKF Record V2"
 source:
-  path: decisions/0004-introduce-nkf-record-v2.md
+  path: decisions/0004-historical-record-contract-versioning.md
   digest:
     algorithm: sha-256
-    value: 3f420907c575dc1448d394dfabbf1e69d761f15d9d26a8e8069308ad4055ced7
+    value: f632f6e30ee2c93afad4d590d0caf7bef634fdc7f58c611b70b4345b599a1360
 governance:
   lifecycle: immutable
   status: accepted

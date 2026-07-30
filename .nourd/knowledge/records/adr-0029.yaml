@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0029: Reconcile NKF 0.1 Schema Realization Status"
 source:
-  path: decisions/0029-reconcile-nkf-0-1-schema-realization-status.md
+  path: decisions/0029-schema-realization-status.md
   digest:
     algorithm: sha-256
-    value: 579bdce27b4851e6df16df309203e809aa3fc961ca925fe465be731faf98f334
+    value: 3a51b652ea61adae3c2cdb7834e8e4e10c4ff97244d8703334cca68f58d28601
 governance:
   lifecycle: immutable
   status: accepted

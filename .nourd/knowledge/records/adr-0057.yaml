@@ -1,0 +1,81 @@
+contract: nkf.record
+id: adr-0057
+type: decision
+body_contract: nkf.decision
+title: "ADR 0057: Current System Realization"
+source:
+  path: decisions/0057-current-system-realization.md
+  digest:
+    algorithm: sha-256
+    value: c7364e2b8ee3913e85384a27ff4a52e0281955e8d1e5c34bf8a003e3029f45f2
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path: [Context And Problem]
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities: [context-and-problem]
+  - id: decision
+    heading_path: [Decision]
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities: [decision]
+  - id: scope-and-applicability
+    heading_path: [Scope And Applicability]
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+    responsibilities: [scope-and-applicability]
+  - id: rationale
+    heading_path: [Rationale]
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+    responsibilities: [rationale]
+  - id: alternatives-considered
+    heading_path: [Alternatives Considered]
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+    responsibilities: [alternatives-considered]
+  - id: consequences-and-trade-offs
+    heading_path: [Consequences And Trade-Offs]
+    occurrence: 1
+    authority: accepted-meaning
+    role: trade-off
+    responsibilities: [consequences-and-trade-offs]
+  - id: confirmed-realization-revisions
+    heading_path: [Confirmed Realization Revisions]
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: confirmed-derived-artifacts
+    heading_path: [Confirmed Derived Artifacts]
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: verification-evidence
+    heading_path: [Verification Evidence]
+    occurrence: 1
+    authority: evidence
+    role: evidence
+  - id: recovery-and-supersession
+    heading_path: [Recovery And Supersession]
+    occurrence: 1
+    authority: accepted-meaning
+    role: recovery
+  - id: non-claims
+    heading_path: [Non-Claims]
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships: []

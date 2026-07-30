@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0018: Accept NKF 0.1 Project Path And Knowledge Coverage"
 source:
-  path: decisions/0018-accept-nkf-0-1-project-path-and-knowledge-coverage.md
+  path: decisions/0018-project-paths-and-knowledge-coverage.md
   digest:
     algorithm: sha-256
-    value: 215a22182dee40ee853b18c9d0997354916952ee616564d19c55683a06db371d
+    value: cac51ef626a1daa18343454e740a14d797dd5691c8cba30d5508fff1d7fad4b1
 governance:
   lifecycle: immutable
   status: accepted

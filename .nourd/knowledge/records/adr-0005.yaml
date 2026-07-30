@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0005: Accept Record V2 Responsibility Bindings"
 source:
-  path: decisions/0005-accept-record-v2-responsibility-bindings.md
+  path: decisions/0005-historical-record-responsibility-bindings.md
   digest:
     algorithm: sha-256
-    value: 50539a2a0cf3073909e5aba07cf6c906b3df7a0b5fa25938ae530ae443548213
+    value: 435845085953530105c392f11bfebdca0dca03ff76690f6af0783b13623150c4
 governance:
   lifecycle: immutable
   status: accepted

@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0048: Confirm Initial Release Package Realization"
 source:
-  path: decisions/0048-confirm-initial-release-package-realization.md
+  path: decisions/0048-release-package.md
   digest:
     algorithm: sha-256
-    value: 12221491a16991d0b104f9bf066b621e33c93e622f65e1d49d15b97fdabc79c0
+    value: 41952e4541faaa39a3dfd01f16857eb5765e66a77503998511478b9ddaab7acb
 governance:
   lifecycle: immutable
   status: accepted

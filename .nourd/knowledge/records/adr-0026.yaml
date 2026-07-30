@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0026: Accept Deterministic Secret Pattern Registry"
 source:
-  path: decisions/0026-accept-deterministic-secret-pattern-registry.md
+  path: decisions/0026-deterministic-secret-pattern-registry.md
   digest:
     algorithm: sha-256
-    value: 83e961cb94485e45e0a2409165e2e597137d21d383dd953cac65b3f779ce09c7
+    value: 4db78df42c34dbbdffcb8193c7d224c9c04d8789830b7822a1056ee68d519582
 governance:
   lifecycle: immutable
   status: accepted

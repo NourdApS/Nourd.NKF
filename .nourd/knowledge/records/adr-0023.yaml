@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0023: Confirm NKF 0.1 JSON Schema Realization"
 source:
-  path: decisions/0023-confirm-nkf-0-1-json-schema-realization.md
+  path: decisions/0023-native-json-schemas.md
   digest:
     algorithm: sha-256
-    value: c7333c467020ac6a588f1fbea3323acff5aa4f582654d865bdb1aa555668ad0a
+    value: 12eabf845c6c5141142916e2c825285c47c3f215c361ead0af463113ef05a34e
 governance:
   lifecycle: immutable
   status: accepted

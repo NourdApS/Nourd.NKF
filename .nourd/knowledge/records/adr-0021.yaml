@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0021: Accept NKF 0.1 Native Bundle Serialization"
 source:
-  path: decisions/0021-accept-nkf-0-1-native-bundle-serialization.md
+  path: decisions/0021-native-bundle-serialization.md
   digest:
     algorithm: sha-256
-    value: 339ac908c87cd921ceca170992f01efa788365bb3d5b737b5d22ed0f1262641f
+    value: 5f856a48b766bd0ee06cd0fe426876463bd31b40467ffc863dbbd4cc4836bc85
 governance:
   lifecycle: immutable
   status: accepted

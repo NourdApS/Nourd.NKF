@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Product–Technology Common Comparison
 source:
-  path: designs/nkf-0.1-product-technology-common-comparison.md
+  path: designs/adopted/product-technology-common-allocation.md
   digest:
     algorithm: sha-256
-    value: 9ab8c7d35fdced20f291b13db92387c9797b1cdf615831914255bbea4f97b774
+    value: 4926bb5f960f1b590785df89e9cadd3c6ec38994b3d5937cfd7e014d75fbf01b
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -35,7 +35,7 @@ sections:
     authority: proposal
     role: validation
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: common-mechanism-candidates
     heading_path:
       - Common Mechanism Candidates
@@ -131,6 +131,6 @@ sections:
     authority: proposal
     role: context
     responsibilities:
-      - proposed-or-accepted-design
+      - proposed-direction
       - unresolved-matters
 relationships: []

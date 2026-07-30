@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0055
+type: decision
+body_contract: nkf.decision
+title: "ADR 0055: Design Responsibility Vocabulary"
+source:
+  path: decisions/0055-design-responsibility-vocabulary.md
+  digest:
+    algorithm: sha-256
+    value: 7b3ba076c14a20a5e533a5094fac5cf21d24025f21d2998e5dc070b6f8e9fc74
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: supersession-and-compatibility
+    heading_path:
+      - Supersession And Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: derived-realization-state
+    heading_path:
+      - Derived Realization State
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships: []

@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0007: Establish Markdown And YAML Contract Authority"
 source:
-  path: decisions/0007-establish-markdown-and-yaml-contract-authority.md
+  path: decisions/0007-markdown-yaml-authority.md
   digest:
     algorithm: sha-256
-    value: fe97c21a99dfc87cf6e6b62e84b6bbbf150655c530415627d94b4ff92dcef2b1
+    value: c87a8e4e6bdbb47d222386ada5849594d47c9e5821a2b4bec224e0871737b1da
 governance:
   lifecycle: immutable
   status: accepted

@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0036: Accept Checker-Findings-Resolved Authority Pair"
 source:
-  path: decisions/0036-accept-checker-findings-resolved-authority-pair.md
+  path: decisions/0036-checker-ready-authority-pair.md
   digest:
     algorithm: sha-256
-    value: d126c2d9157db6c18f02902b23654e45d81b1f475b73b0cc377869cc6b040bb6
+    value: 6722b32b6e7a3ae685b951efea8f65e4451624f70865b56041353fdc6cf1b560
 governance:
   lifecycle: immutable
   status: accepted

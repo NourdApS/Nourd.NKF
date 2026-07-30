@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0013: Accept NKF 0.1 Native Record Serialization"
 source:
-  path: decisions/0013-accept-nkf-0-1-native-record-serialization.md
+  path: decisions/0013-native-record-serialization.md
   digest:
     algorithm: sha-256
-    value: 8fee3d17cf1744fbf19162bb5e80e2a460be6aa167407297742015bb13a63013
+    value: 302c005fc7b91519500d97ae1da704a390444ca07a3dda624556a5a614f154de
 governance:
   lifecycle: immutable
   status: accepted

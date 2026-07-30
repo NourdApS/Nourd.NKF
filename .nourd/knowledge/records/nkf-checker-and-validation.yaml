@@ -1,0 +1,64 @@
+contract: nkf.record
+id: nkf-checker-and-validation
+type: realization
+body_contract: nkf.realization
+title: NKF Checker And Validation
+source:
+  path: realizations/current/checker-and-validation.md
+  digest:
+    algorithm: sha-256
+    value: 0a2d50f6174c9b8bf4a443fea396164a65c306d91a8503b62256bc7cc2d11116
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: realization-identity-and-kind
+    heading_path: [Realization Identity And Kind]
+    occurrence: 1
+    authority: accepted-meaning
+    role: identity
+    responsibilities: [realization-identity-and-kind]
+  - id: governed-meaning-realized
+    heading_path: [Governed Meaning Realized]
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities: [governed-meaning-realized]
+  - id: durable-mapping
+    heading_path: [Durable Mapping]
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities: [durable-mapping]
+  - id: responsibilities-and-ownership-boundaries
+    heading_path: [Responsibilities And Ownership Boundaries]
+    occurrence: 1
+    authority: accepted-meaning
+    role: responsibility
+    responsibilities: [responsibilities-and-ownership-boundaries]
+  - id: interfaces-dependencies-locators-and-resolution
+    heading_path: [Interfaces Dependencies Locators And Resolution]
+    occurrence: 1
+    authority: accepted-meaning
+    role: interface
+    responsibilities: [interfaces-dependencies-locators-and-resolution]
+  - id: external-authority-and-operational-state-boundaries
+    heading_path: [External Authority And Operational State Boundaries]
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+    responsibilities: [external-authority-and-operational-state-boundaries]
+  - id: compatibility-verification-and-recovery
+    heading_path: [Compatibility Verification And Recovery]
+    occurrence: 1
+    authority: accepted-meaning
+    role: recovery
+    responsibilities: [compatibility-verification-and-recovery]
+relationships:
+  - type: realizes
+    target: nkf-0.1-specification
+    source_section: governed-meaning-realized

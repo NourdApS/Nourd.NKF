@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0008: Accept NKF 0.1 Artifact Identities"
 source:
-  path: decisions/0008-accept-nkf-0-1-artifact-identities.md
+  path: decisions/0008-nkf-0-1-artifact-paths.md
   digest:
     algorithm: sha-256
-    value: 094f1bafc903cc5e0865cc3828fbb8d291f78697d8971fa94a1b81641e2400f3
+    value: 13ba696adb8db09ab75132a54d574772acccc3020f95173b90f1408fbf892e73
 governance:
   lifecycle: immutable
   status: accepted

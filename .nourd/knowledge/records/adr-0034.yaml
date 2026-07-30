@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0034: Accept Checker-Derived Mechanical Completions"
 source:
-  path: decisions/0034-accept-checker-derived-mechanical-completions.md
+  path: decisions/0034-checker-derived-mechanical-completions.md
   digest:
     algorithm: sha-256
-    value: ba6d02c3ba33facf6b33ebbc0d6f1a5c2ce9bdb1a82c4a88d77df3341d29f15b
+    value: c728ae68c51a87190acbb8f9473e6ef64c29cca3467e1f4b8667bdccec9ef3a7
 governance:
   lifecycle: immutable
   status: accepted

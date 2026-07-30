@@ -171,7 +171,7 @@ A precise option for informed confirmation is:
 
 The Human Product Owner accepted this boundary on 29 July 2026. It is recorded
 as
-[`ADR 0002`](../decisions/0002-establish-body-responsibility-bindings.md).
+[`ADR 0002`](../decisions/0002-body-responsibility-bindings.md).
 That Decision accepts the generic mechanism and its conformance limit, not the
 exact Product responsibility vocabularies, serialization, or checker
 implementation.

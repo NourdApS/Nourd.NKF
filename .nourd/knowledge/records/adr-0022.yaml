@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0022: Accept Coherent NKF 0.1 Authority Pair"
 source:
-  path: decisions/0022-accept-coherent-nkf-0-1-authority-pair.md
+  path: decisions/0022-native-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 59aec0f29bfd050df96a84ed95e67e69e541deb2e5703ee65beb09670f79f399
+    value: d60149c0b485af8031c76272e957d327d2205388d029fcce7a8149947bb6c98d
 governance:
   lifecycle: immutable
   status: accepted

@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0052: Confirm Dynamic Root And Self-Hosting Realization"
 source:
-  path: decisions/0052-confirm-dynamic-root-and-self-hosting-realization.md
+  path: decisions/0052-dynamic-root-self-hosting.md
   digest:
     algorithm: sha-256
-    value: 8000ee0909c3b71abf45d1bbb4e803a7b9251a140accf973deb6f771021db226
+    value: 42a783a8190278e0eeb0d932e048b37b186120178652e7401c5c9d465c2391ba
 governance:
   lifecycle: immutable
   status: accepted

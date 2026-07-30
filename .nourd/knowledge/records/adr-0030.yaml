@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0030: Confirm Rebound NKF 0.1 Json Schemas"
 source:
-  path: decisions/0030-confirm-rebound-nkf-0-1-json-schemas.md
+  path: decisions/0030-source-bound-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 79daf8b86b49abe62e9f01a6c8287adc4655ff143d7ddeeb2a65cb52a24573cc
+    value: c585ef488810e0a71862a21e874afd794dff25ba26a427464c3dc45b619fb865
 governance:
   lifecycle: immutable
   status: accepted

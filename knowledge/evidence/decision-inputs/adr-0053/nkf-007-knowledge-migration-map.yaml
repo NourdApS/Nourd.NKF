@@ -1,0 +1,327 @@
+identity: nkf.repository-knowledge-migration
+task: NKF-007
+state: proposal
+recorded_at: 2026-07-30T16:40:40Z
+authority_effect: none
+
+rules:
+  record_ids: preserve
+  evidence_source_snapshots: preserve-path-and-bytes
+  evidence_moves: preserve-bytes
+  historical_specification_moves: preserve-bytes
+  historical_artifact_moves: preserve-bytes
+  active_links: update-to-target-path
+  content_change_default: front-matter-structured-metadata-and-links-only
+  semantic_change: separately-reviewed-and-governed
+
+in_place:
+  - path: knowledge/README.md
+    change: front-matter-and-current-navigation
+  - path: knowledge/nkf.md
+    change: front-matter-and-current-realization-links
+  - path: knowledge/decisions/README.md
+    change: front-matter-and-thematic-index
+  - path: knowledge/designs/README.md
+    change: front-matter-and-disposition-index
+  - path: knowledge/evidence/README.md
+    change: navigation-only
+  - path: knowledge/evidence/nkf-003-source-reconciliation.md
+    change: none
+  - path: knowledge/specifications/README.md
+    change: front-matter-and-current-authority-summary
+  - path: knowledge/specifications/nkf-0.1.md
+    change: front-matter-source-envelope-and-current-authority-revision
+  - path: knowledge/realizations/README.md
+    change: front-matter-and-current-system-index
+
+preserved_prefixes:
+  - path: knowledge/evidence/source-snapshots/
+    change: none
+
+task_moves:
+  - from: knowledge/tasks/NKF-003-establish-independent-nkf-authority.md
+    to: knowledge/tasks/completed/NKF-003-independent-nkf-authority.md
+  - from: knowledge/tasks/NKF-004-define-portable-presentation-guidance-extension.md
+    to: knowledge/tasks/deferred/NKF-004-portable-presentation-guidance.md
+  - from: knowledge/tasks/NKF-005-investigate-validation-expiry-and-authority-freshness.md
+    to: knowledge/tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md
+  - from: knowledge/tasks/NKF-006-define-extensible-root-knowledge-models.md
+    to: knowledge/tasks/deferred/NKF-006-extensible-root-models.md
+  - from: knowledge/tasks/NKF-007-repair-knowledge-structure-and-confirmation.md
+    to: knowledge/tasks/active/NKF-007-knowledge-structure-and-confirmation.md
+
+new_tasks:
+  - path: knowledge/tasks/deferred/NKF-008-publication-and-consumer-onboarding.md
+    purpose: deferred-publication-pinning-migration-and-handover
+  - path: knowledge/tasks/deferred/NKF-009-governed-artifact-secret-coverage.md
+    purpose: deferred-secret-rule-scope-and-enforcement
+
+decision_moves:
+  - from: knowledge/decisions/0001-establish-independent-nkf-authority.md
+    to: knowledge/decisions/0001-independent-nkf-authority.md
+  - from: knowledge/decisions/0002-establish-body-responsibility-bindings.md
+    to: knowledge/decisions/0002-body-responsibility-bindings.md
+  - from: knowledge/decisions/0003-accept-product-responsibility-identifiers.md
+    to: knowledge/decisions/0003-product-responsibility-identifiers.md
+  - from: knowledge/decisions/0004-introduce-nkf-record-v2.md
+    to: knowledge/decisions/0004-historical-record-contract-versioning.md
+  - from: knowledge/decisions/0005-accept-record-v2-responsibility-bindings.md
+    to: knowledge/decisions/0005-historical-record-responsibility-bindings.md
+  - from: knowledge/decisions/0006-establish-governed-pre-stable-evolution.md
+    to: knowledge/decisions/0006-pre-stable-evolution.md
+  - from: knowledge/decisions/0007-establish-markdown-and-yaml-contract-authority.md
+    to: knowledge/decisions/0007-markdown-yaml-authority.md
+  - from: knowledge/decisions/0008-accept-nkf-0-1-artifact-identities.md
+    to: knowledge/decisions/0008-nkf-0-1-artifact-paths.md
+  - from: knowledge/decisions/0009-establish-single-nkf-0-1-version-namespace.md
+    to: knowledge/decisions/0009-nkf-0-1-version-namespace.md
+  - from: knowledge/decisions/0010-accept-canonical-nkf-0-1-markdown.md
+    to: knowledge/decisions/0010-nkf-0-1-markdown-authority.md
+  - from: knowledge/decisions/0011-accept-nkf-0-1-yaml-companion.md
+    to: knowledge/decisions/0011-nkf-0-1-yaml-authority.md
+  - from: knowledge/decisions/0012-reconcile-single-version-artifact-authority.md
+    to: knowledge/decisions/0012-nkf-0-1-artifact-authority.md
+  - from: knowledge/decisions/0013-accept-nkf-0-1-native-record-serialization.md
+    to: knowledge/decisions/0013-native-record-serialization.md
+  - from: knowledge/decisions/0014-accept-nkf-0-1-section-role-vocabularies.md
+    to: knowledge/decisions/0014-section-role-vocabularies.md
+  - from: knowledge/decisions/0015-accept-nkf-0-1-semantic-topology-and-binding-vocabularies.md
+    to: knowledge/decisions/0015-semantic-topology-and-bindings.md
+  - from: knowledge/decisions/0016-accept-nkf-0-1-extension-declaration-and-resolution.md
+    to: knowledge/decisions/0016-extension-resolution.md
+  - from: knowledge/decisions/0017-accept-nkf-0-1-acceptance-provenance-boundary.md
+    to: knowledge/decisions/0017-acceptance-provenance.md
+  - from: knowledge/decisions/0018-accept-nkf-0-1-project-path-and-knowledge-coverage.md
+    to: knowledge/decisions/0018-project-paths-and-knowledge-coverage.md
+  - from: knowledge/decisions/0019-accept-nkf-0-1-enforcement-and-diagnostics.md
+    to: knowledge/decisions/0019-validation-enforcement-and-diagnostics.md
+  - from: knowledge/decisions/0020-establish-current-presentation-guidance-boundary.md
+    to: knowledge/decisions/0020-presentation-guidance.md
+  - from: knowledge/decisions/0021-accept-nkf-0-1-native-bundle-serialization.md
+    to: knowledge/decisions/0021-native-bundle-serialization.md
+  - from: knowledge/decisions/0022-accept-coherent-nkf-0-1-authority-pair.md
+    to: knowledge/decisions/0022-native-authority-pair.md
+  - from: knowledge/decisions/0023-confirm-nkf-0-1-json-schema-realization.md
+    to: knowledge/decisions/0023-native-json-schemas.md
+  - from: knowledge/decisions/0024-accept-deterministic-markdown-structure-and-title-case.md
+    to: knowledge/decisions/0024-deterministic-markdown-structure-and-title-case.md
+  - from: knowledge/decisions/0025-accept-nkf-0-1-validation-result-contract.md
+    to: knowledge/decisions/0025-validation-result.md
+  - from: knowledge/decisions/0026-accept-deterministic-secret-pattern-registry.md
+    to: knowledge/decisions/0026-deterministic-secret-pattern-registry.md
+  - from: knowledge/decisions/0027-accept-pre-checker-nkf-0-1-authority-pair.md
+    to: knowledge/decisions/0027-validation-authority-pair.md
+  - from: knowledge/decisions/0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md
+    to: knowledge/decisions/0028-validation-json-schemas.md
+  - from: knowledge/decisions/0029-reconcile-nkf-0-1-schema-realization-status.md
+    to: knowledge/decisions/0029-schema-realization-status.md
+  - from: knowledge/decisions/0030-confirm-rebound-nkf-0-1-json-schemas.md
+    to: knowledge/decisions/0030-source-bound-json-schemas.md
+  - from: knowledge/decisions/0031-establish-checker-development-layout-and-identity.md
+    to: knowledge/decisions/0031-checker-layout-and-identity.md
+  - from: knowledge/decisions/0032-correct-nkf-0-1-yaml-flow-scalar-grammar.md
+    to: knowledge/decisions/0032-yaml-scalar-grammar.md
+  - from: knowledge/decisions/0033-confirm-yaml-grammar-corrected-json-schema-bindings.md
+    to: knowledge/decisions/0033-yaml-grammar-schema-bindings.md
+  - from: knowledge/decisions/0034-accept-checker-derived-mechanical-completions.md
+    to: knowledge/decisions/0034-checker-derived-mechanical-completions.md
+  - from: knowledge/decisions/0035-clarify-product-scope-and-structural-hierarchy.md
+    to: knowledge/decisions/0035-product-scope-and-hierarchy.md
+  - from: knowledge/decisions/0036-accept-checker-findings-resolved-authority-pair.md
+    to: knowledge/decisions/0036-checker-ready-authority-pair.md
+  - from: knowledge/decisions/0037-confirm-checker-findings-resolved-json-schema-bindings.md
+    to: knowledge/decisions/0037-checker-ready-json-schemas.md
+  - from: knowledge/decisions/0038-establish-nourd-invocation-precondition.md
+    to: knowledge/decisions/0038-nourd-invocation-precondition.md
+  - from: knowledge/decisions/0039-accept-invocation-precondition-authority-pair.md
+    to: knowledge/decisions/0039-invocation-authority-pair.md
+  - from: knowledge/decisions/0040-confirm-invocation-precondition-json-schema-bindings.md
+    to: knowledge/decisions/0040-invocation-json-schemas.md
+  - from: knowledge/decisions/0041-confirm-native-checker-development-realization.md
+    to: knowledge/decisions/0041-native-checker-development-realization.md
+  - from: knowledge/decisions/0042-establish-initial-release-distribution-boundary.md
+    to: knowledge/decisions/0042-release-distribution.md
+  - from: knowledge/decisions/0043-establish-native-release-manifest-contract.md
+    to: knowledge/decisions/0043-release-manifest.md
+  - from: knowledge/decisions/0044-accept-nkf-0-1-release-contract.md
+    to: knowledge/decisions/0044-release-contract.md
+  - from: knowledge/decisions/0045-accept-release-contract-authority-pair.md
+    to: knowledge/decisions/0045-release-contract-authority-pair.md
+  - from: knowledge/decisions/0046-confirm-release-contract-json-schema-bindings.md
+    to: knowledge/decisions/0046-release-json-schemas.md
+  - from: knowledge/decisions/0047-confirm-release-bound-checker-realization.md
+    to: knowledge/decisions/0047-release-checker.md
+  - from: knowledge/decisions/0048-confirm-initial-release-package-realization.md
+    to: knowledge/decisions/0048-release-package.md
+  - from: knowledge/decisions/0049-establish-common-specification-and-concrete-root-profiles.md
+    to: knowledge/decisions/0049-common-and-root-profiles.md
+  - from: knowledge/decisions/0050-accept-product-and-technology-root-profiles.md
+    to: knowledge/decisions/0050-product-and-technology-profiles.md
+  - from: knowledge/decisions/0051-govern-self-hosting-heading-migration.md
+    to: knowledge/decisions/0051-self-hosting-source-migration.md
+  - from: knowledge/decisions/0052-confirm-dynamic-root-and-self-hosting-realization.md
+    to: knowledge/decisions/0052-dynamic-root-self-hosting.md
+
+new_decisions:
+  - path: knowledge/decisions/0053-repository-knowledge-architecture.md
+    purpose: accept-target-architecture-source-envelope-and-migration
+  - path: knowledge/decisions/0054-front-matter-authority-pair.md
+    purpose: accept-exact-front-matter-enabled-markdown-yaml-authority-pair
+  - path: knowledge/decisions/0055-current-system-realization.md
+    purpose: confirm-migrated-realization-and-self-adoption
+
+design_moves:
+  - from: knowledge/designs/nkf-007-knowledge-architecture-proposal.md
+    to: knowledge/designs/adopted/knowledge-architecture.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-acceptance-provenance-boundary.md
+    to: knowledge/designs/adopted/acceptance-provenance.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-common-and-root-profile-proposal.md
+    to: knowledge/designs/adopted/common-and-root-profiles.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-enforcement-and-diagnostics.md
+    to: knowledge/designs/adopted/enforcement-and-diagnostics.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-extension-declaration-and-resolution.md
+    to: knowledge/designs/adopted/extension-declaration-and-resolution.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-initial-release-distribution.md
+    to: knowledge/designs/adopted/initial-release-distribution.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-native-bundle-serialization.md
+    to: knowledge/designs/adopted/native-bundle-serialization.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-native-record-serialization.md
+    to: knowledge/designs/adopted/native-record-serialization.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-path-and-distribution-boundary.md
+    to: knowledge/designs/adopted/project-path-and-knowledge-coverage.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-presentation-guidance-boundary.md
+    to: knowledge/designs/adopted/presentation-guidance.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-product-responsibility-identifiers.md
+    to: knowledge/designs/adopted/product-responsibility-identifiers.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-product-technology-common-comparison.md
+    to: knowledge/designs/adopted/product-technology-common-allocation.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-section-role-vocabularies.md
+    to: knowledge/designs/adopted/section-role-vocabularies.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-semantic-topology-and-binding-vocabularies.md
+    to: knowledge/designs/adopted/semantic-topology-and-bindings.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-technology-root-profile-specification-proposal.md
+    to: knowledge/designs/adopted/technology-root-profile.md
+    disposition: adopted
+  - from: knowledge/designs/reconcile-single-version-artifact-authority.md
+    to: knowledge/designs/adopted/single-version-artifact-authority.md
+    disposition: adopted
+  - from: knowledge/designs/nkf-0.1-authoritative-artifacts.md
+    to: knowledge/designs/superseded/artifact-identities-and-contract-versioning.md
+    disposition: superseded
+  - from: knowledge/designs/nkf-0.1-json-schema-realization.md
+    to: knowledge/designs/superseded/initial-json-schema-realization.md
+    disposition: superseded
+  - from: knowledge/designs/nkf-0.1-replacement-json-schemas.md
+    to: knowledge/designs/superseded/replacement-json-schema-realization.md
+    disposition: superseded
+  - from: knowledge/designs/nkf-record-v2-responsibility-bindings.md
+    to: knowledge/designs/superseded/record-v2-responsibility-bindings.md
+    disposition: superseded
+
+audit_moves:
+  - from: knowledge/evidence/nkf-pre-remediation-repository-audit.md
+    to: knowledge/evidence/audits/pre-remediation-repository-audit.md
+  - from: knowledge/evidence/nkf-007-current-structure-inventory.md
+    to: knowledge/evidence/audits/nkf-007-current-structure-inventory.md
+  - from: knowledge/evidence/nkf-007-design-classification-review.md
+    to: knowledge/evidence/audits/nkf-007-design-classification-review.md
+  - from: knowledge/evidence/nkf-007-front-matter-parser-finding.md
+    to: knowledge/evidence/audits/nkf-007-front-matter-parser-finding.md
+  - from: knowledge/evidence/nkf-007-target-architecture-review.md
+    to: knowledge/evidence/audits/nkf-007-target-architecture-review.md
+  - from: knowledge/designs/nkf-0.1-checker-realization-gaps.md
+    to: knowledge/evidence/audits/nkf-0.1-checker-realization-gaps.md
+  - from: knowledge/designs/nkf-0.1-executable-completeness-gaps.md
+    to: knowledge/evidence/audits/nkf-0.1-executable-completeness-gaps.md
+  - from: knowledge/designs/nkf-0.1-native-checker-realization-findings.md
+    to: knowledge/evidence/audits/nkf-0.1-native-checker-realization-findings.md
+
+historical_specification_moves:
+  - from: knowledge/designs/nkf-0.1-independent-specification.md
+    to: knowledge/evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md
+  - from: knowledge/designs/nkf-0.1-replacement-specification.md
+    to: knowledge/evidence/decision-inputs/adr-0022-0023/nkf-0.1-replacement-specification.md
+  - from: knowledge/designs/nkf-0.1-pre-checker-specification-proposal.md
+    to: knowledge/evidence/decision-inputs/adr-0027-0028/nkf-0.1-pre-checker-specification-proposal.md
+  - from: knowledge/designs/nkf-0.1-schema-status-reconciled-specification-proposal.md
+    to: knowledge/evidence/decision-inputs/adr-0029-0030/nkf-0.1-schema-status-reconciled-specification-proposal.md
+  - from: knowledge/designs/nkf-0.1-checker-findings-resolved-specification-proposal.md
+    to: knowledge/evidence/decision-inputs/adr-0036-0037/nkf-0.1-checker-findings-resolved-specification-proposal.md
+  - from: knowledge/designs/nkf-0.1-invocation-precondition-specification-proposal.md
+    to: knowledge/evidence/decision-inputs/adr-0039-0040/nkf-0.1-invocation-precondition-specification-proposal.md
+  - from: knowledge/designs/nkf-0.1-release-contract-specification-proposal.md
+    to: knowledge/evidence/decision-inputs/adr-0043-0046/nkf-0.1-release-contract-specification-proposal.md
+
+accepted_design_input_moves:
+  - from: knowledge/designs/nkf-007-knowledge-migration-map.yaml
+    to: knowledge/evidence/decision-inputs/adr-0053/nkf-007-knowledge-migration-map.yaml
+
+historical_artifact_groups:
+  adr-0022-0023:
+    - nkf-0.1-replacement-contract-set.yaml
+    - nkf-0.1-bundle-schema-proposal.json
+    - nkf-0.1-record-schema-proposal.json
+  adr-0025:
+    - nkf-0.1-validation-result-schema-proposal.json
+    - nkf-0.1-validation-result-example.json
+  adr-0027-0028:
+    - nkf-0.1-pre-checker-contract-proposal.yaml
+    - nkf-0.1-pre-checker-bundle-schema-proposal.json
+    - nkf-0.1-pre-checker-record-schema-proposal.json
+    - nkf-0.1-pre-checker-validation-result-schema-proposal.json
+  adr-0029-0030:
+    - nkf-0.1-schema-status-reconciled-contract-proposal.yaml
+    - nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json
+    - nkf-0.1-schema-status-reconciled-record-schema-proposal.json
+    - nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json
+  adr-0032-0033:
+    - nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml
+    - nkf-0.1-yaml-grammar-corrected-bundle-schema-proposal.json
+    - nkf-0.1-yaml-grammar-corrected-record-schema-proposal.json
+    - nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json
+  adr-0036-0037:
+    - nkf-0.1-checker-findings-resolved-contract-proposal.yaml
+    - nkf-0.1-checker-findings-resolved-bundle-schema-proposal.json
+    - nkf-0.1-checker-findings-resolved-record-schema-proposal.json
+    - nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json
+  adr-0039-0040:
+    - nkf-0.1-invocation-precondition-contract-proposal.yaml
+    - nkf-0.1-invocation-precondition-bundle-schema-proposal.json
+    - nkf-0.1-invocation-precondition-record-schema-proposal.json
+    - nkf-0.1-invocation-precondition-validation-result-schema-proposal.json
+  adr-0043-0046:
+    - nkf-0.1-release-manifest-schema-proposal.json
+    - nkf-0.1-release-contract-proposal.yaml
+    - nkf-0.1-release-contract-bundle-schema-proposal.json
+    - nkf-0.1-release-contract-record-schema-proposal.json
+    - nkf-0.1-release-contract-release-manifest-schema-proposal.json
+    - nkf-0.1-release-contract-validation-result-schema-proposal.json
+
+realization_moves:
+  - from: knowledge/realizations/nkf-0.1-native-realization.md
+    to: knowledge/realizations/current-system.md
+    record_id: nkf-0.1-native-realization
+
+new_realizations:
+  - path: knowledge/realizations/current/contracts-and-schemas.md
+    record_id: nkf-contracts-and-schemas
+  - path: knowledge/realizations/current/checker-and-validation.md
+    record_id: nkf-checker-and-validation
+  - path: knowledge/realizations/current/self-hosting.md
+    record_id: nkf-self-hosting
+  - path: knowledge/realizations/current/release-package.md
+    record_id: nkf-release-package

@@ -1,0 +1,57 @@
+contract: nkf.record
+id: adr-0054
+type: decision
+body_contract: nkf.decision
+title: "ADR 0054: Front-Matter Authority Pair"
+source:
+  path: decisions/0054-front-matter-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: a7116d95e8396d9dbcdc38e64930a78159986b5af3629fd919306341cb493286
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context
+    heading_path:
+      - Context
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: derived-realization-state
+    heading_path:
+      - Derived Realization State
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships: []

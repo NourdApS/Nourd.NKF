@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Extension Declaration And Resolution
 source:
-  path: designs/nkf-0.1-extension-declaration-and-resolution.md
+  path: designs/adopted/extension-declaration-and-resolution.md
   digest:
     algorithm: sha-256
-    value: 1dd195284e75abadf1fa71a16849bb794c55d70476b207cb882cb827d9b46bce
+    value: 5012d11d4c4df2d50173f87f31e4581e50ecaeaf9db4e1629a036247de3f891e
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,7 +24,7 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
@@ -80,7 +80,7 @@ sections:
     authority: proposal
     role: validation
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: exact-confirmation-requested
     heading_path:
       - Exact Confirmation Requested

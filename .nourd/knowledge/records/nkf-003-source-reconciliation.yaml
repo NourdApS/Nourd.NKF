@@ -7,7 +7,7 @@ source:
   path: evidence/nkf-003-source-reconciliation.md
   digest:
     algorithm: sha-256
-    value: a06f32d1b48de0bba4d96a99f6b775df42cedf075805a6830fe18fd5009b854c
+    value: 97af299991448c26b5ea934d3de7042fc880649c2e5a3dd95ea00225197be0b8
 governance:
   lifecycle: living
   status: draft

@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Enforcement And Diagnostics
 source:
-  path: designs/nkf-0.1-enforcement-and-diagnostics.md
+  path: designs/adopted/enforcement-and-diagnostics.md
   digest:
     algorithm: sha-256
-    value: 629067b6c766c6ec8525e5ed1a17a2adab95c485946ca1f28ff9463d86cb366d
+    value: 0e4bb00ce4d313850469ab2ac6fea5b498b82433521ab1dfc9abd9cfcee2963a
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,7 +24,7 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - unresolved-matters
@@ -141,7 +141,7 @@ sections:
     authority: proposal
     role: validation
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: exact-confirmation-requested
     heading_path:
       - Exact Confirmation Requested

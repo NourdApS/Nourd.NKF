@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: Reconcile Single-Version Artifact Authority
 source:
-  path: designs/reconcile-single-version-artifact-authority.md
+  path: designs/adopted/single-version-artifact-authority.md
   digest:
     algorithm: sha-256
-    value: 3d73f7c19f1f43220762793a48b5666e580ea403bf1627bfa002f1d1af396e59
+    value: c7f50ad11605e942e26e54b09a5f5f95bf082c02d6d85880cae43aede2caabe4
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -28,7 +28,7 @@ sections:
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: proposed-reconciliation
     heading_path:
@@ -55,5 +55,5 @@ sections:
     authority: proposal
     role: context
     responsibilities:
-      - proposed-or-accepted-design
+      - proposed-direction
 relationships: []

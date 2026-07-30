@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0001: Establish Independent NKF Shared Technology Authority"
 source:
-  path: decisions/0001-establish-independent-nkf-authority.md
+  path: decisions/0001-independent-nkf-authority.md
   digest:
     algorithm: sha-256
-    value: ffcd9508961afc3e9a9b797f3626a8bdf9721f2cc12e0f51efaf9fed3d479790
+    value: 306944aa6099ad611dbd0336c8187fe91f0ee9abaa7d897e8ff02043d626d39d
 governance:
   lifecycle: immutable
   status: accepted

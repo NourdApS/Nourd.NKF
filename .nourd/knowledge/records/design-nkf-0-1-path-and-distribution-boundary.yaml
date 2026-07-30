@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Project Path And Knowledge Coverage
 source:
-  path: designs/nkf-0.1-path-and-distribution-boundary.md
+  path: designs/adopted/project-path-and-knowledge-coverage.md
   digest:
     algorithm: sha-256
-    value: eaf5e082814eb8c73c9ae6fabec733542211f5554f6be184139d21012230d5ad
+    value: 5f1187e4acb01e294e57de01da49cb96f0913f1683896c4a7c3b0d663787cf42
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -18,18 +18,18 @@ scope:
 sections:
   - id: accepted-boundary
     heading_path:
-      - Accepted Boundary
+      - Proposed Direction
     occurrence: 1
     authority: proposal
     role: boundary
     responsibilities:
       - design-kind-problem-and-scope
       - governing-inputs-and-constraints
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: project-layout
     heading_path:

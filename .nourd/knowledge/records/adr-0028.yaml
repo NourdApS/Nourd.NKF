@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0028: Confirm Pre-Checker NKF 0.1 Json Schema Realization"
 source:
-  path: decisions/0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md
+  path: decisions/0028-validation-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 11686b6b60d0954c4b4ea46ea11b5b6707ec017fec2bfb5686182f69181b59cc
+    value: 885c16eeb90f505b260d70b29beb032cbcf073ec34ab5e4285c34309667916c2
 governance:
   lifecycle: immutable
   status: accepted

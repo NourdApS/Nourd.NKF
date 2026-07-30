@@ -1,6 +1,6 @@
 export const CHECKER_CONFIRMATION = Object.freeze({
   decision: "ADR-0047",
-  path: "knowledge/decisions/0047-confirm-release-bound-checker-realization.md",
+  path: "knowledge/decisions/0047-release-checker.md",
   checkerSourceCommit: "0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f",
   checkerSha256:
     "f71226e5f632cdd0918a0eedae1cbbc5d5f17b450395d98e744ae572dfd73579",

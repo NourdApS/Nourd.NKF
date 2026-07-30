@@ -27,7 +27,7 @@ function markdownRules(source: string): Map<string, "error" | "warning"> {
 }
 
 describe("canonical NKF 0.1 authority realization", () => {
-  it("keeps the accepted dynamic-root authority pair bound to ADR 0050", async () => {
+  it("keeps the accepted Design-vocabulary authority pair bound to ADR 0056", async () => {
     const [specification, executable, acceptanceDecision] =
       await Promise.all([
         readFile(specificationPath),
@@ -35,7 +35,7 @@ describe("canonical NKF 0.1 authority realization", () => {
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/decisions/0050-accept-product-and-technology-root-profiles.md",
+            "knowledge/decisions/0056-design-direction-and-record-authority.md",
           ),
           "utf8",
         ),
@@ -53,7 +53,7 @@ describe("canonical NKF 0.1 authority realization", () => {
     }
   });
 
-  it("keeps strict executable parsing, Markdown binding, and 130-rule severity parity", async () => {
+  it("keeps strict executable parsing, Markdown binding, and 131-rule severity parity", async () => {
     const [specificationBytes, executableBytes] = await Promise.all([
       readFile(specificationPath),
       readFile(executablePath),
@@ -74,14 +74,14 @@ describe("canonical NKF 0.1 authority realization", () => {
       ).map(([id, rule]) => [id, rule.severity]),
     );
     const specificationRules = markdownRules(specificationBytes.toString("utf8"));
-    expect(executableRules.size).toBe(130);
+    expect(executableRules.size).toBe(131);
     expect(specificationRules).toEqual(executableRules);
   });
 
   it("keeps every participating canonical heading in Unicode 17 Title Case", async () => {
     const specification = await readFile(specificationPath, "utf8");
     const headings = parseMarkdown(specification).headings;
-    expect(headings).toHaveLength(42);
+    expect(headings).toHaveLength(43);
     for (const heading of headings) {
       const ranges = protectedCanonicalRanges(
         heading.text,

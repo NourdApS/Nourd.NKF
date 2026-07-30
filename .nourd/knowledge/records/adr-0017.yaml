@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary"
 source:
-  path: decisions/0017-accept-nkf-0-1-acceptance-provenance-boundary.md
+  path: decisions/0017-acceptance-provenance.md
   digest:
     algorithm: sha-256
-    value: 2faac4575add5009591dfe945f908869edf8a115683842a44d6122623b48f942
+    value: 081f64d5177c644ff66a1658add47800990f4757f210424daf14db40e42568e3
 governance:
   lifecycle: immutable
   status: accepted

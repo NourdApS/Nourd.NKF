@@ -1,3 +1,7 @@
+---
+created_at: 2026-07-28T22:01:17Z
+---
+
 # Nourd Knowledge Format
 
 Nourd Knowledge Format (**NKF**) is Company-owned **Shared Technology**
@@ -27,22 +31,26 @@ distribution, security, and technical lifecycle.
 
 ## Current Stage
 
-The independent authority migration is governed by Task `NKF-003`. NKF 0.1
-now has one automatic non-selectable Common Specification and two selectable
-Root Profiles: Product and Technology. ADR 0050 accepts the exact current
-Markdown/YAML authority pair and the breaking pre-stable migration from
-`product_record` and `scope.product` to `root` and `scope.root`.
+The independent authority migration is complete under Task `NKF-003`.
+Active Task `NKF-007` is repairing repository knowledge architecture,
+completing the current Realization view, adding the governed front-matter
+source envelope, and rebuilding honest self-host declarations.
 
-This repository is an NKF Technology bundle. Its project-root
-`.nourd/knowledge/bundle.yaml` selects `nkf.profile.technology`, represents
-every Markdown file under `knowledge/`, and binds the executable contract,
-schemas, checker source, tests, fixtures, build tooling, and project
-configuration as governed artifacts. The latest full-bundle result is kept
-locally at `.nourd/validation-result.json`.
+NKF 0.1 has one automatic non-selectable Common Specification and two
+selectable Root Profiles: Product and Technology. ADR 0056 accepts the exact
+current Markdown/YAML authority pair. The
+[Current System Realization](knowledge/realizations/current-system.md)
+records what is implemented, confirmed, pending, and deferred.
 
-Passing validation establishes current NKF conformance only. It does not
-verify every historical acceptance binding, accept consumer knowledge,
-confirm implementation correctness, or publish a release.
+This repository is intended to self-host as an NKF Technology bundle. Its
+earlier `.nourd` declarations and validation result are stale while NKF-007
+migrates source paths and bytes. No current conformance claim is made until
+the rebuilt declarations and complete validation pass.
+
+Passing validation establishes conformance for one observed snapshot only. It
+does not verify every historical acceptance binding, accept consumer
+knowledge, confirm implementation correctness, publish a release, or migrate
+a consumer.
 
 NKF remains open to evidence-driven change before its first stable release.
 Real-project findings must move through governed reproduction, classification,

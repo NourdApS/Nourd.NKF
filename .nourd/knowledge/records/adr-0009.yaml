@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0009: Establish The Single NKF 0.1 Version Namespace"
 source:
-  path: decisions/0009-establish-single-nkf-0-1-version-namespace.md
+  path: decisions/0009-nkf-0-1-version-namespace.md
   digest:
     algorithm: sha-256
-    value: aaf1e4ea82051af7b49f0a830b8b8611262a9d0657a18a0b5467c5ed3cd54f44
+    value: 1658974c53c7f37280f07c0041412baa3692fb70795a15f1af5c55f6682fd3ff
 governance:
   lifecycle: immutable
   status: accepted

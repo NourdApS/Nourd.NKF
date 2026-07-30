@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Section-Role Vocabularies
 source:
-  path: designs/nkf-0.1-section-role-vocabularies.md
+  path: designs/adopted/section-role-vocabularies.md
   digest:
     algorithm: sha-256
-    value: cf176e5a5b04e6e2de6044638acc996ca41ceec474061378c4ae2091ce7664bd
+    value: 23d1c7122e428690bf6edc33097a904d0c0cab8f555efb0cf7246e4356716e25
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -25,11 +25,11 @@ sections:
     responsibilities:
       - design-kind-problem-and-scope
       - governing-inputs-and-constraints
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: role-model
     heading_path:

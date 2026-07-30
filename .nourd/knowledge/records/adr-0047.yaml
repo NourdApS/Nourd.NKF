@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0047: Confirm Release-Bound Checker Realization"
 source:
-  path: decisions/0047-confirm-release-bound-checker-realization.md
+  path: decisions/0047-release-checker.md
   digest:
     algorithm: sha-256
-    value: 74f4c96da139ba9f478232bc0583e6b69404695548f3da4d23af245acc931aa1
+    value: 0463a9ea38b212470efa52f288dd4d6e1f8673749053e002714b3d6c7175701e
 governance:
   lifecycle: immutable
   status: accepted

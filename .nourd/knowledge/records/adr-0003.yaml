@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0003: Accept Product Responsibility Identifiers"
 source:
-  path: decisions/0003-accept-product-responsibility-identifiers.md
+  path: decisions/0003-product-responsibility-identifiers.md
   digest:
     algorithm: sha-256
-    value: a464a1f84817deadddd88090c2f7bf101d34c19c3a2a99480c39c386d9e0c62f
+    value: b8b623eee26fe3654049c6636fbff898e3c2fdb50ca2039a4deda58bb8e5670a
 governance:
   lifecycle: immutable
   status: accepted

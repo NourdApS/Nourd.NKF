@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0016: Accept NKF 0.1 Extension Declaration And Resolution"
 source:
-  path: decisions/0016-accept-nkf-0-1-extension-declaration-and-resolution.md
+  path: decisions/0016-extension-resolution.md
   digest:
     algorithm: sha-256
-    value: d274da19f89bd7184c8607d2c528da509bb08d4715ee293218b5f4e95b81139a
+    value: 813b1b5bba724ee1c7555bed8b2a5f2a864f82bd6d10327ebc39ac90c41f4203
 governance:
   lifecycle: immutable
   status: accepted

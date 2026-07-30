@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0046: Confirm Release Contract Json Schema Bindings"
 source:
-  path: decisions/0046-confirm-release-contract-json-schema-bindings.md
+  path: decisions/0046-release-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 873329cf9b662af5b4dbc4178d47a3bb24c8bfcee310163b9f332a128dea7963
+    value: b3b56939eae356d0d0122c5d364b66be250150839c8c21294050c2463bee04c0
 governance:
   lifecycle: immutable
   status: accepted

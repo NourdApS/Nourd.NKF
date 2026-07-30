@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0002: Establish Body-Responsibility Bindings"
 source:
-  path: decisions/0002-establish-body-responsibility-bindings.md
+  path: decisions/0002-body-responsibility-bindings.md
   digest:
     algorithm: sha-256
-    value: 9c818ec8fe0d28926451ca1524d95a739b950941ef42867df4add98b90e49730
+    value: f917a249b0a992ecb5de632487525f370b510b612923069e8cae1e6ea6b17484
 governance:
   lifecycle: immutable
   status: accepted

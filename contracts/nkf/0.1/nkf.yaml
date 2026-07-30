@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.1/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50
+    value: 52daa84db3067e39d8868f190874bb3a75328589d00127fecd7cb299312fa4ed
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -57,6 +57,10 @@ authority:
     - ADR-0045
     - ADR-0049
     - ADR-0050
+    - ADR-0053
+    - ADR-0054
+    - ADR-0055
+    - ADR-0056
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
@@ -382,6 +386,33 @@ markdown:
     required: UTF-8
     invalid_diagnostic: markdown.utf8.invalid
     copied_invalid_bytes: forbidden
+  source_envelope:
+    complete_source_bytes: optional-front-matter-envelope-plus-commonmark-body
+    opening_condition: first-line-exactly----
+    opening_delimiter: "---"
+    closing_delimiter: "---"
+    closing_rule: first-later-line-exactly-closing-delimiter
+    front_matter:
+      grammar: YAML-1.2-Core
+      document_count: 1
+      root: non-empty-mapping
+      unique_string_keys: required
+      value_model: JSON-compatible
+      anchors: forbidden
+      aliases: forbidden
+      merge_keys: forbidden
+      custom_tags: forbidden
+      arbitrary_core_key_meaning: none
+      profile_or_extension_keys_require_accepted_governance: true
+    commonmark_body:
+      begins: immediately-after-closing-delimiter-line-ending
+      envelope_participation: none
+      owns_canonical_human_meaning: true
+    complete_bytes_participate_in:
+      - record-source-digest
+      - validated-snapshot
+      - applicable-security-scan
+    invalid_diagnostic: markdown.frontmatter.invalid
   participating_headings:
     container: direct-child-of-document-root
     levels: [1, 2, 3]
@@ -1067,7 +1098,7 @@ body_contracts:
       part_of_exactly_one: domain
   nkf.design:
     type: design
-    required_responsibilities: [design-kind-problem-and-scope, governing-inputs-and-constraints, proposed-or-accepted-design, responsibilities-interactions-and-information-flows, alternatives-and-trade-offs, failure-safety-recovery-and-operations, validation-and-acceptance-evidence, unresolved-matters]
+    required_responsibilities: [design-kind-problem-and-scope, governing-inputs-and-constraints, proposed-direction, responsibilities-interactions-and-information-flows, alternatives-and-trade-offs, failure-safety-recovery-and-operations, validation-and-decision-evidence, unresolved-matters]
   nkf.decision:
     type: decision
     required_responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]
@@ -1336,6 +1367,7 @@ diagnostics:
     record.source.duplicate: {severity: error, blocking: conformance, phase: source}
     record.source.digest-mismatch: {severity: error, blocking: conformance, phase: source}
     markdown.utf8.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.invalid: {severity: error, blocking: conformance, phase: source}
     record.h1-count.invalid: {severity: error, blocking: conformance, phase: source}
     record.title.mismatch: {severity: error, blocking: conformance, phase: source}
     record.title.case-invalid: {severity: error, blocking: conformance, phase: source}

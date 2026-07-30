@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Acceptance-Provenance Boundary
 source:
-  path: designs/nkf-0.1-acceptance-provenance-boundary.md
+  path: designs/adopted/acceptance-provenance.md
   digest:
     algorithm: sha-256
-    value: 5f5bb852368770ed8b27b65f55f41a60213a8c99fe191fea5d3b96c80c13599a
+    value: b35cf8dae3396e54b72c62f360206a3e0c3abd56ab04a9fc61df85ecad6311d4
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,7 +24,7 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
@@ -48,7 +48,7 @@ sections:
     authority: proposal
     role: validation
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: independent-result-axes
     heading_path:
       - Independent Result Axes

@@ -1,23 +1,27 @@
+---
+created_at: 2026-07-28T22:01:17Z
+---
+
 # NKF 0.1 — Product And Technology Knowledge Format
 
 - **Status:** Accepted
-- **Task:** `NKF-003`
+- **Task:** `NKF-007`
 - **Version:** `0.1`
-- **Prepared:** 30 July 2026
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted source baseline:** `kaveh6202/Nourd.Studio@13a82fbc1b72c1350e9765f59d1538c375f3fa69`
 - **Accepted source digest:** `77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a`
 - **Source acceptance:** [Nourd Studio ADR 0012](../evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md)
-- **Accepted canonical baseline:** `knowledge/specifications/nkf-0.1.md`
-- **Accepted canonical digest:** `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`
+- **Predecessor canonical baseline:** `knowledge/specifications/nkf-0.1.md`
+- **Predecessor canonical digest:** `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`
 - **Canonical destination:** `knowledge/specifications/nkf-0.1.md`
-- **Proposed executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
-- **Acceptance Decisions:** ADR 0045 and ADR 0050
-- **Independent governing inputs:** ADRs 0001 through 0050
+- **Executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
+- **Acceptance Decisions:** ADR 0045, ADR 0050, ADR 0054, ADR 0055, and ADR
+  0056
+- **Independent governing inputs:** ADRs 0001 through 0055
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision is the current canonical NKF 0.1 specification when
-> bound by ADR 0050 and its executable companion. It
+> bound by ADR 0056 and its executable companion. It
 > is not the public stable NKF 1.0 release.
 
 ## Purpose
@@ -374,13 +378,53 @@ The YAML declaration:
 - MUST NOT introduce, strengthen, accept, or reinterpret meaning absent from
   the Markdown source.
 
+### Markdown Source Envelope
+
+The complete governed Markdown source is the exact UTF-8 byte sequence bound
+by the record digest. It consists of an optional front-matter envelope
+followed by one CommonMark body.
+
+The optional envelope exists only when the first source line is exactly
+`---`. The first later line that is exactly `---` closes it. The content
+between those delimiter lines MUST parse as exactly one safe YAML mapping
+using the native YAML 1.2 Core data model:
+
+- mapping keys are unique strings;
+- values use the JSON-compatible data model;
+- anchors, aliases, merge keys, and custom tags are forbidden; and
+- an empty, unclosed, non-mapping, or otherwise invalid envelope is invalid.
+
+When an envelope is present, the CommonMark body begins immediately after the
+closing delimiter and its line ending. The delimiter lines and enclosed YAML
+are not CommonMark content and cannot supply the H1, semantic sections,
+record responsibilities, acceptance, or other canonical human meaning. When
+the first line is not exactly `---`, the complete decoded source is the
+CommonMark body.
+
+Complete source bytes, including any envelope, participate in the record
+source digest, validated snapshot, and applicable security scanning. Markdown
+heading, section, path, occurrence, Title Case, and Mermaid behavior operate
+only on the CommonMark body.
+
+NKF Core validates the safe envelope boundary but assigns no portable meaning
+to arbitrary front-matter keys. A concrete profile or accepted extension MAY
+govern keys explicitly. Repository conventions such as `created_at` and
+`design_disposition` remain repository governance unless separately added to
+portable NKF meaning.
+
+An opening delimiter without a valid closing delimiter, unsafe or malformed
+YAML, multiple YAML documents, a non-mapping root, or a forbidden YAML feature
+emits `markdown.frontmatter.invalid`. A source intended to begin with a
+CommonMark thematic break MUST use a form other than an exact opening `---`
+line.
+
 ### Deterministic Markdown Structure
 
-Native NKF 0.1 interprets Markdown using CommonMark 0.31.2. Only heading nodes
-that are direct children of the CommonMark document root participate in NKF
-title, section, path, occurrence, and casing checks. Headings inside block
-quotes, lists, or other containers remain content. Both ATX and setext
-headings count.
+Native NKF 0.1 interprets the Markdown source body using CommonMark 0.31.2.
+Only heading nodes that are direct children of the CommonMark document root
+participate in NKF title, section, path, occurrence, and casing checks.
+Headings inside block quotes, lists, or other containers remain content. Both
+ATX and setext headings count.
 
 For every participating heading, the checker derives one comparison string:
 
@@ -747,7 +791,7 @@ safety, acceptance, or conformance.
 | `transition` | A meaningful stage, decision point, state change, or movement through a journey. |
 | `trigger` | An event or circumstance that initiates a journey or consequential transition. |
 | `unresolved` | An explicit open question, ambiguity, conflict, missing decision, or unsettled matter. |
-| `validation` | The approach, criteria, or required proof for validating a design or its acceptance conditions. |
+| `validation` | The approach, criteria, or required proof for evaluating a proposed direction or informing a Decision. |
 
 The core body-specific subsets are:
 
@@ -1280,14 +1324,15 @@ Required responsibilities:
 
 1. `design-kind-problem-and-scope` — Design kind, problem, and scope.
 2. `governing-inputs-and-constraints` — Governing inputs and constraints.
-3. `proposed-or-accepted-design` — Proposed or accepted design.
+3. `proposed-direction` — Direction proposed for a Decision to adopt, reject,
+   or supersede.
 4. `responsibilities-interactions-and-information-flows` — Responsibilities,
    interactions, and information flows.
 5. `alternatives-and-trade-offs` — Alternatives and trade-offs.
 6. `failure-safety-recovery-and-operations` — Failure, safety, recovery, and
    operational considerations.
-7. `validation-and-acceptance-evidence` — Validation approach and acceptance
-   evidence required.
+7. `validation-and-decision-evidence` — Validation approach and evidence
+   required for an informed Decision.
 8. `unresolved-matters` — Explicit unresolved matters.
 
 Optional responsibilities include experience states, diagrams, contracts,
@@ -1295,10 +1340,12 @@ data treatment, accessibility, security, privacy, commercial implications,
 migration, rollout, and retirement.
 
 A Design MAY describe experience, business, service, operating, policy, or
-technical realization. It MUST distinguish Product requirements from chosen
-solutions in a Product bundle and Technology requirements from chosen
-solutions in a Technology bundle. It MUST NOT claim implementation or
-conformance without a
+technical realization. A Design remains proposal knowledge in every
+disposition. A Decision adopts, rejects, or supersedes the proposed direction;
+acceptance governs an exact record revision and is not a Design disposition.
+A Design MUST distinguish Product requirements from chosen solutions in a
+Product bundle and Technology requirements from chosen solutions in a
+Technology bundle. It MUST NOT claim implementation or conformance without a
 Realization and Evidence. A material choice that must remain historically
 stable SHOULD be captured by a Decision.
 
@@ -1724,6 +1771,7 @@ warning is non-blocking.
 | `record.source.duplicate` | error |
 | `record.source.digest-mismatch` | error |
 | `markdown.utf8.invalid` | error |
+| `markdown.frontmatter.invalid` | error |
 | `record.h1-count.invalid` | error |
 | `record.title.mismatch` | error |
 | `record.title.case-invalid` | error |

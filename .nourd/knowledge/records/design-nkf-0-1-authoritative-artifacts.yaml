@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Authoritative Artifacts
 source:
-  path: designs/nkf-0.1-authoritative-artifacts.md
+  path: designs/superseded/artifact-identities-and-contract-versioning.md
   digest:
     algorithm: sha-256
-    value: fe3697408faf66bb620fce059911a541fb4cd48b4d4f6d02151abf980146cd32
+    value: e1499e33733d93a3ec9202c2ad4c5bc0bfceb0efbdf62eaf17765014276d2c18
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: superseded
   authority:
     - human-product-owner
 scope:
@@ -25,10 +25,10 @@ sections:
     responsibilities:
       - design-kind-problem-and-scope
       - governing-inputs-and-constraints
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: proposed-identities
     heading_path:

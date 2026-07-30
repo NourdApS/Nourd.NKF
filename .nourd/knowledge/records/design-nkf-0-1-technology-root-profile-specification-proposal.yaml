@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Technology Root Profile Specification Proposal
 source:
-  path: designs/nkf-0.1-technology-root-profile-specification-proposal.md
+  path: designs/adopted/technology-root-profile.md
   digest:
     algorithm: sha-256
-    value: 66f0c25729cbc999a4a397dcf2b98ecef029534d1e6a59b91c1df1da0974ba90
+    value: adb3f18975127769b3cb75202b9290b67dd521f60048fa40b04337cb37d37651
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -35,7 +35,7 @@ sections:
     authority: proposal
     role: evidence
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: technology-definition
     heading_path:
       - Technology Definition
@@ -95,7 +95,7 @@ sections:
     authority: proposal
     role: evidence
     responsibilities:
-      - proposed-or-accepted-design
+      - proposed-direction
   - id: decision-design-realization-and-evidence-bodies-technology-decision
     heading_path:
       - Decision, Design, Realization, And Evidence Bodies

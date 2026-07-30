@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 JSON Schema Realization
 source:
-  path: designs/nkf-0.1-json-schema-realization.md
+  path: designs/superseded/initial-json-schema-realization.md
   digest:
     algorithm: sha-256
-    value: d8552c83670c3111ecb6409489940afdc84a81d9710eb5fafdf9c8ddb0d3878b
+    value: 0e4a08501aa471e64e808c4b88c99fdacfc022ce50e633ee3108653e61cd80d7
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: superseded
   authority:
     - human-product-owner
 scope:
@@ -24,11 +24,11 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: proposed-derived-artifact-layout
     heading_path:

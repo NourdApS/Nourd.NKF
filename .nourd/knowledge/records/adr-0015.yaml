@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies"
 source:
-  path: decisions/0015-accept-nkf-0-1-semantic-topology-and-binding-vocabularies.md
+  path: decisions/0015-semantic-topology-and-bindings.md
   digest:
     algorithm: sha-256
-    value: ff4582959ec58e5bcdfdc596a6f4a27fa9a20b52c1476ad32e7d00f40cfc438b
+    value: 947ca82d576e779656049f0b0f5000a1bf6b252b85524943df4906695e1405f6
 governance:
   lifecycle: immutable
   status: accepted

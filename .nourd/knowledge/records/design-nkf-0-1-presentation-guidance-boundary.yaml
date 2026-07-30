@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Presentation-Guidance Boundary
 source:
-  path: designs/nkf-0.1-presentation-guidance-boundary.md
+  path: designs/adopted/presentation-guidance.md
   digest:
     algorithm: sha-256
-    value: de2b244675469cd802eab0dfd78dd1fd73137527fb832d4beb920e02470295b1
+    value: c025e831739624e599b093cafecdc2770dd421d4d25438fb474616d1b65bf395
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,11 +24,11 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: boundary
     heading_path:

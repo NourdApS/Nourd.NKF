@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0051: Govern Self-Hosting Heading Migration"
 source:
-  path: decisions/0051-govern-self-hosting-heading-migration.md
+  path: decisions/0051-self-hosting-source-migration.md
   digest:
     algorithm: sha-256
-    value: f389e52a074b42956519fc682f9bf978a16e045b23b7ac69a6dfd86d735de47f
+    value: eb997222d56fd073a2ca11955dff45707e91f797f45b94d87dbe679cd4c886d6
 governance:
   lifecycle: immutable
   status: accepted

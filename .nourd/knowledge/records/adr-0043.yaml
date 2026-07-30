@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0043: Establish Native Release Manifest Contract"
 source:
-  path: decisions/0043-establish-native-release-manifest-contract.md
+  path: decisions/0043-release-manifest.md
   digest:
     algorithm: sha-256
-    value: 8adf5cdfa25292ff3855ed498c5a63ff57a8ed8e16218ce2ab504782bef7c723
+    value: a54c88abbee215f305b9841017b37ee72bb7b58fa1e3e4d3ff79f3f2c8456768
 governance:
   lifecycle: immutable
   status: accepted

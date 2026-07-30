@@ -36,7 +36,7 @@ async function releaseFixture() {
     releaseCommit: "a".repeat(40),
     checkerConfirmation: {
       decision: "ADR-0047",
-      path: "knowledge/decisions/0047-confirm-release-bound-checker-realization.md",
+      path: "knowledge/decisions/0047-release-checker.md",
       bytes: Buffer.from("# ADR 0047\n", "utf8"),
       checkerSourceCommit: "b".repeat(40),
     },

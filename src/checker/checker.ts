@@ -181,6 +181,17 @@ function sourceChecks(
   }
   const model = parseMarkdown(markdownText);
   record.markdown = model;
+  if (model.frontMatterError !== null) {
+    emitter.emit(
+      "markdown.frontmatter.invalid",
+      "The Markdown front-matter envelope is unsafe, malformed, or unclosed.",
+      {
+        artifact: record.sourceObservation.entry.path,
+        record_id: recordId,
+      },
+    );
+    return;
+  }
   if (model.h1.length !== 1) {
     emitter.emit("record.h1-count.invalid", "A governed record must have exactly one top-level H1.", {
       artifact: record.artifact,

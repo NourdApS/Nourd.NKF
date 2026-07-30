@@ -1,0 +1,85 @@
+contract: nkf.record
+id: adr-0053
+type: decision
+body_contract: nkf.decision
+title: "ADR 0053: Repository Knowledge Architecture"
+source:
+  path: decisions/0053-repository-knowledge-architecture.md
+  digest:
+    algorithm: sha-256
+    value: afab6ba9588746b4e83b7733431aa815f9d372f4eaf1db4e4416bc2149f910fa
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities:
+      - context-and-problem
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - decision
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+    responsibilities:
+      - scope-and-applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+    responsibilities:
+      - rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+    responsibilities:
+      - alternatives-considered
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: trade-off
+    responsibilities:
+      - consequences-and-trade-offs
+  - id: migration-and-recovery
+    heading_path:
+      - Migration And Recovery
+    occurrence: 1
+    authority: accepted-meaning
+    role: recovery
+  - id: deferred-work
+    heading_path:
+      - Deferred Work
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships: []

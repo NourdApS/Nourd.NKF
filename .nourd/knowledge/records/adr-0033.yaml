@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0033: Confirm Yaml Grammar-Corrected Json Schema Bindings"
 source:
-  path: decisions/0033-confirm-yaml-grammar-corrected-json-schema-bindings.md
+  path: decisions/0033-yaml-grammar-schema-bindings.md
   digest:
     algorithm: sha-256
-    value: 064e0300e108a766b796404e9d21cdf1e91b180f85e73ef20b98933919ffc8c4
+    value: 64a53a905503ff3e45bc45a62ef99073fb0512400ca7ca4c5cffc348748f34a0
 governance:
   lifecycle: immutable
   status: accepted

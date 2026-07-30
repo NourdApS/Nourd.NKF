@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0032: Correct NKF 0.1 Yaml Flow Scalar Grammar"
 source:
-  path: decisions/0032-correct-nkf-0-1-yaml-flow-scalar-grammar.md
+  path: decisions/0032-yaml-scalar-grammar.md
   digest:
     algorithm: sha-256
-    value: 5839385670df07319704ed87bb4a47e38d225064885a7269a0a5e24ee8702076
+    value: 54536d52c400504c67d49f6ce3ac79da24fb94c9b1a463fc144d4a61bc52f624
 governance:
   lifecycle: immutable
   status: accepted

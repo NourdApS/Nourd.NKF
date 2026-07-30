@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0012: Reconcile Single-Version Artifact Authority"
 source:
-  path: decisions/0012-reconcile-single-version-artifact-authority.md
+  path: decisions/0012-nkf-0-1-artifact-authority.md
   digest:
     algorithm: sha-256
-    value: ca69edcc8a487a41facd04eeef0beeb885e8ac8733896cc9562b9aa60c83ef4e
+    value: e417cee7c9d68a445ba393c17134be5ea7824167b7eb6cb8b4d5876c2a5ea6f5
 governance:
   lifecycle: immutable
   status: accepted

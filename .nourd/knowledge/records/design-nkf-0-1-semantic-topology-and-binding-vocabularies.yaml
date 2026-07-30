@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Semantic-Topology And Binding Vocabularies
 source:
-  path: designs/nkf-0.1-semantic-topology-and-binding-vocabularies.md
+  path: designs/adopted/semantic-topology-and-bindings.md
   digest:
     algorithm: sha-256
-    value: 01fdd28e008efa9d243aef8531ccf25f4beed85acd25d0f2c8a14de43eb643f4
+    value: 351d83df6bc7344cf0cc6103d6d5a51d68aecaabe6ad4af2025c5207e8854e1c
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -25,7 +25,7 @@ sections:
     responsibilities:
       - design-kind-problem-and-scope
       - governing-inputs-and-constraints
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
@@ -73,7 +73,7 @@ sections:
     authority: proposal
     role: validation
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: compatibility
     heading_path:
       - Compatibility

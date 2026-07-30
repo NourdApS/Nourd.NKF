@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF Record V2 Responsibility Bindings
 source:
-  path: designs/nkf-record-v2-responsibility-bindings.md
+  path: designs/superseded/record-v2-responsibility-bindings.md
   digest:
     algorithm: sha-256
-    value: 34831c9ef11ff6573b072608c8ebab642e757f254ad860c59a5a4073f26e1574
+    value: a8cfd9e5d23ec6fb7457ce8dd2a0523aa40bf8d7b296c78febcb6030f1dc94b3
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: superseded
   authority:
     - human-product-owner
 scope:
@@ -24,11 +24,11 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: proposed-representation
     heading_path:
       - Proposed Representation

@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0042: Establish Initial Release Distribution Boundary"
 source:
-  path: decisions/0042-establish-initial-release-distribution-boundary.md
+  path: decisions/0042-release-distribution.md
   digest:
     algorithm: sha-256
-    value: f0eaf1cd044232694bf8c7156903b5ab8b330a0bdc0f3eb22281618b9c4ac3e5
+    value: f3718e30687a65f7f9d0553978545c523241f57f6a855be5fc9db3eceb84ddaa
 governance:
   lifecycle: immutable
   status: accepted

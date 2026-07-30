@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0031: Establish Checker Development Layout And Identity"
 source:
-  path: decisions/0031-establish-checker-development-layout-and-identity.md
+  path: decisions/0031-checker-layout-and-identity.md
   digest:
     algorithm: sha-256
-    value: 6afdad08463896f31655446565adc9a8fee95e22a36444da97622d83d5e94ea4
+    value: a40abbe3920f581638cb9f7ae70d2d09acc424032fb82917d0c61a7dfebc4dd6
 governance:
   lifecycle: immutable
   status: accepted

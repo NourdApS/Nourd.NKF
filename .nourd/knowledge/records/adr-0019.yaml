@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0019: Accept NKF 0.1 Enforcement And Diagnostics"
 source:
-  path: decisions/0019-accept-nkf-0-1-enforcement-and-diagnostics.md
+  path: decisions/0019-validation-enforcement-and-diagnostics.md
   digest:
     algorithm: sha-256
-    value: c333481f60f28374efe7cad4ecbd0ec842cfd39e47feb48f018eef7e338030a3
+    value: 42c8ef38e70f234a72acda7b1bfa00102cb62e17dbc1c369ff148f9f05c878e9
 governance:
   lifecycle: immutable
   status: accepted

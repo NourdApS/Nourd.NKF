@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Product Responsibility Identifiers
 source:
-  path: designs/nkf-0.1-product-responsibility-identifiers.md
+  path: designs/adopted/product-responsibility-identifiers.md
   digest:
     algorithm: sha-256
-    value: 3a73386184f8268f55cde5d3f0052bc85a417779580a5745efd6597b0ade0806
+    value: de0a5c7a66c75e42da246e41176c3dd10a8639554453b305bc52eccf67c5a06f
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,11 +24,11 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - responsibilities-interactions-and-information-flows
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
       - unresolved-matters
   - id: verification
     heading_path:

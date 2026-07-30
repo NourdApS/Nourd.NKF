@@ -1,0 +1,70 @@
+contract: nkf.record
+id: adr-0056
+type: decision
+body_contract: nkf.decision
+title: "ADR 0056: Design Direction And Record Authority"
+source:
+  path: decisions/0056-design-direction-and-record-authority.md
+  digest:
+    algorithm: sha-256
+    value: 3d8ed454285bef4f9b07c05c70836d0741d2088cd23ca8de51b124ba830ac6e4
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path: [Context And Problem]
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+    responsibilities: [context-and-problem]
+  - id: decision
+    heading_path: [Decision]
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities: [decision]
+  - id: scope-and-applicability
+    heading_path: [Scope And Applicability]
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+    responsibilities: [scope-and-applicability]
+  - id: rationale
+    heading_path: [Rationale]
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+    responsibilities: [rationale]
+  - id: alternatives-considered
+    heading_path: [Alternatives Considered]
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+    responsibilities: [alternatives-considered]
+  - id: consequences-and-trade-offs
+    heading_path: [Consequences And Trade-Offs]
+    occurrence: 1
+    authority: accepted-meaning
+    role: trade-off
+    responsibilities: [consequences-and-trade-offs]
+  - id: accepted-revisions
+    heading_path: [Accepted Revisions]
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: supersession-and-compatibility
+    heading_path: [Supersession And Compatibility]
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path: [Non-Claims]
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships: []

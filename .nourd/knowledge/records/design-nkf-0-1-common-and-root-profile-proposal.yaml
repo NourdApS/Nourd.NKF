@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Common And Root Profile Proposal
 source:
-  path: designs/nkf-0.1-common-and-root-profile-proposal.md
+  path: designs/adopted/common-and-root-profiles.md
   digest:
     algorithm: sha-256
-    value: 12857d58088d2f7b858575d174a143c7b6fa226f03e30ccf90f39720e18c1c07
+    value: 36ad6302eac18a3bfcee0c0abc42159935bb9ef13b6bb2412b884b591cf86d5e
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -53,7 +53,7 @@ sections:
     authority: proposal
     role: context
     responsibilities:
-      - proposed-or-accepted-design
+      - proposed-direction
   - id: technology-first-comparison-method
     heading_path:
       - Technology-First Comparison Method
@@ -73,7 +73,7 @@ sections:
     authority: proposal
     role: validation
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: profile-specifications-and-packaging
     heading_path:
       - Profile Specifications And Packaging

@@ -28,6 +28,44 @@ describe("deterministic Markdown and Unicode 17 Title Case", () => {
     expect(model.h1[0]?.protectedRanges).toEqual([{ start: 8, end: 11 }]);
   });
 
+  it("parses safe front matter outside the CommonMark body", () => {
+    const model = parseMarkdown(
+      [
+        "---",
+        "created_at: 2026-07-30T17:03:21Z",
+        "design_disposition: adopted",
+        "---",
+        "",
+        "# Product Knowledge",
+        "",
+        "## Purpose",
+        "",
+      ].join("\n"),
+    );
+    expect(model.frontMatterPresent).toBe(true);
+    expect(model.frontMatterError).toBeNull();
+    expect(model.frontMatter).toEqual({
+      created_at: "2026-07-30T17:03:21Z",
+      design_disposition: "adopted",
+    });
+    expect(model.headings.map((heading) => heading.text)).toEqual([
+      "Product Knowledge",
+      "Purpose",
+    ]);
+  });
+
+  it("fails closed for malformed or unclosed front matter", () => {
+    expect(parseMarkdown("---\ncreated_at: [\n---\n# Product").frontMatterError).toBe(
+      "invalid",
+    );
+    expect(parseMarkdown("---\ncreated_at: value\n# Product").frontMatterError).toBe(
+      "unclosed",
+    );
+    expect(parseMarkdown("---\n- value\n---\n# Product").frontMatterError).toBe(
+      "invalid",
+    );
+  });
+
   it("title-cases every word and every hyphen-separated component", () => {
     expect(toUnicode17TitleCase("Needs and outcomes")).toBe("Needs And Outcomes");
     expect(toUnicode17TitleCase("pre-stable evolution")).toBe("Pre-Stable Evolution");

@@ -2,15 +2,15 @@ contract: nkf.record
 id: nkf-0.1-native-realization
 type: realization
 body_contract: nkf.realization
-title: NKF 0.1 Native Realization
+title: NKF Current System
 source:
-  path: realizations/nkf-0.1-native-realization.md
+  path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: 7c663ac976804878456123aebdd488cd2e4bb0c031f31fa3290ec071afdc9782
+    value: 09852847e2a767833cdd515acbdaf7f737ac9be8f58201443d192ca44e514905
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -20,7 +20,7 @@ sections:
     heading_path:
       - Realization Identity And Kind
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: identity
     responsibilities:
       - realization-identity-and-kind
@@ -28,7 +28,7 @@ sections:
     heading_path:
       - Governed Meaning Realized
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: mapping
     responsibilities:
       - governed-meaning-realized
@@ -36,7 +36,7 @@ sections:
     heading_path:
       - Durable Mapping
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: mapping
     responsibilities:
       - durable-mapping
@@ -44,7 +44,7 @@ sections:
     heading_path:
       - Responsibilities And Ownership Boundaries
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: responsibility
     responsibilities:
       - responsibilities-and-ownership-boundaries
@@ -52,7 +52,7 @@ sections:
     heading_path:
       - Interfaces Dependencies Locators And Resolution
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: interface
     responsibilities:
       - interfaces-dependencies-locators-and-resolution
@@ -60,7 +60,7 @@ sections:
     heading_path:
       - External Authority And Operational State Boundaries
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: boundary
     responsibilities:
       - external-authority-and-operational-state-boundaries
@@ -68,7 +68,7 @@ sections:
     heading_path:
       - Compatibility Verification And Recovery
     occurrence: 1
-    authority: proposal
+    authority: accepted-meaning
     role: recovery
     responsibilities:
       - compatibility-verification-and-recovery

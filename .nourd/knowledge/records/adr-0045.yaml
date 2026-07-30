@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0045: Accept Release Contract Authority Pair"
 source:
-  path: decisions/0045-accept-release-contract-authority-pair.md
+  path: decisions/0045-release-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 6d736756d4cb904dfca02f3e907b50ad2aa02e3c2b09abb5ff70c4c91198afb5
+    value: e5b0f4e32f51c5a2875566f6a4b3a623b3d4fc36b7b10ab36e1001463154c2a5
 governance:
   lifecycle: immutable
   status: accepted

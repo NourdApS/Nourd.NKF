@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Native Record Serialization
 source:
-  path: designs/nkf-0.1-native-record-serialization.md
+  path: designs/adopted/native-record-serialization.md
   digest:
     algorithm: sha-256
-    value: a26e8ce9d21a68a8b5955d587d216a446aa0bcb1529e1ecaca87cadd198b9120
+    value: 6f0eb7b2e5d45b725b62cddb63c4d4fc152f6b8a57d02db52ad2ce8cf3d3ba0f
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,10 +24,10 @@ sections:
     role: context
     responsibilities:
       - design-kind-problem-and-scope
-      - proposed-or-accepted-design
+      - proposed-direction
       - alternatives-and-trade-offs
       - failure-safety-recovery-and-operations
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: required-top-level-fields
     heading_path:
       - Required Top-Level Fields

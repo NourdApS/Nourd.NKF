@@ -1,0 +1,230 @@
+contract: nkf.record
+id: design-nkf-007-knowledge-architecture
+type: design
+body_contract: nkf.design
+title: NKF-007 Knowledge Architecture
+source:
+  path: designs/adopted/knowledge-architecture.md
+  digest:
+    algorithm: sha-256
+    value: 5b2e53bc5c18de1e85901d976282faa5b2fedd6d0abce14ed9c11b7ad791d4b3
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - proposed-direction
+  - id: target-knowledge-topology
+    heading_path:
+      - Proposed Direction
+      - Target Knowledge Topology
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: entry-point-navigation
+    heading_path:
+      - Proposed Direction
+      - Entry-Point Navigation
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: task-organization
+    heading_path:
+      - Proposed Direction
+      - Task Organization
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: design-disposition
+    heading_path:
+      - Proposed Direction
+      - Design Disposition
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: design-disposition-and-record-governance
+    heading_path:
+      - Proposed Direction
+      - Design Disposition And Record Governance
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: filename-convention
+    heading_path:
+      - Proposed Direction
+      - Filename Convention
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: front-matter-and-time
+    heading_path:
+      - Proposed Direction
+      - Front Matter And Time
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: front-matter-parsing-boundary
+    heading_path:
+      - Proposed Direction
+      - Front-Matter Parsing Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: decision-and-immutable-record-migration
+    heading_path:
+      - Proposed Direction
+      - Decision And Immutable-Record Migration
+    occurrence: 1
+    authority: proposal
+    role: recovery
+  - id: nkf-003-closure-and-work-transfer
+    heading_path:
+      - Proposed Direction
+      - NKF-003 Closure And Work Transfer
+    occurrence: 1
+    authority: proposal
+    role: recovery
+  - id: current-realization-set
+    heading_path:
+      - Proposed Direction
+      - Current Realization Set
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: non-inferential-self-adoption
+    heading_path:
+      - Proposed Direction
+      - Non-Inferential Self-Adoption
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: preserved-audit-findings
+    heading_path:
+      - Proposed Direction
+      - Preserved Audit Findings
+    occurrence: 1
+    authority: evidence
+    role: evidence
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: keep-every-lifecycle-directory-flat
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep Every Lifecycle Directory Flat
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: organize-everything-by-topic
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Organize Everything By Topic
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: put-current-meaning-in-a-separate-current-system-layer
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Put Current Meaning In A Separate Current-System Layer
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: treat-resolved-as-a-design-disposition
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Treat Resolved As A Design Disposition
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-accepted-as-a-design-disposition
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use Accepted As A Design Disposition
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: convert-date-only-metadata-to-midnight-utc
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Convert Date-Only Metadata To Midnight UTC
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: treat-front-matter-as-ordinary-commonmark
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Treat Front Matter As Ordinary CommonMark
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: regenerate-declarations-from-filenames-and-headings
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Regenerate Declarations From Filenames And Headings
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: recovery
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships: []

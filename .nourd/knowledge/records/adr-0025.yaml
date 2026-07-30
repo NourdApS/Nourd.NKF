@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0025: Accept NKF 0.1 Validation Result Contract"
 source:
-  path: decisions/0025-accept-nkf-0-1-validation-result-contract.md
+  path: decisions/0025-validation-result.md
   digest:
     algorithm: sha-256
-    value: 1f941dbec242cc130337021233b1d3ebd89d60f9d7623afa58d4c73647650261
+    value: 51c7413a7fd341407a9bfd032d9c252b57b8ee711d2e03bcdbc22b87b71f5aa5
 governance:
   lifecycle: immutable
   status: accepted

@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0044: Accept NKF 0.1 Release Contract"
 source:
-  path: decisions/0044-accept-nkf-0-1-release-contract.md
+  path: decisions/0044-release-contract.md
   digest:
     algorithm: sha-256
-    value: 82c98b79cc87fe63fe5f2fcd27662b88d6d74541b58df1ab78ebdb0e2106c980
+    value: 75967371ad289286914e6b90fa8333b0aedf33b07235bb932723263a05521103
 governance:
   lifecycle: immutable
   status: accepted

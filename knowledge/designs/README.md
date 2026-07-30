@@ -1,208 +1,82 @@
+---
+created_at: 2026-07-28T22:01:17Z
+---
+
 # Designs
 
-This directory contains evolving NKF proposals. A design remains
-non-authoritative until its consequential meaning is accepted and recorded in
-an immutable Decision or normative specification.
+A Design is governed proposal knowledge. It presents a direction,
+alternatives, and trade-offs so a Decision can adopt, reject, or supersede
+that direction.
 
-## Resolved proposals
+Acceptance and adoption are different:
 
-- [`nkf-0.1-product-responsibility-identifiers.md`](nkf-0.1-product-responsibility-identifiers.md)
-  records the proposal accepted by ADR 0003 for stable, contract-scoped
-  identifiers for the 69 Product body responsibilities.
-- [`nkf-record-v2-responsibility-bindings.md`](nkf-record-v2-responsibility-bindings.md)
-  records the historical YAML representation and deterministic coverage rules
-  accepted by ADR 0005. Its record-version framing is superseded by ADR 0009;
-  its binding semantics are retained in the sole NKF 0.1 record definition.
+- `accepted` is the native authority state of an exact Design record revision;
+- `adopted` is the Design disposition established when a Decision selects the
+  direction proposed by that Design; and
+- neither an accepted Design record nor an Adopted disposition makes the
+  Design current normative authority.
 
-- [`nkf-0.1-authoritative-artifacts.md`](nkf-0.1-authoritative-artifacts.md)
-  records the version, canonical Markdown and YAML paths, and YAML contract
-  identity accepted by ADR 0008.
-- [`nkf-0.1-independent-specification.md`](nkf-0.1-independent-specification.md)
-  is the exact proposal accepted as the canonical NKF 0.1 Markdown revision by
-  ADR 0010.
-- [`reconcile-single-version-artifact-authority.md`](reconcile-single-version-artifact-authority.md)
-  records the reconciliation accepted by ADR 0012 between ADR 0007's
-  artifact-binding model and ADR 0009's single NKF version namespace.
-- [`nkf-0.1-native-record-serialization.md`](nkf-0.1-native-record-serialization.md)
-  records the native NKF 0.1 record object shape accepted by ADR 0013. Its
-  explicitly deferred vocabularies and other semantic boundaries remain
-  undecided.
-- [`nkf-0.1-section-role-vocabularies.md`](nkf-0.1-section-role-vocabularies.md)
-  records the shared role meanings and core body-specific subsets accepted by
-  ADR 0014.
-- [`nkf-0.1-semantic-topology-and-binding-vocabularies.md`](nkf-0.1-semantic-topology-and-binding-vocabularies.md)
-  records the core semantic-topology and durable-binding vocabularies accepted
-  by ADR 0015.
-- [`nkf-0.1-extension-declaration-and-resolution.md`](nkf-0.1-extension-declaration-and-resolution.md)
-  records the native extension identity, declaration, resolution, round-trip,
-  and fail-closed rules accepted by ADR 0016.
-- [`nkf-0.1-acceptance-provenance-boundary.md`](nkf-0.1-acceptance-provenance-boundary.md)
-  records the no-universal-core-proof boundary and independent result axes
-  accepted by ADR 0017.
-- [`nkf-0.1-path-and-distribution-boundary.md`](nkf-0.1-path-and-distribution-boundary.md)
-  records the fixed `.nourd`, configurable knowledge-root, Markdown coverage,
-  declaration cardinality, and qualified symlink rules accepted by ADR 0018.
-- [`nkf-0.1-enforcement-and-diagnostics.md`](nkf-0.1-enforcement-and-diagnostics.md)
-  records the YAML parse boundary, enforcement partition, validation phases,
-  stable diagnostics, and result semantics accepted by ADR 0019 under
-  delegated technical authority.
-- [`nkf-0.1-presentation-guidance-boundary.md`](nkf-0.1-presentation-guidance-boundary.md)
-  supports the current no-native-field and optional-extension boundary
-  accepted by ADR 0020 and explicitly revisitable through NKF-004.
-- [`nkf-0.1-native-bundle-serialization.md`](nkf-0.1-native-bundle-serialization.md)
-  records the closed native manifest and exact non-record representation
-  accepted by ADR 0021.
-- [`nkf-0.1-replacement-specification.md`](nkf-0.1-replacement-specification.md)
-  is the exact review revision accepted and promoted by ADR 0022. It is now a
-  historical accepted snapshot after ADR 0027.
-- [`nkf-0.1-replacement-contract-set.yaml`](nkf-0.1-replacement-contract-set.yaml)
-  is the exact digest-bound executable companion accepted and promoted by ADR
-  0022, now historical after ADR 0027.
-- [`nkf-0.1-executable-completeness-gaps.md`](nkf-0.1-executable-completeness-gaps.md)
-  records the gaps subsequently resolved through ADRs 0013 through 0021 and
-  the coherent pair accepted by ADR 0022.
-- [`nkf-0.1-replacement-json-schemas.md`](nkf-0.1-replacement-json-schemas.md)
-  records the historical derived JSON Schema realization confirmed by ADR
-  0023. Its exact bundle and record review artifacts are
-  [`nkf-0.1-bundle-schema-proposal.json`](nkf-0.1-bundle-schema-proposal.json)
-  and
-  [`nkf-0.1-record-schema-proposal.json`](nkf-0.1-record-schema-proposal.json).
-- [`nkf-0.1-checker-realization-gaps.md`](nkf-0.1-checker-realization-gaps.md)
-  records the three conformance-critical gaps resolved through ADRs 0024
-  through 0030 before checker implementation.
-- [`nkf-0.1-validation-result-schema-proposal.json`](nkf-0.1-validation-result-schema-proposal.json)
-  is the structural precursor reviewed for ADR 0025. Its positive review
-  example is
-  [`nkf-0.1-validation-result-example.json`](nkf-0.1-validation-result-example.json).
-- [`nkf-0.1-pre-checker-specification-proposal.md`](nkf-0.1-pre-checker-specification-proposal.md)
-  and
-  [`nkf-0.1-pre-checker-contract-proposal.yaml`](nkf-0.1-pre-checker-contract-proposal.yaml)
-  are the exact authority revisions accepted and promoted by ADR 0027, now
-  historical after ADR 0029.
-- [`nkf-0.1-pre-checker-bundle-schema-proposal.json`](nkf-0.1-pre-checker-bundle-schema-proposal.json),
-  [`nkf-0.1-pre-checker-record-schema-proposal.json`](nkf-0.1-pre-checker-record-schema-proposal.json),
-  and
-  [`nkf-0.1-pre-checker-validation-result-schema-proposal.json`](nkf-0.1-pre-checker-validation-result-schema-proposal.json)
-  are the exact source-bound schemas confirmed and promoted by ADR 0028, now
-  historical after ADR 0030.
-- [`nkf-0.1-schema-status-reconciled-specification-proposal.md`](nkf-0.1-schema-status-reconciled-specification-proposal.md)
-  and
-  [`nkf-0.1-schema-status-reconciled-contract-proposal.yaml`](nkf-0.1-schema-status-reconciled-contract-proposal.yaml)
-  are the exact authority revisions accepted and promoted by ADR 0029. The
-  Markdown remains current; the YAML is historical after ADR 0032.
-- [`nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json`](nkf-0.1-schema-status-reconciled-bundle-schema-proposal.json),
-  [`nkf-0.1-schema-status-reconciled-record-schema-proposal.json`](nkf-0.1-schema-status-reconciled-record-schema-proposal.json),
-  and
-  [`nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json`](nkf-0.1-schema-status-reconciled-validation-result-schema-proposal.json)
-  are the exact source-bound schemas confirmed by ADR 0030, now historical
-  after ADR 0033.
-- [`nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml`](nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml)
-  is the historical strict-YAML executable companion accepted and promoted by
-  ADR 0032, now superseded as current authority by ADR 0036.
-- [`nkf-0.1-yaml-grammar-corrected-bundle-schema-proposal.json`](nkf-0.1-yaml-grammar-corrected-bundle-schema-proposal.json),
-  [`nkf-0.1-yaml-grammar-corrected-record-schema-proposal.json`](nkf-0.1-yaml-grammar-corrected-record-schema-proposal.json),
-  and
-  [`nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json`](nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json)
-  are the exact source-bound schemas confirmed and promoted by ADR 0033, now
-  historical after ADR 0037.
-- [`nkf-0.1-native-checker-realization-findings.md`](nkf-0.1-native-checker-realization-findings.md)
-  records five conformance-critical findings exposed by native checker
-  realization. All five are resolved through ADRs 0034 through 0040.
-- [`nkf-0.1-checker-findings-resolved-specification-proposal.md`](nkf-0.1-checker-findings-resolved-specification-proposal.md)
-  and
-  [`nkf-0.1-checker-findings-resolved-contract-proposal.yaml`](nkf-0.1-checker-findings-resolved-contract-proposal.yaml)
-  are the exact authority pair accepted and promoted by ADR 0036, now
-  historical after ADR 0039.
-- [`nkf-0.1-checker-findings-resolved-bundle-schema-proposal.json`](nkf-0.1-checker-findings-resolved-bundle-schema-proposal.json),
-  [`nkf-0.1-checker-findings-resolved-record-schema-proposal.json`](nkf-0.1-checker-findings-resolved-record-schema-proposal.json),
-  and
-  [`nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json`](nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json)
-  are the exact source-bound schemas confirmed and promoted by ADR 0037, now
-  historical after ADR 0040.
-- [`nkf-0.1-invocation-precondition-specification-proposal.md`](nkf-0.1-invocation-precondition-specification-proposal.md)
-  and
-  [`nkf-0.1-invocation-precondition-contract-proposal.yaml`](nkf-0.1-invocation-precondition-contract-proposal.yaml)
-  are the exact current authority pair accepted and promoted by ADR 0039.
-- [`nkf-0.1-invocation-precondition-bundle-schema-proposal.json`](nkf-0.1-invocation-precondition-bundle-schema-proposal.json),
-  [`nkf-0.1-invocation-precondition-record-schema-proposal.json`](nkf-0.1-invocation-precondition-record-schema-proposal.json),
-  and
-  [`nkf-0.1-invocation-precondition-validation-result-schema-proposal.json`](nkf-0.1-invocation-precondition-validation-result-schema-proposal.json)
-  are the exact current source-bound schemas confirmed and promoted by ADR
-  0040.
+When the subject is the proposed direction, use `propose`, `adopt`, `reject`,
+`supersede`, or `withdraw`. Reserve `accept` for an authority accepting an
+exact record revision.
 
-## Dynamic Root Resolution
+Current normative meaning belongs to Specifications. Current implementation
+knowledge belongs to Realizations.
 
-- [`nkf-0.1-common-and-root-profile-proposal.md`](nkf-0.1-common-and-root-profile-proposal.md),
-  [`nkf-0.1-technology-root-profile-specification-proposal.md`](nkf-0.1-technology-root-profile-specification-proposal.md),
-  and
-  [`nkf-0.1-product-technology-common-comparison.md`](nkf-0.1-product-technology-common-comparison.md)
-  contain the evidence and comparison accepted in exact normative form
-  through ADR 0050. They remain proposal provenance rather than competing
-  authority.
+## Dispositions
 
-## Active Proposals
+Every Design declares exactly one `design_disposition` in front matter:
 
-All five checker-derived authority findings are accepted through ADRs 0034,
-0035, and 0038. ADRs 0039 and 0040 reflect their exact semantics in the
-current canonical authority pair and source-bound schemas. Checker updates
-and their historical 115-rule fixture-reference matrix are confirmed as the
-prior development Realization through ADR 0041. ADR 0050 supersedes the
-Product-only authority boundary; its current realization is confirmed
-separately.
+| Disposition | Meaning |
+| --- | --- |
+| Active | The proposed direction remains under consideration |
+| Adopted | A Decision adopted the proposed direction |
+| Rejected | A Decision rejected the proposed direction |
+| Superseded | A later Design or Decision replaced the proposed direction |
+| Withdrawn | The owner explicitly stopped consideration without a merits Decision |
 
-Checker distribution and release realization have not yet been proposed or
-accepted as an exact contract or implementation. ADR 0042 accepts one
-content-addressed Github Release archive as the initial distribution boundary.
-[`nkf-0.1-initial-release-distribution.md`](nkf-0.1-initial-release-distribution.md)
-records the exact archive, manifest, integrity, pinning, release mechanics,
-normative Markdown delta, and executable YAML delta accepted by ADR 0044 under
-explicit Human Product Owner delegation. Its accepted structural schema design
-is
-[`nkf-0.1-release-manifest-schema-proposal.json`](nkf-0.1-release-manifest-schema-proposal.json).
-The coherent full authority pair accepted and promoted by ADR 0045 is preserved
-in
-[`nkf-0.1-release-contract-specification-proposal.md`](nkf-0.1-release-contract-specification-proposal.md)
-and
-[`nkf-0.1-release-contract-proposal.yaml`](nkf-0.1-release-contract-proposal.yaml).
-The exact source-bound schemas confirmed by ADR 0046 are
-[`nkf-0.1-release-contract-bundle-schema-proposal.json`](nkf-0.1-release-contract-bundle-schema-proposal.json),
-[`nkf-0.1-release-contract-record-schema-proposal.json`](nkf-0.1-release-contract-record-schema-proposal.json),
-[`nkf-0.1-release-contract-release-manifest-schema-proposal.json`](nkf-0.1-release-contract-release-manifest-schema-proposal.json),
-and
-[`nkf-0.1-release-contract-validation-result-schema-proposal.json`](nkf-0.1-release-contract-validation-result-schema-proposal.json).
-ADR 0047 confirms the rebound checker, and ADR 0048 confirms the deterministic
-release-package and bootstrap-verifier Realization. No tag, asset, or Github
-Release has been created or published.
+`resolved` is only a derived grouping for non-Active Designs. It is not a
+disposition. Directory placement reflects the declared disposition and never
+establishes it.
 
-Deferred presentation-extension work remains governed separately by NKF-004.
-Deferred expiry and authority-freshness investigation remains governed by
-NKF-005.
+## Active
 
-[`nkf-0.1-common-and-root-profile-proposal.md`](nkf-0.1-common-and-root-profile-proposal.md)
-develops the architecture accepted by ADR 0049. It proposes the
-Common-versus-profile responsibility boundary, one concrete profile selection,
-Technology-first comparison method, profile validation, artifact choices, and
-compatibility. Its exact contracts remain unaccepted proposal rather than
-canonical authority or confirmed realization.
+No Design is currently Active.
 
-[`nkf-0.1-technology-root-profile-specification-proposal.md`](nkf-0.1-technology-root-profile-specification-proposal.md)
-derives the first Technology candidate independently from NKF's own
-repository, authority, specification, design, realization, evidence,
-distribution, compatibility, security, and lifecycle needs. It proposes the
-Technology root, Specification body, minimal record set, lack of a mandatory
-record hierarchy, governed technical artifacts, validation, and an NKF
-self-hosting mapping without accepting them.
+## Adopted
 
-[`nkf-0.1-product-technology-common-comparison.md`](nkf-0.1-product-technology-common-comparison.md)
-compares the accepted Product specification with that independent Technology
-candidate. It classifies proposed Common mechanisms and bodies, Product-only
-meaning, Technology-only meaning, and unresolved vocabularies without changing
-canonical authority.
+- [Acceptance Provenance](adopted/acceptance-provenance.md)
+- [Common And Root Profiles](adopted/common-and-root-profiles.md)
+- [Enforcement And Diagnostics](adopted/enforcement-and-diagnostics.md)
+- [Extension Declaration And Resolution](adopted/extension-declaration-and-resolution.md)
+- [Initial Release Distribution](adopted/initial-release-distribution.md)
+- [Knowledge Architecture](adopted/knowledge-architecture.md)
+- [Native Bundle Serialization](adopted/native-bundle-serialization.md)
+- [Native Record Serialization](adopted/native-record-serialization.md)
+- [Presentation Guidance](adopted/presentation-guidance.md)
+- [Product Responsibility Identifiers](adopted/product-responsibility-identifiers.md)
+- [Product Technology Common Allocation](adopted/product-technology-common-allocation.md)
+- [Project Path And Knowledge Coverage](adopted/project-path-and-knowledge-coverage.md)
+- [Section Role Vocabularies](adopted/section-role-vocabularies.md)
+- [Semantic Topology And Bindings](adopted/semantic-topology-and-bindings.md)
+- [Single-Version Artifact Authority](adopted/single-version-artifact-authority.md)
+- [Technology Root Profile](adopted/technology-root-profile.md)
 
-Broader root-model investigation remains deferred through NKF-006.
+## Rejected
 
-## Superseded proposals
+No Design is currently classified as Rejected.
 
-- [`nkf-0.1-json-schema-realization.md`](nkf-0.1-json-schema-realization.md)
-  retains the earlier root-field and incomplete-record assumptions and must
-  not guide realization after ADRs 0013 through 0018.
+## Superseded
+
+- [Artifact Identities And Contract Versioning](superseded/artifact-identities-and-contract-versioning.md)
+- [Initial JSON Schema Realization](superseded/initial-json-schema-realization.md)
+- [Record V2 Responsibility Bindings](superseded/record-v2-responsibility-bindings.md)
+- [Replacement JSON Schema Realization](superseded/replacement-json-schema-realization.md)
+
+## Withdrawn
+
+No Design is currently classified as Withdrawn.
+
+Historical specification revisions, schema proposals, contract candidates,
+audits, and findings are retained under
+[Evidence](../evidence/README.md), not classified as Designs.

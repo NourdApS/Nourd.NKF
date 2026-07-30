@@ -1,10 +1,19 @@
+---
+created_at: 2026-07-28T22:01:17Z
+---
+
 # Specifications
 
-This directory owns accepted normative NKF format and profile specifications.
+Specifications own current accepted normative NKF meaning.
 
-[`nkf-0.1.md`](nkf-0.1.md) is the accepted canonical NKF 0.1 specification.
-ADR 0050 accepts its automatic non-selectable Common Specification and its
-Product and Technology Root Profiles, together with the exact digest-bound
-strict-YAML executable companion. Earlier Product-only authority pairs and
-schema realizations, together with the Studio source baseline, remain
-immutable historical provenance.
+[NKF 0.1](nkf-0.1.md) is the canonical specification. ADR 0056 accepts its
+current front-matter-enabled revision and exact digest-bound executable YAML
+companion at `contracts/nkf/0.1/nkf.yaml`.
+
+The Specification contains the automatically applicable non-selectable Common
+Specification and the Product and Technology Root Profiles. A bundle must
+select Product or Technology; General is not a selectable root.
+
+Earlier authority pairs and derived artifacts remain immutable historical
+provenance under Decisions, Evidence, Git, and source snapshots. Realizations
+describe the current implementation but cannot override this Specification.

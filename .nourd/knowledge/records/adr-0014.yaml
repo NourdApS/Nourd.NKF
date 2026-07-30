@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0014: Accept NKF 0.1 Section-Role Vocabularies"
 source:
-  path: decisions/0014-accept-nkf-0-1-section-role-vocabularies.md
+  path: decisions/0014-section-role-vocabularies.md
   digest:
     algorithm: sha-256
-    value: a57ce4ea9883d209b22d027e2551f0b37f1020386d1e23368ac347ed9e0ab2ea
+    value: a55fd08f04afecf69502ecbdfeb2f4892aee9d0922b764181f4f855443d9529f
 governance:
   lifecycle: immutable
   status: accepted

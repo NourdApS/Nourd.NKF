@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0035: Clarify Product Scope And Structural Hierarchy"
 source:
-  path: decisions/0035-clarify-product-scope-and-structural-hierarchy.md
+  path: decisions/0035-product-scope-and-hierarchy.md
   digest:
     algorithm: sha-256
-    value: 4ba9e8d750df0a73e4dbd74314be6262aa0b8bb6c309f209ad51787f309484a8
+    value: 9deb7fac773a9c2f86dae8cda89529dc563776ad76e1fff143d75bf24126cef9
 governance:
   lifecycle: immutable
   status: accepted

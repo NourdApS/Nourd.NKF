@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0049: Establish Common Specification And Concrete Root Profiles"
 source:
-  path: decisions/0049-establish-common-specification-and-concrete-root-profiles.md
+  path: decisions/0049-common-and-root-profiles.md
   digest:
     algorithm: sha-256
-    value: 5d5ff43af2db39fd2fb87ba1c4748ba4c89a1413ab71d8fa275412aaf40d7215
+    value: 8aaadeb626ed35d403e2f6f9da1d94f15f378d1679fcd9b9429d60b453fc2045
 governance:
   lifecycle: immutable
   status: accepted

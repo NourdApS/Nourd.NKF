@@ -12,7 +12,7 @@ const schemaPath = path.join(
 );
 const proposalPath = path.join(
   repositoryRoot,
-  "knowledge/designs/nkf-0.1-release-contract-release-manifest-schema-proposal.json",
+  "knowledge/evidence/decision-inputs/adr-0043-0046/nkf-0.1-release-contract-release-manifest-schema-proposal.json",
 );
 
 function digest(): { algorithm: "sha-256"; value: string } {

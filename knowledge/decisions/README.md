@@ -1,62 +1,81 @@
+---
+created_at: 2026-07-28T22:01:17Z
+---
+
 # Decisions
 
-Accepted NKF decisions are immutable snapshots. Corrections, extensions,
-replacements, and reversals require later decisions with explicit provenance
-and compatibility.
+Decisions record why a direction was adopted, rejected, or superseded.
+Accepted Decision revisions are immutable authority snapshots. A later
+Decision must correct, extend, replace, or reverse them explicitly.
 
-## Index
+The numeric prefix is a stable chronological identity. The filename describes
+the durable subject rather than the workflow action that created the Decision.
 
-| Decision | Status | Scope |
-| --- | --- | --- |
-| [ADR 0001](0001-establish-independent-nkf-authority.md) | Accepted | Independent NKF Shared Technology authority |
-| [ADR 0002](0002-establish-body-responsibility-bindings.md) | Accepted, superseded in part by ADR 0009 | Core responsibility-binding mechanism and conformance boundary |
-| [ADR 0003](0003-accept-product-responsibility-identifiers.md) | Accepted, superseded in part by ADR 0009 | Stable identifiers for the 69 NKF 0.1 Product responsibilities |
-| [ADR 0004](0004-introduce-nkf-record-v2.md) | Accepted, superseded in part by ADR 0009 | Historical record-version boundary |
-| [ADR 0005](0005-accept-record-v2-responsibility-bindings.md) | Accepted, superseded in part by ADR 0009 | Historical record-v2 binding presentation |
-| [ADR 0006](0006-establish-governed-pre-stable-evolution.md) | Accepted | Governed NKF evolution before the first stable release |
-| [ADR 0007](0007-establish-markdown-and-yaml-contract-authority.md) | Accepted | Normative Markdown and executable YAML authority relationship |
-| [ADR 0008](0008-accept-nkf-0-1-artifact-identities.md) | Accepted, superseded in part by ADR 0009 | NKF 0.1 artifact paths and historical contract identities |
-| [ADR 0009](0009-establish-single-nkf-0-1-version-namespace.md) | Accepted | Single NKF 0.1 version namespace and sole record definition |
-| [ADR 0010](0010-accept-canonical-nkf-0-1-markdown.md) | Accepted | Exact canonical NKF 0.1 Markdown revision |
-| [ADR 0011](0011-accept-nkf-0-1-yaml-companion.md) | Accepted | Exact digest-bound NKF 0.1 YAML executable companion |
-| [ADR 0012](0012-reconcile-single-version-artifact-authority.md) | Accepted | Reconcile ADR 0007 artifact binding with the single NKF version namespace |
-| [ADR 0013](0013-accept-nkf-0-1-native-record-serialization.md) | Accepted | Exact native record object shape for NKF 0.1 |
-| [ADR 0014](0014-accept-nkf-0-1-section-role-vocabularies.md) | Accepted | Shared section-role meanings and allowed subsets for core NKF 0.1 bodies |
-| [ADR 0015](0015-accept-nkf-0-1-semantic-topology-and-binding-vocabularies.md) | Accepted | Core semantic-entity, entity-relationship, and durable-binding vocabularies |
-| [ADR 0016](0016-accept-nkf-0-1-extension-declaration-and-resolution.md) | Accepted | Extension identity, contract binding, declaration, support, and fail-closed rules |
-| [ADR 0017](0017-accept-nkf-0-1-acceptance-provenance-boundary.md) | Accepted | No universal core proof field; authority verification remains distinct from conformance |
-| [ADR 0018](0018-accept-nkf-0-1-project-path-and-knowledge-coverage.md) | Accepted | Fixed project-root `.nourd`, configurable knowledge entry point, and complete Markdown representation |
-| [ADR 0019](0019-accept-nkf-0-1-enforcement-and-diagnostics.md) | Accepted under delegated technical authority | Deterministic enforcement layers, phases, diagnostics, and result semantics |
-| [ADR 0020](0020-establish-current-presentation-guidance-boundary.md) | Accepted, explicitly revisitable through NKF-004 | No native presentation field; Markdown default; optional extension boundary |
-| [ADR 0021](0021-accept-nkf-0-1-native-bundle-serialization.md) | Accepted | Closed native bundle shape and exact non-record representation |
-| [ADR 0022](0022-accept-coherent-nkf-0-1-authority-pair.md) | Accepted, superseded as current authority by ADR 0027 | Historical canonical NKF 0.1 Markdown/YAML authority pair |
-| [ADR 0023](0023-confirm-nkf-0-1-json-schema-realization.md) | Accepted, superseded as current realization by ADR 0028 | Historical derived bundle and record JSON Schemas |
-| [ADR 0024](0024-accept-deterministic-markdown-structure-and-title-case.md) | Accepted under delegated technical authority and contingent Human Product Owner confirmation | CommonMark structure, complete heading coverage, Title Case, canonical terms, and Mermaid boundary |
-| [ADR 0025](0025-accept-nkf-0-1-validation-result-contract.md) | Accepted through Human Product Owner confirmation and bounded delegated technical authority | Exact operational validation-result contract, snapshot, persistence, readiness, and freshness |
-| [ADR 0026](0026-accept-deterministic-secret-pattern-registry.md) | Accepted through Human Product Owner confirmation and derived technical mechanics | Exact native secret scan scope, blocking registry, exclusions, diagnostics, and evolution |
-| [ADR 0027](0027-accept-pre-checker-nkf-0-1-authority-pair.md) | Accepted, superseded as current authority by ADR 0029 | Historical canonical pre-checker NKF 0.1 Markdown/YAML authority pair |
-| [ADR 0028](0028-confirm-pre-checker-nkf-0-1-json-schema-realization.md) | Accepted, superseded as current realization by ADR 0030 | Historical derived bundle, record, and validation-result JSON Schemas |
-| [ADR 0029](0029-reconcile-nkf-0-1-schema-realization-status.md) | Accepted under delegated technical authority | Exact current canonical NKF 0.1 Markdown/YAML authority pair with reconciled realization status |
-| [ADR 0030](0030-confirm-rebound-nkf-0-1-json-schemas.md) | Accepted, superseded as current realization by ADR 0033 | Historical source-bound bundle, record, and validation-result JSON Schemas |
-| [ADR 0031](0031-establish-checker-development-layout-and-identity.md) | Accepted through Human Product Owner confirmation | Root private checker package, validation-only responsibility, and portable artifact identity |
-| [ADR 0032](0032-correct-nkf-0-1-yaml-flow-scalar-grammar.md) | Accepted under delegated technical authority | Strict YAML 1.2 grammar correction for three literal hyphen scalars |
-| [ADR 0033](0033-confirm-yaml-grammar-corrected-json-schema-bindings.md) | Accepted under delegated technical authority | Exact current schema bindings after the YAML grammar correction |
-| [ADR 0034](0034-accept-checker-derived-mechanical-completions.md) | Accepted under delegated technical authority; canonical realization pending | Missing Markdown UTF-8 and contract-target diagnostics plus minimal-example casing repair |
-| [ADR 0035](0035-clarify-product-scope-and-structural-hierarchy.md) | Accepted through Human Product Owner confirmation | Product scope for every record and `part-of` limited to Product, Domain, Capability |
-| [ADR 0036](0036-accept-checker-findings-resolved-authority-pair.md) | Accepted, superseded as current authority by ADR 0039 | Historical checker-findings-resolved Markdown/YAML authority pair |
-| [ADR 0037](0037-confirm-checker-findings-resolved-json-schema-bindings.md) | Accepted, superseded as current realization by ADR 0040 | Historical source-bound schemas for the checker-findings-resolved authority pair |
-| [ADR 0038](0038-establish-nourd-invocation-precondition.md) | Accepted through Human Product Owner confirmation | Project-root `.nourd` invocation precondition and retirement of the unreachable missing-directory diagnostic |
-| [ADR 0039](0039-accept-invocation-precondition-authority-pair.md) | Accepted under delegated technical authority | Current invocation-precondition Markdown/YAML authority pair |
-| [ADR 0040](0040-confirm-invocation-precondition-json-schema-bindings.md) | Accepted under delegated technical authority | Exact current source-bound schemas for the invocation-precondition authority pair |
-| [ADR 0041](0041-confirm-native-checker-development-realization.md) | Accepted under delegated technical authority | Exact native checker development Realization at source checkpoint `f06ebb5` |
-| [ADR 0042](0042-establish-initial-release-distribution-boundary.md) | Accepted | One content-addressed Github Release archive as the initial pinned NKF checker distribution |
-| [ADR 0043](0043-establish-native-release-manifest-contract.md) | Accepted | Unversioned native NKF 0.1 release-manifest identity, authority, schema, and project-validation separation |
-| [ADR 0044](0044-accept-nkf-0-1-release-contract.md) | Accepted under explicit Human Product Owner delegation | Exact six-field release manifest, deterministic USTAR package, consumer pin, provenance, and verification contract |
-| [ADR 0045](0045-accept-release-contract-authority-pair.md) | Accepted under explicit Human Product Owner delegation | Current canonical NKF 0.1 Markdown/YAML pair with the native release contract |
-| [ADR 0046](0046-confirm-release-contract-json-schema-bindings.md) | Accepted under explicit Human Product Owner delegation | Four exact source-bound release-package schemas while project validation remains a three-schema boundary |
-| [ADR 0047](0047-confirm-release-bound-checker-realization.md) | Accepted under explicit Human Product Owner delegation | Exact release-bound project checker source and portable build realization |
-| [ADR 0048](0048-confirm-initial-release-package-realization.md) | Accepted under explicit Human Product Owner delegation | Exact reproducible initial release-package and bootstrap-verifier realization without publication |
-| [ADR 0049](0049-establish-common-specification-and-concrete-root-profiles.md) | Accepted through Human Product Owner confirmation; exact normative realization pending | One non-selectable Common Specification and exactly one concrete Root Profile per bundle |
-| [ADR 0050](0050-accept-product-and-technology-root-profiles.md) | Accepted under explicit feature-limited delegation | Exact Common, Product, and Technology NKF 0.1 authority pair and breaking pre-stable declaration migration |
-| [ADR 0051](0051-govern-self-hosting-heading-migration.md) | Accepted under explicit feature-limited delegation | Controlled heading-only revision for native self-hosting while preserving predecessor provenance |
-| [ADR 0052](0052-confirm-dynamic-root-and-self-hosting-realization.md) | Accepted under explicit feature-limited delegation | Exact schemas, checker behavior, fixtures, build, generator, and NKF Technology self-hosting realization |
+## Governance And Authority
+
+- [ADR 0001: Independent NKF Authority](0001-independent-nkf-authority.md)
+- [ADR 0006: Pre-Stable Evolution](0006-pre-stable-evolution.md)
+- [ADR 0007: Markdown And YAML Authority](0007-markdown-yaml-authority.md)
+- [ADR 0008: NKF 0.1 Artifact Paths](0008-nkf-0-1-artifact-paths.md)
+- [ADR 0009: NKF 0.1 Version Namespace](0009-nkf-0-1-version-namespace.md)
+- [ADR 0010: NKF 0.1 Markdown Authority](0010-nkf-0-1-markdown-authority.md)
+- [ADR 0011: NKF 0.1 YAML Authority](0011-nkf-0-1-yaml-authority.md)
+- [ADR 0012: NKF 0.1 Artifact Authority](0012-nkf-0-1-artifact-authority.md)
+- [ADR 0017: Acceptance Provenance](0017-acceptance-provenance.md)
+- [ADR 0053: Repository Knowledge Architecture](0053-repository-knowledge-architecture.md)
+- [ADR 0054: Front-Matter Authority Pair](0054-front-matter-authority-pair.md)
+- [ADR 0055: Design Responsibility Vocabulary](0055-design-responsibility-vocabulary.md)
+- [ADR 0056: Design Direction And Record Authority](0056-design-direction-and-record-authority.md)
+- [ADR 0057: Current System Realization](0057-current-system-realization.md)
+
+## Format Model And Serialization
+
+- [ADR 0002: Body Responsibility Bindings](0002-body-responsibility-bindings.md)
+- [ADR 0003: Product Responsibility Identifiers](0003-product-responsibility-identifiers.md)
+- [ADR 0004: Historical Record Contract Versioning](0004-historical-record-contract-versioning.md)
+- [ADR 0005: Historical Record Responsibility Bindings](0005-historical-record-responsibility-bindings.md)
+- [ADR 0013: Native Record Serialization](0013-native-record-serialization.md)
+- [ADR 0014: Section Role Vocabularies](0014-section-role-vocabularies.md)
+- [ADR 0015: Semantic Topology And Bindings](0015-semantic-topology-and-bindings.md)
+- [ADR 0016: Extension Resolution](0016-extension-resolution.md)
+- [ADR 0018: Project Paths And Knowledge Coverage](0018-project-paths-and-knowledge-coverage.md)
+- [ADR 0020: Presentation Guidance](0020-presentation-guidance.md)
+- [ADR 0021: Native Bundle Serialization](0021-native-bundle-serialization.md)
+- [ADR 0024: Deterministic Markdown And Title Case](0024-deterministic-markdown-structure-and-title-case.md)
+- [ADR 0032: YAML Scalar Grammar](0032-yaml-scalar-grammar.md)
+- [ADR 0035: Product Scope And Hierarchy](0035-product-scope-and-hierarchy.md)
+- [ADR 0038: Nourd Invocation Precondition](0038-nourd-invocation-precondition.md)
+- [ADR 0049: Common And Root Profiles](0049-common-and-root-profiles.md)
+- [ADR 0050: Product And Technology Profiles](0050-product-and-technology-profiles.md)
+- [ADR 0051: Self-Hosting Source Migration](0051-self-hosting-source-migration.md)
+
+## Executable Authority Validation And Checker
+
+- [ADR 0019: Validation Enforcement And Diagnostics](0019-validation-enforcement-and-diagnostics.md)
+- [ADR 0022: Native Authority Pair](0022-native-authority-pair.md)
+- [ADR 0023: Native JSON Schemas](0023-native-json-schemas.md)
+- [ADR 0025: Validation Result](0025-validation-result.md)
+- [ADR 0026: Deterministic Secret Pattern Registry](0026-deterministic-secret-pattern-registry.md)
+- [ADR 0027: Validation Authority Pair](0027-validation-authority-pair.md)
+- [ADR 0028: Validation JSON Schemas](0028-validation-json-schemas.md)
+- [ADR 0029: Schema Realization Status](0029-schema-realization-status.md)
+- [ADR 0030: Source-Bound JSON Schemas](0030-source-bound-json-schemas.md)
+- [ADR 0031: Checker Layout And Identity](0031-checker-layout-and-identity.md)
+- [ADR 0033: YAML Grammar Schema Bindings](0033-yaml-grammar-schema-bindings.md)
+- [ADR 0034: Checker-Derived Mechanical Completions](0034-checker-derived-mechanical-completions.md)
+- [ADR 0036: Checker-Ready Authority Pair](0036-checker-ready-authority-pair.md)
+- [ADR 0037: Checker-Ready JSON Schemas](0037-checker-ready-json-schemas.md)
+- [ADR 0039: Invocation Authority Pair](0039-invocation-authority-pair.md)
+- [ADR 0040: Invocation JSON Schemas](0040-invocation-json-schemas.md)
+- [ADR 0041: Checker Development Realization](0041-checker-development-realization.md)
+- [ADR 0052: Dynamic Root Self-Hosting](0052-dynamic-root-self-hosting.md)
+
+## Release And Distribution
+
+- [ADR 0042: Release Distribution](0042-release-distribution.md)
+- [ADR 0043: Release Manifest](0043-release-manifest.md)
+- [ADR 0044: Release Contract](0044-release-contract.md)
+- [ADR 0045: Release Authority Pair](0045-release-authority-pair.md)
+- [ADR 0046: Release JSON Schemas](0046-release-json-schemas.md)
+- [ADR 0047: Release Checker](0047-release-checker.md)
+- [ADR 0048: Release Package](0048-release-package.md)

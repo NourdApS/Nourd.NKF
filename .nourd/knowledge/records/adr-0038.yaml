@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0038: Establish Nourd Invocation Precondition"
 source:
-  path: decisions/0038-establish-nourd-invocation-precondition.md
+  path: decisions/0038-nourd-invocation-precondition.md
   digest:
     algorithm: sha-256
-    value: 0a8f5008b871fc9bc31ef9818f21e4369aab5f2f8869215ccc5ce0e6e3b3b677
+    value: fa1ca53ef772ae2b0efdd4e1de9372823bee1d27738c6b2b5431a8b65628a929
 governance:
   lifecycle: immutable
   status: accepted

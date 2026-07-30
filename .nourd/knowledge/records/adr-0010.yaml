@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0010: Accept Canonical NKF 0.1 Markdown"
 source:
-  path: decisions/0010-accept-canonical-nkf-0-1-markdown.md
+  path: decisions/0010-nkf-0-1-markdown-authority.md
   digest:
     algorithm: sha-256
-    value: faf1242f330a49ae1e5abde487a1355302cbbc29a08a3a2c3d2979b13b4622e9
+    value: 111af82c01c654813756a02a345c08f3e9b11c05b717e604c3561ab5b2bc5b70
 governance:
   lifecycle: immutable
   status: accepted

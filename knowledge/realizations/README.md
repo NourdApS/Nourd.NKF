@@ -1,10 +1,25 @@
+---
+created_at: 2026-07-30T15:59:54Z
+---
+
 # Realizations
 
-This directory contains durable mappings from governed NKF meaning to
-repository-owned schemas, checker source, fixtures, tests, build tooling, and
-other technical artifacts.
+Realizations describe how accepted NKF meaning is currently implemented. They
+map Specifications to durable components, relationships, interfaces,
+artifacts, implementation status, confirmation status, verification, and
+recovery.
 
-[`nkf-0.1-native-realization.md`](nkf-0.1-native-realization.md) owns the
-current native NKF 0.1 realization boundary. A Realization does not replace
-the canonical Specification, prove conformance, or own live operational
-state.
+They do not own normative meaning, live operational state, acceptance, or
+conformance.
+
+## Current System
+
+- [NKF Current System](current-system.md) — consolidated entry view
+- [Contracts And Schemas](current/contracts-and-schemas.md)
+- [Checker And Validation](current/checker-and-validation.md)
+- [Self-Hosting](current/self-hosting.md)
+- [Release Package](current/release-package.md)
+
+Begin audits and implementation reviews with the consolidated current-system
+view. Follow Decisions for governing rationale and Designs for proposal
+alternatives or trade-offs only when needed.

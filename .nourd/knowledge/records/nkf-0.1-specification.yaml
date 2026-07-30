@@ -7,7 +7,7 @@ source:
   path: specifications/nkf-0.1.md
   digest:
     algorithm: sha-256
-    value: 8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50
+    value: 52daa84db3067e39d8868f190874bb3a75328589d00127fecd7cb299312fa4ed
 governance:
   lifecycle: immutable
   status: accepted
@@ -296,6 +296,13 @@ sections:
     occurrence: 1
     authority: accepted-meaning
     role: governing
+  - id: markdown-source-envelope
+    heading_path:
+      - Record Contract
+      - Markdown Source Envelope
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
 relationships:
   - type: governs
     target: nkf

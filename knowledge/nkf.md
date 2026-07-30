@@ -1,3 +1,7 @@
+---
+created_at: 2026-07-30T15:59:54Z
+---
+
 # Nourd Knowledge Format
 
 ## Technology Definition

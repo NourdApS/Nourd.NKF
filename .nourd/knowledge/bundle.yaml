@@ -6,58 +6,124 @@ root:
   profile: nkf.profile.technology
 knowledge_root: knowledge
 non_records:
+  - path: README.md
+    kind: navigation
   - path: decisions/README.md
     kind: navigation
   - path: designs/README.md
     kind: navigation
   - path: evidence/README.md
     kind: navigation
-  - path: evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/knowledge/designs/nkf-0.1.md
+  - path: evidence/audits/nkf-0.1-checker-realization-gaps.md
     kind: other
-    reason: Byte-preserved provenance source is represented by the governed
-      reconciliation Evidence
-  - path: evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/knowledge/designs/plans/nkf-002-nkf-0-1-conformance-checker.md
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-0.1-executable-completeness-gaps.md
     kind: other
-    reason: Byte-preserved provenance source is represented by the governed
-      reconciliation Evidence
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-0.1-native-checker-realization-findings.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-current-structure-inventory.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-design-classification-review.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-design-vocabulary-authority-review.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-final-repository-audit.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-front-matter-authority-review.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-front-matter-parser-finding.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/nkf-007-target-architecture-review.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/audits/pre-remediation-repository-audit.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0022-0023/nkf-0.1-replacement-specification.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0027-0028/nkf-0.1-pre-checker-specification-proposal.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0029-0030/nkf-0.1-schema-status-reconciled-specification-proposal.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0036-0037/nkf-0.1-checker-findings-resolved-specification-proposal.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0039-0040/nkf-0.1-invocation-precondition-specification-proposal.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0043-0046/nkf-0.1-release-contract-specification-proposal.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0053/knowledge-architecture-design.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0054/knowledge-architecture-design.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/decision-inputs/adr-0054/nkf-0.1.md
+    kind: other
+    reason: Historical or supporting Evidence retained outside the declared semantic record set
+  - path: evidence/source-snapshots/README.md
+    kind: navigation
   - path: evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/README.md
     kind: navigation
+  - path: evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/knowledge/designs/nkf-0.1.md
+    kind: other
+    reason: Byte-preserved provenance source is represented by the governed reconciliation Evidence
+  - path: evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/knowledge/designs/plans/nkf-002-nkf-0-1-conformance-checker.md
+    kind: other
+    reason: Byte-preserved provenance source is represented by the governed reconciliation Evidence
   - path: evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/README.md
+    kind: navigation
+  - path: evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/README.md
     kind: navigation
   - path: evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md
     kind: other
-    reason: Byte-preserved provenance source is represented by the governed
-      reconciliation Evidence
+    reason: Byte-preserved provenance source is represented by the governed reconciliation Evidence
   - path: evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/designs/nkf-0.1.md
     kind: other
-    reason: Byte-preserved provenance source is represented by the governed
-      reconciliation Evidence
-  - path: evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/README.md
-    kind: navigation
-  - path: evidence/source-snapshots/README.md
-    kind: navigation
-  - path: README.md
-    kind: navigation
+    reason: Byte-preserved provenance source is represented by the governed reconciliation Evidence
   - path: realizations/README.md
     kind: navigation
   - path: specifications/README.md
     kind: navigation
-  - path: tasks/NKF-003-establish-independent-nkf-authority.md
+  - path: tasks/README.md
+    kind: navigation
+  - path: tasks/completed/NKF-003-independent-nkf-authority.md
     kind: other
-    reason: Operational Task knowledge is outside the current Technology Profile
-      record set
-  - path: tasks/NKF-004-define-portable-presentation-guidance-extension.md
+    reason: Operational Task knowledge is outside the current Technology Profile record set
+  - path: tasks/completed/NKF-007-knowledge-structure-and-confirmation.md
     kind: other
-    reason: Operational Task knowledge is outside the current Technology Profile
-      record set
-  - path: tasks/NKF-005-investigate-validation-expiry-and-authority-freshness.md
+    reason: Operational Task knowledge is outside the current Technology Profile record set
+  - path: tasks/deferred/NKF-004-portable-presentation-guidance.md
     kind: other
-    reason: Operational Task knowledge is outside the current Technology Profile
-      record set
-  - path: tasks/NKF-006-define-extensible-root-knowledge-models.md
+    reason: Operational Task knowledge is outside the current Technology Profile record set
+  - path: tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md
     kind: other
-    reason: Operational Task knowledge is outside the current Technology Profile
-      record set
+    reason: Operational Task knowledge is outside the current Technology Profile record set
+  - path: tasks/deferred/NKF-006-extensible-root-models.md
+    kind: other
+    reason: Operational Task knowledge is outside the current Technology Profile record set
+  - path: tasks/deferred/NKF-008-publish-and-onboard-consumers.md
+    kind: other
+    reason: Operational Task knowledge is outside the current Technology Profile record set
+  - path: tasks/deferred/NKF-009-governed-artifact-secret-scanning.md
+    kind: other
+    reason: Operational Task knowledge is outside the current Technology Profile record set
 canonical_terms:
   - ADR
   - AI
@@ -81,16 +147,25 @@ canonical_terms:
   - UI
   - URI
   - URL
+  - UTC
   - UTF-8
   - UUID
   - YAML
 governed_artifacts:
+  - id: artifact-agents-md
+    kind: project-configuration
+    path: AGENTS.md
+    digest:
+      algorithm: sha-256
+      value: 7b0d0d3bc60f7087717db41ab58f6b86a79bdb348d3e06d4c4199cb15aad6ee3
+    record: nkf-0.1-native-realization
+    source_section: durable-mapping
   - id: artifact-contracts-nkf-0-1-nkf-yaml
     kind: executable-contract
     path: contracts/nkf/0.1/nkf.yaml
     digest:
       algorithm: sha-256
-      value: fd60ad052ff5b58a20b285fec03aede560cd84d18221f7b2d88b7db7fdf67dbd
+      value: 9bd57b1a3c9992ff30a50d5e90ba7f7ef55d56f5aa4a38a5a463e711e07a1136
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-contracts-nkf-0-1-schemas-bundle-schema-json
@@ -98,7 +173,7 @@ governed_artifacts:
     path: contracts/nkf/0.1/schemas/bundle.schema.json
     digest:
       algorithm: sha-256
-      value: 7d923662563b1b298bb79cacf95f1ad4e836f7322295508b14491a646cd297d8
+      value: b186a0435d95864b2782e4382a06c64315fb58793d42e9cf8cf0a49839bceb16
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-contracts-nkf-0-1-schemas-record-schema-json
@@ -106,7 +181,7 @@ governed_artifacts:
     path: contracts/nkf/0.1/schemas/record.schema.json
     digest:
       algorithm: sha-256
-      value: e92f7ba4b87ab21042f768b1b0f78bcbd0050911c229233e3073a80e487b75d4
+      value: 94a3143ad1cf4be7cb01191d602115c783b1cfa5d11fedcbdd53b3c273c6e85f
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-contracts-nkf-0-1-schemas-release-manifest-schema-json
@@ -122,7 +197,7 @@ governed_artifacts:
     path: contracts/nkf/0.1/schemas/validation-result.schema.json
     digest:
       algorithm: sha-256
-      value: d544485bf693d7e23d6c34ec87d4ac484d6bba40360f8d2a8b8c4466b26a017a
+      value: 24a736cdf1138af6ef88603bb3ab67dea35e7b9f978e9681bb4e465f7bf2a004
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-nourd-knowledge-bundle-yaml
@@ -138,7 +213,7 @@ governed_artifacts:
     path: fixtures/valid/minimal/.nourd/knowledge/records/product.yaml
     digest:
       algorithm: sha-256
-      value: 733f4bdf061547c048346a8c5ac8ffc3407a3b443f21435d9df13baff5b2921c
+      value: 601b49e2781db64f864bda4aa7c7f39f6184b35a6beb73619f588e061859601c
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-knowledge-product-md
@@ -146,7 +221,7 @@ governed_artifacts:
     path: fixtures/valid/minimal/knowledge/product.md
     digest:
       algorithm: sha-256
-      value: c3cbc0a72d0c730e27488a1137261f3f41d907b3cd1a0aa9b2a9c1e4ebe7e286
+      value: eef2029db2ae110c275e2d87a73fb9ef7d6c813f46a4cd73b64a010e349c492c
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-knowledge-readme-md
@@ -154,7 +229,7 @@ governed_artifacts:
     path: fixtures/valid/minimal/knowledge/README.md
     digest:
       algorithm: sha-256
-      value: d912daf8d6f7dcb78ed790d58edb932f5540b00a4a024e9daa03dbee5a9d8051
+      value: d34c672ef743a2da487f493d48df714ee789e8b4ac467ea8c96427f6cf7bc9ae
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-nourd-knowledge-bundle-yaml
@@ -170,7 +245,7 @@ governed_artifacts:
     path: fixtures/valid/technology/.nourd/knowledge/records/realization.yaml
     digest:
       algorithm: sha-256
-      value: d5c8160525571c4e37fa8452052301a65122ea0a3970b2931a7e89518b00a916
+      value: caf7831889e574f31a33bb214f520df1abdc11283963c8ef34adb2b478a89094
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-nourd-knowledge-records-specification-yaml
@@ -178,7 +253,7 @@ governed_artifacts:
     path: fixtures/valid/technology/.nourd/knowledge/records/specification.yaml
     digest:
       algorithm: sha-256
-      value: 46a5ba03035071c4eb0094180716eb4d1479156b4016e2a42467d33648508d46
+      value: 2056738680d447849679e5ce46b833874ec059e471d96f3edf1a137ffa59d17e
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-nourd-knowledge-records-technology-yaml
@@ -186,7 +261,7 @@ governed_artifacts:
     path: fixtures/valid/technology/.nourd/knowledge/records/technology.yaml
     digest:
       algorithm: sha-256
-      value: 480e66b9707a43dfde0c74ebbb6a80fe3ae2898abe7275f688ba780b9d210074
+      value: 0e91360c538db2a58287cfb5db7ad567fd7741c1d9c91d1f8862787b3c23d16e
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-knowledge-realization-md
@@ -194,7 +269,7 @@ governed_artifacts:
     path: fixtures/valid/technology/knowledge/realization.md
     digest:
       algorithm: sha-256
-      value: 64202224bafc8f2824091945f0fa860435b110a94037c222a0ab6804d0e0486b
+      value: 430c5922032f1c4000d1ffcad28dc0758b989cd2a978413cd1aaa5b39ef8c169
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-knowledge-specification-md
@@ -202,7 +277,7 @@ governed_artifacts:
     path: fixtures/valid/technology/knowledge/specification.md
     digest:
       algorithm: sha-256
-      value: 46c871248f76929633671ce3ac7299762888547669e4f0b94387fb7dd39ea3d9
+      value: f4a34d82bffa339d8178bc24e6787918ed2da5e8aad30b01dd07e8bfb76491f1
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-knowledge-technology-md
@@ -210,7 +285,7 @@ governed_artifacts:
     path: fixtures/valid/technology/knowledge/technology.md
     digest:
       algorithm: sha-256
-      value: 29148a3054e036dbb1e44cda20257d4fe77ac2ba8e65fcdfbe4f77ae2ebe1cfa
+      value: 829aaa5ade7af47c0565d7a6a1a3b36395de6c5383c3d2a29b2bb90d77d33971
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-fixtures-valid-technology-src-example-ts
@@ -237,28 +312,20 @@ governed_artifacts:
       value: 23726eb59f84ee8f8fbfe4c795769ad07a6c6ed275d8fe676303c90dbd5dd6a9
     record: nkf-0.1-native-realization
     source_section: durable-mapping
+  - id: artifact-readme-md
+    kind: project-configuration
+    path: README.md
+    digest:
+      algorithm: sha-256
+      value: 9cf5d0d093a64e2ac0717265b0ff533ec563090b324db6b2a80908a880efb5fc
+    record: nkf-0.1-native-realization
+    source_section: durable-mapping
   - id: artifact-scripts-build-mjs
     kind: build-tool
     path: scripts/build.mjs
     digest:
       algorithm: sha-256
       value: da58e8fba26a83bdd89198a0d603826bd55d97515b1f70179af20f0f78eb714b
-    record: nkf-0.1-native-realization
-    source_section: durable-mapping
-  - id: artifact-scripts-generate-self-host-bundle-ts
-    kind: build-tool
-    path: scripts/generate-self-host-bundle.ts
-    digest:
-      algorithm: sha-256
-      value: 5b016596d27e4dcc526c8b8e756be384ce183cb22d037669bc629945a374df4a
-    record: nkf-0.1-native-realization
-    source_section: durable-mapping
-  - id: artifact-scripts-normalize-self-host-headings-ts
-    kind: build-tool
-    path: scripts/normalize-self-host-headings.ts
-    digest:
-      algorithm: sha-256
-      value: feca1db24d189a4de24c20215dbfbdf173032c69890289cdbaa99caed5641a25
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs
@@ -274,7 +341,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: 4556e6585b85a2669e6aa790cd34f03b80f54ec1056712bf05f238a7e7005897
+      value: 2df19133503a17f127e19294aa3c94a741be3038b1a2537131008f7be79e62c6
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
@@ -306,7 +373,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: c4a4ad8fabb4e8fb8c702c6196d25febafe49d4fc571b635edcc833800dfa080
+      value: bbf86696255478a39818db478e698e393ec380d2f7fcce45c716a6e5d9c5382a
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -314,7 +381,7 @@ governed_artifacts:
     path: src/checker/checker.ts
     digest:
       algorithm: sha-256
-      value: 506b3b569268196905691413e4a1fcb681bbdbf488848d32cd1626a7a9dd35d8
+      value: 20aeadb50497a101c83f40889fb63873fabc2f397495be35aabb1fa6ed256731
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-contracts-ts
@@ -354,7 +421,7 @@ governed_artifacts:
     path: src/checker/markdown.ts
     digest:
       algorithm: sha-256
-      value: 31c992f2b4b0d754fd023c25bcde93398a02673724ad69b898a2b87b337ff161
+      value: 2b5170d25efeb053caac50f23d8d6f10fa5dbc9ed8c72dff897ee234d0ce3cfc
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-project-ts
@@ -426,7 +493,7 @@ governed_artifacts:
     path: test/authority.test.ts
     digest:
       algorithm: sha-256
-      value: 794ea4530c3264f00edf3e776d6711718af52374f94b18f47b9e6958f945e9bc
+      value: 62866b1d9328f05c151fb0fe71a8dcea7431f03c1c96c353424accf7a6d2b361
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-checker-test-ts
@@ -434,7 +501,7 @@ governed_artifacts:
     path: test/checker.test.ts
     digest:
       algorithm: sha-256
-      value: 6f4fbfd133e93c9690b0a866d264602ce8d2900a99678adad635bdb321ec5c56
+      value: 43b084a3c33e4f0942125adeac427622e64ede26aa4b734b8292216d7278767f
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-contracts-test-ts
@@ -450,7 +517,7 @@ governed_artifacts:
     path: test/diagnostics.test.ts
     digest:
       algorithm: sha-256
-      value: 3cb43e1b8d4fbadf9a5b9093ff3f0c1c49f5f2dd7ff613d2b5d2561d4028277b
+      value: 3e2567f14c90fb1c85ede15851f259e9ec169a8457b0a5cde83cc2aa44b33b47
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-dynamic-root-test-ts
@@ -490,7 +557,7 @@ governed_artifacts:
     path: test/release-manifest-schema.test.ts
     digest:
       algorithm: sha-256
-      value: 5ea67c8c6092fb9061b5d0290d123e866a4f53e31a08216a0e8b97f2d469c337
+      value: 06d6a12e33a7e75049705f15eac011ec7843daabcd6e1cafd0c26eeede329ad4
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-release-tooling-test-ts
@@ -498,7 +565,7 @@ governed_artifacts:
     path: test/release-tooling.test.ts
     digest:
       algorithm: sha-256
-      value: 8b47a1bed7624ed99459fe62cb0fdd2a215bdb25d686286ad46489f2333b0ee3
+      value: 4198601d9586ef5261d35cfd36989cea397711efc0c587035b9bdcfa0ad072d3
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-result-test-ts
@@ -538,7 +605,7 @@ governed_artifacts:
     path: test/titlecase.test.ts
     digest:
       algorithm: sha-256
-      value: b91ba0411999f954119b1042dcd4a22d684ee2881a94f71e592c4df5f718f209
+      value: a1286025645b2a4174fbe589f425b3f117ac05a776d801754d561ca04a37a4ca
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-yaml-test-ts

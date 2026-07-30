@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0027: Accept Pre-Checker NKF 0.1 Authority Pair"
 source:
-  path: decisions/0027-accept-pre-checker-nkf-0-1-authority-pair.md
+  path: decisions/0027-validation-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 6ab864c1597d1a3270707d9bcbe610027aa519fbb6c27451248b1638c2bd7f89
+    value: c4cd37a0697a10f35db55f430d7e1d1f2dc264eb68d21c7491b0a4d767552419
 governance:
   lifecycle: immutable
   status: accepted

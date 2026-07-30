@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Replacement JSON Schemas
 source:
-  path: designs/nkf-0.1-replacement-json-schemas.md
+  path: designs/superseded/replacement-json-schema-realization.md
   digest:
     algorithm: sha-256
-    value: b028fda7144da9725a3fae905301cffe1d7d30322f50f02f3c8f88e45e67fb96
+    value: 05e2fadc08b4c05cea6f5d5a38d45ad4c2974bd9b1adf5c977ac510cf3e796df
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: superseded
   authority:
     - human-product-owner
 scope:
@@ -36,7 +36,7 @@ sections:
     authority: proposal
     role: context
     responsibilities:
-      - proposed-or-accepted-design
+      - proposed-direction
   - id: schema-owned-enforcement
     heading_path:
       - Schema-Owned Enforcement
@@ -50,7 +50,7 @@ sections:
     authority: proposal
     role: boundary
     responsibilities:
-      - validation-and-acceptance-evidence
+      - validation-and-decision-evidence
   - id: verification-performed
     heading_path:
       - Verification Performed

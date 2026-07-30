@@ -4,10 +4,10 @@ type: decision
 body_contract: nkf.decision
 title: "ADR 0024: Accept Deterministic Markdown Structure And Title Case"
 source:
-  path: decisions/0024-accept-deterministic-markdown-structure-and-title-case.md
+  path: decisions/0024-deterministic-markdown-structure-and-title-case.md
   digest:
     algorithm: sha-256
-    value: 51612750b7fb6e97e933e0859d088d9ba82f43be2b8a1d5f25d1dc26a9a5da43
+    value: ea509434025c0c2784a388dc68d57582eb19a16396eca7feb21b28697fdc292d
 governance:
   lifecycle: immutable
   status: accepted

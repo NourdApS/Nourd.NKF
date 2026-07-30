@@ -291,6 +291,33 @@ describe("bundle-aware checker", () => {
     );
   });
 
+  it("fails malformed Markdown front matter with a stable source diagnostic", async () => {
+    const project = await copyValidFixture();
+    const bytes = Buffer.from(
+      "---\ncreated_at: [\n---\n# Product\n\n## Purpose\n\nA product.\n",
+      "utf8",
+    );
+    await writeFile(path.join(project, "knowledge/product.md"), bytes);
+    await mutateRecord(project, (record) => {
+      record.source.digest.value = sha256(bytes);
+    });
+    const result = await validateProject(options(project));
+    expect(result.conformance).toBe("failed");
+    expect(result.diagnostics).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          rule_id: "markdown.frontmatter.invalid",
+          phase: "source",
+          artifact: "knowledge/product.md",
+          record_id: "product",
+        }),
+      ]),
+    );
+    expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).not.toContain(
+      "record.h1-count.invalid",
+    );
+  });
+
   it("never reports a failing full bundle with no record results as ready", async () => {
     const project = await copyValidFixture();
     await unlink(path.join(project, ".nourd/knowledge/records/product.yaml"));
