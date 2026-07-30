@@ -565,6 +565,18 @@ function requireManifestBootstrap(manifest) {
   ) {
     fail("Release manifest bootstrap schema entry is invalid.");
   }
+  requireDecisionPathBinding(manifest.source?.checker_confirmation);
+}
+
+function requireDecisionPathBinding(confirmation) {
+  if (
+    !/^ADR-[0-9]{4}$/.test(confirmation?.decision ?? "") ||
+    !confirmation?.path?.startsWith(
+      `knowledge/decisions/${confirmation.decision.slice(4)}-`,
+    )
+  ) {
+    fail("Checker-confirmation Decision ID and path prefix do not match.");
+  }
 }
 
 function verifyArtifact(entries, artifact) {
@@ -590,10 +602,7 @@ export function verifySourceProvenance(sourceRoot, manifest) {
     fail("Release commit is unavailable from the source repository.");
   }
   const confirmation = manifest.source.checker_confirmation;
-  const prefix = confirmation.decision.slice(4);
-  if (!confirmation.path.startsWith(`knowledge/decisions/${prefix}-`)) {
-    fail("Checker-confirmation Decision ID and path prefix do not match.");
-  }
+  requireDecisionPathBinding(confirmation);
   const decisionBytes = Buffer.from(
     execFileSync(
       "git",
@@ -666,6 +675,16 @@ export async function invokeVerifiedChecker(
   verification,
   checkerArguments = ["--help"],
 ) {
+  const currentNodeMajor = Number.parseInt(
+    process.versions.node.split(".")[0] ?? "0",
+    10,
+  );
+  if (
+    verification.manifest.checker.runtime.name !== "node" ||
+    currentNodeMajor < verification.manifest.checker.runtime.minimum_major
+  ) {
+    fail("The verified checker runtime requirement is not satisfied.");
+  }
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nourd-nkf-release-"));
   try {
     const root = path.join(temporary, ARCHIVE_ROOT);

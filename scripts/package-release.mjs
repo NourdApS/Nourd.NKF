@@ -92,6 +92,12 @@ if (
 ) {
   throw new Error("ADR 0047 does not bind the configured checker realization.");
 }
+if (
+  git("rev-parse", "HEAD") !== releaseCommit ||
+  git("status", "--porcelain") !== ""
+) {
+  throw new Error("Release source changed during packaging.");
+}
 const manifest = constructReleaseManifest({
   releaseCommit,
   checkerConfirmation: {

@@ -163,5 +163,19 @@ describe("NKF release tooling", () => {
     expect(() =>
       verifyReleaseArchive(noncanonicalArchive, sha256(noncanonicalArchive)),
     ).toThrow(/canonical contract order and format/);
+
+    const mismatchedDecision = new Map(entries);
+    const mismatchedManifest = parseStrictJson(
+      mismatchedDecision.get("release-manifest.json")!,
+    );
+    mismatchedManifest.source.checker_confirmation.decision = "ADR-0048";
+    mismatchedDecision.set(
+      "release-manifest.json",
+      serializeReleaseManifest(mismatchedManifest),
+    );
+    const mismatchedArchive = createUstar(mismatchedDecision);
+    expect(() =>
+      verifyReleaseArchive(mismatchedArchive, sha256(mismatchedArchive)),
+    ).toThrow(/Decision ID and path prefix/);
   });
 });
