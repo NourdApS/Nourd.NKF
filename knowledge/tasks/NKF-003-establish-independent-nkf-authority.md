@@ -1963,6 +1963,59 @@ source, package, tag, release, consumer, or conformance result was changed.
 Work is paused for exact Human Product Owner acceptance before promotion and
 derived realization.
 
+## AI Execution Slice: Accept And Realize Release Package
+
+- **Recorded:** 30 July 2026
+- **Scope:** Exercise the Human Product Owner's explicit delegation to approve
+  the exact release-contract revision, replace and rebind canonical NKF 0.1
+  authority, realize its schemas and checker bindings, and implement the
+  deterministic release package without publishing it
+- **Decision Authority:** Codex technical reviewer acting under explicit Human
+  Product Owner delegation for the exact reviewed revision and derived
+  technical realization
+- **Authority Effect:** May accept only the exact review artifacts bound in
+  the preceding slice and derived replacements that preserve their semantics.
+  Confirmation of implementation must remain separate and bind immutable
+  source and artifact checkpoints.
+
+### Plan
+
+1. Reverify the exact proposal commit and artifact digests, then record
+   delegated acceptance without restating it as Human line-by-line review.
+2. Derive one coherent replacement of the canonical Markdown/YAML pair from
+   the accepted delta, audit the complete composite, and promote only the exact
+   reviewed bytes.
+3. Derive the release-manifest schema, rebind the existing schemas, and prove
+   that project-validation assertion graphs and the three-schema validation
+   result boundary remain unchanged.
+4. Rebind the checker to the accepted authority pair without adding release
+   verification to project conformance.
+5. Implement deterministic release-manifest construction, uncompressed USTAR
+   packaging, archive verification, and positive/negative tests in repository
+   release tooling.
+6. Build the package twice, verify exact internal bindings and byte
+   reproducibility, exercise the archive's checker, and audit security,
+   traversal, provenance, and failure behavior.
+7. Commit the exact development Realization, independently audit that
+   checkpoint, and record a separate bounded confirmation if it passes.
+8. Stop before push, tag, Github Release publication, self-hosting, consumer
+   migration, or consumer conformance.
+
+### Guardrails
+
+- Preserve `nkf_version: "0.1"` as the only version coordinate.
+- Preserve Markdown-over-YAML authority and the project checker's exact
+  validation-only responsibility.
+- Keep the release-manifest schema out of project Governed Validation Inputs
+  and `validation_result.contract_artifacts.schemas`.
+- Do not infer semantic acceptance from schemas, code, tests, Git, package
+  bytes, or a passing checker.
+- Do not change the accepted proposal's six-field manifest, four package
+  schemas, eight-file USTAR archive, consumer pin, or verification order
+  without returning to the Human Product Owner.
+- Do not push, publish, tag, create a Github Release, self-host, migrate a
+  consumer, or claim consumer conformance.
+
 ## Initial source anchors
 
 | Source | Revision | Authority state |

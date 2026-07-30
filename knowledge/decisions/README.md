@@ -51,3 +51,4 @@ and compatibility.
 | [ADR 0041](0041-confirm-native-checker-development-realization.md) | Accepted under delegated technical authority | Exact native checker development Realization at source checkpoint `f06ebb5` |
 | [ADR 0042](0042-establish-initial-release-distribution-boundary.md) | Accepted | One content-addressed Github Release archive as the initial pinned NKF checker distribution |
 | [ADR 0043](0043-establish-native-release-manifest-contract.md) | Accepted | Unversioned native NKF 0.1 release-manifest identity, authority, schema, and project-validation separation |
+| [ADR 0044](0044-accept-nkf-0-1-release-contract.md) | Accepted under explicit Human Product Owner delegation | Exact six-field release manifest, deterministic USTAR package, consumer pin, provenance, and verification contract |

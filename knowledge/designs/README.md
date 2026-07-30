@@ -142,11 +142,13 @@ Checker distribution and release realization have not yet been proposed or
 accepted as an exact contract or implementation. ADR 0042 accepts one
 content-addressed Github Release archive as the initial distribution boundary.
 [`nkf-0.1-initial-release-distribution.md`](nkf-0.1-initial-release-distribution.md)
-proposes the exact archive, manifest, integrity, pinning, and release mechanics
-and now contains the exact proposed normative Markdown and executable YAML
-delta after ADR 0043 accepted the native release-manifest boundary. Its
-non-authoritative structural realization is
+records the exact archive, manifest, integrity, pinning, release mechanics,
+normative Markdown delta, and executable YAML delta accepted by ADR 0044 under
+explicit Human Product Owner delegation. Its accepted structural schema design
+is
 [`nkf-0.1-release-manifest-schema-proposal.json`](nkf-0.1-release-manifest-schema-proposal.json).
+Canonical authority, source-bound schemas, checker rebinding, and package
+Realization remain pending.
 
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by
