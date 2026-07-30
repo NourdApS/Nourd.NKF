@@ -1,10 +1,17 @@
 ---
+id: design-nkf-0-1-initial-release-distribution
+type: design
+title: NKF 0.1 Initial Release Distribution
+summary: This proposal defines one reproducible distribution unit for the confirmed native NKF 0.1 checker and the exact authority artifacts it implements. It turns ADR 0042's accepted channel boundary into reviewable archive, manifest, integrity, pinning, and release mechanics.
 created_at: 2026-07-30T08:39:41Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 design_disposition: adopted
 design_decisions:
-  - ADR-0042
-  - ADR-0043
-  - ADR-0044
+  - adr-0042
+  - adr-0043
+  - adr-0044
 ---
 
 # NKF 0.1 Initial Release Distribution

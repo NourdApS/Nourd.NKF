@@ -1,5 +1,9 @@
 ---
+title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"
+summary: Determine and implement the correct security-scanning boundary for governed validation inputs that are not Markdown sources.
 created_at: 2026-07-30T17:03:21Z
+task_id: NKF-009
+task_status: deferred
 ---
 
 # NKF-009: Extend Secret Scanning Across Governed Artifacts

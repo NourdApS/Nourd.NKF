@@ -7,7 +7,7 @@ source:
   path: realization.md
   digest:
     algorithm: sha-256
-    value: 430c5922032f1c4000d1ffcad28dc0758b989cd2a978413cd1aaa5b39ef8c169
+    value: d4c671b8e001a481b6f931725921b0565a094eb566ce61c286a04bf257fd0693
 governance:
   lifecycle: living
   status: draft

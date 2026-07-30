@@ -1,5 +1,9 @@
 ---
+title: "NKF-008: Publish NKF And Onboard Consumers"
+summary: Publish a governed NKF release and onboard external consumers deliberately after NKF-007 establishes a coherent current Realization and truthful self-validation baseline.
 created_at: 2026-07-30T17:03:21Z
+task_id: NKF-008
+task_status: deferred
 ---
 
 # NKF-008: Publish NKF And Onboard Consumers

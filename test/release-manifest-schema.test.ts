@@ -83,25 +83,28 @@ function clone<T>(value: T): T {
 }
 
 describe("NKF 0.1 release-manifest schema", () => {
-  it("is byte-identical to its reviewed proposal and source-bound to the accepted pair", async () => {
+  it("preserves the reviewed assertion graph while rebinding to the accepted pair", async () => {
     const [canonical, proposal] = await Promise.all([
       readFile(schemaPath),
       readFile(proposalPath),
     ]);
-    expect(canonical).toEqual(proposal);
+    const canonicalValue = JSON.parse(canonical.toString("utf8"));
+    const proposalValue = JSON.parse(proposal.toString("utf8"));
+    const { "x-nkf-source": canonicalSource, ...canonicalAssertions } = canonicalValue;
+    const { "x-nkf-source": _proposalSource, ...proposalAssertions } = proposalValue;
+    expect(canonicalAssertions).toEqual(proposalAssertions);
     expect(sha256(canonical)).toBe(
-      "8ee2ede58717387c418e956f2b1e45f4d6edb21a7d024c8fd855e0d006ab0e34",
+      "00058b5e86f29edb005f0a4125125c32ccd18a986a244c69f60f8605cab11f23",
     );
-    const schema = JSON.parse(canonical.toString("utf8"));
-    expect(schema["x-nkf-source"]).toMatchObject({
+    expect(canonicalSource).toMatchObject({
       nkf_version: "0.1",
       markdown_digest: {
         algorithm: "sha-256",
-        value: "67beed2a380e719573175d3dfd70b05c59cbe51274c9975f863a58f7083ddba4",
+        value: "428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be",
       },
       executable_digest: {
         algorithm: "sha-256",
-        value: "7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b",
+        value: "b05d4e7d34d5f2b8472045feed547ae44ff4a0a57299da0630b3a538dc6ab2fd",
       },
     });
   });

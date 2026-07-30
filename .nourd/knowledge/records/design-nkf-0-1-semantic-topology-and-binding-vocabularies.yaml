@@ -7,7 +7,7 @@ source:
   path: designs/adopted/semantic-topology-and-bindings.md
   digest:
     algorithm: sha-256
-    value: 351d83df6bc7344cf0cc6103d6d5a51d68aecaabe6ad4af2025c5207e8854e1c
+    value: 8d9845cacb7db257b71569bab6199ad7ba62c540a49b4ebc524c14e821c8f8e5
 governance:
   lifecycle: immutable
   status: accepted

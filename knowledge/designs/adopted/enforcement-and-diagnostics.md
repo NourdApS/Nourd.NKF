@@ -1,8 +1,15 @@
 ---
+id: design-nkf-0-1-enforcement-and-diagnostics
+type: design
+title: NKF 0.1 Enforcement And Diagnostics
+summary: Whether the following YAML parse boundary, schema/checker/resolver/reviewer partition, validation phases, diagnostic contract, rule registry, and result semantics are the deterministic enforcement model for native NKF 0.1.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 design_disposition: adopted
 design_decisions:
-  - ADR-0019
+  - adr-0019
 ---
 
 # NKF 0.1 Enforcement And Diagnostics

@@ -1,5 +1,12 @@
 ---
+id: adr-0008
+type: decision
+title: "ADR 0008: Accept NKF 0.1 Artifact Identities"
+summary: ADR 0007 establishes a digest-bound pair of normative Markdown and complete executable YAML, but deliberately leaves their version, paths, and YAML contract-set identity undecided.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0008: Accept NKF 0.1 Artifact Identities

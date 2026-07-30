@@ -1,5 +1,9 @@
 ---
+title: "NKF-005: Investigate Validation Expiry And Authority Freshness"
+summary: "Determine from concrete consumer evidence whether NKF needs:"
 created_at: 2026-07-30T00:27:52Z
+task_id: NKF-005
+task_status: deferred
 ---
 
 # NKF-005: Investigate Validation Expiry And Authority Freshness

@@ -68,6 +68,13 @@ interface ParsedRecord {
   sourceValid: boolean;
 }
 
+interface ParsedNonRecord {
+  index: number;
+  declaration: Record<string, any>;
+  observation: Observation;
+  markdown?: MarkdownModel;
+}
+
 export class ProjectNotInitializedError extends Error {
   readonly code = "NKF_PROJECT_NOT_INITIALIZED";
 
@@ -159,6 +166,336 @@ function securityScan(
   }
 }
 
+const COMMON_FRONTMATTER_KEYS = ["title", "summary", "created_at"] as const;
+const RECORD_FRONTMATTER_KEYS = ["id", "type", "record_lifecycle", "record_status"] as const;
+const LIFECYCLE_RECORD_TYPES = new Set(["design", "decision", "specification", "realization"]);
+const DESIGN_FRONTMATTER_KEYS = [
+  "design_disposition",
+  "design_decisions",
+  "superseded_by",
+  "withdrawal_source",
+] as const;
+const REALIZATION_FRONTMATTER_KEYS = [
+  "confirmation_status",
+  "confirmation_decisions",
+  "unconfirmed_scope",
+] as const;
+const TASK_FRONTMATTER_KEYS = ["task_id", "task_status"] as const;
+
+function hasOwn(value: Record<string, unknown>, key: string): boolean {
+  return Object.prototype.hasOwnProperty.call(value, key);
+}
+
+function orientationString(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    value.length > 0 &&
+    value === value.trim() &&
+    !value.includes("\n") &&
+    !value.includes("\r")
+  );
+}
+
+function exactUtcSecond(value: unknown): value is string {
+  if (
+    typeof value !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value)
+  ) {
+    return false;
+  }
+  const parsed = new Date(value);
+  return (
+    !Number.isNaN(parsed.getTime()) &&
+    parsed.toISOString() === `${value.slice(0, -1)}.000Z`
+  );
+}
+
+function uniqueOrientationStrings(value: unknown): value is string[] {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    value.every(orientationString) &&
+    new Set(value).size === value.length
+  );
+}
+
+function frontMatterContext(
+  artifact: string,
+  recordId?: string,
+  key?: string,
+): {
+  artifact: string;
+  record_id?: string;
+  instance_pointer?: string;
+} {
+  return {
+    artifact,
+    ...(recordId === undefined ? {} : { record_id: recordId }),
+    ...(key === undefined ? {} : { instance_pointer: `/frontmatter/${escapePointer(key)}` }),
+  };
+}
+
+function requiredFrontMatterKeys(
+  frontMatter: Record<string, unknown>,
+  keys: readonly string[],
+  artifact: string,
+  emitter: RuleEmitter,
+  recordId?: string,
+): void {
+  for (const key of keys) {
+    if (!hasOwn(frontMatter, key)) {
+      emitter.emit(
+        "markdown.frontmatter.key.missing",
+        `The governed frontmatter is missing the required ${key} key.`,
+        frontMatterContext(artifact, recordId, key),
+      );
+    }
+  }
+}
+
+function rejectUnsupportedFrontMatterKeys(
+  frontMatter: Record<string, unknown>,
+  allowed: Set<string>,
+  artifact: string,
+  emitter: RuleEmitter,
+  recordId?: string,
+): void {
+  for (const key of Object.keys(frontMatter)) {
+    if (!allowed.has(key)) {
+      emitter.emit(
+        "markdown.frontmatter.key.unsupported",
+        "The frontmatter key is not allocated to this native document class.",
+        frontMatterContext(artifact, recordId, key),
+      );
+    }
+  }
+}
+
+function commonFrontMatterChecks(
+  model: MarkdownModel,
+  artifact: string,
+  emitter: RuleEmitter,
+  recordId?: string,
+): Record<string, unknown> | null {
+  if (!model.frontMatterPresent || model.frontMatter === null) {
+    emitter.emit(
+      "markdown.frontmatter.required",
+      "A represented non-Evidence Markdown document requires governed frontmatter.",
+      frontMatterContext(artifact, recordId),
+    );
+    return null;
+  }
+  const frontMatter = model.frontMatter;
+  requiredFrontMatterKeys(frontMatter, COMMON_FRONTMATTER_KEYS, artifact, emitter, recordId);
+
+  for (const key of ["title", "summary"] as const) {
+    if (hasOwn(frontMatter, key) && !orientationString(frontMatter[key])) {
+      emitter.emit(
+        "markdown.frontmatter.value.invalid",
+        `The ${key} value must be a non-empty, trimmed, single-line string.`,
+        frontMatterContext(artifact, recordId, key),
+      );
+    }
+  }
+  if (hasOwn(frontMatter, "created_at") && !exactUtcSecond(frontMatter.created_at)) {
+    emitter.emit(
+      "markdown.frontmatter.created-at.invalid",
+      "created_at must be a real UTC instant serialized exactly as YYYY-MM-DDTHH:mm:ssZ.",
+      frontMatterContext(artifact, recordId, "created_at"),
+    );
+  }
+
+  if (model.h1.length !== 1) {
+    emitter.emit(
+      recordId === undefined ? "markdown.h1-count.invalid" : "record.h1-count.invalid",
+      "A represented non-Evidence Markdown document must have exactly one top-level H1.",
+      frontMatterContext(artifact, recordId),
+    );
+  } else if (
+    orientationString(frontMatter.title) &&
+    frontMatter.title !== model.h1[0]?.text
+  ) {
+    emitter.emit(
+      "markdown.frontmatter.title-mismatch",
+      "The frontmatter title does not equal the Markdown H1.",
+      frontMatterContext(artifact, recordId, "title"),
+    );
+  }
+  return frontMatter;
+}
+
+function recordFrontMatterChecks(
+  record: ParsedRecord,
+  model: MarkdownModel,
+  emitter: RuleEmitter,
+): void {
+  const declaration = record.value;
+  if (declaration === null || declaration.type === "evidence") return;
+  const recordId = String(declaration.id);
+  const artifact = record.sourceObservation?.entry.path ?? record.artifact;
+  const frontMatter = commonFrontMatterChecks(model, artifact, emitter, recordId);
+  if (frontMatter === null) return;
+
+  requiredFrontMatterKeys(frontMatter, RECORD_FRONTMATTER_KEYS, artifact, emitter, recordId);
+  const type = String(declaration.type);
+  if (LIFECYCLE_RECORD_TYPES.has(type)) {
+    requiredFrontMatterKeys(frontMatter, ["task"], artifact, emitter, recordId);
+  }
+  if (type === "design") {
+    requiredFrontMatterKeys(frontMatter, ["design_disposition"], artifact, emitter, recordId);
+  }
+  if (type === "realization") {
+    requiredFrontMatterKeys(frontMatter, ["confirmation_status"], artifact, emitter, recordId);
+  }
+
+  const allowed = new Set<string>([...COMMON_FRONTMATTER_KEYS, ...RECORD_FRONTMATTER_KEYS]);
+  if (LIFECYCLE_RECORD_TYPES.has(type)) allowed.add("task");
+  if (type === "design") DESIGN_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
+  if (type === "realization") REALIZATION_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
+  rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter, recordId);
+
+  const expected = {
+    id: declaration.id,
+    type: declaration.type,
+    record_lifecycle: declaration.governance?.lifecycle,
+    record_status: declaration.governance?.status,
+    title: declaration.title,
+  };
+  for (const [key, value] of Object.entries(expected)) {
+    if (hasOwn(frontMatter, key) && frontMatter[key] !== value) {
+      emitter.emit(
+        "markdown.frontmatter.record-mismatch",
+        "The frontmatter record identity or declared-governance value does not equal the declaration.",
+        frontMatterContext(artifact, recordId, key),
+      );
+    }
+  }
+
+  if (
+    LIFECYCLE_RECORD_TYPES.has(type) &&
+    hasOwn(frontMatter, "task") &&
+    !orientationString(frontMatter.task)
+  ) {
+    emitter.emit(
+      "markdown.frontmatter.value.invalid",
+      "task must be one non-empty, trimmed, single-line Task identifier.",
+      frontMatterContext(artifact, recordId, "task"),
+    );
+  }
+
+  if (type === "design") {
+    const disposition = frontMatter.design_disposition;
+    const supported = new Set(["active", "adopted", "rejected", "superseded", "withdrawn"]);
+    if (!supported.has(String(disposition))) {
+      emitter.emit(
+        "markdown.frontmatter.design.invalid",
+        "The Design disposition is unsupported.",
+        frontMatterContext(artifact, recordId, "design_disposition"),
+      );
+    } else {
+      const requires = (key: string) => {
+        if (!hasOwn(frontMatter, key)) {
+          emitter.emit(
+            "markdown.frontmatter.design.invalid",
+            `The Design disposition requires ${key}.`,
+            frontMatterContext(artifact, recordId, key),
+          );
+        }
+      };
+      const forbids = (key: string) => {
+        if (hasOwn(frontMatter, key)) {
+          emitter.emit(
+            "markdown.frontmatter.design.invalid",
+            `The Design disposition forbids ${key}.`,
+            frontMatterContext(artifact, recordId, key),
+          );
+        }
+      };
+      if (disposition === "active") {
+        ["design_decisions", "superseded_by", "withdrawal_source"].forEach(forbids);
+      } else if (disposition === "adopted" || disposition === "rejected") {
+        requires("design_decisions");
+        ["superseded_by", "withdrawal_source"].forEach(forbids);
+      } else if (disposition === "superseded") {
+        requires("superseded_by");
+        forbids("withdrawal_source");
+      } else if (disposition === "withdrawn") {
+        requires("withdrawal_source");
+        ["design_decisions", "superseded_by"].forEach(forbids);
+      }
+    }
+    for (const key of ["design_decisions", "superseded_by"] as const) {
+      if (hasOwn(frontMatter, key) && !uniqueOrientationStrings(frontMatter[key])) {
+        emitter.emit(
+          "markdown.frontmatter.design.invalid",
+          `${key} must be a non-empty unique list of exact record IDs.`,
+          frontMatterContext(artifact, recordId, key),
+        );
+      }
+    }
+    if (hasOwn(frontMatter, "withdrawal_source")) {
+      const source = asObject(frontMatter.withdrawal_source);
+      if (
+        source === null ||
+        Object.keys(source).some((key) => !["kind", "id"].includes(key)) ||
+        !["task", "record"].includes(String(source.kind)) ||
+        !orientationString(source.id)
+      ) {
+        emitter.emit(
+          "markdown.frontmatter.design.invalid",
+          "withdrawal_source must be a closed {kind: task | record, id} mapping.",
+          frontMatterContext(artifact, recordId, "withdrawal_source"),
+        );
+      }
+    }
+  }
+
+  if (type === "realization") {
+    const confirmation = frontMatter.confirmation_status;
+    if (!["unconfirmed", "partially-confirmed", "confirmed"].includes(String(confirmation))) {
+      emitter.emit(
+        "markdown.frontmatter.confirmation.invalid",
+        "The Realization confirmation status is unsupported.",
+        frontMatterContext(artifact, recordId, "confirmation_status"),
+      );
+    } else {
+      const hasDecisions = hasOwn(frontMatter, "confirmation_decisions");
+      const hasScope = hasOwn(frontMatter, "unconfirmed_scope");
+      if (
+        (confirmation === "confirmed" && (!hasDecisions || hasScope)) ||
+        (confirmation === "unconfirmed" && (hasDecisions || hasScope)) ||
+        (confirmation === "partially-confirmed" && (!hasDecisions || !hasScope))
+      ) {
+        emitter.emit(
+          "markdown.frontmatter.confirmation.invalid",
+          "The Realization confirmation provenance does not match confirmation_status.",
+          frontMatterContext(artifact, recordId, "confirmation_status"),
+        );
+      }
+    }
+    if (
+      hasOwn(frontMatter, "confirmation_decisions") &&
+      !uniqueOrientationStrings(frontMatter.confirmation_decisions)
+    ) {
+      emitter.emit(
+        "markdown.frontmatter.confirmation.invalid",
+        "confirmation_decisions must be a non-empty unique list of exact Decision record IDs.",
+        frontMatterContext(artifact, recordId, "confirmation_decisions"),
+      );
+    }
+    if (
+      hasOwn(frontMatter, "unconfirmed_scope") &&
+      !orientationString(frontMatter.unconfirmed_scope)
+    ) {
+      emitter.emit(
+        "markdown.frontmatter.confirmation.invalid",
+        "unconfirmed_scope must be a non-empty, trimmed, single-line string.",
+        frontMatterContext(artifact, recordId, "unconfirmed_scope"),
+      );
+    }
+  }
+}
+
 function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
@@ -192,12 +529,7 @@ function sourceChecks(
     );
     return;
   }
-  if (model.h1.length !== 1) {
-    emitter.emit("record.h1-count.invalid", "A governed record must have exactly one top-level H1.", {
-      artifact: record.artifact,
-      record_id: recordId,
-    });
-  }
+  recordFrontMatterChecks(record, model, emitter);
   const h1 = model.h1[0];
   if (h1 !== undefined && declaration.title !== h1.text) {
     emitter.emit("record.title.mismatch", "The declaration title does not equal the Markdown H1.", {
@@ -280,6 +612,169 @@ function sourceChecks(
   }
 }
 
+function nonRecordSourceChecks(
+  nonRecord: ParsedNonRecord,
+  emitter: RuleEmitter,
+): void {
+  const artifact = nonRecord.observation.entry.path;
+  const bytes = nonRecord.observation.bytes;
+  if (bytes === null) return;
+  let markdownText: string;
+  try {
+    markdownText = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch {
+    emitter.emit("markdown.utf8.invalid", "The Markdown source is not valid UTF-8.", {
+      artifact,
+    });
+    return;
+  }
+  const model = parseMarkdown(markdownText);
+  nonRecord.markdown = model;
+  if (model.frontMatterError !== null) {
+    emitter.emit(
+      "markdown.frontmatter.invalid",
+      "The Markdown front-matter envelope is unsafe, malformed, or unclosed.",
+      { artifact },
+    );
+    return;
+  }
+  if (nonRecord.declaration.kind === "evidence") return;
+
+  const frontMatter = commonFrontMatterChecks(model, artifact, emitter);
+  if (frontMatter === null) return;
+  const allowed = new Set<string>(COMMON_FRONTMATTER_KEYS);
+  if (nonRecord.declaration.kind === "task") {
+    TASK_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
+    requiredFrontMatterKeys(frontMatter, TASK_FRONTMATTER_KEYS, artifact, emitter);
+    if (hasOwn(frontMatter, "task_id") && !orientationString(frontMatter.task_id)) {
+      emitter.emit(
+        "markdown.frontmatter.task.invalid",
+        "task_id must be a non-empty, trimmed, single-line string.",
+        frontMatterContext(artifact, undefined, "task_id"),
+      );
+    }
+    if (
+      hasOwn(frontMatter, "task_status") &&
+      !["active", "deferred", "completed"].includes(String(frontMatter.task_status))
+    ) {
+      emitter.emit(
+        "markdown.frontmatter.task.invalid",
+        "task_status must be active, deferred, or completed.",
+        frontMatterContext(artifact, undefined, "task_status"),
+      );
+    }
+  }
+  rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter);
+}
+
+function frontMatterReferenceChecks(
+  records: ParsedRecord[],
+  nonRecords: ParsedNonRecord[],
+  emitter: RuleEmitter,
+): void {
+  const taskGroups = new Map<string, ParsedNonRecord[]>();
+  for (const nonRecord of nonRecords) {
+    if (nonRecord.declaration.kind !== "task") continue;
+    const taskId = nonRecord.markdown?.frontMatter?.task_id;
+    if (!orientationString(taskId)) continue;
+    const group = taskGroups.get(taskId) ?? [];
+    group.push(nonRecord);
+    taskGroups.set(taskId, group);
+  }
+  for (const [taskId, group] of taskGroups) {
+    if (group.length <= 1) continue;
+    for (const nonRecord of group) {
+      emitter.emit(
+        "markdown.frontmatter.task.invalid",
+        `The Task identity ${taskId} is duplicated.`,
+        frontMatterContext(nonRecord.observation.entry.path, undefined, "task_id"),
+      );
+    }
+  }
+
+  const recordsById = new Map<string, ParsedRecord>();
+  for (const record of records) {
+    if (record.value !== null) recordsById.set(String(record.value.id), record);
+  }
+  const taskResolves = (id: string) => (taskGroups.get(id)?.length ?? 0) === 1;
+  const recordResolves = (id: string, type?: string) => {
+    const target = recordsById.get(id);
+    return target !== undefined && (type === undefined || target.value?.type === type);
+  };
+
+  const unresolved = (record: ParsedRecord, key: string, value: string, expected: string) => {
+    const recordId = String(record.value?.id);
+    emitter.emit(
+      "markdown.frontmatter.reference.unresolved",
+      `The ${key} reference ${value} does not resolve exactly once to ${expected}.`,
+      frontMatterContext(
+        record.sourceObservation?.entry.path ?? record.artifact,
+        recordId,
+        key,
+      ),
+    );
+  };
+
+  for (const record of records) {
+    const declaration = record.value;
+    const frontMatter = record.markdown?.frontMatter;
+    if (declaration === null || declaration.type === "evidence" || frontMatter === null || frontMatter === undefined) {
+      continue;
+    }
+    const type = String(declaration.type);
+    if (LIFECYCLE_RECORD_TYPES.has(type) && orientationString(frontMatter.task)) {
+      if (!taskResolves(frontMatter.task)) {
+        unresolved(record, "task", frontMatter.task, "one Task non-record");
+      }
+    }
+    if (type === "design") {
+      if (uniqueOrientationStrings(frontMatter.design_decisions)) {
+        for (const id of frontMatter.design_decisions) {
+          if (!recordResolves(id, "decision")) {
+            unresolved(record, "design_decisions", id, "one Decision record");
+          }
+        }
+      }
+      if (uniqueOrientationStrings(frontMatter.superseded_by)) {
+        for (const id of frontMatter.superseded_by) {
+          if (!recordResolves(id)) {
+            unresolved(record, "superseded_by", id, "one record");
+          }
+        }
+      }
+      const withdrawal = asObject(frontMatter.withdrawal_source);
+      if (
+        withdrawal !== null &&
+        ["task", "record"].includes(String(withdrawal.kind)) &&
+        orientationString(withdrawal.id)
+      ) {
+        const resolved =
+          withdrawal.kind === "task"
+            ? taskResolves(withdrawal.id)
+            : recordResolves(withdrawal.id);
+        if (!resolved) {
+          unresolved(
+            record,
+            "withdrawal_source",
+            withdrawal.id,
+            withdrawal.kind === "task" ? "one Task non-record" : "one record",
+          );
+        }
+      }
+    }
+    if (
+      type === "realization" &&
+      uniqueOrientationStrings(frontMatter.confirmation_decisions)
+    ) {
+      for (const id of frontMatter.confirmation_decisions) {
+        if (!recordResolves(id, "decision")) {
+          unresolved(record, "confirmation_decisions", id, "one Decision record");
+        }
+      }
+    }
+  }
+}
+
 async function persistResult(projectRoot: string, result: ValidationResult): Promise<void> {
   const directory = path.join(projectRoot, ".nourd");
   const temporary = path.join(directory, `.validation-result.${result.execution.id}.tmp`);
@@ -326,6 +821,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
 
   let bundle: Record<string, any> | null = null;
   const parsedRecords: ParsedRecord[] = [];
+  const parsedNonRecords: ParsedNonRecord[] = [];
   if (phasePassed("contracts")) {
     evaluated.add("parse");
     if (bundleObservation.bytes === null) {
@@ -634,7 +1130,15 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         } else {
           nonRecordLexical.set(nonRecordPath, index);
         }
-        const observation = await collector.observe(logical, { content: false, knowledgeRoot: knowledgeRootAbsolute });
+        const observation = await collector.observe(logical, {
+          content: nonRecordPath.endsWith(".md"),
+          knowledgeRoot: knowledgeRootAbsolute,
+        });
+        parsedNonRecords.push({
+          index,
+          declaration: nonRecord,
+          observation,
+        });
         symlinkDiagnostics(emitter, observation, "regular-file", true);
         if (observation.entry.direct_kind === "missing" || observation.entry.final_kind === null) {
           emitter.emit("non-record.missing", "The declared non-record file is missing.", {
@@ -699,6 +1203,17 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         });
       }
       sourceChecks(record, projectTerms, emitter);
+    }
+    for (const nonRecord of parsedNonRecords) {
+      if (
+        nonRecord.declaration.path.endsWith(".md") &&
+        nonRecord.observation.bytes !== null
+      ) {
+        nonRecordSourceChecks(nonRecord, emitter);
+      }
+    }
+    frontMatterReferenceChecks(uniqueRecords, parsedNonRecords, emitter);
+    for (const record of uniqueRecords) {
       record.sourceValid = !emitter.diagnostics.some(
         (diagnostic) =>
           diagnostic.record_id === record.value?.id &&

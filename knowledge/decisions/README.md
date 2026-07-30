@@ -1,4 +1,6 @@
 ---
+title: Decisions
+summary: Decisions record why a direction was adopted, rejected, or superseded. Accepted Decision revisions are immutable authority snapshots. A later Decision must correct, extend, replace, or reverse them explicitly.
 created_at: 2026-07-28T22:01:17Z
 ---
 
@@ -27,6 +29,8 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0055: Design Responsibility Vocabulary](0055-design-responsibility-vocabulary.md)
 - [ADR 0056: Design Direction And Record Authority](0056-design-direction-and-record-authority.md)
 - [ADR 0057: Current System Realization](0057-current-system-realization.md)
+- [ADR 0058: Governed Frontmatter](0058-governed-frontmatter.md)
+- [ADR 0059: Confirm Governed Frontmatter Realization](0059-confirm-governed-frontmatter-realization.md)
 
 ## Format Model And Serialization
 

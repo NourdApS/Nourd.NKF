@@ -7,7 +7,7 @@ source:
   path: decisions/0040-invocation-json-schemas.md
   digest:
     algorithm: sha-256
-    value: f38e4fd87c3a17b8789459fb7e33bec49deae9f1d6ab2a54661c049a3ebdf181
+    value: cb369ea6ac6f23e09e912adb148f0e5e55a6cfb72d89743f786c8bb05780397a
 governance:
   lifecycle: immutable
   status: accepted

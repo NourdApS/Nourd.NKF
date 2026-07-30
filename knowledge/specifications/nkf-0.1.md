@@ -1,11 +1,18 @@
 ---
+id: nkf-0.1-specification
+type: specification
+title: NKF 0.1 — Product And Technology Knowledge Format
+summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.1 supports Product and Technology knowledge through two concrete Root Profiles.
 created_at: 2026-07-28T22:01:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-010
 ---
 
 # NKF 0.1 — Product And Technology Knowledge Format
 
 - **Status:** Accepted
-- **Task:** `NKF-007`
+- **Task:** `NKF-010`
 - **Version:** `0.1`
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted source baseline:** `kaveh6202/Nourd.Studio@13a82fbc1b72c1350e9765f59d1538c375f3fa69`
@@ -15,13 +22,13 @@ created_at: 2026-07-28T22:01:17Z
 - **Predecessor canonical digest:** `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`
 - **Canonical destination:** `knowledge/specifications/nkf-0.1.md`
 - **Executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
-- **Acceptance Decisions:** ADR 0045, ADR 0050, ADR 0054, ADR 0055, and ADR
-  0056
-- **Independent governing inputs:** ADRs 0001 through 0055
+- **Acceptance Decisions:** ADR 0045, ADR 0050, ADR 0054, ADR 0055, ADR
+  0056, and ADR 0058
+- **Independent governing inputs:** ADRs 0001 through 0058
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision is the current canonical NKF 0.1 specification when
-> bound by ADR 0056 and its executable companion. It
+> bound by ADR 0058 and its executable companion. It
 > is not the public stable NKF 1.0 release.
 
 ## Purpose
@@ -86,11 +93,11 @@ declarations, body responsibilities, validation, release, security, and
 pre-stable evolution rules.
 
 ADR 0049 and the Technology-first NKF self-hosting exercise establish the
-Common, Product, and Technology division. The Human Product Owner authorizes
-technical audit and exact acceptance or confirmation only for changes
-necessary to realize this dynamic-root feature. That authority does not
-accept a future profile, extension, consumer meaning, or unrelated format
-change.
+Common, Product, and Technology division. ADR 0058 establishes the governed
+frontmatter successor revision under the Human Product Owner's accepted
+orientation boundary and explicit authorization for coherent NKF 0.1
+adoption. That authority does not accept a future profile, extension,
+consumer meaning, or unrelated format change.
 
 Earlier Product-only revisions remain immutable provenance. This replacement
 does not rewrite their historical meaning; it deliberately migrates the
@@ -406,17 +413,151 @@ source digest, validated snapshot, and applicable security scanning. Markdown
 heading, section, path, occurrence, Title Case, and Mermaid behavior operate
 only on the CommonMark body.
 
-NKF Core validates the safe envelope boundary but assigns no portable meaning
-to arbitrary front-matter keys. A concrete profile or accepted extension MAY
-govern keys explicitly. Repository conventions such as `created_at` and
-`design_disposition` remain repository governance unless separately added to
-portable NKF meaning.
+NKF Core assigns portable document-orientation meaning to the governed
+frontmatter keys defined below. The vocabulary is closed by applicable
+document class. Additional keys require an accepted Root Profile or extension
+allocation; an unsupported native key fails closed.
+
+Every represented Markdown file other than explicitly classified Evidence
+MUST contain frontmatter. Evidence exemption is declared rather than inferred:
+
+- a record whose declaration has `type: evidence` is exempt;
+- a non-record whose bundle entry has `kind: evidence` is exempt; and
+- a directory name or path segment such as `evidence/` does not itself create
+  an exemption.
+
+Evidence MAY omit frontmatter. If Evidence begins with an exact opening
+delimiter, the envelope MUST still satisfy the safe-YAML parsing boundary, but
+NKF does not require or interpret the current orientation keys. This preserves
+source bytes without allowing malformed source-envelope syntax.
+
+Every applicable Markdown document requires exactly these common keys:
+
+```yaml
+---
+title: "Human-Readable Document Title"
+summary: "A concise orientation summary."
+created_at: 2026-07-30T19:47:30Z
+---
+```
+
+`title` and `summary` MUST be non-empty, trimmed, single-line strings. The
+document MUST have exactly one top-level H1, and `title` MUST exactly equal its
+comparison string. `summary` helps a person or agent orient to the document;
+its presence and shape do not prove semantic correctness, completeness, or
+acceptance.
+
+`created_at` MUST be a real calendar instant serialized exactly as
+`YYYY-MM-DDTHH:mm:ssZ`. It records the first evidenced repository appearance
+or authoritative creation instant claimed by the source. It does not claim
+acceptance, implementation, modification, review, or operational time. NKF
+does not define a generic `updated_at`.
+
+Every applicable record source additionally requires:
+
+```yaml
+id: record-identity
+type: decision
+record_lifecycle: immutable
+record_status: accepted
+```
+
+The frontmatter `id`, `type`, `record_lifecycle`, `record_status`, and `title`
+MUST exactly equal declaration `id`, `type`, `governance.lifecycle`,
+`governance.status`, and `title`, respectively. A mismatch fails conformance;
+the checker does not select a winner or rewrite either representation.
+
+Design, Decision, Specification, and Realization record sources additionally
+require one non-empty `task` value. It MUST exactly resolve to one Task
+non-record `task_id` in the same bundle. Resolution establishes internal
+traceability only. It does not make a Task an NKF record, prove its operational
+state, satisfy its acceptance criteria, or establish acceptance or
+confirmation.
+
+A Design source additionally requires `design_disposition`, independently of
+record lifecycle and record authority status. Supported values are `active`,
+`adopted`, `rejected`, `superseded`, and `withdrawn`.
+
+- Every Design requires `task`.
+- Adopted and Rejected require a non-empty unique `design_decisions` list.
+  Every value is an exact same-bundle Decision record ID.
+- Superseded requires a non-empty unique `superseded_by` list. Every value is
+  an exact same-bundle record ID. It MAY retain `design_decisions` governing
+  an earlier disposition.
+- Withdrawn requires `withdrawal_source`, a closed mapping containing
+  `kind: task | record` and one non-empty `id` that resolves according to its
+  kind.
+- Provenance keys that do not apply to the selected disposition are
+  forbidden.
+
+An Active Design remains proposal knowledge under consideration. Adopted
+means a Decision selected its proposed direction; Rejected means a Decision
+declined it; Superseded means later governed knowledge replaced it; and
+Withdrawn means its owner or governing Task stopped consideration without a
+Decision deciding its merits. None of those values makes the Design current
+normative authority.
+
+A Realization source additionally requires `confirmation_status`. Supported
+values are `unconfirmed`, `partially-confirmed`, and `confirmed`.
+
+- Confirmed requires a non-empty unique `confirmation_decisions` list of exact
+  same-bundle Decision record IDs.
+- Unconfirmed forbids `confirmation_decisions` and `unconfirmed_scope`.
+- Partially Confirmed requires both a non-empty unique
+  `confirmation_decisions` list and a non-empty, trimmed, single-line
+  `unconfirmed_scope`.
+
+These fields expose the claimed confirmation boundary. Their presence and
+reference resolution do not verify authority or prove the claimed
+implementation. Acceptance-binding or other authority verification remains a
+separate operation.
+
+NKF adds `task` and `evidence` to `non_records[].kind`. A Task non-record
+requires a unique, non-empty `task_id` and a `task_status` of `active`,
+`deferred`, or `completed`. The project supplies that operational projection;
+NKF validates its declared shape and reference graph but does not execute,
+schedule, complete, or become authoritative for the Task. NKF Core does not
+infer Task state from directory names.
+
+Record references in `design_decisions`, `superseded_by`, and
+`confirmation_decisions` use exact native record IDs. Task references use
+exact `task_id` values. `withdrawal_source` selects the applicable namespace
+explicitly. Every governed reference MUST resolve exactly once.
+
+The allowed keys are:
+
+| Applicable document | Required keys | Conditional keys |
+| --- | --- | --- |
+| Non-Evidence Markdown | `title`, `summary`, `created_at` | None |
+| Record source | Common plus `id`, `type`, `record_lifecycle`, `record_status` | Type profile |
+| Design record | Record plus `task`, `design_disposition` | `design_decisions`, `superseded_by`, `withdrawal_source` |
+| Decision or Specification record | Record plus `task` | None |
+| Realization record | Record plus `task`, `confirmation_status` | `confirmation_decisions`, `unconfirmed_scope` |
+| Task non-record | Common plus `task_id`, `task_status` | None |
+| Evidence record or non-record | Exempt | Safe syntax only when an envelope is present |
+
+Key order, quoting style, comments, and whitespace are non-semantic. A
+`summary` is canonical orientation metadata within the Markdown source but is
+not a substitute for substantive meaning in the CommonMark body.
 
 An opening delimiter without a valid closing delimiter, unsafe or malformed
 YAML, multiple YAML documents, a non-mapping root, or a forbidden YAML feature
 emits `markdown.frontmatter.invalid`. A source intended to begin with a
 CommonMark thematic break MUST use a form other than an exact opening `---`
 line.
+
+A missing required envelope emits `markdown.frontmatter.required`. A missing
+key emits `markdown.frontmatter.key.missing`; an unsupported key emits
+`markdown.frontmatter.key.unsupported`; and an invalid value or conditional
+shape emits `markdown.frontmatter.value.invalid`. Invalid `created_at` emits
+`markdown.frontmatter.created-at.invalid`. Title disagreement emits
+`markdown.frontmatter.title-mismatch`; record identity or declared-governance
+disagreement emits `markdown.frontmatter.record-mismatch`. Invalid Design
+disposition provenance emits `markdown.frontmatter.design.invalid`; invalid
+Realization confirmation provenance emits
+`markdown.frontmatter.confirmation.invalid`; invalid Task identity or status
+emits `markdown.frontmatter.task.invalid`; and an unresolved or ambiguous
+governed reference emits `markdown.frontmatter.reference.unresolved`.
 
 ### Deterministic Markdown Structure
 
@@ -1772,6 +1913,18 @@ warning is non-blocking.
 | `record.source.digest-mismatch` | error |
 | `markdown.utf8.invalid` | error |
 | `markdown.frontmatter.invalid` | error |
+| `markdown.frontmatter.required` | error |
+| `markdown.frontmatter.key.missing` | error |
+| `markdown.frontmatter.key.unsupported` | error |
+| `markdown.frontmatter.value.invalid` | error |
+| `markdown.frontmatter.created-at.invalid` | error |
+| `markdown.frontmatter.title-mismatch` | error |
+| `markdown.frontmatter.record-mismatch` | error |
+| `markdown.frontmatter.design.invalid` | error |
+| `markdown.frontmatter.confirmation.invalid` | error |
+| `markdown.frontmatter.task.invalid` | error |
+| `markdown.frontmatter.reference.unresolved` | error |
+| `markdown.h1-count.invalid` | error |
 | `record.h1-count.invalid` | error |
 | `record.title.mismatch` | error |
 | `record.title.case-invalid` | error |

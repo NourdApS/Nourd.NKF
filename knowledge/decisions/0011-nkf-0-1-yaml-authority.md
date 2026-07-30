@@ -1,5 +1,12 @@
 ---
+id: adr-0011
+type: decision
+title: "ADR 0011: Accept NKF 0.1 YAML Companion"
+summary: The exact YAML revision at ../../contracts/nkf/0.1/nkf.yaml is accepted as the executable companion to the canonical NKF 0.1 Markdown specification.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0011: Accept NKF 0.1 YAML Companion

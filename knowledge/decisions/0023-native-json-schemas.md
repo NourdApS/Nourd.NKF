@@ -1,5 +1,12 @@
 ---
+id: adr-0023
+type: decision
+title: "ADR 0023: Confirm NKF 0.1 JSON Schema Realization"
+summary: ADR 0022 accepts the exact current NKF 0.1 Markdown/YAML authority pair. The schema files previously present at the canonical paths were preliminary proposal evidence bound to an obsolete open-field, markdown_root, and records_root model. They were not a current realization of the accepted authority pair.
 created_at: 2026-07-30T00:27:52Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0023: Confirm NKF 0.1 JSON Schema Realization

@@ -7,7 +7,7 @@ source:
   path: decisions/0035-product-scope-and-hierarchy.md
   digest:
     algorithm: sha-256
-    value: 9deb7fac773a9c2f86dae8cda89529dc563776ad76e1fff143d75bf24126cef9
+    value: 5a9afa78ac24dd9a4f27ea760842039a19b3674d66df1c24dc9720dced9f36cd
 governance:
   lifecycle: immutable
   status: accepted

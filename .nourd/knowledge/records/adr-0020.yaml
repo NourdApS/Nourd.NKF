@@ -7,7 +7,7 @@ source:
   path: decisions/0020-presentation-guidance.md
   digest:
     algorithm: sha-256
-    value: 7537fb454564870cd79b8a1972b17dba2e38b7e4de7d4d6b91120e93224ccd5c
+    value: bb92979bf1a05e9943e3f422c424fba63f46e28235cd80aa2994c2b10e073f1f
 governance:
   lifecycle: immutable
   status: accepted

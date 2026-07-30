@@ -1,5 +1,15 @@
 ---
+id: nkf-checker-and-validation
+type: realization
+title: NKF Checker And Validation
+summary: This Realization describes the native TypeScript checker, command-line interface, deterministic diagnostics, fixtures, tests, and validation-result production.
 created_at: 2026-07-30T17:16:33Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-010
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0059
 ---
 
 # NKF Checker And Validation
@@ -17,9 +27,15 @@ authority pair. It validates conformance; it cannot accept knowledge, confirm
 a Realization, determine truth or design quality, or change the contract by
 implementation.
 
-The ADR 0054 source-envelope rule is implemented by separating safe YAML front
-matter from the CommonMark body before heading and Title Case analysis. Exact
-source bytes remain the digest, snapshot, and security-scan input.
+The ADR 0058 source-envelope rule is implemented by separating safe YAML
+frontmatter from the CommonMark body before document-class and heading
+analysis. Applicable record sources and Markdown non-records require common
+orientation. Record identity and governance must equal the declaration;
+Design disposition, Realization confirmation, Task identity and state, and
+their references are checked according to their separate vocabularies.
+Evidence is exempt only when its representation explicitly classifies it as
+Evidence. Exact source bytes remain the digest, snapshot, and security-scan
+input.
 
 ## Durable Mapping
 
@@ -28,6 +44,7 @@ source bytes remain the digest, snapshot, and security-scan input.
 | Contract and Schema loading | `src/checker/contracts.ts` |
 | Native YAML parsing | `src/checker/yaml.ts` |
 | Front matter and CommonMark | `src/checker/markdown.ts` |
+| Governed frontmatter and reference graph | `src/checker/checker.ts` |
 | Project paths and snapshots | `src/checker/project.ts` |
 | Schema and phase orchestration | `src/checker/checker.ts` |
 | Profiles and semantic rules | `src/checker/semantic.ts` |
@@ -74,11 +91,11 @@ systems.
 
 ## Compatibility Verification And Recovery
 
-ADR 0057 confirms the exact checker source and current derived build after
-type checking, 15 test files with 93 passing tests, deterministic build
-verification, declaration audit, and passing repository self-validation. The
-confirmed build identity is `nourd-nkf-checker` with SHA-256
-`2d32d43b43788d3d874c7ffef4e01fa370d6467d93fc5c6f62fb088b269e4bc3`.
+ADR 0059 confirms the exact checker source and current derived build after
+type checking, 15 test files with 102 passing tests, deterministic build
+verification, frontmatter and declaration audit, and passing repository
+self-validation. The confirmed build identity is `nourd-nkf-checker` with
+SHA-256 `a35cbcc2d267748409b913454d1befc7c640a4e4a8dd1487f3acdb8d285233b7`.
 
 The implementation fails closed when trusted contract artifacts mismatch.
 Recovery is to restore a confirmed artifact set or govern and confirm a new

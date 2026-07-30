@@ -7,7 +7,7 @@ source:
   path: decisions/0004-historical-record-contract-versioning.md
   digest:
     algorithm: sha-256
-    value: f632f6e30ee2c93afad4d590d0caf7bef634fdc7f58c611b70b4345b599a1360
+    value: 1fc9986fdc1c61e8ae4391457dd8a0d74b898db98b0a7828568549dcd45b80b7
 governance:
   lifecycle: immutable
   status: accepted

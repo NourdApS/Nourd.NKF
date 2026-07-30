@@ -1,5 +1,9 @@
 ---
+title: "NKF-004: Define portable presentation-guidance extension"
+summary: Define an NKF-owned optional contract for portable presentation guidance when real consumer projects demonstrate that native NKF semantics and canonical Markdown are insufficient to communicate consistent display intent across interfaces.
 created_at: 2026-07-29T20:06:17Z
+task_id: NKF-004
+task_status: deferred
 ---
 
 # NKF-004: Define portable presentation-guidance extension

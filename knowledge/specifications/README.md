@@ -1,4 +1,6 @@
 ---
+title: Specifications
+summary: Specifications own current accepted normative NKF meaning.
 created_at: 2026-07-28T22:01:17Z
 ---
 

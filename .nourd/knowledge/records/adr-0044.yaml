@@ -7,7 +7,7 @@ source:
   path: decisions/0044-release-contract.md
   digest:
     algorithm: sha-256
-    value: 75967371ad289286914e6b90fa8333b0aedf33b07235bb932723263a05521103
+    value: c16171e9de969445468cfe11936c39826deaf1d1015bfd2b6fac4fe899ef6e11
 governance:
   lifecycle: immutable
   status: accepted

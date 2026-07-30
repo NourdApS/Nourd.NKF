@@ -1,5 +1,9 @@
 ---
+title: "NKF-006: Define Extensible Root Knowledge Models"
+summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct.
 created_at: 2026-07-30T15:59:54Z
+task_id: NKF-006
+task_status: deferred
 ---
 
 # NKF-006: Define Extensible Root Knowledge Models

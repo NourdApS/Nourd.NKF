@@ -1,10 +1,17 @@
 ---
+id: design-nkf-record-v2-responsibility-bindings
+type: design
+title: NKF Record V2 Responsibility Bindings
+summary: Whether nkf.record/v2 should represent responsibility bindings as a section-local YAML list named responsibilities and enforce complete body-contract coverage across the record.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: superseded
+task: NKF-003
 design_disposition: superseded
 design_decisions:
-  - ADR-0005
+  - adr-0005
 superseded_by:
-  - ADR-0009
+  - adr-0009
 ---
 
 # NKF Record V2 Responsibility Bindings

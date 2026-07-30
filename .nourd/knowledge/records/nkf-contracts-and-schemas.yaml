@@ -7,7 +7,7 @@ source:
   path: realizations/current/contracts-and-schemas.md
   digest:
     algorithm: sha-256
-    value: 23b339224758869fd5532b2e9e59d76d82ab31a49466c73e721a8a5c7d92bb90
+    value: 966ccd6013e46d22ead1a1162c9e116169a8dd1bddd8b68f7ad7b8527ce21591
 governance:
   lifecycle: immutable
   status: accepted

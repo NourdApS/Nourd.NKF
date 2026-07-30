@@ -1,4 +1,6 @@
 ---
+title: Realizations
+summary: Realizations describe how accepted NKF meaning is currently implemented. They map Specifications to durable components, relationships, interfaces, artifacts, implementation status, confirmation status, verification, and recovery.
 created_at: 2026-07-30T15:59:54Z
 ---
 

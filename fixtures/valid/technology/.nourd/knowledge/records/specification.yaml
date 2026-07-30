@@ -7,7 +7,7 @@ source:
   path: specification.md
   digest:
     algorithm: sha-256
-    value: f4a34d82bffa339d8178bc24e6787918ed2da5e8aad30b01dd07e8bfb76491f1
+    value: 4fb77a3ecfbe1c7a08a41de6cbaeef29874109d8fcc06ace42d9336bb0c859bb
 governance:
   lifecycle: immutable
   status: accepted

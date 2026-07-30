@@ -1,5 +1,12 @@
 ---
+id: adr-0004
+type: decision
+title: "ADR 0004: Introduce NKF Record V2"
+summary: ADRs 0002 and 0003 establish explicit section-to-responsibility bindings and the stable identifiers for the 69 accepted NKF 0.1 Product responsibilities.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0004: Introduce NKF Record V2

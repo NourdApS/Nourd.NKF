@@ -1,9 +1,16 @@
 ---
+id: design-nkf-0-1-product-technology-common-comparison
+type: design
+title: NKF 0.1 Product–Technology Common Comparison
+summary: "Compare the accepted Product knowledge model with an independently derived Technology knowledge model and identify:"
 created_at: 2026-07-30T15:59:54Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 design_disposition: adopted
 design_decisions:
-  - ADR-0049
-  - ADR-0050
+  - adr-0049
+  - adr-0050
 ---
 
 # NKF 0.1 Product–Technology Common Comparison

@@ -1,8 +1,15 @@
 ---
+id: design-nkf-007-knowledge-architecture
+type: design
+title: NKF-007 Knowledge Architecture
+summary: This repository-architecture Design addresses the NKF-007 knowledge organization, current-system navigation, filename, front-matter, date, Design-disposition, Task-transfer, Realization, migration, and self-adoption problems.
 created_at: 2026-07-30T16:27:13Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-007
 design_disposition: adopted
 design_decisions:
-  - ADR-0053
+  - adr-0053
 ---
 
 # NKF-007 Knowledge Architecture

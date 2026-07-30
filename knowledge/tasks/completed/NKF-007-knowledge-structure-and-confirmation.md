@@ -1,5 +1,9 @@
 ---
+title: "NKF-007: Repair Knowledge Structure And Confirmation"
+summary: "Repair the fundamental knowledge-model, navigation, lifecycle, metadata, and confirmation problems identified after the whole-repository NKF audit before returning to its individual implementation findings. The central knowledge gap is an incomplete Realization boundary: NKF does not yet provide one complete, consolidated, and navigable view of the system as it is currently implemented."
 created_at: 2026-07-30T15:52:40Z
+task_id: NKF-007
+task_status: completed
 ---
 
 # NKF-007: Repair Knowledge Structure And Confirmation

@@ -1,11 +1,18 @@
 ---
+id: design-nkf-0-1-authoritative-artifacts
+type: design
+title: NKF 0.1 Authoritative Artifacts
+summary: The exact version, paths, and contract-set identity for the independent normative Markdown specification and its complete executable YAML companion.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: superseded
+task: NKF-003
 design_disposition: superseded
 design_decisions:
-  - ADR-0008
+  - adr-0008
 superseded_by:
-  - ADR-0009
-  - ADR-0012
+  - adr-0009
+  - adr-0012
 ---
 
 # NKF 0.1 Authoritative Artifacts

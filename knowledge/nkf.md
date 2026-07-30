@@ -1,5 +1,11 @@
 ---
+id: nkf
+type: technology
+title: Nourd Knowledge Format
+summary: Nourd Knowledge Format, abbreviated NKF, is a Nourd ApS-maintained knowledge format with stable identity NKF. It is a Company-owned Technology that defines portable, human-readable, machine-verifiable contracts for durable governed knowledge.
 created_at: 2026-07-30T15:59:54Z
+record_lifecycle: living
+record_status: accepted
 ---
 
 # Nourd Knowledge Format

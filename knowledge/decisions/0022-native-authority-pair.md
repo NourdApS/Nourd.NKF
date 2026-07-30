@@ -1,5 +1,12 @@
 ---
+id: adr-0022
+type: decision
+title: "ADR 0022: Accept Coherent NKF 0.1 Authority Pair"
+summary: ADRs 0013 through 0021 establish native record and bundle serialization, controlled vocabularies, semantic topology, durable bindings, extensions, acceptance provenance, project paths, knowledge coverage, enforcement, diagnostics, and the current presentation boundary. The previously accepted Markdown/YAML pair predates those Decisions and remains an immutable historical snapshot rather than their coherent current realization.
 created_at: 2026-07-30T00:27:52Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0022: Accept Coherent NKF 0.1 Authority Pair

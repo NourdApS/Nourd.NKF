@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.1/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 52daa84db3067e39d8868f190874bb3a75328589d00127fecd7cb299312fa4ed
+    value: 428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -61,6 +61,7 @@ authority:
     - ADR-0054
     - ADR-0055
     - ADR-0056
+    - ADR-0058
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
@@ -247,7 +248,7 @@ bundle:
         must_exist: true
         file_kind: regular-file
       kind:
-        enum: [navigation, generated, redirect, other]
+        enum: [navigation, task, evidence, generated, redirect, other]
       reason:
         type: string
         min_length: 1
@@ -402,8 +403,152 @@ markdown:
       aliases: forbidden
       merge_keys: forbidden
       custom_tags: forbidden
-      arbitrary_core_key_meaning: none
+      arbitrary_core_key_meaning: forbidden
       profile_or_extension_keys_require_accepted_governance: true
+      governed_orientation:
+        applicability:
+          default: required
+          evidence_record:
+            selector: declaration.type
+            equals: evidence
+            orientation_fields: exempt
+          evidence_non_record:
+            selector: bundle.non_records.kind
+            equals: evidence
+            orientation_fields: exempt
+          exemption_from_path: forbidden
+          safe_syntax_when_exempt_envelope_present: required
+        scalar_string:
+          type: string
+          min_length: 1
+          trim_must_equal_self: true
+          line_breaks: forbidden
+        created_at:
+          type: string
+          exact_serialization: YYYY-MM-DDTHH:mm:ssZ
+          real_calendar_instant: required
+          timezone: UTC
+          fractional_seconds: forbidden
+          generic_updated_at: undefined
+        common:
+          required_fields: [title, summary, created_at]
+          fields:
+            title:
+              ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+              equals: commonmark-body-single-H1-comparison-string
+            summary:
+              ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+              semantic_adequacy_from_validation: false
+            created_at:
+              ref: markdown.source_envelope.front_matter.governed_orientation.created_at
+        record:
+          required_fields: [id, type, record_lifecycle, record_status]
+          fields:
+            id:
+              equals: declaration.id
+            type:
+              equals: declaration.type
+            record_lifecycle:
+              equals: declaration.governance.lifecycle
+            record_status:
+              equals: declaration.governance.status
+            title:
+              equals: declaration.title
+        lifecycle_record_task:
+          applies_to_types: [design, decision, specification, realization]
+          required_field: task
+          field:
+            ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+            resolves_to: same-bundle-task-non-record-task-id
+          proves_operational_state: false
+          proves_acceptance: false
+          proves_confirmation: false
+        design:
+          applies_to_type: design
+          required_fields: [task, design_disposition]
+          dispositions: [active, adopted, rejected, superseded, withdrawn]
+          provenance:
+            active:
+              required: []
+              forbidden: [design_decisions, superseded_by, withdrawal_source]
+            adopted:
+              required: [design_decisions]
+              forbidden: [superseded_by, withdrawal_source]
+            rejected:
+              required: [design_decisions]
+              forbidden: [superseded_by, withdrawal_source]
+            superseded:
+              required: [superseded_by]
+              optional: [design_decisions]
+              forbidden: [withdrawal_source]
+            withdrawn:
+              required: [withdrawal_source]
+              forbidden: [design_decisions, superseded_by]
+          design_decisions:
+            type: array
+            min_items: 1
+            unique: true
+            items_resolve_to: same-bundle-decision-record-id
+          superseded_by:
+            type: array
+            min_items: 1
+            unique: true
+            items_resolve_to: same-bundle-record-id
+          withdrawal_source:
+            closed: true
+            required_fields: [kind, id]
+            fields:
+              kind:
+                enum: [task, record]
+              id:
+                ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+            resolves_by_kind: true
+          determines_record_governance: false
+          determines_normative_authority: false
+        realization:
+          applies_to_type: realization
+          required_fields: [task, confirmation_status]
+          statuses: [unconfirmed, partially-confirmed, confirmed]
+          confirmation_decisions:
+            type: array
+            min_items: 1
+            unique: true
+            items_resolve_to: same-bundle-decision-record-id
+          unconfirmed_scope:
+            ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+          conditions:
+            unconfirmed:
+              forbidden: [confirmation_decisions, unconfirmed_scope]
+            partially-confirmed:
+              required: [confirmation_decisions, unconfirmed_scope]
+            confirmed:
+              required: [confirmation_decisions]
+              forbidden: [unconfirmed_scope]
+          confirmation_from_fields: false
+          confirmation_from_validation: false
+        task_non_record:
+          applies_to_kind: task
+          required_fields: [task_id, task_status]
+          task_id:
+            ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+            unique_across_task_non_records: true
+          task_status:
+            enum: [active, deferred, completed]
+          directory_state_inference: forbidden
+          operational_authority: external-to-nkf
+        allowed_keys:
+          closed_by_applicable_document_class: true
+          common: [title, summary, created_at]
+          record: [id, type, record_lifecycle, record_status]
+          lifecycle_record: [task]
+          design: [design_disposition, design_decisions, superseded_by, withdrawal_source]
+          realization: [confirmation_status, confirmation_decisions, unconfirmed_scope]
+          task_non_record: [task_id, task_status]
+        reference_resolution:
+          record_ids: exact-and-unique
+          task_ids: exact-and-unique
+          display-identifiers: forbidden
+          unresolved_or_ambiguous: error
     commonmark_body:
       begins: immediately-after-closing-delimiter-line-ending
       envelope_participation: none
@@ -1368,6 +1513,18 @@ diagnostics:
     record.source.digest-mismatch: {severity: error, blocking: conformance, phase: source}
     markdown.utf8.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.required: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.key.missing: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.key.unsupported: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.value.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.created-at.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.title-mismatch: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.record-mismatch: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.design.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.confirmation.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.task.invalid: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.reference.unresolved: {severity: error, blocking: conformance, phase: source}
+    markdown.h1-count.invalid: {severity: error, blocking: conformance, phase: source}
     record.h1-count.invalid: {severity: error, blocking: conformance, phase: source}
     record.title.mismatch: {severity: error, blocking: conformance, phase: source}
     record.title.case-invalid: {severity: error, blocking: conformance, phase: source}

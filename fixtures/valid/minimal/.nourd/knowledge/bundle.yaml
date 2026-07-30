@@ -8,3 +8,5 @@ knowledge_root: knowledge
 non_records:
   - path: README.md
     kind: navigation
+  - path: task.md
+    kind: task

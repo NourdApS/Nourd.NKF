@@ -7,7 +7,7 @@ source:
   path: designs/adopted/enforcement-and-diagnostics.md
   digest:
     algorithm: sha-256
-    value: 0e4bb00ce4d313850469ab2ac6fea5b498b82433521ab1dfc9abd9cfcee2963a
+    value: 29697e4a4cc115453afdf4f7231c586960bcd3c72a252044d48c76e3aee8c764
 governance:
   lifecycle: immutable
   status: accepted

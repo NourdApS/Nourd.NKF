@@ -1,4 +1,6 @@
 ---
+title: NKF Knowledge
+summary: Begin with the Current System Realization. It is the consolidated, navigable view of the current architecture, topology, components, interfaces, implementation status, confirmation status, artifact mappings, and relevant Decision provenance.
 created_at: 2026-07-28T22:01:17Z
 ---
 

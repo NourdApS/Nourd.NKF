@@ -1,5 +1,12 @@
 ---
+id: adr-0055
+type: decision
+title: "ADR 0055: Design Responsibility Vocabulary"
+summary: NKF defines a Design as governed proposal knowledge containing alternatives and trade-offs. ADR 0054 distinguishes acceptance of an exact Design record revision from adoption of the direction proposed by that Design.
 created_at: 2026-07-30T17:23:58Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-007
 ---
 
 # ADR 0055: Design Responsibility Vocabulary

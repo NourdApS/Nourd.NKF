@@ -1,8 +1,15 @@
 ---
+id: design-nkf-0-1-native-bundle-serialization
+type: design
+title: NKF 0.1 Native Bundle Serialization
+summary: ADR 0018 defines the fixed manifest location, knowledge_root, Markdown coverage, and declaration directory, but not the exact bundle object or non_records entry shape. The executable companion and schemas cannot choose those details by implication.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 design_disposition: adopted
 design_decisions:
-  - ADR-0021
+  - adr-0021
 ---
 
 # NKF 0.1 Native Bundle Serialization

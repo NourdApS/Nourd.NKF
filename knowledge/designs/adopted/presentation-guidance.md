@@ -1,8 +1,15 @@
 ---
+id: design-nkf-0-1-presentation-guidance-boundary
+type: design
+title: NKF 0.1 Presentation-Guidance Boundary
+summary: Native NKF 0.1 should define no presentation-guidance field.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 design_disposition: adopted
 design_decisions:
-  - ADR-0020
+  - adr-0020
 ---
 
 # NKF 0.1 Presentation-Guidance Boundary

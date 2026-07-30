@@ -1,8 +1,15 @@
 ---
+id: design-nkf-0-1-acceptance-provenance-boundary
+type: design
+title: NKF 0.1 Acceptance-Provenance Boundary
+summary: Whether native NKF 0.1 should deliberately define no universal acceptance-event or acceptance-proof field and instead establish the exact authority, confirmation, conformance, and extension boundary below.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 design_disposition: adopted
 design_decisions:
-  - ADR-0017
+  - adr-0017
 ---
 
 # NKF 0.1 Acceptance-Provenance Boundary

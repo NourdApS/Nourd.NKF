@@ -7,7 +7,7 @@ source:
   path: decisions/0022-native-authority-pair.md
   digest:
     algorithm: sha-256
-    value: d60149c0b485af8031c76272e957d327d2205388d029fcce7a8149947bb6c98d
+    value: 8a98b0bc0f2e8fad6b692c752167ddc70cffb3927663bda45e42970a47e7c3e7
 governance:
   lifecycle: immutable
   status: accepted

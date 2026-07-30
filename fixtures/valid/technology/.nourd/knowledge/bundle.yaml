@@ -5,7 +5,9 @@ root:
   record: technology
   profile: nkf.profile.technology
 knowledge_root: knowledge
-non_records: []
+non_records:
+  - path: task.md
+    kind: task
 governed_artifacts:
   - id: example-source
     kind: checker-source

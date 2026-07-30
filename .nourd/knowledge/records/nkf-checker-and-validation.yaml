@@ -7,7 +7,7 @@ source:
   path: realizations/current/checker-and-validation.md
   digest:
     algorithm: sha-256
-    value: 0a2d50f6174c9b8bf4a443fea396164a65c306d91a8503b62256bc7cc2d11116
+    value: b23ef0940fddd52b906c3a1a1f49cf43cfd5396a996c90789375227b68bf5596
 governance:
   lifecycle: immutable
   status: accepted

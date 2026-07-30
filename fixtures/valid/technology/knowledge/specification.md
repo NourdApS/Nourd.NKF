@@ -1,5 +1,12 @@
 ---
+id: specification
+type: specification
+title: "Example Specification"
+summary: "Defines the normative Example Technology contract and its validation boundary."
 created_at: 2026-07-30T15:59:54Z
+record_lifecycle: immutable
+record_status: accepted
+task: TEST-TECH-001
 ---
 
 # Example Specification

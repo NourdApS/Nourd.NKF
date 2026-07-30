@@ -1,5 +1,15 @@
 ---
+id: nkf-release-package
+type: realization
+title: NKF Release Package
+summary: This Realization describes the repository-owned build, archive, manifest, and verification tooling for a portable native NKF checker release.
 created_at: 2026-07-30T17:16:33Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-010
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0059
 ---
 
 # NKF Release Package
@@ -25,8 +35,8 @@ A local archive or build is not a published release.
 
 The current release configuration is bound to the earlier ADR 0047 checker
 confirmation and predecessor authority digests. It is not a current
-distribution realization of the ADR 0056 authority pair. Publication and
-consumer onboarding are deferred to NKF-008.
+distribution realization of the ADR 0058 authority pair or ADR 0059 checker
+confirmation. Publication and consumer onboarding are deferred to NKF-008.
 
 ## Responsibilities And Ownership Boundaries
 

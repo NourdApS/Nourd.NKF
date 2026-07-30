@@ -7,7 +7,7 @@ source:
   path: designs/adopted/project-path-and-knowledge-coverage.md
   digest:
     algorithm: sha-256
-    value: 5f1187e4acb01e294e57de01da49cb96f0913f1683896c4a7c3b0d663787cf42
+    value: b02d4dfaa37bafdf1192acaf28e6979681d610a1c22c8cf5c7ef72a44c7a8c78
 governance:
   lifecycle: immutable
   status: accepted

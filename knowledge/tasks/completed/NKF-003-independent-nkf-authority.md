@@ -1,5 +1,9 @@
 ---
+title: "NKF-003: Establish Independent NKF Authority"
+summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.
 created_at: 2026-07-28T22:01:17Z
+task_id: NKF-003
+task_status: completed
 ---
 
 # NKF-003: Establish Independent NKF Authority

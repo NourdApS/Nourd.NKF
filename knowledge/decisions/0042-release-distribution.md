@@ -1,5 +1,12 @@
 ---
+id: adr-0042
+type: decision
+title: "ADR 0042: Establish Initial Release Distribution Boundary"
+summary: ADR 0041 confirms one exact native NKF 0.1 development Realization, but expressly leaves distribution and release unresolved. NKF-003 requires one pinned checker distribution before the NKF repository can exercise that distribution as its first governed consumer.
 created_at: 2026-07-30T08:39:41Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0042: Establish Initial Release Distribution Boundary

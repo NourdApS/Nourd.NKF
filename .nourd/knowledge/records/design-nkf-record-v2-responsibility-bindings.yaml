@@ -7,7 +7,7 @@ source:
   path: designs/superseded/record-v2-responsibility-bindings.md
   digest:
     algorithm: sha-256
-    value: a8cfd9e5d23ec6fb7457ce8dd2a0523aa40bf8d7b296c78febcb6030f1dc94b3
+    value: 580bb42e774c801337e7230bca4adca2e63defd5f6ec254839ff6e376d2f2120
 governance:
   lifecycle: immutable
   status: superseded

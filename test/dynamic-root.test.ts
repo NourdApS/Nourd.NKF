@@ -3,6 +3,7 @@ import path from "node:path";
 import YAML from "yaml";
 import { describe, expect, it } from "vitest";
 import { validateProject } from "../src/checker/checker.js";
+import { sha256 } from "../src/checker/util.js";
 import { copyValidFixture, copyValidTechnologyFixture, options } from "./helpers.js";
 
 async function readBundle(project: string): Promise<Record<string, any>> {
@@ -57,6 +58,12 @@ describe("dynamic Product and Technology roots", () => {
     const specification = YAML.parse(await readFile(specificationFile, "utf8"));
     specification.type = "product";
     specification.body_contract = "nkf.product";
+    const specificationSourceFile = path.join(incompatible, "knowledge/specification.md");
+    const specificationSource = (await readFile(specificationSourceFile, "utf8"))
+      .replace("type: specification", "type: product")
+      .replace("task: TEST-TECH-001\n", "");
+    await writeFile(specificationSourceFile, specificationSource, "utf8");
+    specification.source.digest.value = sha256(Buffer.from(specificationSource, "utf8"));
     await writeFile(specificationFile, YAML.stringify(specification), "utf8");
     expect(await rules(incompatible)).toContain("profile.record.unsupported");
 
@@ -64,6 +71,14 @@ describe("dynamic Product and Technology roots", () => {
     await unlink(path.join(missing, ".nourd/knowledge/records/specification.yaml"));
     const missingBundle = await readBundle(missing);
     missingBundle.non_records.push({ path: "specification.md", kind: "other", reason: "Negative profile fixture" });
+    const missingSourceFile = path.join(missing, "knowledge/specification.md");
+    const missingSource = (await readFile(missingSourceFile, "utf8"))
+      .replace(/^id:.*\n/m, "")
+      .replace(/^type:.*\n/m, "")
+      .replace(/^record_lifecycle:.*\n/m, "")
+      .replace(/^record_status:.*\n/m, "")
+      .replace(/^task:.*\n/m, "");
+    await writeFile(missingSourceFile, missingSource, "utf8");
     await writeBundle(missing, missingBundle);
     expect(await rules(missing)).toContain("profile.specification.missing");
   });
@@ -142,6 +157,13 @@ describe("dynamic Product and Technology roots", () => {
     );
     const specification = YAML.parse(await readFile(specificationFile, "utf8"));
     specification.governance.lifecycle = "living";
+    const sourceFile = path.join(project, "knowledge/specification.md");
+    const source = (await readFile(sourceFile, "utf8")).replace(
+      "record_lifecycle: immutable",
+      "record_lifecycle: living",
+    );
+    await writeFile(sourceFile, source, "utf8");
+    specification.source.digest.value = sha256(Buffer.from(source, "utf8"));
     await writeFile(specificationFile, YAML.stringify(specification), "utf8");
     expect(await rules(project)).toContain("governance.specification.lifecycle");
   });

@@ -1,5 +1,15 @@
 ---
+id: nkf-0.1-native-realization
+type: realization
+title: NKF Current System
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository. It is the normal entry point for understanding how accepted NKF meaning is implemented.
 created_at: 2026-07-30T15:59:54Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-010
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0059
 ---
 
 # NKF Current System
@@ -25,17 +35,18 @@ Product and Technology Root Profiles. Markdown remains the normative human
 authority and the executable YAML remains its digest-bound companion.
 
 The current exact authority pair is accepted through
-[ADR 0056](../decisions/0056-design-direction-and-record-authority.md). ADR 0054
-adds a safe optional front-matter source envelope while keeping canonical
-meaning in the CommonMark body; ADRs 0055 and 0056 align the native Design
-responsibility vocabulary with the NKF lifecycle.
+[ADR 0058](../decisions/0058-governed-frontmatter.md). It makes the safe YAML
+frontmatter envelope introduced through ADR 0054 a governed
+document-orientation surface while keeping substantive canonical meaning in
+the CommonMark body. ADRs 0055 and 0056 remain predecessor provenance for the
+native Design responsibility vocabulary.
 
 The predecessor implementation baseline is
-[ADR 0052](../decisions/0052-dynamic-root-self-hosting.md). ADR 0057 confirms
-the current implementation and repository structure produced by NKF-007.
-Confirmation applies to the exact revisions and artifacts listed by that
-Decision; it does not make a release current or verify external acceptance
-authority.
+[ADR 0057](../decisions/0057-current-system-realization.md). ADR 0059 confirms
+the frontmatter implementation and repository migration produced by NKF-010.
+Confirmation applies only to the exact revisions and artifacts listed by
+that Decision; it does not make a release current or verify external
+acceptance authority.
 
 ## Durable Mapping
 
@@ -57,13 +68,13 @@ Latest Validation Result
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| Normative Specification | `knowledge/specifications/nkf-0.1.md` | Accepted current revision | ADR 0056 |
-| Executable companion | `contracts/nkf/0.1/nkf.yaml` | Accepted current revision | ADR 0056 |
-| Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas with unchanged assertion graphs | ADR 0057 |
-| Checker library and CLI | `src/checker/`, `src/cli.ts` | Front-matter boundary and accepted checker behavior implemented | ADR 0057 |
-| Fixtures and tests | `fixtures/`, `test/` | 15 test files and 93 tests pass | ADR 0057 |
-| Build artifact | `dist/nourd-nkf-checker.mjs` | Deterministically verified local build | ADR 0057 |
-| Self-host declaration | `.nourd/knowledge/` | Explicit Technology bundle with complete source and artifact bindings | ADR 0057 |
+| Normative Specification | `knowledge/specifications/nkf-0.1.md` | Accepted current governed-frontmatter revision | ADR 0058 |
+| Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0058 |
+| Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas; bundle kind vocabulary extended | ADR 0059 |
+| Checker library and CLI | `src/checker/`, `src/cli.ts` | Governed frontmatter, references, and prior checker behavior implemented | ADR 0059 |
+| Fixtures and tests | `fixtures/`, `test/` | 15 test files and 102 tests pass | ADR 0059 |
+| Build artifact | `dist/nourd-nkf-checker.mjs` | Deterministically verified local build | ADR 0059 |
+| Self-host declaration | `.nourd/knowledge/` | Migrated Technology bundle with complete source and artifact bindings | ADR 0059 |
 | Latest result | `.nourd/validation-result.json` | Latest passing full-bundle observation | Conformance only |
 | Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Earlier release contract implementation | Current publication deferred to NKF-008 |
 
@@ -84,7 +95,10 @@ accepted contract.
 
 The `.nourd` declaration represents this repository as one Technology bundle;
 it does not accept the Markdown or infer Design disposition, section meaning,
-relationships, or confirmation from paths and filenames.
+relationships, Task state, Evidence classification, or confirmation from
+paths and filenames. Applicable frontmatter exposes orientation and must agree
+with its declaration, but it does not replace either substantive CommonMark
+meaning or the executable declaration.
 
 This Realization owns a navigable implementation account. It does not compete
 with the Specification, decide a Design disposition, accept knowledge, or
@@ -118,7 +132,7 @@ mechanism and current repository implementation status, not mutable workflow,
 process, deployment, account, permission, health, or execution state.
 
 No release, push, deployment, or external-consumer migration is part of the
-current NKF-007 work.
+current NKF-010 work.
 
 ## Compatibility Verification And Recovery
 
@@ -127,12 +141,13 @@ type checking, positive and negative fixtures, diagnostic coverage, unit and
 integration tests, deterministic build verification, explicit self-host
 declarations, and full-bundle validation.
 
-`npm run check` passes type checking, 15 test files with 93 tests, build, and
-deterministic build verification. The self-host bundle contains 85 explicit
-records and 43 explicit non-record Markdown entries after ADR 0057, with 60
-digest-bound governed artifacts. Full-bundle validation passes with no
-diagnostics; authority-binding verification was not requested and remains
-separate.
+`npm run check` passes type checking, 15 test files with 102 tests, build, and
+deterministic build verification. The self-host bundle contains 88 explicit
+records and 46 explicit non-record Markdown entries after ADR 0059, with 62
+digest-bound governed artifacts. Every non-Evidence Markdown representation
+has governed orientation; Evidence retains its byte-preserving exemption.
+Full-bundle validation passes with no diagnostics; authority-binding
+verification remains separate from native structural conformance.
 
 Recovery uses Git history, immutable Decision and Evidence provenance,
 predecessor digests, explicit successor Decisions, deterministic rebuilding,

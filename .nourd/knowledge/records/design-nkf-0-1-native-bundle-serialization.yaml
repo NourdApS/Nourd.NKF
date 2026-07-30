@@ -7,7 +7,7 @@ source:
   path: designs/adopted/native-bundle-serialization.md
   digest:
     algorithm: sha-256
-    value: a6d36a4efad03c44bb79654f2c6a783135943ac6451445ff65cb5e41b57f743a
+    value: 3cb46bd254fe869f4ab39655cc716b439603174ef4e262ace76dea3f6941f54e
 governance:
   lifecycle: immutable
   status: accepted

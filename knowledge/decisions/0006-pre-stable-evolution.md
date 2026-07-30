@@ -1,5 +1,12 @@
 ---
+id: adr-0006
+type: decision
+title: "ADR 0006: Establish Governed Pre-Stable Evolution"
+summary: NKF is pre-stable. Implementing and exercising it across Nourd Studio, Shredwise, Nourd Agent SDK, and later projects will expose shortcomings, ambiguities, invalid assumptions, checker bugs, and missing cases that cannot all be discovered from specification drafting alone.
 created_at: 2026-07-29T20:06:17Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-003
 ---
 
 # ADR 0006: Establish Governed Pre-Stable Evolution
