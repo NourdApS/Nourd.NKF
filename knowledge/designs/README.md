@@ -158,7 +158,9 @@ The exact source-bound schemas confirmed by ADR 0046 are
 [`nkf-0.1-release-contract-release-manifest-schema-proposal.json`](nkf-0.1-release-contract-release-manifest-schema-proposal.json),
 and
 [`nkf-0.1-release-contract-validation-result-schema-proposal.json`](nkf-0.1-release-contract-validation-result-schema-proposal.json).
-Checker rebinding and package Realization remain pending.
+ADR 0047 confirms the rebound checker, and ADR 0048 confirms the deterministic
+release-package and bootstrap-verifier Realization. No tag, asset, or Github
+Release has been created or published.
 
 Deferred presentation-extension work remains governed separately by NKF-004.
 Deferred expiry and authority-freshness investigation remains governed by

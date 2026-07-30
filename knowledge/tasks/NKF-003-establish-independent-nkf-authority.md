@@ -2028,8 +2028,12 @@ derived realization.
 - ADR 0047 confirms the rebound project checker at source checkpoint
   `0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f` and portable checker SHA-256
   `f71226e5f632cdd0918a0eedae1cbbc5d5f17b450395d98e744ae572dfd73579`.
-- Release tooling, artifact confirmation, and package reproducibility work
-  remain in progress.
+- ADR 0048 confirms release tooling at source checkpoint
+  `50fbc53c7ec1022598029780b5159d5a91c4a087` and two independent,
+  byte-identical 1,159,680-byte archives at SHA-256
+  `c8d0df6e68889d5be0c4ca9e215188748d28399f10d10d03728d0561eaf86b4d`.
+- This execution slice is complete. No push, tag, asset upload, Github Release,
+  self-hosting, consumer migration, or consumer conformance was performed.
 
 ## Initial source anchors
 

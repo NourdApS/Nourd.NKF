@@ -55,3 +55,4 @@ and compatibility.
 | [ADR 0045](0045-accept-release-contract-authority-pair.md) | Accepted under explicit Human Product Owner delegation | Current canonical NKF 0.1 Markdown/YAML pair with the native release contract |
 | [ADR 0046](0046-confirm-release-contract-json-schema-bindings.md) | Accepted under explicit Human Product Owner delegation | Four exact source-bound release-package schemas while project validation remains a three-schema boundary |
 | [ADR 0047](0047-confirm-release-bound-checker-realization.md) | Accepted under explicit Human Product Owner delegation | Exact release-bound project checker source and portable build realization |
+| [ADR 0048](0048-confirm-initial-release-package-realization.md) | Accepted under explicit Human Product Owner delegation | Exact reproducible initial release-package and bootstrap-verifier realization without publication |

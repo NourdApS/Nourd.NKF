@@ -33,22 +33,21 @@ exact accepted revision and the subsequent checker work remain source
 provenance during migration; they must not be silently rewritten or treated as
 already migrated.
 
-Current contract work remains grounded in the accepted Product knowledge
-format. ADR 0039 accepts the current exact canonical Markdown and strict-YAML
-executable companion, including all checker-finding resolutions accepted
-through ADRs 0034, 0035, and 0038. ADR 0040 confirms the exact source-bound
-bundle, record, and validation-result JSON Schemas for that pair.
+ADR 0045 accepts the current exact canonical Markdown and strict-YAML
+executable companion, including the native release contract. ADR 0046 confirms
+the four source-bound release-package schemas while preserving bundle, record,
+and validation-result as the exact three-schema project-validation boundary.
 
-ADR 0031 governs a private development checker package. Its first
-implementation and fixture suite are confirmed as the exact development
-Realization at source checkpoint `f06ebb5` through ADR 0041. All five
-authority findings exposed by that implementation are now
-governed and reflected in the current authority, schemas, checker, and
-115-rule fixture matrix. Local verification passes 74 tests and produces the
-reproducible development executable SHA-256
-`f64d772cb628d6c1fe7dd337baceecb75007fdabe74f91bd87971e063a362d0c`.
-No continuous-integration gate, distribution, release, consumer migration,
-or consumer conformance result is claimed.
+ADR 0047 confirms the release-bound project checker at source checkpoint
+`0fe4f0d` and executable SHA-256
+`f71226e5f632cdd0918a0eedae1cbbc5d5f17b450395d98e744ae572dfd73579`.
+ADR 0048 confirms deterministic release tooling and two independent,
+byte-identical local package builds from source checkpoint `50fbc53`, with
+archive SHA-256
+`c8d0df6e68889d5be0c4ca9e215188748d28399f10d10d03728d0561eaf86b4d`.
+The complete development gate passes 81 tests in 13 files. No tag, asset
+upload, Github Release, public distribution, consumer migration, or consumer
+conformance result is claimed.
 
 NKF remains open to evidence-driven change before its first stable release.
 Real-project findings must move through governed reproduction, classification,

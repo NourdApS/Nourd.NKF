@@ -142,6 +142,19 @@ claiming checker completeness.
 confirms the exact native checker development Realization at source checkpoint
 `f06ebb5c514f9549b0dfb34a910dbdb3d4349edd` without establishing
 distribution, release, consumer migration, or consumer conformance.
+[ADR 0042](decisions/0042-establish-initial-release-distribution-boundary.md)
+through
+[ADR 0045](decisions/0045-accept-release-contract-authority-pair.md)
+accept the content-addressed initial distribution boundary, release-manifest
+contract, deterministic archive contract, and exact current authority pair.
+[ADR 0046](decisions/0046-confirm-release-contract-json-schema-bindings.md)
+confirms four release-package schemas while keeping project validation bound
+to exactly three.
+[ADR 0047](decisions/0047-confirm-release-bound-checker-realization.md)
+confirms the release-bound checker source and portable bytes.
+[ADR 0048](decisions/0048-confirm-initial-release-package-realization.md)
+confirms the reproducible release package and bootstrap verifier without
+claiming a tag, upload, Github Release, consumer migration, or conformance.
 
 Task [`NKF-003`](tasks/NKF-003-establish-independent-nkf-authority.md) governs
 the source migration. Until its acceptance criteria are satisfied, every
