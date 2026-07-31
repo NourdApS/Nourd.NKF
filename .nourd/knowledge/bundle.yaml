@@ -205,7 +205,7 @@ governed_artifacts:
     path: .github/workflows/nkf-contracts.yml
     digest:
       algorithm: sha-256
-      value: b251a64e71f1c3b6d25f8f5c652837a9fbd27d1521f49340e323ce6c62759ac4
+      value: 18be2706b3e05901b389692bb061fd2f05c8b62e9189ec3d8996f407e87ce725
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-github-workflows-nkf-consumer-adoption-yml
@@ -213,7 +213,7 @@ governed_artifacts:
     path: .github/workflows/nkf-consumer-adoption.yml
     digest:
       algorithm: sha-256
-      value: 7d065ec1acf8e4048ca6aa7e784e9f7513dbf5cfdd7db4bb8613e34f4393c1f3
+      value: 322e8caa26651103361de8873e4900c666c9363a8cc0712d621ab917e60957da
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-agents-md
@@ -397,7 +397,7 @@ governed_artifacts:
     path: integrations/ai/agent-hosts.yaml
     digest:
       algorithm: sha-256
-      value: ac4f1ae0b5b1caf69cbecae2e669bd7b41c201550f9e8d678d82e0b70cfd9256
+      value: 8f60a4b1b95898bdb473e36f14f44467c8301ece1a4e4d8c5325b212e0db93ae
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-integrations-ai-nkf-authoring-protocol-md
@@ -645,7 +645,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 12c2e0f06ed0ef21256406b8d95b50ef628ee71ced6fbee23f477bda6ec3b843
+      value: 7533a029053beaccd8f6fec939c2198c5909fd8b5a37a4ba9b5bc0c205bbc7c8
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -661,7 +661,7 @@ governed_artifacts:
     path: release/recommended.json
     digest:
       algorithm: sha-256
-      value: 4bc7809f09eacf91229c4ec6255e888e56d62eaaffdb801b7a9f26b8d7f4e2c9
+      value: 770e5b2d54c6ac315a2b750845ed25bdf6b4193b013309d653c1620f588066ec
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-build-mjs
@@ -677,7 +677,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 12c2e0f06ed0ef21256406b8d95b50ef628ee71ced6fbee23f477bda6ec3b843
+      value: 7533a029053beaccd8f6fec939c2198c5909fd8b5a37a4ba9b5bc0c205bbc7c8
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-adoption-nourd-nkf-adopt-mjs
@@ -685,7 +685,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: a5d125114266d8b44a0960dcbd43b65685c99472791825db410e5d2ce377cb41
+      value: f9255b35474a13098a2187057c2c33ed87e8055e86784ffbfaa8bc57be3b395a
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
@@ -749,7 +749,7 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: 89c98f3c0b9ec6ca0ee9a48ac49428b4a0bc167796a76889d5b00e36c6894167
+      value: aa4a87d069399cd4a4a6d4cba217a820630be143edf4d86bc3e5d0c3a57a3108
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-scripts-verify-onboarding-guidance-mjs
@@ -933,7 +933,7 @@ governed_artifacts:
     path: test/agent-guidance.test.ts
     digest:
       algorithm: sha-256
-      value: 75256e4ab0297d3ba6182cb85970a6e5b69919f21573d7027a7f839fa8260107
+      value: bd339a09c712f4111ece92f53c48cf35cf63a7423003b47aee82ff67a5ba4f60
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-test-adopter-test-ts

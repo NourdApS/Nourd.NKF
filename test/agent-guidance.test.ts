@@ -170,7 +170,7 @@ describe("agent guidance integrity verifier", () => {
     const workflowPath = path.join(project, ".github/workflows/nkf-contracts.yml");
     const originalWorkflow = await readFile(workflowPath, "utf8");
     const changedWorkflow = originalWorkflow.replace(
-      "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+      "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
       "actions/checkout@v4",
     );
     await writeWorkflowAndUpdateDigest(project, changedWorkflow);
@@ -186,7 +186,7 @@ describe("agent guidance integrity verifier", () => {
     const workflowPath = path.join(project, ".github/workflows/nkf-contracts.yml");
     const originalWorkflow = await readFile(workflowPath, "utf8");
     const changedWorkflow = originalWorkflow.replace(
-      "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+      "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
       "example/checkout@0000000000000000000000000000000000000000",
     );
     await writeWorkflowAndUpdateDigest(project, changedWorkflow);
