@@ -187,7 +187,7 @@ governed_artifacts:
     path: .github/workflows/nkf-consumer-adoption.yml
     digest:
       algorithm: sha-256
-      value: 1fcd70caab977d6eaf9b940d7db286c605f7ac53d78abbfba5f333e684ef09ae
+      value: 7d065ec1acf8e4048ca6aa7e784e9f7513dbf5cfdd7db4bb8613e34f4393c1f3
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-agents-md

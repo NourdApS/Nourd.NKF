@@ -25,7 +25,7 @@ jobs:
         run: npm ci
       - name: Build And Verify Adopter
         run: |
-          npm run build:adopter
+          node scripts/build-adopter.mjs
           npm run verify:adopter
       - name: Download Exact Private Release
         env:
