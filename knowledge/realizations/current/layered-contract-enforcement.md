@@ -7,10 +7,10 @@ created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-015
-confirmation_status: partially-confirmed
+confirmation_status: confirmed
 confirmation_decisions:
   - adr-0068
-unconfirmed_scope: The bounded NKF-repository Task-authorization policy and NKF-015 onboarding-guidance successor remain unconfirmed pending the completion Decision.
+  - adr-0070
 ---
 
 # NKF Layered Contract Enforcement
@@ -183,8 +183,9 @@ contract and consumer workflows separately passed without annotations.
 The NKF-015 successor keeps the four-adapter and twelve-surface authoring
 shape, rebinds the authorized bounded root instruction, and verifies the
 agent-led onboarding procedure separately. Its final test, publication, and
-exact-worktree observations are recorded by the NKF-015 completion Evidence;
-they do not confirm this successor by themselves.
+exact-worktree observations are recorded by the NKF-015 completion Evidence.
+ADR 0070 confirms this exact successor separately; the observations do not
+confirm it by themselves.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)

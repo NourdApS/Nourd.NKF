@@ -93,3 +93,4 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
 - [ADR 0069: Agent-Led Initial Onboarding](0069-agent-led-initial-onboarding.md)
+- [ADR 0070: Confirm Agent-Led Initial Onboarding](0070-confirm-agent-led-initial-onboarding.md)

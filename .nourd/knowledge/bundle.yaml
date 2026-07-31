@@ -60,6 +60,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-015-agent-led-initial-onboarding-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-015-publication-and-verification.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
@@ -132,7 +134,7 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-016-deliver-acceptance-binding-verification.md
     kind: task
-  - path: tasks/active/NKF-015-agent-led-initial-onboarding.md
+  - path: tasks/completed/NKF-015-agent-led-initial-onboarding.md
     kind: task
 canonical_terms:
   - ADR

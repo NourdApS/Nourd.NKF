@@ -16,7 +16,9 @@ authority-pair, NKF-011 enforcement, NKF-008 release, public-documentation,
 consumer-workflow, NKF-013 completion, and NKF-015 agent-led onboarding audit
 evidence. It also contains the whole-repository development-support audit
 covering agent guidance, human and Knowledge Engine consumption, monolithic
-applications, coherence, completeness, enforcement, and current readiness.
+applications, coherence, completeness, enforcement, and current readiness,
+plus the NKF-015 exact public-projection publication and fresh-clone
+verification Evidence.
 
 ## Decision Inputs
 

@@ -7,10 +7,10 @@ created_at: 2026-07-31T02:26:24Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-015
-confirmation_status: partially-confirmed
+confirmation_status: confirmed
 confirmation_decisions:
   - adr-0068
-unconfirmed_scope: The NKF-015 agent-led onboarding adopter, recommendation, and public projection remain unconfirmed pending publication, verification, and the completion Decision.
+  - adr-0070
 ---
 
 # NKF Release Documentation And Adoption
@@ -22,7 +22,8 @@ release, documentation, and adoption direction accepted by ADR 0064 and
 extended for initial onboarding by ADR 0067. ADR 0066 confirms the predecessor
 revision. ADR 0068 confirms this exact audited successor after its separate
 local, remote, and public observations were recorded. ADR 0069 adopts the
-agent-led successor now implemented as an unconfirmed NKF-015 revision.
+agent-led successor. ADR 0070 confirms the exact NKF-015 revision after its
+publication and fresh-clone verification were recorded separately.
 
 ## Governed Meaning Realized
 
@@ -159,13 +160,20 @@ files plus itself to the private source commit and adopter SHA-256
 A second fresh clone matched every staged byte and both example projects
 passed with zero diagnostics.
 
-The local NKF-015 successor replaces deterministic semantic eligibility with
-the agent-led procedure adopted by ADR 0069. Its built public adopter SHA-256
-is `c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387`.
-The deliberate recommendation now binds that adopter while retaining the
-unchanged confirmed native archive, checker, and authority digests. This
-interim revision does not claim that the successor public projection has
-already been published or remotely verified.
+The NKF-015 successor replaces deterministic semantic eligibility with the
+agent-led procedure adopted by ADR 0069. Its private source commit is
+`53ae5217f68731d953f3bf616a578adeb033bb03`. The deliberate recommendation
+binds public adopter SHA-256
+`c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387`
+while retaining the unchanged confirmed native archive, checker, and authority
+digests. The allowlisted public projection was observed at exact commit
+`a14766ca1bdc67bfd8fb9e6d73355fc019017a90`; its generated publication
+manifest SHA-256 is
+`40c77be1543d916946ba09733b2264033f75e7c7e9e4963b5f15291b89dfe2b5`.
+A fresh clone matched all 28 staged files and every one of the 27
+manifest-bound digests. Both complete example projects passed the confirmed
+checker with zero diagnostics. The NKF-015 publication Evidence owns those
+time-bound observations.
 
 Live URLs, run identifiers, timestamps, visibility, and publication state
 remain owned by their Evidence and external systems rather than by this
@@ -190,11 +198,12 @@ private-path or credential material, and conformance of both complete
 published Product and Technology example projects. Deterministic build
 verification compares two adopter builds and the committed output.
 
-The NKF-015 local candidate passes nineteen test files with 136 tests,
+The NKF-015 successor passes nineteen test files with 136 tests,
 deterministic checker and adopter builds, guidance verification, public
 documentation verification, and full-bundle self-validation once the
-deliberate recommendation is bound to the successor adopter. These checks do
-not publish or confirm the revision.
+deliberate recommendation is bound to the successor adopter. The public
+projection was separately published and freshly verified. These observations
+do not confirm the revision; ADR 0070 supplies the separate confirmation act.
 
 The predecessor clean exact release source commit, reproducible archive construction,
 independent verification, private prerelease upload, remote re-download,

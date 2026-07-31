@@ -2,15 +2,15 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the unconfirmed NKF-015 agent-led initial-onboarding successor and its deferred NKF-014 extension boundary.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the confirmed NKF-015 agent-led initial-onboarding successor and its deferred NKF-014 extension boundary.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-015
-confirmation_status: partially-confirmed
+confirmation_status: confirmed
 confirmation_decisions:
   - adr-0068
-unconfirmed_scope: The NKF-015 agent-led initial-onboarding successor remains unconfirmed pending its complete audit and confirmation Decision.
+  - adr-0070
 ---
 
 # NKF Current System
@@ -81,11 +81,13 @@ audit, clean exact-commit workflows, and fresh public-byte verification were
 recorded separately.
 
 [ADR 0069](../decisions/0069-agent-led-initial-onboarding.md) supersedes the
-deterministic semantic eligibility portion of ADR 0067. The current candidate
+deterministic semantic eligibility portion of ADR 0067. The current
 workflow assigns repository assessment to the portable onboarding skill,
 requires human confirmation for Category 2, and retains deterministic source
-binding, sealing, transaction, and validation. Its exact successor Realization
-remains unconfirmed while NKF-015 is active.
+binding, sealing, transaction, and validation.
+[ADR 0070](../decisions/0070-confirm-agent-led-initial-onboarding.md) confirms
+the exact audited and published NKF-015 successor while keeping consumer
+onboarding outside the completed Task.
 
 ## Durable Mapping
 
@@ -135,16 +137,16 @@ Draft NKF Candidate Or Complete Rollback
 | Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0058 |
 | Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas; bundle kind vocabulary extended | ADR 0059 |
 | Checker library and CLI | `src/checker/`, `src/cli.ts` | Governed frontmatter, references, and prior checker behavior implemented | ADR 0059 |
-| Fixtures and tests | `fixtures/`, `test/` | NKF-015 adds Category 1 and Category 2 assessment, mandatory confirmation, negative override, numeric and frontmatter neutrality, complete project-source drift, and revised guidance coverage over the confirmed NKF-013 suite | NKF-015 successor remains unconfirmed over ADR 0068 |
+| Fixtures and tests | `fixtures/`, `test/` | NKF-015 adds Category 1 and Category 2 assessment, mandatory confirmation, negative override, numeric and frontmatter neutrality, complete project-source drift, and revised guidance coverage over the confirmed NKF-013 suite | ADR 0070 over ADR 0068 |
 | Build artifact | `dist/nourd-nkf-checker.mjs` | Deterministically verified local build | ADR 0059 |
 | Self-host declaration | `.nourd/knowledge/` | Migrated Technology bundle with complete source and artifact bindings | ADR 0059 |
 | Neutral authoring procedure | `integrations/ai/nkf-authoring-protocol.md` | Implemented vendor-neutral CommonMark protocol | ADR 0061 |
-| Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Implemented for twelve explicit host surfaces with unknown-surface fail-closed policy; the root adapter also contains an NKF-repository-only Task-authorization policy outside portable NKF meaning | ADR 0061 predecessor; NKF-015 successor remains unconfirmed |
+| Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Implemented for twelve explicit host surfaces with unknown-surface fail-closed policy; the root adapter also contains an NKF-repository-only Task-authorization policy outside portable NKF meaning | ADR 0070 over ADR 0061 |
 | Project enforcement command | `package.json` | `npm run nkf:check` orchestrates adopted-repository guidance, pre-adoption guidance verification, engineering, build, and bundle checks | ADR 0068 successor over ADR 0061 |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; NKF-013 successor run `30628878063` passed on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` without annotations; required protection remains deferred to NKF-012 | ADR 0068 successor over ADRs 0061–0063; run remains external Evidence |
-| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Retains inspect, seal, onboard, staged validation, rollback, and receipt commands; NKF-015 removes semantic eligibility claims, adds complete mechanical capture and plan-bound assessment reporting | NKF-015 successor remains unconfirmed over ADR 0068 and ADR 0066 |
-| Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge assessment, Category 2 human confirmation, complete mechanical source manifest, native generation, whole-project transaction, and NKF-014 semantic handoff implemented | NKF-015 successor remains unconfirmed; ADR 0068 confirms the predecessor |
-| Public documentation | `public-docs/` | Local candidate projection explains the agent-led workflow and mechanical enforcement boundary; the previously published NKF-013 projection remains the latest externally observed publication | NKF-015 successor unconfirmed and unpublished; ADR 0068 covers predecessor publication Evidence |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; NKF-015 run `30655408945` passed on exact source commit `53ae5217f68731d953f3bf616a578adeb033bb03`; required protection remains deferred to NKF-012 | ADR 0070 successor over ADRs 0061–0063; run remains external Evidence |
+| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Retains inspect, seal, onboard, staged validation, rollback, and receipt commands; NKF-015 removes semantic eligibility claims, adds complete mechanical capture and plan-bound assessment reporting | ADR 0070 over ADRs 0068 and 0066 |
+| Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge assessment, Category 2 human confirmation, complete mechanical source manifest, native generation, whole-project transaction, and NKF-014 semantic handoff implemented | ADR 0070; ADR 0068 confirms the predecessor |
+| Public documentation | `public-docs/` | The NKF-015 projection at public commit `a14766ca1bdc67bfd8fb9e6d73355fc019017a90` explains the agent-led workflow and mechanical enforcement boundary; a fresh clone matched all 28 staged files | ADR 0070; publication remains external Evidence |
 | Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Unborn-Git Product and Technology onboarding, generated package command, existing install, no-update, and tamper rejection passed locally and in run `30628889305` on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` | ADR 0068; run remains external Evidence |
 | Latest result | `.nourd/validation-result.json` | Persists the latest full-bundle observation for its exact validated snapshot; the result may become stale immediately when a Governed Validation Input changes | Conformance observation only |
 | Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Rebound, reproducibly built, published as the exact private prerelease, re-downloaded, and independently verified | ADR 0059 mechanism; ADR 0065 inputs; ADR 0066 successor |
@@ -257,10 +259,18 @@ projection was freshly cloned and matched, the completion audit records no
 unresolved material finding, and ADR 0068 separately confirms the exact
 successor Realizations. These time-bound external observations remain
 historical predecessor Evidence; they do not become authority merely because
-this account records them. NKF-015 now owns the unconfirmed agent-led
-successor. No successor public projection is claimed by the current
-candidate. Consumer onboarding is outside NKF-015 and will be performed
-separately by the Human Product Owner.
+this account records them.
+
+NKF-015 is complete for the agent-led Category 1 and Category 2 onboarding
+scope. Private source commit
+`53ae5217f68731d953f3bf616a578adeb033bb03` passed exact-commit run
+`30655408945`. Public commit
+`a14766ca1bdc67bfd8fb9e6d73355fc019017a90` matched its deterministic staging
+projection in a fresh clone, and both public examples passed the confirmed
+checker with no diagnostics. The publication Evidence owns those time-bound
+observations; ADR 0070 separately confirms the exact successor. Consumer
+onboarding is outside NKF-015 and will be performed separately by the Human
+Product Owner.
 
 ## Compatibility Verification And Recovery
 
@@ -286,14 +296,15 @@ archive, pin, adapter, and knowledge tamper rejection. The NKF-013 successor
 passes nineteen test files with 135 tests, deterministic builds, local Product
 and Technology exercises, public-byte verification, and full self-validation.
 
-The isolated NKF-015 candidate passes nineteen test files with 136 tests,
+The NKF-015 successor passes nineteen test files with 136 tests,
 agent and onboarding guidance verification, deterministic checker and adopter
 builds, public documentation verification, and full-bundle self-hosting. Its
 first recommendation check correctly rejected the then-unpublished successor
 adopter and its first exact-worktree check exposed the unbound `AGENTS.md`
 policy. The Human Product Owner subsequently authorized both completion
-boundaries. Publication, remote verification, and confirmation remain separate
-later acts at this interim revision.
+boundaries. The successor was published and freshly verified, and its private
+source commit passed the exact-commit workflow. Those observations remain
+separate from ADR 0070's confirmation act.
 
 The separate
 [NKF-011 Realization Audit](../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
@@ -326,7 +337,11 @@ The
 records two repaired findings, the isolated passing candidate checks, and the
 original release, instruction-candidate, and consumer-operation boundaries.
 Its post-audit resolution records the later authority changes. It does not
-confirm the successor Realization.
+confirm the successor Realization. The separate
+[NKF-015 Publication And Verification Evidence](../evidence/audits/nkf-015-publication-and-verification.md)
+records the exact source and public commits, fresh-clone comparison, manifest
+verification, example checks, and successful exact-source workflow. ADR 0070
+supplies confirmation rather than deriving it from either Evidence record.
 
 Recovery uses Git history, immutable Decision and Evidence provenance,
 predecessor digests, explicit successor Decisions, deterministic rebuilding,

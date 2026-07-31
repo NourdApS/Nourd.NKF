@@ -4,10 +4,12 @@ type: realization
 title: NKF Agent-Led Initial Onboarding
 summary: This Realization maps the implemented agent-led Category 1 and Category 2 workflow, complete mechanical project snapshot, plan-bound confirmation, deterministic sealing, and existing transaction and validation boundary.
 created_at: 2026-07-31T14:16:33Z
-record_lifecycle: living
-record_status: draft
+record_lifecycle: immutable
+record_status: accepted
 task: NKF-015
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0070
 ---
 
 # NKF Agent-Led Initial Onboarding
@@ -18,9 +20,9 @@ This is the current implementation Realization for the onboarding direction
 adopted by ADR 0069. It describes derived pre-adoption guidance, tooling,
 tests, and public documentation. It does not revise native NKF 0.1 meaning.
 
-The revision is implemented as a candidate and remains unconfirmed until the
-NKF-015 audit, complete repository validation, and a separate confirmation act
-cover its exact bytes. The exact NKF-013 Realization revision confirmed by ADR
+ADR 0070 confirms this exact successor after the NKF-015 audit, complete
+repository validation, public projection, and fresh-clone verification were
+recorded separately. The exact NKF-013 Realization revision confirmed by ADR
 0068 remains historical provenance rather than being rewritten as if this
 direction existed earlier.
 
@@ -134,8 +136,14 @@ knowledge merely because deterministic tooling validates their shape.
 
 Release availability, public-repository publication, workflow runs, Git
 history, branch protection, and consumer acceptance remain in their owning
-systems. No successor release or public publication is claimed by this
-candidate Realization.
+systems. The exact private source commit
+`53ae5217f68731d953f3bf616a578adeb033bb03` was pushed to `master`. The
+allowlisted public projection was independently observed at exact commit
+`a14766ca1bdc67bfd8fb9e6d73355fc019017a90`; its manifest binds the
+successor adopter SHA-256
+`c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387`.
+Those external facts are owned by the NKF-015 publication Evidence rather
+than by this confirmation act.
 
 Consumer-repository onboarding is outside this Realization and NKF-015. The
 Human Product Owner removed that operation from the Task and will perform it
@@ -171,5 +179,6 @@ The independent
 [NKF-015 Audit](../../evidence/audits/nkf-015-agent-led-initial-onboarding-audit.md)
 records the exact execution, two repaired findings, and the original blockers.
 Its post-audit resolution records the later authority changes. Confirmation,
-successor publication, and the final exact-worktree `npm run nkf:check` remain
-outstanding at this interim revision.
+the successor publication, and the final exact-worktree check were then
+evidenced separately. ADR 0070 supplies the exact-byte confirmation act rather
+than deriving confirmation from those observations.

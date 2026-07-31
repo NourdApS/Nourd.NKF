@@ -7,7 +7,7 @@ source:
   path: realizations/current/release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
-    value: 3b1ffbaa0a541c5f3b363a6dda90d6e58ec0659d5dfc292c9d0733c5b2e2f126
+    value: 34475ad4d7313a0ca7e7be6d14ebbf53bd419d90e9db118b95c3ee0a2bf3fc4c
 governance:
   lifecycle: immutable
   status: accepted

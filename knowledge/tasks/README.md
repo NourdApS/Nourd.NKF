@@ -12,7 +12,7 @@ status; it does not establish that status.
 
 ## Active
 
-- [NKF-015: Establish Agent-Led Initial Onboarding](active/NKF-015-agent-led-initial-onboarding.md)
+None.
 
 ## Deferred
 
@@ -32,3 +32,4 @@ status; it does not establish that status.
 - [NKF-010: Adopt Governed Frontmatter](completed/NKF-010-governed-frontmatter-adoption.md)
 - [NKF-011: Enforce NKF Contracts](completed/NKF-011-enforce-nkf-contracts.md)
 - [NKF-013: Establish Initial Greenfield Onboarding](completed/NKF-013-initial-greenfield-onboarding.md)
+- [NKF-015: Establish Agent-Led Initial Onboarding](completed/NKF-015-agent-led-initial-onboarding.md)

@@ -7,12 +7,13 @@ source:
   path: realizations/current/agent-led-initial-onboarding.md
   digest:
     algorithm: sha-256
-    value: 82869afa2f8a82ff8b9e428dcb328b6068304c563c234ba8830ed85db19d6406
+    value: c7f00c0a31e76693febc74c11128a79d4794eac77278cd7c5d73a0b1abe76e39
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - codex-technical-reviewer
+    - human-product-owner
 scope:
   root: nkf
 sections:

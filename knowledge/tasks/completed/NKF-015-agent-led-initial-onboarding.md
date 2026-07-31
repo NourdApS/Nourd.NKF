@@ -3,13 +3,13 @@ title: "NKF-015: Establish Agent-Led Initial Onboarding"
 summary: Replace deterministic repository-category assessment in initial NKF onboarding with a portable agent-led inspection and recommendation workflow while retaining deterministic sealing, application, and validation safeguards.
 created_at: 2026-07-31T13:58:38Z
 task_id: NKF-015
-task_status: active
+task_status: completed
 ---
 
 # NKF-015: Establish Agent-Led Initial Onboarding
 
 - **Task:** `NKF-015`
-- **Status:** Active
+- **Status:** Completed
 - **Owner:** Nourd ApS
 - **Decision Authority:** Human Product Owner, Nourd ApS
 - **Predecessor:**
@@ -183,24 +183,26 @@ This Task owns:
 
 ## Current Status
 
-The Task is active. ADR 0069 adopts the exact successor Design. The neutral
-protocol, byte-identical portable skills, complete mechanical source manifest,
-plan-bound assessment and confirmation, deterministic seal and onboarding
-changes, tests, public documentation, current-system candidate, and independent
-audit are implemented.
+The Task is completed. ADR 0069 adopts the exact successor Design, and ADR
+0070 confirms the exact independently audited successor Realizations through
+delegated technical-review authority.
 
-The isolated candidate passes 19 test files and all 136 tests, deterministic
-checker and adopter builds, guidance verification, public-documentation
-verification, and full-bundle self-hosting validation. Two audit findings were
-repaired before handoff.
+The final implementation passes 19 test files and all 136 tests,
+deterministic checker and adopter builds, agent and onboarding guidance
+verification, public-documentation verification, and full-bundle
+self-hosting. Exact private source commit
+`53ae5217f68731d953f3bf616a578adeb033bb03` passed `NKF Contracts` run
+`30655408945`. Exact public commit
+`a14766ca1bdc67bfd8fb9e6d73355fc019017a90` matched its fresh-cloned
+28-file staging projection, every manifest digest matched, and both complete
+examples passed without diagnostics.
 
-The Human Product Owner has authorized the bounded repository-specific
-`AGENTS.md` policy binding as completion cleanup and removed the consumer
-repository exercise from NKF-015. That later consumer operation is not an
-NKF-015 acceptance criterion or completion blocker.
+The bounded repository-specific `AGENTS.md` Task-authorization policy is
+bound as project instruction without becoming portable NKF protocol meaning.
+The unchanged native archive remains recommended alongside the successor
+public adopter. The independent audit records two repaired findings and no
+unresolved material completion finding.
 
-Completion now requires the authorized successor adopter and public-projection
-publication, deliberate recommendation update, fresh verification, exact-byte
-Realization confirmation, Task closure, and final commit and push. No such
-publication, confirmation, completion, or push is claimed by this interim
-revision.
+Consumer-repository onboarding is excluded from NKF-015. The Human Product
+Owner retained that operation for separate manual execution, so no consumer
+mutation or conformance claim is part of this completion.
