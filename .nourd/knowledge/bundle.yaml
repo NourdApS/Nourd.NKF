@@ -90,7 +90,7 @@ non_records:
     kind: navigation
   - path: tasks/README.md
     kind: navigation
-  - path: tasks/active/NKF-011-enforce-nkf-contracts.md
+  - path: tasks/completed/NKF-011-enforce-nkf-contracts.md
     kind: task
   - path: tasks/completed/NKF-010-governed-frontmatter-adoption.md
     kind: task
@@ -107,6 +107,8 @@ non_records:
   - path: tasks/deferred/NKF-008-publish-and-onboard-consumers.md
     kind: task
   - path: tasks/deferred/NKF-009-governed-artifact-secret-scanning.md
+    kind: task
+  - path: tasks/deferred/NKF-012-activate-protected-merge-gate.md
     kind: task
 canonical_terms:
   - ADR
@@ -381,7 +383,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: d0ae56038f282ea5bc490f28483d5442a676f38cb2cd1850f95f276843227eef
+      value: 37ec74d801635d8a0006ca5fb17be8fa7c6581c734ae9cbb1f7a054473096823
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-build-mjs

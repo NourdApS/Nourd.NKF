@@ -76,6 +76,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0052: Dynamic Root Self-Hosting](0052-dynamic-root-self-hosting.md)
 - [ADR 0060: Layered Contract Enforcement](0060-layered-contract-enforcement.md)
 - [ADR 0062: Confirm Remote Workflow Activation Boundary](0062-confirm-remote-workflow-activation-boundary.md)
+- [ADR 0063: Defer Protected Merge Gate](0063-defer-protected-merge-gate.md)
 
 ## Release And Distribution
 

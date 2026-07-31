@@ -12,6 +12,7 @@ confirmation_decisions:
   - adr-0059
   - adr-0061
   - adr-0062
+  - adr-0063
 ---
 
 # NKF Self-Hosting
@@ -50,8 +51,10 @@ ADR 0061 confirms this exact audited local self-hosting successor. Remote
 workflow activation was then observed successfully and its current
 protection limit recorded as remote Evidence. ADR 0062 confirms the exact
 successor Realization account without claiming that the protected gate exists.
+ADR 0063 completes NKF-011 for that delivered enforcement scope and transfers
+protected-gate activation and proof to deferred NKF-012.
 
-The confirmed bundle contains 93 record declarations, 51 explicit non-record
+The confirmed bundle contains 94 record declarations, 52 explicit non-record
 sources, and 72 governed artifacts. Every Markdown file under `knowledge`
 remains represented exactly once.
 
@@ -88,6 +91,8 @@ Self-hosting validates the repository snapshot only. It does not accept NKF,
 confirm the implementation, publish a release, infer remote Git or Github
 state, activate branch protection, or migrate consumers. Remote workflow and
 protection observations remain sourced from Github and retained as Evidence.
+Deferred NKF-012 owns the unavailable required check, mandatory
+pull-request approval, bypass policy, and blocked-invalid-candidate proof.
 
 The persisted result is latest-run state rather than historical knowledge.
 Only the latest current result belongs in `.nourd`; historical audit evidence
@@ -111,5 +116,7 @@ persisted result covers the new Governed Validation Inputs but remains a
 conformance observation rather than the source of confirmation. ADR 0061
 supplies the separate local confirmation act, and ADR 0062 confirms the exact
 successor account of remote workflow activation and the protection blocker.
+ADR 0063 confirms the successor Task allocation and current counts without
+claiming protected enforcement.
 Recovery uses predecessor declarations and reviewed artifact digests in Git
 rather than regenerating semantic content heuristically.

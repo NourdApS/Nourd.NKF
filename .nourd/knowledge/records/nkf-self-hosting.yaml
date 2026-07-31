@@ -7,7 +7,7 @@ source:
   path: realizations/current/self-hosting.md
   digest:
     algorithm: sha-256
-    value: 646a0517975492c576e217d303da4487dca9c268c858761cb177cb4996fe580d
+    value: 352c8ceb894e16029682d7cad4c2103c0e06a6303d58f0b250f5e1ad37fe3885
 governance:
   lifecycle: immutable
   status: accepted

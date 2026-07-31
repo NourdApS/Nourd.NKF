@@ -1,14 +1,15 @@
 ---
 title: "NKF-011: Enforce NKF Contracts"
-summary: Establish layered NKF enforcement that reduces document drift during AI-assisted authoring, provides one standard local validation path, blocks invalid knowledge from merging to the protected default branch, and can later be adopted by consumer repositories without confusing tooling with authority.
+summary: Establish and confirm AI-neutral authoring guidance, deterministic local validation, and exact-commit continuous integration, while transferring the externally blocked protected merge gate to deferred NKF-012.
 created_at: 2026-07-30T23:07:00Z
 task_id: NKF-011
-task_status: active
+task_status: completed
 ---
 
 # NKF-011: Enforce NKF Contracts
 
-- **Status:** Active
+- **Status:** Completed
+- **Completed At:** `2026-07-31T01:40:19Z`
 - **Owner:** Nourd ApS
 - **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** The Human Product Owner has accepted the enforcement
@@ -42,6 +43,18 @@ Enforcement is layered:
 This boundary does not claim that every temporary feature-branch commit is
 valid. It requires that invalid knowledge cannot merge to the protected
 default branch once the required remote protection is activated.
+
+## Closure Boundary
+
+[ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) completes
+NKF-011 for the delivered and confirmed authoring, local-validation, and
+exact-commit workflow scope. It transfers the externally blocked protected
+merge gate to deferred Task `NKF-012`.
+
+This successor allocation does not claim that invalid knowledge is currently
+prevented from reaching `master`. The required `Validate` check, one mandatory
+pull-request approval, explicit bypass policy, and blocked-invalid-candidate
+observation remain required before the protected gate may be claimed.
 
 ## Requirements
 
@@ -174,12 +187,11 @@ records no unresolved material local finding after repairing incomplete
 competing-instruction discovery and strengthening path, command, and workflow
 integrity checks.
 
-The confirmed local implementation passes the canonical gate over 92 record
-declarations, 50 non-record sources, and 72 governed artifacts. ADR 0061
-records the delegated independent confirmation. Git commit state, remote
-workflow activation, required-check protection, review and bypass controls,
-and the blocked invalid pull-request observation remain later Task work
-requiring their applicable authority and operational evidence.
+The confirmed local implementation passes the canonical gate. ADR 0061
+records the delegated independent local confirmation. ADR 0062 confirms the
+successful exact-commit remote workflow observation and the unavailable
+protection boundary. ADR 0063 confirms the final successor Realization account
+and separates the remaining protected-gate work into deferred NKF-012.
 
 ## AI Execution Slice: Activate Remote Enforcement
 
@@ -231,5 +243,36 @@ features.
 
 The remote workflow is therefore active, but the protected hard gate is not.
 No required-check rule, review or bypass enforcement, or blocked invalid pull
-request is claimed. NKF-011 remains Active pending an external plan or
-visibility decision. Release and consumer work remain deferred to NKF-008.
+request is claimed. ADR 0063 completes NKF-011 for the scope actually
+delivered and transfers those blocked requirements to deferred NKF-012.
+Release and consumer work remain deferred to NKF-008.
+
+## AI Execution Slice: Separate Blocked Remote Protection
+
+- **Recorded At:** `2026-07-31T01:40:19Z`
+- **Authority:** The Human Product Owner explicitly directed closure of
+  NKF-011 and transfer of the externally blocked protected-gate work to a new
+  deferred Task. The Human Product Owner subsequently confirmed that the
+  future protected gate must require pull-request approval.
+- **Scope:** Record a successor Decision, complete NKF-011 for its delivered
+  and confirmed enforcement scope, create deferred NKF-012 for the protected
+  merge gate, update current Realizations and navigation, synchronize `.nourd`
+  declarations and digests, and validate the complete bundle.
+- **Non-Claims:** This slice does not activate branch protection, require a
+  check or review in Github, prove that an invalid pull request is blocked,
+  change repository visibility or subscription, publish a release, or onboard
+  a consumer.
+
+### Plan
+
+1. Record the exact successor completion and Task-allocation boundary without
+   rewriting ADRs 0060 through 0062.
+2. Create deferred NKF-012 with the required check, one mandatory
+   pull-request approval, explicit bypass policy, and blocked-invalid-candidate
+   Evidence as its activation criteria.
+3. Complete NKF-011 and update the Task map.
+4. Update the consolidated and supporting current Realizations, preserving the
+   unprotected-branch non-claim and exact confirmation provenance.
+5. Synchronize record declarations, non-record paths, indexes, and governed
+   artifact digests.
+6. Run `npm run nkf:check` and audit the coherent candidate before handoff.

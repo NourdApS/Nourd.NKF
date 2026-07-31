@@ -11,6 +11,7 @@ confirmation_status: confirmed
 confirmation_decisions:
   - adr-0061
   - adr-0062
+  - adr-0063
 ---
 
 # NKF Layered Contract Enforcement
@@ -33,6 +34,11 @@ The implementation applies accepted NKF 0.1 meaning without revising the
 Specification, executable YAML companion, Root Profiles, or conformance
 definition.
 
+ADR 0063 completes NKF-011 for the implemented and confirmed authoring,
+local-validation, and exact-commit workflow scope. It transfers activation
+and proof of the separately governed protected merge gate to deferred
+NKF-012.
+
 ## Durable Mapping
 
 | Responsibility | Durable Artifact | Current Implementation |
@@ -47,7 +53,7 @@ definition.
 | Claude skill path | `.claude/skills/nkf-authoring/SKILL.md` | Byte-identical shared representation |
 | Integrity verifier | `scripts/verify-agent-guidance.mjs` | Closed registry, digest, path, import, skill, workflow, and command checks |
 | Local command | `package.json` | `npm run nkf:check` |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable under the observed private-repository plan |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to NKF-012 |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
 
 The registry records host surfaces rather than model names. Its finite verified
@@ -102,7 +108,10 @@ because the repository is private under the current plan. Required-check
 protection, review ownership, bypass policy, and a blocked intentionally
 invalid candidate therefore remain unavailable and unconfirmed. Completing
 the protected gate requires Github Pro or a separately governed change to
-public repository visibility.
+public repository visibility. Deferred NKF-012 requires the exact `Validate`
+check, at least one approving pull-request review, an explicit bypass policy,
+and an observed blocked invalid candidate when that capability becomes
+available.
 
 The current workflow is self-checking evidence because a candidate can alter
 its own verifier, command, checker, or workflow. Enforcement-surface changes
@@ -133,7 +142,9 @@ records no unresolved material local-implementation finding. These results
 establish conformance Evidence only. ADR 0061 independently confirms the
 local implementation through delegated technical-review authority. ADR 0062
 confirms this exact successor account of the observed remote workflow and
-protection limit. The protected remote hard gate remains unconfirmed.
+protection limit. ADR 0063 confirms this later Task-allocation successor and
+completes NKF-011 without claiming the protected gate. The protected remote
+hard gate remains unconfirmed under deferred NKF-012.
 
 Recovery restores reviewed artifact bytes and registry digests from Git,
 reruns `npm run nkf:check`, and uses a later governed successor when accepted
