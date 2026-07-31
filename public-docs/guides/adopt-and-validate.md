@@ -30,7 +30,7 @@ the latter, then run:
 node nourd-nkf-adopt.mjs install \
   --project /absolute/path/to/project \
   --github-repository kaveh6202/Nourd.NKF \
-  --sha256 <FULL_RELEASE_SHA256>
+  --sha256 0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727
 ```
 
 For an approved offline archive:
@@ -38,8 +38,8 @@ For an approved offline archive:
 ```sh
 node nourd-nkf-adopt.mjs install \
   --project /absolute/path/to/project \
-  --archive /absolute/path/to/nourd-nkf-sha256-<DIGEST>.tar \
-  --sha256 <FULL_RELEASE_SHA256>
+  --archive /absolute/path/to/nourd-nkf-sha256-0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727.tar \
+  --sha256 0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727
 ```
 
 The full digest is the trust anchor. The derived tag and asset name are only

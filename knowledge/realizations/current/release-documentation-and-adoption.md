@@ -43,7 +43,10 @@ The release source boundary is:
 - `scripts/release/core.mjs`;
 - `scripts/package-release.mjs`;
 - `scripts/verify-release.mjs`; and
-- `release/recommended.json` after publication.
+- `scripts/verify-recommended-release.mjs`;
+- `release/recommended.json`; and
+- `.gitignore`, which excludes archive products while allowing the reviewed
+  recommendation.
 
 The adopter source and deterministic build boundary is:
 
@@ -110,10 +113,14 @@ current installation and full project validation pass.
 
 ## External Authority And Operational State Boundaries
 
-The previously published prerelease remains a stale historical operational
-fact. The successor release, recommendation, public repository, public commit,
-availability, consumer workflow run, and validation result are not yet
-claimed by this candidate revision.
+The predecessor prerelease remains a stale historical operational fact. The
+successor content-addressed archive is now published as a private prerelease,
+re-downloaded byte-for-byte, independently verified, and recorded in the
+recommended-release catalog. The exact release and local consumer observations
+are retained in NKF-008 Evidence.
+
+The public repository, public commit and availability, and consumer workflow
+run are not yet claimed by this candidate revision.
 
 Live URLs, run identifiers, timestamps, and remote visibility belong in
 Evidence after observation. The current local passing focused tests establish
@@ -132,11 +139,11 @@ links outside the immutable Specification mirror, and forbidden private-path
 or credential material. Deterministic build verification compares two adopter
 builds and the committed output.
 
-Release and publication completion still require a clean exact source commit,
-reproducible archive construction, independent verification, private
-prerelease upload, public projection upload, remote byte verification, local
-published-release consumer exercise, Github consumer-workflow execution, and
-a final audit.
+The clean exact release source commit, reproducible archive construction,
+independent verification, private prerelease upload, remote re-download, and
+local published-release consumer exercise are complete. Remaining completion
+work is the public projection upload, remote public-byte verification, Github
+consumer-workflow execution, and final audit.
 
 Installation stages all target bytes, rejects path escapes and symbolic links,
 preserves predecessor bytes, restores replaced files after an interrupted

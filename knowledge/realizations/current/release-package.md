@@ -44,6 +44,13 @@ The rebound configuration and later publication account remain unconfirmed
 until NKF-008 builds and observes the successor release and completes its
 final audit.
 
+NKF-008 has now built the archive reproducibly from exact source commit
+`37c0f557e0b936b1f2e56706c936ef619aacdd9d`, published it as the private
+content-addressed prerelease, re-downloaded identical bytes, independently
+verified them, and recorded the exact recommendation. These are observed
+publication facts; the successor Realization remains partially confirmed
+until the final audit and confirmation Decision.
+
 ## Responsibilities And Ownership Boundaries
 
 Build tooling owns reproducible artifact production. Verification tooling owns

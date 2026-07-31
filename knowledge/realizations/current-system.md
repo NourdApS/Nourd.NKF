@@ -14,7 +14,7 @@ confirmation_decisions:
   - adr-0062
   - adr-0063
   - adr-0065
-unconfirmed_scope: The NKF-008 adopter, public documentation, successor release publication, consumer exercise, and resulting current-system account await live evidence, final audit, and confirmation.
+unconfirmed_scope: The NKF-008 public documentation publication, remote consumer exercise, and resulting current-system account await live evidence, final audit, and confirmation.
 ---
 
 # NKF Current System
@@ -71,9 +71,10 @@ claiming that `master` is protected.
 separate native release, public explanation, and pinned consumer experience.
 [ADR 0065](../decisions/0065-confirm-current-release-bound-checker.md)
 confirms the exact current checker and release inputs. The resulting NKF-008
-implementation remains a partially confirmed current-system candidate until
-the release and documentation are published, the consumer workflow is
-observed, and the final audit and confirmation are complete.
+implementation remains a partially confirmed current-system candidate. The
+successor release and local consumer path are now observed; public
+documentation publication, the consumer workflow, final audit, and
+confirmation remain incomplete.
 
 ## Durable Mapping
 
@@ -126,7 +127,7 @@ Allowlisted Public Documentation Projection
 | Public documentation | `public-docs/` | Allowlisted CommonMark and Mermaid source with exact Specification and adopter mirrors; local verification passes | ADR 0064 direction; publication unconfirmed |
 | Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Local synthetic exercise implemented; remote dispatch waits on the published release | ADR 0064 direction; operational observation pending |
 | Latest result | `.nourd/validation-result.json` | Latest passing full-bundle observation | Conformance only |
-| Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Rebound to the ADR 0065 checker and current exact authority inputs | ADR 0059 mechanism; ADR 0065 inputs; successor publication unconfirmed |
+| Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Rebound, reproducibly built, published as the exact private prerelease, re-downloaded, and independently verified | ADR 0059 mechanism; ADR 0065 inputs; NKF-008 publication Evidence; successor confirmation pending |
 
 Supporting current Realizations provide the detailed mappings:
 
@@ -210,10 +211,10 @@ gate, and active exact-commit workflow. Deferred NKF-012 owns the required
 blocked-invalid-candidate observation. No release, deployment, or
 external-consumer migration is part of either enforcement Task.
 
-NKF-008 is Active. Its current implementation files and focused tests exist
-locally, but no successor release, recommendation catalog, public docs
-repository, or consumer workflow run is claimed before direct remote
-observation.
+NKF-008 is Active. The successor private release and recommendation are
+observed, and the published bytes pass the isolated local consumer exercise.
+No public docs repository or consumer workflow run is claimed before direct
+remote observation.
 
 ## Compatibility Verification And Recovery
 
@@ -228,8 +229,8 @@ NKF-011 adds the adapter verifier, eighteen focused positive and negative cases,
 the unified `npm run nkf:check` command, and additional governed integration
 artifacts.
 
-The self-host candidate now contains 98 record declarations, 53 explicit
-non-record sources, and 92 governed artifacts. Focused NKF-008 checks pass
+The self-host candidate now contains 98 record declarations, 54 explicit
+non-record sources, and 95 governed artifacts. Focused NKF-008 checks pass
 eighteen test files with 126 tests, deterministic checker and adopter builds,
 the public-documentation verifier, Product and Technology installation,
 same-pin no-update, and representative tamper rejection. Full canonical

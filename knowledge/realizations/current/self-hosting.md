@@ -58,7 +58,7 @@ protected-gate activation and proof to deferred NKF-012.
 NKF-008 adds its adopted Design, Decisions, candidate Realization, audit
 Evidence, release rebinding, adopter, public-documentation projection, focused
 tests, and consumer exercise. The current candidate bundle contains 98 record
-declarations, 53 explicit non-record sources, and 92 governed artifacts.
+declarations, 54 explicit non-record sources, and 95 governed artifacts.
 Every Markdown file under `knowledge` remains represented exactly once. The
 new successor self-host account is partially confirmed until NKF-008 completes
 live publication and its final audit.

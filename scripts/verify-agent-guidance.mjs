@@ -532,7 +532,7 @@ export async function verifyAgentGuidance(projectRootInput) {
   const packageManifest = JSON.parse(packageBytes.toString("utf8"));
   const expectedScripts = {
     build: "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
-    check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
+    check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs && npm run verify:recommended-release",
     "nkf:check": "npm run verify:agent-guidance && npm run check && npm run validate:self",
     test: "vitest run",
     typecheck: "tsc --noEmit",
@@ -541,6 +541,7 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:adopter": "node scripts/verify-adopter.mjs",
     "verify:build": "node scripts/verify-build.mjs",
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
+    "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
   };
   for (const [name, command] of Object.entries(expectedScripts)) {
     if (packageManifest.scripts?.[name] !== command) {

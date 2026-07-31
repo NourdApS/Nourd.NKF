@@ -181,6 +181,21 @@ consumer knowledge.
 10. Run `npm run nkf:check`, commit the coherent completion, push it to the
     verified remote, and observe the exact-commit workflow.
 
+## Execution Checkpoint: Release And Local Consumer
+
+- **Recorded At:** `2026-07-31T02:33:42Z`
+- **Source Commit:**
+  `37c0f557e0b936b1f2e56706c936ef619aacdd9d`
+- **Release SHA-256:**
+  `0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727`
+- **State:** The exact private prerelease is published and independently
+  re-downloaded and verified. The recommended-release catalog is bound. The
+  isolated Product consumer installation, local check, no-update path, and
+  tamper rejection pass.
+- **Still Pending:** Public repository publication and remote verification,
+  Github consumer-workflow execution, final cross-angle audit, successor
+  Realization confirmation, and Task completion.
+
 ## Origin
 
 NKF-003 established the distribution model but intentionally did not publish
