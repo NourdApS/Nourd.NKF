@@ -1,17 +1,19 @@
 contract: nkf.record
-id: nkf-layered-contract-enforcement
+id: nkf-initial-greenfield-onboarding
 type: realization
 body_contract: nkf.realization
-title: NKF Layered Contract Enforcement
+title: NKF Initial Greenfield Onboarding
 source:
-  path: realizations/current/layered-contract-enforcement.md
+  path: realizations/current/initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
-    value: f1a8461f0a418b9c1861cdf8a08378a90c08b7abd751499a67a7b32d6e2e039e
+    value: 2b3f8005addd2ee353c2c5cb4d54ed4feeb9f8772a99217b2314548eff2f73dc
 governance:
   lifecycle: immutable
   status: accepted
-  authority: [human-product-owner]
+  authority:
+    - codex-technical-reviewer
+    - human-product-owner
 scope:
   root: nkf
 sections:
@@ -22,4 +24,7 @@ sections:
   - {id: interfaces-dependencies-locators-and-resolution, heading_path: [Interfaces Dependencies Locators And Resolution], occurrence: 1, authority: accepted-meaning, role: interface, responsibilities: [interfaces-dependencies-locators-and-resolution]}
   - {id: external-authority-and-operational-state-boundaries, heading_path: [External Authority And Operational State Boundaries], occurrence: 1, authority: accepted-meaning, role: boundary, responsibilities: [external-authority-and-operational-state-boundaries]}
   - {id: compatibility-verification-and-recovery, heading_path: [Compatibility Verification And Recovery], occurrence: 1, authority: accepted-meaning, role: recovery, responsibilities: [compatibility-verification-and-recovery]}
-relationships: []
+relationships:
+  - type: realizes
+    target: adr-0067
+    source_section: governed-meaning-realized

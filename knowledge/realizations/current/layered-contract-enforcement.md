@@ -2,17 +2,12 @@
 id: nkf-layered-contract-enforcement
 type: realization
 title: NKF Layered Contract Enforcement
-summary: This Realization maps the confirmed AI-neutral authoring and enforcement implementation, including successful remote workflow activation while keeping the unavailable protected merge gate explicit.
+summary: This Realization maps the unconfirmed NKF-013 successor enforcement command, including separate adopted-repository and pre-adoption guidance verification while preserving the confirmed remote workflow boundary.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-008
-confirmation_status: confirmed
-confirmation_decisions:
-  - adr-0061
-  - adr-0062
-  - adr-0063
-  - adr-0066
+task: NKF-013
+confirmation_status: unconfirmed
 ---
 
 # NKF Layered Contract Enforcement
@@ -46,6 +41,11 @@ command. It also adds a separately dispatched consumer-adoption exercise
 workflow. ADR 0066 confirms the successor package and workflow account after
 the final audit and successful exact-release remote exercise.
 
+NKF-013 adds a separate provider-neutral pre-adoption protocol, portable skill,
+and integrity verifier before the existing authoring procedure. The canonical
+command now verifies both guidance boundaries. The exact local successor and
+its remote workflow behavior remain unconfirmed until NKF-013 completion.
+
 ## Durable Mapping
 
 | Responsibility | Durable Artifact | Current Implementation |
@@ -59,10 +59,14 @@ the final audit and successful exact-release remote exercise.
 | Portable skill | `.agents/skills/nkf-authoring/SKILL.md` | Shared open-format representation |
 | Claude skill path | `.claude/skills/nkf-authoring/SKILL.md` | Byte-identical shared representation |
 | Integrity verifier | `scripts/verify-agent-guidance.mjs` | Closed registry, digest, path, import, skill, workflow, and command checks |
-| Local command | `package.json` | `npm run nkf:check`, now including deterministic adopter and public-documentation verification |
+| Pre-adoption procedure | `integrations/onboarding/nkf-onboarding-protocol.md` | Complete vendor-neutral candidate-workspace and authority handoff |
+| Pre-adoption skills | `.agents/skills/nkf-onboarding/SKILL.md` and `.claude/skills/nkf-onboarding/SKILL.md` | Byte-identical portable discovery routes |
+| Pre-adoption verifier | `scripts/verify-onboarding-guidance.mjs` | Exact skill equality, required procedure, and provider-neutrality checks |
+| Local command | `package.json` | `npm run nkf:check`, now verifying authoring guidance, onboarding guidance, engineering, builds, public projection, release catalog, and full bundle |
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to NKF-012 |
 | Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; Github Actions run `30599982716` passed on exact commit `5a435d54145c31bc091857b1f30520213bdfe6a8` |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
+| Pre-adoption verification | `test/onboarding-guidance.test.ts` and `test/adopter.test.ts` | Two guidance-integrity cases plus eleven initial-onboarding, transaction, path, surface-drift, compatibility, and tamper cases |
 
 The registry records host surfaces rather than model names. Its finite verified
 set is not represented as universal automatic discovery. Unknown surfaces
@@ -92,8 +96,9 @@ The supported handoff interface is:
 npm run nkf:check
 ```
 
-It invokes the agent-guidance verifier, type checking, all tests, deterministic
-build verification, and full-bundle self-validation in that order.
+It invokes the agent-guidance verifier, onboarding-guidance verifier, type
+checking, all tests, deterministic build verification, and full-bundle
+self-validation in that order.
 
 The verifier resolves every registered artifact as a project-contained regular
 file, rejects symlinks in every path component, checks exact SHA-256 bindings,
@@ -126,10 +131,12 @@ its own verifier, command, checker, or workflow. Enforcement-surface changes
 therefore require explicit human review and later successor-Realization
 confirmation even when candidate continuous integration passes.
 
-The current consumer-adoption path is active for deliberately authorized
+The predecessor consumer-adoption path is active for deliberately authorized
 Product and Technology repositories through the separately verified private
 release owned by NKF-008. The workflow observation is retained in
 [consumer workflow Evidence](../../evidence/audits/nkf-008-consumer-workflow-execution.md).
+The local NKF-013 successor extends that exercise to initial Product and
+Technology onboarding; its remote exact-commit observation remains pending.
 
 ## Compatibility Verification And Recovery
 
@@ -145,6 +152,12 @@ not alter the output gate. The NKF-008 successor passes `npm run nkf:check`,
 eighteen test files with 126 tests, deterministic checker and adopter build
 verification, two checker-conformant complete public examples, and
 full-bundle self-validation.
+
+The unconfirmed NKF-013 successor passes nineteen test files with 135 tests,
+the separate onboarding-guidance verifier, a local unborn-Git Product and
+Technology exercise through the installed package command, deterministic
+adopter verification, and full-bundle self-validation. Remote exact-commit
+execution remains a separate pending observation.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)

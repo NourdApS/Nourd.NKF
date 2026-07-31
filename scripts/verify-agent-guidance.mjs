@@ -533,13 +533,14 @@ export async function verifyAgentGuidance(projectRootInput) {
   const expectedScripts = {
     build: "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
     check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs && npm run verify:recommended-release",
-    "nkf:check": "npm run verify:agent-guidance && npm run check && npm run validate:self",
+    "nkf:check": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run check && npm run validate:self",
     test: "vitest run",
     typecheck: "tsc --noEmit",
     "validate:self": "node dist/nourd-nkf-checker.mjs --project . --level full-bundle",
     "verify:agent-guidance": "node scripts/verify-agent-guidance.mjs --project .",
     "verify:adopter": "node scripts/verify-adopter.mjs",
     "verify:build": "node scripts/verify-build.mjs",
+    "verify:onboarding-guidance": "node scripts/verify-onboarding-guidance.mjs --project .",
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
   };

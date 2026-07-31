@@ -52,6 +52,7 @@ No Design is currently classified as Active.
 - [Enforcement And Diagnostics](adopted/enforcement-and-diagnostics.md)
 - [Extension Declaration And Resolution](adopted/extension-declaration-and-resolution.md)
 - [Initial Release Distribution](adopted/initial-release-distribution.md)
+- [Initial Greenfield Onboarding](adopted/initial-greenfield-onboarding.md)
 - [Knowledge Architecture](adopted/knowledge-architecture.md)
 - [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
 - [Native Bundle Serialization](adopted/native-bundle-serialization.md)

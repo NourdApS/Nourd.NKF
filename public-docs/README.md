@@ -112,20 +112,23 @@ so. A passing checker never accepts knowledge.
 
 1. Decide whether the project knowledge root represents a Product or a
    Technology.
-2. Create or migrate the canonical Markdown and `.nourd` declarations under
-   the owning project authority.
-3. Obtain the public adopter and the exact recommended release SHA-256 from
+2. For an empty or small-document greenfield repository, follow
+   [Initial Onboarding](guides/initial-onboarding.md). The adopter inspects the
+   project, creates a review workspace, generates native declarations, and
+   applies only a complete conformant candidate.
+3. For a project whose native NKF bundle is already complete, follow
+   [Adopt And Validate](guides/adopt-and-validate.md) to install the pinned
+   integration without reconstructing the bundle.
+4. Obtain the public adopter and the exact recommended release SHA-256 from
    `reference/publication.json`.
-4. Run the one-operation installation described in
-   [Adopt And Validate](guides/adopt-and-validate.md).
 5. Author through the installed AI-neutral protocol and run
    `npm run nkf:check` before handoff.
 6. Review release updates deliberately; never follow a moving branch or
    `latest`.
 
-The adopter does not invent a project's knowledge or acceptance decisions. It
-installs and verifies the contract tooling around an already declared NKF 0.1
-Product or Technology bundle.
+The onboarder does not invent project meaning or acceptance decisions. Mature
+knowledge history and source-derived reconstruction fail closed for later
+brownfield work instead of being forced through the initial path.
 
 ## Documentation Map
 
@@ -133,6 +136,8 @@ Product or Technology bundle.
   entities, Realizations, and external authority.
 - [Authority And Lifecycle](concepts/authority-and-lifecycle.md) explains
   Markdown, executable contracts, Schemas, checking, and claim boundaries.
+- [Initial Onboarding](guides/initial-onboarding.md) covers empty and
+  small-document Product and Technology repositories.
 - [Adopt And Validate](guides/adopt-and-validate.md) covers installation,
   AI-assisted authoring, local checks, and continuous integration.
 - [Update And Recover](guides/update-and-recover.md) covers no-update, explicit
@@ -156,6 +161,9 @@ Product or Technology bundle.
   `gh` session for the private release or a locally supplied archive.
 - Only Product and Technology are selectable Root Profiles. Common rules are
   shared implementation-independent meaning, not a selectable General root.
+- Initial onboarding supports no more than twenty Markdown files, 256 KiB in
+  total, and 64 KiB per file, and defers mature lifecycle history to later
+  brownfield onboarding.
 - Public presentation metadata, other future root models, validation expiry,
   broader secret scanning, and a protected merge gate remain outside the
   current delivered boundary.

@@ -10,6 +10,8 @@ import { fileURLToPath } from "node:url";
 import { repositoryRoot } from "./build-public-docs.mjs";
 
 export const PUBLIC_FILES = Object.freeze([
+  ".agents/skills/nkf-onboarding/SKILL.md",
+  ".claude/skills/nkf-onboarding/SKILL.md",
   "README.md",
   "concepts/authority-and-lifecycle.md",
   "concepts/topology.md",
@@ -30,9 +32,11 @@ export const PUBLIC_FILES = Object.freeze([
   "examples/technology/project/knowledge/technology.md",
   "examples/technology/project/src/example.ts",
   "guides/adopt-and-validate.md",
+  "guides/initial-onboarding.md",
   "guides/update-and-recover.md",
   "reference/nkf-0.1.md",
   "tools/nourd-nkf-adopt.mjs",
+  "tools/nkf-onboarding-protocol.md",
 ]);
 
 function sha256(bytes) {
@@ -83,6 +87,9 @@ function requireSubjects(combined) {
     "recover",
     "pre-stable",
     "internal",
+    "initial onboarding",
+    "brownfield",
+    "rollback",
   ];
   const lower = combined.toLowerCase();
   for (const subject of subjects) {
@@ -171,6 +178,26 @@ export async function verifyPublicDocs(root = repositoryRoot) {
   );
   if (!publicAdopter.equals(adopter)) {
     throw new Error("The public adopter differs from the deterministic build.");
+  }
+  const onboardingProtocol = await readFile(
+    path.join(root, "integrations/onboarding/nkf-onboarding-protocol.md"),
+  );
+  const publicOnboardingProtocol = await readFile(
+    path.join(docsRoot, "tools/nkf-onboarding-protocol.md"),
+  );
+  if (!publicOnboardingProtocol.equals(onboardingProtocol)) {
+    throw new Error("The public onboarding protocol differs from its governed source.");
+  }
+  const onboardingSkill = await readFile(
+    path.join(root, ".agents/skills/nkf-onboarding/SKILL.md"),
+  );
+  for (const directory of [".agents", ".claude"]) {
+    const publishedSkill = await readFile(
+      path.join(docsRoot, directory, "skills/nkf-onboarding/SKILL.md"),
+    );
+    if (!publishedSkill.equals(onboardingSkill)) {
+      throw new Error(`The public ${directory} onboarding skill differs.`);
+    }
   }
   const markdown = new Map();
   for (const relative of actual.filter((entry) => entry.endsWith(".md"))) {

@@ -2,6 +2,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import {
   appendFile,
   cp,
+  mkdir,
   mkdtemp,
   readFile,
   writeFile,
@@ -9,6 +10,7 @@ import {
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import YAML from "yaml";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -32,14 +34,14 @@ execFileSync("git", ["init", "-b", "master"], {
   stdio: "ignore",
 });
 
-function run(command, extra = [], expected = 0) {
+function runFor(projectRoot, command, extra = [], expected = 0) {
   const result = spawnSync(
     process.execPath,
     [
       path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs"),
       command,
       "--project",
-      project,
+      projectRoot,
       ...extra,
     ],
     { encoding: "utf8" },
@@ -51,12 +53,111 @@ function run(command, extra = [], expected = 0) {
   );
 }
 
+const run = (command, extra = [], expected = 0) =>
+  runFor(project, command, extra, expected);
+
 const releaseArguments = [
   "--archive",
   archivePath,
   "--sha256",
   expectedSha256,
 ];
+
+async function exerciseInitialOnboarding(profile, withDocument) {
+  const root = path.join(parent, `initial-${profile}`);
+  const workspace = path.join(parent, `workspace-${profile}`);
+  await mkdir(root);
+  execFileSync("git", ["init", "-b", "master"], {
+    cwd: root,
+    stdio: "ignore",
+  });
+  if (withDocument) {
+    const source = path.join(root, "knowledge", "notes", "overview.md");
+    await mkdir(path.dirname(source), { recursive: true });
+    await writeFile(
+      source,
+      [
+        "---",
+        `title: ${profile === "product" ? "Product" : "Technology"} Overview`,
+        'summary: "Provides early project navigation without accepted lifecycle meaning."',
+        "created_at: 2026-07-31T11:00:00Z",
+        "---",
+        "",
+        `# ${profile === "product" ? "Product" : "Technology"} Overview`,
+        "",
+        "This early note remains project-owned.",
+        "",
+      ].join("\n"),
+    );
+  }
+  const technology = profile === "technology";
+  const inspected = JSON.parse(
+    runFor(root, "inspect", [
+      "--output",
+      workspace,
+      "--profile",
+      profile,
+      "--root-id",
+      technology ? "exercise-technology" : "exercise-product",
+      "--root-title",
+      technology ? "Exercise Technology" : "Exercise Product",
+      "--task-id",
+      technology ? "EXERCISE-TECH-001" : "EXERCISE-001",
+      "--created-at",
+      "2026-07-31T11:00:00Z",
+    ]).stdout,
+  );
+  if (withDocument) {
+    const planPath = path.join(workspace, "plan.yaml");
+    const plan = YAML.parse(await readFile(planPath, "utf8"));
+    for (const document of plan.documents) {
+      document.representation = {
+        kind: "non_record",
+        non_record_kind: "navigation",
+      };
+    }
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+  }
+  const sealed = JSON.parse(
+    runFor(root, "seal", ["--plan", path.join(workspace, "plan.yaml")]).stdout,
+  );
+  const onboarded = JSON.parse(
+    runFor(root, "onboard", [
+      "--plan",
+      path.join(workspace, "plan.yaml"),
+      ...releaseArguments,
+    ]).stdout,
+  );
+  execFileSync("npm", ["ci", "--ignore-scripts"], {
+    cwd: root,
+    stdio: "ignore",
+  });
+  execFileSync("npm", ["run", "nkf:check"], {
+    cwd: root,
+    stdio: "ignore",
+  });
+  const checked = JSON.parse(runFor(root, "check").stdout);
+  const repeated = JSON.parse(
+    runFor(root, "onboard", [
+      "--plan",
+      path.join(workspace, "plan.yaml"),
+      ...releaseArguments,
+    ]).stdout,
+  );
+  return {
+    eligible: inspected.eligible,
+    sealed: sealed.state,
+    onboarded: onboarded.state,
+    conformance: onboarded.validation.conformance,
+    governing_use: onboarded.validation.governing_use,
+    package_command: "passed",
+    checked: checked.state,
+    repeated: repeated.state,
+  };
+}
+
+const initialProduct = await exerciseInitialOnboarding("product", false);
+const initialTechnology = await exerciseInitialOnboarding("technology", true);
 const installed = JSON.parse(run("install", releaseArguments).stdout);
 const checked = JSON.parse(run("check").stdout);
 const noUpdate = JSON.parse(run("install", releaseArguments).stdout);
@@ -111,6 +212,8 @@ process.stdout.write(
       pin_tamper_rejected: pinTamper.status !== 0,
       integration_tamper_rejected: integrationTamper.status !== 0,
       knowledge_tamper_rejected: knowledgeTamper.status !== 0,
+      initial_product: initialProduct,
+      initial_technology: initialTechnology,
       project_kind: "isolated-synthetic-product",
     },
     null,

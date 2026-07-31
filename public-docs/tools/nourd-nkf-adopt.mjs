@@ -114,17 +114,17 @@ var require_visit = __commonJS({
     visit.BREAK = BREAK;
     visit.SKIP = SKIP;
     visit.REMOVE = REMOVE;
-    function visit_(key, node, visitor, path3) {
-      const ctrl = callVisitor(key, node, visitor, path3);
+    function visit_(key, node, visitor, path4) {
+      const ctrl = callVisitor(key, node, visitor, path4);
       if (identity.isNode(ctrl) || identity.isPair(ctrl)) {
-        replaceNode(key, path3, ctrl);
-        return visit_(key, ctrl, visitor, path3);
+        replaceNode(key, path4, ctrl);
+        return visit_(key, ctrl, visitor, path4);
       }
       if (typeof ctrl !== "symbol") {
         if (identity.isCollection(node)) {
-          path3 = Object.freeze(path3.concat(node));
+          path4 = Object.freeze(path4.concat(node));
           for (let i = 0; i < node.items.length; ++i) {
-            const ci = visit_(i, node.items[i], visitor, path3);
+            const ci = visit_(i, node.items[i], visitor, path4);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -135,13 +135,13 @@ var require_visit = __commonJS({
             }
           }
         } else if (identity.isPair(node)) {
-          path3 = Object.freeze(path3.concat(node));
-          const ck = visit_("key", node.key, visitor, path3);
+          path4 = Object.freeze(path4.concat(node));
+          const ck = visit_("key", node.key, visitor, path4);
           if (ck === BREAK)
             return BREAK;
           else if (ck === REMOVE)
             node.key = null;
-          const cv = visit_("value", node.value, visitor, path3);
+          const cv = visit_("value", node.value, visitor, path4);
           if (cv === BREAK)
             return BREAK;
           else if (cv === REMOVE)
@@ -162,17 +162,17 @@ var require_visit = __commonJS({
     visitAsync.BREAK = BREAK;
     visitAsync.SKIP = SKIP;
     visitAsync.REMOVE = REMOVE;
-    async function visitAsync_(key, node, visitor, path3) {
-      const ctrl = await callVisitor(key, node, visitor, path3);
+    async function visitAsync_(key, node, visitor, path4) {
+      const ctrl = await callVisitor(key, node, visitor, path4);
       if (identity.isNode(ctrl) || identity.isPair(ctrl)) {
-        replaceNode(key, path3, ctrl);
-        return visitAsync_(key, ctrl, visitor, path3);
+        replaceNode(key, path4, ctrl);
+        return visitAsync_(key, ctrl, visitor, path4);
       }
       if (typeof ctrl !== "symbol") {
         if (identity.isCollection(node)) {
-          path3 = Object.freeze(path3.concat(node));
+          path4 = Object.freeze(path4.concat(node));
           for (let i = 0; i < node.items.length; ++i) {
-            const ci = await visitAsync_(i, node.items[i], visitor, path3);
+            const ci = await visitAsync_(i, node.items[i], visitor, path4);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -183,13 +183,13 @@ var require_visit = __commonJS({
             }
           }
         } else if (identity.isPair(node)) {
-          path3 = Object.freeze(path3.concat(node));
-          const ck = await visitAsync_("key", node.key, visitor, path3);
+          path4 = Object.freeze(path4.concat(node));
+          const ck = await visitAsync_("key", node.key, visitor, path4);
           if (ck === BREAK)
             return BREAK;
           else if (ck === REMOVE)
             node.key = null;
-          const cv = await visitAsync_("value", node.value, visitor, path3);
+          const cv = await visitAsync_("value", node.value, visitor, path4);
           if (cv === BREAK)
             return BREAK;
           else if (cv === REMOVE)
@@ -216,23 +216,23 @@ var require_visit = __commonJS({
       }
       return visitor;
     }
-    function callVisitor(key, node, visitor, path3) {
+    function callVisitor(key, node, visitor, path4) {
       if (typeof visitor === "function")
-        return visitor(key, node, path3);
+        return visitor(key, node, path4);
       if (identity.isMap(node))
-        return visitor.Map?.(key, node, path3);
+        return visitor.Map?.(key, node, path4);
       if (identity.isSeq(node))
-        return visitor.Seq?.(key, node, path3);
+        return visitor.Seq?.(key, node, path4);
       if (identity.isPair(node))
-        return visitor.Pair?.(key, node, path3);
+        return visitor.Pair?.(key, node, path4);
       if (identity.isScalar(node))
-        return visitor.Scalar?.(key, node, path3);
+        return visitor.Scalar?.(key, node, path4);
       if (identity.isAlias(node))
-        return visitor.Alias?.(key, node, path3);
+        return visitor.Alias?.(key, node, path4);
       return void 0;
     }
-    function replaceNode(key, path3, node) {
-      const parent = path3[path3.length - 1];
+    function replaceNode(key, path4, node) {
+      const parent = path4[path4.length - 1];
       if (identity.isCollection(parent)) {
         parent.items[key] = node;
       } else if (identity.isPair(parent)) {
@@ -842,10 +842,10 @@ var require_Collection = __commonJS({
     var createNode = require_createNode();
     var identity = require_identity();
     var Node = require_Node();
-    function collectionFromPath(schema, path3, value) {
+    function collectionFromPath(schema, path4, value) {
       let v = value;
-      for (let i = path3.length - 1; i >= 0; --i) {
-        const k = path3[i];
+      for (let i = path4.length - 1; i >= 0; --i) {
+        const k = path4[i];
         if (typeof k === "number" && Number.isInteger(k) && k >= 0) {
           const a = [];
           a[k] = v;
@@ -864,7 +864,7 @@ var require_Collection = __commonJS({
         sourceObjects: /* @__PURE__ */ new Map()
       });
     }
-    var isEmptyPath = (path3) => path3 == null || typeof path3 === "object" && !!path3[Symbol.iterator]().next().done;
+    var isEmptyPath = (path4) => path4 == null || typeof path4 === "object" && !!path4[Symbol.iterator]().next().done;
     var Collection = class extends Node.NodeBase {
       constructor(type, schema) {
         super(type);
@@ -894,11 +894,11 @@ var require_Collection = __commonJS({
        * be a Pair instance or a `{ key, value }` object, which may not have a key
        * that already exists in the map.
        */
-      addIn(path3, value) {
-        if (isEmptyPath(path3))
+      addIn(path4, value) {
+        if (isEmptyPath(path4))
           this.add(value);
         else {
-          const [key, ...rest] = path3;
+          const [key, ...rest] = path4;
           const node = this.get(key, true);
           if (identity.isCollection(node))
             node.addIn(rest, value);
@@ -912,8 +912,8 @@ var require_Collection = __commonJS({
        * Removes a value from the collection.
        * @returns `true` if the item was found and removed.
        */
-      deleteIn(path3) {
-        const [key, ...rest] = path3;
+      deleteIn(path4) {
+        const [key, ...rest] = path4;
         if (rest.length === 0)
           return this.delete(key);
         const node = this.get(key, true);
@@ -927,8 +927,8 @@ var require_Collection = __commonJS({
        * scalar values from their surrounding node; to disable set `keepScalar` to
        * `true` (collections are always returned intact).
        */
-      getIn(path3, keepScalar) {
-        const [key, ...rest] = path3;
+      getIn(path4, keepScalar) {
+        const [key, ...rest] = path4;
         const node = this.get(key, true);
         if (rest.length === 0)
           return !keepScalar && identity.isScalar(node) ? node.value : node;
@@ -946,8 +946,8 @@ var require_Collection = __commonJS({
       /**
        * Checks if the collection includes a value with the key `key`.
        */
-      hasIn(path3) {
-        const [key, ...rest] = path3;
+      hasIn(path4) {
+        const [key, ...rest] = path4;
         if (rest.length === 0)
           return this.has(key);
         const node = this.get(key, true);
@@ -957,8 +957,8 @@ var require_Collection = __commonJS({
        * Sets a value in this collection. For `!!set`, `value` needs to be a
        * boolean to add/remove the item from the set.
        */
-      setIn(path3, value) {
-        const [key, ...rest] = path3;
+      setIn(path4, value) {
+        const [key, ...rest] = path4;
         if (rest.length === 0) {
           this.set(key, value);
         } else {
@@ -1422,7 +1422,7 @@ var require_stringify = __commonJS({
     var identity = require_identity();
     var stringifyComment = require_stringifyComment();
     var stringifyString = require_stringifyString();
-    function createStringifyContext(doc, options2) {
+    function createStringifyContext(doc, options) {
       const opt = Object.assign({
         blockQuote: true,
         commentString: stringifyComment.stringifyComment,
@@ -1442,7 +1442,7 @@ var require_stringify = __commonJS({
         trailingComma: false,
         trueStr: "true",
         verifyAliasOrder: true
-      }, doc.schema.toStringOptions, options2);
+      }, doc.schema.toStringOptions, options);
       let inFlow;
       switch (opt.collectionStyle) {
         case "block":
@@ -1864,10 +1864,10 @@ var require_stringifyCollection = __commonJS({
     var identity = require_identity();
     var stringify = require_stringify();
     var stringifyComment = require_stringifyComment();
-    function stringifyCollection(collection, ctx, options2) {
+    function stringifyCollection(collection, ctx, options) {
       const flow = ctx.inFlow ?? collection.flow;
       const stringify2 = flow ? stringifyFlowCollection : stringifyBlockCollection;
-      return stringify2(collection, ctx, options2);
+      return stringify2(collection, ctx, options);
     }
     function stringifyBlockCollection({ comment, items }, ctx, { blockItemPrefix, flowChars, itemIndent, onChompKeep, onComment }) {
       const { indent, options: { commentString } } = ctx;
@@ -3322,10 +3322,10 @@ var require_stringifyDocument = __commonJS({
     var identity = require_identity();
     var stringify = require_stringify();
     var stringifyComment = require_stringifyComment();
-    function stringifyDocument(doc, options2) {
+    function stringifyDocument(doc, options) {
       const lines = [];
-      let hasDirectives = options2.directives === true;
-      if (options2.directives !== false && doc.directives) {
+      let hasDirectives = options.directives === true;
+      if (options.directives !== false && doc.directives) {
         const dir = doc.directives.toString(doc);
         if (dir) {
           lines.push(dir);
@@ -3335,7 +3335,7 @@ var require_stringifyDocument = __commonJS({
       }
       if (hasDirectives)
         lines.push("---");
-      const ctx = stringify.createStringifyContext(doc, options2);
+      const ctx = stringify.createStringifyContext(doc, options);
       const { commentString } = ctx.options;
       if (doc.commentBefore) {
         if (lines.length !== 1)
@@ -3411,7 +3411,7 @@ var require_Document = __commonJS({
     var createNode = require_createNode();
     var directives = require_directives();
     var Document = class _Document {
-      constructor(value, replacer, options2) {
+      constructor(value, replacer, options) {
         this.commentBefore = null;
         this.comment = null;
         this.errors = [];
@@ -3420,8 +3420,8 @@ var require_Document = __commonJS({
         let _replacer = null;
         if (typeof replacer === "function" || Array.isArray(replacer)) {
           _replacer = replacer;
-        } else if (options2 === void 0 && replacer) {
-          options2 = replacer;
+        } else if (options === void 0 && replacer) {
+          options = replacer;
           replacer = void 0;
         }
         const opt = Object.assign({
@@ -3433,17 +3433,17 @@ var require_Document = __commonJS({
           stringKeys: false,
           uniqueKeys: true,
           version: "1.2"
-        }, options2);
+        }, options);
         this.options = opt;
         let { version } = opt;
-        if (options2?._directives) {
-          this.directives = options2._directives.atDocument();
+        if (options?._directives) {
+          this.directives = options._directives.atDocument();
           if (this.directives.yaml.explicit)
             version = this.directives.yaml.version;
         } else
           this.directives = new directives.Directives({ version });
-        this.setSchema(version, options2);
-        this.contents = value === void 0 ? null : this.createNode(value, _replacer, options2);
+        this.setSchema(version, options);
+        this.contents = value === void 0 ? null : this.createNode(value, _replacer, options);
       }
       /**
        * Create a deep copy of this Document and its contents.
@@ -3473,9 +3473,9 @@ var require_Document = __commonJS({
           this.contents.add(value);
       }
       /** Adds a value to the document. */
-      addIn(path3, value) {
+      addIn(path4, value) {
         if (assertCollection(this.contents))
-          this.contents.addIn(path3, value);
+          this.contents.addIn(path4, value);
       }
       /**
        * Create a new `Alias` node, ensuring that the target `node` has the required anchor.
@@ -3494,7 +3494,7 @@ var require_Document = __commonJS({
         }
         return new Alias.Alias(node.anchor);
       }
-      createNode(value, replacer, options2) {
+      createNode(value, replacer, options) {
         let _replacer = void 0;
         if (typeof replacer === "function") {
           value = replacer.call({ "": value }, "", value);
@@ -3505,11 +3505,11 @@ var require_Document = __commonJS({
           if (asStr.length > 0)
             replacer = replacer.concat(asStr);
           _replacer = replacer;
-        } else if (options2 === void 0 && replacer) {
-          options2 = replacer;
+        } else if (options === void 0 && replacer) {
+          options = replacer;
           replacer = void 0;
         }
-        const { aliasDuplicateObjects, anchorPrefix, flow, keepUndefined, onTagObj, tag } = options2 ?? {};
+        const { aliasDuplicateObjects, anchorPrefix, flow, keepUndefined, onTagObj, tag } = options ?? {};
         const { onAnchor, setAnchors, sourceObjects } = anchors.createNodeAnchors(
           this,
           // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
@@ -3534,9 +3534,9 @@ var require_Document = __commonJS({
        * Convert a key and a value into a `Pair` using the current schema,
        * recursively wrapping all values as `Scalar` or `Collection` nodes.
        */
-      createPair(key, value, options2 = {}) {
-        const k = this.createNode(key, null, options2);
-        const v = this.createNode(value, null, options2);
+      createPair(key, value, options = {}) {
+        const k = this.createNode(key, null, options);
+        const v = this.createNode(value, null, options);
         return new Pair.Pair(k, v);
       }
       /**
@@ -3550,14 +3550,14 @@ var require_Document = __commonJS({
        * Removes a value from the document.
        * @returns `true` if the item was found and removed.
        */
-      deleteIn(path3) {
-        if (Collection.isEmptyPath(path3)) {
+      deleteIn(path4) {
+        if (Collection.isEmptyPath(path4)) {
           if (this.contents == null)
             return false;
           this.contents = null;
           return true;
         }
-        return assertCollection(this.contents) ? this.contents.deleteIn(path3) : false;
+        return assertCollection(this.contents) ? this.contents.deleteIn(path4) : false;
       }
       /**
        * Returns item at `key`, or `undefined` if not found. By default unwraps
@@ -3572,10 +3572,10 @@ var require_Document = __commonJS({
        * scalar values from their surrounding node; to disable set `keepScalar` to
        * `true` (collections are always returned intact).
        */
-      getIn(path3, keepScalar) {
-        if (Collection.isEmptyPath(path3))
+      getIn(path4, keepScalar) {
+        if (Collection.isEmptyPath(path4))
           return !keepScalar && identity.isScalar(this.contents) ? this.contents.value : this.contents;
-        return identity.isCollection(this.contents) ? this.contents.getIn(path3, keepScalar) : void 0;
+        return identity.isCollection(this.contents) ? this.contents.getIn(path4, keepScalar) : void 0;
       }
       /**
        * Checks if the document includes a value with the key `key`.
@@ -3586,10 +3586,10 @@ var require_Document = __commonJS({
       /**
        * Checks if the document includes a value at `path`.
        */
-      hasIn(path3) {
-        if (Collection.isEmptyPath(path3))
+      hasIn(path4) {
+        if (Collection.isEmptyPath(path4))
           return this.contents !== void 0;
-        return identity.isCollection(this.contents) ? this.contents.hasIn(path3) : false;
+        return identity.isCollection(this.contents) ? this.contents.hasIn(path4) : false;
       }
       /**
        * Sets a value in this document. For `!!set`, `value` needs to be a
@@ -3606,13 +3606,13 @@ var require_Document = __commonJS({
        * Sets a value in this document. For `!!set`, `value` needs to be a
        * boolean to add/remove the item from the set.
        */
-      setIn(path3, value) {
-        if (Collection.isEmptyPath(path3)) {
+      setIn(path4, value) {
+        if (Collection.isEmptyPath(path4)) {
           this.contents = value;
         } else if (this.contents == null) {
-          this.contents = Collection.collectionFromPath(this.schema, Array.from(path3), value);
+          this.contents = Collection.collectionFromPath(this.schema, Array.from(path4), value);
         } else if (assertCollection(this.contents)) {
-          this.contents.setIn(path3, value);
+          this.contents.setIn(path4, value);
         }
       }
       /**
@@ -3622,7 +3622,7 @@ var require_Document = __commonJS({
        *
        * Overrides all previously set schema options.
        */
-      setSchema(version, options2 = {}) {
+      setSchema(version, options = {}) {
         if (typeof version === "number")
           version = String(version);
         let opt;
@@ -3652,10 +3652,10 @@ var require_Document = __commonJS({
             throw new Error(`Expected '1.1', '1.2' or null as first argument, but found: ${sv}`);
           }
         }
-        if (options2.schema instanceof Object)
-          this.schema = options2.schema;
+        if (options.schema instanceof Object)
+          this.schema = options.schema;
         else if (opt)
-          this.schema = new Schema.Schema(Object.assign(opt, options2));
+          this.schema = new Schema.Schema(Object.assign(opt, options));
         else
           throw new Error(`With a null YAML version, the { schema: Schema } option is required`);
       }
@@ -3685,14 +3685,14 @@ var require_Document = __commonJS({
         return this.toJS({ json: true, jsonArg, mapAsMap: false, onAnchor });
       }
       /** A YAML representation of the document. */
-      toString(options2 = {}) {
+      toString(options = {}) {
         if (this.errors.length > 0)
           throw new Error("Document with errors cannot be stringified");
-        if ("indent" in options2 && (!Number.isInteger(options2.indent) || Number(options2.indent) <= 0)) {
-          const s = JSON.stringify(options2.indent);
+        if ("indent" in options && (!Number.isInteger(options.indent) || Number(options.indent) <= 0)) {
+          const s = JSON.stringify(options.indent);
           throw new Error(`"indent" option must be a positive integer, not ${s}`);
         }
-        return stringifyDocument.stringifyDocument(this, options2);
+        return stringifyDocument.stringifyDocument(this, options);
       }
     };
     function assertCollection(contents) {
@@ -5042,14 +5042,14 @@ var require_compose_node = __commonJS({
       }
       return node;
     }
-    function composeAlias({ options: options2 }, { offset, source, end }, onError) {
+    function composeAlias({ options }, { offset, source, end }, onError) {
       const alias = new Alias.Alias(source.substring(1));
       if (alias.source === "")
         onError(offset, "BAD_ALIAS", "Alias cannot be an empty string");
       if (alias.source.endsWith(":"))
         onError(offset + source.length - 1, "BAD_ALIAS", "Alias ending in : is ambiguous", true);
       const valueEnd = offset + source.length;
-      const re = resolveEnd.resolveEnd(end, valueEnd, options2.strict, onError);
+      const re = resolveEnd.resolveEnd(end, valueEnd, options.strict, onError);
       alias.range = [offset, valueEnd, re.offset];
       if (re.comment)
         alias.comment = re.comment;
@@ -5068,8 +5068,8 @@ var require_compose_doc = __commonJS({
     var composeNode = require_compose_node();
     var resolveEnd = require_resolve_end();
     var resolveProps = require_resolve_props();
-    function composeDoc(options2, directives, { offset, start, value, end }, onError) {
-      const opts = Object.assign({ _directives: directives }, options2);
+    function composeDoc(options, directives, { offset, start, value, end }, onError) {
+      const opts = Object.assign({ _directives: directives }, options);
       const doc = new Document.Document(void 0, opts);
       const ctx = {
         atKey: false,
@@ -5148,7 +5148,7 @@ var require_composer = __commonJS({
       return { comment, afterEmptyLine };
     }
     var Composer = class {
-      constructor(options2 = {}) {
+      constructor(options = {}) {
         this.doc = null;
         this.atDirectives = false;
         this.prelude = [];
@@ -5161,8 +5161,8 @@ var require_composer = __commonJS({
           else
             this.errors.push(new errors.YAMLParseError(pos, code, message));
         };
-        this.directives = new directives.Directives({ version: options2.version || "1.2" });
-        this.options = options2;
+        this.directives = new directives.Directives({ version: options.version || "1.2" });
+        this.options = options;
       }
       decorate(doc, afterDoc) {
         const { comment, afterEmptyLine } = parsePrelude(this.prelude);
@@ -5572,9 +5572,9 @@ var require_cst_visit = __commonJS({
     visit.BREAK = BREAK;
     visit.SKIP = SKIP;
     visit.REMOVE = REMOVE;
-    visit.itemAtPath = (cst, path3) => {
+    visit.itemAtPath = (cst, path4) => {
       let item = cst;
-      for (const [field, index] of path3) {
+      for (const [field, index] of path4) {
         const tok = item?.[field];
         if (tok && "items" in tok) {
           item = tok.items[index];
@@ -5583,23 +5583,23 @@ var require_cst_visit = __commonJS({
       }
       return item;
     };
-    visit.parentCollection = (cst, path3) => {
-      const parent = visit.itemAtPath(cst, path3.slice(0, -1));
-      const field = path3[path3.length - 1][0];
+    visit.parentCollection = (cst, path4) => {
+      const parent = visit.itemAtPath(cst, path4.slice(0, -1));
+      const field = path4[path4.length - 1][0];
       const coll = parent?.[field];
       if (coll && "items" in coll)
         return coll;
       throw new Error("Parent collection not found");
     };
-    function _visit(path3, item, visitor) {
-      let ctrl = visitor(item, path3);
+    function _visit(path4, item, visitor) {
+      let ctrl = visitor(item, path4);
       if (typeof ctrl === "symbol")
         return ctrl;
       for (const field of ["key", "value"]) {
         const token = item[field];
         if (token && "items" in token) {
           for (let i = 0; i < token.items.length; ++i) {
-            const ci = _visit(Object.freeze(path3.concat([[field, i]])), token.items[i], visitor);
+            const ci = _visit(Object.freeze(path4.concat([[field, i]])), token.items[i], visitor);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -5610,10 +5610,10 @@ var require_cst_visit = __commonJS({
             }
           }
           if (typeof ctrl === "function" && field === "key")
-            ctrl = ctrl(item, path3);
+            ctrl = ctrl(item, path4);
         }
       }
-      return typeof ctrl === "function" ? ctrl(item, path3) : ctrl;
+      return typeof ctrl === "function" ? ctrl(item, path4) : ctrl;
     }
     exports.visit = visit;
   }
@@ -7226,15 +7226,15 @@ var require_public_api = __commonJS({
     var identity = require_identity();
     var lineCounter = require_line_counter();
     var parser = require_parser();
-    function parseOptions(options2) {
-      const prettyErrors = options2.prettyErrors !== false;
-      const lineCounter$1 = options2.lineCounter || prettyErrors && new lineCounter.LineCounter() || null;
+    function parseOptions(options) {
+      const prettyErrors = options.prettyErrors !== false;
+      const lineCounter$1 = options.lineCounter || prettyErrors && new lineCounter.LineCounter() || null;
       return { lineCounter: lineCounter$1, prettyErrors };
     }
-    function parseAllDocuments(source, options2 = {}) {
-      const { lineCounter: lineCounter2, prettyErrors } = parseOptions(options2);
+    function parseAllDocuments(source, options = {}) {
+      const { lineCounter: lineCounter2, prettyErrors } = parseOptions(options);
       const parser$1 = new parser.Parser(lineCounter2?.addNewLine);
-      const composer$1 = new composer.Composer(options2);
+      const composer$1 = new composer.Composer(options);
       const docs = Array.from(composer$1.compose(parser$1.parse(source)));
       if (prettyErrors && lineCounter2)
         for (const doc of docs) {
@@ -7245,10 +7245,10 @@ var require_public_api = __commonJS({
         return docs;
       return Object.assign([], { empty: true }, composer$1.streamInfo());
     }
-    function parseDocument(source, options2 = {}) {
-      const { lineCounter: lineCounter2, prettyErrors } = parseOptions(options2);
+    function parseDocument(source, options = {}) {
+      const { lineCounter: lineCounter2, prettyErrors } = parseOptions(options);
       const parser$1 = new parser.Parser(lineCounter2?.addNewLine);
-      const composer$1 = new composer.Composer(options2);
+      const composer$1 = new composer.Composer(options);
       let doc = null;
       for (const _doc of composer$1.compose(parser$1.parse(source), true, source.length)) {
         if (!doc)
@@ -7264,14 +7264,14 @@ var require_public_api = __commonJS({
       }
       return doc;
     }
-    function parse(src, reviver, options2) {
+    function parse(src, reviver, options) {
       let _reviver = void 0;
       if (typeof reviver === "function") {
         _reviver = reviver;
-      } else if (options2 === void 0 && reviver && typeof reviver === "object") {
-        options2 = reviver;
+      } else if (options === void 0 && reviver && typeof reviver === "object") {
+        options = reviver;
       }
-      const doc = parseDocument(src, options2);
+      const doc = parseDocument(src, options);
       if (!doc)
         return null;
       doc.warnings.forEach((warning) => log.warn(doc.options.logLevel, warning));
@@ -7281,29 +7281,29 @@ var require_public_api = __commonJS({
         else
           doc.errors = [];
       }
-      return doc.toJS(Object.assign({ reviver: _reviver }, options2));
+      return doc.toJS(Object.assign({ reviver: _reviver }, options));
     }
-    function stringify(value, replacer, options2) {
+    function stringify(value, replacer, options) {
       let _replacer = null;
       if (typeof replacer === "function" || Array.isArray(replacer)) {
         _replacer = replacer;
-      } else if (options2 === void 0 && replacer) {
-        options2 = replacer;
+      } else if (options === void 0 && replacer) {
+        options = replacer;
       }
-      if (typeof options2 === "string")
-        options2 = options2.length;
-      if (typeof options2 === "number") {
-        const indent = Math.round(options2);
-        options2 = indent < 1 ? void 0 : indent > 8 ? { indent: 8 } : { indent };
+      if (typeof options === "string")
+        options = options.length;
+      if (typeof options === "number") {
+        const indent = Math.round(options);
+        options = indent < 1 ? void 0 : indent > 8 ? { indent: 8 } : { indent };
       }
       if (value === void 0) {
-        const { keepUndefined } = options2 ?? replacer ?? {};
+        const { keepUndefined } = options ?? replacer ?? {};
         if (!keepUndefined)
           return void 0;
       }
       if (identity.isDocument(value) && !_replacer)
-        return value.toString(options2);
-      return new Document.Document(value, _replacer, options2).toString(options2);
+        return value.toString(options);
+      return new Document.Document(value, _replacer, options).toString(options);
     }
     exports.parse = parse;
     exports.parseAllDocuments = parseAllDocuments;
@@ -10472,13 +10472,13 @@ var require_utils = __commonJS({
       buffer.length = 0;
       return true;
     }
-    function consumeHextets(buffer, address, output2) {
+    function consumeHextets(buffer, address, output) {
       if (buffer.length) {
         const hex = stringArrayToHexStripped(buffer);
         if (hex !== "") {
           address.push(hex);
         } else {
-          output2.error = true;
+          output.error = true;
           return false;
         }
         buffer.length = 0;
@@ -10487,7 +10487,7 @@ var require_utils = __commonJS({
     }
     function getIPV6(input) {
       let tokenCount = 0;
-      const output2 = { error: false, address: "", zone: "" };
+      const output = { error: false, address: "", zone: "" };
       const address = [];
       const buffer = [];
       let endipv6Encountered = false;
@@ -10502,11 +10502,11 @@ var require_utils = __commonJS({
           if (endipv6Encountered === true) {
             endIpv6 = true;
           }
-          if (!consume(buffer, address, output2)) {
+          if (!consume(buffer, address, output)) {
             break;
           }
           if (++tokenCount > 7) {
-            output2.error = true;
+            output.error = true;
             break;
           }
           if (i > 0 && input[i - 1] === ":") {
@@ -10515,7 +10515,7 @@ var require_utils = __commonJS({
           address.push(":");
           continue;
         } else if (cursor === "%") {
-          if (!consume(buffer, address, output2)) {
+          if (!consume(buffer, address, output)) {
             break;
           }
           consume = consumeIsZone;
@@ -10526,15 +10526,15 @@ var require_utils = __commonJS({
       }
       if (buffer.length) {
         if (consume === consumeIsZone) {
-          output2.zone = buffer.join("");
+          output.zone = buffer.join("");
         } else if (endIpv6) {
           address.push(buffer.join(""));
         } else {
           address.push(stringArrayToHexStripped(buffer));
         }
       }
-      output2.address = address.join("");
-      return output2;
+      output.address = address.join("");
+      return output;
     }
     function normalizeIPv6(host) {
       if (findToken(host, ":") < 2) {
@@ -10560,9 +10560,9 @@ var require_utils = __commonJS({
       }
       return ind;
     }
-    function removeDotSegments(path3) {
-      let input = path3;
-      const output2 = [];
+    function removeDotSegments(path4) {
+      let input = path4;
+      const output = [];
       let nextSlash = -1;
       let len = 0;
       while (len = input.length) {
@@ -10570,10 +10570,10 @@ var require_utils = __commonJS({
           if (input === ".") {
             break;
           } else if (input === "/") {
-            output2.push("/");
+            output.push("/");
             break;
           } else {
-            output2.push(input);
+            output.push(input);
             break;
           }
         } else if (len === 2) {
@@ -10586,16 +10586,16 @@ var require_utils = __commonJS({
             }
           } else if (input[0] === "/") {
             if (input[1] === "." || input[1] === "/") {
-              output2.push("/");
+              output.push("/");
               break;
             }
           }
         } else if (len === 3) {
           if (input === "/..") {
-            if (output2.length !== 0) {
-              output2.pop();
+            if (output.length !== 0) {
+              output.pop();
             }
-            output2.push("/");
+            output.push("/");
             break;
           }
         }
@@ -10617,8 +10617,8 @@ var require_utils = __commonJS({
             } else if (input[2] === ".") {
               if (input[3] === "/") {
                 input = input.slice(3);
-                if (output2.length !== 0) {
-                  output2.pop();
+                if (output.length !== 0) {
+                  output.pop();
                 }
                 continue;
               }
@@ -10626,14 +10626,14 @@ var require_utils = __commonJS({
           }
         }
         if ((nextSlash = input.indexOf("/", 1)) === -1) {
-          output2.push(input);
+          output.push(input);
           break;
         } else {
-          output2.push(input.slice(0, nextSlash));
+          output.push(input.slice(0, nextSlash));
           input = input.slice(nextSlash);
         }
       }
-      return output2.join("");
+      return output.join("");
     }
     var HOST_DELIMS = { "@": "%40", "/": "%2F", "?": "%3F", "#": "%23", ":": "%3A" };
     var HOST_DELIM_RE = /[@/?#:]/g;
@@ -10647,7 +10647,7 @@ var require_utils = __commonJS({
       if (input.indexOf("%") === -1) {
         return input;
       }
-      let output2 = "";
+      let output = "";
       for (let i = 0; i < input.length; i++) {
         if (input[i] === "%" && i + 2 < input.length) {
           const hex = input.slice(i + 1, i + 3);
@@ -10655,20 +10655,20 @@ var require_utils = __commonJS({
             const normalizedHex = hex.toUpperCase();
             const decoded = String.fromCharCode(parseInt(normalizedHex, 16));
             if (decodeUnreserved && isUnreserved(decoded)) {
-              output2 += decoded;
+              output += decoded;
             } else {
-              output2 += "%" + normalizedHex;
+              output += "%" + normalizedHex;
             }
             i += 2;
             continue;
           }
         }
-        output2 += input[i];
+        output += input[i];
       }
-      return output2;
+      return output;
     }
     function normalizePathEncoding(input) {
-      let output2 = "";
+      let output = "";
       for (let i = 0; i < input.length; i++) {
         if (input[i] === "%" && i + 2 < input.length) {
           const hex = input.slice(i + 1, i + 3);
@@ -10676,36 +10676,36 @@ var require_utils = __commonJS({
             const normalizedHex = hex.toUpperCase();
             const decoded = String.fromCharCode(parseInt(normalizedHex, 16));
             if (decoded !== "." && isUnreserved(decoded)) {
-              output2 += decoded;
+              output += decoded;
             } else {
-              output2 += "%" + normalizedHex;
+              output += "%" + normalizedHex;
             }
             i += 2;
             continue;
           }
         }
         if (isPathCharacter(input[i])) {
-          output2 += input[i];
+          output += input[i];
         } else {
-          output2 += escape(input[i]);
+          output += escape(input[i]);
         }
       }
-      return output2;
+      return output;
     }
     function escapePreservingEscapes(input) {
-      let output2 = "";
+      let output = "";
       for (let i = 0; i < input.length; i++) {
         if (input[i] === "%" && i + 2 < input.length) {
           const hex = input.slice(i + 1, i + 3);
           if (isHexPair(hex)) {
-            output2 += "%" + hex.toUpperCase();
+            output += "%" + hex.toUpperCase();
             i += 2;
             continue;
           }
         }
-        output2 += escape(input[i]);
+        output += escape(input[i]);
       }
-      return output2;
+      return output;
     }
     function recomposeAuthority(component) {
       const uriTokens = [];
@@ -10813,57 +10813,57 @@ var require_schemes = __commonJS({
         wsComponent.secure = void 0;
       }
       if (wsComponent.resourceName) {
-        const [path3, query] = wsComponent.resourceName.split("?");
-        wsComponent.path = path3 && path3 !== "/" ? path3 : void 0;
+        const [path4, query] = wsComponent.resourceName.split("?");
+        wsComponent.path = path4 && path4 !== "/" ? path4 : void 0;
         wsComponent.query = query;
         wsComponent.resourceName = void 0;
       }
       wsComponent.fragment = void 0;
       return wsComponent;
     }
-    function urnParse(urnComponent, options2) {
+    function urnParse(urnComponent, options) {
       if (!urnComponent.path) {
         urnComponent.error = "URN can not be parsed";
         return urnComponent;
       }
       const matches = urnComponent.path.match(URN_REG);
       if (matches) {
-        const scheme = options2.scheme || urnComponent.scheme || "urn";
+        const scheme = options.scheme || urnComponent.scheme || "urn";
         urnComponent.nid = matches[1].toLowerCase();
         urnComponent.nss = matches[2];
-        const urnScheme = `${scheme}:${options2.nid || urnComponent.nid}`;
+        const urnScheme = `${scheme}:${options.nid || urnComponent.nid}`;
         const schemeHandler = getSchemeHandler(urnScheme);
         urnComponent.path = void 0;
         if (schemeHandler) {
-          urnComponent = schemeHandler.parse(urnComponent, options2);
+          urnComponent = schemeHandler.parse(urnComponent, options);
         }
       } else {
         urnComponent.error = urnComponent.error || "URN can not be parsed.";
       }
       return urnComponent;
     }
-    function urnSerialize(urnComponent, options2) {
+    function urnSerialize(urnComponent, options) {
       if (urnComponent.nid === void 0) {
         throw new Error("URN without nid cannot be serialized");
       }
-      const scheme = options2.scheme || urnComponent.scheme || "urn";
+      const scheme = options.scheme || urnComponent.scheme || "urn";
       const nid = urnComponent.nid.toLowerCase();
-      const urnScheme = `${scheme}:${options2.nid || nid}`;
+      const urnScheme = `${scheme}:${options.nid || nid}`;
       const schemeHandler = getSchemeHandler(urnScheme);
       if (schemeHandler) {
-        urnComponent = schemeHandler.serialize(urnComponent, options2);
+        urnComponent = schemeHandler.serialize(urnComponent, options);
       }
       const uriComponent = urnComponent;
       const nss = urnComponent.nss;
-      uriComponent.path = `${nid || options2.nid}:${nss}`;
-      options2.skipEscape = true;
+      uriComponent.path = `${nid || options.nid}:${nss}`;
+      options.skipEscape = true;
       return uriComponent;
     }
-    function urnuuidParse(urnComponent, options2) {
+    function urnuuidParse(urnComponent, options) {
       const uuidComponent = urnComponent;
       uuidComponent.uuid = uuidComponent.nss;
       uuidComponent.nss = void 0;
-      if (!options2.tolerant && (!uuidComponent.uuid || !isUUID(uuidComponent.uuid))) {
+      if (!options.tolerant && (!uuidComponent.uuid || !isUUID(uuidComponent.uuid))) {
         uuidComponent.error = uuidComponent.error || "UUID is not valid.";
       }
       return uuidComponent;
@@ -10963,30 +10963,30 @@ var require_fast_uri = __commonJS({
     "use strict";
     var { normalizeIPv6, removeDotSegments, recomposeAuthority, normalizePercentEncoding, normalizePathEncoding, escapePreservingEscapes, reescapeHostDelimiters, isIPv4, nonSimpleDomain } = require_utils();
     var { SCHEMES, getSchemeHandler } = require_schemes();
-    function normalize(uri, options2) {
+    function normalize(uri, options) {
       if (typeof uri === "string") {
         uri = /** @type {T} */
-        normalizeString(uri, options2);
+        normalizeString(uri, options);
       } else if (typeof uri === "object") {
         uri = /** @type {T} */
-        parse(serialize(uri, options2), options2);
+        parse(serialize(uri, options), options);
       }
       return uri;
     }
-    function resolve(baseURI, relativeURI, options2) {
-      const schemelessOptions = options2 ? Object.assign({ scheme: "null" }, options2) : { scheme: "null" };
+    function resolve(baseURI, relativeURI, options) {
+      const schemelessOptions = options ? Object.assign({ scheme: "null" }, options) : { scheme: "null" };
       const resolved = resolveComponent(parse(baseURI, schemelessOptions), parse(relativeURI, schemelessOptions), schemelessOptions, true);
       schemelessOptions.skipEscape = true;
       return serialize(resolved, schemelessOptions);
     }
-    function resolveComponent(base, relative, options2, skipNormalization) {
+    function resolveComponent(base, relative, options, skipNormalization) {
       const target = {};
       if (!skipNormalization) {
-        base = parse(serialize(base, options2), options2);
-        relative = parse(serialize(relative, options2), options2);
+        base = parse(serialize(base, options), options);
+        relative = parse(serialize(relative, options), options);
       }
-      options2 = options2 || {};
-      if (!options2.tolerant && relative.scheme) {
+      options = options || {};
+      if (!options.tolerant && relative.scheme) {
         target.scheme = relative.scheme;
         target.userinfo = relative.userinfo;
         target.host = relative.host;
@@ -11032,9 +11032,9 @@ var require_fast_uri = __commonJS({
       target.fragment = relative.fragment;
       return target;
     }
-    function equal(uriA, uriB, options2) {
-      const normalizedA = normalizeComparableURI(uriA, options2);
-      const normalizedB = normalizeComparableURI(uriB, options2);
+    function equal(uriA, uriB, options) {
+      const normalizedA = normalizeComparableURI(uriA, options);
+      const normalizedB = normalizeComparableURI(uriB, options);
       return normalizedA !== void 0 && normalizedB !== void 0 && normalizedA.toLowerCase() === normalizedB.toLowerCase();
     }
     function serialize(cmpts, opts) {
@@ -11054,12 +11054,12 @@ var require_fast_uri = __commonJS({
         secure: cmpts.secure,
         error: ""
       };
-      const options2 = Object.assign({}, opts);
+      const options = Object.assign({}, opts);
       const uriTokens = [];
-      const schemeHandler = getSchemeHandler(options2.scheme || component.scheme);
-      if (schemeHandler && schemeHandler.serialize) schemeHandler.serialize(component, options2);
+      const schemeHandler = getSchemeHandler(options.scheme || component.scheme);
+      if (schemeHandler && schemeHandler.serialize) schemeHandler.serialize(component, options);
       if (component.path !== void 0) {
-        if (!options2.skipEscape) {
+        if (!options.skipEscape) {
           component.path = escapePreservingEscapes(component.path);
           if (component.scheme !== void 0) {
             component.path = component.path.split("%3A").join(":");
@@ -11068,12 +11068,12 @@ var require_fast_uri = __commonJS({
           component.path = normalizePercentEncoding(component.path);
         }
       }
-      if (options2.reference !== "suffix" && component.scheme) {
+      if (options.reference !== "suffix" && component.scheme) {
         uriTokens.push(component.scheme, ":");
       }
       const authority = recomposeAuthority(component);
       if (authority !== void 0) {
-        if (options2.reference !== "suffix") {
+        if (options.reference !== "suffix") {
           uriTokens.push("//");
         }
         uriTokens.push(authority);
@@ -11083,7 +11083,7 @@ var require_fast_uri = __commonJS({
       }
       if (component.path !== void 0) {
         let s = component.path;
-        if (!options2.absolutePath && (!schemeHandler || !schemeHandler.absolutePath)) {
+        if (!options.absolutePath && (!schemeHandler || !schemeHandler.absolutePath)) {
           s = removeDotSegments(s);
         }
         if (authority === void 0 && s[0] === "/" && s[1] === "/") {
@@ -11111,7 +11111,7 @@ var require_fast_uri = __commonJS({
       return void 0;
     }
     function parseWithStatus(uri, opts) {
-      const options2 = Object.assign({}, opts);
+      const options = Object.assign({}, opts);
       const parsed = {
         scheme: void 0,
         userinfo: void 0,
@@ -11123,9 +11123,9 @@ var require_fast_uri = __commonJS({
       };
       let malformedAuthorityOrPort = false;
       let isIP = false;
-      if (options2.reference === "suffix") {
-        if (options2.scheme) {
-          uri = options2.scheme + ":" + uri;
+      if (options.reference === "suffix") {
+        if (options.scheme) {
+          uri = options.scheme + ":" + uri;
         } else {
           uri = "//" + uri;
         }
@@ -11171,12 +11171,12 @@ var require_fast_uri = __commonJS({
         } else {
           parsed.reference = "uri";
         }
-        if (options2.reference && options2.reference !== "suffix" && options2.reference !== parsed.reference) {
-          parsed.error = parsed.error || "URI is not a " + options2.reference + " reference.";
+        if (options.reference && options.reference !== "suffix" && options.reference !== parsed.reference) {
+          parsed.error = parsed.error || "URI is not a " + options.reference + " reference.";
         }
-        const schemeHandler = getSchemeHandler(options2.scheme || parsed.scheme);
-        if (!options2.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport)) {
-          if (parsed.host && (options2.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
+        const schemeHandler = getSchemeHandler(options.scheme || parsed.scheme);
+        if (!options.unicodeSupport && (!schemeHandler || !schemeHandler.unicodeSupport)) {
+          if (parsed.host && (options.domainHost || schemeHandler && schemeHandler.domainHost) && isIP === false && nonSimpleDomain(parsed.host)) {
             try {
               parsed.host = new URL("http://" + parsed.host).hostname;
             } catch (e) {
@@ -11205,7 +11205,7 @@ var require_fast_uri = __commonJS({
           }
         }
         if (schemeHandler && schemeHandler.parse) {
-          schemeHandler.parse(parsed, options2);
+          schemeHandler.parse(parsed, options);
         }
       } else {
         parsed.error = parsed.error || "URI can not be parsed.";
@@ -11741,10 +11741,10 @@ var require_core = __commonJS({
     Ajv.ValidationError = validation_error_1.default;
     Ajv.MissingRefError = ref_error_1.default;
     exports.default = Ajv;
-    function checkOptions(checkOpts, options2, msg, log = "error") {
+    function checkOptions(checkOpts, options, msg, log = "error") {
       for (const key in checkOpts) {
         const opt = key;
-        if (opt in options2)
+        if (opt in options)
           this.logger[log](`${msg}: option ${key}. ${checkOpts[opt]}`);
       }
     }
@@ -15051,22 +15051,25 @@ var require_dist2 = __commonJS({
 });
 
 // scripts/adoption/nourd-nkf-adopt.mjs
-var import_yaml = __toESM(require_dist(), 1);
-import { createHash as createHash2 } from "node:crypto";
-import { execFileSync as execFileSync2 } from "node:child_process";
+var import_yaml2 = __toESM(require_dist(), 1);
+import { createHash as createHash3 } from "node:crypto";
+import { execFileSync as execFileSync3 } from "node:child_process";
 import {
-  lstat,
-  mkdir as mkdir2,
+  cp,
+  lstat as lstat2,
+  mkdir as mkdir3,
   mkdtemp as mkdtemp2,
-  readFile as readFile2,
-  realpath,
+  readFile as readFile3,
+  readdir as readdir2,
+  realpath as realpath2,
   rename,
   rm as rm2,
+  rmdir,
   unlink,
-  writeFile as writeFile2
+  writeFile as writeFile3
 } from "node:fs/promises";
 import os2 from "node:os";
-import path2 from "node:path";
+import path3 from "node:path";
 import process2 from "node:process";
 import { fileURLToPath } from "node:url";
 
@@ -15076,21 +15079,1121 @@ var nkf_authoring_protocol_default = "# NKF Authoring Protocol\n\nThis is the co
 // .agents/skills/nkf-authoring/SKILL.md
 var SKILL_default = "---\nname: nkf-authoring\ndescription: Author, change, classify, migrate, audit, or validate NKF-governed knowledge in an adopted repository. Use for any operation affecting a knowledge root, .nourd declarations, NKF lifecycle records, governed artifacts, contract bindings, or NKF validation.\n---\n\n# NKF Authoring\n\nFrom the project root, read and follow\n`integrations/ai/nkf-authoring-protocol.md` before editing governed knowledge.\n\nRun `npm run nkf:check` after one coherent governed change and before handoff.\nTreat the protocol as derived procedure and accepted NKF Specifications as the\nauthority for format meaning.\n";
 
+// scripts/onboarding/core.mjs
+var import_yaml = __toESM(require_dist(), 1);
+import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
+import {
+  lstat,
+  mkdir,
+  readFile,
+  readdir,
+  realpath,
+  writeFile
+} from "node:fs/promises";
+import path from "node:path";
+var ONBOARDING_LIMITS = Object.freeze({
+  markdown_files: 20,
+  markdown_total_bytes: 256 * 1024,
+  markdown_file_bytes: 64 * 1024
+});
+var ROOT_PROFILES = /* @__PURE__ */ new Map([
+  ["product", "nkf.profile.product"],
+  ["technology", "nkf.profile.technology"],
+  ["nkf.profile.product", "nkf.profile.product"],
+  ["nkf.profile.technology", "nkf.profile.technology"]
+]);
+var NON_RECORD_KINDS = /* @__PURE__ */ new Set([
+  "navigation",
+  "task",
+  "evidence",
+  "generated",
+  "redirect",
+  "other"
+]);
+var MATURE_TYPES = /* @__PURE__ */ new Set([
+  "decision",
+  "design",
+  "realization",
+  "specification"
+]);
+var PROJECT_SURFACES = [
+  { path: ".agents/skills/nkf-authoring/SKILL.md", policy: "exclusive" },
+  { path: ".claude/skills/nkf-authoring/SKILL.md", policy: "exclusive" },
+  { path: ".github/copilot-instructions.md", policy: "merge" },
+  { path: ".github/workflows/nkf-contracts.yml", policy: "exclusive" },
+  { path: "AGENTS.md", policy: "merge" },
+  { path: "CLAUDE.md", policy: "merge" },
+  { path: "GEMINI.md", policy: "merge" },
+  { path: "integrations/ai/nkf-authoring-protocol.md", policy: "exclusive" },
+  { path: "integrations/ai/nkf-consumer-integration.yaml", policy: "exclusive" },
+  { path: "package-lock.json", policy: "preserve" },
+  { path: "package.json", policy: "merge" },
+  { path: "scripts/verify-nkf-integration.mjs", policy: "exclusive" }
+];
+var OnboardingError = class extends Error {
+  constructor(code, message, details = {}) {
+    super(message);
+    this.name = "OnboardingError";
+    this.code = code;
+    this.details = details;
+  }
+};
+function fail(code, message, details) {
+  throw new OnboardingError(code, message, details);
+}
+function sha256(bytes) {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+function isObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+function requireObject(value, label) {
+  if (!isObject(value)) fail("NKF-ONBOARDING-PLAN-INVALID", `${label} must be a mapping.`);
+  return value;
+}
+function requireExactKeys(value, allowed, label) {
+  requireObject(value, label);
+  const actual = Object.keys(value).sort();
+  const expected = [...allowed].sort();
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    fail(
+      "NKF-ONBOARDING-PLAN-INVALID",
+      `${label} keys must be exactly: ${expected.join(", ")}.`
+    );
+  }
+}
+function requireString(value, label) {
+  if (typeof value !== "string" || value === "" || value.trim() !== value) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", `${label} must be a non-empty trimmed string.`);
+  }
+  return value;
+}
+function safeRelative(value, label) {
+  const result = requireString(value, label);
+  if (path.isAbsolute(result) || path.win32.isAbsolute(result) || result.includes("\\") || result.split("/").some((part) => part === "" || part === "." || part === "..")) {
+    fail("NKF-ONBOARDING-PATH-INVALID", `${label} must be a safe relative path.`);
+  }
+  return result;
+}
+function requireIdentifier(value, label) {
+  const result = requireString(value, label);
+  if (!/^[a-z0-9]+(?:[._-][a-z0-9]+)*$/.test(result)) {
+    fail(
+      "NKF-ONBOARDING-PLAN-INVALID",
+      `${label} must be a lowercase NKF identifier.`
+    );
+  }
+  return result;
+}
+function requireSha256(value, label) {
+  const result = requireString(value, label);
+  if (!/^[0-9a-f]{64}$/.test(result)) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", `${label} must be a lowercase SHA-256 value.`);
+  }
+  return result;
+}
+function requireUtcInstant(value, label) {
+  const result = requireString(value, label);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(result)) {
+    fail(
+      "NKF-ONBOARDING-PLAN-INVALID",
+      `${label} must be an RFC 3339 UTC instant with whole seconds.`
+    );
+  }
+  const date = new Date(result);
+  if (Number.isNaN(date.getTime()) || date.toISOString().replace(".000Z", "Z") !== result) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", `${label} is not a real calendar instant.`);
+  }
+  return result;
+}
+function inside(root, candidate) {
+  const relative = path.relative(root, candidate);
+  return relative === "" || !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+function utf16Compare(left, right) {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+function serializeYaml(value) {
+  return Buffer.from(import_yaml.default.stringify(value, { lineWidth: 0 }), "utf8");
+}
+function serializeJson(value) {
+  return Buffer.from(`${JSON.stringify(value, null, 2)}
+`, "utf8");
+}
+function parseYaml(bytes, label) {
+  const document = import_yaml.default.parseDocument(bytes.toString("utf8"), { uniqueKeys: true });
+  if (document.errors.length > 0) {
+    fail(
+      "NKF-ONBOARDING-PLAN-INVALID",
+      `${label} is invalid YAML: ${document.errors[0].message}`
+    );
+  }
+  return document.toJS();
+}
+function parseFrontmatter(text) {
+  const normalized = text.replaceAll("\r\n", "\n");
+  if (!normalized.startsWith("---\n")) return null;
+  const end = normalized.indexOf("\n---\n", 4);
+  if (end === -1) return { invalid: true };
+  try {
+    const value = import_yaml.default.parse(normalized.slice(4, end), { uniqueKeys: true });
+    return isObject(value) ? value : { invalid: true };
+  } catch {
+    return { invalid: true };
+  }
+}
+function maturityReason(frontmatter2) {
+  if (frontmatter2 === null || frontmatter2.invalid === true) return null;
+  if (frontmatter2.record_status !== void 0 && frontmatter2.record_status !== "draft") {
+    return `record_status is ${String(frontmatter2.record_status)}`;
+  }
+  if (frontmatter2.design_disposition !== void 0) return "it declares a Design disposition";
+  if (frontmatter2.confirmation_status !== void 0) return "it declares Realization confirmation";
+  if (frontmatter2.task_id !== void 0 || frontmatter2.task_status !== void 0) {
+    return "it declares existing Task lifecycle state";
+  }
+  if (MATURE_TYPES.has(frontmatter2.type)) {
+    return `it declares lifecycle record type ${frontmatter2.type}`;
+  }
+  return null;
+}
+async function resolveProjectRoot(value) {
+  const root = path.resolve(value);
+  const stat = await lstat(root).catch(() => null);
+  if (stat === null || !stat.isDirectory() || stat.isSymbolicLink()) {
+    fail(
+      "NKF-ONBOARDING-PROJECT-INVALID",
+      "The project root must be an existing non-symbolic-link directory."
+    );
+  }
+  return realpath(root);
+}
+async function readRegularNoLinks(root, relative, required = true) {
+  const safe = safeRelative(relative, "Path");
+  const absolute = path.resolve(root, ...safe.split("/"));
+  if (!inside(root, absolute)) fail("NKF-ONBOARDING-PATH-INVALID", `Path escapes: ${safe}`);
+  let cursor = root;
+  for (const [index, part] of safe.split("/").entries()) {
+    cursor = path.join(cursor, part);
+    const stat2 = await lstat(cursor).catch(() => null);
+    if (stat2 === null) {
+      if (required) fail("NKF-ONBOARDING-PATH-MISSING", `Required path is missing: ${safe}`);
+      return null;
+    }
+    if (stat2.isSymbolicLink()) {
+      fail("NKF-ONBOARDING-SYMLINK-PROHIBITED", `Symbolic links are prohibited: ${safe}`);
+    }
+    if (index < safe.split("/").length - 1 && !stat2.isDirectory()) {
+      fail("NKF-ONBOARDING-PATH-INVALID", `A path component is not a directory: ${safe}`);
+    }
+  }
+  const stat = await lstat(absolute);
+  if (!stat.isFile()) fail("NKF-ONBOARDING-PATH-INVALID", `Path is not a regular file: ${safe}`);
+  return readFile(absolute);
+}
+async function markdownInventory(projectRoot, knowledgeRoot) {
+  let absoluteRoot = projectRoot;
+  for (const part of knowledgeRoot.split("/")) {
+    absoluteRoot = path.join(absoluteRoot, part);
+    const stat = await lstat(absoluteRoot).catch(() => null);
+    if (stat === null) return { documents: [], diagnostics: [] };
+    if (!stat.isDirectory() || stat.isSymbolicLink()) {
+      return {
+        documents: [],
+        diagnostics: [{
+          code: stat.isSymbolicLink() ? "NKF-ONBOARDING-SYMLINK-PROHIBITED" : "NKF-ONBOARDING-KNOWLEDGE-ROOT-INVALID",
+          path: knowledgeRoot,
+          message: "Every knowledge-root path component must be a regular project-contained directory."
+        }]
+      };
+    }
+  }
+  const documents = [];
+  const diagnostics = [];
+  const visit = async (directory, prefix = "") => {
+    const entries = await readdir(directory, { withFileTypes: true });
+    entries.sort((left, right) => utf16Compare(left.name, right.name));
+    for (const entry of entries) {
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      const absolute = path.join(directory, entry.name);
+      const direct = await lstat(absolute);
+      if (direct.isSymbolicLink()) {
+        diagnostics.push({
+          code: "NKF-ONBOARDING-SYMLINK-PROHIBITED",
+          path: relative,
+          message: "Symbolic links are prohibited inside the onboarding knowledge root."
+        });
+        continue;
+      }
+      if (direct.isDirectory()) {
+        await visit(absolute, relative);
+        continue;
+      }
+      if (!direct.isFile() || !relative.endsWith(".md")) continue;
+      const bytes = await readFile(absolute);
+      let text;
+      try {
+        text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      } catch {
+        diagnostics.push({
+          code: "NKF-ONBOARDING-MARKDOWN-UTF8",
+          path: relative,
+          message: "Markdown onboarding inputs must be valid UTF-8."
+        });
+        continue;
+      }
+      const reason = maturityReason(parseFrontmatter(text));
+      if (reason !== null) {
+        diagnostics.push({
+          code: "NKF-ONBOARDING-DEFER-NKF-014",
+          path: relative,
+          message: `The document requires mature lifecycle migration because ${reason}; defer to NKF-014.`
+        });
+      }
+      documents.push({ path: relative, bytes: bytes.length, sha256: sha256(bytes) });
+    }
+  };
+  await visit(absoluteRoot);
+  return { documents, diagnostics };
+}
+function gitState(projectRoot) {
+  let topLevel;
+  try {
+    topLevel = execFileSync("git", ["-C", projectRoot, "rev-parse", "--show-toplevel"], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"]
+    }).trim();
+  } catch {
+    return {
+      repository: false,
+      project_is_repository_root: null,
+      default_branch: "master"
+    };
+  }
+  let branch = "master";
+  try {
+    const observed = execFileSync(
+      "git",
+      ["-C", projectRoot, "symbolic-ref", "--short", "HEAD"],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
+    ).trim();
+    if (/^[A-Za-z0-9._/-]+$/.test(observed) && !observed.includes("..")) {
+      branch = observed;
+    }
+  } catch {
+  }
+  return {
+    repository: true,
+    project_is_repository_root: path.resolve(topLevel) === projectRoot,
+    default_branch: branch
+  };
+}
+async function workflowSurfacePaths(projectRoot) {
+  let workflowRoot = projectRoot;
+  for (const part of [".github", "workflows"]) {
+    workflowRoot = path.join(workflowRoot, part);
+    const stat = await lstat(workflowRoot).catch(() => null);
+    if (stat === null) return [];
+    if (!stat.isDirectory() || stat.isSymbolicLink()) {
+      fail(
+        stat.isSymbolicLink() ? "NKF-ONBOARDING-SYMLINK-PROHIBITED" : "NKF-ONBOARDING-PATH-INVALID",
+        ".github/workflows and its parent must be regular directories when they exist."
+      );
+    }
+  }
+  const result = [];
+  for (const entry of await readdir(workflowRoot, { withFileTypes: true })) {
+    if (!entry.isFile() || !/\.ya?ml$/i.test(entry.name)) continue;
+    const relative = `.github/workflows/${entry.name}`;
+    if (!PROJECT_SURFACES.some((surface) => surface.path === relative)) {
+      result.push({ path: relative, policy: "preserve" });
+    }
+  }
+  return result;
+}
+async function projectSurfaceInventory(projectRoot) {
+  const definitions = [...PROJECT_SURFACES, ...await workflowSurfacePaths(projectRoot)].sort((left, right) => utf16Compare(left.path, right.path));
+  const surfaces = [];
+  const diagnostics = [];
+  let packageScripts = [];
+  for (const definition of definitions) {
+    const bytes = await readRegularNoLinks(projectRoot, definition.path, false);
+    if (bytes === null) {
+      surfaces.push({ ...definition, state: "absent" });
+      continue;
+    }
+    surfaces.push({
+      ...definition,
+      state: "file",
+      bytes: bytes.length,
+      sha256: sha256(bytes)
+    });
+    if (definition.path === "package.json") {
+      try {
+        const manifest = JSON.parse(bytes.toString("utf8"));
+        if (!isObject(manifest) || manifest.scripts !== void 0 && !isObject(manifest.scripts)) {
+          throw new Error("package.json or its scripts field is not an object");
+        }
+        packageScripts = Object.keys(manifest.scripts ?? {}).sort(utf16Compare);
+      } catch (error) {
+        diagnostics.push({
+          code: "NKF-ONBOARDING-PACKAGE-INVALID",
+          path: "package.json",
+          message: `The existing package manifest cannot be integrated: ${error.message}.`
+        });
+      }
+    }
+  }
+  return { surfaces, packageScripts, diagnostics };
+}
+function snapshotDigest(knowledgeRoot, documents, projectSurfaces, git) {
+  return sha256(Buffer.from(JSON.stringify({
+    knowledge_root: knowledgeRoot,
+    documents,
+    project_surfaces: projectSurfaces,
+    git
+  }), "utf8"));
+}
+async function inspectOnboardingProject(projectRootInput, knowledgeRootInput = "knowledge") {
+  const projectRoot = await resolveProjectRoot(projectRootInput);
+  const knowledgeRoot = safeRelative(knowledgeRootInput, "knowledge_root");
+  if (knowledgeRoot === ".nourd" || knowledgeRoot.startsWith(".nourd/")) {
+    fail(
+      "NKF-ONBOARDING-KNOWLEDGE-ROOT-INVALID",
+      "The knowledge root cannot be inside the project-root .nourd directory."
+    );
+  }
+  const diagnostics = [];
+  const nourd = await lstat(path.join(projectRoot, ".nourd")).catch(() => null);
+  if (nourd !== null) {
+    diagnostics.push({
+      code: "NKF-ONBOARDING-ALREADY-ADOPTED",
+      path: ".nourd",
+      message: "The project already contains .nourd; use authoring or an explicit migration workflow."
+    });
+  }
+  const inventory = await markdownInventory(projectRoot, knowledgeRoot);
+  diagnostics.push(...inventory.diagnostics);
+  const projectState = await projectSurfaceInventory(projectRoot);
+  diagnostics.push(...projectState.diagnostics);
+  const observedGit = gitState(projectRoot);
+  if (observedGit.repository && !observedGit.project_is_repository_root) {
+    diagnostics.push({
+      code: "NKF-ONBOARDING-GIT-ROOT-MISMATCH",
+      message: "The selected project must be the Git repository root when it is inside a Git worktree."
+    });
+  }
+  const totalBytes = inventory.documents.reduce((sum, item) => sum + item.bytes, 0);
+  if (inventory.documents.length > ONBOARDING_LIMITS.markdown_files) {
+    diagnostics.push({
+      code: "NKF-ONBOARDING-DEFER-NKF-014",
+      message: `The corpus has ${inventory.documents.length} Markdown files; NKF-013 supports at most ${ONBOARDING_LIMITS.markdown_files}.`
+    });
+  }
+  if (totalBytes > ONBOARDING_LIMITS.markdown_total_bytes) {
+    diagnostics.push({
+      code: "NKF-ONBOARDING-DEFER-NKF-014",
+      message: `The corpus has ${totalBytes} Markdown bytes; NKF-013 supports at most ${ONBOARDING_LIMITS.markdown_total_bytes}.`
+    });
+  }
+  for (const document of inventory.documents) {
+    if (document.bytes > ONBOARDING_LIMITS.markdown_file_bytes) {
+      diagnostics.push({
+        code: "NKF-ONBOARDING-DEFER-NKF-014",
+        path: document.path,
+        message: `The document has ${document.bytes} bytes; NKF-013 supports at most ${ONBOARDING_LIMITS.markdown_file_bytes} per file.`
+      });
+    }
+  }
+  const snapshotSha256 = snapshotDigest(
+    knowledgeRoot,
+    inventory.documents,
+    projectState.surfaces,
+    observedGit
+  );
+  return {
+    contract: "nkf.onboarding-inspection",
+    nkf_version: "0.1",
+    eligible: diagnostics.length === 0,
+    knowledge_root: knowledgeRoot,
+    limits: ONBOARDING_LIMITS,
+    observed: {
+      markdown_files: inventory.documents.length,
+      markdown_total_bytes: totalBytes
+    },
+    documents: inventory.documents,
+    project_surfaces: projectState.surfaces,
+    package_scripts: projectState.packageScripts,
+    git: observedGit,
+    snapshot_sha256: snapshotSha256,
+    diagnostics
+  };
+}
+function profile(value) {
+  const resolved = ROOT_PROFILES.get(value);
+  if (resolved === void 0) {
+    fail(
+      "NKF-ONBOARDING-PROFILE-INVALID",
+      "Profile must be product, technology, nkf.profile.product, or nkf.profile.technology."
+    );
+  }
+  return resolved;
+}
+function slug(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+function unusedPath(preferred, occupied) {
+  if (!occupied.has(preferred)) return preferred;
+  const extension = path.posix.extname(preferred);
+  const base = preferred.slice(0, -extension.length);
+  for (let index = 2; index < 1e3; index += 1) {
+    const candidate = `${base}-${index}${extension}`;
+    if (!occupied.has(candidate)) return candidate;
+  }
+  fail("NKF-ONBOARDING-PATH-INVALID", `No available scaffold path for ${preferred}.`);
+}
+async function createOnboardingWorkspace(options) {
+  const projectRoot = await resolveProjectRoot(options.projectRoot);
+  const inspection = await inspectOnboardingProject(projectRoot, options.knowledgeRoot);
+  const outputRoot = path.resolve(options.outputRoot);
+  if (inside(projectRoot, outputRoot)) {
+    fail(
+      "NKF-ONBOARDING-WORKSPACE-INVALID",
+      "The onboarding workspace must be outside the project so inspection does not mutate it."
+    );
+  }
+  const outputStat = await lstat(outputRoot).catch(() => null);
+  if (outputStat !== null) {
+    if (!outputStat.isDirectory() || (await readdir(outputRoot)).length > 0) {
+      fail(
+        "NKF-ONBOARDING-WORKSPACE-INVALID",
+        "The onboarding workspace output must not exist or must be an empty directory."
+      );
+    }
+  }
+  await mkdir(outputRoot, { recursive: true });
+  await writeFile(path.join(outputRoot, "inspection.json"), serializeJson(inspection), { flag: "wx" });
+  if (!inspection.eligible) {
+    return { inspection, plan: null, workspace: outputRoot };
+  }
+  const rootProfile = profile(options.profile);
+  const rootId = requireIdentifier(options.rootId, "root_id");
+  const rootTitle = requireString(options.rootTitle, "root_title");
+  const taskId = requireString(options.taskId, "task_id");
+  if (slug(taskId) === "") {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "task_id must contain at least one letter or number.");
+  }
+  const authority = requireIdentifier(options.authority ?? "human-product-owner", "authority");
+  const createdAt = requireUtcInstant(options.createdAt, "created_at");
+  const occupied = new Set(inspection.documents.map((item) => item.path));
+  const kind = rootProfile === "nkf.profile.product" ? "product" : "technology";
+  const mapPath = unusedPath("README.md", occupied);
+  occupied.add(mapPath);
+  const rootPath = unusedPath(`${kind}.md`, occupied);
+  occupied.add(rootPath);
+  const realizationPath = unusedPath("realizations/current-system.md", occupied);
+  occupied.add(realizationPath);
+  const taskPath = unusedPath(`tasks/active/${slug(taskId)}-onboard-nkf.md`, occupied);
+  occupied.add(taskPath);
+  const specificationPath = kind === "technology" ? unusedPath("specifications/initial-specification.md", occupied) : null;
+  for (const document of inspection.documents) {
+    const source = path.join(projectRoot, ...inspection.knowledge_root.split("/"), ...document.path.split("/"));
+    const target = path.join(outputRoot, "candidate", ...document.path.split("/"));
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, await readFile(source), { flag: "wx" });
+  }
+  const plan = {
+    contract: "nkf.onboarding-plan",
+    nkf_version: "0.1",
+    inspection: {
+      knowledge_root: inspection.knowledge_root,
+      snapshot_sha256: inspection.snapshot_sha256
+    },
+    project: {
+      profile: rootProfile,
+      root: { id: rootId, title: rootTitle },
+      task: { id: taskId, title: `${taskId}: Onboard ${rootTitle} To NKF` },
+      authority,
+      created_at: createdAt,
+      canonical_terms: []
+    },
+    scaffold: {
+      knowledge_map: mapPath,
+      root_record: rootPath,
+      current_system_realization: realizationPath,
+      onboarding_task: taskPath,
+      initial_specification: specificationPath
+    },
+    documents: inspection.documents.map((document) => ({
+      path: document.path,
+      original_sha256: document.sha256,
+      candidate_path: `candidate/${document.path}`,
+      candidate_sha256: document.sha256,
+      representation: { kind: "unresolved" }
+    }))
+  };
+  await writeFile(path.join(outputRoot, "plan.yaml"), serializeYaml(plan), { flag: "wx" });
+  return { inspection, plan, workspace: outputRoot };
+}
+async function readPlan(planPathInput) {
+  const planPath = path.resolve(planPathInput);
+  const stat = await lstat(planPath).catch(() => null);
+  if (stat === null || !stat.isFile() || stat.isSymbolicLink()) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "The onboarding plan must be a regular file.");
+  }
+  const bytes = await readFile(planPath);
+  return { planPath, workspaceRoot: path.dirname(planPath), bytes, plan: parseYaml(bytes, "Plan") };
+}
+function validatePlanEnvelope(plan) {
+  requireExactKeys(
+    plan,
+    ["contract", "nkf_version", "inspection", "project", "scaffold", "documents"],
+    "plan"
+  );
+  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.1") {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.1 onboarding plan.");
+  }
+  requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
+  safeRelative(plan.inspection.knowledge_root, "inspection.knowledge_root");
+  requireSha256(plan.inspection.snapshot_sha256, "inspection.snapshot_sha256");
+  requireExactKeys(
+    plan.project,
+    ["profile", "root", "task", "authority", "created_at", "canonical_terms"],
+    "project"
+  );
+  plan.project.profile = profile(plan.project.profile);
+  requireExactKeys(plan.project.root, ["id", "title"], "project.root");
+  requireIdentifier(plan.project.root.id, "project.root.id");
+  requireString(plan.project.root.title, "project.root.title");
+  requireExactKeys(plan.project.task, ["id", "title"], "project.task");
+  requireString(plan.project.task.id, "project.task.id");
+  requireString(plan.project.task.title, "project.task.title");
+  requireIdentifier(plan.project.authority, "project.authority");
+  requireUtcInstant(plan.project.created_at, "project.created_at");
+  if (!Array.isArray(plan.project.canonical_terms)) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "project.canonical_terms must be an array.");
+  }
+  for (const [index, term] of plan.project.canonical_terms.entries()) {
+    requireString(term, `project.canonical_terms[${index}]`);
+  }
+  if (new Set(plan.project.canonical_terms).size !== plan.project.canonical_terms.length) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "project.canonical_terms must be unique.");
+  }
+  requireExactKeys(
+    plan.scaffold,
+    ["knowledge_map", "root_record", "current_system_realization", "onboarding_task", "initial_specification"],
+    "scaffold"
+  );
+  for (const field of [
+    "knowledge_map",
+    "root_record",
+    "current_system_realization",
+    "onboarding_task"
+  ]) safeRelative(plan.scaffold[field], `scaffold.${field}`);
+  if (plan.project.profile === "nkf.profile.technology") {
+    safeRelative(plan.scaffold.initial_specification, "scaffold.initial_specification");
+  } else if (plan.scaffold.initial_specification !== null) {
+    fail(
+      "NKF-ONBOARDING-PLAN-INVALID",
+      "Product onboarding must set scaffold.initial_specification to null."
+    );
+  }
+  if (!Array.isArray(plan.documents)) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "documents must be an array.");
+  }
+}
+async function sealOnboardingPlan(projectRootInput, planPathInput) {
+  const projectRoot = await resolveProjectRoot(projectRootInput);
+  const loaded = await readPlan(planPathInput);
+  validatePlanEnvelope(loaded.plan);
+  const inspection = await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
+  if (!inspection.eligible || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
+    fail(
+      "NKF-ONBOARDING-INSPECTION-DRIFT",
+      "The project no longer matches the eligible inspection bound by the plan.",
+      { diagnostics: inspection.diagnostics }
+    );
+  }
+  for (const [index, item] of loaded.plan.documents.entries()) {
+    requireObject(item, `documents[${index}]`);
+    safeRelative(item.candidate_path, `documents[${index}].candidate_path`);
+    const bytes = await readRegularNoLinks(loaded.workspaceRoot, item.candidate_path);
+    item.candidate_sha256 = sha256(bytes);
+  }
+  const sealed = serializeYaml(loaded.plan);
+  await writeFile(loaded.planPath, sealed);
+  return {
+    contract: "nkf.onboarding-plan-seal-result",
+    nkf_version: "0.1",
+    state: "sealed",
+    plan_sha256: sha256(sealed),
+    documents: loaded.plan.documents.length
+  };
+}
+function section(id, heading, role, responsibility = id) {
+  return {
+    id,
+    heading_path: [heading],
+    occurrence: 1,
+    authority: "proposal",
+    role,
+    responsibilities: [responsibility]
+  };
+}
+function frontmatter(values) {
+  return `---
+${import_yaml.default.stringify(values, { lineWidth: 0 }).trimEnd()}
+---
+
+`;
+}
+function rootScaffold(plan, kind) {
+  const { id, title } = plan.project.root;
+  const common = {
+    id,
+    type: kind,
+    title,
+    summary: `Provides the initial Draft ${kind === "product" ? "Product" : "Technology"} orientation for ${title} without inventing accepted meaning.`,
+    created_at: plan.project.created_at,
+    record_lifecycle: "living",
+    record_status: "draft"
+  };
+  if (kind === "product") {
+    const headings2 = [
+      ["Product Definition", `${title} is the selected Draft Product knowledge root. Its accepted definition remains unresolved.`],
+      ["Purpose", "The Product purpose remains unresolved until Product authority supplies and accepts it."],
+      ["Vision", "The Product vision remains unresolved until Product authority supplies and accepts it."],
+      ["People Served", "The people served remain unresolved until Product authority identifies them."],
+      ["Needs And Outcomes", "Needs and intended outcomes remain unresolved and are not inferred from source code or filenames."],
+      ["Boundaries", "External systems retain authority for their own data, permissions, and operations."],
+      ["Product Map", "The knowledge map and current-system Realization provide the initial navigable context."]
+    ];
+    return Buffer.from(`${frontmatter(common)}# ${title}
+
+${headings2.map(([heading, body]) => `## ${heading}
+
+${body}
+`).join("\n")}`, "utf8");
+  }
+  const headings = [
+    ["Technology Definition", `${title} is the selected Draft Technology knowledge root. Its accepted definition remains unresolved.`],
+    ["Purpose And Problem", "The reusable technical problem and purpose remain unresolved until Technology authority supplies them."],
+    ["Consumers And Use Contexts", "Consumers and use contexts remain unresolved and are not inferred from repository contents."],
+    ["Capabilities And Contracts", "The initial Draft Specification makes the required contract boundary visible without accepting it."],
+    ["Scope Authority And Boundaries", "The Technology owns only meaning deliberately accepted by its authority and does not own consumer meaning or live operational state."],
+    ["Technology Map", "The knowledge map, Draft Specification, and current-system Realization provide the initial navigable context."],
+    ["Versioning Compatibility And Migration", "Compatibility and migration policy remain unresolved until accepted Technology meaning exists."],
+    ["Distribution Support And Security", "Distribution, support, and security obligations remain unresolved and no secret is introduced by this scaffold."],
+    ["Evolution And Retirement", "Evolution and retirement require later governed Tasks, Designs, Decisions, Specifications, Realizations, and Validation as applicable."]
+  ];
+  return Buffer.from(`${frontmatter(common)}# ${title}
+
+${headings.map(([heading, body]) => `## ${heading}
+
+${body}
+`).join("\n")}`, "utf8");
+}
+function realizationScaffold(plan) {
+  const title = `${plan.project.root.title} Current System`;
+  const values = {
+    id: `${plan.project.root.id}-current-system`,
+    type: "realization",
+    title,
+    summary: `Provides the initial unconfirmed current-system view for ${plan.project.root.title} without reconstructing implementation from source.`,
+    created_at: plan.project.created_at,
+    record_lifecycle: "living",
+    record_status: "draft",
+    task: plan.project.task.id,
+    confirmation_status: "unconfirmed"
+  };
+  const sections = [
+    ["Realization Identity And Kind", `This is the initial consolidated current-system Realization for ${plan.project.root.title}.`],
+    ["Governed Meaning Realized", "Onboarding did not establish accepted meaning or an accepted implementation mapping."],
+    ["Durable Mapping", "No implementation artifact is bound by this initial scaffold. Existing source files, if any, were not interpreted."],
+    ["Responsibilities And Ownership Boundaries", "Project authority owns semantic acceptance. The onboarder owns only deterministic scaffold and integration mechanics."],
+    ["Interfaces Dependencies Locators And Resolution", "The knowledge map links this Realization to the Draft root and onboarding Task."],
+    ["External Authority And Operational State Boundaries", "External systems and live operational state remain outside this Realization."],
+    ["Compatibility Verification And Recovery", "The pinned checker verifies the candidate snapshot. Validation does not confirm this Realization."]
+  ];
+  return Buffer.from(`${frontmatter(values)}# ${title}
+
+${sections.map(([heading, body]) => `## ${heading}
+
+${body}
+`).join("\n")}`, "utf8");
+}
+function specificationScaffold(plan) {
+  const title = `${plan.project.root.title} Initial Specification`;
+  const values = {
+    id: `${plan.project.root.id}-initial-specification`,
+    type: "specification",
+    title,
+    summary: `Makes the required Draft Specification boundary visible for ${plan.project.root.title} without inventing accepted normative meaning.`,
+    created_at: plan.project.created_at,
+    record_lifecycle: "living",
+    record_status: "draft",
+    task: plan.project.task.id
+  };
+  const sections = [
+    ["Specification Definition", "This Draft reserves the initial Technology Specification boundary. No normative contract is accepted by this scaffold."],
+    ["Authority And Normative Status", "The Specification remains Draft and cannot govern consumers until the owning authority accepts an exact revision."],
+    ["Scope And Applicability", "Scope and applicability remain unresolved."],
+    ["Model Vocabulary And Semantics", "Vocabulary and semantics remain unresolved."],
+    ["Requirements Constraints And Interfaces", "Requirements, constraints, and interfaces remain unresolved."],
+    ["Validation And Conformance", "The checker validates structural conformance only and cannot accept this Draft."],
+    ["Versioning Compatibility And Migration", "Versioning, compatibility, and migration remain unresolved."],
+    ["Security Authority And Operational Boundaries", "No secret, external authority, or live operational state is defined here."],
+    ["Unresolved And Deferred Matters", "All substantive Technology contract meaning remains unresolved for later governed work."]
+  ];
+  return Buffer.from(`${frontmatter(values)}# ${title}
+
+${sections.map(([heading, body]) => `## ${heading}
+
+${body}
+`).join("\n")}`, "utf8");
+}
+function taskScaffold(plan) {
+  const values = {
+    title: plan.project.task.title,
+    summary: `Tracks project-authority review and completion of the initial NKF onboarding candidate for ${plan.project.root.title}.`,
+    created_at: plan.project.created_at,
+    task_id: plan.project.task.id,
+    task_status: "active"
+  };
+  return Buffer.from(`${frontmatter(values)}# ${plan.project.task.title}
+
+This Task owns review of the Draft root, unresolved meaning, current-system
+Realization, and the exact candidate produced by onboarding.
+
+## Acceptance Criteria
+
+- Project authority reviews every Draft and unresolved statement.
+- Later accepted meaning follows the governed NKF lifecycle.
+- Validation remains separate from acceptance and Realization confirmation.
+`, "utf8");
+}
+function mapScaffold(plan, existingPaths) {
+  const title = `${plan.project.root.title} Knowledge`;
+  const values = {
+    title,
+    summary: `Provides navigation to the initial governed knowledge for ${plan.project.root.title}.`,
+    created_at: plan.project.created_at
+  };
+  const links = [
+    [plan.scaffold.root_record, "Draft Root"],
+    [plan.scaffold.current_system_realization, "Current System Realization"],
+    [plan.scaffold.onboarding_task, "Onboarding Task"]
+  ];
+  if (plan.scaffold.initial_specification !== null) {
+    links.splice(1, 0, [plan.scaffold.initial_specification, "Initial Draft Specification"]);
+  }
+  for (const existing of existingPaths) links.push([existing, `Preserved ${existing}`]);
+  return Buffer.from(`${frontmatter(values)}# ${title}
+
+Begin with the current-system Realization, then follow Draft or preserved
+knowledge only as its declared authority permits.
+
+## Knowledge Map
+
+${links.map(([target, label]) => `- [${label}](${path.posix.relative(path.posix.dirname(plan.scaffold.knowledge_map), target) || path.posix.basename(target)})`).join("\n")}
+`, "utf8");
+}
+function generatedDeclaration({ id, type, title, sourcePath, sourceBytes, authority, sections, relationships = [] }) {
+  return {
+    contract: "nkf.record",
+    id,
+    type,
+    body_contract: `nkf.${type}`,
+    title,
+    source: {
+      path: sourcePath,
+      digest: { algorithm: "sha-256", value: sha256(sourceBytes) }
+    },
+    governance: { lifecycle: "living", status: "draft", authority: [authority] },
+    scope: { root: null },
+    sections,
+    relationships
+  };
+}
+function productSections() {
+  return [
+    section("product-definition", "Product Definition", "governing"),
+    section("purpose", "Purpose", "governing"),
+    section("vision", "Vision", "governing"),
+    section("people-served", "People Served", "boundary"),
+    section("needs-and-outcomes", "Needs And Outcomes", "governing"),
+    section("boundaries", "Boundaries", "boundary"),
+    section("product-map", "Product Map", "catalogue")
+  ];
+}
+function technologySections() {
+  return [
+    section("technology-definition", "Technology Definition", "definition"),
+    section("purpose-and-problem", "Purpose And Problem", "context"),
+    section("consumers-and-use-contexts", "Consumers And Use Contexts", "actor"),
+    section("capabilities-and-contracts", "Capabilities And Contracts", "catalogue"),
+    section("scope-authority-and-boundaries", "Scope Authority And Boundaries", "boundary"),
+    section("technology-map", "Technology Map", "catalogue"),
+    section("versioning-compatibility-and-migration", "Versioning Compatibility And Migration", "evolution"),
+    section("distribution-support-and-security", "Distribution Support And Security", "obligation"),
+    section("evolution-and-retirement", "Evolution And Retirement", "evolution")
+  ];
+}
+function realizationSections() {
+  return [
+    section("realization-identity-and-kind", "Realization Identity And Kind", "identity"),
+    section("governed-meaning-realized", "Governed Meaning Realized", "mapping"),
+    section("durable-mapping", "Durable Mapping", "mapping"),
+    section("responsibilities-and-ownership-boundaries", "Responsibilities And Ownership Boundaries", "responsibility"),
+    section("interfaces-dependencies-locators-and-resolution", "Interfaces Dependencies Locators And Resolution", "interface"),
+    section("external-authority-and-operational-state-boundaries", "External Authority And Operational State Boundaries", "boundary"),
+    section("compatibility-verification-and-recovery", "Compatibility Verification And Recovery", "recovery")
+  ];
+}
+function specificationSections() {
+  const sections = [
+    section("specification-definition", "Specification Definition", "definition"),
+    section("authority-and-normative-status", "Authority And Normative Status", "governing"),
+    section("scope-and-applicability", "Scope And Applicability", "applicability"),
+    section("model-vocabulary-and-semantics", "Model Vocabulary And Semantics", "definition"),
+    section("requirements-constraints-and-interfaces", "Requirements Constraints And Interfaces", "governing"),
+    section("validation-and-conformance", "Validation And Conformance", "validation"),
+    section("versioning-compatibility-and-migration", "Versioning Compatibility And Migration", "evolution"),
+    section("security-authority-and-operational-boundaries", "Security Authority And Operational Boundaries", "boundary"),
+    section("unresolved-and-deferred-matters", "Unresolved And Deferred Matters", "unresolved")
+  ];
+  sections.at(-1).authority = "unresolved";
+  return sections;
+}
+async function validateAndLoadPlan(projectRoot, planPathInput) {
+  const loaded = await readPlan(planPathInput);
+  validatePlanEnvelope(loaded.plan);
+  const inspection = await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
+  if (!inspection.eligible || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
+    fail(
+      "NKF-ONBOARDING-INSPECTION-DRIFT",
+      "The project no longer matches the eligible inspection bound by the plan.",
+      { diagnostics: inspection.diagnostics }
+    );
+  }
+  const observed = new Map(inspection.documents.map((item) => [item.path, item]));
+  if (loaded.plan.documents.length !== observed.size) {
+    fail("NKF-ONBOARDING-PLAN-INCOMPLETE", "The plan must represent every inspected Markdown file exactly once.");
+  }
+  const seenPaths = /* @__PURE__ */ new Set();
+  const seenRecordIds = /* @__PURE__ */ new Set([
+    loaded.plan.project.root.id,
+    `${loaded.plan.project.root.id}-current-system`,
+    ...loaded.plan.project.profile === "nkf.profile.technology" ? [`${loaded.plan.project.root.id}-initial-specification`] : []
+  ]);
+  const candidateDocuments = [];
+  const nonRecords = [];
+  const declarations = [];
+  for (const [index, item] of loaded.plan.documents.entries()) {
+    requireExactKeys(
+      item,
+      ["path", "original_sha256", "candidate_path", "candidate_sha256", "representation"],
+      `documents[${index}]`
+    );
+    const documentPath = safeRelative(item.path, `documents[${index}].path`);
+    if (seenPaths.has(documentPath)) {
+      fail("NKF-ONBOARDING-PLAN-INCOMPLETE", `Duplicate document path: ${documentPath}`);
+    }
+    seenPaths.add(documentPath);
+    const source = observed.get(documentPath);
+    if (source === void 0 || source.sha256 !== requireSha256(item.original_sha256, `documents[${index}].original_sha256`)) {
+      fail("NKF-ONBOARDING-INSPECTION-DRIFT", `Original document binding differs: ${documentPath}`);
+    }
+    const candidatePath = safeRelative(item.candidate_path, `documents[${index}].candidate_path`);
+    if (!candidatePath.startsWith("candidate/")) {
+      fail("NKF-ONBOARDING-WORKSPACE-INVALID", "Candidate paths must be under candidate/ in the workspace.");
+    }
+    const bytes = await readRegularNoLinks(loaded.workspaceRoot, candidatePath);
+    if (sha256(bytes) !== requireSha256(item.candidate_sha256, `documents[${index}].candidate_sha256`)) {
+      fail(
+        "NKF-ONBOARDING-CANDIDATE-DRIFT",
+        `Candidate bytes differ from the sealed plan: ${documentPath}. Run seal after editing.`
+      );
+    }
+    requireObject(item.representation, `documents[${index}].representation`);
+    if (item.representation.kind === "unresolved") {
+      fail("NKF-ONBOARDING-PLAN-UNRESOLVED", `Document representation remains unresolved: ${documentPath}`);
+    }
+    if (item.representation.kind === "non_record") {
+      const allowed = item.representation.non_record_kind === "other" ? ["kind", "non_record_kind", "reason"] : ["kind", "non_record_kind"];
+      requireExactKeys(item.representation, allowed, `documents[${index}].representation`);
+      if (!NON_RECORD_KINDS.has(item.representation.non_record_kind)) {
+        fail("NKF-ONBOARDING-PLAN-INVALID", `Unsupported non-record kind: ${item.representation.non_record_kind}`);
+      }
+      const entry = { path: documentPath, kind: item.representation.non_record_kind };
+      if (entry.kind === "other") entry.reason = requireString(item.representation.reason, "non-record reason");
+      nonRecords.push(entry);
+    } else if (item.representation.kind === "record") {
+      requireExactKeys(item.representation, ["kind", "declaration"], `documents[${index}].representation`);
+      const declaration = structuredClone(requireObject(item.representation.declaration, "record declaration"));
+      if (declaration.source !== void 0) {
+        fail("NKF-ONBOARDING-PLAN-INVALID", "Plan record declarations must omit generated source bindings.");
+      }
+      if (declaration.contract !== "nkf.record") {
+        fail("NKF-ONBOARDING-PLAN-INVALID", "Plan record declarations must use contract nkf.record.");
+      }
+      if (declaration.governance?.status !== "draft") {
+        fail(
+          "NKF-ONBOARDING-AUTHORITY-UNSUPPORTED",
+          "Initial onboarding record declarations must remain Draft; acceptance requires a later governed authority act."
+        );
+      }
+      requireIdentifier(declaration.id, "record declaration id");
+      if (seenRecordIds.has(declaration.id)) {
+        fail("NKF-ONBOARDING-PLAN-INVALID", `Duplicate record id: ${declaration.id}`);
+      }
+      seenRecordIds.add(declaration.id);
+      declaration.source = {
+        path: documentPath,
+        digest: { algorithm: "sha-256", value: sha256(bytes) }
+      };
+      declarations.push(declaration);
+    } else {
+      fail("NKF-ONBOARDING-PLAN-INVALID", `Unsupported representation kind for ${documentPath}.`);
+    }
+    candidateDocuments.push({ path: documentPath, bytes, changed: source.sha256 !== sha256(bytes) });
+  }
+  if (seenPaths.size !== observed.size || [...observed.keys()].some((entry) => !seenPaths.has(entry))) {
+    fail("NKF-ONBOARDING-PLAN-INCOMPLETE", "The plan does not cover the complete inspected Markdown set.");
+  }
+  return { ...loaded, inspection, candidateDocuments, nonRecords, declarations };
+}
+async function buildOnboardingKnowledge(projectRootInput, planPathInput) {
+  const projectRoot = await resolveProjectRoot(projectRootInput);
+  const loaded = await validateAndLoadPlan(projectRoot, planPathInput);
+  const plan = loaded.plan;
+  const knowledgeRoot = plan.inspection.knowledge_root;
+  const kind = plan.project.profile === "nkf.profile.product" ? "product" : "technology";
+  const generatedPaths = [
+    plan.scaffold.knowledge_map,
+    plan.scaffold.root_record,
+    plan.scaffold.current_system_realization,
+    plan.scaffold.onboarding_task,
+    ...plan.scaffold.initial_specification === null ? [] : [plan.scaffold.initial_specification]
+  ];
+  const allPaths = [...loaded.candidateDocuments.map((item) => item.path), ...generatedPaths];
+  if (new Set(allPaths).size !== allPaths.length) {
+    fail("NKF-ONBOARDING-PATH-CONFLICT", "A scaffold path conflicts with an existing Markdown path.");
+  }
+  const files = /* @__PURE__ */ new Map();
+  for (const item of loaded.candidateDocuments) {
+    files.set(`${knowledgeRoot}/${item.path}`, item.bytes);
+  }
+  const rootBytes = rootScaffold(plan, kind);
+  const realizationBytes = realizationScaffold(plan);
+  const taskBytes = taskScaffold(plan);
+  const mapBytes = mapScaffold(plan, loaded.candidateDocuments.map((item) => item.path));
+  files.set(`${knowledgeRoot}/${plan.scaffold.root_record}`, rootBytes);
+  files.set(`${knowledgeRoot}/${plan.scaffold.current_system_realization}`, realizationBytes);
+  files.set(`${knowledgeRoot}/${plan.scaffold.onboarding_task}`, taskBytes);
+  files.set(`${knowledgeRoot}/${plan.scaffold.knowledge_map}`, mapBytes);
+  let specificationBytes = null;
+  if (plan.scaffold.initial_specification !== null) {
+    specificationBytes = specificationScaffold(plan);
+    files.set(`${knowledgeRoot}/${plan.scaffold.initial_specification}`, specificationBytes);
+  }
+  const rootDeclaration = generatedDeclaration({
+    id: plan.project.root.id,
+    type: kind,
+    title: plan.project.root.title,
+    sourcePath: plan.scaffold.root_record,
+    sourceBytes: rootBytes,
+    authority: plan.project.authority,
+    sections: kind === "product" ? productSections() : technologySections()
+  });
+  rootDeclaration.scope.root = plan.project.root.id;
+  const realizationId = `${plan.project.root.id}-current-system`;
+  const realizationDeclaration = generatedDeclaration({
+    id: realizationId,
+    type: "realization",
+    title: `${plan.project.root.title} Current System`,
+    sourcePath: plan.scaffold.current_system_realization,
+    sourceBytes: realizationBytes,
+    authority: plan.project.authority,
+    sections: realizationSections()
+  });
+  realizationDeclaration.scope.root = plan.project.root.id;
+  const declarations = [rootDeclaration, realizationDeclaration, ...loaded.declarations];
+  if (specificationBytes !== null) {
+    const specificationId = `${plan.project.root.id}-initial-specification`;
+    const specificationDeclaration = generatedDeclaration({
+      id: specificationId,
+      type: "specification",
+      title: `${plan.project.root.title} Initial Specification`,
+      sourcePath: plan.scaffold.initial_specification,
+      sourceBytes: specificationBytes,
+      authority: plan.project.authority,
+      sections: specificationSections()
+    });
+    specificationDeclaration.scope.root = plan.project.root.id;
+    declarations.splice(1, 0, specificationDeclaration);
+  }
+  for (const declaration of loaded.declarations) {
+    if (declaration.scope?.root !== plan.project.root.id) {
+      fail(
+        "NKF-ONBOARDING-PLAN-INVALID",
+        `Record ${declaration.id} must scope to root ${plan.project.root.id}.`
+      );
+    }
+  }
+  for (const declaration of declarations) {
+    files.set(
+      `.nourd/knowledge/records/${declaration.id}.yaml`,
+      serializeYaml(declaration)
+    );
+  }
+  const nonRecords = [
+    { path: plan.scaffold.knowledge_map, kind: "navigation" },
+    { path: plan.scaffold.onboarding_task, kind: "task" },
+    ...loaded.nonRecords
+  ].sort((left, right) => utf16Compare(left.path, right.path));
+  const bundle = {
+    nkf_version: "0.1",
+    contract: "nkf.bundle",
+    id: plan.project.root.id,
+    root: { record: plan.project.root.id, profile: plan.project.profile },
+    knowledge_root: knowledgeRoot,
+    non_records: nonRecords
+  };
+  if (plan.project.canonical_terms.length > 0) {
+    bundle.canonical_terms = plan.project.canonical_terms;
+  }
+  files.set(".nourd/knowledge/bundle.yaml", serializeYaml(bundle));
+  return {
+    files,
+    plan,
+    plan_sha256: sha256(loaded.bytes),
+    inspection: loaded.inspection,
+    changed_documents: loaded.candidateDocuments.filter((item) => item.changed).map((item) => `${knowledgeRoot}/${item.path}`),
+    preserved_documents: loaded.candidateDocuments.filter((item) => !item.changed).map((item) => `${knowledgeRoot}/${item.path}`),
+    generated_records: declarations.map((item) => item.id)
+  };
+}
+function serializeOnboardingReceipt(value) {
+  return serializeJson(value);
+}
+
 // scripts/release/core.mjs
 var import__ = __toESM(require__(), 1);
 var import_ajv_formats = __toESM(require_dist2(), 1);
-import { createHash } from "node:crypto";
-import { execFileSync, spawnSync } from "node:child_process";
+import { createHash as createHash2 } from "node:crypto";
+import { execFileSync as execFileSync2, spawnSync } from "node:child_process";
 import {
   chmod,
-  mkdir,
+  mkdir as mkdir2,
   mkdtemp,
-  readFile,
+  readFile as readFile2,
   rm,
-  writeFile
+  writeFile as writeFile2
 } from "node:fs/promises";
 import os from "node:os";
-import path from "node:path";
+import path2 from "node:path";
 var ARCHIVE_ROOT = "nourd-nkf";
 var RELEASE_ENTRIES = Object.freeze([
   { path: "contracts/nkf/0.1/nkf.yaml", mode: 420 },
@@ -15132,16 +16235,16 @@ var SCHEMA_BINDINGS = Object.freeze([
     path: "contracts/nkf/0.1/schemas/validation-result.schema.json"
   }
 ]);
-function fail(message) {
+function fail2(message) {
   throw new Error(message);
 }
-function sha256(bytes) {
-  return createHash("sha256").update(bytes).digest("hex");
+function sha2562(bytes) {
+  return createHash2("sha256").update(bytes).digest("hex");
 }
 function requireBuffer(entries, artifactPath) {
   const value = entries.get(artifactPath);
   if (!Buffer.isBuffer(value)) {
-    fail(`Required release artifact is unavailable: ${artifactPath}`);
+    fail2(`Required release artifact is unavailable: ${artifactPath}`);
   }
   return value;
 }
@@ -15159,7 +16262,7 @@ var StrictJsonParser = class {
     const value = this.value();
     this.whitespace();
     if (this.index !== this.source.length) {
-      fail(`Unexpected JSON content at byte ${this.index}.`);
+      fail2(`Unexpected JSON content at byte ${this.index}.`);
     }
     return value;
   }
@@ -15198,16 +16301,16 @@ var StrictJsonParser = class {
     }
     while (true) {
       if (this.source[this.index] !== '"') {
-        fail(`Expected a JSON object key at byte ${this.index}.`);
+        fail2(`Expected a JSON object key at byte ${this.index}.`);
       }
       const key = this.string();
       if (keys.has(key)) {
-        fail(`Duplicate JSON object key: ${key}`);
+        fail2(`Duplicate JSON object key: ${key}`);
       }
       keys.add(key);
       this.whitespace();
       if (this.source[this.index] !== ":") {
-        fail(`Expected ':' after JSON key at byte ${this.index}.`);
+        fail2(`Expected ':' after JSON key at byte ${this.index}.`);
       }
       this.index += 1;
       this.whitespace();
@@ -15218,7 +16321,7 @@ var StrictJsonParser = class {
         return result;
       }
       if (this.source[this.index] !== ",") {
-        fail(`Expected ',' in JSON object at byte ${this.index}.`);
+        fail2(`Expected ',' in JSON object at byte ${this.index}.`);
       }
       this.index += 1;
       this.whitespace();
@@ -15240,7 +16343,7 @@ var StrictJsonParser = class {
         return result;
       }
       if (this.source[this.index] !== ",") {
-        fail(`Expected ',' in JSON array at byte ${this.index}.`);
+        fail2(`Expected ',' in JSON array at byte ${this.index}.`);
       }
       this.index += 1;
       this.whitespace();
@@ -15261,33 +16364,33 @@ var StrictJsonParser = class {
         if (escape2 === "u") {
           const hex = this.source.slice(this.index + 1, this.index + 5);
           if (!/^[0-9a-fA-F]{4}$/.test(hex)) {
-            fail(`Invalid JSON Unicode escape at byte ${this.index}.`);
+            fail2(`Invalid JSON Unicode escape at byte ${this.index}.`);
           }
           this.index += 5;
           continue;
         }
         if (!'"\\/bfnrt'.includes(escape2 ?? "")) {
-          fail(`Invalid JSON escape at byte ${this.index}.`);
+          fail2(`Invalid JSON escape at byte ${this.index}.`);
         }
         this.index += 1;
         continue;
       }
       if ((character?.charCodeAt(0) ?? 0) < 32) {
-        fail(`Unescaped JSON control character at byte ${this.index}.`);
+        fail2(`Unescaped JSON control character at byte ${this.index}.`);
       }
       this.index += 1;
     }
-    fail("Unterminated JSON string.");
+    fail2("Unterminated JSON string.");
   }
   number() {
     const match = this.source.slice(this.index).match(/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/);
     if (!match) {
-      fail(`Expected a JSON value at byte ${this.index}.`);
+      fail2(`Expected a JSON value at byte ${this.index}.`);
     }
     this.index += match[0].length;
     const value = Number(match[0]);
     if (!Number.isFinite(value)) {
-      fail("Non-finite JSON numbers are forbidden.");
+      fail2("Non-finite JSON numbers are forbidden.");
     }
     return value;
   }
@@ -15295,10 +16398,10 @@ var StrictJsonParser = class {
 function parseStrictJson(bytes) {
   const source = Buffer.from(bytes).toString("utf8");
   if (Buffer.from(source, "utf8").compare(Buffer.from(bytes)) !== 0) {
-    fail("Release manifest is not valid UTF-8.");
+    fail2("Release manifest is not valid UTF-8.");
   }
   if (source.charCodeAt(0) === 65279) {
-    fail("Release manifest must not contain a byte-order mark.");
+    fail2("Release manifest must not contain a byte-order mark.");
   }
   return new StrictJsonParser(source).parse();
 }
@@ -15318,17 +16421,17 @@ function validateReleaseManifest(manifest, schemaBytes) {
   const schema = parseStrictJson(schemaBytes);
   const validate = ajv.compile(schema);
   if (!validate(manifest)) {
-    fail(`Release manifest is invalid: ${ajv.errorsText(validate.errors)}`);
+    fail2(`Release manifest is invalid: ${ajv.errorsText(validate.errors)}`);
   }
 }
 function octal(value, length, checksum = false) {
   if (!Number.isSafeInteger(value) || value < 0) {
-    fail("USTAR numeric values must be non-negative safe integers.");
+    fail2("USTAR numeric values must be non-negative safe integers.");
   }
   const width = checksum ? length - 2 : length - 1;
   const digits = value.toString(8).padStart(width, "0");
   if (digits.length !== width) {
-    fail("USTAR numeric value exceeds its field.");
+    fail2("USTAR numeric value exceeds its field.");
   }
   return Buffer.from(
     checksum ? `${digits}\0 ` : `${digits}\0`,
@@ -15337,12 +16440,12 @@ function octal(value, length, checksum = false) {
 }
 function requireZero(field, label) {
   if (field.some((byte) => byte !== 0)) {
-    fail(`${label} must be zero-filled.`);
+    fail2(`${label} must be zero-filled.`);
   }
 }
 function requireExact(actual, expected, label) {
   if (!actual.equals(expected)) {
-    fail(`${label} is not in the required canonical USTAR encoding.`);
+    fail2(`${label} is not in the required canonical USTAR encoding.`);
   }
 }
 function readName(field) {
@@ -15351,7 +16454,7 @@ function readName(field) {
   if (nul !== -1) requireZero(field.subarray(nul), "USTAR path tail");
   const value = field.subarray(0, end).toString("ascii");
   if (!/^[\x20-\x7e]+$/.test(value)) {
-    fail("USTAR paths must use printable ASCII bytes.");
+    fail2("USTAR paths must use printable ASCII bytes.");
   }
   return value;
 }
@@ -15365,7 +16468,7 @@ function parseCanonicalOctal(field, label, checksum = false) {
   const digitBytes = field.subarray(0, checksum ? -2 : -1);
   const digits = digitBytes.toString("ascii");
   if (!/^[0-7]+$/.test(digits)) {
-    fail(`${label} must use ASCII-octal digits.`);
+    fail2(`${label} must use ASCII-octal digits.`);
   }
   const value = Number.parseInt(digits, 8);
   requireExact(field, octal(value, field.length, checksum), label);
@@ -15373,13 +16476,13 @@ function parseCanonicalOctal(field, label, checksum = false) {
 }
 function safeArchivePath(name) {
   if (name.startsWith("/") || name.includes("\\") || name.split("/").some((part) => part === "" || part === "." || part === "..")) {
-    fail(`Unsafe archive path: ${name}`);
+    fail2(`Unsafe archive path: ${name}`);
   }
 }
 function inspectUstar(archiveBytes) {
   const archive = Buffer.from(archiveBytes);
   if (archive.length < 1024 || archive.length % 512 !== 0) {
-    fail("USTAR archive length is invalid.");
+    fail2("USTAR archive length is invalid.");
   }
   const dataEnd = archive.length - 1024;
   requireZero(archive.subarray(dataEnd), "USTAR final blocks");
@@ -15389,10 +16492,10 @@ function inspectUstar(archiveBytes) {
   let index = 0;
   while (offset < dataEnd) {
     const expected = RELEASE_ENTRIES[index];
-    if (!expected) fail("USTAR contains an unexpected ninth entry.");
+    if (!expected) fail2("USTAR contains an unexpected ninth entry.");
     const header = archive.subarray(offset, offset + 512);
     if (header.length !== 512 || header.every((byte) => byte === 0)) {
-      fail("USTAR contains an early zero block.");
+      fail2("USTAR contains an early zero block.");
     }
     requireExact(
       header.subarray(257, 263),
@@ -15417,29 +16520,29 @@ function inspectUstar(archiveBytes) {
     safeArchivePath(name);
     const expectedName = `${ARCHIVE_ROOT}/${expected.path}`;
     if (name !== expectedName) {
-      fail(`Unexpected or out-of-order archive path: ${name}`);
+      fail2(`Unexpected or out-of-order archive path: ${name}`);
     }
-    if (entries.has(expected.path)) fail(`Duplicate archive path: ${name}`);
+    if (entries.has(expected.path)) fail2(`Duplicate archive path: ${name}`);
     const folded = name.toLowerCase();
-    if (seenFolded.has(folded)) fail(`Case-colliding archive path: ${name}`);
+    if (seenFolded.has(folded)) fail2(`Case-colliding archive path: ${name}`);
     seenFolded.add(folded);
     const mode = parseCanonicalOctal(header.subarray(100, 108), "USTAR mode");
-    if (mode !== expected.mode) fail(`Incorrect archive mode for ${name}.`);
+    if (mode !== expected.mode) fail2(`Incorrect archive mode for ${name}.`);
     if (parseCanonicalOctal(header.subarray(108, 116), "USTAR uid") !== 0) {
-      fail("USTAR uid must be zero.");
+      fail2("USTAR uid must be zero.");
     }
     if (parseCanonicalOctal(header.subarray(116, 124), "USTAR gid") !== 0) {
-      fail("USTAR gid must be zero.");
+      fail2("USTAR gid must be zero.");
     }
     const size = parseCanonicalOctal(
       header.subarray(124, 136),
       "USTAR size"
     );
     if (parseCanonicalOctal(header.subarray(136, 148), "USTAR mtime") !== 0) {
-      fail("USTAR mtime must be zero.");
+      fail2("USTAR mtime must be zero.");
     }
     if (parseCanonicalOctal(header.subarray(329, 337), "USTAR device major") !== 0 || parseCanonicalOctal(header.subarray(337, 345), "USTAR device minor") !== 0) {
-      fail("USTAR device values must be zero.");
+      fail2("USTAR device values must be zero.");
     }
     const storedChecksum = parseCanonicalOctal(
       header.subarray(148, 156),
@@ -15453,13 +16556,13 @@ function inspectUstar(archiveBytes) {
       0
     );
     if (storedChecksum !== actualChecksum) {
-      fail(`USTAR checksum mismatch for ${name}.`);
+      fail2(`USTAR checksum mismatch for ${name}.`);
     }
     const contentStart = offset + 512;
     const contentEnd = contentStart + size;
     const nextOffset = contentStart + Math.ceil(size / 512) * 512;
     if (contentEnd > dataEnd || nextOffset > dataEnd) {
-      fail(`USTAR entry exceeds the archive boundary: ${name}`);
+      fail2(`USTAR entry exceeds the archive boundary: ${name}`);
     }
     requireZero(
       archive.subarray(contentEnd, nextOffset),
@@ -15470,17 +16573,17 @@ function inspectUstar(archiveBytes) {
     index += 1;
   }
   if (offset !== dataEnd || index !== RELEASE_ENTRIES.length) {
-    fail("USTAR archive is missing one or more required files.");
+    fail2("USTAR archive is missing one or more required files.");
   }
   return entries;
 }
 function requireManifestBootstrap(manifest) {
   if (manifest?.contract !== "nkf.release-manifest" || manifest?.nkf_version !== "0.1") {
-    fail("Release manifest bootstrap contract or NKF version is invalid.");
+    fail2("Release manifest bootstrap contract or NKF version is invalid.");
   }
   const schema = manifest?.schemas?.[2];
   if (schema?.identity !== "urn:nkf:0.1:schema:release-manifest" || schema?.path !== "contracts/nkf/0.1/schemas/release-manifest.schema.json" || schema?.digest?.algorithm !== "sha-256" || !/^[0-9a-f]{64}$/.test(schema?.digest?.value ?? "")) {
-    fail("Release manifest bootstrap schema entry is invalid.");
+    fail2("Release manifest bootstrap schema entry is invalid.");
   }
   requireDecisionPathBinding(manifest.source?.checker_confirmation);
 }
@@ -15488,66 +16591,66 @@ function requireDecisionPathBinding(confirmation) {
   if (!/^ADR-[0-9]{4}$/.test(confirmation?.decision ?? "") || !confirmation?.path?.startsWith(
     `knowledge/decisions/${confirmation.decision.slice(4)}-`
   )) {
-    fail("Checker-confirmation Decision ID and path prefix do not match.");
+    fail2("Checker-confirmation Decision ID and path prefix do not match.");
   }
 }
 function verifyArtifact(entries, artifact) {
   if (artifact?.digest?.algorithm !== "sha-256") {
-    fail(`Unsupported artifact digest for ${artifact?.path ?? "unknown"}.`);
+    fail2(`Unsupported artifact digest for ${artifact?.path ?? "unknown"}.`);
   }
   const bytes = requireBuffer(entries, artifact.path);
-  if (sha256(bytes) !== artifact.digest.value) {
-    fail(`Release artifact digest mismatch: ${artifact.path}`);
+  if (sha2562(bytes) !== artifact.digest.value) {
+    fail2(`Release artifact digest mismatch: ${artifact.path}`);
   }
 }
 function verifySourceProvenance(sourceRoot, manifest) {
-  const git = (...argumentsValue) => execFileSync("git", ["-C", sourceRoot, ...argumentsValue], {
+  const git = (...argumentsValue) => execFileSync2("git", ["-C", sourceRoot, ...argumentsValue], {
     encoding: "utf8"
   }).trim();
   if (git("remote", "get-url", "origin") !== manifest.source.repository) {
-    fail("Source repository remote does not match the release manifest.");
+    fail2("Source repository remote does not match the release manifest.");
   }
   const releaseCommit = git("rev-parse", `${manifest.source.release_commit}^{commit}`);
   if (releaseCommit !== manifest.source.release_commit) {
-    fail("Release commit is unavailable from the source repository.");
+    fail2("Release commit is unavailable from the source repository.");
   }
   const confirmation = manifest.source.checker_confirmation;
   requireDecisionPathBinding(confirmation);
   const decisionBytes = Buffer.from(
-    execFileSync(
+    execFileSync2(
       "git",
       ["-C", sourceRoot, "show", `${releaseCommit}:${confirmation.path}`]
     )
   );
-  if (sha256(decisionBytes) !== confirmation.digest.value) {
-    fail("Checker-confirmation Decision digest does not match release source.");
+  if (sha2562(decisionBytes) !== confirmation.digest.value) {
+    fail2("Checker-confirmation Decision digest does not match release source.");
   }
   const decision = decisionBytes.toString("utf8");
   if (!decision.includes(confirmation.checker_source_commit) || !decision.includes(manifest.checker.digest.value)) {
-    fail("Checker-confirmation Decision does not bind the source and checker.");
+    fail2("Checker-confirmation Decision does not bind the source and checker.");
   }
   const checkerCommit = git(
     "rev-parse",
     `${confirmation.checker_source_commit}^{commit}`
   );
   if (checkerCommit !== confirmation.checker_source_commit) {
-    fail("Confirmed checker source commit is unavailable.");
+    fail2("Confirmed checker source commit is unavailable.");
   }
 }
 function verifyReleaseArchive(archiveBytes, expectedArchiveSha256, { sourceRoot } = {}) {
   if (!/^[0-9a-f]{64}$/.test(expectedArchiveSha256)) {
-    fail("Expected archive digest must be lowercase SHA-256.");
+    fail2("Expected archive digest must be lowercase SHA-256.");
   }
-  const archiveDigest = sha256(archiveBytes);
+  const archiveDigest = sha2562(archiveBytes);
   if (archiveDigest !== expectedArchiveSha256) {
-    fail("Release archive digest does not match the independent consumer pin.");
+    fail2("Release archive digest does not match the independent consumer pin.");
   }
   const entries = inspectUstar(archiveBytes);
   const manifestBytes = requireBuffer(entries, "release-manifest.json");
   const manifest = parseStrictJson(manifestBytes);
   requireManifestBootstrap(manifest);
   if (!manifestBytes.equals(serializeReleaseManifest(manifest))) {
-    fail("Release manifest bytes are not in canonical contract order and format.");
+    fail2("Release manifest bytes are not in canonical contract order and format.");
   }
   const manifestSchema = manifest.schemas[2];
   verifyArtifact(entries, manifestSchema);
@@ -15576,23 +16679,23 @@ async function invokeVerifiedChecker(verification, checkerArguments = ["--help"]
     10
   );
   if (verification.manifest.checker.runtime.name !== "node" || currentNodeMajor < verification.manifest.checker.runtime.minimum_major) {
-    fail("The verified checker runtime requirement is not satisfied.");
+    fail2("The verified checker runtime requirement is not satisfied.");
   }
-  const temporary = await mkdtemp(path.join(os.tmpdir(), "nourd-nkf-release-"));
+  const temporary = await mkdtemp(path2.join(os.tmpdir(), "nourd-nkf-release-"));
   try {
-    const root = path.join(temporary, ARCHIVE_ROOT);
+    const root = path2.join(temporary, ARCHIVE_ROOT);
     for (const expected of RELEASE_ENTRIES) {
-      const target = path.join(root, expected.path);
-      await mkdir(path.dirname(target), { recursive: true });
-      await writeFile(target, requireBuffer(verification.entries, expected.path));
+      const target = path2.join(root, expected.path);
+      await mkdir2(path2.dirname(target), { recursive: true });
+      await writeFile2(target, requireBuffer(verification.entries, expected.path));
       await chmod(target, expected.mode);
     }
-    const checker = path.join(root, "dist/nourd-nkf-checker.mjs");
+    const checker = path2.join(root, "dist/nourd-nkf-checker.mjs");
     const result = spawnSync(process.execPath, [checker, ...checkerArguments], {
       encoding: "utf8"
     });
     if (result.status !== 0) {
-      fail(
+      fail2(
         `Verified checker invocation failed: ${result.stderr || result.stdout}`
       );
     }
@@ -15611,15 +16714,17 @@ var INTEGRATION_REVISION = 1;
 var PIN_PATH = ".nourd/nkf-release.json";
 var ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
 var RELEASE_DIRECTORY = ".nourd/tools/nkf/releases";
+var ONBOARDING_RECEIPT_PATH = ".nourd/onboarding-receipt.json";
 var PROTOCOL_PATH = "integrations/ai/nkf-authoring-protocol.md";
 var REGISTRY_PATH = "integrations/ai/nkf-consumer-integration.yaml";
 var VERIFIER_PATH = "scripts/verify-nkf-integration.mjs";
 var WORKFLOW_PATH = ".github/workflows/nkf-contracts.yml";
+var LOCK_PATH = "package-lock.json";
 var SKILL_PATHS = [
   ".agents/skills/nkf-authoring/SKILL.md",
   ".claude/skills/nkf-authoring/SKILL.md"
 ];
-var ROOT_PROFILES = /* @__PURE__ */ new Set([
+var ROOT_PROFILES2 = /* @__PURE__ */ new Set([
   "nkf.profile.product",
   "nkf.profile.technology"
 ]);
@@ -15664,79 +16769,115 @@ const result = spawnSync(
 );
 process.exit(result.status ?? 1);
 `;
-function fail2(message) {
+function fail3(message) {
   throw new Error(message);
 }
 function digest(bytes) {
-  return createHash2("sha256").update(bytes).digest("hex");
+  return createHash3("sha256").update(bytes).digest("hex");
 }
-function inside(root, candidate) {
-  const relative = path2.relative(root, candidate);
-  return relative === "" || !relative.startsWith("..") && !path2.isAbsolute(relative);
+function inside2(root, candidate) {
+  const relative = path3.relative(root, candidate);
+  return relative === "" || !relative.startsWith("..") && !path3.isAbsolute(relative);
 }
-function safeRelative(value, label) {
-  if (typeof value !== "string" || value === "" || value.trim() !== value || path2.isAbsolute(value) || value.includes("\\") || value.split("/").some((part) => part === "" || part === "." || part === "..")) {
-    fail2(`${label} must be a safe project-relative path.`);
+function safeRelative2(value, label) {
+  if (typeof value !== "string" || value === "" || value.trim() !== value || path3.isAbsolute(value) || value.includes("\\") || value.split("/").some((part) => part === "" || part === "." || part === "..")) {
+    fail3(`${label} must be a safe project-relative path.`);
   }
   return value;
 }
 function parseArguments(values) {
   const result = { command: values[0], options: {} };
-  if (!["install", "update", "check", "status", "integration-check"].includes(result.command)) {
-    fail2(
-      "Usage: nourd-nkf-adopt.mjs <install|update|check|status|integration-check> --project <path> [--archive <path> | --github-repository <owner/name>] [--sha256 <digest>]"
+  if (![
+    "inspect",
+    "seal",
+    "onboard",
+    "install",
+    "update",
+    "check",
+    "status",
+    "integration-check"
+  ].includes(result.command)) {
+    fail3(
+      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|install|update|check|status|integration-check> [options]"
     );
   }
   for (let index = 1; index < values.length; index += 2) {
     const key = values[index];
     const value = values[index + 1];
     if (!key?.startsWith("--") || value === void 0) {
-      fail2(`Unknown or incomplete argument: ${key ?? ""}`);
+      fail3(`Unknown or incomplete argument: ${key ?? ""}`);
     }
     const name = key.slice(2);
     if (Object.hasOwn(result.options, name)) {
-      fail2(`Duplicate argument: ${key}`);
+      fail3(`Duplicate argument: ${key}`);
     }
     result.options[name] = value;
   }
-  const allowed = result.command === "install" || result.command === "update" ? /* @__PURE__ */ new Set(["archive", "github-repository", "project", "sha256"]) : /* @__PURE__ */ new Set(["project"]);
+  let allowed;
+  if (result.command === "inspect") {
+    allowed = /* @__PURE__ */ new Set([
+      "authority",
+      "created-at",
+      "knowledge-root",
+      "output",
+      "profile",
+      "project",
+      "root-id",
+      "root-title",
+      "task-id"
+    ]);
+  } else if (result.command === "seal") {
+    allowed = /* @__PURE__ */ new Set(["plan", "project"]);
+  } else if (result.command === "onboard") {
+    allowed = /* @__PURE__ */ new Set([
+      "archive",
+      "github-repository",
+      "plan",
+      "project",
+      "sha256"
+    ]);
+  } else if (result.command === "install" || result.command === "update") {
+    allowed = /* @__PURE__ */ new Set(["archive", "github-repository", "project", "sha256"]);
+  } else {
+    allowed = /* @__PURE__ */ new Set(["project"]);
+  }
   for (const name of Object.keys(result.options)) {
-    if (!allowed.has(name)) fail2(`Unknown argument: --${name}`);
+    if (!allowed.has(name)) fail3(`Unknown argument: --${name}`);
   }
   return result;
 }
 async function requireProjectRoot(value) {
-  const root = path2.resolve(value ?? ".");
-  const rootStat = await lstat(root).catch(() => null);
+  const root = path3.resolve(value ?? ".");
+  const rootStat = await lstat2(root).catch(() => null);
   if (rootStat === null || !rootStat.isDirectory() || rootStat.isSymbolicLink()) {
-    fail2("The project root must be an existing non-symbolic-link directory.");
+    fail3("The project root must be an existing non-symbolic-link directory.");
   }
-  const resolved = await realpath(root);
+  const resolved = await realpath2(root);
   return resolved;
 }
 async function readRegularInside(root, relative, required = true) {
-  const normalized = safeRelative(relative, "Path");
-  const absolute = path2.resolve(root, ...normalized.split("/"));
-  if (!inside(root, absolute)) fail2(`Path escapes the project: ${relative}`);
+  const normalized = safeRelative2(relative, "Path");
+  const absolute = path3.resolve(root, ...normalized.split("/"));
+  if (!inside2(root, absolute)) fail3(`Path escapes the project: ${relative}`);
   const parts = normalized.split("/");
   let current = root;
   for (const [index, part] of parts.entries()) {
-    current = path2.join(current, part);
-    const stat2 = await lstat(current).catch(() => null);
+    current = path3.join(current, part);
+    const stat2 = await lstat2(current).catch(() => null);
     if (stat2 === null) {
-      if (required) fail2(`Required file is missing: ${relative}`);
+      if (required) fail3(`Required file is missing: ${relative}`);
       return null;
     }
     if (stat2.isSymbolicLink()) {
-      fail2(`Symbolic links are prohibited in adoption paths: ${relative}`);
+      fail3(`Symbolic links are prohibited in adoption paths: ${relative}`);
     }
     if (index < parts.length - 1 && !stat2.isDirectory()) {
-      fail2(`A path component is not a directory: ${relative}`);
+      fail3(`A path component is not a directory: ${relative}`);
     }
   }
-  const stat = await lstat(absolute);
-  if (!stat.isFile()) fail2(`Path is not a regular file: ${relative}`);
-  return readFile2(absolute);
+  const stat = await lstat2(absolute);
+  if (!stat.isFile()) fail3(`Path is not a regular file: ${relative}`);
+  return readFile3(absolute);
 }
 async function requireBundle(projectRoot) {
   const bundleBytes = await readRegularInside(
@@ -15745,36 +16886,36 @@ async function requireBundle(projectRoot) {
   );
   let bundle;
   try {
-    bundle = import_yaml.default.parse(bundleBytes.toString("utf8"));
+    bundle = import_yaml2.default.parse(bundleBytes.toString("utf8"));
   } catch (error) {
-    fail2(`The NKF bundle is invalid YAML: ${error.message}`);
+    fail3(`The NKF bundle is invalid YAML: ${error.message}`);
   }
   if (bundle?.nkf_version !== "0.1" || bundle?.contract !== "nkf.bundle") {
-    fail2("The project must already declare an NKF 0.1 bundle.");
+    fail3("The project must already declare an NKF 0.1 bundle.");
   }
-  if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
-    fail2("The bundle must select the Product or Technology Root Profile.");
+  if (!ROOT_PROFILES2.has(bundle?.root?.profile)) {
+    fail3("The bundle must select the Product or Technology Root Profile.");
   }
-  const knowledgeRoot = safeRelative(
+  const knowledgeRoot = safeRelative2(
     bundle.knowledge_root,
     "bundle knowledge_root"
   );
-  const knowledgeAbsolute = path2.resolve(
+  const knowledgeAbsolute = path3.resolve(
     projectRoot,
     ...knowledgeRoot.split("/")
   );
-  if (!inside(projectRoot, knowledgeAbsolute)) {
-    fail2("The configured knowledge root escapes the project.");
+  if (!inside2(projectRoot, knowledgeAbsolute)) {
+    fail3("The configured knowledge root escapes the project.");
   }
-  const knowledgeStat = await lstat(knowledgeAbsolute).catch(() => null);
+  const knowledgeStat = await lstat2(knowledgeAbsolute).catch(() => null);
   if (knowledgeStat === null || !knowledgeStat.isDirectory() || knowledgeStat.isSymbolicLink()) {
-    fail2("The configured knowledge root must be a project-contained directory.");
+    fail3("The configured knowledge root must be a project-contained directory.");
   }
   return { bundle, knowledgeRoot };
 }
-function requireSha256(value) {
+function requireSha2562(value) {
   if (!/^[0-9a-f]{64}$/.test(value ?? "")) {
-    fail2("--sha256 must be a full lowercase SHA-256 value.");
+    fail3("--sha256 must be a full lowercase SHA-256 value.");
   }
   return value;
 }
@@ -15784,23 +16925,23 @@ function releaseIdentity(archiveSha256) {
     tag: `release-sha256-${archiveSha256}`
   };
 }
-async function acquireArchive(options2, expectedSha256) {
-  const hasArchive = options2.archive !== void 0;
-  const hasRepository = options2["github-repository"] !== void 0;
+async function acquireArchive(options, expectedSha256) {
+  const hasArchive = options.archive !== void 0;
+  const hasRepository = options["github-repository"] !== void 0;
   if (hasArchive === hasRepository) {
-    fail2("Supply exactly one of --archive or --github-repository.");
+    fail3("Supply exactly one of --archive or --github-repository.");
   }
   if (hasArchive) {
-    return readFile2(path2.resolve(options2.archive));
+    return readFile3(path3.resolve(options.archive));
   }
-  const repository = options2["github-repository"];
+  const repository = options["github-repository"];
   if (repository !== "kaveh6202/Nourd.NKF") {
-    fail2("--github-repository must be kaveh6202/Nourd.NKF.");
+    fail3("--github-repository must be kaveh6202/Nourd.NKF.");
   }
   const { assetName, tag } = releaseIdentity(expectedSha256);
-  const temporary = await mkdtemp2(path2.join(os2.tmpdir(), "nkf-download-"));
+  const temporary = await mkdtemp2(path3.join(os2.tmpdir(), "nkf-download-"));
   try {
-    execFileSync2(
+    execFileSync3(
       "gh",
       [
         "release",
@@ -15815,7 +16956,7 @@ async function acquireArchive(options2, expectedSha256) {
       ],
       { stdio: "inherit" }
     );
-    return readFile2(path2.join(temporary, assetName));
+    return readFile3(path3.join(temporary, assetName));
   } finally {
     await rm2(temporary, { recursive: true, force: true });
   }
@@ -15827,11 +16968,11 @@ function mergeBlock(existingBytes, block, relativePath) {
   const start = existing.indexOf(BLOCK_START);
   const end = existing.indexOf(BLOCK_END);
   if (start === -1 !== (end === -1)) {
-    fail2(`Malformed NKF adapter markers in ${relativePath}.`);
+    fail3(`Malformed NKF adapter markers in ${relativePath}.`);
   }
   if (start !== -1) {
     if (existing.indexOf(BLOCK_START, start + BLOCK_START.length) !== -1 || existing.indexOf(BLOCK_END, end + BLOCK_END.length) !== -1 || end < start) {
-      fail2(`Conflicting NKF adapter markers in ${relativePath}.`);
+      fail3(`Conflicting NKF adapter markers in ${relativePath}.`);
     }
     return Buffer.from(
       `${existing.slice(0, start)}${block}${existing.slice(
@@ -15849,11 +16990,11 @@ function verifyBlock(bytes, block, relativePath) {
   const start = text.indexOf(BLOCK_START);
   const end = text.indexOf(BLOCK_END);
   if (start === -1 || end === -1 || end < start) {
-    fail2(`The NKF adapter block is missing from ${relativePath}.`);
+    fail3(`The NKF adapter block is missing from ${relativePath}.`);
   }
   const observed = text.slice(start, end + BLOCK_END.length);
   if (observed !== block) {
-    fail2(`The NKF adapter block differs in ${relativePath}.`);
+    fail3(`The NKF adapter block differs in ${relativePath}.`);
   }
 }
 function workflow(branch) {
@@ -15890,10 +17031,10 @@ jobs:
 }
 function defaultBranch(projectRoot) {
   try {
-    const value = execFileSync2(
+    const value = execFileSync3(
       "git",
       ["-C", projectRoot, "symbolic-ref", "--short", "HEAD"],
-      { encoding: "utf8" }
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
     ).trim();
     if (/^[A-Za-z0-9._/-]+$/.test(value) && !value.includes("..")) return value;
   } catch {
@@ -15924,10 +17065,10 @@ function integrationRegistry(files, branch) {
     workflow: { ...exact(WORKFLOW_PATH), branch }
   };
 }
-function serializeYaml(value) {
-  return Buffer.from(import_yaml.default.stringify(value, { lineWidth: 0 }), "utf8");
+function serializeYaml2(value) {
+  return Buffer.from(import_yaml2.default.stringify(value, { lineWidth: 0 }), "utf8");
 }
-function serializeJson(value) {
+function serializeJson2(value) {
   return Buffer.from(`${JSON.stringify(value, null, 2)}
 `, "utf8");
 }
@@ -15935,29 +17076,50 @@ function packageBytes(existingBytes, projectRoot) {
   let manifest;
   if (existingBytes === null) {
     manifest = {
-      name: path2.basename(projectRoot).toLowerCase().replace(/[^a-z0-9-]+/g, "-") || "nkf-project",
+      name: path3.basename(projectRoot).toLowerCase().replace(/[^a-z0-9-]+/g, "-") || "nkf-project",
       private: true,
       scripts: { "nkf:check": CHECK_COMMAND }
     };
   } else {
     manifest = parseStrictJson(existingBytes);
     if (manifest === null || typeof manifest !== "object" || Array.isArray(manifest)) {
-      fail2("package.json must contain a JSON object.");
+      fail3("package.json must contain a JSON object.");
     }
     if (manifest.scripts !== void 0 && (manifest.scripts === null || typeof manifest.scripts !== "object" || Array.isArray(manifest.scripts))) {
-      fail2("package.json scripts must be an object.");
+      fail3("package.json scripts must be an object.");
     }
     const current = manifest.scripts?.["nkf:check"];
     if (current !== void 0 && current !== CHECK_COMMAND) {
-      fail2("package.json already defines an incompatible nkf:check command.");
+      fail3("package.json already defines an incompatible nkf:check command.");
     }
     manifest.scripts = { ...manifest.scripts ?? {}, "nkf:check": CHECK_COMMAND };
   }
-  return serializeJson(manifest);
+  return serializeJson2(manifest);
+}
+function packageLockBytes(packageManifestBytes) {
+  const manifest = parseStrictJson(packageManifestBytes);
+  for (const field of ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"]) {
+    if (manifest[field] !== void 0 && Object.keys(manifest[field]).length > 0) {
+      fail3(
+        "A project with package dependencies must supply its own committed package-lock.json before NKF integration."
+      );
+    }
+  }
+  return serializeJson2({
+    name: manifest.name,
+    lockfileVersion: 3,
+    requires: true,
+    packages: {
+      "": {
+        name: manifest.name,
+        private: manifest.private === true
+      }
+    }
+  });
 }
 async function currentExecutableBytes() {
-  const candidate = path2.resolve(fileURLToPath(import.meta.url));
-  return readFile2(candidate);
+  const candidate = path3.resolve(fileURLToPath(import.meta.url));
+  return readFile3(candidate);
 }
 async function targetFiles(projectRoot, archiveBytes, verification, rootProfile) {
   const files = /* @__PURE__ */ new Map();
@@ -15984,18 +17146,19 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
       mergeBlock(await readRegularInside(projectRoot, relative, false), block, relative)
     );
   }
-  files.set(
-    "package.json",
-    packageBytes(
-      await readRegularInside(projectRoot, "package.json", false),
-      projectRoot
-    )
+  const manifestBytes = packageBytes(
+    await readRegularInside(projectRoot, "package.json", false),
+    projectRoot
   );
+  files.set("package.json", manifestBytes);
+  if (await readRegularInside(projectRoot, LOCK_PATH, false) === null) {
+    files.set(LOCK_PATH, packageLockBytes(manifestBytes));
+  }
   const registry = integrationRegistry(files, branch);
-  files.set(REGISTRY_PATH, serializeYaml(registry));
+  files.set(REGISTRY_PATH, serializeYaml2(registry));
   files.set(
     PIN_PATH,
-    serializeJson({
+    serializeJson2({
       contract: "nkf.consumer-release-pin",
       nkf_version: "0.1",
       repository: "kaveh6202/Nourd.NKF",
@@ -16022,49 +17185,71 @@ async function ensureWritableParents(projectRoot, relativePaths) {
     const parts = relative.split("/").slice(0, -1);
     let current = projectRoot;
     for (const part of parts) {
-      current = path2.join(current, part);
-      const stat = await lstat(current).catch(() => null);
+      current = path3.join(current, part);
+      const stat = await lstat2(current).catch(() => null);
       if (stat?.isSymbolicLink()) {
-        fail2(`A target directory is a symbolic link: ${relative}`);
+        fail3(`A target directory is a symbolic link: ${relative}`);
       }
       if (stat !== null && !stat.isDirectory()) {
-        fail2(`A target path component is not a directory: ${relative}`);
+        fail3(`A target path component is not a directory: ${relative}`);
       }
     }
   }
 }
-async function writeTransaction(projectRoot, files) {
+async function writeTransaction(projectRoot, files, verifyAfterWrite) {
   await ensureWritableParents(projectRoot, files.keys());
   const staging = await mkdtemp2(
-    path2.join(projectRoot, ".nourd", ".nkf-adoption-staging-")
+    path3.join(projectRoot, ".nkf-transaction-")
   );
   const originals = /* @__PURE__ */ new Map();
   const replaced = [];
+  const createdDirectories = /* @__PURE__ */ new Set();
+  const ensureTargetDirectory = async (directory) => {
+    const missing = [];
+    let cursor = directory;
+    while (inside2(projectRoot, cursor) && cursor !== projectRoot) {
+      const stat = await lstat2(cursor).catch(() => null);
+      if (stat !== null) break;
+      missing.push(cursor);
+      cursor = path3.dirname(cursor);
+    }
+    await mkdir3(directory, { recursive: true });
+    for (const item of missing) createdDirectories.add(item);
+  };
   try {
     for (const [relative, bytes] of files) {
-      const staged = path2.join(staging, ...relative.split("/"));
-      await mkdir2(path2.dirname(staged), { recursive: true });
-      await writeFile2(staged, bytes, { flag: "wx" });
+      const staged = path3.join(staging, ...relative.split("/"));
+      await mkdir3(path3.dirname(staged), { recursive: true });
+      await writeFile3(staged, bytes, { flag: "wx" });
       originals.set(relative, await readRegularInside(projectRoot, relative, false));
     }
     for (const [relative] of files) {
-      const target = path2.join(projectRoot, ...relative.split("/"));
-      const staged = path2.join(staging, ...relative.split("/"));
-      await mkdir2(path2.dirname(target), { recursive: true });
-      const current = await lstat(target).catch(() => null);
+      const target = path3.join(projectRoot, ...relative.split("/"));
+      const staged = path3.join(staging, ...relative.split("/"));
+      await ensureTargetDirectory(path3.dirname(target));
+      const current = await lstat2(target).catch(() => null);
       if (current?.isSymbolicLink() || current !== null && !current.isFile()) {
-        fail2(`Adoption target is not a regular file: ${relative}`);
+        fail3(`Adoption target is not a regular file: ${relative}`);
       }
       replaced.push(relative);
       if (current !== null) await unlink(target);
       await rename(staged, target);
     }
+    return await verifyAfterWrite();
   } catch (error) {
     for (const relative of replaced.reverse()) {
-      const target = path2.join(projectRoot, ...relative.split("/"));
+      const target = path3.join(projectRoot, ...relative.split("/"));
       const original = originals.get(relative);
       await rm2(target, { force: true });
-      if (original !== null) await writeFile2(target, original);
+      if (original !== null) {
+        await mkdir3(path3.dirname(target), { recursive: true });
+        await writeFile3(target, original);
+      }
+    }
+    for (const directory of [...createdDirectories].sort(
+      (left, right) => right.split(path3.sep).length - left.split(path3.sep).length
+    )) {
+      await rmdir(directory).catch(() => void 0);
     }
     throw error;
   } finally {
@@ -16074,10 +17259,10 @@ async function writeTransaction(projectRoot, files) {
 function requirePinShape(pin) {
   const exactKeys = (value, expected, label) => {
     if (value === null || typeof value !== "object" || Array.isArray(value)) {
-      fail2(`${label} must be an object.`);
+      fail3(`${label} must be an object.`);
     }
     if (JSON.stringify(Object.keys(value).sort()) !== JSON.stringify([...expected].sort())) {
-      fail2(`${label} contains unsupported fields.`);
+      fail3(`${label} contains unsupported fields.`);
     }
   };
   exactKeys(
@@ -16097,31 +17282,31 @@ function requirePinShape(pin) {
   );
   exactKeys(pin.archive, ["asset_name", "project_path", "sha256", "tag"], "Pinned archive");
   exactKeys(pin.adopter, ["path", "sha256"], "Pinned adopter");
-  if (pin?.contract !== "nkf.consumer-release-pin" || pin?.nkf_version !== "0.1" || pin?.repository !== "kaveh6202/Nourd.NKF" || !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") || pin?.archive?.asset_name !== `nourd-nkf-sha256-${pin?.archive?.sha256}.tar` || pin?.archive?.tag !== `release-sha256-${pin?.archive?.sha256}` || !/^[0-9a-f]{40}$/.test(pin?.source_commit ?? "") || !/^[0-9a-f]{64}$/.test(pin?.checker_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(pin?.adopter?.sha256 ?? "") || pin?.adopter?.path !== ADOPTER_PATH || pin?.integration_revision !== INTEGRATION_REVISION || !ROOT_PROFILES.has(pin?.root_profile)) {
-    fail2("The installed NKF release pin is invalid or unsupported.");
+  if (pin?.contract !== "nkf.consumer-release-pin" || pin?.nkf_version !== "0.1" || pin?.repository !== "kaveh6202/Nourd.NKF" || !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") || pin?.archive?.asset_name !== `nourd-nkf-sha256-${pin?.archive?.sha256}.tar` || pin?.archive?.tag !== `release-sha256-${pin?.archive?.sha256}` || !/^[0-9a-f]{40}$/.test(pin?.source_commit ?? "") || !/^[0-9a-f]{64}$/.test(pin?.checker_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(pin?.adopter?.sha256 ?? "") || pin?.adopter?.path !== ADOPTER_PATH || pin?.integration_revision !== INTEGRATION_REVISION || !ROOT_PROFILES2.has(pin?.root_profile)) {
+    fail3("The installed NKF release pin is invalid or unsupported.");
   }
-  const archivePath = safeRelative(
+  const archivePath = safeRelative2(
     pin.archive.project_path,
     "Pinned archive path"
   );
   if (archivePath !== `${RELEASE_DIRECTORY}/${pin.archive.asset_name}`) {
-    fail2("The pinned archive path does not match its content identity.");
+    fail3("The pinned archive path does not match its content identity.");
   }
   return pin;
 }
 async function verifyIntegration(projectRoot, pin) {
   const adopter = await readRegularInside(projectRoot, ADOPTER_PATH);
   if (digest(adopter) !== pin.adopter.sha256) {
-    fail2("The installed adopter differs from its immutable pin.");
+    fail3("The installed adopter differs from its immutable pin.");
   }
   const protocol = await readRegularInside(projectRoot, PROTOCOL_PATH);
   if (protocol.toString("utf8") !== nkf_authoring_protocol_default) {
-    fail2("The installed neutral authoring protocol differs.");
+    fail3("The installed neutral authoring protocol differs.");
   }
   for (const skillPath of SKILL_PATHS) {
     const skill = await readRegularInside(projectRoot, skillPath);
     if (skill.toString("utf8") !== SKILL_default) {
-      fail2(`The installed portable skill differs: ${skillPath}`);
+      fail3(`The installed portable skill differs: ${skillPath}`);
     }
   }
   verifyBlock(await readRegularInside(projectRoot, "AGENTS.md"), ROOT_BLOCK, "AGENTS.md");
@@ -16134,16 +17319,16 @@ async function verifyIntegration(projectRoot, pin) {
   );
   const verifier = await readRegularInside(projectRoot, VERIFIER_PATH);
   if (verifier.toString("utf8") !== VERIFIER_SOURCE) {
-    fail2("The installed integration verifier differs.");
+    fail3("The installed integration verifier differs.");
   }
   const registryBytes = await readRegularInside(projectRoot, REGISTRY_PATH);
-  const registry = import_yaml.default.parse(registryBytes.toString("utf8"));
+  const registry = import_yaml2.default.parse(registryBytes.toString("utf8"));
   if (registry?.contract !== "nkf.consumer-integration" || registry?.version !== INTEGRATION_REVISION || registry?.canonical_command !== "npm run nkf:check") {
-    fail2("The installed integration registry is invalid.");
+    fail3("The installed integration registry is invalid.");
   }
   const workflowBytes = await readRegularInside(projectRoot, WORKFLOW_PATH);
   if (typeof registry.workflow?.branch !== "string" || workflowBytes.toString("utf8") !== workflow(registry.workflow.branch) || digest(workflowBytes) !== registry.workflow.sha256) {
-    fail2("The installed NKF workflow differs from the registry.");
+    fail3("The installed NKF workflow differs from the registry.");
   }
   const exactFiles = /* @__PURE__ */ new Map([
     [PROTOCOL_PATH, protocol],
@@ -16152,17 +17337,23 @@ async function verifyIntegration(projectRoot, pin) {
     [VERIFIER_PATH, verifier],
     [WORKFLOW_PATH, workflowBytes]
   ]);
-  const expectedRegistry = serializeYaml(
+  const expectedRegistry = serializeYaml2(
     integrationRegistry(exactFiles, registry.workflow.branch)
   );
   if (!registryBytes.equals(expectedRegistry)) {
-    fail2("The installed integration registry differs from its canonical form.");
+    fail3("The installed integration registry differs from its canonical form.");
   }
   const packageManifest = parseStrictJson(
     await readRegularInside(projectRoot, "package.json")
   );
   if (packageManifest?.scripts?.["nkf:check"] !== CHECK_COMMAND) {
-    fail2("The project nkf:check command differs from the installed contract.");
+    fail3("The project nkf:check command differs from the installed contract.");
+  }
+  const packageLock = parseStrictJson(
+    await readRegularInside(projectRoot, LOCK_PATH)
+  );
+  if (![2, 3].includes(packageLock?.lockfileVersion) || packageLock?.packages === null || typeof packageLock?.packages !== "object" || Array.isArray(packageLock?.packages)) {
+    fail3("The project package-lock.json cannot support the installed exact-commit workflow.");
   }
   return registry;
 }
@@ -16172,7 +17363,7 @@ async function verifyInstalled(projectRoot, runChecker) {
     parseStrictJson(await readRegularInside(projectRoot, PIN_PATH))
   );
   if (pin.root_profile !== bundle.root.profile) {
-    fail2("The installed Root Profile pin differs from the current bundle.");
+    fail3("The installed Root Profile pin differs from the current bundle.");
   }
   await verifyIntegration(projectRoot, pin);
   const archiveBytes = await readRegularInside(
@@ -16181,10 +17372,11 @@ async function verifyInstalled(projectRoot, runChecker) {
   );
   const verification = verifyReleaseArchive(archiveBytes, pin.archive.sha256);
   if (verification.release_commit !== pin.source_commit || verification.checker_sha256 !== pin.checker_sha256) {
-    fail2("The verified release manifest differs from the installed pin.");
+    fail3("The verified release manifest differs from the installed pin.");
   }
+  let report = null;
   if (runChecker) {
-    await invokeVerifiedChecker(verification, [
+    const invocation = await invokeVerifiedChecker(verification, [
       "--project",
       projectRoot,
       "--level",
@@ -16192,24 +17384,53 @@ async function verifyInstalled(projectRoot, runChecker) {
       "--runner",
       "nourd-nkf-consumer"
     ]);
+    report = parseStrictJson(Buffer.from(invocation.stdout, "utf8"));
   }
-  return { pin, verification };
+  return { pin, verification, report };
 }
-async function installOrUpdate(command2, options2) {
-  if (Number.parseInt(process2.versions.node.split(".")[0] ?? "0", 10) < 22) {
-    fail2("NKF adoption requires Node.js 22 or later.");
+async function validateCompleteCandidate(projectRoot, files) {
+  const temporary = await mkdtemp2(path3.join(os2.tmpdir(), "nkf-candidate-"));
+  const candidate = path3.join(temporary, "project");
+  try {
+    await cp(projectRoot, candidate, {
+      recursive: true,
+      filter(source) {
+        const relative = path3.relative(projectRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path3.sep)[0];
+        return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
+      }
+    });
+    await ensureWritableParents(candidate, files.keys());
+    for (const [relative, bytes] of files) {
+      const target = path3.join(candidate, ...relative.split("/"));
+      const current = await lstat2(target).catch(() => null);
+      if (current?.isSymbolicLink() || current !== null && !current.isFile()) {
+        fail3(`Candidate target is not a regular file: ${relative}`);
+      }
+      await mkdir3(path3.dirname(target), { recursive: true });
+      await writeFile3(target, bytes);
+    }
+    return await verifyInstalled(candidate, true);
+  } finally {
+    await rm2(temporary, { recursive: true, force: true });
   }
-  const projectRoot = await requireProjectRoot(options2.project);
+}
+async function installOrUpdate(command, options) {
+  if (Number.parseInt(process2.versions.node.split(".")[0] ?? "0", 10) < 22) {
+    fail3("NKF adoption requires Node.js 22 or later.");
+  }
+  const projectRoot = await requireProjectRoot(options.project);
   const { bundle } = await requireBundle(projectRoot);
-  const expectedSha256 = requireSha256(options2.sha256);
+  const expectedSha256 = requireSha2562(options.sha256);
   const priorBytes = await readRegularInside(projectRoot, PIN_PATH, false);
-  if (command2 === "update" && priorBytes === null) {
-    fail2("Update requires an existing NKF consumer release pin.");
+  if (command === "update" && priorBytes === null) {
+    fail3("Update requires an existing NKF consumer release pin.");
   }
   if (priorBytes !== null) {
     await verifyInstalled(projectRoot, false);
   }
-  const archiveBytes = await acquireArchive(options2, expectedSha256);
+  const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
   const files = await targetFiles(
     projectRoot,
@@ -16228,7 +17449,7 @@ async function installOrUpdate(command2, options2) {
     ]) {
       const current = await readRegularInside(projectRoot, relative, false);
       if (current !== null && !current.equals(files.get(relative))) {
-        fail2(`Installation would overwrite an existing owned path: ${relative}`);
+        fail3(`Installation would overwrite an existing owned path: ${relative}`);
       }
     }
   }
@@ -16240,22 +17461,213 @@ async function installOrUpdate(command2, options2) {
       return { state: "no-update", project: projectRoot, pin: prior };
     }
   }
-  await writeTransaction(projectRoot, files);
-  const installed = await verifyInstalled(projectRoot, true);
+  await validateCompleteCandidate(projectRoot, files);
+  const installed = await writeTransaction(
+    projectRoot,
+    files,
+    () => verifyInstalled(projectRoot, true)
+  );
   return {
     state: priorBytes === null ? "installed" : "updated",
     project: projectRoot,
     pin: installed.pin
   };
 }
-var { command, options } = parseArguments(process2.argv.slice(2));
-var output;
-if (command === "install" || command === "update") {
-  output = await installOrUpdate(command, options);
-} else {
+async function inspectForOnboarding(options) {
+  for (const required of [
+    "created-at",
+    "output",
+    "profile",
+    "project",
+    "root-id",
+    "root-title",
+    "task-id"
+  ]) {
+    if (options[required] === void 0) fail3(`inspect requires --${required}.`);
+  }
+  const result = await createOnboardingWorkspace({
+    projectRoot: options.project,
+    knowledgeRoot: options["knowledge-root"] ?? "knowledge",
+    outputRoot: options.output,
+    profile: options.profile,
+    rootId: options["root-id"],
+    rootTitle: options["root-title"],
+    taskId: options["task-id"],
+    authority: options.authority ?? "human-product-owner",
+    createdAt: options["created-at"]
+  });
+  return {
+    contract: "nkf.onboarding-inspect-result",
+    nkf_version: "0.1",
+    state: result.inspection.eligible ? "workspace-created" : "deferred",
+    eligible: result.inspection.eligible,
+    workspace: result.workspace,
+    inspection_sha256: result.inspection.snapshot_sha256,
+    markdown_files: result.inspection.observed.markdown_files,
+    project_surfaces: result.inspection.project_surfaces.filter(
+      (surface) => surface.state === "file"
+    ),
+    package_scripts: result.inspection.package_scripts,
+    git: result.inspection.git,
+    diagnostics: result.inspection.diagnostics
+  };
+}
+function requireOnboardingReceipt(value) {
+  if (value?.contract !== "nkf.onboarding-receipt" || value?.nkf_version !== "0.1" || !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") || !ROOT_PROFILES2.has(value?.profile) || typeof value?.knowledge_root !== "string" || !Array.isArray(value?.created_paths) || !Array.isArray(value?.changed_paths) || !Array.isArray(value?.preserved_paths)) {
+    fail3("The installed onboarding receipt is invalid.");
+  }
+  return value;
+}
+function onboardingResult(state, projectRoot, receipt, installed, knowledge = null) {
+  return {
+    contract: "nkf.onboarding-result",
+    nkf_version: "0.1",
+    state,
+    project: projectRoot,
+    profile: receipt.profile,
+    knowledge_root: receipt.knowledge_root,
+    paths: {
+      created: receipt.created_paths,
+      changed: receipt.changed_paths,
+      preserved: receipt.preserved_paths
+    },
+    meaning: {
+      root_status: "draft",
+      classification_status: "resolved",
+      substantive_meaning: "contains-unresolved",
+      realization_confirmation: "unconfirmed"
+    },
+    validation: {
+      conformance: installed.report?.conformance ?? "passed",
+      governing_use: installed.report?.governing_use ?? "not-ready"
+    },
+    release: {
+      archive_sha256: installed.pin.archive.sha256,
+      source_commit: installed.pin.source_commit,
+      checker_sha256: installed.pin.checker_sha256,
+      adopter_sha256: installed.pin.adopter.sha256
+    },
+    non_claims: [
+      "project-meaning-not-accepted",
+      "realization-not-confirmed",
+      "git-state-not-inspected",
+      "remote-enforcement-not-inspected"
+    ]
+  };
+}
+async function onboard(options) {
+  if (Number.parseInt(process2.versions.node.split(".")[0] ?? "0", 10) < 22) {
+    fail3("NKF onboarding requires Node.js 22 or later.");
+  }
+  for (const required of ["plan", "project", "sha256"]) {
+    if (options[required] === void 0) fail3(`onboard requires --${required}.`);
+  }
+  const projectRoot = await requireProjectRoot(options.project);
+  const planPath = path3.resolve(options.plan);
+  const planStat = await lstat2(planPath).catch(() => null);
+  if (planStat === null || !planStat.isFile() || planStat.isSymbolicLink()) {
+    fail3("--plan must identify a regular onboarding plan file.");
+  }
+  const planBytes = await readFile3(planPath);
+  const planSha256 = digest(planBytes);
+  const priorReceiptBytes = await readRegularInside(
+    projectRoot,
+    ONBOARDING_RECEIPT_PATH,
+    false
+  );
+  if (priorReceiptBytes !== null) {
+    const receipt2 = requireOnboardingReceipt(parseStrictJson(priorReceiptBytes));
+    if (receipt2.plan_sha256 !== planSha256) {
+      fail3(
+        "The project was onboarded with a different plan; use governed authoring or a deliberate migration workflow."
+      );
+    }
+    const installed2 = await verifyInstalled(projectRoot, true);
+    return onboardingResult("no-update", projectRoot, receipt2, installed2);
+  }
+  const existingNourd = await lstat2(path3.join(projectRoot, ".nourd")).catch(() => null);
+  if (existingNourd !== null) {
+    fail3("Initial onboarding requires a project without .nourd.");
+  }
+  const expectedSha256 = requireSha2562(options.sha256);
+  const archiveBytes = await acquireArchive(options, expectedSha256);
+  const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
+  const knowledge = await buildOnboardingKnowledge(projectRoot, planPath);
+  const integration = await targetFiles(
+    projectRoot,
+    archiveBytes,
+    verification,
+    knowledge.plan.project.profile
+  );
+  const files = new Map(knowledge.files);
+  for (const [relative, bytes] of integration) {
+    if (files.has(relative)) fail3(`Generated onboarding targets conflict: ${relative}`);
+    files.set(relative, bytes);
+  }
+  for (const relative of [
+    ADOPTER_PATH,
+    PROTOCOL_PATH,
+    ...SKILL_PATHS,
+    REGISTRY_PATH,
+    VERIFIER_PATH,
+    WORKFLOW_PATH
+  ]) {
+    const current = await readRegularInside(projectRoot, relative, false);
+    if (current !== null && !current.equals(files.get(relative))) {
+      fail3(`Onboarding would overwrite an existing owned path: ${relative}`);
+    }
+  }
+  const createdPaths = [];
+  const changedPaths = [];
+  for (const [relative, bytes] of files) {
+    const current = await readRegularInside(projectRoot, relative, false);
+    if (current === null) createdPaths.push(relative);
+    else if (!current.equals(bytes)) changedPaths.push(relative);
+  }
+  createdPaths.push(ONBOARDING_RECEIPT_PATH);
+  createdPaths.sort();
+  changedPaths.sort();
+  const receipt = {
+    contract: "nkf.onboarding-receipt",
+    nkf_version: "0.1",
+    plan_sha256: knowledge.plan_sha256,
+    inspection_sha256: knowledge.inspection.snapshot_sha256,
+    profile: knowledge.plan.project.profile,
+    knowledge_root: knowledge.plan.inspection.knowledge_root,
+    created_paths: createdPaths,
+    changed_paths: changedPaths,
+    preserved_paths: knowledge.preserved_documents
+  };
+  files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
+  await validateCompleteCandidate(projectRoot, files);
+  const installed = await writeTransaction(
+    projectRoot,
+    files,
+    () => {
+      if (process2.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
+        fail3("Injected onboarding transaction failure.");
+      }
+      return verifyInstalled(projectRoot, true);
+    }
+  );
+  return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
+}
+async function main() {
+  const { command, options } = parseArguments(process2.argv.slice(2));
+  if (command === "inspect") return inspectForOnboarding(options);
+  if (command === "seal") {
+    if (options.project === void 0 || options.plan === void 0) {
+      fail3("seal requires --project and --plan.");
+    }
+    return sealOnboardingPlan(options.project, options.plan);
+  }
+  if (command === "onboard") return onboard(options);
+  if (command === "install" || command === "update") {
+    return installOrUpdate(command, options);
+  }
   const projectRoot = await requireProjectRoot(options.project);
   const installed = await verifyInstalled(projectRoot, command === "check");
-  output = {
+  return {
     state: command === "check" ? "passed" : "current",
     project: projectRoot,
     archive_sha256: installed.pin.archive.sha256,
@@ -16264,5 +17676,23 @@ if (command === "install" || command === "update") {
     integration_revision: installed.pin.integration_revision
   };
 }
-process2.stdout.write(`${JSON.stringify(output, null, 2)}
+try {
+  process2.stdout.write(`${JSON.stringify(await main(), null, 2)}
 `);
+} catch (error) {
+  const structured = {
+    contract: "nkf.adopter-error",
+    nkf_version: "0.1",
+    state: "failed",
+    diagnostics: [
+      {
+        code: error instanceof OnboardingError ? error.code : "NKF-ADOPTER-FAILED",
+        message: error instanceof Error ? error.message : String(error),
+        ...error instanceof OnboardingError ? error.details : {}
+      }
+    ]
+  };
+  process2.stderr.write(`${JSON.stringify(structured, null, 2)}
+`);
+  process2.exitCode = 1;
+}

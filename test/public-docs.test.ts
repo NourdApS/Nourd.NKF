@@ -34,6 +34,16 @@ async function copyProjection() {
     path.join(root, "contracts/nkf/0.1"),
     { recursive: true },
   );
+  await cp(
+    path.join(repositoryRoot, "integrations/onboarding"),
+    path.join(root, "integrations/onboarding"),
+    { recursive: true },
+  );
+  await cp(
+    path.join(repositoryRoot, ".agents/skills/nkf-onboarding"),
+    path.join(root, ".agents/skills/nkf-onboarding"),
+    { recursive: true },
+  );
   return root;
 }
 
@@ -43,7 +53,7 @@ describe("NKF public documentation", () => {
     expect(result).toMatchObject({
       contract: "nkf.public-documentation-verification",
       status: "passed",
-      files: 23,
+      files: 27,
       examples: 2,
     });
     expect(result.mermaid_diagrams).toBeGreaterThanOrEqual(5);

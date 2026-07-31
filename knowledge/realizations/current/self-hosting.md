@@ -2,18 +2,12 @@
 id: nkf-self-hosting
 type: realization
 title: NKF Self-Hosting
-summary: This Realization describes how the NKF repository represents and validates its own knowledge as an NKF 0.1 Technology bundle.
+summary: This Realization describes the unconfirmed NKF-013 successor self-hosting bundle, including initial-onboarding knowledge, tooling, guidance, public artifacts, tests, and deferred NKF-014 boundaries.
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-008
-confirmation_status: confirmed
-confirmation_decisions:
-  - adr-0059
-  - adr-0061
-  - adr-0062
-  - adr-0063
-  - adr-0066
+task: NKF-013
+confirmation_status: unconfirmed
 ---
 
 # NKF Self-Hosting
@@ -65,6 +59,15 @@ complete public Product and Technology example trees. Every Markdown file
 under `knowledge` remains represented exactly once. ADR 0066 confirms the
 successor after live publication and final audit.
 
+NKF-013 adds its active and deferred Tasks, adopted onboarding Design,
+adopting Decision, current onboarding Realization, provider-neutral
+pre-adoption guidance, deterministic onboarding core, expanded adopter,
+transaction and boundary tests, public onboarding documentation, and exact
+artifact bindings. The pre-confirmation candidate contains 102 record
+declarations, 59 explicit non-record sources, and 119 governed artifacts.
+This self-hosting successor remains unconfirmed until the final audit and
+remote successor evidence are complete.
+
 ## Responsibilities And Ownership Boundaries
 
 Human-reviewed Markdown remains canonical. `.nourd` represents exact sources,
@@ -97,6 +100,12 @@ tool, public documentation source and mirror, focused test, and consumer
 workflow is declared as a Technology `governed_artifact` and bound to the
 Release Documentation And Adoption Realization.
 
+Every onboarding-specific core, protocol, skill, verifier, focused test, and
+public guide is declared as a governed artifact and bound to the Initial
+Greenfield Onboarding Realization. Existing shared adopter and publication
+artifacts retain their release-adoption mapping while the new Realization
+records their composed role.
+
 ## External Authority And Operational State Boundaries
 
 Self-hosting validates the repository snapshot only. It does not accept NKF,
@@ -114,10 +123,11 @@ belongs under `knowledge/evidence/`.
 
 The two skill representations pass the bundled skill validator. The
 agent-guidance verifier and eighteen focused positive and negative cases pass.
-The canonical command passes type checking, eighteen test files with 126
+The canonical command passes type checking, nineteen test files with 135
 tests, deterministic checker and adopter builds, verification of the
-23-file public source projection and its two complete conformant example
-projects, and final full-bundle validation. It exits nonzero when an
+27-file public source projection, four documented initial-onboarding starts,
+its two complete conformant adopted example projects, and full-bundle
+validation. It exits nonzero when an
 unrepresented Markdown source is introduced, independent of who produced
 that candidate.
 

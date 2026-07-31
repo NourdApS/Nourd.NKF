@@ -120,6 +120,10 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-012-activate-protected-merge-gate.md
     kind: task
+  - path: tasks/active/NKF-013-initial-greenfield-onboarding.md
+    kind: task
+  - path: tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md
+    kind: task
 canonical_terms:
   - ADR
   - AI
@@ -164,6 +168,14 @@ governed_artifacts:
       value: 99d98c61c7612c19ba5d967facb88c782043eb93692eb4891aec646c34146959
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
+  - id: artifact-agents-skills-nkf-onboarding-skill-md
+    kind: project-configuration
+    path: .agents/skills/nkf-onboarding/SKILL.md
+    digest:
+      algorithm: sha-256
+      value: e61d27169403382f494b0786e443b4f9b7fefbac155990045ce6940b4cd3cb1a
+    record: nkf-initial-greenfield-onboarding
+    source_section: durable-mapping
   - id: artifact-claude-skills-nkf-authoring-skill-md
     kind: project-configuration
     path: .claude/skills/nkf-authoring/SKILL.md
@@ -171,6 +183,14 @@ governed_artifacts:
       algorithm: sha-256
       value: 99d98c61c7612c19ba5d967facb88c782043eb93692eb4891aec646c34146959
     record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-claude-skills-nkf-onboarding-skill-md
+    kind: project-configuration
+    path: .claude/skills/nkf-onboarding/SKILL.md
+    digest:
+      algorithm: sha-256
+      value: e61d27169403382f494b0786e443b4f9b7fefbac155990045ce6940b4cd3cb1a
+    record: nkf-initial-greenfield-onboarding
     source_section: durable-mapping
   - id: artifact-github-copilot-instructions-md
     kind: project-configuration
@@ -388,12 +408,20 @@ governed_artifacts:
       value: 24fa96349093ea40cb9640989e953390efb80df42e7a43675af21ed957568a5a
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
+  - id: artifact-integrations-onboarding-nkf-onboarding-protocol-md
+    kind: project-configuration
+    path: integrations/onboarding/nkf-onboarding-protocol.md
+    digest:
+      algorithm: sha-256
+      value: d925d276f99fa39fbc33850c95b8605e32000ab156d32f105a3c7ce77b710d27
+    record: nkf-initial-greenfield-onboarding
+    source_section: durable-mapping
   - id: artifact-package-lock-json
     kind: project-configuration
     path: package-lock.json
     digest:
       algorithm: sha-256
-      value: 78464513708bc8a82746513fd7bfd822df900c7563d56db51d96afb27eabb069
+      value: b45c34bd241ee58a321a0644bb23c322c07a03b4ac12651fa41ed3dce52ebf0e
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-package-json
@@ -401,7 +429,7 @@ governed_artifacts:
     path: package.json
     digest:
       algorithm: sha-256
-      value: c9a93c2a3914b2f7eb17a5a595d978ca1f44d86234b95593e465436d51407075
+      value: 1f47d57ac8fc448cf4b281bb522fc63e7c686179e172b16f63af7c36ba168c79
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-public-docs-readme-md
@@ -409,7 +437,7 @@ governed_artifacts:
     path: public-docs/README.md
     digest:
       algorithm: sha-256
-      value: 261a8a1ad012a609821ec0d35d40e57e56ef6636a5f2a7e737e513c7a2fc1002
+      value: 95dbe976168a1b8dc8191ab79022e41c208a98869e8109a25cbd0cf3ae7bf265
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-public-docs-concepts-authority-and-lifecycle-md
@@ -561,8 +589,16 @@ governed_artifacts:
     path: public-docs/guides/adopt-and-validate.md
     digest:
       algorithm: sha-256
-      value: 93c5a38722bdb81ebb984595f15c350267991dad9526d0b330e0824c85c27bcf
+      value: 6a07d6617304253f3a5006acf99177015254007557488f0bbe16a10d9773a2a6
     record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-guides-initial-onboarding-md
+    kind: project-configuration
+    path: public-docs/guides/initial-onboarding.md
+    digest:
+      algorithm: sha-256
+      value: 1c77fa68aa61beaff5be8df58b9e2e69f959648d4addd89064ef8c1b8f07a12f
+    record: nkf-initial-greenfield-onboarding
     source_section: durable-mapping
   - id: artifact-public-docs-guides-update-and-recover-md
     kind: project-configuration
@@ -580,12 +616,36 @@ governed_artifacts:
       value: 428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
+  - id: artifact-public-docs-agents-skills-nkf-onboarding-skill-md
+    kind: project-configuration
+    path: public-docs/.agents/skills/nkf-onboarding/SKILL.md
+    digest:
+      algorithm: sha-256
+      value: e61d27169403382f494b0786e443b4f9b7fefbac155990045ce6940b4cd3cb1a
+    record: nkf-initial-greenfield-onboarding
+    source_section: durable-mapping
+  - id: artifact-public-docs-claude-skills-nkf-onboarding-skill-md
+    kind: project-configuration
+    path: public-docs/.claude/skills/nkf-onboarding/SKILL.md
+    digest:
+      algorithm: sha-256
+      value: e61d27169403382f494b0786e443b4f9b7fefbac155990045ce6940b4cd3cb1a
+    record: nkf-initial-greenfield-onboarding
+    source_section: durable-mapping
+  - id: artifact-public-docs-tools-nkf-onboarding-protocol-md
+    kind: project-configuration
+    path: public-docs/tools/nkf-onboarding-protocol.md
+    digest:
+      algorithm: sha-256
+      value: d925d276f99fa39fbc33850c95b8605e32000ab156d32f105a3c7ce77b710d27
+    record: nkf-initial-greenfield-onboarding
+    source_section: durable-mapping
   - id: artifact-public-docs-tools-nourd-nkf-adopt-mjs
     kind: build-tool
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: b2fb0580705782dec45e96fdcce298c691a4d9842e120d1b036104c46567bb88
+      value: 12c2e0f06ed0ef21256406b8d95b50ef628ee71ced6fbee23f477bda6ec3b843
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -601,7 +661,7 @@ governed_artifacts:
     path: release/recommended.json
     digest:
       algorithm: sha-256
-      value: b3b45013d85b6f3bc1208180ae342b32dc851ba1b58b7c324e7972c7f5644d27
+      value: 4bc7809f09eacf91229c4ec6255e888e56d62eaaffdb801b7a9f26b8d7f4e2c9
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-build-mjs
@@ -617,7 +677,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: b2fb0580705782dec45e96fdcce298c691a4d9842e120d1b036104c46567bb88
+      value: 12c2e0f06ed0ef21256406b8d95b50ef628ee71ced6fbee23f477bda6ec3b843
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-adoption-nourd-nkf-adopt-mjs
@@ -625,8 +685,16 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 7a81b0e9109f698e27bc8bf9b0f692c9369fb7d48e93eb5f33b0570d39bf9952
+      value: a5d125114266d8b44a0960dcbd43b65685c99472791825db410e5d2ce377cb41
     record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-scripts-onboarding-core-mjs
+    kind: build-tool
+    path: scripts/onboarding/core.mjs
+    digest:
+      algorithm: sha-256
+      value: d6be47942ef448a51dff38a7d4edec2a176c1476d7343d85facaeb12a6f3cfd1
+    record: nkf-initial-greenfield-onboarding
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
     kind: build-tool
@@ -641,7 +709,7 @@ governed_artifacts:
     path: scripts/build-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: cc4739e11977ab21f081d48f39bf927fa203abbbed0575ea493f8417900942c5
+      value: 0de6a4f07dc9754d2b98d21217bbce3983070504b5e8332e3243ac2330e58775
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-exercise-consumer-adoption-mjs
@@ -649,7 +717,7 @@ governed_artifacts:
     path: scripts/exercise-consumer-adoption.mjs
     digest:
       algorithm: sha-256
-      value: 5bf9a4ec3ac678deb6a95726c2185816b32232b8a605822523db7edca0941216
+      value: 1f30b899e5b311d4d63d7cf4a22deea613ccde6bd493318875de512f674e0e30
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs
@@ -681,8 +749,16 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: 2a1941744cebb629e2302391df948b4b2da18602617dfc0fb3bf0ef0d4c94d8f
+      value: 89c98f3c0b9ec6ca0ee9a48ac49428b4a0bc167796a76889d5b00e36c6894167
     record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-scripts-verify-onboarding-guidance-mjs
+    kind: build-tool
+    path: scripts/verify-onboarding-guidance.mjs
+    digest:
+      algorithm: sha-256
+      value: d6fc3c7ebf57e056229ab19797135e1a1e8d419f7a663991270a6ab7ee26d64b
+    record: nkf-initial-greenfield-onboarding
     source_section: durable-mapping
   - id: artifact-scripts-stage-public-docs-mjs
     kind: build-tool
@@ -713,7 +789,7 @@ governed_artifacts:
     path: scripts/verify-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: 7c8797fdec9c1d2704d843eb6e3a4ca91d53d5f6caf08209778673a52fea07e5
+      value: 0ba80b15d0c0348f974a12e3226c28cab0ad52ae1119c16c701b54171e411499
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-recommended-release-mjs
@@ -865,8 +941,16 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: accf6dba9cd19711889063099bd2ad2f76d333360c4335573f1c94825ff94818
+      value: 9b93034dc578ac2d4c0e00874f3245dac4eebda86f185cd5c7bcdb28d74caf72
     record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-test-onboarding-guidance-test-ts
+    kind: test
+    path: test/onboarding-guidance.test.ts
+    digest:
+      algorithm: sha-256
+      value: 239f39bc1422fe119279bbaac83709e25c3730a5704ad3002eab90bed5ac8dd9
+    record: nkf-initial-greenfield-onboarding
     source_section: durable-mapping
   - id: artifact-test-authority-test-ts
     kind: test
@@ -937,7 +1021,7 @@ governed_artifacts:
     path: test/public-docs.test.ts
     digest:
       algorithm: sha-256
-      value: 37bf1ee983b443abb03e11c835cc7fe3819eb56b9b8cc9b81ba591b8e2ef355a
+      value: 7cc03deb1e0ab6bc35e57beeeb02c37edf55a0b76074e49c83df4a0a10fe4ec7
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-test-release-manifest-schema-test-ts

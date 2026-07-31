@@ -1,13 +1,16 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import {
+  cp,
   lstat,
   mkdir,
   mkdtemp,
   readFile,
+  readdir,
   realpath,
   rename,
   rm,
+  rmdir,
   unlink,
   writeFile,
 } from "node:fs/promises";
@@ -19,6 +22,13 @@ import YAML from "yaml";
 import neutralProtocol from "../../integrations/ai/nkf-authoring-protocol.md";
 import portableSkill from "../../.agents/skills/nkf-authoring/SKILL.md";
 import {
+  buildOnboardingKnowledge,
+  createOnboardingWorkspace,
+  OnboardingError,
+  sealOnboardingPlan,
+  serializeOnboardingReceipt,
+} from "../onboarding/core.mjs";
+import {
   invokeVerifiedChecker,
   parseStrictJson,
   sha256,
@@ -29,10 +39,12 @@ const INTEGRATION_REVISION = 1;
 const PIN_PATH = ".nourd/nkf-release.json";
 const ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
 const RELEASE_DIRECTORY = ".nourd/tools/nkf/releases";
+const ONBOARDING_RECEIPT_PATH = ".nourd/onboarding-receipt.json";
 const PROTOCOL_PATH = "integrations/ai/nkf-authoring-protocol.md";
 const REGISTRY_PATH = "integrations/ai/nkf-consumer-integration.yaml";
 const VERIFIER_PATH = "scripts/verify-nkf-integration.mjs";
 const WORKFLOW_PATH = ".github/workflows/nkf-contracts.yml";
+const LOCK_PATH = "package-lock.json";
 const SKILL_PATHS = [
   ".agents/skills/nkf-authoring/SKILL.md",
   ".claude/skills/nkf-authoring/SKILL.md",
@@ -118,9 +130,18 @@ function safeRelative(value, label) {
 
 function parseArguments(values) {
   const result = { command: values[0], options: {} };
-  if (!["install", "update", "check", "status", "integration-check"].includes(result.command)) {
+  if (![
+    "inspect",
+    "seal",
+    "onboard",
+    "install",
+    "update",
+    "check",
+    "status",
+    "integration-check",
+  ].includes(result.command)) {
     fail(
-      "Usage: nourd-nkf-adopt.mjs <install|update|check|status|integration-check> --project <path> [--archive <path> | --github-repository <owner/name>] [--sha256 <digest>]",
+      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|install|update|check|status|integration-check> [options]",
     );
   }
   for (let index = 1; index < values.length; index += 2) {
@@ -135,10 +156,34 @@ function parseArguments(values) {
     }
     result.options[name] = value;
   }
-  const allowed =
-    result.command === "install" || result.command === "update"
-      ? new Set(["archive", "github-repository", "project", "sha256"])
-      : new Set(["project"]);
+  let allowed;
+  if (result.command === "inspect") {
+    allowed = new Set([
+      "authority",
+      "created-at",
+      "knowledge-root",
+      "output",
+      "profile",
+      "project",
+      "root-id",
+      "root-title",
+      "task-id",
+    ]);
+  } else if (result.command === "seal") {
+    allowed = new Set(["plan", "project"]);
+  } else if (result.command === "onboard") {
+    allowed = new Set([
+      "archive",
+      "github-repository",
+      "plan",
+      "project",
+      "sha256",
+    ]);
+  } else if (result.command === "install" || result.command === "update") {
+    allowed = new Set(["archive", "github-repository", "project", "sha256"]);
+  } else {
+    allowed = new Set(["project"]);
+  }
   for (const name of Object.keys(result.options)) {
     if (!allowed.has(name)) fail(`Unknown argument: --${name}`);
   }
@@ -348,7 +393,7 @@ function defaultBranch(projectRoot) {
     const value = execFileSync(
       "git",
       ["-C", projectRoot, "symbolic-ref", "--short", "HEAD"],
-      { encoding: "utf8" },
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
     ).trim();
     if (/^[A-Za-z0-9._/-]+$/.test(value) && !value.includes("..")) return value;
   } catch {
@@ -420,6 +465,28 @@ function packageBytes(existingBytes, projectRoot) {
   return serializeJson(manifest);
 }
 
+function packageLockBytes(packageManifestBytes) {
+  const manifest = parseStrictJson(packageManifestBytes);
+  for (const field of ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"]) {
+    if (manifest[field] !== undefined && Object.keys(manifest[field]).length > 0) {
+      fail(
+        "A project with package dependencies must supply its own committed package-lock.json before NKF integration.",
+      );
+    }
+  }
+  return serializeJson({
+    name: manifest.name,
+    lockfileVersion: 3,
+    requires: true,
+    packages: {
+      "": {
+        name: manifest.name,
+        private: manifest.private === true,
+      },
+    },
+  });
+}
+
 async function currentExecutableBytes() {
   const candidate = path.resolve(fileURLToPath(import.meta.url));
   return readFile(candidate);
@@ -453,13 +520,14 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
     );
   }
 
-  files.set(
-    "package.json",
-    packageBytes(
-      await readRegularInside(projectRoot, "package.json", false),
-      projectRoot,
-    ),
+  const manifestBytes = packageBytes(
+    await readRegularInside(projectRoot, "package.json", false),
+    projectRoot,
   );
+  files.set("package.json", manifestBytes);
+  if ((await readRegularInside(projectRoot, LOCK_PATH, false)) === null) {
+    files.set(LOCK_PATH, packageLockBytes(manifestBytes));
+  }
   const registry = integrationRegistry(files, branch);
   files.set(REGISTRY_PATH, serializeYaml(registry));
   files.set(
@@ -504,13 +572,26 @@ async function ensureWritableParents(projectRoot, relativePaths) {
   }
 }
 
-async function writeTransaction(projectRoot, files) {
+async function writeTransaction(projectRoot, files, verifyAfterWrite) {
   await ensureWritableParents(projectRoot, files.keys());
   const staging = await mkdtemp(
-    path.join(projectRoot, ".nourd", ".nkf-adoption-staging-"),
+    path.join(projectRoot, ".nkf-transaction-"),
   );
   const originals = new Map();
   const replaced = [];
+  const createdDirectories = new Set();
+  const ensureTargetDirectory = async (directory) => {
+    const missing = [];
+    let cursor = directory;
+    while (inside(projectRoot, cursor) && cursor !== projectRoot) {
+      const stat = await lstat(cursor).catch(() => null);
+      if (stat !== null) break;
+      missing.push(cursor);
+      cursor = path.dirname(cursor);
+    }
+    await mkdir(directory, { recursive: true });
+    for (const item of missing) createdDirectories.add(item);
+  };
   try {
     for (const [relative, bytes] of files) {
       const staged = path.join(staging, ...relative.split("/"));
@@ -521,7 +602,7 @@ async function writeTransaction(projectRoot, files) {
     for (const [relative] of files) {
       const target = path.join(projectRoot, ...relative.split("/"));
       const staged = path.join(staging, ...relative.split("/"));
-      await mkdir(path.dirname(target), { recursive: true });
+      await ensureTargetDirectory(path.dirname(target));
       const current = await lstat(target).catch(() => null);
       if (current?.isSymbolicLink() || (current !== null && !current.isFile())) {
         fail(`Adoption target is not a regular file: ${relative}`);
@@ -530,12 +611,21 @@ async function writeTransaction(projectRoot, files) {
       if (current !== null) await unlink(target);
       await rename(staged, target);
     }
+    return await verifyAfterWrite();
   } catch (error) {
     for (const relative of replaced.reverse()) {
       const target = path.join(projectRoot, ...relative.split("/"));
       const original = originals.get(relative);
       await rm(target, { force: true });
-      if (original !== null) await writeFile(target, original);
+      if (original !== null) {
+        await mkdir(path.dirname(target), { recursive: true });
+        await writeFile(target, original);
+      }
+    }
+    for (const directory of [...createdDirectories].sort(
+      (left, right) => right.split(path.sep).length - left.split(path.sep).length,
+    )) {
+      await rmdir(directory).catch(() => undefined);
     }
     throw error;
   } finally {
@@ -662,6 +752,17 @@ async function verifyIntegration(projectRoot, pin) {
   if (packageManifest?.scripts?.["nkf:check"] !== CHECK_COMMAND) {
     fail("The project nkf:check command differs from the installed contract.");
   }
+  const packageLock = parseStrictJson(
+    await readRegularInside(projectRoot, LOCK_PATH),
+  );
+  if (
+    ![2, 3].includes(packageLock?.lockfileVersion) ||
+    packageLock?.packages === null ||
+    typeof packageLock?.packages !== "object" ||
+    Array.isArray(packageLock?.packages)
+  ) {
+    fail("The project package-lock.json cannot support the installed exact-commit workflow.");
+  }
   return registry;
 }
 
@@ -685,8 +786,9 @@ async function verifyInstalled(projectRoot, runChecker) {
   ) {
     fail("The verified release manifest differs from the installed pin.");
   }
+  let report = null;
   if (runChecker) {
-    await invokeVerifiedChecker(verification, [
+    const invocation = await invokeVerifiedChecker(verification, [
       "--project",
       projectRoot,
       "--level",
@@ -694,8 +796,38 @@ async function verifyInstalled(projectRoot, runChecker) {
       "--runner",
       "nourd-nkf-consumer",
     ]);
+    report = parseStrictJson(Buffer.from(invocation.stdout, "utf8"));
   }
-  return { pin, verification };
+  return { pin, verification, report };
+}
+
+async function validateCompleteCandidate(projectRoot, files) {
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-candidate-"));
+  const candidate = path.join(temporary, "project");
+  try {
+    await cp(projectRoot, candidate, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(projectRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0];
+        return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
+      },
+    });
+    await ensureWritableParents(candidate, files.keys());
+    for (const [relative, bytes] of files) {
+      const target = path.join(candidate, ...relative.split("/"));
+      const current = await lstat(target).catch(() => null);
+      if (current?.isSymbolicLink() || (current !== null && !current.isFile())) {
+        fail(`Candidate target is not a regular file: ${relative}`);
+      }
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, bytes);
+    }
+    return await verifyInstalled(candidate, true);
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
 }
 
 async function installOrUpdate(command, options) {
@@ -747,8 +879,12 @@ async function installOrUpdate(command, options) {
       return { state: "no-update", project: projectRoot, pin: prior };
     }
   }
-  await writeTransaction(projectRoot, files);
-  const installed = await verifyInstalled(projectRoot, true);
+  await validateCompleteCandidate(projectRoot, files);
+  const installed = await writeTransaction(
+    projectRoot,
+    files,
+    () => verifyInstalled(projectRoot, true),
+  );
   return {
     state: priorBytes === null ? "installed" : "updated",
     project: projectRoot,
@@ -756,14 +892,215 @@ async function installOrUpdate(command, options) {
   };
 }
 
-const { command, options } = parseArguments(process.argv.slice(2));
-let output;
-if (command === "install" || command === "update") {
-  output = await installOrUpdate(command, options);
-} else {
+async function inspectForOnboarding(options) {
+  for (const required of [
+    "created-at",
+    "output",
+    "profile",
+    "project",
+    "root-id",
+    "root-title",
+    "task-id",
+  ]) {
+    if (options[required] === undefined) fail(`inspect requires --${required}.`);
+  }
+  const result = await createOnboardingWorkspace({
+    projectRoot: options.project,
+    knowledgeRoot: options["knowledge-root"] ?? "knowledge",
+    outputRoot: options.output,
+    profile: options.profile,
+    rootId: options["root-id"],
+    rootTitle: options["root-title"],
+    taskId: options["task-id"],
+    authority: options.authority ?? "human-product-owner",
+    createdAt: options["created-at"],
+  });
+  return {
+    contract: "nkf.onboarding-inspect-result",
+    nkf_version: "0.1",
+    state: result.inspection.eligible ? "workspace-created" : "deferred",
+    eligible: result.inspection.eligible,
+    workspace: result.workspace,
+    inspection_sha256: result.inspection.snapshot_sha256,
+    markdown_files: result.inspection.observed.markdown_files,
+    project_surfaces: result.inspection.project_surfaces.filter(
+      (surface) => surface.state === "file",
+    ),
+    package_scripts: result.inspection.package_scripts,
+    git: result.inspection.git,
+    diagnostics: result.inspection.diagnostics,
+  };
+}
+
+function requireOnboardingReceipt(value) {
+  if (
+    value?.contract !== "nkf.onboarding-receipt" ||
+    value?.nkf_version !== "0.1" ||
+    !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
+    !ROOT_PROFILES.has(value?.profile) ||
+    typeof value?.knowledge_root !== "string" ||
+    !Array.isArray(value?.created_paths) ||
+    !Array.isArray(value?.changed_paths) ||
+    !Array.isArray(value?.preserved_paths)
+  ) {
+    fail("The installed onboarding receipt is invalid.");
+  }
+  return value;
+}
+
+function onboardingResult(state, projectRoot, receipt, installed, knowledge = null) {
+  return {
+    contract: "nkf.onboarding-result",
+    nkf_version: "0.1",
+    state,
+    project: projectRoot,
+    profile: receipt.profile,
+    knowledge_root: receipt.knowledge_root,
+    paths: {
+      created: receipt.created_paths,
+      changed: receipt.changed_paths,
+      preserved: receipt.preserved_paths,
+    },
+    meaning: {
+      root_status: "draft",
+      classification_status: "resolved",
+      substantive_meaning: "contains-unresolved",
+      realization_confirmation: "unconfirmed",
+    },
+    validation: {
+      conformance: installed.report?.conformance ?? "passed",
+      governing_use: installed.report?.governing_use ?? "not-ready",
+    },
+    release: {
+      archive_sha256: installed.pin.archive.sha256,
+      source_commit: installed.pin.source_commit,
+      checker_sha256: installed.pin.checker_sha256,
+      adopter_sha256: installed.pin.adopter.sha256,
+    },
+    non_claims: [
+      "project-meaning-not-accepted",
+      "realization-not-confirmed",
+      "git-state-not-inspected",
+      "remote-enforcement-not-inspected",
+    ],
+  };
+}
+
+async function onboard(options) {
+  if (Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10) < 22) {
+    fail("NKF onboarding requires Node.js 22 or later.");
+  }
+  for (const required of ["plan", "project", "sha256"]) {
+    if (options[required] === undefined) fail(`onboard requires --${required}.`);
+  }
+  const projectRoot = await requireProjectRoot(options.project);
+  const planPath = path.resolve(options.plan);
+  const planStat = await lstat(planPath).catch(() => null);
+  if (planStat === null || !planStat.isFile() || planStat.isSymbolicLink()) {
+    fail("--plan must identify a regular onboarding plan file.");
+  }
+  const planBytes = await readFile(planPath);
+  const planSha256 = digest(planBytes);
+  const priorReceiptBytes = await readRegularInside(
+    projectRoot,
+    ONBOARDING_RECEIPT_PATH,
+    false,
+  );
+  if (priorReceiptBytes !== null) {
+    const receipt = requireOnboardingReceipt(parseStrictJson(priorReceiptBytes));
+    if (receipt.plan_sha256 !== planSha256) {
+      fail(
+        "The project was onboarded with a different plan; use governed authoring or a deliberate migration workflow.",
+      );
+    }
+    const installed = await verifyInstalled(projectRoot, true);
+    return onboardingResult("no-update", projectRoot, receipt, installed);
+  }
+  const existingNourd = await lstat(path.join(projectRoot, ".nourd")).catch(() => null);
+  if (existingNourd !== null) {
+    fail("Initial onboarding requires a project without .nourd.");
+  }
+  const expectedSha256 = requireSha256(options.sha256);
+  const archiveBytes = await acquireArchive(options, expectedSha256);
+  const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
+  const knowledge = await buildOnboardingKnowledge(projectRoot, planPath);
+  const integration = await targetFiles(
+    projectRoot,
+    archiveBytes,
+    verification,
+    knowledge.plan.project.profile,
+  );
+  const files = new Map(knowledge.files);
+  for (const [relative, bytes] of integration) {
+    if (files.has(relative)) fail(`Generated onboarding targets conflict: ${relative}`);
+    files.set(relative, bytes);
+  }
+  for (const relative of [
+    ADOPTER_PATH,
+    PROTOCOL_PATH,
+    ...SKILL_PATHS,
+    REGISTRY_PATH,
+    VERIFIER_PATH,
+    WORKFLOW_PATH,
+  ]) {
+    const current = await readRegularInside(projectRoot, relative, false);
+    if (current !== null && !current.equals(files.get(relative))) {
+      fail(`Onboarding would overwrite an existing owned path: ${relative}`);
+    }
+  }
+  const createdPaths = [];
+  const changedPaths = [];
+  for (const [relative, bytes] of files) {
+    const current = await readRegularInside(projectRoot, relative, false);
+    if (current === null) createdPaths.push(relative);
+    else if (!current.equals(bytes)) changedPaths.push(relative);
+  }
+  createdPaths.push(ONBOARDING_RECEIPT_PATH);
+  createdPaths.sort();
+  changedPaths.sort();
+  const receipt = {
+    contract: "nkf.onboarding-receipt",
+    nkf_version: "0.1",
+    plan_sha256: knowledge.plan_sha256,
+    inspection_sha256: knowledge.inspection.snapshot_sha256,
+    profile: knowledge.plan.project.profile,
+    knowledge_root: knowledge.plan.inspection.knowledge_root,
+    created_paths: createdPaths,
+    changed_paths: changedPaths,
+    preserved_paths: knowledge.preserved_documents,
+  };
+  files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
+  await validateCompleteCandidate(projectRoot, files);
+  const installed = await writeTransaction(
+    projectRoot,
+    files,
+    () => {
+      if (process.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
+        fail("Injected onboarding transaction failure.");
+      }
+      return verifyInstalled(projectRoot, true);
+    },
+  );
+  return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
+}
+
+async function main() {
+  const { command, options } = parseArguments(process.argv.slice(2));
+  if (command === "inspect") return inspectForOnboarding(options);
+  if (command === "seal") {
+    if (options.project === undefined || options.plan === undefined) {
+      fail("seal requires --project and --plan.");
+    }
+    return sealOnboardingPlan(options.project, options.plan);
+  }
+  if (command === "onboard") return onboard(options);
+  if (command === "install" || command === "update") {
+    return installOrUpdate(command, options);
+  }
   const projectRoot = await requireProjectRoot(options.project);
   const installed = await verifyInstalled(projectRoot, command === "check");
-  output = {
+  return {
     state: command === "check" ? "passed" : "current",
     project: projectRoot,
     archive_sha256: installed.pin.archive.sha256,
@@ -772,4 +1109,22 @@ if (command === "install" || command === "update") {
     integration_revision: installed.pin.integration_revision,
   };
 }
-process.stdout.write(`${JSON.stringify(output, null, 2)}\n`);
+
+try {
+  process.stdout.write(`${JSON.stringify(await main(), null, 2)}\n`);
+} catch (error) {
+  const structured = {
+    contract: "nkf.adopter-error",
+    nkf_version: "0.1",
+    state: "failed",
+    diagnostics: [
+      {
+        code: error instanceof OnboardingError ? error.code : "NKF-ADOPTER-FAILED",
+        message: error instanceof Error ? error.message : String(error),
+        ...(error instanceof OnboardingError ? error.details : {}),
+      },
+    ],
+  };
+  process.stderr.write(`${JSON.stringify(structured, null, 2)}\n`);
+  process.exitCode = 1;
+}

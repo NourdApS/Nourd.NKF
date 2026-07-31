@@ -20,6 +20,7 @@ conformance.
 - [Contracts And Schemas](current/contracts-and-schemas.md)
 - [Checker And Validation](current/checker-and-validation.md)
 - [Layered Contract Enforcement](current/layered-contract-enforcement.md)
+- [Initial Greenfield Onboarding](current/initial-greenfield-onboarding.md)
 - [Release Documentation And Adoption](current/release-documentation-and-adoption.md)
 - [Self-Hosting](current/self-hosting.md)
 - [Release Package](current/release-package.md)

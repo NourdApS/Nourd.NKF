@@ -2,23 +2,23 @@
 id: nkf-release-documentation-and-adoption
 type: realization
 title: NKF Release Documentation And Adoption
-summary: This Realization describes the current NKF-008 release rebinding, public documentation projection, pinned consumer adopter, and authorized consumer exercise.
+summary: This Realization describes the unconfirmed NKF-013 successor to the release documentation and adoption surface, including complete initial onboarding while preserving the confirmed native archive.
 created_at: 2026-07-31T02:26:24Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-008
-confirmation_status: confirmed
-confirmation_decisions:
-  - adr-0066
+task: NKF-013
+confirmation_status: unconfirmed
 ---
 
 # NKF Release Documentation And Adoption
 
 ## Realization Identity And Kind
 
-This Realization describes the confirmed current implementation of the
+This Realization describes the current successor implementation of the
 release, documentation, and adoption direction accepted by ADR 0064 and
-confirmed by ADR 0066.
+extended for initial onboarding by ADR 0067. ADR 0066 confirms the predecessor
+revision. This successor remains unconfirmed until final NKF-013 evidence and
+confirmation exist.
 
 ## Governed Meaning Realized
 
@@ -47,13 +47,21 @@ The release source boundary is:
 - `.gitignore`, which excludes archive products while allowing the reviewed
   recommendation.
 
-The adopter source and deterministic build boundary is:
+The adopter and onboarding source and deterministic build boundary is:
 
 - `scripts/adoption/nourd-nkf-adopt.mjs`;
+- `scripts/onboarding/core.mjs`;
 - `scripts/build-adopter.mjs`;
 - `scripts/verify-adopter.mjs`;
 - `dist/nourd-nkf-adopt.mjs`; and
 - `test/adopter.test.ts`.
+
+The pre-adoption guidance boundary is:
+
+- `integrations/onboarding/nkf-onboarding-protocol.md`;
+- the two byte-identical `nkf-onboarding` skills;
+- `scripts/verify-onboarding-guidance.mjs`; and
+- `test/onboarding-guidance.test.ts`.
 
 The public documentation boundary is:
 
@@ -106,9 +114,12 @@ the archive and manifest, and installs:
 - one `npm run nkf:check` command; and
 - one exact-commit Github workflow.
 
-`install`, `check`, `status`, `integration-check`, and `update` are the
-supported commands. A same-pin reinstall returns `no-update` only after the
-current installation and full project validation pass.
+`inspect`, `seal`, and `onboard` now precede the existing `install`, `check`,
+`status`, `integration-check`, and `update` commands. The initial commands
+create an external candidate workspace, bind semantic resolution and candidate
+bytes, generate native declarations, validate a complete staged project, and
+apply it transactionally. A same-plan repeat and a same-pin reinstall return
+`no-update` only after full project validation passes.
 
 ## External Authority And Operational State Boundaries
 
@@ -127,33 +138,49 @@ every staged byte and all 23 manifest-bound digests.
 
 Github consumer workflow run `30599982716` passed the hardened exact-release
 exercise on commit `5a435d54145c31bc091857b1f30520213bdfe6a8`.
+Those observations govern the predecessor public projection. The local
+NKF-013 successor contains additional onboarding guidance, exact protocol and
+skill mirrors, and a new adopter digest. Its remote publication and successor
+workflow execution are not yet claimed.
+
 Live URLs, run identifiers, timestamps, visibility, and publication state
 remain owned by their Evidence and external systems rather than by this
 durable implementation account.
 
 ## Compatibility Verification And Recovery
 
-Focused tests exercise Product and Technology installation, local full-bundle
-validation, same-pin no-update, private-release tampering, pin tampering,
-skill tampering, governed Markdown tampering, and conflicting consumer-owned
-workflow preservation.
+Focused tests now exercise empty and small-document Product and Technology
+onboarding, exact candidate edits, ambiguity, limits, lifecycle deferral,
+CommonMark line endings, final and intermediate symbolic links, duplicate and
+escaping paths, relevant instruction and package-surface drift, owned-path
+conflicts, rollback, existing conventions and source bytes, same-plan
+no-update, already-structured installation, full-bundle validation, and
+release, pin, skill, and governed Markdown tampering. Eleven adopter tests and
+two onboarding-guidance tests cover that boundary.
 
-The public-doc verifier checks the exact 23-file source allowlist, normative
-mirror, adopter mirror, required subjects, eight Mermaid diagrams, internal
+The public-doc verifier checks the exact 27-file source allowlist, normative
+mirror, adopter, onboarding-protocol, and skill mirrors, required subjects,
+nine Mermaid diagrams, internal
 relative links outside the immutable Specification mirror, forbidden
 private-path or credential material, and conformance of both complete
 published Product and Technology example projects. Deterministic build
 verification compares two adopter builds and the committed output.
 
-The clean exact release source commit, reproducible archive construction,
+The predecessor clean exact release source commit, reproducible archive construction,
 independent verification, private prerelease upload, remote re-download,
 local published-release consumer exercise, public projection, remote
 public-byte verification, Github consumer-workflow execution, and final
-adversarial audit are complete.
+adversarial audit remain complete. The native archive is unchanged because no
+native authority, Schema, or checker byte changed. NKF-013 remote publication,
+successor workflow Evidence, final audit, and confirmation remain pending.
 
-Installation stages all target bytes, rejects path escapes and symbolic links,
-preserves predecessor bytes, restores replaced files after an interrupted
-replacement, and retains content-addressed archives for explicit rollback.
+Installation and onboarding validate a complete isolated candidate before
+mutation. Inspection binds relevant instruction, package, workflow,
+integration-target, and Git-branch state before resolution. Application
+rejects path escapes and symbolic links, preserves predecessor bytes, keeps
+post-write verification inside the transaction, restores replaced files and
+removes created paths after handled failure, and retains content-addressed
+archives for explicit rollback.
 
 The
 [completion audit](../../evidence/audits/nkf-008-completion-audit.md) records

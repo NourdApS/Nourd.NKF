@@ -4,6 +4,13 @@ This guide applies to the exact internal NKF 0.1 release recorded in
 `../reference/publication.json`. NKF 0.1 is pre-stable. The checker is private;
 the documentation and adopter are public.
 
+## Already Structured Projects Only
+
+This guide installs the pinned NKF integration around an already complete
+native NKF 0.1 bundle. For an empty or small-document greenfield repository,
+begin with [Initial Onboarding](initial-onboarding.md). Do not manually create
+native YAML merely to satisfy this install prerequisite.
+
 ## Before Installation
 
 The project must already contain:

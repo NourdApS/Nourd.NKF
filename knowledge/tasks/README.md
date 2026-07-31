@@ -12,7 +12,7 @@ status; it does not establish that status.
 
 ## Active
 
-No Task is currently Active.
+- [NKF-013: Establish Initial Greenfield Onboarding](active/NKF-013-initial-greenfield-onboarding.md)
 
 ## Deferred
 
@@ -21,6 +21,7 @@ No Task is currently Active.
 - [NKF-006: Define Extensible Root Knowledge Models](deferred/NKF-006-extensible-root-models.md)
 - [NKF-009: Extend Secret Scanning Across Governed Artifacts](deferred/NKF-009-governed-artifact-secret-scanning.md)
 - [NKF-012: Activate Protected Merge Gate](deferred/NKF-012-activate-protected-merge-gate.md)
+- [NKF-014: Expand Brownfield And Advanced Onboarding](deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
 
 ## Completed
 

@@ -90,3 +90,4 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0064: Release Documentation And Adoption](0064-release-documentation-and-adoption.md)
 - [ADR 0065: Confirm Current Release-Bound Checker](0065-confirm-current-release-bound-checker.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
+- [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
