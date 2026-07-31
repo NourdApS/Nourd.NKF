@@ -1,22 +1,22 @@
 export const CHECKER_CONFIRMATION = Object.freeze({
-  decision: "ADR-0047",
-  path: "knowledge/decisions/0047-release-checker.md",
-  checkerSourceCommit: "0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f",
+  decision: "ADR-0065",
+  path: "knowledge/decisions/0065-confirm-current-release-bound-checker.md",
+  checkerSourceCommit: "57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc",
   checkerSha256:
-    "f71226e5f632cdd0918a0eedae1cbbc5d5f17b450395d98e744ae572dfd73579",
+    "a35cbcc2d267748409b913454d1befc7c640a4e4a8dd1487f3acdb8d285233b7",
 });
 
 export const ACCEPTED_ARTIFACT_DIGESTS = Object.freeze({
   "knowledge/specifications/nkf-0.1.md":
-    "67beed2a380e719573175d3dfd70b05c59cbe51274c9975f863a58f7083ddba4",
+    "428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be",
   "contracts/nkf/0.1/nkf.yaml":
-    "7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b",
+    "b05d4e7d34d5f2b8472045feed547ae44ff4a0a57299da0630b3a538dc6ab2fd",
   "contracts/nkf/0.1/schemas/bundle.schema.json":
-    "73459c032933eb140b7c62d5dc551ea8103e1e5c3c72ba6d7823c73757cf9fbc",
+    "05f9303d799f8e07a64dc2fb571317ca3d28491dd02d5ed0a446b77065468a1f",
   "contracts/nkf/0.1/schemas/record.schema.json":
-    "aad9bac1c7dd40bef536010da9b3493f5c08f89d46d044a62b141e9cda3d46a7",
+    "397f83707112022b16f7860882e3b48afb83b9c46c62cc82043483e7a727859b",
   "contracts/nkf/0.1/schemas/release-manifest.schema.json":
-    "8ee2ede58717387c418e956f2b1e45f4d6edb21a7d024c8fd855e0d006ab0e34",
+    "00058b5e86f29edb005f0a4125125c32ccd18a986a244c69f60f8605cab11f23",
   "contracts/nkf/0.1/schemas/validation-result.schema.json":
-    "f901f78d3c11e9360f55d322713296879d8e2971059b83a8bb1b33ddbf6b30a1",
+    "155f94a6c3ff7c86a57c58590fa9d3a6a2afc609a5ab6a9a6191a9c9e9708248",
 });

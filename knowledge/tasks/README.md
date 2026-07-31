@@ -12,14 +12,13 @@ status; it does not establish that status.
 
 ## Active
 
-None.
+- [NKF-008: Publish NKF, Public Documentation, And Consumer Adoption](active/NKF-008-publish-and-onboard-consumers.md)
 
 ## Deferred
 
 - [NKF-004: Define Portable Presentation Guidance Extension](deferred/NKF-004-portable-presentation-guidance.md)
 - [NKF-005: Investigate Validation Expiry And Authority Freshness](deferred/NKF-005-validation-expiry-and-authority-freshness.md)
 - [NKF-006: Define Extensible Root Knowledge Models](deferred/NKF-006-extensible-root-models.md)
-- [NKF-008: Publish NKF, Public Documentation, And Consumer Adoption](deferred/NKF-008-publish-and-onboard-consumers.md)
 - [NKF-009: Extend Secret Scanning Across Governed Artifacts](deferred/NKF-009-governed-artifact-secret-scanning.md)
 - [NKF-012: Activate Protected Merge Gate](deferred/NKF-012-activate-protected-merge-gate.md)
 

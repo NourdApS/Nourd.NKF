@@ -6,13 +6,14 @@ summary: This Realization describes how the NKF repository represents and valida
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-011
-confirmation_status: confirmed
+task: NKF-008
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0059
   - adr-0061
   - adr-0062
   - adr-0063
+unconfirmed_scope: NKF-008 adds the release, adopter, public-documentation, and consumer-exercise records and Governed Validation Inputs; the successor self-host account awaits live publication, final audit, and confirmation.
 ---
 
 # NKF Self-Hosting
@@ -54,9 +55,13 @@ successor Realization account without claiming that the protected gate exists.
 ADR 0063 completes NKF-011 for that delivered enforcement scope and transfers
 protected-gate activation and proof to deferred NKF-012.
 
-The confirmed bundle contains 94 record declarations, 52 explicit non-record
-sources, and 72 governed artifacts. Every Markdown file under `knowledge`
-remains represented exactly once.
+NKF-008 adds its adopted Design, Decisions, candidate Realization, audit
+Evidence, release rebinding, adopter, public-documentation projection, focused
+tests, and consumer exercise. The current candidate bundle contains 98 record
+declarations, 53 explicit non-record sources, and 92 governed artifacts.
+Every Markdown file under `knowledge` remains represented exactly once. The
+new successor self-host account is partially confirmed until NKF-008 completes
+live publication and its final audit.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -84,6 +89,11 @@ Every applicable enforcement integration file is declared as a Technology
 `governed_artifact` and bound to the Layered Contract Enforcement Realization.
 The registry and verifier apply an additional fail-closed regular-file rule to
 instruction adapters and portable skills.
+
+Every applicable NKF-008 adopter source, deterministic build and verification
+tool, public documentation source and mirror, focused test, and consumer
+workflow is declared as a Technology `governed_artifact` and bound to the
+Release Documentation And Adoption Realization.
 
 ## External Authority And Operational State Boundaries
 

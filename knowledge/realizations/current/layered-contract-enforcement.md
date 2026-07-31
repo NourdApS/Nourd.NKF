@@ -6,12 +6,13 @@ summary: This Realization maps the confirmed AI-neutral authoring and enforcemen
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-011
-confirmation_status: confirmed
+task: NKF-008
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0061
   - adr-0062
   - adr-0063
+unconfirmed_scope: NKF-008 extends the package command with adopter and public-documentation verification and adds a separate consumer-exercise workflow; the successor integration account awaits final audit and confirmation.
 ---
 
 # NKF Layered Contract Enforcement
@@ -39,6 +40,12 @@ local-validation, and exact-commit workflow scope. It transfers activation
 and proof of the separately governed protected merge gate to deferred
 NKF-012.
 
+NKF-008 preserves the exact `npm run nkf:check` interface and adds
+deterministic adopter-build and public-documentation verification inside that
+command. It also adds a separately dispatched consumer-adoption exercise
+workflow. These successor package and workflow bytes remain partially
+confirmed until NKF-008 completes its live exercise and final audit.
+
 ## Durable Mapping
 
 | Responsibility | Durable Artifact | Current Implementation |
@@ -52,8 +59,9 @@ NKF-012.
 | Portable skill | `.agents/skills/nkf-authoring/SKILL.md` | Shared open-format representation |
 | Claude skill path | `.claude/skills/nkf-authoring/SKILL.md` | Byte-identical shared representation |
 | Integrity verifier | `scripts/verify-agent-guidance.mjs` | Closed registry, digest, path, import, skill, workflow, and command checks |
-| Local command | `package.json` | `npm run nkf:check` |
+| Local command | `package.json` | `npm run nkf:check`, now including deterministic adopter and public-documentation verification |
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to NKF-012 |
+| Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; remote execution pending NKF-008 publication |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
 
 The registry records host surfaces rather than model names. Its finite verified

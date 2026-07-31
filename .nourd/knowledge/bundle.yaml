@@ -46,6 +46,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-011-remote-enforcement-activation.md
     kind: evidence
+  - path: evidence/audits/nkf-008-release-documentation-and-adoption-design-audit.md
+    kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
     kind: evidence
   - path: evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md
@@ -104,7 +106,7 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-006-extensible-root-models.md
     kind: task
-  - path: tasks/deferred/NKF-008-publish-and-onboard-consumers.md
+  - path: tasks/active/NKF-008-publish-and-onboard-consumers.md
     kind: task
   - path: tasks/deferred/NKF-009-governed-artifact-secret-scanning.md
     kind: task
@@ -169,6 +171,14 @@ governed_artifacts:
       algorithm: sha-256
       value: b251a64e71f1c3b6d25f8f5c652837a9fbd27d1521f49340e323ce6c62759ac4
     record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-github-workflows-nkf-consumer-adoption-yml
+    kind: project-configuration
+    path: .github/workflows/nkf-consumer-adoption.yml
+    digest:
+      algorithm: sha-256
+      value: 5685acd84f419d704e9e729b6fc3dde83f79af628c938fc1c92beee403d5c75c
+    record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-agents-md
     kind: project-configuration
@@ -375,8 +385,80 @@ governed_artifacts:
     path: package.json
     digest:
       algorithm: sha-256
-      value: c45fbfeafdef966441e6bb856705de17a403e36380132673920404e063ef2ad2
+      value: 141b7a32402eb7fe5cabc2a86b2de0ab442bb0b45fb273aaf63bf78927d21f67
     record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-public-docs-readme-md
+    kind: project-configuration
+    path: public-docs/README.md
+    digest:
+      algorithm: sha-256
+      value: 261a8a1ad012a609821ec0d35d40e57e56ef6636a5f2a7e737e513c7a2fc1002
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-concepts-authority-and-lifecycle-md
+    kind: project-configuration
+    path: public-docs/concepts/authority-and-lifecycle.md
+    digest:
+      algorithm: sha-256
+      value: cdc7acfc5df7b3bce6719e9ba8fbd79fbb75514a87df25a5aec9cf4dbc2b6900
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-concepts-topology-md
+    kind: project-configuration
+    path: public-docs/concepts/topology.md
+    digest:
+      algorithm: sha-256
+      value: 5a60ccc540876559003a8728ce25f1c0c588156eb54f3c7711dcc3a780eac57b
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-product-readme-md
+    kind: project-configuration
+    path: public-docs/examples/product/README.md
+    digest:
+      algorithm: sha-256
+      value: 6700da881e7a1dad8eaf0c67a2871d4f12a86185833262fb9fa13e04012974e0
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-readme-md
+    kind: project-configuration
+    path: public-docs/examples/technology/README.md
+    digest:
+      algorithm: sha-256
+      value: 882283a21a5ded12a53278413eb6cd9618012a3f93edc5f7098f54e3df505072
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-guides-adopt-and-validate-md
+    kind: project-configuration
+    path: public-docs/guides/adopt-and-validate.md
+    digest:
+      algorithm: sha-256
+      value: 39aecf74f24efdc1211cac69d297bd76c4c50875d7be7dd562157d7c463af5c0
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-guides-update-and-recover-md
+    kind: project-configuration
+    path: public-docs/guides/update-and-recover.md
+    digest:
+      algorithm: sha-256
+      value: 5fe03c5c60cfd8dda5ee26537e29002eed554851f59e87db3e1633aac030fecb
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-reference-nkf-0-1-md
+    kind: project-configuration
+    path: public-docs/reference/nkf-0.1.md
+    digest:
+      algorithm: sha-256
+      value: 428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-tools-nourd-nkf-adopt-mjs
+    kind: build-tool
+    path: public-docs/tools/nourd-nkf-adopt.mjs
+    digest:
+      algorithm: sha-256
+      value: b2fb0580705782dec45e96fdcce298c691a4d9842e120d1b036104c46567bb88
+    record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-readme-md
     kind: project-configuration
@@ -394,12 +476,52 @@ governed_artifacts:
       value: da58e8fba26a83bdd89198a0d603826bd55d97515b1f70179af20f0f78eb714b
     record: nkf-0.1-native-realization
     source_section: durable-mapping
+  - id: artifact-dist-nourd-nkf-adopt-mjs
+    kind: build-tool
+    path: dist/nourd-nkf-adopt.mjs
+    digest:
+      algorithm: sha-256
+      value: b2fb0580705782dec45e96fdcce298c691a4d9842e120d1b036104c46567bb88
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-scripts-adoption-nourd-nkf-adopt-mjs
+    kind: build-tool
+    path: scripts/adoption/nourd-nkf-adopt.mjs
+    digest:
+      algorithm: sha-256
+      value: 7a81b0e9109f698e27bc8bf9b0f692c9369fb7d48e93eb5f33b0570d39bf9952
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-scripts-build-adopter-mjs
+    kind: build-tool
+    path: scripts/build-adopter.mjs
+    digest:
+      algorithm: sha-256
+      value: c79e94201d6c6d1ebe176839f49a144c70b8c0c0421b347f64b628e441f2a2bd
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-scripts-build-public-docs-mjs
+    kind: build-tool
+    path: scripts/build-public-docs.mjs
+    digest:
+      algorithm: sha-256
+      value: 5a4dd42831ad849bd13776f6a2e65f24986499e085d1ea8a1ea649b8f53f6ec9
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-scripts-exercise-consumer-adoption-mjs
+    kind: build-tool
+    path: scripts/exercise-consumer-adoption.mjs
+    digest:
+      algorithm: sha-256
+      value: 6afcf3e4505dd3e0d90e233511f6ae56eb8c82aab5c9fa1a6402c58d61b4c490
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs
     kind: build-tool
     path: scripts/package-release.mjs
     digest:
       algorithm: sha-256
-      value: d376878b756389baa3f392b306ae41b3d77d5200927f326dda24c3b35af922fd
+      value: 7be14ec7499fa3c440bb858ddc85e058c205d6f4bc9617b75658ce8b6667f297
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-config-mjs
@@ -407,7 +529,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: 2df19133503a17f127e19294aa3c94a741be3038b1a2537131008f7be79e62c6
+      value: 7a2853130bd923b50148b65fed5792e93d945d1429838b76e3854166cb8277bf
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
@@ -423,8 +545,24 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: 8e875d1375d22c3feb2cfd888e3d71b4cf73c6246930efd4b5b013e9adf16a70
+      value: e326f945c62bbb72f6d016c478413dbcfb0fe05f4fba6af7741d2a503bc75309
     record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-scripts-stage-public-docs-mjs
+    kind: build-tool
+    path: scripts/stage-public-docs.mjs
+    digest:
+      algorithm: sha-256
+      value: b19f2374f1de8e22a17244ae2ceb071b114630155d749d661798d7327d366c8e
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-scripts-verify-adopter-mjs
+    kind: build-tool
+    path: scripts/verify-adopter.mjs
+    digest:
+      algorithm: sha-256
+      value: 050ac6fa9457f9c4640ea26f4be003c2da40313a7fe0523386ee5de0e6b65573
+    record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-build-mjs
     kind: build-tool
@@ -433,6 +571,14 @@ governed_artifacts:
       algorithm: sha-256
       value: 2bb8eaca29b0d3e3ef2bd5141d68d9ea15447a9cc1b2856d44827fdd374108ae
     record: nkf-0.1-native-realization
+    source_section: durable-mapping
+  - id: artifact-scripts-verify-public-docs-mjs
+    kind: build-tool
+    path: scripts/verify-public-docs.mjs
+    digest:
+      algorithm: sha-256
+      value: 5770e397b2cfd090579a202910392e220c673aca8816eb97f95719bb2217b961
+    record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-release-mjs
     kind: build-tool
@@ -570,6 +716,14 @@ governed_artifacts:
       value: 75256e4ab0297d3ba6182cb85970a6e5b69919f21573d7027a7f839fa8260107
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
+  - id: artifact-test-adopter-test-ts
+    kind: test
+    path: test/adopter.test.ts
+    digest:
+      algorithm: sha-256
+      value: accf6dba9cd19711889063099bd2ad2f76d333360c4335573f1c94825ff94818
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
   - id: artifact-test-authority-test-ts
     kind: test
     path: test/authority.test.ts
@@ -633,6 +787,14 @@ governed_artifacts:
       algorithm: sha-256
       value: 3af6e6f738489ce7d094aef41f659e04034c0fa6fcda25a76ee2130de933d666
     record: nkf-0.1-native-realization
+    source_section: durable-mapping
+  - id: artifact-test-public-docs-test-ts
+    kind: test
+    path: test/public-docs.test.ts
+    digest:
+      algorithm: sha-256
+      value: 45ba2a347e8aeda8209b54cae04485e231cbe65b440485f5b2d2b9f2906e18bd
+    record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-test-release-manifest-schema-test-ts
     kind: test

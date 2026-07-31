@@ -3,13 +3,13 @@ title: "NKF-008: Publish NKF, Public Documentation, And Consumer Adoption"
 summary: Publish a governed internal NKF release, provide public documentation that makes NKF understandable and usable, and onboard authorized consumer repositories deliberately.
 created_at: 2026-07-30T17:03:21Z
 task_id: NKF-008
-task_status: deferred
+task_status: active
 ---
 
 # NKF-008: Publish NKF, Public Documentation, And Consumer Adoption
 
 - **Task:** `NKF-008`
-- **Status:** Deferred
+- **Status:** Active
 - **Owner:** Nourd ApS
 
 ## Purpose
@@ -135,6 +135,51 @@ consumer knowledge.
 - **Non-Activation:** This slice does not activate NKF-008, select a
   documentation platform, author or publish documentation, rebind a release,
   or onboard a consumer.
+
+## AI Execution Slice: Complete Release And Adoption
+
+- **Recorded At:** `2026-07-31T01:54:07Z`
+- **Authority:** The Human Product Owner explicitly activated NKF-008,
+  authorized work through completion and independent audit, and delegated the
+  final commit and push after the technical reviewer is satisfied.
+- **Scope:** Reconcile and publish the current internal release, implement the
+  complete pinned consumer experience, publish public explanatory
+  documentation, exercise an authorized consumer-style adoption, preserve
+  operational Evidence, confirm the exact successor Realization, complete the
+  Task, and push the audited result.
+- **Authority Effect:** Existing accepted NKF meaning remains authoritative.
+  New Design and Decision records own consequential publication and adoption
+  choices. Realizations describe exact implementation. Release hosting,
+  documentation hosting, Git, Github, and consumer state remain external
+  operational facts supported by Evidence.
+
+### Plan
+
+1. Audit the current release contract, package configuration, verifier,
+   archive layout, Github state, documentation options, consumer artifacts,
+   and accepted compatibility boundary.
+2. Define and independently review the exact internal release, public
+   documentation, support, pinning, installation, update, recovery, and
+   consumer-evidence Design.
+3. Record the adopting Decision and update normative authority only if the
+   accepted user experience exposes a genuine NKF contract gap.
+4. Rebind the package to the current authority and confirmed checker, add
+   portable adoption tooling and documentation, and cover them with focused
+   tests.
+5. Produce and independently verify a reproducible content-addressed release
+   from a clean exact source commit.
+6. Publish the authorized prerelease and public documentation without exposing
+   private repository contents or making either a competing NKF authority.
+7. Exercise the documented path in an isolated authorized consumer fixture,
+   including local validation, continuous-integration configuration, and
+   deliberate update or no-update verification.
+8. Preserve publication and consumer Evidence separately from release
+   acceptance, Realization confirmation, and snapshot conformance.
+9. Perform a requirement-by-requirement adversarial completion audit, repair
+   every material finding, confirm the exact successor Realization, and
+   complete NKF-008.
+10. Run `npm run nkf:check`, commit the coherent completion, push it to the
+    verified remote, and observe the exact-commit workflow.
 
 ## Origin
 

@@ -87,3 +87,5 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0046: Release JSON Schemas](0046-release-json-schemas.md)
 - [ADR 0047: Release Checker](0047-release-checker.md)
 - [ADR 0048: Release Package](0048-release-package.md)
+- [ADR 0064: Release Documentation And Adoption](0064-release-documentation-and-adoption.md)
+- [ADR 0065: Confirm Current Release-Bound Checker](0065-confirm-current-release-bound-checker.md)

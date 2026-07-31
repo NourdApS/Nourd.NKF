@@ -69,7 +69,9 @@ if (!checkerFirst.equals(checkerSecond)) {
   throw new Error("Two checker builds did not produce identical bytes.");
 }
 if (sha256(checkerSecond) !== CHECKER_CONFIRMATION.checkerSha256) {
-  throw new Error("Built checker does not match ADR 0047.");
+  throw new Error(
+    `Built checker does not match ${CHECKER_CONFIRMATION.decision}.`,
+  );
 }
 
 const entries = await readReleaseEntries(repositoryRoot);
@@ -90,7 +92,9 @@ if (
   !decisionText.includes(CHECKER_CONFIRMATION.checkerSourceCommit) ||
   !decisionText.includes(CHECKER_CONFIRMATION.checkerSha256)
 ) {
-  throw new Error("ADR 0047 does not bind the configured checker realization.");
+  throw new Error(
+    `${CHECKER_CONFIRMATION.decision} does not bind the configured checker realization.`,
+  );
 }
 if (
   git("rev-parse", "HEAD") !== releaseCommit ||

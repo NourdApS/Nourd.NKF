@@ -60,6 +60,7 @@ No Design is currently classified as Active.
 - [Product Responsibility Identifiers](adopted/product-responsibility-identifiers.md)
 - [Product Technology Common Allocation](adopted/product-technology-common-allocation.md)
 - [Project Path And Knowledge Coverage](adopted/project-path-and-knowledge-coverage.md)
+- [Release Documentation And Adoption](adopted/release-documentation-and-adoption.md)
 - [Section Role Vocabularies](adopted/section-role-vocabularies.md)
 - [Semantic Topology And Bindings](adopted/semantic-topology-and-bindings.md)
 - [Single-Version Artifact Authority](adopted/single-version-artifact-authority.md)

@@ -1,17 +1,18 @@
 contract: nkf.record
-id: nkf-self-hosting
+id: nkf-release-documentation-and-adoption
 type: realization
 body_contract: nkf.realization
-title: NKF Self-Hosting
+title: NKF Release Documentation And Adoption
 source:
-  path: realizations/current/self-hosting.md
+  path: realizations/current/release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
-    value: ebcba5eafc668c76b4f6edc0ca551e303c13809cd3c0ee00d3b7020c6906ce12
+    value: 3c72f8f4ac06a4b345f8bbb1e2b672f4de9755b05ae011eaf7a4963f5d71d8f1
 governance:
   lifecycle: immutable
   status: accepted
   authority:
+    - codex-technical-reviewer
     - human-product-owner
 scope:
   root: nkf

@@ -6,10 +6,12 @@ summary: This Realization describes the repository-owned build, archive, manifes
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-010
-confirmation_status: confirmed
+task: NKF-008
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0059
+  - adr-0065
+unconfirmed_scope: Successor package configuration and publication state remain unconfirmed until NKF-008 completes its release, consumer, and final audit.
 ---
 
 # NKF Release Package
@@ -33,10 +35,14 @@ A local archive or build is not a published release.
 `scripts/release/core.mjs` build the release archive and manifest.
 `scripts/verify-release.mjs` independently verifies the archive.
 
-The current release configuration is bound to the earlier ADR 0047 checker
-confirmation and predecessor authority digests. It is not a current
-distribution realization of the ADR 0058 authority pair or ADR 0059 checker
-confirmation. Publication and consumer onboarding are deferred to NKF-008.
+ADR 0065 now binds the current release checker source checkpoint, executable
+digest, normative Markdown, executable YAML, and four Schema digests.
+`scripts/release/config.mjs` is rebound to those exact values.
+
+The deterministic package mechanism confirmed by ADR 0059 remains unchanged.
+The rebound configuration and later publication account remain unconfirmed
+until NKF-008 builds and observes the successor release and completes its
+final audit.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -56,7 +62,10 @@ checker-confirmation provenance, and the release-manifest Schema. The archive
 contains portable relative paths and SHA-256 bindings. Runtime and archive
 names are contract inputs.
 
-No package-registry channel is currently selected.
+No package-registry channel is selected. The native archive remains the
+private Github prerelease distribution unit. The separate adopter and public
+documentation projection are mapped by the Release Documentation And Adoption
+Realization.
 
 ## External Authority And Operational State Boundaries
 
@@ -67,10 +76,10 @@ mechanism and its present confirmation boundary only.
 
 ## Compatibility Verification And Recovery
 
-When NKF-008 is activated, release work must first rebind the package to a
-confirmed current checker and authority pair, then pass two-build
-reproducibility, manifest Schema validation, archive path and digest checks,
-independent extraction verification, and explicit publication authorization.
+The current candidate must pass two-build reproducibility, manifest Schema
+validation, archive path and digest checks, independent extraction
+verification, and explicit publication observation from a clean exact source
+commit before the successor package revision is confirmed.
 
 Recovery rejects or removes a candidate artifact before publication and
 rebuilds from the exact governed source commit. A published release is never

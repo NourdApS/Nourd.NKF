@@ -1,0 +1,39 @@
+name: NKF Consumer Adoption
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  consumer-adoption:
+    name: Consumer Adoption
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check Out Exact Commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Set Up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install Locked Dependencies
+        run: npm ci
+      - name: Download Exact Private Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          archive_sha256="$(jq -r '.archive.sha256' release/recommended.json)"
+          tag="$(jq -r '.archive.tag' release/recommended.json)"
+          asset="$(jq -r '.archive.asset_name' release/recommended.json)"
+          gh release download "$tag" --repo kaveh6202/Nourd.NKF --pattern "$asset" --dir "$RUNNER_TEMP"
+          printf '%s\n' "$archive_sha256" > "$RUNNER_TEMP/nkf-release-sha256"
+      - name: Exercise Pinned Consumer
+        run: |
+          archive_sha256="$(cat "$RUNNER_TEMP/nkf-release-sha256")"
+          asset="nourd-nkf-sha256-${archive_sha256}.tar"
+          node scripts/exercise-consumer-adoption.mjs "$RUNNER_TEMP/$asset" "$archive_sha256"

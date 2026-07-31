@@ -2,17 +2,19 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including confirmed remote workflow activation and the still-unavailable protected merge gate.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the confirmed checker and enforcement baseline plus the current unconfirmed NKF-008 release, documentation, and adoption candidate.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-011
-confirmation_status: confirmed
+task: NKF-008
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0059
   - adr-0061
   - adr-0062
   - adr-0063
+  - adr-0065
+unconfirmed_scope: The NKF-008 adopter, public documentation, successor release publication, consumer exercise, and resulting current-system account await live evidence, final audit, and confirmation.
 ---
 
 # NKF Current System
@@ -65,6 +67,14 @@ for the delivered enforcement scope, transfers protected-gate activation and
 proof to deferred NKF-012, and confirms this exact successor account without
 claiming that `master` is protected.
 
+[ADR 0064](../decisions/0064-release-documentation-and-adoption.md) adopts the
+separate native release, public explanation, and pinned consumer experience.
+[ADR 0065](../decisions/0065-confirm-current-release-bound-checker.md)
+confirms the exact current checker and release inputs. The resulting NKF-008
+implementation remains a partially confirmed current-system candidate until
+the release and documentation are published, the consumer workflow is
+observed, and the final audit and confirmation are complete.
+
 ## Durable Mapping
 
 The current repository topology is:
@@ -89,6 +99,14 @@ Host Adapters + Portable Skill
 npm run nkf:check
         ↓ reused by
 Exact-Commit Github Workflow
+
+Confirmed Checker + Exact Authority Inputs
+        ↓ packaged as
+Content-Addressed Internal Release
+        ↓ verified and installed by
+Public-Safe Pinned Adopter
+        ↓ accompanied by
+Allowlisted Public Documentation Projection
 ```
 
 | Component | Durable Location | Current State | Confirmation |
@@ -97,21 +115,25 @@ Exact-Commit Github Workflow
 | Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0058 |
 | Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas; bundle kind vocabulary extended | ADR 0059 |
 | Checker library and CLI | `src/checker/`, `src/cli.ts` | Governed frontmatter, references, and prior checker behavior implemented | ADR 0059 |
-| Fixtures and tests | `fixtures/`, `test/` | 16 test files and 120 tests pass; predecessor count was 15 files and 102 tests | ADR 0061 |
+| Fixtures and tests | `fixtures/`, `test/` | 18 test files and 126 tests pass; NKF-008 adds Product and Technology adoption plus public-projection negative coverage | ADR 0061 predecessor; NKF-008 successor unconfirmed |
 | Build artifact | `dist/nourd-nkf-checker.mjs` | Deterministically verified local build | ADR 0059 |
 | Self-host declaration | `.nourd/knowledge/` | Migrated Technology bundle with complete source and artifact bindings | ADR 0059 |
 | Neutral authoring procedure | `integrations/ai/nkf-authoring-protocol.md` | Implemented vendor-neutral CommonMark protocol | ADR 0061 |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Implemented for twelve explicit host surfaces with unknown-surface fail-closed policy | ADR 0061 |
 | Project enforcement command | `package.json` | `npm run nkf:check` orchestrates guidance, engineering, build, and bundle checks | ADR 0061 |
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run `30595019454` passed; required protection unavailable and deferred to NKF-012 | ADR 0061 local file; ADR 0062 remote activation; ADR 0063 Task allocation |
+| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Deterministic self-contained Product and Technology installer and checker; focused tests pass | ADR 0064 direction; successor unconfirmed |
+| Public documentation | `public-docs/` | Allowlisted CommonMark and Mermaid source with exact Specification and adopter mirrors; local verification passes | ADR 0064 direction; publication unconfirmed |
+| Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Local synthetic exercise implemented; remote dispatch waits on the published release | ADR 0064 direction; operational observation pending |
 | Latest result | `.nourd/validation-result.json` | Latest passing full-bundle observation | Conformance only |
-| Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Earlier release contract implementation | Current publication deferred to NKF-008 |
+| Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Rebound to the ADR 0065 checker and current exact authority inputs | ADR 0059 mechanism; ADR 0065 inputs; successor publication unconfirmed |
 
 Supporting current Realizations provide the detailed mappings:
 
 - [Contracts And Schemas](current/contracts-and-schemas.md)
 - [Checker And Validation](current/checker-and-validation.md)
 - [Layered Contract Enforcement](current/layered-contract-enforcement.md)
+- [Release Documentation And Adoption](current/release-documentation-and-adoption.md)
 - [Self-Hosting](current/self-hosting.md)
 - [Release Package](current/release-package.md)
 
@@ -188,6 +210,11 @@ gate, and active exact-commit workflow. Deferred NKF-012 owns the required
 blocked-invalid-candidate observation. No release, deployment, or
 external-consumer migration is part of either enforcement Task.
 
+NKF-008 is Active. Its current implementation files and focused tests exist
+locally, but no successor release, recommendation catalog, public docs
+repository, or consumer workflow run is claimed before direct remote
+observation.
+
 ## Compatibility Verification And Recovery
 
 Verification consists of strict authority-pair binding, schema compilation,
@@ -201,11 +228,13 @@ NKF-011 adds the adapter verifier, eighteen focused positive and negative cases,
 the unified `npm run nkf:check` command, and additional governed integration
 artifacts.
 
-The self-host bundle now contains 94 record declarations, 52 explicit
-non-record sources, and 72 governed artifacts. The canonical command passes
-type checking, sixteen test files with 120 tests, deterministic build
-verification, and full-bundle validation over 368 snapshot entries. It also
-exited nonzero for a temporary unrepresented Markdown source.
+The self-host candidate now contains 98 record declarations, 53 explicit
+non-record sources, and 92 governed artifacts. Focused NKF-008 checks pass
+eighteen test files with 126 tests, deterministic checker and adopter builds,
+the public-documentation verifier, Product and Technology installation,
+same-pin no-update, and representative tamper rejection. Full canonical
+self-validation remains required after all successor mappings are
+synchronized.
 
 The separate
 [NKF-011 Realization Audit](../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
