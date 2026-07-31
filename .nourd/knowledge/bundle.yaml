@@ -531,7 +531,7 @@ governed_artifacts:
     path: scripts/exercise-consumer-adoption.mjs
     digest:
       algorithm: sha-256
-      value: 6afcf3e4505dd3e0d90e233511f6ae56eb8c82aab5c9fa1a6402c58d61b4c490
+      value: 5bf9a4ec3ac678deb6a95726c2185816b32232b8a605822523db7edca0941216
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs

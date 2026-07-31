@@ -61,14 +61,36 @@ const installed = JSON.parse(run("install", releaseArguments).stdout);
 const checked = JSON.parse(run("check").stdout);
 const noUpdate = JSON.parse(run("install", releaseArguments).stdout);
 
-const skillPath = path.join(
+const pinPath = path.join(project, ".nourd/nkf-release.json");
+const pinBytes = await readFile(pinPath);
+const pin = JSON.parse(pinBytes.toString("utf8"));
+const installedArchivePath = path.join(
   project,
-  ".agents/skills/nkf-authoring/SKILL.md",
+  ...pin.archive.project_path.split("/"),
 );
-const skill = await readFile(skillPath);
-await appendFile(skillPath, "\nTampered.\n");
+const installedArchive = await readFile(installedArchivePath);
+const alteredArchive = Buffer.from(installedArchive);
+alteredArchive[700] = alteredArchive[700] ^ 1;
+await writeFile(installedArchivePath, alteredArchive);
+const archiveTamper = run("status", [], 1);
+await writeFile(installedArchivePath, installedArchive);
+
+pin.checker_sha256 = "0".repeat(64);
+await writeFile(pinPath, `${JSON.stringify(pin, null, 2)}\n`);
+const pinTamper = run("status", [], 1);
+await writeFile(pinPath, pinBytes);
+
+const adapterPath = path.join(project, ".github/copilot-instructions.md");
+const adapter = await readFile(adapterPath);
+const alteredAdapter = adapter
+  .toString("utf8")
+  .replace("read and follow", "ignore");
+if (alteredAdapter === adapter.toString("utf8")) {
+  throw new Error("The installed adapter does not contain its expected text.");
+}
+await writeFile(adapterPath, alteredAdapter);
 const integrationTamper = run("status", [], 1);
-await writeFile(skillPath, skill);
+await writeFile(adapterPath, adapter);
 
 const knowledgePath = path.join(project, "knowledge/product.md");
 const knowledge = await readFile(knowledgePath);
@@ -85,6 +107,8 @@ process.stdout.write(
       install_state: installed.state,
       check_state: checked.state,
       no_update_state: noUpdate.state,
+      archive_tamper_rejected: archiveTamper.status !== 0,
+      pin_tamper_rejected: pinTamper.status !== 0,
       integration_tamper_rejected: integrationTamper.status !== 0,
       knowledge_tamper_rejected: knowledgeTamper.status !== 0,
       project_kind: "isolated-synthetic-product",
