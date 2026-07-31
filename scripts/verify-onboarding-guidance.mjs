@@ -52,7 +52,12 @@ function parseSkill(text) {
   ) {
     fail("The onboarding skill frontmatter is invalid.");
   }
-  if (!match[2].includes(PROTOCOL) || !match[2].includes("NKF-014")) {
+  if (
+    !match[2].includes(PROTOCOL) ||
+    !match[2].includes("Category 1") ||
+    !match[2].includes("Category 2") ||
+    !match[2].includes("NKF-014")
+  ) {
     fail("The onboarding skill does not hand off to the complete protocol or deferral boundary.");
   }
 }
@@ -66,8 +71,12 @@ export async function verifyOnboardingGuidance(projectRootInput) {
   }
   const protocol = protocolBytes.toString("utf8");
   for (const required of [
+    "complete repository",
+    "Category 2",
+    "human confirmation",
     "inspect",
     "candidate workspace",
+    "mechanical",
     "seal",
     "onboard",
     "NKF-014",
@@ -77,6 +86,16 @@ export async function verifyOnboardingGuidance(projectRootInput) {
   ]) {
     if (!protocol.toLocaleLowerCase("en-US").includes(required.toLocaleLowerCase("en-US"))) {
       fail(`The onboarding protocol omits required subject: ${required}`);
+    }
+  }
+  for (const prohibited of [
+    "at most twenty Markdown files",
+    "256 KiB",
+    "64 KiB",
+    "eligible inspection",
+  ]) {
+    if (protocol.toLocaleLowerCase("en-US").includes(prohibited.toLocaleLowerCase("en-US"))) {
+      fail(`The onboarding protocol retains deterministic semantic eligibility text: ${prohibited}`);
     }
   }
   for (const vendor of ["Anthropic", "Claude", "Codex", "Copilot", "Gemini", "OpenAI"]) {

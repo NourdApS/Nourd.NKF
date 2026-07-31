@@ -918,10 +918,12 @@ async function inspectForOnboarding(options) {
   return {
     contract: "nkf.onboarding-inspect-result",
     nkf_version: "0.1",
-    state: result.inspection.eligible ? "workspace-created" : "deferred",
-    eligible: result.inspection.eligible,
+    state: result.inspection.mechanically_ready ? "workspace-created" : "blocked",
+    mechanically_ready: result.inspection.mechanically_ready,
     workspace: result.workspace,
     inspection_sha256: result.inspection.snapshot_sha256,
+    project_entries: result.inspection.observed.project_entries,
+    regular_files: result.inspection.observed.regular_files,
     markdown_files: result.inspection.observed.markdown_files,
     project_surfaces: result.inspection.project_surfaces.filter(
       (surface) => surface.state === "file",
@@ -940,6 +942,13 @@ function requireOnboardingReceipt(value) {
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
     typeof value?.knowledge_root !== "string" ||
+    typeof value?.assessment !== "object" ||
+    !["empty-repository", "tiny-knowledge-no-source-or-configuration"].includes(
+      value?.assessment?.category,
+    ) ||
+    !["recommended", "not-recommended", "indeterminate"].includes(
+      value?.assessment?.recommendation,
+    ) ||
     !Array.isArray(value?.created_paths) ||
     !Array.isArray(value?.changed_paths) ||
     !Array.isArray(value?.preserved_paths)
@@ -968,6 +977,12 @@ function onboardingResult(state, projectRoot, receipt, installed, knowledge = nu
       substantive_meaning: "contains-unresolved",
       realization_confirmation: "unconfirmed",
     },
+    onboarding_assessment: {
+      category: receipt.assessment.category,
+      recommendation: receipt.assessment.recommendation,
+      confirmation: receipt.assessment.confirmation.status,
+      mechanically_proven: false,
+    },
     validation: {
       conformance: installed.report?.conformance ?? "passed",
       governing_use: installed.report?.governing_use ?? "not-ready",
@@ -980,6 +995,7 @@ function onboardingResult(state, projectRoot, receipt, installed, knowledge = nu
     },
     non_claims: [
       "project-meaning-not-accepted",
+      "repository-category-not-mechanically-proven",
       "realization-not-confirmed",
       "git-state-not-inspected",
       "remote-enforcement-not-inspected",
@@ -1066,6 +1082,7 @@ async function onboard(options) {
     inspection_sha256: knowledge.inspection.snapshot_sha256,
     profile: knowledge.plan.project.profile,
     knowledge_root: knowledge.plan.inspection.knowledge_root,
+    assessment: knowledge.plan.assessment,
     created_paths: createdPaths,
     changed_paths: changedPaths,
     preserved_paths: knowledge.preserved_documents,

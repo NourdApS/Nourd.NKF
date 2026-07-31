@@ -98,6 +98,14 @@ Resolve an immutable Task identifier before Git-backed work. Record every AI
 execution plan in the owning Task before executing it. Keep operational Git,
 GitHub, check, package, and release state in their authoritative systems.
 
+Do not create or open a new Task, or begin work on one, without explicit human
+direction confirming the intended action. A repository instruction that
+requires an owning Task is not itself direction to create or open that Task.
+If no confirmed owning Task exists, stop and ask the human; do not infer
+authorization or create a Task merely to satisfy a procedural prerequisite.
+Direction to create or open a Task authorizes work on it only when that same
+direction explicitly says to begin the work.
+
 Accepted NKF records and decisions are immutable snapshots. A correction,
 extension, replacement, or reversal requires a later governed revision with
 explicit provenance and compatibility.

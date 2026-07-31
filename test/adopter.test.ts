@@ -112,12 +112,71 @@ function onboard(
 async function resolveAllAsNavigation(workspace: string) {
   const planPath = path.join(workspace, "plan.yaml");
   const plan = YAML.parse(await readFile(planPath, "utf8"));
+  plan.assessment = {
+    category: "tiny-knowledge-no-source-or-configuration",
+    assessed_by: "test-agent",
+    assessed_at: "2026-07-31T11:01:00Z",
+    recommendation: "recommended",
+    summary: "The complete test repository contains only the reviewed tiny knowledge set.",
+    evidence: [{
+      subject: "knowledge/",
+      classification: "knowledge",
+      finding: "Every Markdown file was read by the test assessment.",
+    }],
+    confirmation: {
+      status: "confirmed",
+      authority: "human-product-owner",
+      confirmed_at: "2026-07-31T11:02:00Z",
+      override: false,
+      rationale: "The test authority confirms Category 2 for this exact snapshot.",
+    },
+  };
   for (const document of plan.documents) {
     document.representation = {
       kind: "non_record",
       non_record_kind: "navigation",
     };
   }
+  await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+}
+
+async function resolveEmptyAssessment(workspace: string) {
+  const planPath = path.join(workspace, "plan.yaml");
+  const plan = YAML.parse(await readFile(planPath, "utf8"));
+  plan.assessment = {
+    category: "empty-repository",
+    assessed_by: "test-agent",
+    assessed_at: "2026-07-31T11:01:00Z",
+    recommendation: "recommended",
+    summary: "The complete test repository is effectively empty.",
+    evidence: [],
+    confirmation: { status: "not-required" },
+  };
+  await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+}
+
+async function resolveCategory2Override(workspace: string, subject: string) {
+  const planPath = path.join(workspace, "plan.yaml");
+  const plan = YAML.parse(await readFile(planPath, "utf8"));
+  plan.assessment = {
+    category: "tiny-knowledge-no-source-or-configuration",
+    assessed_by: "test-agent",
+    assessed_at: "2026-07-31T11:01:00Z",
+    recommendation: "not-recommended",
+    summary: "The complete test repository contains material inconsistent with Category 2.",
+    evidence: [{
+      subject,
+      classification: "configuration",
+      finding: "The agent reports this material instead of classifying the repository automatically.",
+    }],
+    confirmation: {
+      status: "confirmed",
+      authority: "human-product-owner",
+      confirmed_at: "2026-07-31T11:02:00Z",
+      override: true,
+      rationale: "The test authority deliberately directs Category 2 despite the agent recommendation.",
+    },
+  };
   await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
 }
 
@@ -180,9 +239,10 @@ describe("NKF consumer adopter", () => {
       const inspected = inspect(project, workspace, profile);
       expect(inspected.status, inspected.stderr).toBe(0);
       expect(JSON.parse(inspected.stdout)).toMatchObject({
-        eligible: true,
+        mechanically_ready: true,
         state: "workspace-created",
       });
+      await resolveEmptyAssessment(workspace);
       expect(seal(project, workspace).status).toBe(0);
 
       const result = onboard(project, workspace);
@@ -197,6 +257,12 @@ describe("NKF consumer adopter", () => {
           realization_confirmation: "unconfirmed",
         },
         validation: { conformance: "passed", governing_use: "not-ready" },
+        onboarding_assessment: {
+          category: "empty-repository",
+          recommendation: "recommended",
+          confirmation: "not-required",
+          mechanically_proven: false,
+        },
       });
       expect(
         await readFile(path.join(project, "package-lock.json"), "utf8"),
@@ -258,6 +324,80 @@ describe("NKF consumer adopter", () => {
     }
   });
 
+  it("requires Category 2 confirmation and preserves negative agent recommendations", async () => {
+    const { project, workspace } = await createEmptyProject();
+    await mkdir(path.join(project, "knowledge"));
+    await writeFile(path.join(project, "knowledge", "note.md"), "# Note\n\nEarly knowledge.\n");
+    expect(inspect(project, workspace).status).toBe(0);
+    const planPath = path.join(workspace, "plan.yaml");
+    const plan = YAML.parse(await readFile(planPath, "utf8"));
+    plan.documents[0].representation = {
+      kind: "non_record",
+      non_record_kind: "navigation",
+    };
+    plan.assessment = {
+      category: "tiny-knowledge-no-source-or-configuration",
+      assessed_by: "test-agent",
+      assessed_at: "2026-07-31T11:01:00Z",
+      recommendation: "recommended",
+      summary: "The agent recommends Category 2 for the complete test repository.",
+      evidence: [{
+        subject: "knowledge/note.md",
+        classification: "knowledge",
+        finding: "The document was read completely.",
+      }],
+      confirmation: { status: "unresolved" },
+    };
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    const missing = seal(project, workspace);
+    expect(missing.status).toBe(1);
+    expect(missing.stderr).toContain("assessment.confirmation keys");
+
+    plan.assessment.recommendation = "not-recommended";
+    plan.assessment.confirmation = {
+      status: "confirmed",
+      authority: "human-product-owner",
+      confirmed_at: "2026-07-31T11:02:00Z",
+      override: false,
+      rationale: "The authority reviewed the agent's negative recommendation.",
+    };
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    const notOverridden = seal(project, workspace);
+    expect(notOverridden.status).toBe(1);
+    expect(notOverridden.stderr).toContain("requires an explicit human override");
+
+    plan.assessment.confirmation.override = true;
+    plan.assessment.confirmation.rationale =
+      "The authority deliberately directs Category 2 despite the agent recommendation.";
+    const evidence = plan.assessment.evidence;
+    plan.assessment.evidence = [];
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    const evidenceMissing = seal(project, workspace);
+    expect(evidenceMissing.status).toBe(1);
+    expect(evidenceMissing.stderr).toContain("must include evidence");
+
+    plan.assessment.evidence = evidence;
+    plan.assessment.confirmation.authority = "different-authority";
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    const wrongAuthority = seal(project, workspace);
+    expect(wrongAuthority.status).toBe(1);
+    expect(wrongAuthority.stderr).toContain("must match the declared project authority");
+
+    plan.assessment.confirmation.authority = "human-product-owner";
+    plan.assessment.confirmation.confirmed_at = "2026-07-31T11:00:00Z";
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    const predatesAssessment = seal(project, workspace);
+    expect(predatesAssessment.status).toBe(1);
+    expect(predatesAssessment.stderr).toContain("cannot predate the agent assessment");
+
+    plan.assessment.confirmation.confirmed_at = "2026-07-31T11:02:00Z";
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    expect(seal(project, workspace).status).toBe(0);
+    const sealed = YAML.parse(await readFile(planPath, "utf8"));
+    expect(sealed.assessment.recommendation).toBe("not-recommended");
+    expect(sealed.assessment.confirmation.override).toBe(true);
+  });
+
   it("applies only exact sealed candidate edits", async () => {
     const { project, workspace } = await createEmptyProject();
     const source = path.join(project, "knowledge", "notes.md");
@@ -266,6 +406,25 @@ describe("NKF consumer adopter", () => {
     expect(inspect(project, workspace).status).toBe(0);
     const planPath = path.join(workspace, "plan.yaml");
     const plan = YAML.parse(await readFile(planPath, "utf8"));
+    plan.assessment = {
+      category: "tiny-knowledge-no-source-or-configuration",
+      assessed_by: "test-agent",
+      assessed_at: "2026-07-31T11:01:00Z",
+      recommendation: "recommended",
+      summary: "The complete test repository contains one tiny knowledge document.",
+      evidence: [{
+        subject: "knowledge/notes.md",
+        classification: "knowledge",
+        finding: "The document was read completely.",
+      }],
+      confirmation: {
+        status: "confirmed",
+        authority: "human-product-owner",
+        confirmed_at: "2026-07-31T11:02:00Z",
+        override: false,
+        rationale: "The authority confirms Category 2.",
+      },
+    };
     plan.documents[0].representation = {
       kind: "non_record",
       non_record_kind: "navigation",
@@ -298,17 +457,39 @@ describe("NKF consumer adopter", () => {
     expect(JSON.parse(applied.stdout).paths.changed).toContain("knowledge/notes.md");
   });
 
-  it("fails closed for unresolved, oversized, mature, and symlinked inputs", async () => {
+  it("keeps semantic assessment agent-led and fails closed for unresolved or unsafe inputs", async () => {
     const unresolved = await createEmptyProject();
     await mkdir(path.join(unresolved.project, "knowledge"));
     await writeFile(path.join(unresolved.project, "knowledge", "note.md"), "# Note\n");
     expect(inspect(unresolved.project, unresolved.workspace).status).toBe(0);
-    expect(seal(unresolved.project, unresolved.workspace).status).toBe(0);
-    const before = await snapshotTree(unresolved.project);
-    const unresolvedResult = onboard(unresolved.project, unresolved.workspace);
-    expect(unresolvedResult.status).toBe(1);
-    expect(unresolvedResult.stderr).toContain("NKF-ONBOARDING-PLAN-UNRESOLVED");
-    expectTreeEqual(await snapshotTree(unresolved.project), before);
+    const assessmentResult = seal(unresolved.project, unresolved.workspace);
+    expect(assessmentResult.status).toBe(1);
+    expect(assessmentResult.stderr).toContain("NKF-ONBOARDING-ASSESSMENT-UNRESOLVED");
+    const unresolvedPlanPath = path.join(unresolved.workspace, "plan.yaml");
+    const unresolvedPlan = YAML.parse(await readFile(unresolvedPlanPath, "utf8"));
+    unresolvedPlan.assessment = {
+      category: "tiny-knowledge-no-source-or-configuration",
+      assessed_by: "test-agent",
+      assessed_at: "2026-07-31T11:01:00Z",
+      recommendation: "recommended",
+      summary: "The agent recommends Category 2 for the complete test snapshot.",
+      evidence: [{
+        subject: "knowledge/note.md",
+        classification: "knowledge",
+        finding: "The one document was read completely.",
+      }],
+      confirmation: {
+        status: "confirmed",
+        authority: "human-product-owner",
+        confirmed_at: "2026-07-31T11:02:00Z",
+        override: false,
+        rationale: "The test authority confirms Category 2.",
+      },
+    };
+    await writeFile(unresolvedPlanPath, YAML.stringify(unresolvedPlan, { lineWidth: 0 }));
+    const representationResult = seal(unresolved.project, unresolved.workspace);
+    expect(representationResult.status).toBe(1);
+    expect(representationResult.stderr).toContain("NKF-ONBOARDING-PLAN-UNRESOLVED");
 
     const oversized = await createEmptyProject();
     await mkdir(path.join(oversized.project, "knowledge"));
@@ -321,10 +502,11 @@ describe("NKF consumer adopter", () => {
     const oversizedResult = inspect(oversized.project, oversized.workspace);
     expect(oversizedResult.status).toBe(0);
     expect(JSON.parse(oversizedResult.stdout)).toMatchObject({
-      eligible: false,
-      state: "deferred",
+      mechanically_ready: true,
+      state: "workspace-created",
+      markdown_files: 21,
     });
-    expect(oversizedResult.stdout).toContain("NKF-ONBOARDING-DEFER-NKF-014");
+    expect(oversizedResult.stdout).not.toContain("NKF-ONBOARDING-DEFER-NKF-014");
 
     const mature = await createEmptyProject();
     await mkdir(path.join(mature.project, "knowledge"));
@@ -347,8 +529,8 @@ describe("NKF consumer adopter", () => {
       ].join("\r\n"),
     );
     const matureResult = inspect(mature.project, mature.workspace);
-    expect(JSON.parse(matureResult.stdout).eligible).toBe(false);
-    expect(matureResult.stdout).toContain("NKF-ONBOARDING-DEFER-NKF-014");
+    expect(JSON.parse(matureResult.stdout).mechanically_ready).toBe(true);
+    expect(matureResult.stdout).not.toContain("NKF-ONBOARDING-DEFER-NKF-014");
 
     const linked = await createEmptyProject();
     await mkdir(path.join(linked.project, "knowledge"));
@@ -358,7 +540,8 @@ describe("NKF consumer adopter", () => {
       path.join(linked.project, "knowledge", "linked.md"),
     );
     const linkedResult = inspect(linked.project, linked.workspace);
-    expect(JSON.parse(linkedResult.stdout).eligible).toBe(false);
+    expect(JSON.parse(linkedResult.stdout).mechanically_ready).toBe(false);
+    expect(JSON.parse(linkedResult.stdout).state).toBe("blocked");
     expect(linkedResult.stdout).toContain("NKF-ONBOARDING-SYMLINK-PROHIBITED");
 
     const linkedRoot = await createEmptyProject();
@@ -375,7 +558,7 @@ describe("NKF consumer adopter", () => {
       "product",
       "docs/knowledge",
     );
-    expect(JSON.parse(linkedRootResult.stdout).eligible).toBe(false);
+    expect(JSON.parse(linkedRootResult.stdout).mechanically_ready).toBe(false);
     expect(linkedRootResult.stdout).toContain(
       "NKF-ONBOARDING-SYMLINK-PROHIBITED",
     );
@@ -393,6 +576,7 @@ describe("NKF consumer adopter", () => {
       "# Note Two\n",
     );
     expect(inspect(duplicate.project, duplicate.workspace).status).toBe(0);
+    await resolveAllAsNavigation(duplicate.workspace);
     const duplicatePlanPath = path.join(duplicate.workspace, "plan.yaml");
     const duplicatePlan = YAML.parse(
       await readFile(duplicatePlanPath, "utf8"),
@@ -419,6 +603,7 @@ describe("NKF consumer adopter", () => {
       "# Note\n",
     );
     expect(inspect(escaping.project, escaping.workspace).status).toBe(0);
+    await resolveAllAsNavigation(escaping.workspace);
     const escapingPlanPath = path.join(escaping.workspace, "plan.yaml");
     const escapingPlan = YAML.parse(await readFile(escapingPlanPath, "utf8"));
     escapingPlan.documents[0].representation = {
@@ -461,7 +646,13 @@ describe("NKF consumer adopter", () => {
         expect.objectContaining({ path: "package.json", policy: "merge" }),
       ]),
     });
+    await resolveCategory2Override(workspace, "package.json");
     expect(seal(project, workspace).status).toBe(0);
+    await appendFile(path.join(project, "src/index.ts"), "export const changed = true;\n");
+    const sourceDrifted = onboard(project, workspace);
+    expect(sourceDrifted.status).toBe(1);
+    expect(sourceDrifted.stderr).toContain("NKF-ONBOARDING-INSPECTION-DRIFT");
+    await writeFile(path.join(project, "src/index.ts"), sourceBytes);
     const originalInstructions = await readFile(path.join(project, "AGENTS.md"));
     await appendFile(path.join(project, "AGENTS.md"), "\nChanged after inspection.\n");
     const drifted = onboard(project, workspace);
@@ -504,6 +695,7 @@ describe("NKF consumer adopter", () => {
         }),
       ]),
     );
+    await resolveCategory2Override(workspace, ".github/workflows/nkf-contracts.yml");
     expect(seal(project, workspace).status).toBe(0);
     const before = await snapshotTree(project);
     const result = onboard(project, workspace);

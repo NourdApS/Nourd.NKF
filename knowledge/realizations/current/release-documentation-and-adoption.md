@@ -2,14 +2,15 @@
 id: nkf-release-documentation-and-adoption
 type: realization
 title: NKF Release Documentation And Adoption
-summary: This Realization describes the confirmed NKF-013 successor to the release documentation and adoption surface, including complete initial onboarding while preserving the confirmed native archive.
+summary: This Realization describes the NKF-015 successor release-documentation and adoption surface, including agent-led initial onboarding and its updated public adopter while preserving the confirmed native archive.
 created_at: 2026-07-31T02:26:24Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-013
-confirmation_status: confirmed
+task: NKF-015
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0068
+unconfirmed_scope: The NKF-015 agent-led onboarding adopter, recommendation, and public projection remain unconfirmed pending publication, verification, and the completion Decision.
 ---
 
 # NKF Release Documentation And Adoption
@@ -20,7 +21,8 @@ This Realization describes the current successor implementation of the
 release, documentation, and adoption direction accepted by ADR 0064 and
 extended for initial onboarding by ADR 0067. ADR 0066 confirms the predecessor
 revision. ADR 0068 confirms this exact audited successor after its separate
-local, remote, and public observations were recorded.
+local, remote, and public observations were recorded. ADR 0069 adopts the
+agent-led successor now implemented as an unconfirmed NKF-015 revision.
 
 ## Governed Meaning Realized
 
@@ -117,10 +119,13 @@ the archive and manifest, and installs:
 - one exact-commit Github workflow.
 
 `inspect`, `seal`, and `onboard` now precede the existing `install`, `check`,
-`status`, `integration-check`, and `update` commands. The initial commands
-create an external candidate workspace, bind semantic resolution and candidate
-bytes, generate native declarations, validate a complete staged project, and
-apply it transactionally. A same-plan repeat and a same-pin reinstall return
+`status`, `integration-check`, and `update` commands. A participating agent
+first reviews the complete repository and records its recommendation and any
+required human confirmation. The executable commands then create an external
+candidate workspace, bind the assessment, complete mechanical project
+snapshot, semantic resolution, and candidate bytes, generate native
+declarations, validate a complete staged project, and apply it
+transactionally. A same-plan repeat and a same-pin reinstall return
 `no-update` only after full project validation passes.
 
 ## External Authority And Operational State Boundaries
@@ -154,6 +159,14 @@ files plus itself to the private source commit and adopter SHA-256
 A second fresh clone matched every staged byte and both example projects
 passed with zero diagnostics.
 
+The local NKF-015 successor replaces deterministic semantic eligibility with
+the agent-led procedure adopted by ADR 0069. Its built public adopter SHA-256
+is `c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387`.
+The deliberate recommendation now binds that adopter while retaining the
+unchanged confirmed native archive, checker, and authority digests. This
+interim revision does not claim that the successor public projection has
+already been published or remotely verified.
+
 Live URLs, run identifiers, timestamps, visibility, and publication state
 remain owned by their Evidence and external systems rather than by this
 durable implementation account.
@@ -176,6 +189,12 @@ relative links outside the immutable Specification mirror, forbidden
 private-path or credential material, and conformance of both complete
 published Product and Technology example projects. Deterministic build
 verification compares two adopter builds and the committed output.
+
+The NKF-015 local candidate passes nineteen test files with 136 tests,
+deterministic checker and adopter builds, guidance verification, public
+documentation verification, and full-bundle self-validation once the
+deliberate recommendation is bound to the successor adopter. These checks do
+not publish or confirm the revision.
 
 The predecessor clean exact release source commit, reproducible archive construction,
 independent verification, private prerelease upload, remote re-download,

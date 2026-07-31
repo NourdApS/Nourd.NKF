@@ -107,17 +107,46 @@ async function exerciseInitialOnboarding(profile, withDocument) {
       "2026-07-31T11:00:00Z",
     ]).stdout,
   );
+  const planPath = path.join(workspace, "plan.yaml");
+  const plan = YAML.parse(await readFile(planPath, "utf8"));
+  plan.assessment = withDocument
+    ? {
+        category: "tiny-knowledge-no-source-or-configuration",
+        assessed_by: "exercise-agent",
+        assessed_at: "2026-07-31T11:01:00Z",
+        recommendation: "recommended",
+        summary: "The complete exercise repository contains one tiny knowledge document.",
+        evidence: [{
+          subject: "knowledge/notes/overview.md",
+          classification: "knowledge",
+          finding: "The document was reviewed completely.",
+        }],
+        confirmation: {
+          status: "confirmed",
+          authority: "human-product-owner",
+          confirmed_at: "2026-07-31T11:02:00Z",
+          override: false,
+          rationale: "The exercise authority confirms Category 2 for the exact snapshot.",
+        },
+      }
+    : {
+        category: "empty-repository",
+        assessed_by: "exercise-agent",
+        assessed_at: "2026-07-31T11:01:00Z",
+        recommendation: "recommended",
+        summary: "The complete exercise repository is effectively empty.",
+        evidence: [],
+        confirmation: { status: "not-required" },
+      };
   if (withDocument) {
-    const planPath = path.join(workspace, "plan.yaml");
-    const plan = YAML.parse(await readFile(planPath, "utf8"));
     for (const document of plan.documents) {
       document.representation = {
         kind: "non_record",
         non_record_kind: "navigation",
       };
     }
-    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
   }
+  await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
   const sealed = JSON.parse(
     runFor(root, "seal", ["--plan", path.join(workspace, "plan.yaml")]).stdout,
   );
@@ -145,7 +174,7 @@ async function exerciseInitialOnboarding(profile, withDocument) {
     ]).stdout,
   );
   return {
-    eligible: inspected.eligible,
+    mechanically_ready: inspected.mechanically_ready,
     sealed: sealed.state,
     onboarded: onboarded.state,
     conformance: onboarded.validation.conformance,

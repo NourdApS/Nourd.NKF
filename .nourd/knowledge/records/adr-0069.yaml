@@ -1,0 +1,32 @@
+contract: nkf.record
+id: adr-0069
+type: decision
+body_contract: nkf.decision
+title: "ADR 0069: Agent-Led Initial Onboarding"
+source:
+  path: decisions/0069-agent-led-initial-onboarding.md
+  digest:
+    algorithm: sha-256
+    value: dc508596a16937f0501343635b09790c271ddae07214a1b267c93908c0572d42
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: compatibility, heading_path: [Compatibility], occurrence: 1, authority: accepted-meaning, role: content}
+  - {id: realization-requirements, heading_path: [Realization Requirements], occurrence: 1, authority: accepted-meaning, role: evidence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: rationale-for
+    target: design-nkf-015-agent-led-initial-onboarding
+    source_section: decision

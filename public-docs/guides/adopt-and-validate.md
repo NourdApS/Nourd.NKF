@@ -7,9 +7,10 @@ the documentation and adopter are public.
 ## Already Structured Projects Only
 
 This guide installs the pinned NKF integration around an already complete
-native NKF 0.1 bundle. For an empty or small-document greenfield repository,
-begin with [Initial Onboarding](initial-onboarding.md). Do not manually create
-native YAML merely to satisfy this install prerequisite.
+native NKF 0.1 bundle. For an Empty Repository or a Tiny Knowledge, No Source
+Or Configuration repository, begin with
+[Initial Onboarding](initial-onboarding.md). Do not manually create native YAML
+merely to satisfy this install prerequisite.
 
 ## Before Installation
 

@@ -11,12 +11,6 @@ import {
 import path from "node:path";
 import YAML from "yaml";
 
-export const ONBOARDING_LIMITS = Object.freeze({
-  markdown_files: 20,
-  markdown_total_bytes: 256 * 1024,
-  markdown_file_bytes: 64 * 1024,
-});
-
 const ROOT_PROFILES = new Map([
   ["product", "nkf.profile.product"],
   ["technology", "nkf.profile.technology"],
@@ -31,11 +25,21 @@ const NON_RECORD_KINDS = new Set([
   "redirect",
   "other",
 ]);
-const MATURE_TYPES = new Set([
-  "decision",
-  "design",
-  "realization",
-  "specification",
+const ONBOARDING_CATEGORIES = new Set([
+  "empty-repository",
+  "tiny-knowledge-no-source-or-configuration",
+]);
+const ASSESSMENT_RECOMMENDATIONS = new Set([
+  "recommended",
+  "not-recommended",
+  "indeterminate",
+]);
+const ASSESSMENT_CLASSIFICATIONS = new Set([
+  "knowledge",
+  "source",
+  "configuration",
+  "incidental",
+  "unresolved",
 ]);
 const PROJECT_SURFACES = [
   { path: ".agents/skills/nkf-authoring/SKILL.md", policy: "exclusive" },
@@ -93,6 +97,13 @@ function requireExactKeys(value, allowed, label) {
 function requireString(value, label) {
   if (typeof value !== "string" || value === "" || value.trim() !== value) {
     fail("NKF-ONBOARDING-PLAN-INVALID", `${label} must be a non-empty trimmed string.`);
+  }
+  return value;
+}
+
+function requireBoolean(value, label) {
+  if (typeof value !== "boolean") {
+    fail("NKF-ONBOARDING-PLAN-INVALID", `${label} must be a boolean.`);
   }
   return value;
 }
@@ -170,35 +181,6 @@ function parseYaml(bytes, label) {
     );
   }
   return document.toJS();
-}
-
-function parseFrontmatter(text) {
-  const normalized = text.replaceAll("\r\n", "\n");
-  if (!normalized.startsWith("---\n")) return null;
-  const end = normalized.indexOf("\n---\n", 4);
-  if (end === -1) return { invalid: true };
-  try {
-    const value = YAML.parse(normalized.slice(4, end), { uniqueKeys: true });
-    return isObject(value) ? value : { invalid: true };
-  } catch {
-    return { invalid: true };
-  }
-}
-
-function maturityReason(frontmatter) {
-  if (frontmatter === null || frontmatter.invalid === true) return null;
-  if (frontmatter.record_status !== undefined && frontmatter.record_status !== "draft") {
-    return `record_status is ${String(frontmatter.record_status)}`;
-  }
-  if (frontmatter.design_disposition !== undefined) return "it declares a Design disposition";
-  if (frontmatter.confirmation_status !== undefined) return "it declares Realization confirmation";
-  if (frontmatter.task_id !== undefined || frontmatter.task_status !== undefined) {
-    return "it declares existing Task lifecycle state";
-  }
-  if (MATURE_TYPES.has(frontmatter.type)) {
-    return `it declares lifecycle record type ${frontmatter.type}`;
-  }
-  return null;
 }
 
 async function resolveProjectRoot(value) {
@@ -279,9 +261,8 @@ async function markdownInventory(projectRoot, knowledgeRoot) {
       }
       if (!direct.isFile() || !relative.endsWith(".md")) continue;
       const bytes = await readFile(absolute);
-      let text;
       try {
-        text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+        new TextDecoder("utf-8", { fatal: true }).decode(bytes);
       } catch {
         diagnostics.push({
           code: "NKF-ONBOARDING-MARKDOWN-UTF8",
@@ -290,19 +271,62 @@ async function markdownInventory(projectRoot, knowledgeRoot) {
         });
         continue;
       }
-      const reason = maturityReason(parseFrontmatter(text));
-      if (reason !== null) {
-        diagnostics.push({
-          code: "NKF-ONBOARDING-DEFER-NKF-014",
-          path: relative,
-          message: `The document requires mature lifecycle migration because ${reason}; defer to NKF-014.`,
-        });
-      }
       documents.push({ path: relative, bytes: bytes.length, sha256: sha256(bytes) });
     }
   };
   await visit(absoluteRoot);
   return { documents, diagnostics };
+}
+
+async function projectEntryInventory(projectRoot) {
+  const entries = [];
+  const diagnostics = [];
+  let regularFiles = 0;
+  let regularFileBytes = 0;
+  const visit = async (directory, prefix = "") => {
+    const children = await readdir(directory, { withFileTypes: true });
+    children.sort((left, right) => utf16Compare(left.name, right.name));
+    for (const child of children) {
+      if (prefix === "" && child.name === ".git") continue;
+      const relative = prefix === "" ? child.name : `${prefix}/${child.name}`;
+      const absolute = path.join(directory, child.name);
+      const direct = await lstat(absolute);
+      if (direct.isSymbolicLink()) {
+        diagnostics.push({
+          code: "NKF-ONBOARDING-SYMLINK-PROHIBITED",
+          path: relative,
+          message: "Symbolic links are prohibited in the initial onboarding project snapshot.",
+        });
+        entries.push({ path: relative, kind: "symbolic-link" });
+        continue;
+      }
+      if (direct.isDirectory()) {
+        entries.push({ path: relative, kind: "directory" });
+        await visit(absolute, relative);
+        continue;
+      }
+      if (direct.isFile()) {
+        const bytes = await readFile(absolute);
+        regularFiles += 1;
+        regularFileBytes += bytes.length;
+        entries.push({
+          path: relative,
+          kind: "file",
+          bytes: bytes.length,
+          sha256: sha256(bytes),
+        });
+        continue;
+      }
+      diagnostics.push({
+        code: "NKF-ONBOARDING-SPECIAL-FILE-PROHIBITED",
+        path: relative,
+        message: "Special filesystem entries are prohibited in the initial onboarding project snapshot.",
+      });
+      entries.push({ path: relative, kind: "special" });
+    }
+  };
+  await visit(projectRoot);
+  return { entries, diagnostics, regularFiles, regularFileBytes };
 }
 
 function gitState(projectRoot) {
@@ -402,10 +426,11 @@ async function projectSurfaceInventory(projectRoot) {
   return { surfaces, packageScripts, diagnostics };
 }
 
-function snapshotDigest(knowledgeRoot, documents, projectSurfaces, git) {
+function snapshotDigest(knowledgeRoot, documents, projectEntries, projectSurfaces, git) {
   return sha256(Buffer.from(JSON.stringify({
     knowledge_root: knowledgeRoot,
     documents,
+    project_entries: projectEntries,
     project_surfaces: projectSurfaces,
     git,
   }), "utf8"));
@@ -431,6 +456,8 @@ export async function inspectOnboardingProject(projectRootInput, knowledgeRootIn
   }
   const inventory = await markdownInventory(projectRoot, knowledgeRoot);
   diagnostics.push(...inventory.diagnostics);
+  const projectEntries = await projectEntryInventory(projectRoot);
+  diagnostics.push(...projectEntries.diagnostics);
   const projectState = await projectSurfaceInventory(projectRoot);
   diagnostics.push(...projectState.diagnostics);
   const observedGit = gitState(projectRoot);
@@ -441,44 +468,27 @@ export async function inspectOnboardingProject(projectRootInput, knowledgeRootIn
     });
   }
   const totalBytes = inventory.documents.reduce((sum, item) => sum + item.bytes, 0);
-  if (inventory.documents.length > ONBOARDING_LIMITS.markdown_files) {
-    diagnostics.push({
-      code: "NKF-ONBOARDING-DEFER-NKF-014",
-      message: `The corpus has ${inventory.documents.length} Markdown files; NKF-013 supports at most ${ONBOARDING_LIMITS.markdown_files}.`,
-    });
-  }
-  if (totalBytes > ONBOARDING_LIMITS.markdown_total_bytes) {
-    diagnostics.push({
-      code: "NKF-ONBOARDING-DEFER-NKF-014",
-      message: `The corpus has ${totalBytes} Markdown bytes; NKF-013 supports at most ${ONBOARDING_LIMITS.markdown_total_bytes}.`,
-    });
-  }
-  for (const document of inventory.documents) {
-    if (document.bytes > ONBOARDING_LIMITS.markdown_file_bytes) {
-      diagnostics.push({
-        code: "NKF-ONBOARDING-DEFER-NKF-014",
-        path: document.path,
-        message: `The document has ${document.bytes} bytes; NKF-013 supports at most ${ONBOARDING_LIMITS.markdown_file_bytes} per file.`,
-      });
-    }
-  }
   const snapshotSha256 = snapshotDigest(
     knowledgeRoot,
     inventory.documents,
+    projectEntries.entries,
     projectState.surfaces,
     observedGit,
   );
   return {
     contract: "nkf.onboarding-inspection",
     nkf_version: "0.1",
-    eligible: diagnostics.length === 0,
+    mechanically_ready: diagnostics.length === 0,
     knowledge_root: knowledgeRoot,
-    limits: ONBOARDING_LIMITS,
     observed: {
+      project_entries: projectEntries.entries.length,
+      regular_files: projectEntries.regularFiles,
+      regular_file_bytes: projectEntries.regularFileBytes,
       markdown_files: inventory.documents.length,
       markdown_total_bytes: totalBytes,
     },
     documents: inventory.documents,
+    project_entries: projectEntries.entries,
     project_surfaces: projectState.surfaces,
     package_scripts: projectState.packageScripts,
     git: observedGit,
@@ -534,7 +544,7 @@ export async function createOnboardingWorkspace(options) {
   }
   await mkdir(outputRoot, { recursive: true });
   await writeFile(path.join(outputRoot, "inspection.json"), serializeJson(inspection), { flag: "wx" });
-  if (!inspection.eligible) {
+  if (!inspection.mechanically_ready) {
     return { inspection, plan: null, workspace: outputRoot };
   }
 
@@ -573,6 +583,15 @@ export async function createOnboardingWorkspace(options) {
     inspection: {
       knowledge_root: inspection.knowledge_root,
       snapshot_sha256: inspection.snapshot_sha256,
+    },
+    assessment: {
+      category: "unresolved",
+      assessed_by: null,
+      assessed_at: null,
+      recommendation: "unresolved",
+      summary: "",
+      evidence: [],
+      confirmation: { status: "unresolved" },
     },
     project: {
       profile: rootProfile,
@@ -614,7 +633,7 @@ async function readPlan(planPathInput) {
 function validatePlanEnvelope(plan) {
   requireExactKeys(
     plan,
-    ["contract", "nkf_version", "inspection", "project", "scaffold", "documents"],
+    ["contract", "nkf_version", "inspection", "assessment", "project", "scaffold", "documents"],
     "plan",
   );
   if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.1") {
@@ -623,6 +642,15 @@ function validatePlanEnvelope(plan) {
   requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
   safeRelative(plan.inspection.knowledge_root, "inspection.knowledge_root");
   requireSha256(plan.inspection.snapshot_sha256, "inspection.snapshot_sha256");
+  requireExactKeys(
+    plan.assessment,
+    ["category", "assessed_by", "assessed_at", "recommendation", "summary", "evidence", "confirmation"],
+    "assessment",
+  );
+  if (!Array.isArray(plan.assessment.evidence)) {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "assessment.evidence must be an array.");
+  }
+  requireObject(plan.assessment.confirmation, "assessment.confirmation");
   requireExactKeys(
     plan.project,
     ["profile", "root", "task", "authority", "created_at", "canonical_terms"],
@@ -670,18 +698,115 @@ function validatePlanEnvelope(plan) {
   }
 }
 
+function validateResolvedAssessment(assessment, inspection, projectAuthority) {
+  if (!ONBOARDING_CATEGORIES.has(assessment.category)) {
+    fail(
+      "NKF-ONBOARDING-ASSESSMENT-UNRESOLVED",
+      "The agent-led assessment must select Empty Repository or Tiny Knowledge With No Source Or Configuration.",
+    );
+  }
+  requireIdentifier(assessment.assessed_by, "assessment.assessed_by");
+  requireUtcInstant(assessment.assessed_at, "assessment.assessed_at");
+  if (!ASSESSMENT_RECOMMENDATIONS.has(assessment.recommendation)) {
+    fail(
+      "NKF-ONBOARDING-ASSESSMENT-UNRESOLVED",
+      "assessment.recommendation must be recommended, not-recommended, or indeterminate.",
+    );
+  }
+  requireString(assessment.summary, "assessment.summary");
+  for (const [index, entry] of assessment.evidence.entries()) {
+    requireExactKeys(entry, ["subject", "classification", "finding"], `assessment.evidence[${index}]`);
+    requireString(entry.subject, `assessment.evidence[${index}].subject`);
+    if (!ASSESSMENT_CLASSIFICATIONS.has(entry.classification)) {
+      fail(
+        "NKF-ONBOARDING-PLAN-INVALID",
+        `assessment.evidence[${index}].classification is unsupported.`,
+      );
+    }
+    requireString(entry.finding, `assessment.evidence[${index}].finding`);
+  }
+  if (
+    assessment.evidence.length === 0 &&
+    (assessment.category !== "empty-repository" || inspection.project_entries.length > 0)
+  ) {
+    fail(
+      "NKF-ONBOARDING-ASSESSMENT-UNRESOLVED",
+      "The assessment must include evidence for a non-empty project snapshot.",
+    );
+  }
+  if (assessment.category === "empty-repository") {
+    if (assessment.recommendation !== "recommended") {
+      fail(
+        "NKF-ONBOARDING-ASSESSMENT-UNRESOLVED",
+        "Empty Repository may proceed automatically only with a recommended agent assessment.",
+      );
+    }
+    requireExactKeys(assessment.confirmation, ["status"], "assessment.confirmation");
+    if (assessment.confirmation.status !== "not-required") {
+      fail(
+        "NKF-ONBOARDING-CONFIRMATION-REQUIRED",
+        "Empty Repository must use confirmation status not-required.",
+      );
+    }
+    return;
+  }
+  requireExactKeys(
+    assessment.confirmation,
+    ["status", "authority", "confirmed_at", "override", "rationale"],
+    "assessment.confirmation",
+  );
+  if (assessment.confirmation.status !== "confirmed") {
+    fail(
+      "NKF-ONBOARDING-CONFIRMATION-REQUIRED",
+      "Tiny Knowledge With No Source Or Configuration requires explicit human confirmation.",
+    );
+  }
+  requireIdentifier(assessment.confirmation.authority, "assessment.confirmation.authority");
+  if (assessment.confirmation.authority !== projectAuthority) {
+    fail(
+      "NKF-ONBOARDING-CONFIRMATION-REQUIRED",
+      "Category 2 confirmation authority must match the declared project authority.",
+    );
+  }
+  const confirmedAt = requireUtcInstant(
+    assessment.confirmation.confirmed_at,
+    "assessment.confirmation.confirmed_at",
+  );
+  if (new Date(confirmedAt).getTime() < new Date(assessment.assessed_at).getTime()) {
+    fail(
+      "NKF-ONBOARDING-CONFIRMATION-REQUIRED",
+      "Category 2 confirmation cannot predate the agent assessment.",
+    );
+  }
+  const override = requireBoolean(assessment.confirmation.override, "assessment.confirmation.override");
+  requireString(assessment.confirmation.rationale, "assessment.confirmation.rationale");
+  if (assessment.recommendation === "recommended" && override) {
+    fail(
+      "NKF-ONBOARDING-PLAN-INVALID",
+      "A recommended Category 2 assessment must not be marked as an override.",
+    );
+  }
+  if (assessment.recommendation !== "recommended" && !override) {
+    fail(
+      "NKF-ONBOARDING-CONFIRMATION-REQUIRED",
+      "A negative or indeterminate Category 2 assessment requires an explicit human override.",
+    );
+  }
+}
+
 export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   const projectRoot = await resolveProjectRoot(projectRootInput);
   const loaded = await readPlan(planPathInput);
   validatePlanEnvelope(loaded.plan);
   const inspection = await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
-  if (!inspection.eligible || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
+  if (!inspection.mechanically_ready || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
     fail(
       "NKF-ONBOARDING-INSPECTION-DRIFT",
-      "The project no longer matches the eligible inspection bound by the plan.",
+      "The project no longer matches the mechanical snapshot bound by the plan.",
       { diagnostics: inspection.diagnostics },
     );
   }
+  validateResolvedAssessment(loaded.plan.assessment, inspection, loaded.plan.project.authority);
   for (const [index, item] of loaded.plan.documents.entries()) {
     requireObject(item, `documents[${index}]`);
     safeRelative(item.candidate_path, `documents[${index}].candidate_path`);
@@ -689,6 +814,7 @@ export async function sealOnboardingPlan(projectRootInput, planPathInput) {
     item.candidate_sha256 = sha256(bytes);
   }
   const sealed = serializeYaml(loaded.plan);
+  await validateLoadedPlan(projectRoot, { ...loaded, bytes: sealed }, inspection);
   await writeFile(loaded.planPath, sealed);
   return {
     contract: "nkf.onboarding-plan-seal-result",
@@ -904,17 +1030,18 @@ function specificationSections() {
   return sections;
 }
 
-async function validateAndLoadPlan(projectRoot, planPathInput) {
-  const loaded = await readPlan(planPathInput);
+async function validateLoadedPlan(projectRoot, loaded, observedInspection = null) {
   validatePlanEnvelope(loaded.plan);
-  const inspection = await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
-  if (!inspection.eligible || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
+  const inspection = observedInspection
+    ?? await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
+  if (!inspection.mechanically_ready || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
     fail(
       "NKF-ONBOARDING-INSPECTION-DRIFT",
-      "The project no longer matches the eligible inspection bound by the plan.",
+      "The project no longer matches the mechanical snapshot bound by the plan.",
       { diagnostics: inspection.diagnostics },
     );
   }
+  validateResolvedAssessment(loaded.plan.assessment, inspection, loaded.plan.project.authority);
   const observed = new Map(inspection.documents.map((item) => [item.path, item]));
   if (loaded.plan.documents.length !== observed.size) {
     fail("NKF-ONBOARDING-PLAN-INCOMPLETE", "The plan must represent every inspected Markdown file exactly once.");
@@ -1005,6 +1132,10 @@ async function validateAndLoadPlan(projectRoot, planPathInput) {
     fail("NKF-ONBOARDING-PLAN-INCOMPLETE", "The plan does not cover the complete inspected Markdown set.");
   }
   return { ...loaded, inspection, candidateDocuments, nonRecords, declarations };
+}
+
+async function validateAndLoadPlan(projectRoot, planPathInput) {
+  return validateLoadedPlan(projectRoot, await readPlan(planPathInput));
 }
 
 export async function buildOnboardingKnowledge(projectRootInput, planPathInput) {

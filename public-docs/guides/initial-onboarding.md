@@ -1,51 +1,81 @@
 # Initial Onboarding
 
-Initial onboarding takes an empty or small-document greenfield repository to a
-complete checked NKF 0.1 candidate without requiring manual native YAML or
-integration assembly.
+Initial onboarding takes an unadopted Empty Repository or Tiny Knowledge, No
+Source Or Configuration repository to a complete checked NKF 0.1 candidate
+without requiring manual native YAML or integration assembly.
 
 It supports Product and Technology roots. Common rules apply to both but are
 not a selectable profile.
 
-## Supported Boundary
+## Understand The Boundary
 
-The selected knowledge root may contain:
+The portable onboarding skill—not a deterministic classifier—guides the
+initial repository assessment:
 
-- at most twenty Markdown files;
-- at most 256 KiB of Markdown in total; and
-- at most 64 KiB in one Markdown file.
+- **Empty Repository:** no useful knowledge, meaningful source implementation,
+  or project configuration. Incidental placeholder material may exist.
+- **Tiny Knowledge, No Source Or Configuration:** a small knowledge corpus that
+  an agent can review completely and no meaningful source implementation or
+  project configuration.
 
-The project must not already contain `.nourd`. Existing accepted Decisions,
-Design dispositions, Specifications, Realization confirmation, Task lifecycle
-history, or another mature migration boundary receives an
-`NKF-ONBOARDING-DEFER-NKF-014` diagnostic. Source-rich reconstruction and
-large brownfield migration are not silently attempted.
+`Tiny` is a semantic reviewability judgment, not a fixed file or byte limit.
+The agent reads the complete repository, distinguishes knowledge, source,
+configuration, incidental material, and unresolved items, and explains its
+evidence. Category 2 always requires human confirmation. Category 1 may
+proceed without a separate confirmation after an explained effectively-empty
+finding.
 
-The knowledge root remains a project-contained relative path. The onboarding
-workspace must be outside the project.
+If neither category is supportable, the agent stops without guessing a later
+category and refers future work to deferred NKF-014. A human may deliberately
+override a negative or indeterminate Category 2 recommendation; mechanical
+safety failures cannot be overridden.
+
+The project must not already contain `.nourd`. The knowledge root remains a
+project-contained relative path, and the candidate workspace stays outside the
+project.
 
 ```mermaid
 flowchart LR
-  P["Unadopted Project"] --> I["Inspect Without Mutation"]
-  I --> W["Candidate Workspace"]
-  W --> S["Semantic Resolution And Seal"]
+  R["Complete Agent Review"] --> H["Recommendation And Human Confirmation"]
+  H --> I["Mechanical Capture"]
+  I --> W["Candidate Resolution"]
+  W --> S["Deterministic Seal"]
   S --> C["Complete Staged Check"]
   C --> A["Atomic Apply Or Rollback"]
-  A --> H["Draft Candidate Handoff"]
+  A --> D["Draft Candidate Handoff"]
 ```
 
 ## Obtain The Trust Anchors
 
 Read `release.archive_sha256` and `adopter.sha256` from
 `../reference/publication.json`. Verify the downloaded public adopter before
-running it. The examples below use `<release-sha256>` as the independently
-trusted full archive digest.
+running it. The examples use `<release-sha256>` as the independently trusted
+full archive digest.
 
 Node.js 22 or later is required.
 
-## Inspect An Empty Product
+## Run The Agent-Led Assessment
 
-Choose the Product profile through project authority and run:
+Use the published `nkf-onboarding` skill. It routes every supported AI host to
+the same vendor-neutral
+[pre-adoption protocol](../tools/nkf-onboarding-protocol.md).
+
+The agent reads every project entry except version-control implementation
+metadata. It must not sample files or decide from filenames, directory names,
+frontmatter, or numeric thresholds. Before proceeding, it reports:
+
+1. knowledge, source, configuration, incidental, and unresolved findings;
+2. its Category 1 or Category 2 recommendation, or why neither is recommended;
+3. exact evidence paths; and
+4. the required Category 2 confirmation or override.
+
+Project authority separately selects Product or Technology, the root identity,
+knowledge root, Task identity, and authority values. Repository contents do
+not select the Root Profile.
+
+## Capture A Mechanical Workspace
+
+After the assessment and required confirmation, run:
 
 ```sh
 node nourd-nkf-adopt.mjs inspect \
@@ -55,14 +85,15 @@ node nourd-nkf-adopt.mjs inspect \
   --root-id example-product \
   --root-title "Example Product" \
   --task-id EXAMPLE-001 \
-  --created-at 2026-07-31T11:00:00Z
+  --created-at 2026-07-31T14:00:00Z
 ```
 
 For a Technology, use `--profile technology` and Technology-owned identity
 values. The generated Technology candidate includes a Draft Specification
 because the Technology Root Profile requires one.
 
-Inspection writes only to the separate workspace:
+The retained `inspect` name means mechanical source capture, not a semantic
+survey. It writes only to the separate workspace:
 
 ```text
 onboarding-workspace/
@@ -71,28 +102,71 @@ onboarding-workspace/
 └── candidate/
 ```
 
-An empty project has no existing document classifications to resolve. The plan
-still records the selected profile, root, Task, authority, UTC creation time,
-safe scaffold paths, and inspection digest.
+Require `mechanically_ready: true`. `inspection.json` includes a complete
+project entry manifest, excluding version-control implementation metadata,
+plus integration surfaces and Git binding. Compare it with the agent's review.
+Any later project change makes the plan stale.
 
-The inspection result also lists existing AI instruction files, package
-files and script names, workflow files, integration-owned paths, and Git
-default-branch state. These relevant surfaces enter the inspection digest. If
-one changes before onboarding, the plan fails as stale and must be inspected
-again; unrelated source files remain uninterpreted and preserved.
+## Record The Assessment
 
-## Resolve Small Existing Documentation
+Replace the unresolved `assessment` mapping in `plan.yaml`.
 
-For a supported small knowledge root, `candidate/` contains exact copies of
-every Markdown file. Each starts as unresolved in `plan.yaml`:
+For Empty Repository:
+
+```yaml
+assessment:
+  category: empty-repository
+  assessed_by: participating-agent
+  assessed_at: 2026-07-31T14:01:00Z
+  recommendation: recommended
+  summary: The complete repository contains only incidental placeholder material.
+  evidence:
+    - subject: README.md
+      classification: incidental
+      finding: The file contains only generic placeholder text.
+  confirmation:
+    status: not-required
+```
+
+For confirmed Tiny Knowledge:
+
+```yaml
+assessment:
+  category: tiny-knowledge-no-source-or-configuration
+  assessed_by: participating-agent
+  assessed_at: 2026-07-31T14:01:00Z
+  recommendation: recommended
+  summary: The repository contains one completely reviewed early knowledge set.
+  evidence:
+    - subject: knowledge/
+      classification: knowledge
+      finding: Every document was read in one complete review.
+  confirmation:
+    status: confirmed
+    authority: human-product-owner
+    confirmed_at: 2026-07-31T14:05:00Z
+    override: false
+    rationale: The authority confirms Category 2 for this exact snapshot.
+```
+
+For a human-directed override, keep `not-recommended` or `indeterminate`, set
+`override: true`, and record the rationale. Do not rewrite the agent's finding.
+
+The plan is operational candidate state. The executable validates its
+completeness but cannot prove the category assessment is true.
+
+## Resolve Existing Markdown
+
+For Tiny Knowledge, `candidate/` contains exact copies of every Markdown file
+under the selected knowledge root. Each starts unresolved in `plan.yaml`:
 
 ```yaml
 representation:
   kind: unresolved
 ```
 
-A human or participating AI reviews the complete corpus and changes each entry
-to one explicit non-record or record representation. A navigation example is:
+The agent changes every entry to exactly one record or `non_records`
+representation. A navigation example is:
 
 ```yaml
 representation:
@@ -105,13 +179,9 @@ A record representation supplies semantic declaration fields but omits
 YAML. Candidate Markdown edits occur only in the workspace and require project
 authority where meaning changes.
 
-The public [pre-adoption protocol](../tools/nkf-onboarding-protocol.md) and
-portable onboarding skill define the complete AI-neutral procedure. The
-executable never calls a model or assigns semantic authority to one provider.
-
 ## Seal Candidate Digests
 
-After every representation is resolved and candidate edit is complete, run:
+Run:
 
 ```sh
 node nourd-nkf-adopt.mjs seal \
@@ -119,9 +189,10 @@ node nourd-nkf-adopt.mjs seal \
   --plan /absolute/path/to/onboarding-workspace/plan.yaml
 ```
 
-Sealing refreshes exact candidate SHA-256 values in the plan. Review the plan
-diff before applying it. Sealing does not change the project or prove
-conformance.
+Sealing verifies the assessment and applicable confirmation, recreates the
+complete mechanical snapshot, requires every Markdown representation, and
+refreshes exact candidate digests. It does not change the project, prove the
+semantic category, or establish conformance.
 
 ## Apply The Complete Candidate
 
@@ -141,41 +212,28 @@ For authenticated private download, replace `--archive` with:
 --github-repository kaveh6202/Nourd.NKF
 ```
 
-The onboarder rechecks the original project snapshot, verifies the release,
-generates the bundle and declarations, installs the authoring integration,
+The onboarder repeats source and candidate checks, verifies the release,
+generates the bundle and declarations, installs authoring integration,
 validates a complete isolated project at `full-bundle`, and only then replaces
-project bytes. A handled post-write failure restores every predecessor byte
-and removes transaction-created paths.
-
-## Generated Product And Technology Knowledge
-
-Both profiles receive a Draft root, active onboarding Task, knowledge map, and
-unconfirmed current-system Realization. The Technology profile also receives a
-Draft Specification.
-
-The generated Realization says that onboarding did not establish an accepted
-implementation mapping. It does not claim that source code or implementation
-is absent.
-
-Existing Markdown bytes are preserved unless the sealed candidate names an
-exact changed digest. Existing topology is not reorganized to resemble the NKF
-repository.
+project bytes. A handled failure restores predecessor bytes and removes
+transaction-created paths.
 
 ## Read The Result
 
-The JSON result separates created, changed, and preserved paths; Draft and
-unresolved meaning; Realization confirmation; conformance; Governing Use; and
-release digests.
-
-A normal initial result has:
+The result keeps the plan-supplied category separate from mechanical proof and
+NKF conformance:
 
 ```json
 {
   "state": "onboarded",
+  "onboarding_assessment": {
+    "category": "tiny-knowledge-no-source-or-configuration",
+    "recommendation": "recommended",
+    "confirmation": "confirmed",
+    "mechanically_proven": false
+  },
   "meaning": {
     "root_status": "draft",
-    "classification_status": "resolved",
-    "substantive_meaning": "contains-unresolved",
     "realization_confirmation": "unconfirmed"
   },
   "validation": {
@@ -185,29 +243,12 @@ A normal initial result has:
 }
 ```
 
+Both profiles receive a Draft root, active onboarding Task, knowledge map, and
+unconfirmed current-system Realization. Technology also receives a Draft
+Specification. Existing bytes and topology are preserved unless the sealed
+candidate names an exact change.
+
 Repeating the exact sealed plan verifies the installed candidate and returns
-`no-update`. A different plan against an adopted repository requires governed
-authoring or deliberate migration.
-
-Successful onboarding does not accept the Draft root, accept a Specification,
-adopt a Design, confirm the Realization, commit Git history, push a branch, or
-activate remote merge protection.
-
-## Complete Supported Examples
-
-The same inspect, resolve, seal, and onboard sequence above covers all four
-supported starting examples:
-
-| Starting Example | Profile | Plan Resolution | Generated Minimum |
-| --- | --- | --- | --- |
-| Empty Product | `product` | No existing document entries | Draft Product root, onboarding Task, map, and unconfirmed current-system Realization |
-| Empty Technology | `technology` | No existing document entries | Draft Technology root, Draft initial Specification, onboarding Task, map, and unconfirmed current-system Realization |
-| Small-document Product | `product` | Resolve every existing Markdown entry | Product minimum plus every resolved existing representation |
-| Small-document Technology | `technology` | Resolve every existing Markdown entry | Technology minimum plus every resolved existing representation |
-
-For the small-document examples, create `knowledge/notes/overview.md` before
-inspection, follow **Resolve Small Existing Documentation**, classify it as
-the shown navigation non-record, and then run the exact seal and onboard
-commands. The original file path and bytes are preserved. The NKF repository
-executes all four examples as part of its adopter tests; publication binds the
-tested adopter by SHA-256.
+`no-update`. Successful onboarding does not accept the Draft root, accept a
+Specification, adopt a Design, confirm the Realization, commit Git history,
+push a branch, or activate remote merge protection.

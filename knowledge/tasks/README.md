@@ -12,7 +12,7 @@ status; it does not establish that status.
 
 ## Active
 
-None.
+- [NKF-015: Establish Agent-Led Initial Onboarding](active/NKF-015-agent-led-initial-onboarding.md)
 
 ## Deferred
 
@@ -22,6 +22,7 @@ None.
 - [NKF-009: Extend Secret Scanning Across Governed Artifacts](deferred/NKF-009-governed-artifact-secret-scanning.md)
 - [NKF-012: Activate Protected Merge Gate](deferred/NKF-012-activate-protected-merge-gate.md)
 - [NKF-014: Expand Brownfield And Advanced Onboarding](deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
+- [NKF-016: Deliver Acceptance-Binding Verification](deferred/NKF-016-deliver-acceptance-binding-verification.md)
 
 ## Completed
 

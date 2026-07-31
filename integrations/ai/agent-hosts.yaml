@@ -9,7 +9,7 @@ adapters:
     path: AGENTS.md
     mode: bounded-root
     imports: []
-    sha256: c0723a812a9aee7c8cc3111d71fb7d40a3c8ed451794eb67c04a193dae8e14c2
+    sha256: 30300f3be6f25d55d56137f9d7308999a97851bac38b0f1a20a84d4ad8e3a9f5
   - id: claude-code
     path: CLAUDE.md
     mode: exact-import

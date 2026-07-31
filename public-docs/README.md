@@ -112,10 +112,12 @@ so. A passing checker never accepts knowledge.
 
 1. Decide whether the project knowledge root represents a Product or a
    Technology.
-2. For an empty or small-document greenfield repository, follow
-   [Initial Onboarding](guides/initial-onboarding.md). The adopter inspects the
-   project, creates a review workspace, generates native declarations, and
-   applies only a complete conformant candidate.
+2. For an Empty Repository or a Tiny Knowledge, No Source Or Configuration
+   repository, follow [Initial Onboarding](guides/initial-onboarding.md). The
+   portable skill guides complete agent assessment and required human
+   confirmation; deterministic tooling captures exact bytes, seals the plan,
+   generates native declarations, and applies only a complete conformant
+   candidate.
 3. For a project whose native NKF bundle is already complete, follow
    [Adopt And Validate](guides/adopt-and-validate.md) to install the pinned
    integration without reconstructing the bundle.
@@ -126,9 +128,9 @@ so. A passing checker never accepts knowledge.
 6. Review release updates deliberately; never follow a moving branch or
    `latest`.
 
-The onboarder does not invent project meaning or acceptance decisions. Mature
-knowledge history and source-derived reconstruction fail closed for later
-brownfield work instead of being forced through the initial path.
+The onboarder does not invent project meaning or acceptance decisions. When
+the agent cannot recommend either supported initial category, it reports the
+evidence and stops without guessing a later brownfield category.
 
 ## Documentation Map
 
@@ -136,8 +138,8 @@ brownfield work instead of being forced through the initial path.
   entities, Realizations, and external authority.
 - [Authority And Lifecycle](concepts/authority-and-lifecycle.md) explains
   Markdown, executable contracts, Schemas, checking, and claim boundaries.
-- [Initial Onboarding](guides/initial-onboarding.md) covers empty and
-  small-document Product and Technology repositories.
+- [Initial Onboarding](guides/initial-onboarding.md) covers agent-led Empty and
+  Tiny Knowledge Product and Technology repositories.
 - [Adopt And Validate](guides/adopt-and-validate.md) covers installation,
   AI-assisted authoring, local checks, and continuous integration.
 - [Update And Recover](guides/update-and-recover.md) covers no-update, explicit
@@ -161,9 +163,9 @@ brownfield work instead of being forced through the initial path.
   `gh` session for the private release or a locally supplied archive.
 - Only Product and Technology are selectable Root Profiles. Common rules are
   shared implementation-independent meaning, not a selectable General root.
-- Initial onboarding supports no more than twenty Markdown files, 256 KiB in
-  total, and 64 KiB per file, and defers mature lifecycle history to later
-  brownfield onboarding.
+- Initial onboarding uses semantic agent assessment rather than file or byte
+  thresholds. Category 2 requires human confirmation; unsupported or uncertain
+  later categories remain deferred to NKF-014.
 - Public presentation metadata, other future root models, validation expiry,
   broader secret scanning, and a protected merge gate remain outside the
   current delivered boundary.

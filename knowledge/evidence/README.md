@@ -13,7 +13,10 @@ normalization so original bytes and historical precision can be preserved.
 [`audits/`](audits/) contains the pre-remediation repository audit, NKF-007
 inventory and classification reviews, the front-matter parser finding, and
 authority-pair, NKF-011 enforcement, NKF-008 release, public-documentation,
-consumer-workflow, and completion evidence.
+consumer-workflow, NKF-013 completion, and NKF-015 agent-led onboarding audit
+evidence. It also contains the whole-repository development-support audit
+covering agent guidance, human and Knowledge Engine consumption, monolithic
+applications, coherence, completeness, enforcement, and current readiness.
 
 ## Decision Inputs
 

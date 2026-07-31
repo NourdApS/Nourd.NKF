@@ -2,14 +2,15 @@
 id: nkf-layered-contract-enforcement
 type: realization
 title: NKF Layered Contract Enforcement
-summary: This Realization maps the confirmed NKF-013 successor enforcement command, including separate adopted-repository and pre-adoption guidance verification while preserving the protected-gate boundary.
+summary: This Realization maps the NKF-015 successor enforcement command, including adopted-repository and pre-adoption guidance verification, the bounded repository-specific Task-authorization policy, and the preserved protected-gate boundary.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-013
-confirmation_status: confirmed
+task: NKF-015
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0068
+unconfirmed_scope: The bounded NKF-repository Task-authorization policy and NKF-015 onboarding-guidance successor remain unconfirmed pending the completion Decision.
 ---
 
 # NKF Layered Contract Enforcement
@@ -49,13 +50,20 @@ command now verifies both guidance boundaries. ADR 0068 confirms the exact
 audited successor after separate remote workflow and public-projection
 observations were recorded.
 
+NKF-015 replaces deterministic semantic onboarding eligibility with the
+agent-led workflow adopted by ADR 0069 while retaining the same deterministic
+output gate. The NKF repository additionally requires explicit human
+direction before an agent creates, opens, or begins a Task. That instruction
+is bounded repository policy in `AGENTS.md`; it is not portable NKF protocol
+meaning and is not copied into the neutral protocol or portable skills.
+
 ## Durable Mapping
 
 | Responsibility | Durable Artifact | Current Implementation |
 | --- | --- | --- |
 | Complete neutral procedure | `integrations/ai/nkf-authoring-protocol.md` | Plain CommonMark, vendor- and model-neutral |
 | Surface registry | `integrations/ai/agent-hosts.yaml` | Twelve explicit surface entries and one unknown-surface policy |
-| Root adapter | `AGENTS.md` | Bounded NKF adapter within repository instructions |
+| Root adapter | `AGENTS.md` | Bounded NKF adapter plus an authorized NKF-repository-only Task-creation policy; the repository policy is outside portable NKF meaning |
 | Claude Code adapter | `CLAUDE.md` | Exact import of the root adapter |
 | Gemini CLI adapter | `GEMINI.md` | Exact import of the root adapter |
 | Github Copilot adapter | `.github/copilot-instructions.md` | Exact neutral-protocol bootstrap |
@@ -81,6 +89,12 @@ output gate.
 The neutral protocol owns the complete derived authoring procedure. Adapters
 only make that procedure discoverable. The skill provides progressive
 discovery without copying the full workflow.
+
+The root adapter may also contain bounded repository policy. The explicit
+human-direction requirement for creating, opening, or beginning a Task
+governs work in this repository only. Its registration and artifact digest
+make changed instruction bytes visible to validation; they do not elevate the
+policy into an NKF contract for consumers.
 
 The verifier checks structural integrity and exact reviewed bytes. It does not
 judge semantic adequacy, accept knowledge, confirm a Realization, or prove
@@ -165,6 +179,12 @@ the separate onboarding-guidance verifier, a local unborn-Git Product and
 Technology exercise through the installed package command, deterministic
 adopter verification, and full-bundle self-validation. The exact-commit
 contract and consumer workflows separately passed without annotations.
+
+The NKF-015 successor keeps the four-adapter and twelve-surface authoring
+shape, rebinds the authorized bounded root instruction, and verifies the
+agent-led onboarding procedure separately. Its final test, publication, and
+exact-worktree observations are recorded by the NKF-015 completion Evidence;
+they do not confirm this successor by themselves.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
