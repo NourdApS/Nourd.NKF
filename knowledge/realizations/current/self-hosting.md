@@ -6,10 +6,11 @@ summary: This Realization describes how the NKF repository represents and valida
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-010
+task: NKF-011
 confirmation_status: confirmed
 confirmation_decisions:
   - adr-0059
+  - adr-0061
 ---
 
 # NKF Self-Hosting
@@ -40,9 +41,16 @@ stable record IDs, adds governed orientation to every non-Evidence source,
 classifies operational Tasks and Evidence explicitly as non-record kinds, and
 binds exact source and governed-artifact digests.
 
-After ADR 0059, the bundle contains 88 explicit records, 46 explicit
-non-record Markdown entries, and 62 governed artifacts. Every Markdown file
-under `knowledge` is represented exactly once.
+ADR 0060 adopts the layered enforcement direction. NKF-011 adds the neutral
+authoring protocol, four instruction adapters, two byte-identical skill
+representations, twelve surface registry entries, the adapter verifier, the
+unified project command, negative tests, and the exact-commit workflow.
+ADR 0061 confirms this exact audited local self-hosting successor. Remote
+workflow activation and protection remain separate operational state.
+
+The confirmed bundle contains 92 record declarations, 50 explicit non-record
+sources, and 72 governed artifacts. Every Markdown file under `knowledge`
+remains represented exactly once.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -66,11 +74,16 @@ the project root and bind to exact Realization sections.
 Symlinks remain generally prohibited by project policy; the native checker
 applies its accepted deterministic path and portability diagnostics.
 
+Every applicable enforcement integration file is declared as a Technology
+`governed_artifact` and bound to the Layered Contract Enforcement Realization.
+The registry and verifier apply an additional fail-closed regular-file rule to
+instruction adapters and portable skills.
+
 ## External Authority And Operational State Boundaries
 
 Self-hosting validates the repository snapshot only. It does not accept NKF,
-confirm the implementation, publish a release, describe remote Git state, or
-migrate consumers.
+confirm the implementation, publish a release, infer remote Git or Github
+state, activate branch protection, or migrate consumers.
 
 The persisted result is latest-run state rather than historical knowledge.
 Only the latest current result belongs in `.nourd`; historical audit evidence
@@ -78,14 +91,19 @@ belongs under `knowledge/evidence/`.
 
 ## Compatibility Verification And Recovery
 
-Exact Markdown coverage, source digests, section mappings, Technology
-hierarchy, artifact bindings, frontmatter applicability and references,
-active links, symlink policy, full checker tests, deterministic build
-verification, and full-bundle validation pass. Byte-preserved historical
-Evidence may retain predecessor-location links without becoming current
-navigation or requiring current orientation.
+The two skill representations pass the bundled skill validator. The
+agent-guidance verifier and eighteen focused positive and negative cases pass.
+The canonical command passes type checking, sixteen test files with 120
+tests, deterministic build verification, and full-bundle validation over 360
+snapshot entries before confirmation closure and 362 entries afterward. It
+exits nonzero when an unrepresented Markdown source is
+introduced, independent of who produced that candidate.
 
-The latest persisted result is the current full-bundle observation after ADR
-0059. It establishes conformance for that snapshot only. Recovery uses
-predecessor declarations in Git and the explicit migration manifest rather
-than regenerating semantic content heuristically.
+The separate
+[NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
+records no unresolved material local-implementation finding. The latest
+persisted result covers the new Governed Validation Inputs but remains a
+conformance observation rather than the source of confirmation. ADR 0061
+supplies the separate delegated confirmation act. Recovery uses predecessor
+declarations and reviewed artifact digests in Git rather than regenerating
+semantic content heuristically.

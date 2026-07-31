@@ -38,6 +38,12 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-010-frontmatter-realization-candidate-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-011-ai-neutral-enforcement-design-audit.md
+    kind: evidence
+  - path: evidence/audits/nkf-011-ai-neutral-enforcement-design-reaudit.md
+    kind: evidence
+  - path: evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md
+    kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
     kind: evidence
   - path: evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md
@@ -82,6 +88,8 @@ non_records:
     kind: navigation
   - path: tasks/README.md
     kind: navigation
+  - path: tasks/active/NKF-011-enforce-nkf-contracts.md
+    kind: task
   - path: tasks/completed/NKF-010-governed-frontmatter-adoption.md
     kind: task
   - path: tasks/completed/NKF-003-independent-nkf-authority.md
@@ -126,13 +134,61 @@ canonical_terms:
   - UUID
   - YAML
 governed_artifacts:
+  - id: artifact-agents-skills-nkf-authoring-skill-md
+    kind: project-configuration
+    path: .agents/skills/nkf-authoring/SKILL.md
+    digest:
+      algorithm: sha-256
+      value: 99d98c61c7612c19ba5d967facb88c782043eb93692eb4891aec646c34146959
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-claude-skills-nkf-authoring-skill-md
+    kind: project-configuration
+    path: .claude/skills/nkf-authoring/SKILL.md
+    digest:
+      algorithm: sha-256
+      value: 99d98c61c7612c19ba5d967facb88c782043eb93692eb4891aec646c34146959
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-github-copilot-instructions-md
+    kind: project-configuration
+    path: .github/copilot-instructions.md
+    digest:
+      algorithm: sha-256
+      value: c26b38ac7b1fe0e6745370c4ee28f819c183f1f4541d0bf714869a9a168404a0
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-github-workflows-nkf-contracts-yml
+    kind: project-configuration
+    path: .github/workflows/nkf-contracts.yml
+    digest:
+      algorithm: sha-256
+      value: b251a64e71f1c3b6d25f8f5c652837a9fbd27d1521f49340e323ce6c62759ac4
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
   - id: artifact-agents-md
     kind: project-configuration
     path: AGENTS.md
     digest:
       algorithm: sha-256
-      value: 7b0d0d3bc60f7087717db41ab58f6b86a79bdb348d3e06d4c4199cb15aad6ee3
-    record: nkf-0.1-native-realization
+      value: c0723a812a9aee7c8cc3111d71fb7d40a3c8ed451794eb67c04a193dae8e14c2
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-claude-md
+    kind: project-configuration
+    path: CLAUDE.md
+    digest:
+      algorithm: sha-256
+      value: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-gemini-md
+    kind: project-configuration
+    path: GEMINI.md
+    digest:
+      algorithm: sha-256
+      value: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
+    record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-contracts-nkf-0-1-nkf-yaml
     kind: executable-contract
@@ -286,28 +342,44 @@ governed_artifacts:
       value: 5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29
     record: nkf-0.1-native-realization
     source_section: durable-mapping
+  - id: artifact-integrations-ai-agent-hosts-yaml
+    kind: project-configuration
+    path: integrations/ai/agent-hosts.yaml
+    digest:
+      algorithm: sha-256
+      value: ac4f1ae0b5b1caf69cbecae2e669bd7b41c201550f9e8d678d82e0b70cfd9256
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
+  - id: artifact-integrations-ai-nkf-authoring-protocol-md
+    kind: project-configuration
+    path: integrations/ai/nkf-authoring-protocol.md
+    digest:
+      algorithm: sha-256
+      value: 24fa96349093ea40cb9640989e953390efb80df42e7a43675af21ed957568a5a
+    record: nkf-layered-contract-enforcement
+    source_section: durable-mapping
   - id: artifact-package-lock-json
     kind: project-configuration
     path: package-lock.json
     digest:
       algorithm: sha-256
       value: 78464513708bc8a82746513fd7bfd822df900c7563d56db51d96afb27eabb069
-    record: nkf-0.1-native-realization
+    record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-package-json
     kind: project-configuration
     path: package.json
     digest:
       algorithm: sha-256
-      value: 23726eb59f84ee8f8fbfe4c795769ad07a6c6ed275d8fe676303c90dbd5dd6a9
-    record: nkf-0.1-native-realization
+      value: c45fbfeafdef966441e6bb856705de17a403e36380132673920404e063ef2ad2
+    record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-readme-md
     kind: project-configuration
     path: README.md
     digest:
       algorithm: sha-256
-      value: 9cf5d0d093a64e2ac0717265b0ff533ec563090b324db6b2a80908a880efb5fc
+      value: d0ae56038f282ea5bc490f28483d5442a676f38cb2cd1850f95f276843227eef
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-build-mjs
@@ -341,6 +413,14 @@ governed_artifacts:
       algorithm: sha-256
       value: 3e3e6c64afb265d8420a1ffad6a86a80ff9b1cac34e07744220bf9dcb90f39fa
     record: nkf-0.1-native-realization
+    source_section: durable-mapping
+  - id: artifact-scripts-verify-agent-guidance-mjs
+    kind: build-tool
+    path: scripts/verify-agent-guidance.mjs
+    digest:
+      algorithm: sha-256
+      value: 8e875d1375d22c3feb2cfd888e3d71b4cf73c6246930efd4b5b013e9adf16a70
+    record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-scripts-verify-build-mjs
     kind: build-tool
@@ -477,6 +557,14 @@ governed_artifacts:
       algorithm: sha-256
       value: cdeef86c0fd1b2ea91fcd44b3bb68cd428b1564152099fab4fd19eac67e62768
     record: nkf-0.1-native-realization
+    source_section: durable-mapping
+  - id: artifact-test-agent-guidance-test-ts
+    kind: test
+    path: test/agent-guidance.test.ts
+    digest:
+      algorithm: sha-256
+      value: 75256e4ab0297d3ba6182cb85970a6e5b69919f21573d7027a7f839fa8260107
+    record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-test-authority-test-ts
     kind: test

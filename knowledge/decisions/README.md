@@ -31,6 +31,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0057: Current System Realization](0057-current-system-realization.md)
 - [ADR 0058: Governed Frontmatter](0058-governed-frontmatter.md)
 - [ADR 0059: Confirm Governed Frontmatter Realization](0059-confirm-governed-frontmatter-realization.md)
+- [ADR 0061: Confirm Layered Contract Enforcement Realization](0061-confirm-layered-contract-enforcement-realization.md)
 
 ## Format Model And Serialization
 
@@ -73,6 +74,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0040: Invocation JSON Schemas](0040-invocation-json-schemas.md)
 - [ADR 0041: Checker Development Realization](0041-checker-development-realization.md)
 - [ADR 0052: Dynamic Root Self-Hosting](0052-dynamic-root-self-hosting.md)
+- [ADR 0060: Layered Contract Enforcement](0060-layered-contract-enforcement.md)
 
 ## Release And Distribution
 

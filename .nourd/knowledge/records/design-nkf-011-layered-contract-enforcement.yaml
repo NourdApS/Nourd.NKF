@@ -1,0 +1,45 @@
+contract: nkf.record
+id: design-nkf-011-layered-contract-enforcement
+type: design
+body_contract: nkf.design
+title: NKF Layered Contract Enforcement
+source:
+  path: designs/adopted/layered-contract-enforcement.md
+  digest:
+    algorithm: sha-256
+    value: b8dba5836735cade5ed11425763a3541d5837d05de8472c62ee663a36b7e10e7
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority: [human-product-owner]
+scope:
+  root: nkf
+sections:
+  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
+  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
+  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
+  - {id: layer-one-ai-neutral-authoring-guidance, heading_path: [Proposed Direction, Layer One AI-Neutral Authoring Guidance], occurrence: 1, authority: proposal, role: responsibility}
+  - {id: participating-agent-capability-and-universal-output-rule, heading_path: [Proposed Direction, Participating Agent Capability And Universal Output Rule], occurrence: 1, authority: proposal, role: boundary}
+  - {id: layer-two-one-local-command, heading_path: [Proposed Direction, Layer Two One Local Command], occurrence: 1, authority: proposal, role: interface}
+  - {id: layer-three-exact-commit-continuous-integration, heading_path: [Proposed Direction, Layer Three Exact Commit Continuous Integration], occurrence: 1, authority: proposal, role: responsibility}
+  - {id: layer-four-protected-merge-gate, heading_path: [Proposed Direction, Layer Four Protected Merge Gate], occurrence: 1, authority: proposal, role: boundary}
+  - {id: enforcement-surface-change-boundary, heading_path: [Proposed Direction, Enforcement-Surface Change Boundary], occurrence: 1, authority: proposal, role: boundary}
+  - {id: layer-five-consumer-adoption, heading_path: [Proposed Direction, Layer Five Consumer Adoption], occurrence: 1, authority: proposal, role: interface}
+  - {id: commit-time-boundary, heading_path: [Proposed Direction, Commit-Time Boundary], occurrence: 1, authority: proposal, role: boundary}
+  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
+  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
+  - {id: neutral-guidance-without-host-adapters, heading_path: [Alternatives And Trade-Offs, Neutral Guidance Without Host Adapters], occurrence: 1, authority: proposal, role: alternative}
+  - {id: vendor-specific-canonical-instructions, heading_path: [Alternatives And Trade-Offs, Vendor-Specific Canonical Instructions], occurrence: 1, authority: proposal, role: alternative}
+  - {id: claim-every-ai-automatically-obeys-repository-instructions, heading_path: [Alternatives And Trade-Offs, Claim Every AI Automatically Obeys Repository Instructions], occurrence: 1, authority: proposal, role: alternative}
+  - {id: agent-guidance-without-a-skill, heading_path: [Alternatives And Trade-Offs, Agent Guidance Without A Skill], occurrence: 1, authority: proposal, role: alternative}
+  - {id: skill-without-mechanical-validation, heading_path: [Alternatives And Trade-Offs, Skill Without Mechanical Validation], occurrence: 1, authority: proposal, role: alternative}
+  - {id: different-local-and-continuous-integration-commands, heading_path: [Alternatives And Trade-Offs, Different Local And Continuous Integration Commands], occurrence: 1, authority: proposal, role: alternative}
+  - {id: validate-only-changed-markdown, heading_path: [Alternatives And Trade-Offs, Validate Only Changed Markdown], occurrence: 1, authority: proposal, role: alternative}
+  - {id: add-a-naive-pre-commit-hook-now, heading_path: [Alternatives And Trade-Offs, Add A Naive Pre-Commit Hook Now], occurrence: 1, authority: proposal, role: alternative}
+  - {id: make-continuous-integration-part-of-nkf-conformance, heading_path: [Alternatives And Trade-Offs, Make Continuous Integration Part Of NKF Conformance], occurrence: 1, authority: proposal, role: alternative}
+  - {id: treat-candidate-controlled-continuous-integration-as-independent-trust, heading_path: [Alternatives And Trade-Offs, Treat Candidate-Controlled Continuous Integration As Independent Trust], occurrence: 1, authority: proposal, role: alternative}
+  - {id: require-every-branch-commit-to-be-valid, heading_path: [Alternatives And Trade-Offs, Require Every Branch Commit To Be Valid], occurrence: 1, authority: proposal, role: alternative}
+  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
+  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
+  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+relationships: []

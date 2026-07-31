@@ -12,7 +12,7 @@ normalization so original bytes and historical precision can be preserved.
 
 [`audits/`](audits/) contains the pre-remediation repository audit, NKF-007
 inventory and classification reviews, the front-matter parser finding, and
-authority-pair review evidence.
+authority-pair and NKF-011 enforcement review evidence.
 
 ## Decision Inputs
 

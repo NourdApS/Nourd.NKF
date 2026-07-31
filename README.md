@@ -31,21 +31,27 @@ distribution, security, and technical lifecycle.
 
 ## Current Stage
 
-The independent authority migration is complete under Task `NKF-003`.
-Active Task `NKF-007` is repairing repository knowledge architecture,
-completing the current Realization view, adding the governed front-matter
-source envelope, and rebuilding honest self-host declarations.
+The independent authority migration, repository-knowledge repair, and
+governed-frontmatter adoption are complete under Tasks `NKF-003`, `NKF-007`,
+and `NKF-010`.
 
 NKF 0.1 has one automatic non-selectable Common Specification and two
-selectable Root Profiles: Product and Technology. ADR 0056 accepts the exact
-current Markdown/YAML authority pair. The
+selectable Root Profiles: Product and Technology. ADR 0058 accepts the exact
+current Markdown/YAML authority pair. ADR 0059 confirms the current Schemas,
+checker, fixtures, deterministic build, and Technology self-hosting
+Realization. The
 [Current System Realization](knowledge/realizations/current-system.md)
 records what is implemented, confirmed, pending, and deferred.
 
-This repository is intended to self-host as an NKF Technology bundle. Its
-earlier `.nourd` declarations and validation result are stale while NKF-007
-migrates source paths and bytes. No current conformance claim is made until
-the rebuilt declarations and complete validation pass.
+This repository self-hosts as an NKF Technology bundle. Its current local
+full-bundle validation passes over the complete governed snapshot. ADR 0061
+confirms the audited local layered-enforcement Realization under active Task
+`NKF-011`; remote workflow activation, required protection, and the blocked
+invalid-merge observation remain separate operational work.
+
+The existing checker prerelease predates the current authority and confirmed
+Realization. Current publication and deliberate consumer onboarding remain
+deferred to Task `NKF-008`.
 
 Passing validation establishes conformance for one observed snapshot only. It
 does not verify every historical acceptance binding, accept consumer

@@ -12,7 +12,7 @@ status; it does not establish that status.
 
 ## Active
 
-No Task is currently active.
+- [NKF-011: Enforce NKF Contracts](active/NKF-011-enforce-nkf-contracts.md)
 
 ## Deferred
 

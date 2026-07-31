@@ -1,0 +1,130 @@
+---
+id: nkf-layered-contract-enforcement
+type: realization
+title: NKF Layered Contract Enforcement
+summary: This Realization maps the confirmed local AI-neutral authoring protocol, host-surface adapters, portable skills, deterministic project command, and exact-commit Github workflow while keeping remote activation explicitly unconfirmed.
+created_at: 2026-07-31T00:03:54Z
+record_lifecycle: immutable
+record_status: accepted
+task: NKF-011
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0061
+---
+
+# NKF Layered Contract Enforcement
+
+## Realization Identity And Kind
+
+This Realization maps the repository implementation of the direction adopted
+by ADR 0060. It describes durable integration artifacts and their current
+implementation status. It is not normative NKF meaning, an acceptance act, a
+confirmation act, or live Github state.
+
+## Governed Meaning Realized
+
+ADR 0060 adopts one vendor-neutral CommonMark authoring protocol, thin
+agent-host-surface adapters, byte-identical portable skill representations,
+one deterministic project command, exact-commit continuous integration, and a
+separately activated protected merge gate.
+
+The implementation applies accepted NKF 0.1 meaning without revising the
+Specification, executable YAML companion, Root Profiles, or conformance
+definition.
+
+## Durable Mapping
+
+| Responsibility | Durable Artifact | Current Implementation |
+| --- | --- | --- |
+| Complete neutral procedure | `integrations/ai/nkf-authoring-protocol.md` | Plain CommonMark, vendor- and model-neutral |
+| Surface registry | `integrations/ai/agent-hosts.yaml` | Twelve explicit surface entries and one unknown-surface policy |
+| Root adapter | `AGENTS.md` | Bounded NKF adapter within repository instructions |
+| Claude Code adapter | `CLAUDE.md` | Exact import of the root adapter |
+| Gemini CLI adapter | `GEMINI.md` | Exact import of the root adapter |
+| Github Copilot adapter | `.github/copilot-instructions.md` | Exact neutral-protocol bootstrap |
+| Portable skill | `.agents/skills/nkf-authoring/SKILL.md` | Shared open-format representation |
+| Claude skill path | `.claude/skills/nkf-authoring/SKILL.md` | Byte-identical shared representation |
+| Integrity verifier | `scripts/verify-agent-guidance.mjs` | Closed registry, digest, path, import, skill, workflow, and command checks |
+| Local command | `package.json` | `npm run nkf:check` |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Pull request and push validation for `master` |
+| Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
+
+The registry records host surfaces rather than model names. Its finite verified
+set is not represented as universal automatic discovery. Unknown surfaces
+remain `not-verified` and retain the neutral-protocol bootstrap plus universal
+output gate.
+
+## Responsibilities And Ownership Boundaries
+
+The neutral protocol owns the complete derived authoring procedure. Adapters
+only make that procedure discoverable. The skill provides progressive
+discovery without copying the full workflow.
+
+The verifier checks structural integrity and exact reviewed bytes. It does not
+judge semantic adequacy, accept knowledge, confirm a Realization, or prove
+that a model obeyed natural-language instructions.
+
+The NKF checker continues to own native conformance. The project command
+orchestrates adapter verification, repository engineering checks, a
+deterministic build, and full-bundle validation without making those layers
+normative authority.
+
+## Interfaces Dependencies Locators And Resolution
+
+The supported handoff interface is:
+
+```text
+npm run nkf:check
+```
+
+It invokes the agent-guidance verifier, type checking, all tests, deterministic
+build verification, and full-bundle self-validation in that order.
+
+The verifier resolves every registered artifact as a project-contained regular
+file, rejects symlinks in every path component, checks exact SHA-256 bindings,
+validates the portable skill subset, checks adapter import reachability,
+rejects unregistered instruction files across the supported host conventions,
+requires the exact reviewed full-SHA Actions and workflow shape, and verifies
+the complete project-command chain without lifecycle wrappers.
+
+## External Authority And Operational State Boundaries
+
+The workflow file is implemented locally. Remote workflow presence, successful
+execution, required-check identity, branch protection, review ownership,
+bypass policy, and a blocked intentionally invalid candidate remain
+unconfirmed Github operational state.
+
+The current workflow is self-checking evidence because a candidate can alter
+its own verifier, command, checker, or workflow. Enforcement-surface changes
+therefore require explicit human review and later successor-Realization
+confirmation even when candidate continuous integration passes.
+
+Consumer adoption remains blocked on the separately verified current checker
+release owned by NKF-008.
+
+## Compatibility Verification And Recovery
+
+Both skill representations pass the bundled skill validator and are
+byte-identical. The repository verifier passes with four adapters, two skill
+representations, and twelve explicitly registered surfaces. Its eighteen
+focused cases reject representative instruction, path, command, and workflow
+integrity failures.
+
+The canonical command also exited nonzero when exercised against a temporary
+unrepresented Markdown source, demonstrating that the author identity does
+not alter the output gate. After that source was removed, `npm run nkf:check`
+passed type checking, sixteen test files with 120 tests, deterministic build
+verification, and full-bundle self-validation over 362 snapshot entries after
+confirmation closure.
+
+The separate
+[NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
+records no unresolved material local-implementation finding. These results
+establish conformance evidence only. ADR 0061 independently confirms this
+exact local Realization through delegated technical-review authority. The
+remote hard gate remains unconfirmed.
+
+Recovery restores reviewed artifact bytes and registry digests from Git,
+reruns `npm run nkf:check`, and uses a later governed successor when accepted
+behavior must change. A green candidate check cannot confirm its own
+enforcement-surface revision.

@@ -19,6 +19,7 @@ conformance.
 - [NKF Current System](current-system.md) — consolidated entry view
 - [Contracts And Schemas](current/contracts-and-schemas.md)
 - [Checker And Validation](current/checker-and-validation.md)
+- [Layered Contract Enforcement](current/layered-contract-enforcement.md)
 - [Self-Hosting](current/self-hosting.md)
 - [Release Package](current/release-package.md)
 

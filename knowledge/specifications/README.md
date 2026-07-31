@@ -8,7 +8,7 @@ created_at: 2026-07-28T22:01:17Z
 
 Specifications own current accepted normative NKF meaning.
 
-[NKF 0.1](nkf-0.1.md) is the canonical specification. ADR 0056 accepts its
+[NKF 0.1](nkf-0.1.md) is the canonical specification. ADR 0058 accepts its
 current front-matter-enabled revision and exact digest-bound executable YAML
 companion at `contracts/nkf/0.1/nkf.yaml`.
 

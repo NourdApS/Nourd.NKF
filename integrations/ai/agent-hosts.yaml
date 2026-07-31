@@ -1,0 +1,181 @@
+contract: nkf.agent-guidance-registry
+version: 1
+canonical_command: npm run nkf:check
+neutral_protocol:
+  path: integrations/ai/nkf-authoring-protocol.md
+  sha256: 24fa96349093ea40cb9640989e953390efb80df42e7a43675af21ed957568a5a
+adapters:
+  - id: root-agents
+    path: AGENTS.md
+    mode: bounded-root
+    imports: []
+    sha256: c0723a812a9aee7c8cc3111d71fb7d40a3c8ed451794eb67c04a193dae8e14c2
+  - id: claude-code
+    path: CLAUDE.md
+    mode: exact-import
+    imports: [root-agents]
+    sha256: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
+  - id: gemini-cli
+    path: GEMINI.md
+    mode: exact-import
+    imports: [root-agents]
+    sha256: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
+  - id: github-copilot
+    path: .github/copilot-instructions.md
+    mode: exact-bootstrap
+    imports: []
+    sha256: c26b38ac7b1fe0e6745370c4ee28f819c183f1f4541d0bf714869a9a168404a0
+skills:
+  name: nkf-authoring
+  representations:
+    - .agents/skills/nkf-authoring/SKILL.md
+    - .claude/skills/nkf-authoring/SKILL.md
+  sha256: 99d98c61c7612c19ba5d967facb88c782043eb93692eb4891aec646c34146959
+surfaces:
+  - id: openai-codex-cli
+    provider: OpenAI
+    product: Codex
+    surface: CLI
+    coverage: verified-adapter
+    adapters: [root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://learn.chatgpt.com/docs/agent-configuration/agents-md
+        - https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: openai-codex-ide
+    provider: OpenAI
+    product: Codex
+    surface: IDE Extension
+    coverage: verified-adapter
+    adapters: [root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://learn.chatgpt.com/docs/agent-configuration/agents-md
+        - https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: openai-codex-desktop
+    provider: OpenAI
+    product: Codex
+    surface: Desktop
+    coverage: verified-adapter
+    adapters: [root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://learn.chatgpt.com/docs/agent-configuration/agents-md
+        - https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: anthropic-claude-code-cli
+    provider: Anthropic
+    product: Claude Code
+    surface: CLI
+    coverage: verified-adapter
+    adapters: [claude-code, root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://code.claude.com/docs/en/memory
+        - https://code.claude.com/docs/en/slash-commands
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: anthropic-claude-code-cloud
+    provider: Anthropic
+    product: Claude Code
+    surface: Cloud Session
+    coverage: verified-adapter
+    adapters: [claude-code, root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://code.claude.com/docs/en/memory
+        - https://code.claude.com/docs/en/slash-commands
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: google-gemini-cli
+    provider: Google
+    product: Gemini CLI
+    surface: CLI
+    coverage: verified-adapter
+    adapters: [gemini-cli, root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://geminicli.com/docs/cli/gemini-md/
+        - https://geminicli.com/docs/cli/using-agent-skills/
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: github-copilot-cli
+    provider: Github
+    product: Copilot
+    surface: CLI
+    coverage: verified-adapter
+    adapters: [github-copilot, root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference
+        - https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: github-copilot-coding-agent
+    provider: Github
+    product: Copilot
+    surface: Coding Agent
+    coverage: verified-adapter
+    adapters: [github-copilot, root-agents]
+    skill: nkf-authoring
+    evidence:
+      urls:
+        - https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: github-copilot-code-review
+    provider: Github
+    product: Copilot
+    surface: Code Review
+    coverage: not-verified
+    adapters: [github-copilot, root-agents]
+    skill: null
+    evidence:
+      urls:
+        - https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: cursor-editor-agent
+    provider: Cursor
+    product: Cursor
+    surface: Editor Agent
+    coverage: verified-adapter
+    adapters: [root-agents]
+    skill: null
+    evidence:
+      urls:
+        - https://docs.cursor.com/context/rules-for-ai
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: cursor-cli
+    provider: Cursor
+    product: Cursor
+    surface: CLI
+    coverage: verified-adapter
+    adapters: [root-agents]
+    skill: null
+    evidence:
+      urls:
+        - https://docs.cursor.com/en/cli/using
+      reviewed_at: 2026-07-31T00:03:54Z
+  - id: windsurf-cascade
+    provider: Windsurf
+    product: Cascade
+    surface: Editor Agent
+    coverage: verified-adapter
+    adapters: [root-agents]
+    skill: null
+    evidence:
+      urls:
+        - https://docs.windsurf.com/zh/windsurf/cascade/agents-md
+      reviewed_at: 2026-07-31T00:03:54Z
+unknown_surface_policy:
+  coverage: not-verified
+  bootstrap_protocol: integrations/ai/nkf-authoring-protocol.md
+  output_gate: npm run nkf:check
+workflow:
+  path: .github/workflows/nkf-contracts.yml
+  required_job: Validate
+  sha256: b251a64e71f1c3b6d25f8f5c652837a9fbd27d1521f49340e323ce6c62759ac4

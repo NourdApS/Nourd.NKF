@@ -43,7 +43,7 @@ establishes it.
 
 ## Active
 
-No Design is currently Active.
+No Design is currently classified as Active.
 
 ## Adopted
 
@@ -53,6 +53,7 @@ No Design is currently Active.
 - [Extension Declaration And Resolution](adopted/extension-declaration-and-resolution.md)
 - [Initial Release Distribution](adopted/initial-release-distribution.md)
 - [Knowledge Architecture](adopted/knowledge-architecture.md)
+- [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
 - [Native Bundle Serialization](adopted/native-bundle-serialization.md)
 - [Native Record Serialization](adopted/native-record-serialization.md)
 - [Presentation Guidance](adopted/presentation-guidance.md)
