@@ -7,12 +7,12 @@ created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-008
-confirmation_status: partially-confirmed
+confirmation_status: confirmed
 confirmation_decisions:
   - adr-0061
   - adr-0062
   - adr-0063
-unconfirmed_scope: NKF-008 extends the package command with adopter and public-documentation verification and adds a separate consumer-exercise workflow; the successor integration account awaits final audit and confirmation.
+  - adr-0066
 ---
 
 # NKF Layered Contract Enforcement
@@ -43,8 +43,8 @@ NKF-012.
 NKF-008 preserves the exact `npm run nkf:check` interface and adds
 deterministic adopter-build and public-documentation verification inside that
 command. It also adds a separately dispatched consumer-adoption exercise
-workflow. These successor package and workflow bytes remain partially
-confirmed until NKF-008 completes its live exercise and final audit.
+workflow. ADR 0066 confirms the successor package and workflow account after
+the final audit and successful exact-release remote exercise.
 
 ## Durable Mapping
 
@@ -61,7 +61,7 @@ confirmed until NKF-008 completes its live exercise and final audit.
 | Integrity verifier | `scripts/verify-agent-guidance.mjs` | Closed registry, digest, path, import, skill, workflow, and command checks |
 | Local command | `package.json` | `npm run nkf:check`, now including deterministic adopter and public-documentation verification |
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to NKF-012 |
-| Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; remote execution pending NKF-008 publication |
+| Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; Github Actions run `30599982716` passed on exact commit `5a435d54145c31bc091857b1f30520213bdfe6a8` |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
 
 The registry records host surfaces rather than model names. Its finite verified
@@ -126,8 +126,10 @@ its own verifier, command, checker, or workflow. Enforcement-surface changes
 therefore require explicit human review and later successor-Realization
 confirmation even when candidate continuous integration passes.
 
-Consumer adoption remains blocked on the separately verified current checker
-release owned by NKF-008.
+The current consumer-adoption path is active for deliberately authorized
+Product and Technology repositories through the separately verified private
+release owned by NKF-008. The workflow observation is retained in
+[consumer workflow Evidence](../../evidence/audits/nkf-008-consumer-workflow-execution.md).
 
 ## Compatibility Verification And Recovery
 
@@ -139,10 +141,10 @@ integrity failures.
 
 The canonical command also exited nonzero when exercised against a temporary
 unrepresented Markdown source, demonstrating that the author identity does
-not alter the output gate. After that source was removed, `npm run nkf:check`
-passed type checking, sixteen test files with 120 tests, deterministic build
-verification, and full-bundle self-validation over 365 snapshot entries after
-remote-observation closure.
+not alter the output gate. The NKF-008 successor passes `npm run nkf:check`,
+eighteen test files with 126 tests, deterministic checker and adopter build
+verification, two checker-conformant complete public examples, and
+full-bundle self-validation.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
@@ -152,7 +154,8 @@ local implementation through delegated technical-review authority. ADR 0062
 confirms this exact successor account of the observed remote workflow and
 protection limit. ADR 0063 confirms this later Task-allocation successor and
 completes NKF-011 without claiming the protected gate. The protected remote
-hard gate remains unconfirmed under deferred NKF-012.
+hard gate remains unconfirmed under deferred NKF-012. ADR 0066 confirms only
+the NKF-008 successor command and consumer-workflow account.
 
 Recovery restores reviewed artifact bytes and registry digests from Git,
 reruns `npm run nkf:check`, and uses a later governed successor when accepted

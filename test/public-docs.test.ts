@@ -71,5 +71,17 @@ describe("NKF public documentation", () => {
     await expect(verifyPublicDocs(localPath)).rejects.toThrow(
       /forbidden material/,
     );
+
+    const nonMarkdownSecret = await copyProjection();
+    await writeFile(
+      path.join(
+        nonMarkdownSecret,
+        "public-docs/examples/technology/project/src/example.ts",
+      ),
+      'export const token = "github_pat_not-public";\n',
+    );
+    await expect(verifyPublicDocs(nonMarkdownSecret)).rejects.toThrow(
+      /forbidden material/,
+    );
   });
 });

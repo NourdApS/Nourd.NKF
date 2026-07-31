@@ -3,13 +3,13 @@ title: "NKF-008: Publish NKF, Public Documentation, And Consumer Adoption"
 summary: Publish a governed internal NKF release, provide public documentation that makes NKF understandable and usable, and onboard authorized consumer repositories deliberately.
 created_at: 2026-07-30T17:03:21Z
 task_id: NKF-008
-task_status: active
+task_status: completed
 ---
 
 # NKF-008: Publish NKF, Public Documentation, And Consumer Adoption
 
 - **Task:** `NKF-008`
-- **Status:** Active
+- **Status:** Completed
 - **Owner:** Nourd ApS
 
 ## Purpose
@@ -195,6 +195,39 @@ consumer knowledge.
 - **Still Pending:** Public repository publication and remote verification,
   Github consumer-workflow execution, final cross-angle audit, successor
   Realization confirmation, and Task completion.
+
+## Completion
+
+- **Completed At:** `2026-07-31T02:57:30Z`
+- **Confirmation Decision:** `ADR-0066`
+- **Internal Release SHA-256:**
+  `0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727`
+- **Public Documentation:**
+  `https://github.com/kaveh6202/Nourd.NKF.Docs`
+- **Public Documentation Commit:**
+  `002dd567522bbcba6d250b4f878c2ff3fb778026`
+- **Consumer Workflow:** Github Actions run `30599982716`
+- **Ordinary Contract Workflow:** Github Actions run `30599976399`
+- **Final Audit:**
+  `knowledge/evidence/audits/nkf-008-completion-audit.md`
+
+The current internal release is published and independently verified. The
+public documentation is published through a closed projection and includes
+an exact normative Markdown mirror plus checker-conformant complete Product
+and Technology examples. The public-safe adopter installs one immutable
+release pin and the complete AI-neutral local and continuous-integration
+experience without manual assembly.
+
+The authorized isolated Product consumer path passes local validation,
+same-pin `no-update`, remote Github execution, and archive, pin, adapter, and
+governed Markdown tamper rejection. Focused tests separately pass Technology
+installation and consumer-owned conflict preservation.
+
+The final cross-angle audit records no unresolved material finding within the
+accepted NKF-008 scope. ADR 0066 separately confirms the exact successor
+Realizations. Completion does not claim an external Agent SDK migration,
+public checker distribution, historical acceptance-binding verification,
+Governing Use readiness, or the protected merge gate deferred to NKF-012.
 
 ## Origin
 

@@ -7,13 +7,13 @@ created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-008
-confirmation_status: partially-confirmed
+confirmation_status: confirmed
 confirmation_decisions:
   - adr-0059
   - adr-0061
   - adr-0062
   - adr-0063
-unconfirmed_scope: NKF-008 adds the release, adopter, public-documentation, and consumer-exercise records and Governed Validation Inputs; the successor self-host account awaits live publication, final audit, and confirmation.
+  - adr-0066
 ---
 
 # NKF Self-Hosting
@@ -55,13 +55,15 @@ successor Realization account without claiming that the protected gate exists.
 ADR 0063 completes NKF-011 for that delivered enforcement scope and transfers
 protected-gate activation and proof to deferred NKF-012.
 
-NKF-008 adds its adopted Design, Decisions, candidate Realization, audit
+NKF-008 adds its adopted Design, Decisions, current Realization, audit
 Evidence, release rebinding, adopter, public-documentation projection, focused
-tests, and consumer exercise. The current candidate bundle contains 98 record
-declarations, 54 explicit non-record sources, and 95 governed artifacts.
-Every Markdown file under `knowledge` remains represented exactly once. The
-new successor self-host account is partially confirmed until NKF-008 completes
-live publication and its final audit.
+tests, and consumer exercise. The pre-closure candidate contained 98 record
+declarations, 54 explicit non-record sources, and 95 governed artifacts. The
+confirmed successor contains 99 record declarations, 57
+explicit non-record sources, and 109 governed artifacts, including the
+complete public Product and Technology example trees. Every Markdown file
+under `knowledge` remains represented exactly once. ADR 0066 confirms the
+successor after live publication and final audit.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -112,12 +114,12 @@ belongs under `knowledge/evidence/`.
 
 The two skill representations pass the bundled skill validator. The
 agent-guidance verifier and eighteen focused positive and negative cases pass.
-The canonical command passes type checking, sixteen test files with 120
-tests, deterministic build verification, and full-bundle validation over 360
-snapshot entries before confirmation closure, 362 entries after local
-enforcement closure, and 365 entries after remote-observation closure. It
-exits nonzero when an unrepresented Markdown source is
-introduced, independent of who produced that candidate.
+The canonical command passes type checking, eighteen test files with 126
+tests, deterministic checker and adopter builds, verification of the
+23-file public source projection and its two complete conformant example
+projects, and final full-bundle validation. It exits nonzero when an
+unrepresented Markdown source is introduced, independent of who produced
+that candidate.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
@@ -128,5 +130,10 @@ supplies the separate local confirmation act, and ADR 0062 confirms the exact
 successor account of remote workflow activation and the protection blocker.
 ADR 0063 confirms the successor Task allocation and current counts without
 claiming protected enforcement.
+The
+[NKF-008 Completion Audit](../../evidence/audits/nkf-008-completion-audit.md)
+records no unresolved material successor finding, and ADR 0066 confirms the
+release, documentation, consumer, integration, and self-hosting account
+without turning publication or conformance into confirmation.
 Recovery uses predecessor declarations and reviewed artifact digests in Git
 rather than regenerating semantic content heuristically.

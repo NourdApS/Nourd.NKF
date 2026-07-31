@@ -7,11 +7,11 @@ created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-008
-confirmation_status: partially-confirmed
+confirmation_status: confirmed
 confirmation_decisions:
   - adr-0059
   - adr-0065
-unconfirmed_scope: Successor package configuration and publication state remain unconfirmed until NKF-008 completes its release, consumer, and final audit.
+  - adr-0066
 ---
 
 # NKF Release Package
@@ -40,16 +40,15 @@ digest, normative Markdown, executable YAML, and four Schema digests.
 `scripts/release/config.mjs` is rebound to those exact values.
 
 The deterministic package mechanism confirmed by ADR 0059 remains unchanged.
-The rebound configuration and later publication account remain unconfirmed
-until NKF-008 builds and observes the successor release and completes its
-final audit.
+ADR 0065 confirms the rebound release inputs, and ADR 0066 confirms the
+successor package account after publication and final audit.
 
 NKF-008 has now built the archive reproducibly from exact source commit
 `37c0f557e0b936b1f2e56706c936ef619aacdd9d`, published it as the private
 content-addressed prerelease, re-downloaded identical bytes, independently
 verified them, and recorded the exact recommendation. These are observed
-publication facts; the successor Realization remains partially confirmed
-until the final audit and confirmation Decision.
+publication facts rather than confirmation acts. The final audit is complete,
+and ADR 0066 separately confirms the successor Realization.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -83,10 +82,10 @@ mechanism and its present confirmation boundary only.
 
 ## Compatibility Verification And Recovery
 
-The current candidate must pass two-build reproducibility, manifest Schema
+The confirmed successor passes two-build reproducibility, manifest Schema
 validation, archive path and digest checks, independent extraction
 verification, and explicit publication observation from a clean exact source
-commit before the successor package revision is confirmed.
+commit.
 
 Recovery rejects or removes a candidate artifact before publication and
 rebuilds from the exact governed source commit. A published release is never

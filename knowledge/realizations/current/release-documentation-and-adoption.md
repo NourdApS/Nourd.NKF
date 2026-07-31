@@ -7,19 +7,18 @@ created_at: 2026-07-31T02:26:24Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-008
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0066
 ---
 
 # NKF Release Documentation And Adoption
 
 ## Realization Identity And Kind
 
-This Realization describes the current implementation of the release,
-documentation, and adoption direction accepted by ADR 0064.
-
-It is an unconfirmed candidate until exact release and documentation bytes are
-published, the consumer workflow is observed, a final audit finds no material
-gap, and a later Decision confirms the resulting revision.
+This Realization describes the confirmed current implementation of the
+release, documentation, and adoption direction accepted by ADR 0064 and
+confirmed by ADR 0066.
 
 ## Governed Meaning Realized
 
@@ -119,32 +118,44 @@ re-downloaded byte-for-byte, independently verified, and recorded in the
 recommended-release catalog. The exact release and local consumer observations
 are retained in NKF-008 Evidence.
 
-The public repository, public commit and availability, and consumer workflow
-run are not yet claimed by this candidate revision.
+The public projection is observed at
+`https://github.com/kaveh6202/Nourd.NKF.Docs`. Its final public commit is
+`002dd567522bbcba6d250b4f878c2ff3fb778026`, and its publication manifest
+binds private source commit
+`c03d889b8d8ed459e330d9f4e52c9837aa621974`. A fresh public clone matched
+every staged byte and all 23 manifest-bound digests.
 
-Live URLs, run identifiers, timestamps, and remote visibility belong in
-Evidence after observation. The current local passing focused tests establish
-implementation evidence only.
+Github consumer workflow run `30599982716` passed the hardened exact-release
+exercise on commit `5a435d54145c31bc091857b1f30520213bdfe6a8`.
+Live URLs, run identifiers, timestamps, visibility, and publication state
+remain owned by their Evidence and external systems rather than by this
+durable implementation account.
 
 ## Compatibility Verification And Recovery
 
-Focused tests exercise Product and Technology installation, local
-full-bundle validation, same-pin no-update, private-release tampering, pin
-tampering, skill tampering, governed Markdown tampering, and conflicting
-consumer-owned workflow preservation.
+Focused tests exercise Product and Technology installation, local full-bundle
+validation, same-pin no-update, private-release tampering, pin tampering,
+skill tampering, governed Markdown tampering, and conflicting consumer-owned
+workflow preservation.
 
-The public-doc verifier checks the exact file allowlist, normative mirror,
-adopter mirror, required subjects, eight Mermaid diagrams, internal relative
-links outside the immutable Specification mirror, and forbidden private-path
-or credential material. Deterministic build verification compares two adopter
-builds and the committed output.
+The public-doc verifier checks the exact 23-file source allowlist, normative
+mirror, adopter mirror, required subjects, eight Mermaid diagrams, internal
+relative links outside the immutable Specification mirror, forbidden
+private-path or credential material, and conformance of both complete
+published Product and Technology example projects. Deterministic build
+verification compares two adopter builds and the committed output.
 
 The clean exact release source commit, reproducible archive construction,
-independent verification, private prerelease upload, remote re-download, and
-local published-release consumer exercise are complete. Remaining completion
-work is the public projection upload, remote public-byte verification, Github
-consumer-workflow execution, and final audit.
+independent verification, private prerelease upload, remote re-download,
+local published-release consumer exercise, public projection, remote
+public-byte verification, Github consumer-workflow execution, and final
+adversarial audit are complete.
 
 Installation stages all target bytes, rejects path escapes and symbolic links,
 preserves predecessor bytes, restores replaced files after an interrupted
 replacement, and retains content-addressed archives for explicit rollback.
+
+The
+[completion audit](../../evidence/audits/nkf-008-completion-audit.md) records
+no unresolved material finding. ADR 0066 supplies confirmation separately
+from the passing checks and external publication observations.

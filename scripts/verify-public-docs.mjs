@@ -186,7 +186,15 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     .join("\n");
   requireSubjects(explanatoryCombined);
   verifyRelativeLinks(markdown, actual);
-  verifyExamples(root);
+  const publicSafeCombined = (
+    await Promise.all(
+      actual
+        .filter((relative) => relative !== "reference/nkf-0.1.md")
+        .map((relative) =>
+          readFile(path.join(docsRoot, ...relative.split("/")), "utf8"),
+        ),
+    )
+  ).join("\n");
   for (const forbidden of [
     "/Users/",
     "/home/",
@@ -196,10 +204,11 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     "ghp_",
     "github_pat_",
   ]) {
-    if (explanatoryCombined.includes(forbidden)) {
+    if (publicSafeCombined.includes(forbidden)) {
       throw new Error(`Public documentation contains forbidden material: ${forbidden}`);
     }
   }
+  verifyExamples(root);
   return {
     contract: "nkf.public-documentation-verification",
     status: "passed",

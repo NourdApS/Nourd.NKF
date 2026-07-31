@@ -33,21 +33,27 @@ Profile. The currently defined Root Profiles are Product and Technology. The
 repository self-hosts as an NKF Technology bundle.
 
 The current Markdown/YAML authority pair is accepted, and the current Schemas,
-checker, fixtures, deterministic build, self-hosting, and layered local
-enforcement Realizations are confirmed. The `NKF Contracts` workflow is active
-on remote `master` and has passed for an observed exact commit. The protected
-merge gate remains unavailable under the observed private-repository plan.
-Task `NKF-011` is complete for the delivered enforcement scope; activation and
+checker, fixtures, deterministic build, self-hosting, layered enforcement,
+release, public-documentation, and consumer-adoption Realizations are
+confirmed. The current NKF 0.1 checker is published as an internal private
+content-addressed prerelease. Authorized consumers pin the full archive
+SHA-256 through the public-safe adopter and never follow a moving branch or
+mutable latest release.
+
+The public explanation, topology, lifecycle, adoption guides, and complete
+Product and Technology examples are available in the
+[NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs).
+Task `NKF-008` is complete for this internal release and adoption scope.
+
+The `NKF Contracts` and explicitly dispatched `NKF Consumer Adoption`
+workflows have passed on observed exact commits. The protected merge gate
+remains unavailable under the observed private-repository plan. Task
+`NKF-011` is complete for the delivered enforcement scope; activation and
 proof of the protected gate are deferred to
 [Task NKF-012](knowledge/tasks/deferred/NKF-012-activate-protected-merge-gate.md).
 The
 [Current System Realization](knowledge/realizations/current-system.md) records
 the exact implementation, confirmation, and enforcement boundaries.
-
-The existing checker prerelease predates the current authority and confirmed
-Realization. Publication, complete public documentation, and deliberate
-consumer adoption remain deferred to
-[Task NKF-008](knowledge/tasks/deferred/NKF-008-publish-and-onboard-consumers.md).
 
 Passing validation establishes conformance for one observed snapshot only. It
 does not verify every historical acceptance binding, accept consumer
@@ -59,6 +65,7 @@ a consumer.
 | Need | Location |
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
+| Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
 | Read the normative format | [NKF 0.1 Specification](knowledge/specifications/nkf-0.1.md) |
 | Inspect the executable companion | [NKF 0.1 YAML Contract](contracts/nkf/0.1/nkf.yaml) |
 | Inspect the closed structural contracts | [NKF 0.1 Schemas](contracts/nkf/0.1/schemas/) |
@@ -79,10 +86,12 @@ npm run nkf:check
 ```
 
 The canonical command verifies agent guidance, type-checks and tests the
-checker, verifies the deterministic build, and validates the complete
-self-hosted NKF bundle. The checked-in Github workflow runs the same command
-against its exact candidate commit. A successful workflow run is not a
-protected merge gate unless Github repository rules require that check.
+checker, verifies deterministic checker and adopter builds, verifies the
+public documentation and complete examples, verifies the recommended release,
+and validates the complete self-hosted NKF bundle. The checked-in Github
+workflow runs the same command against its exact candidate commit. A
+successful workflow run is not a protected merge gate unless Github
+repository rules require that check.
 
 ## Pre-Stable Evolution
 

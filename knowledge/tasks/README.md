@@ -12,7 +12,7 @@ status; it does not establish that status.
 
 ## Active
 
-- [NKF-008: Publish NKF, Public Documentation, And Consumer Adoption](active/NKF-008-publish-and-onboard-consumers.md)
+No Task is currently Active.
 
 ## Deferred
 
@@ -26,5 +26,6 @@ status; it does not establish that status.
 
 - [NKF-003: Establish Independent NKF Authority](completed/NKF-003-independent-nkf-authority.md)
 - [NKF-007: Repair Knowledge Structure And Confirmation](completed/NKF-007-knowledge-structure-and-confirmation.md)
+- [NKF-008: Publish NKF, Public Documentation, And Consumer Adoption](completed/NKF-008-publish-and-onboard-consumers.md)
 - [NKF-010: Adopt Governed Frontmatter](completed/NKF-010-governed-frontmatter-adoption.md)
 - [NKF-011: Enforce NKF Contracts](completed/NKF-011-enforce-nkf-contracts.md)

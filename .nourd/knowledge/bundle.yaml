@@ -50,6 +50,12 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-008-release-publication-and-local-adoption.md
     kind: evidence
+  - path: evidence/audits/nkf-008-public-documentation-publication.md
+    kind: evidence
+  - path: evidence/audits/nkf-008-consumer-workflow-execution.md
+    kind: evidence
+  - path: evidence/audits/nkf-008-completion-audit.md
+    kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
     kind: evidence
   - path: evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md
@@ -108,7 +114,7 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-006-extensible-root-models.md
     kind: task
-  - path: tasks/active/NKF-008-publish-and-onboard-consumers.md
+  - path: tasks/completed/NKF-008-publish-and-onboard-consumers.md
     kind: task
   - path: tasks/deferred/NKF-009-governed-artifact-secret-scanning.md
     kind: task
@@ -587,7 +593,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: 37ec74d801635d8a0006ca5fb17be8fa7c6581c734ae9cbb1f7a054473096823
+      value: 280d594de23274571a1ccfc771f28fc5ced9b474013620e4d1865ae98c30d1a7
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -707,7 +713,7 @@ governed_artifacts:
     path: scripts/verify-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: 279478df663fedda0e2d5706815ab8da1388d5718e5176713f782000307ef3ee
+      value: 7c8797fdec9c1d2704d843eb6e3a4ca91d53d5f6caf08209778673a52fea07e5
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-recommended-release-mjs
@@ -931,7 +937,7 @@ governed_artifacts:
     path: test/public-docs.test.ts
     digest:
       algorithm: sha-256
-      value: 5c8121c3353c0984247d5e0eb12e5c40b798fde56197029c40b40bef339761bc
+      value: 37bf1ee983b443abb03e11c835cc7fe3819eb56b9b8cc9b81ba591b8e2ef355a
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-test-release-manifest-schema-test-ts
