@@ -23,6 +23,10 @@ jobs:
           cache: npm
       - name: Install Locked Dependencies
         run: npm ci
+      - name: Build And Verify Adopter
+        run: |
+          npm run build:adopter
+          npm run verify:adopter
       - name: Download Exact Private Release
         env:
           GH_TOKEN: ${{ github.token }}
