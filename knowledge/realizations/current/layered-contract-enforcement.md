@@ -2,12 +2,14 @@
 id: nkf-layered-contract-enforcement
 type: realization
 title: NKF Layered Contract Enforcement
-summary: This Realization maps the unconfirmed NKF-013 successor enforcement command, including separate adopted-repository and pre-adoption guidance verification while preserving the confirmed remote workflow boundary.
+summary: This Realization maps the confirmed NKF-013 successor enforcement command, including separate adopted-repository and pre-adoption guidance verification while preserving the protected-gate boundary.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-013
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0068
 ---
 
 # NKF Layered Contract Enforcement
@@ -43,8 +45,9 @@ the final audit and successful exact-release remote exercise.
 
 NKF-013 adds a separate provider-neutral pre-adoption protocol, portable skill,
 and integrity verifier before the existing authoring procedure. The canonical
-command now verifies both guidance boundaries. The exact local successor and
-its remote workflow behavior remain unconfirmed until NKF-013 completion.
+command now verifies both guidance boundaries. ADR 0068 confirms the exact
+audited successor after separate remote workflow and public-projection
+observations were recorded.
 
 ## Durable Mapping
 
@@ -64,7 +67,7 @@ its remote workflow behavior remain unconfirmed until NKF-013 completion.
 | Pre-adoption verifier | `scripts/verify-onboarding-guidance.mjs` | Exact skill equality, required procedure, and provider-neutrality checks |
 | Local command | `package.json` | `npm run nkf:check`, now verifying authoring guidance, onboarding guidance, engineering, builds, public projection, release catalog, and full bundle |
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to NKF-012 |
-| Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; Github Actions run `30599982716` passed on exact commit `5a435d54145c31bc091857b1f30520213bdfe6a8` |
+| Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; successor run `30628889305` passed on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` without annotations |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
 | Pre-adoption verification | `test/onboarding-guidance.test.ts` and `test/adopter.test.ts` | Two guidance-integrity cases plus eleven initial-onboarding, transaction, path, surface-drift, compatibility, and tamper cases |
 
@@ -135,8 +138,12 @@ The predecessor consumer-adoption path is active for deliberately authorized
 Product and Technology repositories through the separately verified private
 release owned by NKF-008. The workflow observation is retained in
 [consumer workflow Evidence](../../evidence/audits/nkf-008-consumer-workflow-execution.md).
-The local NKF-013 successor extends that exercise to initial Product and
-Technology onboarding; its remote exact-commit observation remains pending.
+The NKF-013 successor extends that exercise to initial Product and Technology
+onboarding. Consumer run `30628889305` and contract run `30628878063` both
+passed on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130`
+with empty annotation sets. The governed workflow pins use current immutable
+Github Action release commits rather than the deprecated Node 20 action
+runtime observed and repaired during audit.
 
 ## Compatibility Verification And Recovery
 
@@ -153,11 +160,11 @@ eighteen test files with 126 tests, deterministic checker and adopter build
 verification, two checker-conformant complete public examples, and
 full-bundle self-validation.
 
-The unconfirmed NKF-013 successor passes nineteen test files with 135 tests,
+The NKF-013 successor passes nineteen test files with 135 tests,
 the separate onboarding-guidance verifier, a local unborn-Git Product and
 Technology exercise through the installed package command, deterministic
-adopter verification, and full-bundle self-validation. Remote exact-commit
-execution remains a separate pending observation.
+adopter verification, and full-bundle self-validation. The exact-commit
+contract and consumer workflows separately passed without annotations.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
@@ -174,3 +181,9 @@ Recovery restores reviewed artifact bytes and registry digests from Git,
 reruns `npm run nkf:check`, and uses a later governed successor when accepted
 behavior must change. A green candidate check cannot confirm its own
 enforcement-surface revision.
+
+The
+[NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
+records the workflow-runtime finding, exact pin repair, and successor remote
+observations. ADR 0068 separately confirms this exact revision rather than
+deriving confirmation from the green runs.

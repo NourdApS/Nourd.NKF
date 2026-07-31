@@ -2,12 +2,14 @@
 id: nkf-release-documentation-and-adoption
 type: realization
 title: NKF Release Documentation And Adoption
-summary: This Realization describes the unconfirmed NKF-013 successor to the release documentation and adoption surface, including complete initial onboarding while preserving the confirmed native archive.
+summary: This Realization describes the confirmed NKF-013 successor to the release documentation and adoption surface, including complete initial onboarding while preserving the confirmed native archive.
 created_at: 2026-07-31T02:26:24Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-013
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0068
 ---
 
 # NKF Release Documentation And Adoption
@@ -17,8 +19,8 @@ confirmation_status: unconfirmed
 This Realization describes the current successor implementation of the
 release, documentation, and adoption direction accepted by ADR 0064 and
 extended for initial onboarding by ADR 0067. ADR 0066 confirms the predecessor
-revision. This successor remains unconfirmed until final NKF-013 evidence and
-confirmation exist.
+revision. ADR 0068 confirms this exact audited successor after its separate
+local, remote, and public observations were recorded.
 
 ## Governed Meaning Realized
 
@@ -140,8 +142,17 @@ Github consumer workflow run `30599982716` passed the hardened exact-release
 exercise on commit `5a435d54145c31bc091857b1f30520213bdfe6a8`.
 Those observations govern the predecessor public projection. The local
 NKF-013 successor contains additional onboarding guidance, exact protocol and
-skill mirrors, and a new adopter digest. Its remote publication and successor
-workflow execution are not yet claimed.
+skill mirrors, and a new adopter digest.
+
+The exact NKF-013 source commit
+`b50493ddb42c87ed426eeb3bb11d3568652d8130` passed contract run
+`30628878063` and consumer-adoption run `30628889305`, both without
+annotations. The successor public projection is exact commit
+`772d57370a094269ee1d9287ae871b0b3c7f64de`; its manifest binds 27 source
+files plus itself to the private source commit and adopter SHA-256
+`7533a029053beaccd8f6fec939c2198c5909fd8b5a37a4ba9b5bc0c205bbc7c8`.
+A second fresh clone matched every staged byte and both example projects
+passed with zero diagnostics.
 
 Live URLs, run identifiers, timestamps, visibility, and publication state
 remain owned by their Evidence and external systems rather than by this
@@ -171,8 +182,9 @@ independent verification, private prerelease upload, remote re-download,
 local published-release consumer exercise, public projection, remote
 public-byte verification, Github consumer-workflow execution, and final
 adversarial audit remain complete. The native archive is unchanged because no
-native authority, Schema, or checker byte changed. NKF-013 remote publication,
-successor workflow Evidence, final audit, and confirmation remain pending.
+native authority, Schema, or checker byte changed. NKF-013 successor remote
+execution, public publication, fresh-byte verification, final audit, and
+confirmation are now complete and separately evidenced.
 
 Installation and onboarding validate a complete isolated candidate before
 mutation. Inspection binds relevant instruction, package, workflow,
@@ -186,3 +198,7 @@ The
 [completion audit](../../evidence/audits/nkf-008-completion-audit.md) records
 no unresolved material finding. ADR 0066 supplies confirmation separately
 from the passing checks and external publication observations.
+The later
+[NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
+records the initial-onboarding successor review and repaired findings. ADR
+0068 separately confirms this exact revision.

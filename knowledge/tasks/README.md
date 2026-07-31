@@ -12,7 +12,7 @@ status; it does not establish that status.
 
 ## Active
 
-- [NKF-013: Establish Initial Greenfield Onboarding](active/NKF-013-initial-greenfield-onboarding.md)
+None.
 
 ## Deferred
 
@@ -30,3 +30,4 @@ status; it does not establish that status.
 - [NKF-008: Publish NKF, Public Documentation, And Consumer Adoption](completed/NKF-008-publish-and-onboard-consumers.md)
 - [NKF-010: Adopt Governed Frontmatter](completed/NKF-010-governed-frontmatter-adoption.md)
 - [NKF-011: Enforce NKF Contracts](completed/NKF-011-enforce-nkf-contracts.md)
+- [NKF-013: Establish Initial Greenfield Onboarding](completed/NKF-013-initial-greenfield-onboarding.md)

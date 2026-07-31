@@ -7,7 +7,9 @@ created_at: 2026-07-31T11:08:00Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-013
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0068
 ---
 
 # NKF Initial Greenfield Onboarding
@@ -140,6 +142,15 @@ systems. The native archive remains the previously confirmed exact release
 because no native authority, Schema, or checker byte changed. The adopter has
 a new separately bound digest.
 
+The exact repaired source commit
+`b50493ddb42c87ed426eeb3bb11d3568652d8130` passed Github contract run
+`30628878063` and consumer-adoption run `30628889305`; both job annotation
+sets were empty. The exact public projection is commit
+`772d57370a094269ee1d9287ae871b0b3c7f64de`, whose 28-file fresh clone
+matched the staged projection and whose Product and Technology examples each
+passed with zero diagnostics. These remain externally observed facts rather
+than the source of confirmation.
+
 The restored Agent SDK snapshot was inspected only as eligibility Evidence. It
 contains mature Task, Design, Decision, and acceptance history and therefore
 receives the intended `NKF-014` deferral. No Agent SDK byte is modified by this
@@ -164,6 +175,9 @@ resumption, and advanced recovery before final apply. Those extensions cannot
 infer authority or weaken the final source binding, staged checker, or
 transaction contract.
 
-This revision remains unconfirmed until the separate adversarial completion
-audit verifies every `NKF-013` criterion and a later Decision binds its exact
-bytes.
+The separate
+[NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
+records the requirement-by-requirement review, repaired findings, local and
+remote execution, public-byte verification, and `NKF-014` extension
+assessment. ADR 0068 separately confirms this exact revision; the audit,
+publication, and passing checks do not confirm it by themselves.

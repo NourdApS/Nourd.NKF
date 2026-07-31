@@ -2,12 +2,14 @@
 id: nkf-self-hosting
 type: realization
 title: NKF Self-Hosting
-summary: This Realization describes the unconfirmed NKF-013 successor self-hosting bundle, including initial-onboarding knowledge, tooling, guidance, public artifacts, tests, and deferred NKF-014 boundaries.
+summary: This Realization describes the confirmed NKF-013 successor self-hosting bundle, including initial-onboarding knowledge, tooling, guidance, public artifacts, tests, and deferred NKF-014 boundaries.
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-013
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0068
 ---
 
 # NKF Self-Hosting
@@ -59,14 +61,15 @@ complete public Product and Technology example trees. Every Markdown file
 under `knowledge` remains represented exactly once. ADR 0066 confirms the
 successor after live publication and final audit.
 
-NKF-013 adds its active and deferred Tasks, adopted onboarding Design,
+NKF-013 adds its completed and deferred Tasks, adopted onboarding Design,
 adopting Decision, current onboarding Realization, provider-neutral
 pre-adoption guidance, deterministic onboarding core, expanded adopter,
 transaction and boundary tests, public onboarding documentation, and exact
-artifact bindings. The pre-confirmation candidate contains 102 record
-declarations, 59 explicit non-record sources, and 119 governed artifacts.
-This self-hosting successor remains unconfirmed until the final audit and
-remote successor evidence are complete.
+artifact bindings. The confirmed completion state contains 103 record
+declarations, 60 explicit non-record sources, and 119 governed artifacts.
+The separate completion Evidence, final Decision, and completed Task account
+for the two successor knowledge entries beyond the pre-confirmation candidate.
+ADR 0068 confirms this exact audited self-hosting revision.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -147,3 +150,8 @@ release, documentation, consumer, integration, and self-hosting account
 without turning publication or conformance into confirmation.
 Recovery uses predecessor declarations and reviewed artifact digests in Git
 rather than regenerating semantic content heuristically.
+
+The later
+[NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
+records the exact local, remote, public, coverage, recovery, and deferred-scope
+review. ADR 0068 supplies the separate confirmation act for this revision.

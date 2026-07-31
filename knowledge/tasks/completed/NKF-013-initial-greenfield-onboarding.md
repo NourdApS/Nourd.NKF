@@ -3,13 +3,13 @@ title: "NKF-013: Establish Initial Greenfield Onboarding"
 summary: Define, implement, validate, document, and release one seamless first-iteration NKF onboarding path for greenfield Product and Technology repositories with an empty or small reviewable Markdown set.
 created_at: 2026-07-31T09:29:17Z
 task_id: NKF-013
-task_status: active
+task_status: completed
 ---
 
 # NKF-013: Establish Initial Greenfield Onboarding
 
 - **Task:** `NKF-013`
-- **Status:** Active
+- **Status:** Completed
 - **Owner:** Nourd ApS
 - **Decision Authority:** Human Product Owner, Nourd ApS
 - **Iteration:** First
@@ -490,3 +490,47 @@ rejection. The pre-confirmation self-host candidate contains 102 record
 declarations, 59 explicit non-record sources, and 119 governed artifacts.
 Validation remains conformance Evidence and does not supply the still-pending
 Realization confirmation.
+
+## Completion
+
+- **Completed At:** `2026-07-31T12:06:29Z`
+- **Accepted Direction:**
+  [ADR 0067](../../decisions/0067-initial-greenfield-onboarding.md)
+- **Confirmation:**
+  [ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md)
+- **Independent Review:**
+  [NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
+
+NKF-013 is complete for deterministic initial onboarding of empty and
+small-document Product and Technology repositories. The delivered path covers
+inspection, an externally reviewable and sealed semantic plan, profile-specific
+Draft scaffolding, native declaration generation, pinned integration, isolated
+whole-project validation, exact replacement or rollback, idempotence,
+AI-neutral guidance, public documentation, and local and exact-commit consumer
+exercise.
+
+The final implementation revision
+`b50493ddb42c87ed426eeb3bb11d3568652d8130` passed Github contract run
+`30628878063` and consumer-adoption run `30628889305` without annotations.
+Public commit `772d57370a094269ee1d9287ae871b0b3c7f64de` was freshly cloned and
+matched all 28 staged files; both complete examples passed with zero
+diagnostics. Those observations remain external Evidence. ADR 0068 supplies
+the separate exact-byte confirmation act.
+
+The completed self-host state contains 103 record declarations, 60 explicit
+non-record sources, and 119 governed artifacts. Agent SDK was inspected,
+found qualitatively outside the accepted greenfield boundary because of its
+mature lifecycle history, and left unchanged. `NKF-014` retains brownfield,
+source reconstruction, resumability, and advanced recovery behind the same
+resolved-plan application seam. `NKF-012` separately retains protected merge
+enforcement.
+
+No NKF 0.1 normative authority, Schema, checker byte, or native release archive
+changed. The successor adopter remains a separately digest-bound derived
+artifact. Validation and publication establish observations, not acceptance,
+consumer meaning, Realization confirmation, or Governing Use readiness.
+
+Execution Plan step 9 therefore did not trigger a new native release: none of
+its governed inputs changed. The separately digest-bound adopter and public
+projection were published and freshly verified as derived distribution
+surfaces under ADR 0067; they are not a replacement native NKF 0.1 archive.

@@ -56,6 +56,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-008-completion-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md
+    kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
     kind: evidence
   - path: evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md
@@ -120,7 +122,7 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-012-activate-protected-merge-gate.md
     kind: task
-  - path: tasks/active/NKF-013-initial-greenfield-onboarding.md
+  - path: tasks/completed/NKF-013-initial-greenfield-onboarding.md
     kind: task
   - path: tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md
     kind: task

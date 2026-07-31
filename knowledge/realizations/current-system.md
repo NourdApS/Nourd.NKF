@@ -2,12 +2,14 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the unconfirmed NKF-013 initial-onboarding successor under final audit and publication verification.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the confirmed NKF-013 initial-onboarding successor and its deferred NKF-014 extension boundary.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-013
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0068
 ---
 
 # NKF Current System
@@ -71,9 +73,11 @@ workflow were separately observed.
 
 [ADR 0067](../decisions/0067-initial-greenfield-onboarding.md) adopts the
 AI-neutral inspect-plan-apply path for empty and small-document Product and
-Technology repositories. Its implemented successor is under final audit and
-remote publication and workflow verification; this current revision therefore
-remains unconfirmed.
+Technology repositories.
+[ADR 0068](../decisions/0068-confirm-initial-greenfield-onboarding.md)
+confirms the exact successor Realizations after the adversarial completion
+audit, clean exact-commit workflows, and fresh public-byte verification were
+recorded separately.
 
 ## Durable Mapping
 
@@ -121,17 +125,17 @@ Draft NKF Candidate Or Complete Rollback
 | Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0058 |
 | Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas; bundle kind vocabulary extended | ADR 0059 |
 | Checker library and CLI | `src/checker/`, `src/cli.ts` | Governed frontmatter, references, and prior checker behavior implemented | ADR 0059 |
-| Fixtures and tests | `fixtures/`, `test/` | NKF-013 adds initial Product and Technology onboarding, small-document, project-surface drift, path and symlink, transaction, deferral, and guidance coverage; the local suite contains nineteen files and 135 passing tests | Unconfirmed NKF-013 successor |
+| Fixtures and tests | `fixtures/`, `test/` | NKF-013 adds initial Product and Technology onboarding, small-document, project-surface drift, path and symlink, transaction, deferral, and guidance coverage; the local suite contains nineteen files and 135 passing tests | ADR 0068 |
 | Build artifact | `dist/nourd-nkf-checker.mjs` | Deterministically verified local build | ADR 0059 |
 | Self-host declaration | `.nourd/knowledge/` | Migrated Technology bundle with complete source and artifact bindings | ADR 0059 |
 | Neutral authoring procedure | `integrations/ai/nkf-authoring-protocol.md` | Implemented vendor-neutral CommonMark protocol | ADR 0061 |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Implemented for twelve explicit host surfaces with unknown-surface fail-closed policy | ADR 0061 |
-| Project enforcement command | `package.json` | `npm run nkf:check` orchestrates adopted-repository guidance, pre-adoption guidance verification, engineering, build, and bundle checks | Unconfirmed NKF-013 successor over ADR 0061 |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run `30595019454` passed; required protection unavailable and deferred to NKF-012 | ADR 0061 local file; ADR 0062 remote activation; ADR 0063 Task allocation |
-| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Adds deterministic inspect, seal, onboard, staged validation, rollback, and receipt behavior while preserving existing commands | Unconfirmed NKF-013 successor over ADR 0066 |
-| Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Product and Technology Draft scaffold, Markdown and relevant-project-surface snapshot, small-corpus plan, native generation, AI-neutral semantic handoff, whole-project transaction, and NKF-014 deferral implemented | Unconfirmed NKF-013 successor |
-| Public documentation | `public-docs/` | Local allowlisted successor adds complete initial-onboarding guidance and exact adopter, protocol, and skill mirrors; remote successor publication pending | Unconfirmed NKF-013 successor; remote state not yet claimed |
-| Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Local exercise covers unborn-Git empty Product, unborn-Git small-document Technology, generated `npm ci` and `npm run nkf:check`, existing install, no-update, and tamper rejection; successor remote run pending | Unconfirmed NKF-013 successor |
+| Project enforcement command | `package.json` | `npm run nkf:check` orchestrates adopted-repository guidance, pre-adoption guidance verification, engineering, build, and bundle checks | ADR 0068 successor over ADR 0061 |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; NKF-013 successor run `30628878063` passed on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` without annotations; required protection remains deferred to NKF-012 | ADR 0068 successor over ADRs 0061–0063; run remains external Evidence |
+| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Adds deterministic inspect, seal, onboard, staged validation, rollback, and receipt behavior while preserving existing commands | ADR 0068 successor over ADR 0066 |
+| Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Product and Technology Draft scaffold, Markdown and relevant-project-surface snapshot, small-corpus plan, native generation, AI-neutral semantic handoff, whole-project transaction, and NKF-014 deferral implemented | ADR 0068 |
+| Public documentation | `public-docs/` | The 28-file public successor at commit `772d57370a094269ee1d9287ae871b0b3c7f64de` includes exact onboarding guidance, adopter, protocol, and skill mirrors; a fresh clone matched every staged byte | ADR 0068; publication remains external Evidence |
+| Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Unborn-Git Product and Technology onboarding, generated package command, existing install, no-update, and tamper rejection passed locally and in run `30628889305` on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` | ADR 0068; run remains external Evidence |
 | Latest result | `.nourd/validation-result.json` | Latest passing full-bundle observation | Conformance only |
 | Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Rebound, reproducibly built, published as the exact private prerelease, re-downloaded, and independently verified | ADR 0059 mechanism; ADR 0065 inputs; ADR 0066 successor |
 
@@ -229,9 +233,13 @@ and Github consumer workflow were observed separately and retained as
 Evidence. Those external facts support but do not replace ADR 0066's
 confirmation act.
 
-NKF-013 has an implemented local successor but is not yet complete. Remote
-publication, exact-commit consumer exercise, final adversarial audit, exact
-Realization confirmation, and Task closure remain outstanding.
+NKF-013 is complete for the accepted initial greenfield scope. Exact-commit
+contract and consumer workflows passed without annotations, the public
+projection was freshly cloned and matched, the completion audit records no
+unresolved material finding, and ADR 0068 separately confirms the exact
+successor Realizations. These time-bound external observations remain
+Evidence; they do not become authority merely because this account records
+them.
 
 ## Compatibility Verification And Recovery
 
@@ -247,15 +255,15 @@ the unified `npm run nkf:check` command, and additional governed integration
 artifacts.
 
 The confirmed predecessor self-host successor contains 99 record declarations,
-57 explicit non-record sources, and 109 governed artifacts. The current
-unconfirmed NKF-013 candidate contains 102 record declarations, 59 explicit
-non-record sources, and 119 governed artifacts. Focused NKF-008 checks pass
+57 explicit non-record sources, and 109 governed artifacts. The confirmed
+NKF-013 completion contains 103 record declarations, 60 explicit non-record
+sources, and 119 governed artifacts. Focused NKF-008 checks pass
 eighteen test files with 126 tests, deterministic checker and adopter builds,
 the public-documentation verifier, complete Product and Technology public
 examples, Product and Technology installation, same-pin no-update, and
-archive, pin, adapter, and knowledge tamper rejection. The pre-confirmation
-canonical self-validation passes with nineteen test files and 135 tests after
-the successor mappings are synchronized.
+archive, pin, adapter, and knowledge tamper rejection. The NKF-013 successor
+passes nineteen test files with 135 tests, deterministic builds, local Product
+and Technology exercises, public-byte verification, and full self-validation.
 
 The separate
 [NKF-011 Realization Audit](../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
@@ -275,6 +283,13 @@ records no unresolved material finding inside the accepted release,
 documentation, and adoption scope. ADR 0066 supplies the separate successor
 confirmation rather than deriving confirmation from publication or passing
 checks.
+
+The
+[NKF-013 Completion Audit](../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
+records the initial-onboarding requirement matrix, three repaired material
+findings, exact remote observations, public-byte verification, and the
+preserved NKF-014 extension seam. ADR 0068 supplies the separate exact-byte
+confirmation act.
 
 Recovery uses Git history, immutable Decision and Evidence provenance,
 predecessor digests, explicit successor Decisions, deterministic rebuilding,
