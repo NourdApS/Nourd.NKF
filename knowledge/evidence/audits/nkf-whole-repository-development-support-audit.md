@@ -439,4 +439,3 @@ creating competing authorities.
 
 The current local snapshot is useful audit material but is not conformant,
 confirmed as the NKF-015 successor, or ready for a successor release.
-
