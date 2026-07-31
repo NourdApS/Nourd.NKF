@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
 import {
   lstat,
   readFile,
@@ -13,7 +14,21 @@ export const PUBLIC_FILES = Object.freeze([
   "concepts/authority-and-lifecycle.md",
   "concepts/topology.md",
   "examples/product/README.md",
+  "examples/product/project/.nourd/knowledge/bundle.yaml",
+  "examples/product/project/.nourd/knowledge/records/product.yaml",
+  "examples/product/project/knowledge/README.md",
+  "examples/product/project/knowledge/product.md",
+  "examples/product/project/knowledge/task.md",
   "examples/technology/README.md",
+  "examples/technology/project/.nourd/knowledge/bundle.yaml",
+  "examples/technology/project/.nourd/knowledge/records/realization.yaml",
+  "examples/technology/project/.nourd/knowledge/records/specification.yaml",
+  "examples/technology/project/.nourd/knowledge/records/technology.yaml",
+  "examples/technology/project/knowledge/realization.md",
+  "examples/technology/project/knowledge/specification.md",
+  "examples/technology/project/knowledge/task.md",
+  "examples/technology/project/knowledge/technology.md",
+  "examples/technology/project/src/example.ts",
   "guides/adopt-and-validate.md",
   "guides/update-and-recover.md",
   "reference/nkf-0.1.md",
@@ -80,8 +95,8 @@ function requireSubjects(combined) {
   }
 }
 
-function verifyRelativeLinks(files) {
-  const fileSet = new Set(files.keys());
+function verifyRelativeLinks(files, publishedPaths) {
+  const fileSet = new Set(publishedPaths);
   for (const [relative, text] of files) {
     if (relative === "reference/nkf-0.1.md") {
       continue;
@@ -101,6 +116,36 @@ function verifyRelativeLinks(files) {
       if (!fileSet.has(normalized)) {
         throw new Error(`Broken public documentation link from ${relative}: ${target}`);
       }
+    }
+  }
+}
+
+function verifyExamples(root) {
+  const checker = path.join(root, "dist/nourd-nkf-checker.mjs");
+  for (const kind of ["product", "technology"]) {
+    const project = path.join(root, "public-docs", "examples", kind, "project");
+    const result = spawnSync(
+      process.execPath,
+      [
+        checker,
+        "--project",
+        project,
+        "--level",
+        "full-bundle",
+        "--runner",
+        "nkf-public-documentation",
+        "--no-persist",
+      ],
+      { encoding: "utf8" },
+    );
+    if (result.status !== 0) {
+      throw new Error(
+        `The complete public ${kind} example does not conform.\n${result.stdout}\n${result.stderr}`,
+      );
+    }
+    const report = JSON.parse(result.stdout);
+    if (report.conformance !== "passed") {
+      throw new Error(`The complete public ${kind} example did not pass.`);
     }
   }
 }
@@ -140,7 +185,8 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     .map(([, text]) => text)
     .join("\n");
   requireSubjects(explanatoryCombined);
-  verifyRelativeLinks(markdown);
+  verifyRelativeLinks(markdown, actual);
+  verifyExamples(root);
   for (const forbidden of [
     "/Users/",
     "/home/",
@@ -158,6 +204,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     contract: "nkf.public-documentation-verification",
     status: "passed",
     files: actual.length,
+    examples: 2,
     markdown_sha256: sha256(specification),
     adopter_sha256: sha256(adopter),
     mermaid_diagrams: (combined.match(/```mermaid/g) ?? []).length,

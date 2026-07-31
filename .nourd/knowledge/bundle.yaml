@@ -427,7 +427,47 @@ governed_artifacts:
     path: public-docs/examples/product/README.md
     digest:
       algorithm: sha-256
-      value: 6700da881e7a1dad8eaf0c67a2871d4f12a86185833262fb9fa13e04012974e0
+      value: add9ec042cd7ac4708f7437e9c6897ab578b925f058965e2afab8b5e77512f2c
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-product-project-nourd-knowledge-bundle-yaml
+    kind: fixture
+    path: public-docs/examples/product/project/.nourd/knowledge/bundle.yaml
+    digest:
+      algorithm: sha-256
+      value: 7345385653f734a0077da30b6294a68ff8d6aa59fba7db49e009c0b64c731e03
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-product-project-nourd-knowledge-records-product-yaml
+    kind: fixture
+    path: public-docs/examples/product/project/.nourd/knowledge/records/product.yaml
+    digest:
+      algorithm: sha-256
+      value: 951558c463a4563c3b98a96499f3db2495a94096acbd47f1a2a9b9c8b79246d8
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-product-project-knowledge-readme-md
+    kind: fixture
+    path: public-docs/examples/product/project/knowledge/README.md
+    digest:
+      algorithm: sha-256
+      value: 5cec83056132801ed956332972d031cd306126845bc45449f3245a252ef4f818
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-product-project-knowledge-product-md
+    kind: fixture
+    path: public-docs/examples/product/project/knowledge/product.md
+    digest:
+      algorithm: sha-256
+      value: 8f427b278f439d076225932de17490c76df1a572bf887d3a78774216b859a66a
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-product-project-knowledge-task-md
+    kind: fixture
+    path: public-docs/examples/product/project/knowledge/task.md
+    digest:
+      algorithm: sha-256
+      value: bd6e522a782417ada18e42225feb9fa6339264ff9573c5f4d49957042dfaad55
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-public-docs-examples-technology-readme-md
@@ -435,7 +475,79 @@ governed_artifacts:
     path: public-docs/examples/technology/README.md
     digest:
       algorithm: sha-256
-      value: 882283a21a5ded12a53278413eb6cd9618012a3f93edc5f7098f54e3df505072
+      value: d8544b0ff8ce830a52f1af1849e1ff04507330c453e6c0b2c161b7ee8d75a855
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-nourd-knowledge-bundle-yaml
+    kind: fixture
+    path: public-docs/examples/technology/project/.nourd/knowledge/bundle.yaml
+    digest:
+      algorithm: sha-256
+      value: f32f9f960238582bbbe8a764402b077e7339fb843123176b3d78657e1f360fc6
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-nourd-knowledge-records-realization-yaml
+    kind: fixture
+    path: public-docs/examples/technology/project/.nourd/knowledge/records/realization.yaml
+    digest:
+      algorithm: sha-256
+      value: 96c40df62aa5041740042cdbe0f19f71759150259edf1bb230a1046da04ca417
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-nourd-knowledge-records-specification-yaml
+    kind: fixture
+    path: public-docs/examples/technology/project/.nourd/knowledge/records/specification.yaml
+    digest:
+      algorithm: sha-256
+      value: 1ee2a73f9fe6484d8f2d57a48a0622979b32c91093bab8eb392d6670e0350c44
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-nourd-knowledge-records-technology-yaml
+    kind: fixture
+    path: public-docs/examples/technology/project/.nourd/knowledge/records/technology.yaml
+    digest:
+      algorithm: sha-256
+      value: 1e1bc1f7739c522845477e0dcb45f1ed046c951649cc6edde0b20c00eaa1c6e3
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-knowledge-realization-md
+    kind: fixture
+    path: public-docs/examples/technology/project/knowledge/realization.md
+    digest:
+      algorithm: sha-256
+      value: d4c671b8e001a481b6f931725921b0565a094eb566ce61c286a04bf257fd0693
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-knowledge-specification-md
+    kind: fixture
+    path: public-docs/examples/technology/project/knowledge/specification.md
+    digest:
+      algorithm: sha-256
+      value: 4fb77a3ecfbe1c7a08a41de6cbaeef29874109d8fcc06ace42d9336bb0c859bb
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-knowledge-task-md
+    kind: fixture
+    path: public-docs/examples/technology/project/knowledge/task.md
+    digest:
+      algorithm: sha-256
+      value: 4d70ae26b87b4b8351d71ec4af4cdf91dda5f44f409c93ba145b108ff58ed333
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-knowledge-technology-md
+    kind: fixture
+    path: public-docs/examples/technology/project/knowledge/technology.md
+    digest:
+      algorithm: sha-256
+      value: f14edd7bed31d00fa5a7ea66eb4dd930ea52158de70491e0e045e18977f6d5ef
+    record: nkf-release-documentation-and-adoption
+    source_section: durable-mapping
+  - id: artifact-public-docs-examples-technology-project-src-example-ts
+    kind: fixture
+    path: public-docs/examples/technology/project/src/example.ts
+    digest:
+      algorithm: sha-256
+      value: 5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-public-docs-guides-adopt-and-validate-md
@@ -523,7 +635,7 @@ governed_artifacts:
     path: scripts/build-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: 5a4dd42831ad849bd13776f6a2e65f24986499e085d1ea8a1ea649b8f53f6ec9
+      value: cc4739e11977ab21f081d48f39bf927fa203abbbed0575ea493f8417900942c5
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-exercise-consumer-adoption-mjs
@@ -595,7 +707,7 @@ governed_artifacts:
     path: scripts/verify-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: 5770e397b2cfd090579a202910392e220c673aca8816eb97f95719bb2217b961
+      value: 279478df663fedda0e2d5706815ab8da1388d5718e5176713f782000307ef3ee
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-recommended-release-mjs
@@ -819,7 +931,7 @@ governed_artifacts:
     path: test/public-docs.test.ts
     digest:
       algorithm: sha-256
-      value: 45ba2a347e8aeda8209b54cae04485e231cbe65b440485f5b2d2b9f2906e18bd
+      value: 5c8121c3353c0984247d5e0eb12e5c40b798fde56197029c40b40bef339761bc
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-test-release-manifest-schema-test-ts

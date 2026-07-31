@@ -1,10 +1,11 @@
 # Technology Example
 
-This synthetic example shows a Technology root and one governed implementation
-artifact.
+This directory contains a complete, conformant synthetic Technology project
+with one governed implementation artifact. It is executable example data, not
+accepted Technology meaning for a real Nourd project.
 
 ```text
-example-technology/
+project/
 ├── .nourd/
 │   └── knowledge/
 │       ├── bundle.yaml
@@ -21,34 +22,20 @@ example-technology/
     └── example.ts
 ```
 
-`.nourd/knowledge/bundle.yaml`:
+Start with the actual
+[bundle](project/.nourd/knowledge/bundle.yaml). It selects
+`nkf.profile.technology` and binds the exact digest of
+[the source artifact](project/src/example.ts) to the
+[Realization declaration](project/.nourd/knowledge/records/realization.yaml).
+The other declarations bind the
+[Technology](project/knowledge/technology.md) and
+[Specification](project/knowledge/specification.md) sources. The
+[Task](project/knowledge/task.md) is an explicit non-record.
 
-```yaml
-nkf_version: "0.1"
-contract: nkf.bundle
-id: example-technology
-root:
-  record: technology
-  profile: nkf.profile.technology
-knowledge_root: knowledge
-non_records:
-  - path: task.md
-    kind: task
-governed_artifacts:
-  - id: example-source
-    kind: implementation
-    path: src/example.ts
-    digest:
-      algorithm: sha-256
-      value: <EXACT_SOURCE_SHA256>
-    record: realization
-    source_section: durable-mapping
-```
-
-The Technology record defines its purpose, capabilities, interfaces,
-ownership, and constraints. The Specification record owns current normative
-meaning. The Realization record describes the current implementation and maps
-`src/example.ts` through its `Durable Mapping` section.
+The Technology record defines purpose, consumers, contracts, boundaries, and
+evolution. The Specification owns current normative meaning. The Realization
+describes the implementation and maps `src/example.ts` through its
+`Durable Mapping` section.
 
 The exact source artifact participates in Governed Validation Inputs because
 the Technology Profile permits `governed_artifacts`. Changing `example.ts`
@@ -58,7 +45,13 @@ The equivalent Product bundle cannot add `governed_artifacts` by implication.
 That distinction keeps Common rules shared while preserving the concrete
 profile boundary.
 
-After installing the same exact pinned NKF release, `npm run nkf:check`
-validates the Technology knowledge and declared artifact together. The result
-observes one snapshot; it does not confirm the Realization or own the runtime
-state of the implemented Technology.
+From this example page, copy `project/` to a writable directory, install the
+same exact pinned NKF release, and run:
+
+```sh
+npm run nkf:check
+```
+
+The publication verifier runs the bundled checker against this exact project
+before publication. The result observes one snapshot; it does not confirm the
+Realization or own the runtime state of the implemented Technology.

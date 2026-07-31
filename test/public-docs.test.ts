@@ -24,6 +24,16 @@ async function copyProjection() {
     path.join(root, "dist/nourd-nkf-adopt.mjs"),
     { recursive: true },
   );
+  await cp(
+    path.join(repositoryRoot, "dist/nourd-nkf-checker.mjs"),
+    path.join(root, "dist/nourd-nkf-checker.mjs"),
+    { recursive: true },
+  );
+  await cp(
+    path.join(repositoryRoot, "contracts/nkf/0.1"),
+    path.join(root, "contracts/nkf/0.1"),
+    { recursive: true },
+  );
   return root;
 }
 
@@ -33,7 +43,8 @@ describe("NKF public documentation", () => {
     expect(result).toMatchObject({
       contract: "nkf.public-documentation-verification",
       status: "passed",
-      files: 9,
+      files: 23,
+      examples: 2,
     });
     expect(result.mermaid_diagrams).toBeGreaterThanOrEqual(5);
   });

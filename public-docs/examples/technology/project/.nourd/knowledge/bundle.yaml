@@ -1,0 +1,19 @@
+nkf_version: "0.1"
+contract: nkf.bundle
+id: example-technology
+root:
+  record: technology
+  profile: nkf.profile.technology
+knowledge_root: knowledge
+non_records:
+  - path: task.md
+    kind: task
+governed_artifacts:
+  - id: example-source
+    kind: checker-source
+    path: src/example.ts
+    digest:
+      algorithm: sha-256
+      value: 5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29
+    record: realization
+    source_section: durable-mapping

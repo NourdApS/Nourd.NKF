@@ -1,4 +1,4 @@
-import { copyFile, mkdir } from "node:fs/promises";
+import { cp, copyFile, mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,6 +19,14 @@ export async function buildPublicDocs(root = repositoryRoot) {
     path.join(root, "dist/nourd-nkf-adopt.mjs"),
     path.join(docsRoot, "tools/nourd-nkf-adopt.mjs"),
   );
+  for (const kind of ["product", "technology"]) {
+    const fixture = kind === "product" ? "minimal" : "technology";
+    const target = path.join(docsRoot, "examples", kind, "project");
+    await rm(target, { recursive: true, force: true });
+    await cp(path.join(root, "fixtures", "valid", fixture), target, {
+      recursive: true,
+    });
+  }
 }
 
 if (path.resolve(process.argv[1] ?? "") === fileURLToPath(import.meta.url)) {

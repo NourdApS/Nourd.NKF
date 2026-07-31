@@ -1,10 +1,11 @@
 # Product Example
 
-This synthetic example shows the smallest complete shape, not accepted Product
-meaning for a real Nourd project.
+This directory contains a complete, conformant synthetic Product project. It
+is executable example data, not accepted Product meaning for a real Nourd
+project.
 
 ```text
-example-product/
+project/
 ├── .nourd/
 │   └── knowledge/
 │       ├── bundle.yaml
@@ -16,72 +17,26 @@ example-product/
     └── task.md
 ```
 
-`.nourd/knowledge/bundle.yaml`:
+Start with the actual
+[bundle](project/.nourd/knowledge/bundle.yaml), then inspect the
+[Product declaration](project/.nourd/knowledge/records/product.yaml) and its
+[canonical Markdown](project/knowledge/product.md). The
+[Task](project/knowledge/task.md) is an explicit non-record and the
+[knowledge README](project/knowledge/README.md) is explicit navigation. No
+Markdown source is left unrepresented.
 
-```yaml
-nkf_version: "0.1"
-contract: nkf.bundle
-id: example-product
-root:
-  record: product
-  profile: nkf.profile.product
-knowledge_root: knowledge
-non_records:
-  - path: README.md
-    kind: navigation
-  - path: task.md
-    kind: task
+The declaration binds the exact SHA-256 of the included Product Markdown,
+uses `body_contract: nkf.product`, and maps every required section by exact
+Title Case heading path. The bundle selects
+`nkf.profile.product`.
+
+From this example page, copy `project/` to a writable directory, install the
+exact pinned release, and run:
+
+```sh
+npm run nkf:check
 ```
 
-`knowledge/product.md`:
-
-```markdown
----
-id: product
-type: product
-title: Example Product
-summary: A synthetic Product root used to demonstrate NKF 0.1.
-created_at: 2026-07-31T00:00:00Z
-record_lifecycle: living
-record_status: accepted
----
-
-# Example Product
-
-## Product Scope
-
-The Product helps a person demonstrate a complete NKF Product bundle.
-
-## Intent
-
-The user can understand the governed Product boundary.
-
-## Capabilities
-
-The Product exposes one documented example.
-
-## Architecture
-
-The example consists only of canonical Markdown and its NKF declaration.
-
-## Responsibilities
-
-The Product owns its example meaning. NKF owns only format validation.
-
-## Constraints
-
-The example contains no live customer or operational data.
-```
-
-`.nourd/knowledge/records/product.yaml` binds the exact SHA-256 of
-`product.md`, declares `body_contract: nkf.product`, maps each required
-section by exact Title Case heading path, and declares accepted Product
-authority. Replace the example digest only after reviewing the exact source
-bytes.
-
-`task.md` is explicitly represented as a Task non-record. `README.md` is
-explicit navigation. No Markdown file under `knowledge` is left
-unrepresented.
-
-After installing the exact pinned release, `npm run nkf:check` validates this
-Product bundle. The pass does not accept the Product intent.
+The publication verifier runs the bundled checker against this exact project
+before publication. A passing example check proves only snapshot conformance;
+it does not accept the synthetic Product meaning.
