@@ -75,6 +75,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0041: Checker Development Realization](0041-checker-development-realization.md)
 - [ADR 0052: Dynamic Root Self-Hosting](0052-dynamic-root-self-hosting.md)
 - [ADR 0060: Layered Contract Enforcement](0060-layered-contract-enforcement.md)
+- [ADR 0062: Confirm Remote Workflow Activation Boundary](0062-confirm-remote-workflow-activation-boundary.md)
 
 ## Release And Distribution
 

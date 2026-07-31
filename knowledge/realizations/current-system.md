@@ -2,7 +2,7 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository. It is the normal entry point for understanding how accepted NKF meaning is implemented.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including confirmed remote workflow activation and the still-unavailable protected merge gate.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
@@ -11,6 +11,7 @@ confirmation_status: confirmed
 confirmation_decisions:
   - adr-0059
   - adr-0061
+  - adr-0062
 ---
 
 # NKF Current System
@@ -54,7 +55,10 @@ repository integration direction for NKF-011 without changing normative NKF
 0.1 meaning.
 [ADR 0061](../decisions/0061-confirm-layered-contract-enforcement-realization.md)
 confirms the exact audited local integration and current-system revisions.
-Remote activation remains a separate unconfirmed operational boundary.
+[ADR 0062](../decisions/0062-confirm-remote-workflow-activation-boundary.md)
+confirms the successor Realization revisions after the workflow was pushed and
+observed successfully on its exact commit. It confirms remote workflow
+activation, not the unavailable protected merge gate.
 
 ## Durable Mapping
 
@@ -94,7 +98,7 @@ Exact-Commit Github Workflow
 | Neutral authoring procedure | `integrations/ai/nkf-authoring-protocol.md` | Implemented vendor-neutral CommonMark protocol | ADR 0061 |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Implemented for twelve explicit host surfaces with unknown-surface fail-closed policy | ADR 0061 |
 | Project enforcement command | `package.json` | `npm run nkf:check` orchestrates guidance, engineering, build, and bundle checks | ADR 0061 |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Confirmed local file with read-only permissions and full-SHA Action pins | ADR 0061 locally; remote activation unconfirmed |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run `30595019454` passed; required protection unavailable under the observed private-repository plan | ADR 0061 local file; ADR 0062 remote activation boundary |
 | Latest result | `.nourd/validation-result.json` | Latest passing full-bundle observation | Conformance only |
 | Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Earlier release contract implementation | Current publication deferred to NKF-008 |
 
@@ -161,12 +165,20 @@ stale immediately after an input changes. This Realization records the durable
 mechanism and current repository implementation status, not mutable workflow,
 process, deployment, account, permission, health, or execution state.
 
-The workflow exists in the local repository snapshot. Its remote presence,
-required-check context, branch protection, review ownership, bypass policy,
-and negative merge-gate test are not inferred from this file.
+The workflow exists in the repository and on remote `master`. Github Actions
+run `30595019454` passed for exact commit
+`143f6f49d9f42b2e4e8e5073ed119a1c3d092d88`, exposing check run `Validate`.
+The linked remote Evidence, rather than this Realization, is the source for
+that time-bound observation.
 
-No release, push, deployment, protection activation, or external-consumer
-migration is part of the current local NKF-011 implementation.
+Github returned HTTP `403` for both branch-protection and repository-ruleset
+access because the repository is private under the current plan. The required
+check, review ownership, bypass controls, and blocked invalid pull-request
+observation therefore remain unavailable and unconfirmed. No repository
+visibility or subscription change was made.
+
+No release, deployment, or external-consumer migration is part of the current
+NKF-011 implementation.
 
 ## Compatibility Verification And Recovery
 
@@ -181,19 +193,22 @@ NKF-011 adds the adapter verifier, eighteen focused positive and negative cases,
 the unified `npm run nkf:check` command, and additional governed integration
 artifacts.
 
-The self-host bundle now contains 92 record declarations, 50 explicit
+The self-host bundle now contains 93 record declarations, 51 explicit
 non-record sources, and 72 governed artifacts. The canonical command passes
 type checking, sixteen test files with 120 tests, deterministic build
-verification, and full-bundle validation over 362 snapshot entries. It also
+verification, and full-bundle validation over 365 snapshot entries. It also
 exited nonzero for a temporary unrepresented Markdown source.
 
 The separate
 [NKF-011 Realization Audit](../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
 records no unresolved material local-implementation finding. ADR 0061
 separately confirms the exact local successor through delegated
-technical-review authority. Neither the audit nor that confirmation verifies
-acceptance bindings, activates the remote gate, or makes authority-binding
-verification part of native structural conformance.
+technical-review authority. The
+[remote activation Evidence](../evidence/audits/nkf-011-remote-enforcement-activation.md)
+then establishes the successful remote workflow observation and protection
+limit, and ADR 0062 confirms the exact successor Realization account. None of
+these acts verifies acceptance bindings, activates the protected gate, or
+makes authority-binding verification part of native structural conformance.
 
 Recovery uses Git history, immutable Decision and Evidence provenance,
 predecessor digests, explicit successor Decisions, deterministic rebuilding,

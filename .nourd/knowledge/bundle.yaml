@@ -44,6 +44,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-011-remote-enforcement-activation.md
+    kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
     kind: evidence
   - path: evidence/decision-inputs/adr-0010/nkf-0.1-independent-specification.md

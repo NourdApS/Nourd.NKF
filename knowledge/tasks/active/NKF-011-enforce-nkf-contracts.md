@@ -95,7 +95,7 @@ default branch once the required remote protection is activated.
 ### Plan
 
 1. Inventory the checker invocation, package scripts, repository instructions,
-   Git and GitHub surfaces, release boundary, and current governed-artifact
+   Git and Github surfaces, release boundary, and current governed-artifact
    mappings.
 2. Draft one exact Design covering authoring guidance, the local command,
    exact-commit continuous integration, portable adoption artifacts, remote
@@ -204,14 +204,32 @@ requiring their applicable authority and operational evidence.
 5. Configure required-check, review, and bypass protection only when the
    current repository plan and visibility support the accepted boundary.
 6. Exercise one intentionally invalid pull-request candidate only after the
-   protection rule is active, and confirm that GitHub blocks its merge.
+   protection rule is active, and confirm that Github blocks its merge.
 7. Record remote operational Evidence and successor Realization status.
 
 ### Guardrails
 
-- Do not change repository visibility or purchase a GitHub plan by
+- Do not change repository visibility or purchase a Github plan by
   implication.
 - Do not publish, replace, or modify a release.
 - Do not begin consumer onboarding or user-experience design.
-- Do not claim a protected remote gate unless GitHub operational evidence
+- Do not claim a protected remote gate unless Github operational evidence
   establishes every accepted condition.
+
+## Remote Activation Result
+
+Exact commit `143f6f49d9f42b2e4e8e5073ed119a1c3d092d88` was pushed to remote
+`master`. Github Actions run `30595019454` executed `NKF Contracts` for that
+commit, and check run `Validate` completed successfully.
+
+The
+[remote activation Evidence](../../evidence/audits/nkf-011-remote-enforcement-activation.md)
+records that Github returned HTTP `403` for both branch-protection and
+repository-ruleset access because the repository is private under the current
+plan. Github requires either Pro or public repository visibility for those
+features.
+
+The remote workflow is therefore active, but the protected hard gate is not.
+No required-check rule, review or bypass enforcement, or blocked invalid pull
+request is claimed. NKF-011 remains Active pending an external plan or
+visibility decision. Release and consumer work remain deferred to NKF-008.

@@ -2,7 +2,7 @@
 id: nkf-layered-contract-enforcement
 type: realization
 title: NKF Layered Contract Enforcement
-summary: This Realization maps the confirmed local AI-neutral authoring protocol, host-surface adapters, portable skills, deterministic project command, and exact-commit Github workflow while keeping remote activation explicitly unconfirmed.
+summary: This Realization maps the confirmed AI-neutral authoring and enforcement implementation, including successful remote workflow activation while keeping the unavailable protected merge gate explicit.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
@@ -10,6 +10,7 @@ task: NKF-011
 confirmation_status: confirmed
 confirmation_decisions:
   - adr-0061
+  - adr-0062
 ---
 
 # NKF Layered Contract Enforcement
@@ -46,7 +47,7 @@ definition.
 | Claude skill path | `.claude/skills/nkf-authoring/SKILL.md` | Byte-identical shared representation |
 | Integrity verifier | `scripts/verify-agent-guidance.mjs` | Closed registry, digest, path, import, skill, workflow, and command checks |
 | Local command | `package.json` | `npm run nkf:check` |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Pull request and push validation for `master` |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable under the observed private-repository plan |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
 
 The registry records host surfaces rather than model names. Its finite verified
@@ -89,10 +90,19 @@ the complete project-command chain without lifecycle wrappers.
 
 ## External Authority And Operational State Boundaries
 
-The workflow file is implemented locally. Remote workflow presence, successful
-execution, required-check identity, branch protection, review ownership,
-bypass policy, and a blocked intentionally invalid candidate remain
-unconfirmed Github operational state.
+The workflow is present on remote `master`. Github Actions run `30595019454`
+completed successfully for exact commit
+`143f6f49d9f42b2e4e8e5073ed119a1c3d092d88`, with check run `Validate`.
+The
+[remote activation Evidence](../../evidence/audits/nkf-011-remote-enforcement-activation.md)
+owns the exact time-bound operational observations.
+
+Github returned HTTP `403` for branch-protection and repository-ruleset access
+because the repository is private under the current plan. Required-check
+protection, review ownership, bypass policy, and a blocked intentionally
+invalid candidate therefore remain unavailable and unconfirmed. Completing
+the protected gate requires Github Pro or a separately governed change to
+public repository visibility.
 
 The current workflow is self-checking evidence because a candidate can alter
 its own verifier, command, checker, or workflow. Enforcement-surface changes
@@ -114,15 +124,16 @@ The canonical command also exited nonzero when exercised against a temporary
 unrepresented Markdown source, demonstrating that the author identity does
 not alter the output gate. After that source was removed, `npm run nkf:check`
 passed type checking, sixteen test files with 120 tests, deterministic build
-verification, and full-bundle self-validation over 362 snapshot entries after
-confirmation closure.
+verification, and full-bundle self-validation over 365 snapshot entries after
+remote-observation closure.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
 records no unresolved material local-implementation finding. These results
-establish conformance evidence only. ADR 0061 independently confirms this
-exact local Realization through delegated technical-review authority. The
-remote hard gate remains unconfirmed.
+establish conformance Evidence only. ADR 0061 independently confirms the
+local implementation through delegated technical-review authority. ADR 0062
+confirms this exact successor account of the observed remote workflow and
+protection limit. The protected remote hard gate remains unconfirmed.
 
 Recovery restores reviewed artifact bytes and registry digests from Git,
 reruns `npm run nkf:check`, and uses a later governed successor when accepted
