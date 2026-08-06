@@ -11,7 +11,7 @@ Specifications own current accepted normative NKF meaning.
 [NKF 0.2](nkf-0.2.md) is the candidate successor specification produced
 under NKF-019: it adds the Decision Applicability Gate and the versioned
 contract evolution rules, with its digest-bound executable companion at
-`contracts/nkf/0.2/nkf.yaml`. It governs only when ADR 0079 accepts the
+`contracts/nkf/0.2/nkf.yaml`. It governs only when ADR 0080 accepts the
 exact pair.
 
 [NKF 0.1](nkf-0.1.md) is the accepted canonical specification. ADR 0073

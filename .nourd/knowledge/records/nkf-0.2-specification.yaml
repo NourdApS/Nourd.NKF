@@ -7,7 +7,7 @@ source:
   path: specifications/nkf-0.2.md
   digest:
     algorithm: sha-256
-    value: 57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88
+    value: d460616c6e68f4edd85ca41e3e9c4c35bdaf47c886c9ae817de44f70eb18f3cd
 governance:
   lifecycle: immutable
   status: draft

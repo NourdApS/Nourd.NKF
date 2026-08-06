@@ -73,6 +73,11 @@ and that the correction be versioned NKF `0.2` because it carries breaking
 changes. ADR 0078 records that correction, and `NKF-020` holds the deferred
 process work.
 
+Still on `2026-08-06`, the Human Product Owner directed removing the
+frontmatter title, moving the repeated top-of-document identity properties
+into type-dynamic frontmatter, and ending the duplication between frontmatter
+and body openings. ADR 0079 records that direction for NKF 0.2.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -86,14 +91,19 @@ process work.
   process from the candidate rulebook, and recorded the deferred `NKF-020`
   process Task; the removed release outline is preserved there as unaccepted
   draft input.
-- The exact NKF 0.2 candidate authority pair is drafted: Markdown SHA-256
-  `57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88` bound to
-  executable SHA-256
-  `4d4ece9cda36da4096b768d35757271c01122a2c48fe343f25df0f43371134c5`, with
-  derived 0.2 Schema candidates. The remaining boundary before derived
+- ADR 0079 removed the frontmatter title from the 0.2 candidate, added the
+  optional Task orientation keys `owner`, `decision_authority`, and
+  `related_tasks`, and removed `markdown.frontmatter.title-mismatch` from the
+  0.2 registry; this repository's own documents migrate to the new envelope
+  during the 0.2 self-migration.
+- The exact NKF 0.2 candidate authority pair is drafted; its current
+  candidate digests are recorded below. The remaining boundary before derived
   implementation is Human Product Owner acceptance of those exact bytes
-  through reserved ADR 0079. No normative promotion, implementation,
+  through reserved ADR 0080. No normative promotion, implementation,
   conformance, or confirmation is claimed yet.
+- Current candidate digests: Markdown SHA-256
+  `d460616c6e68f4edd85ca41e3e9c4c35bdaf47c886c9ae817de44f70eb18f3cd` bound to executable SHA-256
+  `0c05ad832e47ad86b41b26c65dd57a49b53f140a2b592153390dfc950d6c7e6d`, with derived 0.2 Schema candidates.
 
 ## Triggering External Evidence
 

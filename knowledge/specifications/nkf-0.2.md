@@ -22,13 +22,13 @@ task: NKF-019
 - **Predecessor canonical digest:** `df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0`
 - **Canonical destination:** `knowledge/specifications/nkf-0.2.md`
 - **Executable companion destination:** `contracts/nkf/0.2/nkf.yaml`
-- **Acceptance Decisions:** ADR 0076, ADR 0077, ADR 0078, and the reserved
-  pair acceptance ADR 0079
-- **Independent governing inputs:** ADRs 0001 through 0078
+- **Acceptance Decisions:** ADR 0076, ADR 0077, ADR 0078, ADR 0079, and the
+  reserved pair acceptance ADR 0080
+- **Independent governing inputs:** ADRs 0001 through 0079
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision is the candidate canonical NKF 0.2 specification. It
-> governs only when ADR 0079 accepts it with its executable companion. It
+> governs only when ADR 0080 accepts it with its executable companion. It
 > is not the public stable NKF 1.0 release.
 
 ## Purpose
@@ -68,8 +68,9 @@ Product and Technology profile division and the complete portable topology.
 ADR 0077 adopts the Decision Applicability Gate direction realized by this
 revision. ADR 0078 allocates the version coordinate `0.2` to the correction
 because it carries breaking changes, and keeps release, adoption, and
-breaking-change process definition outside format meaning. This exact
-candidate pair governs as NKF 0.2 only when ADR 0079 accepts it.
+breaking-change process definition outside format meaning. ADR 0079 removes
+the frontmatter title and adds the Task orientation keys. This exact
+candidate pair governs as NKF 0.2 only when ADR 0080 accepts it.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
@@ -626,17 +627,18 @@ Every applicable Markdown document requires exactly these common keys:
 
 ```yaml
 ---
-title: "Human-Readable Document Title"
 summary: "A concise orientation summary."
 created_at: 2026-07-30T19:47:30Z
 ---
 ```
 
-`title` and `summary` MUST be non-empty, trimmed, single-line strings. The
-document MUST have exactly one top-level H1, and `title` MUST exactly equal its
-comparison string. `summary` helps a person or agent orient to the document;
-its presence and shape do not prove semantic correctness, completeness, or
-acceptance.
+Frontmatter carries no `title` key. The document MUST have exactly one
+top-level H1, and that H1's comparison string is the document title. For a
+record, the declaration `title` MUST exactly equal it; repeating the title in
+frontmatter is unsupported duplication and fails closed as an unsupported
+key. `summary` MUST be a non-empty, trimmed, single-line string. It helps a
+person or agent orient to the document; its presence and shape do not prove
+semantic correctness, completeness, or acceptance.
 
 `created_at` MUST be a real calendar instant serialized exactly as
 `YYYY-MM-DDTHH:mm:ssZ`. It records the first evidenced repository appearance
@@ -653,10 +655,10 @@ record_lifecycle: immutable
 record_status: accepted
 ```
 
-The frontmatter `id`, `type`, `record_lifecycle`, `record_status`, and `title`
-MUST exactly equal declaration `id`, `type`, `governance.lifecycle`,
-`governance.status`, and `title`, respectively. A mismatch fails conformance;
-the checker does not select a winner or rewrite either representation.
+The frontmatter `id`, `type`, `record_lifecycle`, and `record_status` MUST
+exactly equal declaration `id`, `type`, `governance.lifecycle`, and
+`governance.status`, respectively. A mismatch fails conformance; the checker
+does not select a winner or rewrite either representation.
 
 Design, Decision, Specification, and Realization record sources additionally
 require one non-empty `task` value. It MUST exactly resolve to one Task
@@ -705,11 +707,17 @@ separate operation.
 
 NKF adds `task` and `evidence` to `non_records[].kind`. A Task non-record
 requires a unique, non-empty `task_id` and a `task_status` of `active`,
-`deferred`, or `completed`. The project supplies that operational projection;
-NKF validates its declared shape and reference graph but does not execute,
-schedule, complete, or become authoritative for the Task. NKF Core does not
-infer Task state from directory names. Every Task non-record body MUST carry
-the Decision Applicability Gate defined in its own section of this
+`deferred`, or `completed`. It MAY additionally declare `owner` and
+`decision_authority` as non-empty, trimmed, single-line strings, and
+`related_tasks` as a non-empty duplicate-free sequence of `task_id` values,
+each resolving to exactly one other same-bundle Task non-record. These
+orientation keys replace repeating the same identity facts at the top of the
+body. Repository identity belongs to the bundle and its root record; NKF
+defines no per-document repository key. The project supplies that operational
+projection; NKF validates its declared shape and reference graph but does not
+execute, schedule, complete, or become authoritative for the Task. NKF Core
+does not infer Task state from directory names. Every Task non-record body
+MUST carry the Decision Applicability Gate defined in its own section of this
 specification.
 
 Record references in `design_decisions`, `superseded_by`, and
@@ -721,12 +729,12 @@ The allowed keys are:
 
 | Applicable document | Required keys | Conditional keys |
 | --- | --- | --- |
-| Non-Evidence Markdown | `title`, `summary`, `created_at` | None |
+| Non-Evidence Markdown | `summary`, `created_at` | None |
 | Record source | Common plus `id`, `type`, `record_lifecycle`, `record_status` | Type profile |
 | Design record | Record plus `task`, `design_disposition` | `design_decisions`, `superseded_by`, `withdrawal_source` |
 | Decision or Specification record | Record plus `task` | None |
 | Realization record | Record plus `task`, `confirmation_status` | `confirmation_decisions`, `unconfirmed_scope` |
-| Task non-record | Common plus `task_id`, `task_status` | None |
+| Task non-record | Common plus `task_id`, `task_status` | `owner`, `decision_authority`, `related_tasks` |
 | Evidence record or non-record | Exempt | Safe syntax only when an envelope is present |
 
 Key order, quoting style, comments, and whitespace are non-semantic. A
@@ -740,12 +748,12 @@ CommonMark thematic break MUST use a form other than an exact opening `---`
 line.
 
 A missing required envelope emits `markdown.frontmatter.required`. A missing
-key emits `markdown.frontmatter.key.missing`; an unsupported key emits
-`markdown.frontmatter.key.unsupported`; and an invalid value or conditional
-shape emits `markdown.frontmatter.value.invalid`. Invalid `created_at` emits
-`markdown.frontmatter.created-at.invalid`. Title disagreement emits
-`markdown.frontmatter.title-mismatch`; record identity or declared-governance
-disagreement emits `markdown.frontmatter.record-mismatch`. Invalid Design
+key emits `markdown.frontmatter.key.missing`; an unsupported key, including a
+`title` key, emits `markdown.frontmatter.key.unsupported`; and an invalid
+value or conditional shape emits `markdown.frontmatter.value.invalid`.
+Invalid `created_at` emits `markdown.frontmatter.created-at.invalid`. Record
+identity or declared-governance disagreement emits
+`markdown.frontmatter.record-mismatch`. Invalid Design
 disposition provenance emits `markdown.frontmatter.design.invalid`; invalid
 Realization confirmation provenance emits
 `markdown.frontmatter.confirmation.invalid`; invalid Task identity or status
@@ -2261,7 +2269,6 @@ warning is non-blocking.
 | `markdown.frontmatter.key.unsupported` | error |
 | `markdown.frontmatter.value.invalid` | error |
 | `markdown.frontmatter.created-at.invalid` | error |
-| `markdown.frontmatter.title-mismatch` | error |
 | `markdown.frontmatter.record-mismatch` | error |
 | `markdown.frontmatter.design.invalid` | error |
 | `markdown.frontmatter.confirmation.invalid` | error |

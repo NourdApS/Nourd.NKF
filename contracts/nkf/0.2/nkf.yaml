@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.2/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88
+    value: d460616c6e68f4edd85ca41e3e9c4c35bdaf47c886c9ae817de44f70eb18f3cd
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -618,11 +618,10 @@ markdown:
           fractional_seconds: forbidden
           generic_updated_at: undefined
         common:
-          required_fields: [title, summary, created_at]
+          required_fields: [summary, created_at]
+          title_key: forbidden
+          title_authority: commonmark-body-single-H1-comparison-string
           fields:
-            title:
-              ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
-              equals: commonmark-body-single-H1-comparison-string
             summary:
               ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
               semantic_adequacy_from_validation: false
@@ -639,8 +638,6 @@ markdown:
               equals: declaration.governance.lifecycle
             record_status:
               equals: declaration.governance.status
-            title:
-              equals: declaration.title
         lifecycle_record_task:
           applies_to_types: [design, decision, specification, realization]
           required_field: task
@@ -721,6 +718,16 @@ markdown:
             unique_across_task_non_records: true
           task_status:
             enum: [active, deferred, completed]
+          optional_fields: [owner, decision_authority, related_tasks]
+          owner:
+            ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+          decision_authority:
+            ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+          related_tasks:
+            unique_non_empty_sequence: true
+            item_resolves_to: same-bundle-task-non-record-task-id
+            self_reference: forbidden
+          per_document_repository_key: undefined
           directory_state_inference: forbidden
           operational_authority: external-to-nkf
           applicability_gate:
@@ -759,12 +766,12 @@ markdown:
             retrospective_gate_disclosure: required
         allowed_keys:
           closed_by_applicable_document_class: true
-          common: [title, summary, created_at]
+          common: [summary, created_at]
           record: [id, type, record_lifecycle, record_status]
           lifecycle_record: [task]
           design: [design_disposition, design_decisions, superseded_by, withdrawal_source]
           realization: [confirmation_status, confirmation_decisions, unconfirmed_scope]
-          task_non_record: [task_id, task_status]
+          task_non_record: [task_id, task_status, owner, decision_authority, related_tasks]
         reference_resolution:
           record_ids: exact-and-unique
           task_ids: exact-and-unique
@@ -1760,7 +1767,6 @@ diagnostics:
     markdown.frontmatter.key.unsupported: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.value.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.created-at.invalid: {severity: error, blocking: conformance, phase: source}
-    markdown.frontmatter.title-mismatch: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.record-mismatch: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.design.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.confirmation.invalid: {severity: error, blocking: conformance, phase: source}
