@@ -224,6 +224,30 @@ NKF format versions use `<major>.<minor>`.
   earlier supported version remains valid against that version's immutable
   meaning; nothing migrates by implication.
 
+### Shipping A New Version
+
+Shipping a new NKF version requires, in order:
+
+1. an immutable Decision adopting the change and allocating the version under
+   the rules above;
+2. Human Product Owner acceptance of the exact new Specification revision and
+   its digest-bound executable companion;
+3. Schemas, checker enforcement, diagnostics, fixtures, tests, onboarding
+   output, agent guidance, and documentation derived from that accepted
+   meaning;
+4. a passing complete authoring gate on the exact successor snapshot,
+   including the publishing repository's own migration to the new version;
+5. independent audit Evidence and a separate Decision confirming the exact
+   successor Realization;
+6. one content-addressed versioned release archive and manifest produced and
+   verified under Release Distribution; and
+7. explicit migration meaning for consumers, who migrate deliberately while
+   prior versions remain immutable and validatable.
+
+A release does not accept knowledge, confirm a Realization, prove
+conformance, or migrate a consumer by implication. Skipping a step and
+representing a later step as satisfied fails the shipping process closed.
+
 NKF has one version namespace: the NKF format version. A bundle MUST declare
 `nkf_version`. NKF 0.11 uses the unversioned canonical identities `nkf.bundle`,
 `nkf.record`, `nkf.contract-set`, `nkf.release-manifest`, `nkf.common`,
