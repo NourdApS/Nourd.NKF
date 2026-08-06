@@ -24,6 +24,31 @@ any project-relative directory that remains inside the project. This allows a
 future Root Profile to use a different knowledge entry point without moving
 the project control boundary.
 
+## Portable Knowledge Topology
+
+Product and Technology use the same navigable lifecycle envelope:
+
+```mermaid
+flowchart TB
+  MAP["Canonical Knowledge Map"] --> TASKS["Tasks By State"]
+  MAP --> DESIGNS["Designs By Disposition"]
+  MAP --> DECISIONS["Decisions"]
+  MAP --> SPECS["Specifications"]
+  MAP --> REALIZATIONS["Realizations"]
+  MAP --> CURRENT["Consolidated Current System"]
+  MAP --> EVIDENCE["Evidence Areas"]
+  REALIZATIONS --> CURRENT
+  REALIZATIONS --> SUPPORTING["Supporting Current Realizations"]
+```
+
+`README.md` is the only canonical map. Its managed `NKF Navigation` block
+links the profile root and required lifecycle entry points exactly once;
+project-owned content outside that block remains project-owned. Tasks are
+placed and indexed by `task_status`, Designs by `design_disposition`, and
+Decisions, Specifications, and current Realizations by their native record
+declarations. The checker continuously verifies this topology; it is not only
+an onboarding template.
+
 ## Common And Concrete Profiles
 
 ```mermaid

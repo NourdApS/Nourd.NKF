@@ -2,15 +2,16 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the confirmed NKF-015 agent-led initial-onboarding successor and its deferred NKF-014 extension boundary.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the confirmed NKF-017 complete portable Product and Technology onboarding topology and its deferred boundaries.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-015
+task: NKF-017
 confirmation_status: confirmed
 confirmation_decisions:
   - adr-0068
   - adr-0070
+  - adr-0075
 ---
 
 # NKF Current System
@@ -36,11 +37,12 @@ Product and Technology Root Profiles. Markdown remains the normative human
 authority and the executable YAML remains its digest-bound companion.
 
 The current exact authority pair is accepted through
-[ADR 0058](../decisions/0058-governed-frontmatter.md). It makes the safe YAML
-frontmatter envelope introduced through ADR 0054 a governed
-document-orientation surface while keeping substantive canonical meaning in
-the CommonMark body. ADRs 0055 and 0056 remain predecessor provenance for the
-native Design responsibility vocabulary.
+[ADR 0073](../decisions/0073-correct-portable-topology-diagnostic-registry.md).
+It includes the complete portable topology and preserves the safe YAML
+frontmatter envelope accepted through ADR 0058 while keeping substantive
+canonical meaning in the CommonMark body. ADRs 0054 through 0058 remain
+predecessor provenance for governed frontmatter and the native Design
+responsibility vocabulary.
 
 The predecessor implementation baseline is
 [ADR 0057](../decisions/0057-current-system-realization.md). ADR 0059 confirms
@@ -89,6 +91,18 @@ binding, sealing, transaction, and validation.
 the exact audited and published NKF-015 successor while keeping consumer
 onboarding outside the completed Task.
 
+[ADR 0071](../decisions/0071-complete-portable-onboarding-topology.md) adopts
+the complete portable Product and Technology topology. ADR 0072 accepted its
+initial authority pair, and
+[ADR 0073](../decisions/0073-correct-portable-topology-diagnostic-registry.md)
+accepts the corrected current pair after restoring the omitted topology
+diagnostics to the normative Markdown registry.
+[ADR 0074](../decisions/0074-separate-authoring-and-recommended-release-verification.md)
+separates unreleased current-snapshot authoring validation from explicit
+recommended-release verification without weakening release review.
+[ADR 0075](../decisions/0075-confirm-complete-portable-onboarding-topology.md)
+confirms the exact audited NKF-017 successor without publishing it.
+
 ## Durable Mapping
 
 The current repository topology is:
@@ -127,26 +141,32 @@ Unadopted Empty Or Tiny Knowledge Repository
 Mechanical Project Capture + External Candidate Workspace
         ↓ resolved assessment and Markdown representations
 Deterministically Sealed Onboarding Plan
-        ↓ deterministic generation and staged check
+        ↓ complete topology generation and staged check
 Draft NKF Candidate Or Complete Rollback
+
+Trusted NKF-013 Or NKF-015 Receipt
+        ↓ predecessor integrity and drift checks
+Rollback-Capable Topology Repair
+        ↓ full-bundle validation
+Complete Product Or Technology Topology
 ```
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| Normative Specification | `knowledge/specifications/nkf-0.1.md` | Accepted current governed-frontmatter revision | ADR 0058 |
-| Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0058 |
-| Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas; bundle kind vocabulary extended | ADR 0059 |
-| Checker library and CLI | `src/checker/`, `src/cli.ts` | Governed frontmatter, references, and prior checker behavior implemented | ADR 0059 |
-| Fixtures and tests | `fixtures/`, `test/` | NKF-015 adds Category 1 and Category 2 assessment, mandatory confirmation, negative override, numeric and frontmatter neutrality, complete project-source drift, and revised guidance coverage over the confirmed NKF-013 suite | ADR 0070 over ADR 0068 |
+| Normative Specification | `knowledge/specifications/nkf-0.1.md` | Accepted complete portable-topology revision | ADR 0073 over ADR 0072 |
+| Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0073 over ADR 0072 |
+| Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas | ADR 0075 over ADR 0059 |
+| Checker library and CLI | `src/checker/`, `src/cli.ts` | Complete portable paths, maps, placement, indexes, and diagnostics implemented | ADR 0075 |
+| Fixtures and tests | `fixtures/`, `test/` | Complete Product and Technology topology, onboarding, repair, drift, rollback, idempotence, and tamper coverage | ADR 0075 |
 | Build artifact | `dist/nourd-nkf-checker.mjs` | Deterministically verified local build | ADR 0059 |
 | Self-host declaration | `.nourd/knowledge/` | Migrated Technology bundle with complete source and artifact bindings | ADR 0059 |
 | Neutral authoring procedure | `integrations/ai/nkf-authoring-protocol.md` | Implemented vendor-neutral CommonMark protocol | ADR 0061 |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Implemented for twelve explicit host surfaces with unknown-surface fail-closed policy; the root adapter also contains an NKF-repository-only Task-authorization policy outside portable NKF meaning | ADR 0070 over ADR 0061 |
 | Project enforcement command | `package.json` | `npm run nkf:check` orchestrates adopted-repository guidance, pre-adoption guidance verification, engineering, build, and bundle checks | ADR 0068 successor over ADR 0061 |
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; NKF-015 run `30655408945` passed on exact source commit `53ae5217f68731d953f3bf616a578adeb033bb03`; required protection remains deferred to NKF-012 | ADR 0070 successor over ADRs 0061–0063; run remains external Evidence |
-| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Retains inspect, seal, onboard, staged validation, rollback, and receipt commands; NKF-015 removes semantic eligibility claims, adds complete mechanical capture and plan-bound assessment reporting | ADR 0070 over ADRs 0068 and 0066 |
-| Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge assessment, Category 2 human confirmation, complete mechanical source manifest, native generation, whole-project transaction, and NKF-014 semantic handoff implemented | ADR 0070; ADR 0068 confirms the predecessor |
-| Public documentation | `public-docs/` | The NKF-015 projection at public commit `a14766ca1bdc67bfd8fb9e6d73355fc019017a90` explains the agent-led workflow and mechanical enforcement boundary; a fresh clone matched all 28 staged files | ADR 0070; publication remains external Evidence |
+| Consumer adopter | `dist/nourd-nkf-adopt.mjs` | Initial onboarding plus receipt-bound, rollback-capable, idempotent predecessor topology repair | ADR 0075 over ADR 0070 |
+| Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge assessment plus complete Common and selected-profile topology construction | ADR 0075 over ADR 0070 |
+| Public documentation | `public-docs/` | Complete local projection with topology, onboarding, recovery, and Product and Technology examples | ADR 0075; publication remains separate |
 | Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Unborn-Git Product and Technology onboarding, generated package command, existing install, no-update, and tamper rejection passed locally and in run `30628889305` on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` | ADR 0068; run remains external Evidence |
 | Latest result | `.nourd/validation-result.json` | Persists the latest full-bundle observation for its exact validated snapshot; the result may become stale immediately when a Governed Validation Input changes | Conformance observation only |
 | Release tooling | `scripts/package-release.mjs`, `scripts/release/` | Rebound, reproducibly built, published as the exact private prerelease, re-downloaded, and independently verified | ADR 0059 mechanism; ADR 0065 inputs; ADR 0066 successor |
@@ -157,6 +177,7 @@ Supporting current Realizations provide the detailed mappings:
 - [Checker And Validation](current/checker-and-validation.md)
 - [Layered Contract Enforcement](current/layered-contract-enforcement.md)
 - [Agent-Led Initial Onboarding](current/agent-led-initial-onboarding.md)
+- [Portable Knowledge Topology](current/portable-knowledge-topology.md)
 - [Release Documentation And Adoption](current/release-documentation-and-adoption.md)
 - [Self-Hosting](current/self-hosting.md)
 - [Release Package](current/release-package.md)
@@ -272,6 +293,13 @@ observations; ADR 0070 separately confirms the exact successor. Consumer
 onboarding is outside NKF-015 and will be performed separately by the Human
 Product Owner.
 
+NKF-017 is complete for the accepted complete portable Product and Technology
+topology, continuing checker enforcement, initial onboarding, and deliberate
+NKF-013 or NKF-015 predecessor repair. Its public projection and successor
+adopter are local confirmed artifacts only. No consumer was migrated, no
+successor release was recommended or published, and acceptance-binding and
+protected-merge work remain deferred to NKF-016 and NKF-012.
+
 ## Compatibility Verification And Recovery
 
 Verification consists of strict authority-pair binding, schema compilation,
@@ -305,6 +333,13 @@ policy. The Human Product Owner subsequently authorized both completion
 boundaries. The successor was published and freshly verified, and its private
 source commit passed the exact-commit workflow. Those observations remain
 separate from ADR 0070's confirmation act.
+
+The NKF-017 successor passes nineteen test files with 151 tests, both neutral
+guidance verifiers, deterministic checker and adopter builds, the 60-file
+public-documentation projection with two complete examples, and full-bundle
+self-host validation with zero diagnostics. The completion audit repaired the
+Markdown diagnostic-registry omission, the circular release-recommendation
+gate, and loose repair-receipt integrity checks before confirmation.
 
 The separate
 [NKF-011 Realization Audit](../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
@@ -342,6 +377,12 @@ confirm the successor Realization. The separate
 records the exact source and public commits, fresh-clone comparison, manifest
 verification, example checks, and successful exact-source workflow. ADR 0070
 supplies confirmation rather than deriving it from either Evidence record.
+
+The
+[NKF-017 Completion Audit](../evidence/audits/nkf-017-whole-repository-completion-audit.md)
+records the whole-repository requirement, authority, coherence, enforcement,
+distribution, navigation, security, and recovery review. ADR 0075 supplies the
+separate exact-byte confirmation act.
 
 Recovery uses Git history, immutable Decision and Evidence provenance,
 predecessor digests, explicit successor Decisions, deterministic rebuilding,

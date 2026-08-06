@@ -12,9 +12,13 @@ status; it does not establish that status.
 
 ## Active
 
-None.
+[Active Task Index](active/README.md)
+
+No Task is currently Active.
 
 ## Deferred
+
+[Deferred Task Index](deferred/README.md)
 
 - [NKF-004: Define Portable Presentation Guidance Extension](deferred/NKF-004-portable-presentation-guidance.md)
 - [NKF-005: Investigate Validation Expiry And Authority Freshness](deferred/NKF-005-validation-expiry-and-authority-freshness.md)
@@ -23,8 +27,11 @@ None.
 - [NKF-012: Activate Protected Merge Gate](deferred/NKF-012-activate-protected-merge-gate.md)
 - [NKF-014: Expand Brownfield And Advanced Onboarding](deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
 - [NKF-016: Deliver Acceptance-Binding Verification](deferred/NKF-016-deliver-acceptance-binding-verification.md)
+- [NKF-018: Stabilize Volatile Onboarding Inputs](deferred/NKF-018-stabilize-volatile-onboarding-inputs.md)
 
 ## Completed
+
+[Completed Task Index](completed/README.md)
 
 - [NKF-003: Establish Independent NKF Authority](completed/NKF-003-independent-nkf-authority.md)
 - [NKF-007: Repair Knowledge Structure And Confirmation](completed/NKF-007-knowledge-structure-and-confirmation.md)
@@ -33,3 +40,4 @@ None.
 - [NKF-011: Enforce NKF Contracts](completed/NKF-011-enforce-nkf-contracts.md)
 - [NKF-013: Establish Initial Greenfield Onboarding](completed/NKF-013-initial-greenfield-onboarding.md)
 - [NKF-015: Establish Agent-Led Initial Onboarding](completed/NKF-015-agent-led-initial-onboarding.md)
+- [NKF-017: Establish Complete Portable Onboarding Topology](completed/NKF-017-complete-portable-onboarding-topology.md)

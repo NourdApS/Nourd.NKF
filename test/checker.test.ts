@@ -43,6 +43,12 @@ describe("bundle-aware checker", () => {
         acceptance_binding: "not-applicable",
         governing_use: "not-ready",
       }),
+      expect.objectContaining({
+        record_id: "product-current-system",
+        conformance: "passed",
+        acceptance_binding: "not-applicable",
+        governing_use: "not-ready",
+      }),
     ]);
     expect(result.contract_artifacts.core.executable.binding).toBe("verified");
   });
@@ -112,8 +118,8 @@ describe("bundle-aware checker", () => {
     const result = await validateProject(
       options(project, {
         request: {
-          level: "full-bundle",
-          record_id: null,
+          level: "contract",
+          record_id: "product",
           acceptance_binding: "requested",
         },
         authorityResolver: {
@@ -212,7 +218,12 @@ describe("bundle-aware checker", () => {
       "The Product uses the confirmed option within the stated scope.",
       "",
     ].join("\n");
-    await writeFile(path.join(project, "knowledge/decision.md"), source, "utf8");
+    await writeFile(path.join(project, "knowledge/decisions/example-decision.md"), source, "utf8");
+    await writeFile(
+      path.join(project, "knowledge/decisions/README.md"),
+      `${await readFile(path.join(project, "knowledge/decisions/README.md"), "utf8")}\n- [Example Decision](example-decision.md)\n`,
+      "utf8",
+    );
     await writeFile(
       path.join(project, ".nourd/knowledge/records/decision.yaml"),
       YAML.stringify({
@@ -222,7 +233,7 @@ describe("bundle-aware checker", () => {
         body_contract: "nkf.decision",
         title: "Example Decision",
         source: {
-          path: "decision.md",
+          path: "decisions/example-decision.md",
           digest: { algorithm: "sha-256", value: sha256(Buffer.from(source, "utf8")) },
         },
         governance: {
@@ -253,7 +264,11 @@ describe("bundle-aware checker", () => {
 
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("passed");
-    expect(result.records.map((record) => record.record_id)).toEqual(["decision", "product"]);
+    expect(result.records.map((record) => record.record_id)).toEqual([
+      "decision",
+      "product",
+      "product-current-system",
+    ]);
     expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).not.toContain(
       "hierarchy.root-unreachable",
     );
@@ -337,8 +352,8 @@ describe("bundle-aware checker", () => {
   it("requires governed frontmatter on Markdown non-records", async () => {
     const project = await copyValidFixture();
     await writeFile(
-      path.join(project, "knowledge/README.md"),
-      "# Navigation\n\nThe frontmatter is missing.\n",
+      path.join(project, "knowledge/tasks/deferred/README.md"),
+      "# Deferred Tasks\n\nThe frontmatter is missing.\n",
       "utf8",
     );
     const result = await validateProject(options(project));
@@ -346,7 +361,7 @@ describe("bundle-aware checker", () => {
       expect.arrayContaining([
         expect.objectContaining({
           rule_id: "markdown.frontmatter.required",
-          artifact: "knowledge/README.md",
+          artifact: "knowledge/tasks/deferred/README.md",
         }),
       ]),
     );
@@ -373,11 +388,11 @@ describe("bundle-aware checker", () => {
 
   it("validates required keys, scalar shape, UTC creation time, title equality, and H1 count", async () => {
     const missing = await copyValidFixture();
-    const missingFile = path.join(missing, "knowledge/README.md");
+    const missingFile = path.join(missing, "knowledge/tasks/deferred/README.md");
     await writeFile(
       missingFile,
       (await readFile(missingFile, "utf8")).replace(
-        'summary: "Provides navigation to the governed Example Product knowledge."\n',
+        'summary: "Provides the required NKF navigation index for Deferred Tasks."\n',
         "",
       ),
       "utf8",
@@ -387,13 +402,13 @@ describe("bundle-aware checker", () => {
     ).toContain("markdown.frontmatter.key.missing");
 
     const invalid = await copyValidFixture();
-    const invalidFile = path.join(invalid, "knowledge/README.md");
+    const invalidFile = path.join(invalid, "knowledge/tasks/deferred/README.md");
     await writeFile(
       invalidFile,
       (await readFile(invalidFile, "utf8"))
-        .replace('title: Navigation', 'title: "Wrong Navigation"')
+        .replace('title: "Deferred Tasks"', 'title: "Wrong Navigation"')
         .replace(
-          'summary: "Provides navigation to the governed Example Product knowledge."',
+          'summary: "Provides the required NKF navigation index for Deferred Tasks."',
           'summary: " invalid orientation "',
         )
         .replace("2026-07-30T07:53:41Z", "2026-02-30T07:53:41Z"),
@@ -411,7 +426,7 @@ describe("bundle-aware checker", () => {
     );
 
     const h1 = await copyValidFixture();
-    const h1File = path.join(h1, "knowledge/README.md");
+    const h1File = path.join(h1, "knowledge/tasks/deferred/README.md");
     await writeFile(
       h1File,
       `${await readFile(h1File, "utf8")}\n# Second Navigation\n`,
@@ -424,7 +439,7 @@ describe("bundle-aware checker", () => {
 
   it("validates Task, Design, and Realization lifecycle frontmatter", async () => {
     const task = await copyValidFixture();
-    const taskFile = path.join(task, "knowledge/task.md");
+    const taskFile = path.join(task, "knowledge/tasks/active/task.md");
     await writeFile(
       taskFile,
       (await readFile(taskFile, "utf8")).replace("task_status: active", "task_status: unknown"),
@@ -443,9 +458,20 @@ describe("bundle-aware checker", () => {
         "record_status: draft\ntask: TEST-001\ndesign_disposition: adopted",
       );
     await writeFile(designSourceFile, designSource, "utf8");
+    const adoptedSourceFile = path.join(design, "knowledge/designs/adopted/product.md");
+    await rename(designSourceFile, adoptedSourceFile);
+    const mapFile = path.join(design, "knowledge/README.md");
+    await writeFile(
+      mapFile,
+      (await readFile(mapFile, "utf8")).replace("(product.md)", "(designs/adopted/product.md)"),
+      "utf8",
+    );
+    const adoptedIndex = path.join(design, "knowledge/designs/adopted/README.md");
+    await writeFile(adoptedIndex, `${await readFile(adoptedIndex, "utf8")}\n- [Product](product.md)\n`, "utf8");
     await mutateRecord(design, (record) => {
       record.type = "design";
       record.body_contract = "nkf.design";
+      record.source.path = "designs/adopted/product.md";
       record.source.digest.value = sha256(Buffer.from(designSource, "utf8"));
     });
     expect(
@@ -453,19 +479,14 @@ describe("bundle-aware checker", () => {
     ).toContain("markdown.frontmatter.design.invalid");
 
     const realization = await copyValidFixture();
-    const realizationSourceFile = path.join(realization, "knowledge/product.md");
+    const realizationSourceFile = path.join(realization, "knowledge/realizations/current-system.md");
     const realizationSource = (await readFile(realizationSourceFile, "utf8"))
-      .replace("type: product", "type: realization")
-      .replace(
-        "record_status: draft",
-        "record_status: draft\ntask: TEST-001\nconfirmation_status: confirmed",
-      );
+      .replace("confirmation_status: unconfirmed", "confirmation_status: confirmed");
     await writeFile(realizationSourceFile, realizationSource, "utf8");
-    await mutateRecord(realization, (record) => {
-      record.type = "realization";
-      record.body_contract = "nkf.realization";
-      record.source.digest.value = sha256(Buffer.from(realizationSource, "utf8"));
-    });
+    const realizationDeclarationFile = path.join(realization, ".nourd/knowledge/records/product-current-system.yaml");
+    const realizationDeclaration = YAML.parse(await readFile(realizationDeclarationFile, "utf8"));
+    realizationDeclaration.source.digest.value = sha256(Buffer.from(realizationSource, "utf8"));
+    await writeFile(realizationDeclarationFile, YAML.stringify(realizationDeclaration), "utf8");
     expect(
       (await validateProject(options(realization))).diagnostics.map(
         (diagnostic) => diagnostic.rule_id,
@@ -494,7 +515,9 @@ describe("bundle-aware checker", () => {
       "The Decision exists only as a negative fixture.",
       "",
     ].join("\n");
-    await writeFile(path.join(project, "knowledge/decision.md"), source, "utf8");
+    await writeFile(path.join(project, "knowledge/decisions/unresolved-task-decision.md"), source, "utf8");
+    const decisionsIndex = path.join(project, "knowledge/decisions/README.md");
+    await writeFile(decisionsIndex, `${await readFile(decisionsIndex, "utf8")}\n- [Unresolved Task Decision](unresolved-task-decision.md)\n`, "utf8");
     await writeFile(
       path.join(project, ".nourd/knowledge/records/decision.yaml"),
       YAML.stringify({
@@ -504,7 +527,7 @@ describe("bundle-aware checker", () => {
         body_contract: "nkf.decision",
         title: "Unresolved Task Decision",
         source: {
-          path: "decision.md",
+          path: "decisions/unresolved-task-decision.md",
           digest: { algorithm: "sha-256", value: sha256(Buffer.from(source, "utf8")) },
         },
         governance: {
@@ -557,20 +580,19 @@ describe("bundle-aware checker", () => {
   it("still enforces safe envelope syntax when an Evidence non-record starts with frontmatter", async () => {
     const project = await copyValidFixture();
     await writeFile(
-      path.join(project, "knowledge/README.md"),
+      path.join(project, "knowledge/evidence/README.md"),
       "---\ntitle: Unclosed Evidence\n# Preserved Evidence\n",
       "utf8",
     );
     const bundleFile = path.join(project, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundleFile, "utf8"));
-    bundle.non_records[0].kind = "evidence";
     await writeFile(bundleFile, YAML.stringify(bundle), "utf8");
     const result = await validateProject(options(project));
     expect(result.diagnostics).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           rule_id: "markdown.frontmatter.invalid",
-          artifact: "knowledge/README.md",
+          artifact: "knowledge/evidence/README.md",
         }),
       ]),
     );
@@ -610,10 +632,12 @@ describe("bundle-aware checker", () => {
       "Negative fixture.",
       "",
     ].join("\n");
-    await writeFile(path.join(project, "knowledge/duplicate-task.md"), source, "utf8");
+    await writeFile(path.join(project, "knowledge/tasks/active/duplicate-task.md"), source, "utf8");
+    const activeIndex = path.join(project, "knowledge/tasks/active/README.md");
+    await writeFile(activeIndex, `${await readFile(activeIndex, "utf8")}\n- [Duplicate Task](duplicate-task.md)\n`, "utf8");
     const bundleFile = path.join(project, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundleFile, "utf8"));
-    bundle.non_records.push({ path: "duplicate-task.md", kind: "task" });
+    bundle.non_records.push({ path: "tasks/active/duplicate-task.md", kind: "task" });
     await writeFile(bundleFile, YAML.stringify(bundle), "utf8");
     const result = await validateProject(options(project));
     expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).toContain(
@@ -624,9 +648,11 @@ describe("bundle-aware checker", () => {
   it("never reports a failing full bundle with no record results as ready", async () => {
     const project = await copyValidFixture();
     await unlink(path.join(project, ".nourd/knowledge/records/product.yaml"));
+    await unlink(path.join(project, ".nourd/knowledge/records/product-current-system.yaml"));
     const bundleFile = path.join(project, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundleFile, "utf8"));
     bundle.non_records.push({ path: "product.md", kind: "evidence" });
+    bundle.non_records.push({ path: "realizations/current-system.md", kind: "evidence" });
     await writeFile(bundleFile, YAML.stringify(bundle), "utf8");
 
     const result = await validateProject(options(project));
@@ -634,7 +660,7 @@ describe("bundle-aware checker", () => {
     expect(result.records).toEqual([]);
     expect(result.governing_use).toBe("not-ready");
     expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).toEqual(
-      expect.arrayContaining(["bundle.root.missing", "bundle.root.invalid"]),
+      expect.arrayContaining(["knowledge.topology.current-system.invalid"]),
     );
   });
 });

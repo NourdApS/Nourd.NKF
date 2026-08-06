@@ -6,8 +6,20 @@ created_at: 2026-07-28T22:01:17Z
 
 # NKF Knowledge
 
-Begin with the
-[Current System Realization](realizations/current-system.md). It is the
+<!-- nkf-navigation:start -->
+## NKF Navigation
+
+- [Technology Root](nkf.md)
+- [Tasks](tasks/README.md)
+- [Designs](designs/README.md)
+- [Decisions](decisions/README.md)
+- [Specifications](specifications/README.md)
+- [Realizations](realizations/README.md)
+- [Current System](realizations/current-system.md)
+- [Evidence](evidence/README.md)
+<!-- nkf-navigation:end -->
+
+Begin with the Current System Realization named in NKF Navigation. It is the
 consolidated, navigable view of the current architecture, topology,
 components, interfaces, implementation status, confirmation status, artifact
 mappings, and relevant Decision provenance.
@@ -20,13 +32,13 @@ the current system by routinely replaying every historical record.
 
 | Need | Start Here |
 | --- | --- |
-| Current implementation | [Current System](realizations/current-system.md) |
-| Current normative meaning | [NKF 0.1 Specification](specifications/nkf-0.1.md) |
-| Active work | [Tasks](tasks/README.md) |
-| Adopted or superseded proposal reasoning | [Designs](designs/README.md) |
-| Governing rationale | [Decisions](decisions/README.md) |
-| Reviewed history and migration inputs | [Evidence](evidence/README.md) |
-| Technology root meaning | [NKF](nkf.md) |
+| Current implementation | Current System in NKF Navigation |
+| Current normative meaning | Specifications in NKF Navigation |
+| Active work | Tasks in NKF Navigation |
+| Adopted or superseded proposal reasoning | Designs in NKF Navigation |
+| Governing rationale | Decisions in NKF Navigation |
+| Reviewed history and migration inputs | Evidence in NKF Navigation |
+| Technology root meaning | Technology Root in NKF Navigation |
 
 ## Lifecycle
 

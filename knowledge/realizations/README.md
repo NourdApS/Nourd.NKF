@@ -17,6 +17,7 @@ conformance.
 ## Current System
 
 - [NKF Current System](current-system.md) — consolidated entry view
+- [Supporting Current Realizations](current/README.md) — lifecycle index
 - [Contracts And Schemas](current/contracts-and-schemas.md)
 - [Checker And Validation](current/checker-and-validation.md)
 - [Layered Contract Enforcement](current/layered-contract-enforcement.md)

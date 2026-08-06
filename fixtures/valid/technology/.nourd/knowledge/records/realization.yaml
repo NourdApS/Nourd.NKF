@@ -4,23 +4,75 @@ type: realization
 body_contract: nkf.realization
 title: Example Realization
 source:
-  path: realization.md
+  path: realizations/current-system.md
   digest:
     algorithm: sha-256
     value: d4c671b8e001a481b6f931725921b0565a094eb566ce61c286a04bf257fd0693
 governance:
   lifecycle: living
   status: draft
-  authority: [human-product-owner]
+  authority:
+    - human-product-owner
 scope:
   root: technology
 sections:
-  - {id: realization-identity-and-kind, heading_path: [Realization Identity And Kind], occurrence: 1, authority: proposal, role: identity, responsibilities: [realization-identity-and-kind]}
-  - {id: governed-meaning-realized, heading_path: [Governed Meaning Realized], occurrence: 1, authority: proposal, role: mapping, responsibilities: [governed-meaning-realized]}
-  - {id: durable-mapping, heading_path: [Durable Mapping], occurrence: 1, authority: proposal, role: mapping, responsibilities: [durable-mapping]}
-  - {id: responsibilities-and-ownership-boundaries, heading_path: [Responsibilities And Ownership Boundaries], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-and-ownership-boundaries]}
-  - {id: interfaces-dependencies-locators-and-resolution, heading_path: [Interfaces Dependencies Locators And Resolution], occurrence: 1, authority: proposal, role: interface, responsibilities: [interfaces-dependencies-locators-and-resolution]}
-  - {id: external-authority-and-operational-state-boundaries, heading_path: [External Authority And Operational State Boundaries], occurrence: 1, authority: proposal, role: boundary, responsibilities: [external-authority-and-operational-state-boundaries]}
-  - {id: compatibility-verification-and-recovery, heading_path: [Compatibility Verification And Recovery], occurrence: 1, authority: proposal, role: recovery, responsibilities: [compatibility-verification-and-recovery]}
+  - id: realization-identity-and-kind
+    heading_path:
+      - Realization Identity And Kind
+    occurrence: 1
+    authority: proposal
+    role: identity
+    responsibilities:
+      - realization-identity-and-kind
+  - id: governed-meaning-realized
+    heading_path:
+      - Governed Meaning Realized
+    occurrence: 1
+    authority: proposal
+    role: mapping
+    responsibilities:
+      - governed-meaning-realized
+  - id: durable-mapping
+    heading_path:
+      - Durable Mapping
+    occurrence: 1
+    authority: proposal
+    role: mapping
+    responsibilities:
+      - durable-mapping
+  - id: responsibilities-and-ownership-boundaries
+    heading_path:
+      - Responsibilities And Ownership Boundaries
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-and-ownership-boundaries
+  - id: interfaces-dependencies-locators-and-resolution
+    heading_path:
+      - Interfaces Dependencies Locators And Resolution
+    occurrence: 1
+    authority: proposal
+    role: interface
+    responsibilities:
+      - interfaces-dependencies-locators-and-resolution
+  - id: external-authority-and-operational-state-boundaries
+    heading_path:
+      - External Authority And Operational State Boundaries
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities:
+      - external-authority-and-operational-state-boundaries
+  - id: compatibility-verification-and-recovery
+    heading_path:
+      - Compatibility Verification And Recovery
+    occurrence: 1
+    authority: proposal
+    role: recovery
+    responsibilities:
+      - compatibility-verification-and-recovery
 relationships:
-  - {type: realizes, target: specification, source_section: governed-meaning-realized}
+  - type: realizes
+    target: specification
+    source_section: governed-meaning-realized

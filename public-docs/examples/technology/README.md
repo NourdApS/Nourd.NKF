@@ -14,10 +14,14 @@ project/
 │           ├── specification.yaml
 │           └── technology.yaml
 ├── knowledge/
-│   ├── realization.md
-│   ├── specification.md
-│   ├── task.md
-│   └── technology.md
+│   ├── README.md
+│   ├── technology.md
+│   ├── tasks/
+│   ├── designs/
+│   ├── decisions/
+│   ├── specifications/
+│   ├── realizations/
+│   └── evidence/
 └── src/
     └── example.ts
 ```
@@ -29,8 +33,8 @@ Start with the actual
 [Realization declaration](project/.nourd/knowledge/records/realization.yaml).
 The other declarations bind the
 [Technology](project/knowledge/technology.md) and
-[Specification](project/knowledge/specification.md) sources. The
-[Task](project/knowledge/task.md) is an explicit non-record.
+[Specification](project/knowledge/specifications/specification.md) sources. The
+[Task](project/knowledge/tasks/active/task.md) is an explicit non-record.
 
 The Technology record defines purpose, consumers, contracts, boundaries, and
 evolution. The Specification owns current normative meaning. The Realization

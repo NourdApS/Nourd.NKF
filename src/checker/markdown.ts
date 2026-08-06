@@ -29,6 +29,7 @@ export interface MarkdownModel {
   headings: Heading[];
   h1: Heading[];
   sections: Heading[];
+  links: string[];
   subordinateBeforeSection: boolean;
 }
 
@@ -243,6 +244,7 @@ export function parseMarkdown(text: string): MarkdownModel {
   const parser = new commonmark.Parser();
   const document = parser.parse(envelope.body);
   const headings: Heading[] = [];
+  const links: string[] = [];
   const occurrence = new Map<string, number>();
   let currentH2: string | null = null;
   let hasMappedSection = false;
@@ -252,6 +254,9 @@ export function parseMarkdown(text: string): MarkdownModel {
   let event: { node: any; entering: boolean } | null;
   while ((event = walker.next()) !== null) {
     const node = event.node;
+    if (event.entering && node.type === "link" && typeof node.destination === "string") {
+      links.push(node.destination);
+    }
     if (!event.entering || node.type !== "heading" || node.parent?.type !== "document") continue;
     const level = Number(node.level);
     if (level >= 4 && level <= 6 && !hasMappedSection) subordinateBeforeSection = true;
@@ -281,6 +286,7 @@ export function parseMarkdown(text: string): MarkdownModel {
     headings,
     h1: headings.filter((heading) => heading.level === 1),
     sections: headings.filter((heading) => heading.level === 2 || heading.level === 3),
+    links,
     subordinateBeforeSection,
   };
 }

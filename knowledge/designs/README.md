@@ -43,15 +43,21 @@ establishes it.
 
 ## Active
 
+[Active Design Index](active/README.md)
+
 No Design is currently classified as Active.
 
 ## Adopted
 
+[Adopted Design Index](adopted/README.md)
+
 - [Acceptance Provenance](adopted/acceptance-provenance.md)
 - [Agent-Led Initial Onboarding](adopted/agent-led-initial-onboarding.md)
 - [Common And Root Profiles](adopted/common-and-root-profiles.md)
+- [Complete Portable Onboarding Topology](adopted/complete-portable-onboarding-topology.md)
 - [Enforcement And Diagnostics](adopted/enforcement-and-diagnostics.md)
 - [Extension Declaration And Resolution](adopted/extension-declaration-and-resolution.md)
+- [Governed Frontmatter](adopted/governed-frontmatter.md)
 - [Initial Release Distribution](adopted/initial-release-distribution.md)
 - [Initial Greenfield Onboarding](adopted/initial-greenfield-onboarding.md)
 - [Knowledge Architecture](adopted/knowledge-architecture.md)
@@ -70,9 +76,13 @@ No Design is currently classified as Active.
 
 ## Rejected
 
+[Rejected Design Index](rejected/README.md)
+
 No Design is currently classified as Rejected.
 
 ## Superseded
+
+[Superseded Design Index](superseded/README.md)
 
 - [Artifact Identities And Contract Versioning](superseded/artifact-identities-and-contract-versioning.md)
 - [Initial JSON Schema Realization](superseded/initial-json-schema-realization.md)
@@ -80,6 +90,8 @@ No Design is currently classified as Rejected.
 - [Replacement JSON Schema Realization](superseded/replacement-json-schema-realization.md)
 
 ## Withdrawn
+
+[Withdrawn Design Index](withdrawn/README.md)
 
 No Design is currently classified as Withdrawn.
 

@@ -52,6 +52,34 @@ bytes, preserves predecessor bytes needed for interruption recovery, keeps
 the prior content-addressed archive, installs the new pin, and runs the new
 checker.
 
+## Repair NKF-013 Or NKF-015 Topology
+
+A repository created by the trusted NKF-013 or NKF-015 onboarder may lack the
+complete portable topology or may contain a generated `README-2.md`. Use the
+successor adopter's bounded repair workflow instead of editing those paths by
+hand:
+
+```sh
+node nourd-nkf-adopt.mjs repair-topology \
+  --project /absolute/path/to/project \
+  --archive /absolute/path/to/new-release.tar \
+  --sha256 <NEW_FULL_RELEASE_SHA256>
+```
+
+Repair requires the installed predecessor release pin and onboarding receipt,
+revalidates the predecessor with its pinned checker, and reconstructs the
+known predecessor map bytes. It removes a competing map only when the receipt
+identifies that exact generated path and its current bytes match the known
+generator output. Drift or consumer-authored content fails for human
+resolution.
+
+The workflow builds and seals a candidate outside the project, stages the new
+topology and release integration, runs the successor full-bundle checker, and
+applies one rollback-capable transaction. Its receipt records predecessor and
+successor releases and created, changed, removed, and preserved paths.
+Repeating the exact successful repair returns `no-update`. Any other adopted
+repository needs a governed migration plan.
+
 ## Roll Back
 
 Rollback is another explicit update using a retained prior archive and its
@@ -71,6 +99,7 @@ Specification, Schema, checker, adapter, or workflow simply to obtain a pass.
 | Adapter conflict | Reconcile project-owned instructions without deleting unrelated policy |
 | Governed Markdown digest mismatch | Review the source change and declaration together |
 | Unsupported Root Profile | Select Product or Technology through governed migration |
+| Topology repair drift | Preserve the conflicting map and resolve its authority before migration |
 | CI differs from local | Compare the exact commit, Node.js version, pin, and workflow bytes |
 
 Keep release publication, public documentation, consumer installation,

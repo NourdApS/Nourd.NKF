@@ -7,16 +7,16 @@ authority:
   executable_path: contracts/nkf/0.1/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be
+    value: df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
       algorithm: sha-256
-      value: 099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d
+      value: 428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be
     executable_path: contracts/nkf/0.1/nkf.yaml
     executable_digest:
       algorithm: sha-256
-      value: 8e6ffdfdbe70915b8d0baf07da7aa0464327ef7ccb9857383a96d380bdfec1bc
+      value: b05d4e7d34d5f2b8472045feed547ae44ff4a0a57299da0630b3a538dc6ab2fd
   governing_decisions:
     - ADR-0001
     - ADR-0002
@@ -62,6 +62,9 @@ authority:
     - ADR-0055
     - ADR-0056
     - ADR-0058
+    - ADR-0071
+    - ADR-0072
+    - ADR-0073
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
@@ -285,6 +288,7 @@ bundle:
     exactly_one_profile_root: true
     exactly_one_selectable_profile: true
     common_profile_selectable: false
+    portable_topology_required: true
     every_markdown_exactly_one_representation: true
     non_markdown_enumeration_required: false
     non_markdown_enumeration_permitted: true
@@ -380,6 +384,187 @@ paths:
     are_identity: false
     universal_syntax: unspecified
     automatic_unsafe_dereference: forbidden
+
+portable_topology:
+  owner: nkf.common
+  applies_to_profiles: [nkf.profile.product, nkf.profile.technology]
+  continuing_conformance: true
+  required_paths:
+    - {path: README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: tasks/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: tasks/active/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: tasks/deferred/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: tasks/completed/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: designs/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: designs/active/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: designs/adopted/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: designs/rejected/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: designs/superseded/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: designs/withdrawn/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: decisions/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: specifications/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: realizations/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: realizations/current-system.md, representation: record, type: realization, body_contract: nkf.realization, count: 1}
+    - {path: realizations/current/README.md, representation: non-record, kind: navigation, frontmatter: required}
+    - {path: evidence/README.md, representation: non-record, kind: evidence, frontmatter: evidence-exempt}
+  path_safety:
+    file_kind: regular-file
+    symlink: forbidden
+    duplicate_physical_target: forbidden
+    multiple_representation: forbidden
+  topology_link_resolution:
+    participation: satisfies-required-managed-map-or-lifecycle-index-target
+    commonmark_node: link
+    images: excluded
+    autolinks: excluded
+    scheme: forbidden
+    authority: forbidden
+    query: forbidden
+    fragment: forbidden
+    percent_escape: forbidden
+    backslash: forbidden
+    nul: forbidden
+    ascii_control: forbidden
+    separator: /
+    base: containing-markdown-directory
+    lexical_parent_segments: permitted-while-normalized-target-inside-knowledge-root
+    target_spelling: exact
+    other_links: ignored-for-topology
+  canonical_map:
+    path: README.md
+    single_authority_copy: true
+    competing_generated_pattern: "^README-[0-9]+\\.md$"
+    competing_generated_declared: forbidden
+    managed_block:
+      count: 1
+      start_line: "<!-- nkf-navigation:start -->"
+      end_line: "<!-- nkf-navigation:end -->"
+      heading:
+        level: 2
+        text: NKF Navigation
+        direct_child: true
+        count: 1
+        same_heading_outside_block: forbidden
+      required_targets:
+        - profile-root-source
+        - tasks/README.md
+        - designs/README.md
+        - decisions/README.md
+        - specifications/README.md
+        - realizations/README.md
+        - realizations/current-system.md
+        - evidence/README.md
+      target_count: exactly-once
+      target_base: canonical-map-directory
+      target_spelling: exact
+      target_containment: knowledge-root
+      target_resolution: declared-native-source
+    outside_managed_block:
+      ownership: project
+      native_validation_rewrite: forbidden
+  lifecycle_navigation:
+    task:
+      representation: non-record
+      state_source: markdown.frontmatter.task_status
+      placements:
+        active: tasks/active/
+        deferred: tasks/deferred/
+        completed: tasks/completed/
+      indexes:
+        active: tasks/active/README.md
+        deferred: tasks/deferred/README.md
+        completed: tasks/completed/README.md
+      matching_items: exactly-once
+      parent_index: tasks/README.md
+      parent_targets: [tasks/active/README.md, tasks/deferred/README.md, tasks/completed/README.md]
+    design:
+      representation: record
+      disposition_source: markdown.frontmatter.design_disposition
+      placements:
+        active: designs/active/
+        adopted: designs/adopted/
+        rejected: designs/rejected/
+        superseded: designs/superseded/
+        withdrawn: designs/withdrawn/
+      indexes:
+        active: designs/active/README.md
+        adopted: designs/adopted/README.md
+        rejected: designs/rejected/README.md
+        superseded: designs/superseded/README.md
+        withdrawn: designs/withdrawn/README.md
+      matching_items: exactly-once
+      parent_index: designs/README.md
+      parent_targets: [designs/active/README.md, designs/adopted/README.md, designs/rejected/README.md, designs/superseded/README.md, designs/withdrawn/README.md]
+    decision:
+      representation: record
+      placement: decisions/
+      index: decisions/README.md
+      matching_items: exactly-once
+    specification:
+      representation: record
+      placement: specifications/
+      index: specifications/README.md
+      matching_items: exactly-once
+      selected_profile_permissions_apply: true
+    realization:
+      current_system:
+        path: realizations/current-system.md
+        count: 1
+      supporting_current_placement: realizations/current/
+      supporting_current_index: realizations/current/README.md
+      matching_supporting_items: exactly-once
+      parent_index: realizations/README.md
+      parent_targets: [realizations/current-system.md, realizations/current/README.md]
+    evidence:
+      index: evidence/README.md
+      exhaustive_file_links_required: false
+      required_area_target: direct-child-directory-containing-represented-evidence-markdown-at-any-depth
+      required_area_target_count: exactly-once
+      required_area_target_resolution: safe-directory-inside-knowledge-root
+    metadata_precedes_path_inference: true
+    path_assigns_semantic_state: false
+  preserved_material:
+    unresolved_native_promotion: forbidden
+    noncanonical_path_permitted_when_non-record: true
+    deliberately_promoted_native_knowledge_requires_canonical_placement: true
+  initial_onboarding:
+    supported_categories: [category-1-empty, category-2-tiny-knowledge]
+    common_topology: complete
+    active_task:
+      placement: tasks/active/
+      map_target_during_onboarding: required
+    profile_scaffolds:
+      nkf.profile.product:
+        root: {preferred_path: product.md, governance: draft}
+      nkf.profile.technology:
+        root: {preferred_path: technology.md, governance: draft}
+        specification: {preferred_path: specifications/initial-specification.md, governance: draft, map_target_during_onboarding: required}
+    occupied_preferred_path:
+      inspected_safe_selected_path_may_remain: true
+      filesystem_path_defines_identity: false
+    canonical_map:
+      absent: generate
+      existing: reconcile-same-document
+      suffix_allocation: forbidden
+      ambiguous: fail-before-mutation
+      outside_managed_block_bytes: preserve-unless-explicit-candidate-change
+  predecessor_repair:
+    command: repair-topology
+    eligible_predecessors: [NKF-013, NKF-015]
+    trusted_receipt_required: true
+    candidate_outside_project: true
+    seal_required: true
+    staged_full_bundle_validation: true
+    rollback_required: true
+    idempotent_result: no-update
+    competing_map_removal:
+      receipt_path_match: required
+      current_byte_match: required
+      drift: fail-human-resolution
+      consumer_authored_content: preserve-and-fail-human-resolution
+    receipt_fields: [predecessor_release, successor_release, created_paths, changed_paths, removed_paths, preserved_paths]
+    missing_trustworthy_receipt: governed-migration-plan
+    silent_consumer_migration: forbidden
 
 markdown:
   grammar: CommonMark-0.31.2
@@ -1500,6 +1685,14 @@ diagnostics:
     knowledge.root.invalid: {severity: error, blocking: conformance, phase: project}
     knowledge.root.outside-project: {severity: error, blocking: conformance, phase: project}
     knowledge.root.inside-nourd: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.path.missing: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.representation.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.map.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.map-target.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.lifecycle-path.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.index.invalid: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.generated-map.conflict: {severity: error, blocking: conformance, phase: project}
+    knowledge.topology.current-system.invalid: {severity: error, blocking: conformance, phase: project}
     path.invalid: {severity: error, blocking: conformance, phase: project}
     path.outside-root: {severity: error, blocking: conformance, phase: project}
     path.file-kind.invalid: {severity: error, blocking: conformance, phase: project}

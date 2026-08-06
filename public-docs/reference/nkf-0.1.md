@@ -6,29 +6,29 @@ summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiabl
 created_at: 2026-07-28T22:01:17Z
 record_lifecycle: immutable
 record_status: accepted
-task: NKF-010
+task: NKF-017
 ---
 
 # NKF 0.1 — Product And Technology Knowledge Format
 
 - **Status:** Accepted
-- **Task:** `NKF-010`
+- **Task:** `NKF-017`
 - **Version:** `0.1`
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted source baseline:** `kaveh6202/Nourd.Studio@13a82fbc1b72c1350e9765f59d1538c375f3fa69`
 - **Accepted source digest:** `77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a`
 - **Source acceptance:** [Nourd Studio ADR 0012](../evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md)
 - **Predecessor canonical baseline:** `knowledge/specifications/nkf-0.1.md`
-- **Predecessor canonical digest:** `099fe3cbda9c99708e630b30fdec9d0a8335cca70b34f022d85101ce71cf379d`
+- **Predecessor canonical digest:** `428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be`
 - **Canonical destination:** `knowledge/specifications/nkf-0.1.md`
 - **Executable companion destination:** `contracts/nkf/0.1/nkf.yaml`
 - **Acceptance Decisions:** ADR 0045, ADR 0050, ADR 0054, ADR 0055, ADR
-  0056, and ADR 0058
-- **Independent governing inputs:** ADRs 0001 through 0058
+  0056, ADR 0058, ADR 0071, ADR 0072, and ADR 0073
+- **Independent governing inputs:** ADRs 0001 through 0073
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision is the current canonical NKF 0.1 specification when
-> bound by ADR 0058 and its executable companion. It
+> bound by ADR 0073 and its executable companion. It
 > is not the public stable NKF 1.0 release.
 
 ## Purpose
@@ -65,7 +65,11 @@ NKF 0.1 is an accepted pre-stable format. ADR 0045 accepted the prior
 Product-only canonical Markdown and strict-YAML executable companion. ADR 0049
 accepted one automatically applicable non-selectable Common Specification and
 exactly one concrete Root Profile per bundle. ADR 0050 accepts this exact
-replacement with Product and Technology as the only selectable profiles.
+profile replacement with Product and Technology as the only selectable
+profiles. ADR 0071 adopts the complete portable topology direction. ADR 0072
+accepted the initial complete-topology successor pair. ADR 0073 accepts this
+corrected successor pair after restoring the topology diagnostics omitted from
+the authoritative Markdown registry.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
@@ -98,6 +102,15 @@ frontmatter successor revision under the Human Product Owner's accepted
 orientation boundary and explicit authorization for coherent NKF 0.1
 adoption. That authority does not accept a future profile, extension,
 consumer meaning, or unrelated format change.
+
+ADR 0071 adopts the complete portable onboarding topology after exercise of
+the confirmed predecessor against Nourd Agent SDK. ADR 0072 accepted the
+initial successor authority pair. ADR 0073 corrects that pair's Markdown
+diagnostic registry omission without changing the adopted topology behavior.
+The change adds a durable Common lifecycle envelope, one canonical reconciled
+knowledge map, lifecycle placement and index completeness, profile-specific
+initial scaffolds, and deliberate predecessor repair without adding another
+Root Profile or version namespace.
 
 Earlier Product-only revisions remain immutable provenance. This replacement
 does not rewrite their historical meaning; it deliberately migrates the
@@ -356,6 +369,157 @@ inside the project may be read but produces a portability warning; a knowledge
 path target must also remain inside resolved `knowledge_root`. The final target
 must have the required file kind and duplicate-physical-file rules still
 apply.
+
+### Portable Knowledge Topology
+
+Every Product and Technology bundle using this successor NKF 0.1 revision
+MUST contain the following Common portable topology under its configured
+`knowledge_root`:
+
+| Path | Required Native Representation |
+| --- | --- |
+| `README.md` | One `navigation` non-record; the single canonical knowledge map |
+| `tasks/README.md` | One `navigation` non-record linking the three Task-state indexes |
+| `tasks/active/README.md` | One `navigation` non-record indexing Active Tasks |
+| `tasks/deferred/README.md` | One `navigation` non-record indexing Deferred Tasks |
+| `tasks/completed/README.md` | One `navigation` non-record indexing Completed Tasks |
+| `designs/README.md` | One `navigation` non-record linking the five Design-disposition indexes |
+| `designs/active/README.md` | One `navigation` non-record indexing Active Designs |
+| `designs/adopted/README.md` | One `navigation` non-record indexing Adopted Designs |
+| `designs/rejected/README.md` | One `navigation` non-record indexing Rejected Designs |
+| `designs/superseded/README.md` | One `navigation` non-record indexing Superseded Designs |
+| `designs/withdrawn/README.md` | One `navigation` non-record indexing Withdrawn Designs |
+| `decisions/README.md` | One `navigation` non-record indexing Decisions |
+| `specifications/README.md` | One `navigation` non-record indexing Specifications permitted by the selected profile |
+| `realizations/README.md` | One `navigation` non-record linking the current-system Realization and supporting-current index |
+| `realizations/current-system.md` | Exactly one Realization record with body `nkf.realization` |
+| `realizations/current/README.md` | One `navigation` non-record indexing supporting current Realizations |
+| `evidence/README.md` | One `evidence` non-record exposing the Evidence areas used by the project |
+
+Every required path resolves to one safe regular file. It MUST NOT be a
+symbolic link, special file, duplicate physical target, record and non-record
+conflict, or multiple representation. The required navigation files use the
+normal Markdown source envelope. `evidence/README.md` retains the Common
+Evidence frontmatter exemption. Empty indexes state that no applicable item is
+currently represented; their existence does not create a semantic record,
+Task state, Design disposition, Decision, Specification, Realization
+confirmation, Evidence, acceptance, or operational state.
+
+`README.md` contains exactly one managed navigation block delimited by the
+literal lines:
+
+```text
+<!-- nkf-navigation:start -->
+<!-- nkf-navigation:end -->
+```
+
+The block contains exactly one direct-child level-two heading named
+`NKF Navigation`. It links exactly once to the root record source,
+`tasks/README.md`, `designs/README.md`, `decisions/README.md`,
+`specifications/README.md`, `realizations/README.md`,
+`realizations/current-system.md`, and `evidence/README.md`. Targets are
+project-relative from `README.md`, use exact case, remain inside
+`knowledge_root`, and resolve to the declared native source. Link labels and
+prose do not create semantic status.
+
+A participating topology link is a CommonMark link node, other than an image
+or autolink, that satisfies a required managed-map or lifecycle-index target.
+Its resolved destination has no URI scheme, authority, query, fragment,
+percent escape, backslash, NUL, or ASCII control character. The checker
+resolves `/`-separated path segments lexically from the containing Markdown
+file's directory, permits `..` only while the normalized result remains inside
+`knowledge_root`, and compares the final exact-cased knowledge-relative path.
+Required targets occur exactly once. Other links do not participate in
+topology validation and cannot alter the required target set or lifecycle
+truth.
+
+The CommonMark body outside the managed block is project-owned. Native
+validation MUST NOT rewrite or reinterpret it. An onboarder or migration tool
+MUST preserve its exact bytes unless project authority approves an explicit
+candidate change. Missing frontmatter may be added through an explicit
+candidate while preserving the predecessor body bytes. Another direct-child
+`NKF Navigation` heading outside the block, a missing, duplicated, reversed,
+nested, or otherwise ambiguous marker pair, a competing generated
+`README-<number>.md` map, an unresolved required target, or a required target
+outside the managed block fails conformance.
+
+Lifecycle placement and navigation use explicit native metadata as the source
+of truth:
+
+- every Task non-record is below `tasks/active/`, `tasks/deferred/`, or
+  `tasks/completed/` according to its `task_status` and is linked exactly once
+  from the matching state index;
+- every Design record is below `designs/active/`, `designs/adopted/`,
+  `designs/rejected/`, `designs/superseded/`, or `designs/withdrawn/`
+  according to `design_disposition` and is linked exactly once from the
+  matching disposition index;
+- every Decision record is below `decisions/` and is linked exactly once from
+  `decisions/README.md`;
+- every Specification record is below `specifications/` and is linked exactly
+  once from `specifications/README.md`;
+- `realizations/current-system.md` is the sole consolidated current-system
+  Realization; and
+- every supporting current Realization below `realizations/current/` is
+  linked exactly once from `realizations/current/README.md`.
+
+The parent Task, Design, and Realization indexes link their required child
+indexes and current-system source exactly once. Directory placement and links
+are verified against declarations and frontmatter; they never assign type,
+state, disposition, acceptance, normative authority, or confirmation.
+Historical Evidence need not be exhaustively linked because immutable source
+snapshots may preserve historical layouts. `evidence/README.md` MUST link each
+safe direct child directory of `evidence/` that contains a represented
+Evidence Markdown file at any depth. It need not link every Evidence file.
+
+Unresolved pre-NKF Markdown may remain at a non-canonical path only while it
+is represented as an appropriate non-record. Deliberately promoted native
+lifecycle knowledge MUST satisfy the canonical placement and index rules.
+Once a project adopts this successor revision, the complete topology is a
+continuing conformance requirement rather than a one-time generator output.
+
+### Portable Topology Onboarding And Migration
+
+Initial Category 1 and Category 2 onboarding creates the complete Common
+topology. The Product Profile additionally creates one Draft Product root at
+`product.md` when that canonical path is free. The Technology Profile creates
+one Draft Technology root at `technology.md` and one Draft Specification at
+`specifications/initial-specification.md` when those canonical paths are free.
+An inspected, safe existing root or Specification path may remain when the
+candidate plan selects it explicitly. Filesystem location does not replace
+native record identity or profile meaning.
+
+The generated managed navigation block additionally links the active
+onboarding Task and, for Technology, the initial Specification. Those
+onboarding-only targets are verified during candidate sealing and initial
+application. After lifecycle movement, continuing conformance is established
+through the canonical Task and Specification indexes rather than a permanent
+special onboarding role.
+
+When `README.md` is absent, onboarding generates it. When it exists, onboarding
+reuses that path and document identity, adds or reconciles the single managed
+block, and preserves project-owned bytes as defined above. It MUST NOT allocate
+`README-2.md` or another suffixed authority copy. An existing required index is
+reconciled in place when its meaning and representation are unambiguous.
+Conflicting record use, unsupported file kind, unsafe path, symbolic link,
+duplicate physical target, or semantic ambiguity stops before project
+mutation.
+
+A project created by the confirmed NKF-013 or NKF-015 predecessor may use an
+explicit `repair-topology` workflow only when a trustworthy onboarding receipt
+identifies the predecessor release and exact generated paths. The workflow
+constructs and seals a candidate outside the project, creates missing indexes,
+reconciles `README.md`, and removes a predecessor-generated competing map only
+when the receipt identifies the exact path and its current bytes match the
+known generated predecessor. Drift, consumer-authored content, or missing
+receipt lineage fails for human resolution.
+
+Repair uses the onboarding transaction, staged full-bundle validation,
+rollback, and idempotence boundary. Its receipt records predecessor and
+successor releases plus created, changed, removed, and preserved paths.
+Repeating the exact successful repair returns `no-update`. A repository without
+trustworthy predecessor evidence requires a governed migration plan. No
+historical release changes meaning, no topology sub-version is introduced, and
+no consumer migrates silently.
 
 ## Record Contract
 
@@ -1900,6 +2064,14 @@ warning is non-blocking.
 | `knowledge.root.invalid` | error |
 | `knowledge.root.outside-project` | error |
 | `knowledge.root.inside-nourd` | error |
+| `knowledge.topology.path.missing` | error |
+| `knowledge.topology.representation.invalid` | error |
+| `knowledge.topology.map.invalid` | error |
+| `knowledge.topology.map-target.invalid` | error |
+| `knowledge.topology.lifecycle-path.invalid` | error |
+| `knowledge.topology.index.invalid` | error |
+| `knowledge.topology.generated-map.conflict` | error |
+| `knowledge.topology.current-system.invalid` | error |
 | `path.invalid` | error |
 | `path.outside-root` | error |
 | `path.file-kind.invalid` | error |

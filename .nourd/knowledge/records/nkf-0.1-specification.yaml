@@ -7,7 +7,7 @@ source:
   path: specifications/nkf-0.1.md
   digest:
     algorithm: sha-256
-    value: 428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be
+    value: df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0
 governance:
   lifecycle: immutable
   status: accepted
@@ -69,6 +69,20 @@ sections:
     occurrence: 1
     authority: accepted-meaning
     role: governing
+  - id: bundle-contract-portable-knowledge-topology
+    heading_path:
+      - Bundle Contract
+      - Portable Knowledge Topology
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: bundle-contract-portable-topology-onboarding-and-migration
+    heading_path:
+      - Bundle Contract
+      - Portable Topology Onboarding And Migration
+    occurrence: 1
+    authority: accepted-meaning
+    role: evolution
   - id: record-contract
     heading_path:
       - Record Contract

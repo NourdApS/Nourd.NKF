@@ -203,6 +203,22 @@ representation:
 The record declaration omits `source`; the onboarder injects the exact
 candidate path and SHA-256 and serializes native YAML.
 
+The generated plan initially chooses non-conflicting scaffold paths. When a
+complete semantic review establishes that an inspected document is already the
+safe Draft root, set `scaffold.root_record` to that document's existing
+knowledge-root-relative path and represent it as exactly one matching Draft
+Product or Technology root declaration. For Technology, an inspected safe
+Draft Specification may likewise be selected through
+`scaffold.initial_specification` and exactly one Draft `nkf.specification`
+declaration. The selected declaration must retain the project root scope and
+must not imply acceptance. Leave the generated path selected when identity,
+authority, status, or intended role is ambiguous.
+
+The onboarder preserves the selected candidate bytes, injects their exact
+source bindings, and does not generate a second root or initial Specification.
+Path selection is a reviewed semantic act in the candidate plan, not a
+filename inference by the executable.
+
 Ask project authority when meaning is ambiguous. An unresolved entry is safer
 than an invented classification. Preserve existing candidate bytes by default.
 Make an exact candidate edit only when authorized. Evidence may preserve
@@ -219,7 +235,9 @@ Run `seal --project <path> --plan <plan.yaml>`. Sealing:
 - validates the supported category assessment and applicable confirmation;
 - recreates and compares the complete mechanical project snapshot;
 - requires every knowledge-root Markdown file exactly once in the plan;
-- rejects unresolved or malformed document representations; and
+- rejects unresolved or malformed document representations;
+- verifies the fixed canonical map, current-system, active Task, and
+  profile-specific onboarding target paths; and
 - refreshes and verifies exact candidate digests.
 
 Sealing does not mutate the source project, prove the semantic category,
@@ -229,8 +247,21 @@ accept meaning, confirm a Realization, or prove NKF conformance.
 
 Run `onboard` with the sealed plan, exact adopter, and independently trusted
 release archive SHA-256. The onboarder repeats the source and candidate checks,
-generates native knowledge and integration, validates an isolated full project
-candidate, and applies only a conformant candidate.
+generates native knowledge and integration, creates the complete portable
+topology, validates an isolated full project candidate, and applies only a
+conformant candidate.
+
+The portable topology includes the canonical `README.md`; parent and state
+indexes for Tasks; parent and disposition indexes for Designs; Decision,
+Specification, Realization, supporting-current, and Evidence indexes; and the
+single `realizations/current-system.md` record. The managed `NKF Navigation`
+block links the root and all required entry points plus the active onboarding
+Task and the initial Technology Specification when applicable.
+
+If `README.md` already exists, onboarding reuses it and preserves all
+project-owned bytes outside the managed block. It never creates
+`README-2.md`. Existing required indexes are reconciled only when their
+representation is unambiguous; otherwise onboarding stops before mutation.
 
 If any step fails, report its structured diagnostic and confirm that the source
 project remains unchanged. Do not delete consumer files, weaken validation, or
@@ -256,3 +287,7 @@ Realization, commit Git history, push a branch, or configure remote policy.
 
 After success, the installed NKF authoring protocol and `nkf-authoring` skill
 govern all later knowledge changes.
+
+Projects created by the trusted NKF-013 or NKF-015 predecessor use the
+separate `repair-topology` command documented by the update-and-recovery
+guide. Do not imitate that migration by manually deleting a competing map.

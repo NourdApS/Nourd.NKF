@@ -14,6 +14,7 @@ import os from "node:os";
 import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import YAML from "yaml";
+import { build } from "esbuild";
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
 const {
@@ -32,6 +33,12 @@ import {
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 let archivePath: string;
 let archiveSha256: string;
+let predecessorAdopter: string;
+let predecessorArchivePath: string;
+let predecessorArchiveSha256: string;
+let predecessor13Adopter: string;
+let predecessor13ArchivePath: string;
+let predecessor13ArchiveSha256: string;
 
 async function createProject(fixture = validFixture) {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-adopter-test-"));
@@ -46,9 +53,19 @@ function run(
   extra: string[] = [],
   env: NodeJS.ProcessEnv = {},
 ) {
+  return runWith(adopter, command, project, extra, env);
+}
+
+function runWith(
+  executable: string,
+  command: string,
+  project: string,
+  extra: string[] = [],
+  env: NodeJS.ProcessEnv = {},
+) {
   return spawnSync(
     process.execPath,
-    [adopter, command, "--project", project, ...extra],
+    [executable, command, "--project", project, ...extra],
     { encoding: "utf8", env: { ...process.env, ...env } },
   );
 }
@@ -155,6 +172,46 @@ async function resolveEmptyAssessment(workspace: string) {
   await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
 }
 
+function proposalSection(
+  id: string,
+  heading: string,
+  role: string,
+  responsibility = id,
+) {
+  return {
+    id,
+    heading_path: [heading],
+    occurrence: 1,
+    authority: "proposal",
+    role,
+    responsibilities: [responsibility],
+  };
+}
+
+function draftDeclaration(options: {
+  id: string;
+  type: "product" | "specification";
+  title: string;
+  root: string;
+  sections: ReturnType<typeof proposalSection>[];
+}) {
+  return {
+    contract: "nkf.record",
+    id: options.id,
+    type: options.type,
+    body_contract: `nkf.${options.type}`,
+    title: options.title,
+    governance: {
+      lifecycle: "living",
+      status: "draft",
+      authority: ["human-product-owner"],
+    },
+    scope: { root: options.root },
+    sections: options.sections,
+    relationships: [],
+  };
+}
+
 async function resolveCategory2Override(workspace: string, subject: string) {
   const planPath = path.join(workspace, "plan.yaml");
   const plan = YAML.parse(await readFile(planPath, "utf8"));
@@ -202,6 +259,114 @@ function expectTreeEqual(actual: Map<string, Buffer>, expected: Map<string, Buff
   for (const [key, bytes] of expected) expect(actual.get(key)).toEqual(bytes);
 }
 
+async function buildPredecessorRelease(
+  predecessorCommit: string,
+  expectedAdopterSha256: string,
+) {
+  const predecessorRoot = await mkdtemp(path.join(os.tmpdir(), "nkf-predecessor-source-"));
+  const archivedSource = spawnSync("git", ["archive", predecessorCommit], {
+    cwd: repositoryRoot,
+    encoding: null,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (archivedSource.status !== 0 || archivedSource.stdout === null) {
+    throw new Error(archivedSource.stderr?.toString() || "Cannot read predecessor source.");
+  }
+  const extracted = spawnSync("tar", ["-x", "-C", predecessorRoot], {
+    input: archivedSource.stdout,
+    encoding: null,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (extracted.status !== 0) throw new Error(extracted.stderr?.toString() || "Cannot extract predecessor source.");
+
+  const adopterPath = path.join(predecessorRoot, "dist/nourd-nkf-adopt.mjs");
+  const predecessorChecker = path.join(predecessorRoot, "dist/nourd-nkf-checker.mjs");
+  const predecessorModules = path.join(predecessorRoot, "node_modules");
+  await mkdir(predecessorModules);
+  for (const dependency of [
+    "ajv-formats",
+    "ajv",
+    "commonmark",
+    "yaml",
+    "fast-deep-equal",
+    "fast-uri",
+    "json-schema-traverse",
+    "require-from-string",
+    "entities",
+    "mdurl",
+    "minimist",
+  ]) {
+    await cp(
+      path.join(repositoryRoot, "node_modules", dependency),
+      path.join(predecessorModules, dependency),
+      { recursive: true },
+    );
+  }
+  await mkdir(path.join(predecessorModules, "@unicode"));
+  await cp(
+    path.join(repositoryRoot, "node_modules/@unicode/unicode-17.0.0"),
+    path.join(predecessorModules, "@unicode/unicode-17.0.0"),
+    { recursive: true },
+  );
+  await build({
+    absWorkingDir: predecessorRoot,
+    entryPoints: [path.join(predecessorRoot, "scripts/adoption/nourd-nkf-adopt.mjs")],
+    outfile: adopterPath,
+    bundle: true,
+    platform: "node",
+    target: "node22",
+    format: "esm",
+    legalComments: "none",
+    charset: "utf8",
+    sourcemap: false,
+    minify: false,
+    loader: { ".md": "text" },
+    banner: {
+      js: '#!/usr/bin/env node\nimport { createRequire as __createRequire } from "node:module";\nconst require = __createRequire(import.meta.url);',
+    },
+  });
+  await build({
+    absWorkingDir: predecessorRoot,
+    entryPoints: [path.join(predecessorRoot, "src/cli.ts")],
+    outfile: predecessorChecker,
+    bundle: true,
+    platform: "node",
+    target: "node22",
+    format: "esm",
+    legalComments: "none",
+    sourcemap: false,
+    minify: false,
+    packages: "bundle",
+    banner: {
+      js: '#!/usr/bin/env node\nimport { createRequire as __nkfCreateRequire } from "node:module";\nconst require = __nkfCreateRequire(import.meta.url);',
+    },
+  });
+  expect(sha256(await readFile(adopterPath))).toBe(expectedAdopterSha256);
+
+  const predecessorEntries = new Map<string, Buffer>();
+  for (const entry of RELEASE_ENTRIES) {
+    if (entry.path === "release-manifest.json") continue;
+    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
+  }
+  const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
+  const predecessorManifest = constructReleaseManifest({
+    releaseCommit: predecessorCommit,
+    checkerConfirmation: {
+      decision: "ADR-0065",
+      path: predecessorDecisionPath,
+      bytes: await readFile(path.join(predecessorRoot, predecessorDecisionPath)),
+      checkerSourceCommit: "57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc",
+    },
+    entries: predecessorEntries,
+  });
+  predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
+  const predecessorArchive = createUstar(predecessorEntries);
+  const archiveSha256 = sha256(predecessorArchive);
+  const archivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${archiveSha256}.tar`);
+  await writeFile(archivePath, predecessorArchive);
+  return { adopterPath, archivePath, archiveSha256 };
+}
+
 beforeAll(async () => {
   const entries = new Map<string, Buffer>();
   for (const entry of RELEASE_ENTRIES) {
@@ -230,7 +395,118 @@ beforeAll(async () => {
     `nourd-nkf-sha256-${archiveSha256}.tar`,
   );
   await writeFile(archivePath, archive);
-});
+
+  const predecessorCommit = "53ae5217f68731d953f3bf616a578adeb033bb03";
+  const predecessorRoot = await mkdtemp(path.join(os.tmpdir(), "nkf-predecessor-source-"));
+  const archivedSource = spawnSync("git", ["archive", predecessorCommit], {
+    cwd: repositoryRoot,
+    encoding: null,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (archivedSource.status !== 0 || archivedSource.stdout === null) {
+    throw new Error(archivedSource.stderr?.toString() || "Cannot read predecessor source.");
+  }
+  const extracted = spawnSync("tar", ["-x", "-C", predecessorRoot], {
+    input: archivedSource.stdout,
+    encoding: null,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (extracted.status !== 0) throw new Error(extracted.stderr?.toString() || "Cannot extract predecessor source.");
+  predecessorAdopter = path.join(predecessorRoot, "dist/nourd-nkf-adopt.mjs");
+  const predecessorChecker = path.join(predecessorRoot, "dist/nourd-nkf-checker.mjs");
+  const predecessorModules = path.join(predecessorRoot, "node_modules");
+  await mkdir(predecessorModules);
+  for (const dependency of [
+    "ajv-formats",
+    "ajv",
+    "commonmark",
+    "yaml",
+    "fast-deep-equal",
+    "fast-uri",
+    "json-schema-traverse",
+    "require-from-string",
+    "entities",
+    "mdurl",
+    "minimist",
+  ]) {
+    await cp(
+      path.join(repositoryRoot, "node_modules", dependency),
+      path.join(predecessorModules, dependency),
+      { recursive: true },
+    );
+  }
+  await mkdir(path.join(predecessorModules, "@unicode"));
+  await cp(
+    path.join(repositoryRoot, "node_modules/@unicode/unicode-17.0.0"),
+    path.join(predecessorModules, "@unicode/unicode-17.0.0"),
+    { recursive: true },
+  );
+  await build({
+    absWorkingDir: predecessorRoot,
+    entryPoints: [path.join(predecessorRoot, "scripts/adoption/nourd-nkf-adopt.mjs")],
+    outfile: predecessorAdopter,
+    bundle: true,
+    platform: "node",
+    target: "node22",
+    format: "esm",
+    legalComments: "none",
+    charset: "utf8",
+    sourcemap: false,
+    minify: false,
+    loader: { ".md": "text" },
+    banner: {
+      js: '#!/usr/bin/env node\nimport { createRequire as __createRequire } from "node:module";\nconst require = __createRequire(import.meta.url);',
+    },
+  });
+  await build({
+    absWorkingDir: predecessorRoot,
+    entryPoints: [path.join(predecessorRoot, "src/cli.ts")],
+    outfile: predecessorChecker,
+    bundle: true,
+    platform: "node",
+    target: "node22",
+    format: "esm",
+    legalComments: "none",
+    sourcemap: false,
+    minify: false,
+    packages: "bundle",
+    banner: {
+      js: '#!/usr/bin/env node\nimport { createRequire as __nkfCreateRequire } from "node:module";\nconst require = __nkfCreateRequire(import.meta.url);',
+    },
+  });
+  expect(sha256(await readFile(predecessorAdopter))).toBe(
+    "c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387",
+  );
+  const predecessorEntries = new Map<string, Buffer>();
+  for (const entry of RELEASE_ENTRIES) {
+    if (entry.path === "release-manifest.json") continue;
+    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
+  }
+  const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
+  const predecessorManifest = constructReleaseManifest({
+    releaseCommit: predecessorCommit,
+    checkerConfirmation: {
+      decision: "ADR-0065",
+      path: predecessorDecisionPath,
+      bytes: await readFile(path.join(predecessorRoot, predecessorDecisionPath)),
+      checkerSourceCommit: "57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc",
+    },
+    entries: predecessorEntries,
+  });
+  predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
+  const predecessorArchive = createUstar(predecessorEntries);
+  predecessorArchiveSha256 = sha256(predecessorArchive);
+  predecessorArchivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${predecessorArchiveSha256}.tar`);
+  await writeFile(predecessorArchivePath, predecessorArchive);
+
+  const predecessor13 = await buildPredecessorRelease(
+    "b50493ddb42c87ed426eeb3bb11d3568652d8130",
+    "7533a029053beaccd8f6fec939c2198c5909fd8b5a37a4ba9b5bc0c205bbc7c8",
+  );
+  predecessor13Adopter = predecessor13.adopterPath;
+  predecessor13ArchivePath = predecessor13.archivePath;
+  predecessor13ArchiveSha256 = predecessor13.archiveSha256;
+}, 30_000);
 
 describe("NKF consumer adopter", () => {
   it("onboards empty Product and Technology repositories without native assembly", async () => {
@@ -285,6 +561,24 @@ describe("NKF consumer adopter", () => {
     }
   });
 
+  it("keeps .nourd at the project root while onboarding a safe non-default knowledge root", async () => {
+    const { project, workspace } = await createEmptyProject();
+    expect(inspect(project, workspace, "product", "docs/knowledge").status).toBe(0);
+    await resolveEmptyAssessment(workspace);
+    expect(seal(project, workspace).status).toBe(0);
+    const result = onboard(project, workspace);
+    expect(result.status, result.stderr).toBe(0);
+    const bundle = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+    );
+    expect(bundle.knowledge_root).toBe("docs/knowledge");
+    expect((await lstat(path.join(project, ".nourd"))).isDirectory()).toBe(true);
+    expect((await lstat(path.join(project, "docs/knowledge/README.md"))).isFile()).toBe(true);
+    await expect(lstat(path.join(project, "knowledge"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+  });
+
   it("preserves and explicitly represents nested small-document corpora for both profiles", async () => {
     for (const profile of ["product", "technology"] as const) {
       const { project, workspace } = await createEmptyProject();
@@ -323,6 +617,653 @@ describe("NKF consumer adopter", () => {
       });
     }
   });
+
+  it("preserves unresolved flat Task and Design material without inferring lifecycle state", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const earlyTaskPath = path.join(project, "knowledge/early-task.md");
+    const earlyDesignPath = path.join(project, "knowledge/early-design.md");
+    await mkdir(path.dirname(earlyTaskPath), { recursive: true });
+    const earlyTask = Buffer.from([
+      "---",
+      "title: Possible Task",
+      'summary: "Preserves early Task-like material without assigning lifecycle state."',
+      "created_at: 2026-07-31T10:00:00Z",
+      "---",
+      "",
+      "# Possible Task",
+      "",
+      "Status has not been established.",
+      "",
+    ].join("\n"));
+    const earlyDesign = Buffer.from([
+      "---",
+      "title: Possible Design",
+      'summary: "Preserves early Design-like material without assigning disposition."',
+      "created_at: 2026-07-31T10:00:00Z",
+      "---",
+      "",
+      "# Possible Design",
+      "",
+      "Disposition has not been established.",
+      "",
+    ].join("\n"));
+    await writeFile(earlyTaskPath, earlyTask);
+    await writeFile(earlyDesignPath, earlyDesign);
+    expect(inspect(project, workspace).status).toBe(0);
+    const planPath = path.join(workspace, "plan.yaml");
+    const plan = YAML.parse(await readFile(planPath, "utf8"));
+    plan.assessment = {
+      category: "tiny-knowledge-no-source-or-configuration",
+      assessed_by: "test-agent",
+      assessed_at: "2026-07-31T11:01:00Z",
+      recommendation: "recommended",
+      summary: "The repository contains two unresolved early knowledge documents.",
+      evidence: [{
+        subject: "knowledge/",
+        classification: "knowledge",
+        finding: "Both documents were read and neither has established lifecycle metadata.",
+      }],
+      confirmation: {
+        status: "confirmed",
+        authority: "human-product-owner",
+        confirmed_at: "2026-07-31T11:02:00Z",
+        override: false,
+        rationale: "The authority confirms Category 2 without assigning lifecycle meaning.",
+      },
+    };
+    for (const document of plan.documents) {
+      document.representation = {
+        kind: "non_record",
+        non_record_kind: "other",
+        reason: "Lifecycle type and state remain unresolved during initial onboarding.",
+      };
+    }
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    expect(seal(project, workspace).status).toBe(0);
+    const result = onboard(project, workspace);
+    expect(result.status, result.stderr).toBe(0);
+    expect(await readFile(earlyTaskPath)).toEqual(earlyTask);
+    expect(await readFile(earlyDesignPath)).toEqual(earlyDesign);
+    await expect(lstat(path.join(project, "knowledge/tasks/active/early-task.md"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    await expect(lstat(path.join(project, "knowledge/designs/active/early-design.md"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    const bundle = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+    );
+    expect(bundle.non_records).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: "early-task.md", kind: "other" }),
+        expect.objectContaining({ path: "early-design.md", kind: "other" }),
+      ]),
+    );
+  });
+
+  it("uses an explicitly selected existing Draft Product root without generating a duplicate", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const source = path.join(project, "knowledge/overview.md");
+    await mkdir(path.dirname(source), { recursive: true });
+    const original = Buffer.from([
+      "---",
+      "id: example-product",
+      "type: product",
+      "title: Example Product",
+      'summary: "Provides the existing Draft Product orientation selected during onboarding."',
+      "created_at: 2026-07-31T10:00:00Z",
+      "record_lifecycle: living",
+      "record_status: draft",
+      "---",
+      "",
+      "# Example Product",
+      "",
+      "## Product Definition",
+      "",
+      "Example Product is the deliberately selected Draft Product root.",
+      "",
+      "## Purpose",
+      "",
+      "The purpose remains unresolved.",
+      "",
+      "## Vision",
+      "",
+      "The vision remains unresolved.",
+      "",
+      "## People Served",
+      "",
+      "The people served remain unresolved.",
+      "",
+      "## Needs And Outcomes",
+      "",
+      "Needs and outcomes remain unresolved.",
+      "",
+      "## Boundaries",
+      "",
+      "External systems retain their own authority.",
+      "",
+      "## Product Map",
+      "",
+      "The NKF map will provide the navigable topology.",
+      "",
+    ].join("\n"));
+    await writeFile(source, original);
+    expect(inspect(project, workspace).status).toBe(0);
+    const planPath = path.join(workspace, "plan.yaml");
+    const plan = YAML.parse(await readFile(planPath, "utf8"));
+    plan.assessment = {
+      category: "tiny-knowledge-no-source-or-configuration",
+      assessed_by: "test-agent",
+      assessed_at: "2026-07-31T11:01:00Z",
+      recommendation: "recommended",
+      summary: "The complete repository contains one safe Draft Product root.",
+      evidence: [{
+        subject: "knowledge/overview.md",
+        classification: "knowledge",
+        finding: "The document was read completely and is safe to retain as the Draft root.",
+      }],
+      confirmation: {
+        status: "confirmed",
+        authority: "human-product-owner",
+        confirmed_at: "2026-07-31T11:02:00Z",
+        override: false,
+        rationale: "The authority confirms Category 2 for this exact snapshot.",
+      },
+    };
+    plan.scaffold.root_record = "overview.md";
+    plan.documents[0].representation = {
+      kind: "record",
+      declaration: draftDeclaration({
+        id: "example-product",
+        type: "product",
+        title: "Example Product",
+        root: "example-product",
+        sections: [
+          proposalSection("product-definition", "Product Definition", "governing"),
+          proposalSection("purpose", "Purpose", "governing"),
+          proposalSection("vision", "Vision", "governing"),
+          proposalSection("people-served", "People Served", "boundary"),
+          proposalSection("needs-and-outcomes", "Needs And Outcomes", "governing"),
+          proposalSection("boundaries", "Boundaries", "boundary"),
+          proposalSection("product-map", "Product Map", "catalogue"),
+        ],
+      }),
+    };
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    expect(seal(project, workspace).status).toBe(0);
+    const result = onboard(project, workspace);
+    expect(result.status, result.stderr).toBe(0);
+    expect(await readFile(source)).toEqual(original);
+    await expect(lstat(path.join(project, "knowledge/product.md"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    const rootDeclaration = YAML.parse(
+      await readFile(
+        path.join(project, ".nourd/knowledge/records/example-product.yaml"),
+        "utf8",
+      ),
+    );
+    expect(rootDeclaration.source.path).toBe("overview.md");
+    expect(rootDeclaration.source.digest.value).toBe(sha256(original));
+  });
+
+  it("uses an explicitly selected existing Draft Technology Specification without generating a duplicate", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const source = path.join(project, "knowledge/specifications/technology-contract.md");
+    await mkdir(path.dirname(source), { recursive: true });
+    const original = Buffer.from([
+      "---",
+      "id: example-technology-contract",
+      "type: specification",
+      "title: Example Technology Contract",
+      'summary: "Provides the existing Draft Technology Specification selected during onboarding."',
+      "created_at: 2026-07-31T10:00:00Z",
+      "record_lifecycle: living",
+      "record_status: draft",
+      "task: EXAMPLE-TECH-001",
+      "---",
+      "",
+      "# Example Technology Contract",
+      "",
+      "## Specification Definition",
+      "",
+      "This Draft reserves the initial Technology contract boundary.",
+      "",
+      "## Authority And Normative Status",
+      "",
+      "No normative meaning is accepted by this Draft.",
+      "",
+      "## Scope And Applicability",
+      "",
+      "Scope and applicability remain unresolved.",
+      "",
+      "## Model Vocabulary And Semantics",
+      "",
+      "Vocabulary and semantics remain unresolved.",
+      "",
+      "## Requirements Constraints And Interfaces",
+      "",
+      "Requirements, constraints, and interfaces remain unresolved.",
+      "",
+      "## Validation And Conformance",
+      "",
+      "Validation cannot accept this Draft.",
+      "",
+      "## Versioning Compatibility And Migration",
+      "",
+      "Compatibility and migration remain unresolved.",
+      "",
+      "## Security Authority And Operational Boundaries",
+      "",
+      "External authority and operational state remain outside this Draft.",
+      "",
+      "## Unresolved And Deferred Matters",
+      "",
+      "All substantive contract meaning remains unresolved.",
+      "",
+    ].join("\n"));
+    await writeFile(source, original);
+    expect(inspect(project, workspace, "technology").status).toBe(0);
+    const planPath = path.join(workspace, "plan.yaml");
+    const plan = YAML.parse(await readFile(planPath, "utf8"));
+    plan.assessment = {
+      category: "tiny-knowledge-no-source-or-configuration",
+      assessed_by: "test-agent",
+      assessed_at: "2026-07-31T11:01:00Z",
+      recommendation: "recommended",
+      summary: "The complete repository contains one safe Draft Technology Specification.",
+      evidence: [{
+        subject: "knowledge/specifications/technology-contract.md",
+        classification: "knowledge",
+        finding: "The document was read completely and is safe to retain as the Draft Specification.",
+      }],
+      confirmation: {
+        status: "confirmed",
+        authority: "human-product-owner",
+        confirmed_at: "2026-07-31T11:02:00Z",
+        override: false,
+        rationale: "The authority confirms Category 2 for this exact snapshot.",
+      },
+    };
+    plan.scaffold.initial_specification = "specifications/technology-contract.md";
+    plan.documents[0].representation = {
+      kind: "record",
+      declaration: draftDeclaration({
+        id: "example-technology-contract",
+        type: "specification",
+        title: "Example Technology Contract",
+        root: "example-technology",
+        sections: [
+          proposalSection("specification-definition", "Specification Definition", "definition"),
+          proposalSection("authority-and-normative-status", "Authority And Normative Status", "governing"),
+          proposalSection("scope-and-applicability", "Scope And Applicability", "applicability"),
+          proposalSection("model-vocabulary-and-semantics", "Model Vocabulary And Semantics", "definition"),
+          proposalSection("requirements-constraints-and-interfaces", "Requirements Constraints And Interfaces", "governing"),
+          proposalSection("validation-and-conformance", "Validation And Conformance", "validation"),
+          proposalSection("versioning-compatibility-and-migration", "Versioning Compatibility And Migration", "evolution"),
+          proposalSection("security-authority-and-operational-boundaries", "Security Authority And Operational Boundaries", "boundary"),
+          {
+            ...proposalSection(
+              "unresolved-and-deferred-matters",
+              "Unresolved And Deferred Matters",
+              "unresolved",
+            ),
+            authority: "unresolved",
+          },
+        ],
+      }),
+    };
+    await writeFile(planPath, YAML.stringify(plan, { lineWidth: 0 }));
+    expect(seal(project, workspace).status).toBe(0);
+    const result = onboard(project, workspace);
+    expect(result.status, result.stderr).toBe(0);
+    expect(await readFile(source)).toEqual(original);
+    await expect(
+      lstat(path.join(project, "knowledge/specifications/initial-specification.md")),
+    ).rejects.toMatchObject({ code: "ENOENT" });
+    const specificationDeclaration = YAML.parse(
+      await readFile(
+        path.join(project, ".nourd/knowledge/records/example-technology-contract.yaml"),
+        "utf8",
+      ),
+    );
+    expect(specificationDeclaration.source.path).toBe(
+      "specifications/technology-contract.md",
+    );
+    expect(specificationDeclaration.source.digest.value).toBe(sha256(original));
+  });
+
+  it("reuses an existing canonical map and never allocates README-2.md", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const map = path.join(project, "knowledge/README.md");
+    await mkdir(path.dirname(map), { recursive: true });
+    const original = [
+      "---",
+      "title: Early Knowledge",
+      'summary: "Preserves project-owned orientation during NKF onboarding."',
+      "created_at: 2026-07-31T11:00:00Z",
+      "---",
+      "",
+      "# Early Knowledge",
+      "",
+      "Project-owned orientation remains outside the managed block.",
+      "",
+    ].join("\n");
+    await writeFile(map, original);
+    expect(inspect(project, workspace).status).toBe(0);
+    await resolveAllAsNavigation(workspace);
+    expect(seal(project, workspace).status).toBe(0);
+    const result = onboard(project, workspace);
+    expect(result.status, result.stderr).toBe(0);
+    const reconciled = await readFile(map, "utf8");
+    expect(reconciled.startsWith(original)).toBe(true);
+    expect(reconciled).toContain("<!-- nkf-navigation:start -->");
+    expect(reconciled).toContain("## NKF Navigation");
+    await expect(lstat(path.join(project, "knowledge/README-2.md"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    expect(JSON.parse(result.stdout).paths.changed).toContain("knowledge/README.md");
+  });
+
+  it("applies an explicitly sealed frontmatter envelope without changing existing map body bytes", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const map = path.join(project, "knowledge/README.md");
+    await mkdir(path.dirname(map), { recursive: true });
+    const originalBody = Buffer.from(
+      "# Early Knowledge\n\nProject-owned orientation remains byte-exact.\n",
+      "utf8",
+    );
+    await writeFile(map, originalBody);
+    expect(inspect(project, workspace).status).toBe(0);
+    await resolveAllAsNavigation(workspace);
+    const envelope = Buffer.from([
+      "---",
+      "title: Early Knowledge",
+      'summary: "Preserves the existing canonical map while adding the required source envelope."',
+      "created_at: 2026-07-31T11:00:00Z",
+      "---",
+      "",
+    ].join("\n"));
+    const candidate = path.join(workspace, "candidate/README.md");
+    await writeFile(candidate, Buffer.concat([envelope, originalBody]));
+    expect(seal(project, workspace).status).toBe(0);
+    const result = onboard(project, workspace);
+    expect(result.status, result.stderr).toBe(0);
+    const installed = await readFile(map);
+    expect(installed.subarray(0, envelope.length + originalBody.length)).toEqual(
+      Buffer.concat([envelope, originalBody]),
+    );
+    expect(installed.toString("utf8")).toContain("<!-- nkf-navigation:start -->");
+    expect(JSON.parse(result.stdout).paths.changed).toContain("knowledge/README.md");
+  });
+
+  it("reconciles partial topology and rejects an ambiguous canonical map before mutation", async () => {
+    const partial = await createEmptyProject();
+    const partialIndex = path.join(partial.project, "knowledge/tasks/README.md");
+    await mkdir(path.dirname(partialIndex), { recursive: true });
+    const originalIndex = [
+      "---",
+      "title: Early Tasks",
+      'summary: "Preserves early Task navigation during NKF onboarding."',
+      "created_at: 2026-07-31T11:00:00Z",
+      "---",
+      "",
+      "# Early Tasks",
+      "",
+      "Project-owned Task guidance remains intact.",
+      "",
+    ].join("\n");
+    await writeFile(partialIndex, originalIndex);
+    expect(inspect(partial.project, partial.workspace).status).toBe(0);
+    await resolveAllAsNavigation(partial.workspace);
+    expect(seal(partial.project, partial.workspace).status).toBe(0);
+    const partialResult = onboard(partial.project, partial.workspace);
+    expect(partialResult.status, partialResult.stderr).toBe(0);
+    const reconciledIndex = await readFile(partialIndex, "utf8");
+    expect(reconciledIndex.startsWith(originalIndex)).toBe(true);
+    expect(reconciledIndex).toContain("(active/README.md)");
+    expect(reconciledIndex).toContain("(deferred/README.md)");
+    expect(reconciledIndex).toContain("(completed/README.md)");
+
+    const ambiguous = await createEmptyProject();
+    const ambiguousMap = path.join(ambiguous.project, "knowledge/README.md");
+    await mkdir(path.dirname(ambiguousMap), { recursive: true });
+    await writeFile(
+      ambiguousMap,
+      [
+        "---",
+        "title: Ambiguous Knowledge",
+        'summary: "Contains ambiguous managed navigation markers."',
+        "created_at: 2026-07-31T11:00:00Z",
+        "---",
+        "",
+        "# Ambiguous Knowledge",
+        "",
+        "<!-- nkf-navigation:start -->",
+        "<!-- nkf-navigation:start -->",
+        "<!-- nkf-navigation:end -->",
+        "",
+      ].join("\n"),
+    );
+    expect(inspect(ambiguous.project, ambiguous.workspace).status).toBe(0);
+    await resolveAllAsNavigation(ambiguous.workspace);
+    expect(seal(ambiguous.project, ambiguous.workspace).status).toBe(0);
+    const before = await snapshotTree(ambiguous.project);
+    const ambiguousResult = onboard(ambiguous.project, ambiguous.workspace);
+    expect(ambiguousResult.status).toBe(1);
+    expect(ambiguousResult.stderr).toContain("NKF-ONBOARDING-PATH-CONFLICT");
+    expectTreeEqual(await snapshotTree(ambiguous.project), before);
+  });
+
+  it("repairs trusted predecessor topology with drift protection, rollback, and idempotence", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const map = path.join(project, "knowledge/README.md");
+    await mkdir(path.dirname(map), { recursive: true });
+    const original = [
+      "---",
+      "title: Early Knowledge",
+      'summary: "Preserves the consumer-owned canonical map during predecessor onboarding."',
+      "created_at: 2026-07-31T11:00:00Z",
+      "---",
+      "",
+      "# Early Knowledge",
+      "",
+      "Consumer-owned orientation.",
+      "",
+    ].join("\n");
+    await writeFile(map, original);
+    const predecessorInspect = runWith(predecessorAdopter, "inspect", project, [
+      "--output", workspace,
+      "--profile", "product",
+      "--root-id", "example-product",
+      "--root-title", "Example Product",
+      "--task-id", "EXAMPLE-001",
+      "--created-at", "2026-07-31T11:00:00Z",
+      "--knowledge-root", "knowledge",
+    ]);
+    expect(predecessorInspect.status, predecessorInspect.stderr).toBe(0);
+    await resolveAllAsNavigation(workspace);
+    const predecessorSeal = runWith(predecessorAdopter, "seal", project, [
+      "--plan", path.join(workspace, "plan.yaml"),
+    ]);
+    expect(predecessorSeal.status, predecessorSeal.stderr).toBe(0);
+    const predecessorOnboard = runWith(predecessorAdopter, "onboard", project, [
+      "--plan", path.join(workspace, "plan.yaml"),
+      "--archive", predecessorArchivePath,
+      "--sha256", predecessorArchiveSha256,
+    ]);
+    expect(predecessorOnboard.status, predecessorOnboard.stderr).toBe(0);
+    const competing = path.join(project, "knowledge/README-2.md");
+    const predecessorMap = await readFile(competing);
+
+    const onboardingReceiptPath = path.join(project, ".nourd/onboarding-receipt.json");
+    const onboardingReceiptBytes = await readFile(onboardingReceiptPath);
+    const mismatchedReceipt = JSON.parse(onboardingReceiptBytes.toString("utf8"));
+    mismatchedReceipt.profile = "nkf.profile.technology";
+    await writeFile(onboardingReceiptPath, `${JSON.stringify(mismatchedReceipt, null, 2)}\n`);
+    const mismatched = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(mismatched.status).toBe(1);
+    expect(mismatched.stderr).toContain(
+      "The predecessor onboarding receipt does not match the installed bundle and release pin",
+    );
+    await writeFile(onboardingReceiptPath, onboardingReceiptBytes);
+
+    await appendFile(competing, "\nConsumer drift.\n");
+    const drifted = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(drifted.status).toBe(1);
+    expect(drifted.stderr).toContain("NKF-TOPOLOGY-REPAIR-DRIFT");
+    await expect(lstat(path.join(project, ".nourd/topology-repair-receipt.json"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    await writeFile(competing, predecessorMap);
+
+    const beforeRollback = await snapshotTree(project);
+    const rolledBack = run(
+      "repair-topology",
+      project,
+      ["--archive", archivePath, "--sha256", archiveSha256],
+      { NKF_TOPOLOGY_REPAIR_TEST_FAIL_AFTER_WRITE: "1" },
+    );
+    expect(rolledBack.status).toBe(1);
+    expect(rolledBack.stderr).toContain("Injected topology-repair transaction failure");
+    expectTreeEqual(await snapshotTree(project), beforeRollback);
+
+    const repairStartedAt = Math.floor(Date.now() / 1000) * 1000;
+    const repaired = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(repaired.status, repaired.stderr).toBe(0);
+    const result = JSON.parse(repaired.stdout);
+    expect(result.state).toBe("repaired");
+    expect(result.receipt.removed_paths).toContain("knowledge/README-2.md");
+    await expect(lstat(competing)).rejects.toMatchObject({ code: "ENOENT" });
+    const reconciled = await readFile(map, "utf8");
+    expect(reconciled.startsWith(original)).toBe(true);
+    expect(reconciled).toContain("<!-- nkf-navigation:start -->");
+    for (const required of [
+      "tasks/README.md",
+      "tasks/active/README.md",
+      "tasks/deferred/README.md",
+      "tasks/completed/README.md",
+      "designs/README.md",
+      "designs/active/README.md",
+      "designs/adopted/README.md",
+      "designs/rejected/README.md",
+      "designs/superseded/README.md",
+      "designs/withdrawn/README.md",
+      "decisions/README.md",
+      "specifications/README.md",
+      "realizations/README.md",
+      "realizations/current/README.md",
+      "evidence/README.md",
+    ]) {
+      expect((await lstat(path.join(project, "knowledge", ...required.split("/")))).isFile()).toBe(true);
+    }
+    const generatedIndex = await readFile(
+      path.join(project, "knowledge/tasks/deferred/README.md"),
+      "utf8",
+    );
+    const generatedCreatedAt = generatedIndex.match(/^created_at: (.+)$/mu)?.[1];
+    expect(generatedCreatedAt).toBeDefined();
+    expect(new Date(generatedCreatedAt ?? "").getTime()).toBeGreaterThanOrEqual(
+      repairStartedAt,
+    );
+    expect(new Date(generatedCreatedAt ?? "").getTime()).toBeLessThanOrEqual(Date.now());
+    const repeat = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(repeat.status, repeat.stderr).toBe(0);
+    expect(JSON.parse(repeat.stdout).state).toBe("no-update");
+
+    const repairReceiptPath = path.join(project, ".nourd/topology-repair-receipt.json");
+    const repairReceipt = JSON.parse(await readFile(repairReceiptPath, "utf8"));
+    repairReceipt.successor_release.checker_sha256 = "0".repeat(64);
+    await writeFile(repairReceiptPath, `${JSON.stringify(repairReceipt, null, 2)}\n`);
+    const tamperedReceipt = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(tamperedReceipt.status).toBe(1);
+    expect(tamperedReceipt.stderr).toContain(
+      "The topology-repair receipt does not match the installed successor release",
+    );
+  }, 15_000);
+
+  it("repairs the exact NKF-013 predecessor receipt without inventing assessment state", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const map = path.join(project, "knowledge/README.md");
+    await mkdir(path.dirname(map), { recursive: true });
+    await writeFile(
+      map,
+      [
+        "---",
+        "title: Early Knowledge",
+        'summary: "Preserves the consumer-owned canonical map during predecessor onboarding."',
+        "created_at: 2026-07-31T11:00:00Z",
+        "---",
+        "",
+        "# Early Knowledge",
+        "",
+        "Consumer-owned orientation.",
+        "",
+      ].join("\n"),
+    );
+    const predecessorInspect = runWith(predecessor13Adopter, "inspect", project, [
+      "--output", workspace,
+      "--profile", "product",
+      "--root-id", "example-product",
+      "--root-title", "Example Product",
+      "--task-id", "EXAMPLE-001",
+      "--created-at", "2026-07-31T11:00:00Z",
+      "--knowledge-root", "knowledge",
+    ]);
+    expect(predecessorInspect.status, predecessorInspect.stderr).toBe(0);
+    const planPath = path.join(workspace, "plan.yaml");
+    const predecessorPlan = YAML.parse(await readFile(planPath, "utf8"));
+    expect(predecessorPlan.assessment).toBeUndefined();
+    for (const document of predecessorPlan.documents) {
+      document.representation = { kind: "non_record", non_record_kind: "navigation" };
+    }
+    await writeFile(planPath, YAML.stringify(predecessorPlan, { lineWidth: 0 }));
+    const predecessorSeal = runWith(predecessor13Adopter, "seal", project, [
+      "--plan", planPath,
+    ]);
+    expect(predecessorSeal.status, predecessorSeal.stderr).toBe(0);
+    const predecessorOnboard = runWith(predecessor13Adopter, "onboard", project, [
+      "--plan", planPath,
+      "--archive", predecessor13ArchivePath,
+      "--sha256", predecessor13ArchiveSha256,
+    ]);
+    expect(predecessorOnboard.status, predecessorOnboard.stderr).toBe(0);
+    const predecessorReceipt = JSON.parse(
+      await readFile(path.join(project, ".nourd/onboarding-receipt.json"), "utf8"),
+    );
+    expect(predecessorReceipt.assessment).toBeUndefined();
+
+    const repaired = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(repaired.status, repaired.stderr).toBe(0);
+    const result = JSON.parse(repaired.stdout);
+    expect(result).toMatchObject({
+      state: "repaired",
+      receipt: { predecessor_release: { task: "NKF-013" } },
+      validation: { conformance: "passed" },
+    });
+    await expect(lstat(path.join(project, "knowledge/README-2.md"))).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    expect(await readFile(map, "utf8")).toContain("<!-- nkf-navigation:start -->");
+  }, 15_000);
 
   it("requires Category 2 confirmation and preserves negative agent recommendations", async () => {
     const { project, workspace } = await createEmptyProject();

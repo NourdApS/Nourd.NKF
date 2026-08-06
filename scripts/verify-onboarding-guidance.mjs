@@ -70,21 +70,25 @@ export async function verifyOnboardingGuidance(projectRootInput) {
     fail("The onboarding skill representations differ.");
   }
   const protocol = protocolBytes.toString("utf8");
+  const normalizedProtocol = protocol.replace(/\s+/g, " ");
   for (const required of [
     "complete repository",
     "Category 2",
     "human confirmation",
     "inspect",
     "candidate workspace",
+    "complete portable topology",
+    "README-2.md",
     "mechanical",
     "seal",
     "onboard",
     "NKF-014",
+    "repair-topology",
     "accept",
     "confirm",
     "full-bundle",
   ]) {
-    if (!protocol.toLocaleLowerCase("en-US").includes(required.toLocaleLowerCase("en-US"))) {
+    if (!normalizedProtocol.toLocaleLowerCase("en-US").includes(required.toLocaleLowerCase("en-US"))) {
       fail(`The onboarding protocol omits required subject: ${required}`);
     }
   }

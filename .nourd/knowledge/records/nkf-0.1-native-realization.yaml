@@ -7,11 +7,12 @@ source:
   path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: 24f59bcf284e283f18bb81449a36786a22cf16d68bc8856462916835f8692cf8
+    value: c1ce0b1bcf6cf26b38209e28f0186d16745e4a14d0f0fae47b559acb05a58437
 governance:
   lifecycle: immutable
   status: accepted
   authority:
+    - codex-technical-reviewer
     - human-product-owner
 scope:
   root: nkf
@@ -76,3 +77,6 @@ relationships:
   - type: realizes
     target: nkf-0.1-specification
     source_section: governed-meaning-realized
+  - type: realizes
+    target: adr-0075
+    source_section: compatibility-verification-and-recovery

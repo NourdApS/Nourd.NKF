@@ -58,7 +58,7 @@ describe("dynamic Product and Technology roots", () => {
     const specification = YAML.parse(await readFile(specificationFile, "utf8"));
     specification.type = "product";
     specification.body_contract = "nkf.product";
-    const specificationSourceFile = path.join(incompatible, "knowledge/specification.md");
+    const specificationSourceFile = path.join(incompatible, "knowledge/specifications/specification.md");
     const specificationSource = (await readFile(specificationSourceFile, "utf8"))
       .replace("type: specification", "type: product")
       .replace("task: TEST-TECH-001\n", "");
@@ -70,8 +70,8 @@ describe("dynamic Product and Technology roots", () => {
     const missing = await copyValidTechnologyFixture();
     await unlink(path.join(missing, ".nourd/knowledge/records/specification.yaml"));
     const missingBundle = await readBundle(missing);
-    missingBundle.non_records.push({ path: "specification.md", kind: "other", reason: "Negative profile fixture" });
-    const missingSourceFile = path.join(missing, "knowledge/specification.md");
+    missingBundle.non_records.push({ path: "specifications/specification.md", kind: "other", reason: "Negative profile fixture" });
+    const missingSourceFile = path.join(missing, "knowledge/specifications/specification.md");
     const missingSource = (await readFile(missingSourceFile, "utf8"))
       .replace(/^id:.*\n/m, "")
       .replace(/^type:.*\n/m, "")
@@ -157,7 +157,7 @@ describe("dynamic Product and Technology roots", () => {
     );
     const specification = YAML.parse(await readFile(specificationFile, "utf8"));
     specification.governance.lifecycle = "living";
-    const sourceFile = path.join(project, "knowledge/specification.md");
+    const sourceFile = path.join(project, "knowledge/specifications/specification.md");
     const source = (await readFile(sourceFile, "utf8")).replace(
       "record_lifecycle: immutable",
       "record_lifecycle: living",

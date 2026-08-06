@@ -1,0 +1,34 @@
+contract: nkf.record
+id: adr-0072
+type: decision
+body_contract: nkf.decision
+title: "ADR 0072: Portable Topology Authority Pair"
+source:
+  path: decisions/0072-portable-topology-authority-pair.md
+  digest:
+    algorithm: sha-256
+    value: b47aa96ac0bbe08ad0785b8ff16c2fbb05a186507f61bb781ef38b15a5abce6c
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: compatibility, heading_path: [Compatibility], occurrence: 1, authority: accepted-meaning, role: content}
+  - {id: realization-requirements, heading_path: [Realization Requirements], occurrence: 1, authority: accepted-meaning, role: evidence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: extends
+    target: adr-0071
+    source_section: decision
+  - type: governs
+    target: nkf-0.1-specification
+    source_section: decision

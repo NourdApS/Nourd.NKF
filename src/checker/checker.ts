@@ -30,6 +30,7 @@ import {
   type RecordUnit,
 } from "./semantic.js";
 import { containsNativeSecret } from "./security.js";
+import { validatePortableTopology } from "./topology.js";
 import {
   defaultCaseless,
   protectedCanonicalRanges,
@@ -1186,6 +1187,16 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           });
         }
       }
+    }
+    if (knowledgeRootAbsolute !== null) {
+      validatePortableTopology({
+        bundle,
+        records: uniqueRecords,
+        nonRecords: parsedNonRecords,
+        executable: loaded.executable,
+        knowledgeRoot: String(bundle.knowledge_root),
+        emitter,
+      });
     }
   }
 

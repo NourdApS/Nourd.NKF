@@ -53,7 +53,7 @@ describe("NKF public documentation", () => {
     expect(result).toMatchObject({
       contract: "nkf.public-documentation-verification",
       status: "passed",
-      files: 27,
+      files: 60,
       examples: 2,
     });
     expect(result.mermaid_diagrams).toBeGreaterThanOrEqual(5);

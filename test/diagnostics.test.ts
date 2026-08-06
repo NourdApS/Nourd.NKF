@@ -14,13 +14,13 @@ describe("stable native diagnostic implementation", () => {
       string,
       Pick<Diagnostic, "severity" | "blocking" | "phase">
     >;
-    expect(Object.keys(registry)).toHaveLength(143);
+    expect(Object.keys(registry)).toHaveLength(151);
 
     const emitter = new RuleEmitter(loaded.executable);
     for (const id of Object.keys(registry)) {
       emitter.emit(id, "Test message");
     }
-    expect(emitter.diagnostics).toHaveLength(143);
+    expect(emitter.diagnostics).toHaveLength(151);
     for (const diagnostic of emitter.diagnostics) {
       expect(diagnostic).toMatchObject({
         rule_id: diagnostic.rule_id,

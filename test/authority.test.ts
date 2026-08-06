@@ -27,7 +27,7 @@ function markdownRules(source: string): Map<string, "error" | "warning"> {
 }
 
 describe("canonical NKF 0.1 authority realization", () => {
-  it("keeps the accepted governed-frontmatter authority pair bound to ADR 0058", async () => {
+  it("keeps the corrected portable-topology authority pair bound to ADR 0073", async () => {
     const [specification, executable, acceptanceDecision] =
       await Promise.all([
         readFile(specificationPath),
@@ -35,7 +35,7 @@ describe("canonical NKF 0.1 authority realization", () => {
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/decisions/0058-governed-frontmatter.md",
+            "knowledge/decisions/0073-correct-portable-topology-diagnostic-registry.md",
           ),
           "utf8",
         ),
@@ -53,7 +53,7 @@ describe("canonical NKF 0.1 authority realization", () => {
     }
   });
 
-  it("keeps strict executable parsing, Markdown binding, and 143-rule severity parity", async () => {
+  it("keeps strict executable parsing, Markdown binding, and 151-rule severity parity", async () => {
     const [specificationBytes, executableBytes] = await Promise.all([
       readFile(specificationPath),
       readFile(executablePath),
@@ -74,14 +74,14 @@ describe("canonical NKF 0.1 authority realization", () => {
       ).map(([id, rule]) => [id, rule.severity]),
     );
     const specificationRules = markdownRules(specificationBytes.toString("utf8"));
-    expect(executableRules.size).toBe(143);
+    expect(executableRules.size).toBe(151);
     expect(specificationRules).toEqual(executableRules);
   });
 
   it("keeps every participating canonical heading in Unicode 17 Title Case", async () => {
     const specification = await readFile(specificationPath, "utf8");
     const headings = parseMarkdown(specification).headings;
-    expect(headings).toHaveLength(43);
+    expect(headings).toHaveLength(45);
     for (const heading of headings) {
       const ranges = protectedCanonicalRanges(
         heading.text,

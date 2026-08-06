@@ -94,3 +94,8 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
 - [ADR 0069: Agent-Led Initial Onboarding](0069-agent-led-initial-onboarding.md)
 - [ADR 0070: Confirm Agent-Led Initial Onboarding](0070-confirm-agent-led-initial-onboarding.md)
+- [ADR 0071: Complete Portable Onboarding Topology](0071-complete-portable-onboarding-topology.md)
+- [ADR 0072: Portable Topology Authority Pair](0072-portable-topology-authority-pair.md)
+- [ADR 0073: Correct Portable Topology Diagnostic Registry](0073-correct-portable-topology-diagnostic-registry.md)
+- [ADR 0074: Separate Authoring And Recommended Release Verification](0074-separate-authoring-and-recommended-release-verification.md)
+- [ADR 0075: Confirm Complete Portable Onboarding Topology](0075-confirm-complete-portable-onboarding-topology.md)

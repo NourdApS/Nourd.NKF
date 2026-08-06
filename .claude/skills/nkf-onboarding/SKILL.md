@@ -18,8 +18,21 @@ Work only in the emitted candidate workspace until final onboarding. Record
 the assessment in the plan, resolve every Markdown representation, preserve
 authority uncertainty, and let deterministic sealing and onboarding verify
 complete coverage, exact bytes, safety, native generation, and conformance.
+When complete review establishes that an existing document is already the safe
+Draft root or initial Technology Specification, deliberately select its path
+in the scaffold and supply the matching Draft record declaration; do not let a
+filename imply that choice or generate a duplicate. Leave the generated
+scaffold selected when the existing document's role or authority is ambiguous.
+The generated candidate must contain the complete portable topology, reuse
+the canonical `README.md`, preserve project-owned map bytes, and never create
+`README-2.md`.
 
 Stop and refer to deferred `NKF-014` when neither supported category is
 recommended and no explicit Category 2 human override is supplied. Onboarding
 creates a Draft candidate; it cannot accept meaning, prove its category, or
 confirm a Realization.
+
+For an already adopted NKF-013 or NKF-015 predecessor, do not run initial
+onboarding or improvise a folder migration. Follow the documented trusted
+`repair-topology` workflow and require its receipt, drift, staged validation,
+rollback, and idempotence checks.

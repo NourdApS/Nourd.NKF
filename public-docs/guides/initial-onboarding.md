@@ -179,6 +179,16 @@ A record representation supplies semantic declaration fields but omits
 YAML. Candidate Markdown edits occur only in the workspace and require project
 authority where meaning changes.
 
+The initial plan selects non-conflicting scaffold paths. If complete review
+establishes that an existing document is already the safe Draft Product or
+Technology root, select that existing relative path as `scaffold.root_record`
+and give the document the matching Draft root declaration. A Technology
+repository may similarly select an existing safe Draft Specification through
+`scaffold.initial_specification`. The onboarder then preserves those exact
+candidate bytes and does not create a duplicate root or Specification. Keep the
+generated scaffold path when the existing document's identity, authority,
+status, or role is ambiguous.
+
 ## Seal Candidate Digests
 
 Run:
@@ -218,6 +228,38 @@ validates a complete isolated project at `full-bundle`, and only then replaces
 project bytes. A handled failure restores predecessor bytes and removes
 transaction-created paths.
 
+Every successful initial onboarding creates the complete portable topology:
+
+```text
+<knowledge-root>/
+├── README.md
+├── tasks/
+│   ├── README.md
+│   ├── active/README.md
+│   ├── deferred/README.md
+│   └── completed/README.md
+├── designs/
+│   ├── README.md
+│   ├── active/README.md
+│   ├── adopted/README.md
+│   ├── rejected/README.md
+│   ├── superseded/README.md
+│   └── withdrawn/README.md
+├── decisions/README.md
+├── specifications/README.md
+├── realizations/
+│   ├── README.md
+│   ├── current-system.md
+│   └── current/README.md
+└── evidence/README.md
+```
+
+The canonical `README.md` contains one managed `NKF Navigation` block. If the
+file already exists, the onboarder reconciles that block in the same document
+and preserves project-owned bytes outside it. It never allocates
+`README-2.md`. Ambiguous existing meaning or representation stops before
+mutation.
+
 ## Read The Result
 
 The result keeps the plan-supplied category separate from mechanical proof and
@@ -243,10 +285,11 @@ NKF conformance:
 }
 ```
 
-Both profiles receive a Draft root, active onboarding Task, knowledge map, and
-unconfirmed current-system Realization. Technology also receives a Draft
-Specification. Existing bytes and topology are preserved unless the sealed
-candidate names an exact change.
+Both profiles receive a Draft root, active onboarding Task, complete knowledge
+topology, and unconfirmed current-system Realization. Technology also receives
+a Draft Specification. Existing project-owned bytes are preserved unless the
+sealed candidate names an exact change or the managed navigation/index
+reconciliation is required by NKF.
 
 Repeating the exact sealed plan verifies the installed candidate and returns
 `no-update`. Successful onboarding does not accept the Draft root, accept a

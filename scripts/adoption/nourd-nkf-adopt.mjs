@@ -23,6 +23,7 @@ import neutralProtocol from "../../integrations/ai/nkf-authoring-protocol.md";
 import portableSkill from "../../.agents/skills/nkf-authoring/SKILL.md";
 import {
   buildOnboardingKnowledge,
+  buildPortableTopologyRepair,
   createOnboardingWorkspace,
   OnboardingError,
   sealOnboardingPlan,
@@ -40,6 +41,7 @@ const PIN_PATH = ".nourd/nkf-release.json";
 const ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
 const RELEASE_DIRECTORY = ".nourd/tools/nkf/releases";
 const ONBOARDING_RECEIPT_PATH = ".nourd/onboarding-receipt.json";
+const TOPOLOGY_REPAIR_RECEIPT_PATH = ".nourd/topology-repair-receipt.json";
 const PROTOCOL_PATH = "integrations/ai/nkf-authoring-protocol.md";
 const REGISTRY_PATH = "integrations/ai/nkf-consumer-integration.yaml";
 const VERIFIER_PATH = "scripts/verify-nkf-integration.mjs";
@@ -52,6 +54,10 @@ const SKILL_PATHS = [
 const ROOT_PROFILES = new Set([
   "nkf.profile.product",
   "nkf.profile.technology",
+]);
+const ELIGIBLE_TOPOLOGY_PREDECESSORS = new Map([
+  ["7533a029053beaccd8f6fec939c2198c5909fd8b5a37a4ba9b5bc0c205bbc7c8", "NKF-013"],
+  ["c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387", "NKF-015"],
 ]);
 const CHECK_COMMAND =
   "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
@@ -128,12 +134,48 @@ function safeRelative(value, label) {
   return value;
 }
 
+function requireExactKeys(value, expected, label) {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) {
+    fail(`${label} must be an object.`);
+  }
+  if (
+    JSON.stringify(Object.keys(value).sort()) !==
+    JSON.stringify([...expected].sort())
+  ) {
+    fail(`${label} contains unsupported fields.`);
+  }
+}
+
+function requireReceiptPaths(value, label) {
+  if (!Array.isArray(value)) fail(`${label} must be an array.`);
+  const paths = value.map((item, index) =>
+    safeRelative(item, `${label}[${index}]`));
+  if (new Set(paths).size !== paths.length) {
+    fail(`${label} must not contain duplicate paths.`);
+  }
+  return paths;
+}
+
+function requireDisjointReceiptPaths(groups, label) {
+  const owner = new Map();
+  for (const [name, paths] of Object.entries(groups)) {
+    for (const item of paths) {
+      const prior = owner.get(item);
+      if (prior !== undefined) {
+        fail(`${label} path ${item} appears in both ${prior} and ${name}.`);
+      }
+      owner.set(item, name);
+    }
+  }
+}
+
 function parseArguments(values) {
   const result = { command: values[0], options: {} };
   if (![
     "inspect",
     "seal",
     "onboard",
+    "repair-topology",
     "install",
     "update",
     "check",
@@ -141,7 +183,7 @@ function parseArguments(values) {
     "integration-check",
   ].includes(result.command)) {
     fail(
-      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|install|update|check|status|integration-check> [options]",
+      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|repair-topology|install|update|check|status|integration-check> [options]",
     );
   }
   for (let index = 1; index < values.length; index += 2) {
@@ -179,7 +221,7 @@ function parseArguments(values) {
       "project",
       "sha256",
     ]);
-  } else if (result.command === "install" || result.command === "update") {
+  } else if (["install", "update", "repair-topology"].includes(result.command)) {
     allowed = new Set(["archive", "github-repository", "project", "sha256"]);
   } else {
     allowed = new Set(["project"]);
@@ -572,8 +614,11 @@ async function ensureWritableParents(projectRoot, relativePaths) {
   }
 }
 
-async function writeTransaction(projectRoot, files, verifyAfterWrite) {
-  await ensureWritableParents(projectRoot, files.keys());
+async function writeTransaction(projectRoot, files, verifyAfterWrite, removedPaths = []) {
+  await ensureWritableParents(projectRoot, [...files.keys(), ...removedPaths]);
+  for (const relative of removedPaths) {
+    if (files.has(relative)) fail(`A transaction path cannot be written and removed: ${relative}`);
+  }
   const staging = await mkdtemp(
     path.join(projectRoot, ".nkf-transaction-"),
   );
@@ -599,6 +644,10 @@ async function writeTransaction(projectRoot, files, verifyAfterWrite) {
       await writeFile(staged, bytes, { flag: "wx" });
       originals.set(relative, await readRegularInside(projectRoot, relative, false));
     }
+    for (const relative of removedPaths) {
+      const original = await readRegularInside(projectRoot, relative, true);
+      originals.set(relative, original);
+    }
     for (const [relative] of files) {
       const target = path.join(projectRoot, ...relative.split("/"));
       const staged = path.join(staging, ...relative.split("/"));
@@ -610,6 +659,11 @@ async function writeTransaction(projectRoot, files, verifyAfterWrite) {
       replaced.push(relative);
       if (current !== null) await unlink(target);
       await rename(staged, target);
+    }
+    for (const relative of removedPaths) {
+      const target = path.join(projectRoot, ...relative.split("/"));
+      replaced.push(relative);
+      await unlink(target);
     }
     return await verifyAfterWrite();
   } catch (error) {
@@ -801,7 +855,7 @@ async function verifyInstalled(projectRoot, runChecker) {
   return { pin, verification, report };
 }
 
-async function validateCompleteCandidate(projectRoot, files) {
+async function validateCompleteCandidate(projectRoot, files, removedPaths = []) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-candidate-"));
   const candidate = path.join(temporary, "project");
   try {
@@ -815,6 +869,14 @@ async function validateCompleteCandidate(projectRoot, files) {
       },
     });
     await ensureWritableParents(candidate, files.keys());
+    for (const relative of removedPaths) {
+      const target = path.join(candidate, ...safeRelative(relative, "Removed candidate path").split("/"));
+      const current = await lstat(target).catch(() => null);
+      if (current === null || !current.isFile() || current.isSymbolicLink()) {
+        fail(`Removed candidate path is not a regular file: ${relative}`);
+      }
+      await unlink(target);
+    }
     for (const [relative, bytes] of files) {
       const target = path.join(candidate, ...relative.split("/"));
       const current = await lstat(target).catch(() => null);
@@ -935,6 +997,22 @@ async function inspectForOnboarding(options) {
 }
 
 function requireOnboardingReceipt(value) {
+  requireExactKeys(
+    value,
+    [
+      "assessment",
+      "changed_paths",
+      "contract",
+      "created_paths",
+      "inspection_sha256",
+      "knowledge_root",
+      "nkf_version",
+      "plan_sha256",
+      "preserved_paths",
+      "profile",
+    ],
+    "Onboarding receipt",
+  );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
     value?.nkf_version !== "0.1" ||
@@ -955,6 +1033,64 @@ function requireOnboardingReceipt(value) {
   ) {
     fail("The installed onboarding receipt is invalid.");
   }
+  value.knowledge_root = safeRelative(value.knowledge_root, "Onboarding receipt knowledge_root");
+  value.created_paths = requireReceiptPaths(value.created_paths, "Onboarding receipt created_paths");
+  value.changed_paths = requireReceiptPaths(value.changed_paths, "Onboarding receipt changed_paths");
+  value.preserved_paths = requireReceiptPaths(value.preserved_paths, "Onboarding receipt preserved_paths");
+  requireDisjointReceiptPaths(
+    {
+      created_paths: value.created_paths,
+      changed_paths: value.changed_paths,
+      preserved_paths: value.preserved_paths,
+    },
+    "Onboarding receipt",
+  );
+  return value;
+}
+
+function requirePredecessorOnboardingReceipt(value) {
+  requireExactKeys(
+    value,
+    [
+      ...(value?.assessment === undefined ? [] : ["assessment"]),
+      "changed_paths",
+      "contract",
+      "created_paths",
+      "inspection_sha256",
+      "knowledge_root",
+      "nkf_version",
+      "plan_sha256",
+      "preserved_paths",
+      "profile",
+    ],
+    "Predecessor onboarding receipt",
+  );
+  if (
+    value?.contract !== "nkf.onboarding-receipt" ||
+    value?.nkf_version !== "0.1" ||
+    !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
+    !ROOT_PROFILES.has(value?.profile) ||
+    typeof value?.knowledge_root !== "string" ||
+    !Array.isArray(value?.created_paths) ||
+    !Array.isArray(value?.changed_paths) ||
+    !Array.isArray(value?.preserved_paths)
+  ) {
+    fail("The predecessor onboarding receipt is invalid.");
+  }
+  if (value.assessment !== undefined) return requireOnboardingReceipt(value);
+  value.knowledge_root = safeRelative(value.knowledge_root, "Predecessor receipt knowledge_root");
+  value.created_paths = requireReceiptPaths(value.created_paths, "Predecessor receipt created_paths");
+  value.changed_paths = requireReceiptPaths(value.changed_paths, "Predecessor receipt changed_paths");
+  value.preserved_paths = requireReceiptPaths(value.preserved_paths, "Predecessor receipt preserved_paths");
+  requireDisjointReceiptPaths(
+    {
+      created_paths: value.created_paths,
+      changed_paths: value.changed_paths,
+      preserved_paths: value.preserved_paths,
+    },
+    "Predecessor onboarding receipt",
+  );
   return value;
 }
 
@@ -1102,6 +1238,224 @@ async function onboard(options) {
   return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
 }
 
+function requireTopologyRepairReceipt(value) {
+  requireExactKeys(
+    value,
+    [
+      "candidate_sha256",
+      "changed_paths",
+      "contract",
+      "created_paths",
+      "nkf_version",
+      "predecessor_release",
+      "preserved_paths",
+      "removed_paths",
+      "successor_release",
+    ],
+    "Topology-repair receipt",
+  );
+  if (
+    value?.contract !== "nkf.topology-repair-receipt" ||
+    value?.nkf_version !== "0.1" ||
+    typeof value?.predecessor_release !== "object" ||
+    typeof value?.successor_release !== "object" ||
+    !/^[0-9a-f]{64}$/.test(value?.candidate_sha256 ?? "") ||
+    !Array.isArray(value?.created_paths) ||
+    !Array.isArray(value?.changed_paths) ||
+    !Array.isArray(value?.removed_paths) ||
+    !Array.isArray(value?.preserved_paths)
+  ) {
+    fail("The installed topology-repair receipt is invalid.");
+  }
+  requireExactKeys(
+    value.predecessor_release,
+    ["adopter_sha256", "archive_sha256", "source_commit", "task"],
+    "Topology-repair predecessor release",
+  );
+  requireExactKeys(
+    value.successor_release,
+    ["adopter_sha256", "archive_sha256", "checker_sha256", "source_commit"],
+    "Topology-repair successor release",
+  );
+  if (
+    !["NKF-013", "NKF-015"].includes(value.predecessor_release.task) ||
+    !/^[0-9a-f]{64}$/.test(value.predecessor_release.archive_sha256 ?? "") ||
+    !/^[0-9a-f]{40}$/.test(value.predecessor_release.source_commit ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.predecessor_release.adopter_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.successor_release.archive_sha256 ?? "") ||
+    !/^[0-9a-f]{40}$/.test(value.successor_release.source_commit ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.successor_release.checker_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.successor_release.adopter_sha256 ?? "")
+  ) {
+    fail("The installed topology-repair release lineage is invalid.");
+  }
+  value.created_paths = requireReceiptPaths(value.created_paths, "Topology-repair created_paths");
+  value.changed_paths = requireReceiptPaths(value.changed_paths, "Topology-repair changed_paths");
+  value.removed_paths = requireReceiptPaths(value.removed_paths, "Topology-repair removed_paths");
+  value.preserved_paths = requireReceiptPaths(value.preserved_paths, "Topology-repair preserved_paths");
+  requireDisjointReceiptPaths(
+    {
+      created_paths: value.created_paths,
+      changed_paths: value.changed_paths,
+      removed_paths: value.removed_paths,
+      preserved_paths: value.preserved_paths,
+    },
+    "Topology-repair receipt",
+  );
+  return value;
+}
+
+function repairCandidateSha256(files, removals) {
+  const entries = [
+    ...[...files].map(([relative, bytes]) => ({ path: relative, sha256: digest(bytes), operation: "write" })),
+    ...removals.map((relative) => ({ path: relative, sha256: null, operation: "remove" })),
+  ].sort((left, right) => left.path.localeCompare(right.path));
+  return digest(Buffer.from(`${JSON.stringify(entries)}\n`, "utf8"));
+}
+
+async function repairTopology(options) {
+  if (Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10) < 22) {
+    fail("NKF topology repair requires Node.js 22 or later.");
+  }
+  for (const required of ["project", "sha256"]) {
+    if (options[required] === undefined) fail(`repair-topology requires --${required}.`);
+  }
+  const projectRoot = await requireProjectRoot(options.project);
+  const priorRepairBytes = await readRegularInside(projectRoot, TOPOLOGY_REPAIR_RECEIPT_PATH, false);
+  if (priorRepairBytes !== null) {
+    const receipt = requireTopologyRepairReceipt(parseStrictJson(priorRepairBytes));
+    const installed = await verifyInstalled(projectRoot, true);
+    if (
+      receipt.successor_release.archive_sha256 !== installed.pin.archive.sha256 ||
+      receipt.successor_release.source_commit !== installed.pin.source_commit ||
+      receipt.successor_release.checker_sha256 !== installed.pin.checker_sha256 ||
+      receipt.successor_release.adopter_sha256 !== installed.pin.adopter.sha256
+    ) {
+      fail("The topology-repair receipt does not match the installed successor release.");
+    }
+    return {
+      contract: "nkf.topology-repair-result",
+      nkf_version: "0.1",
+      state: "no-update",
+      project: projectRoot,
+      receipt,
+    };
+  }
+  const onboardingReceipt = requirePredecessorOnboardingReceipt(
+    parseStrictJson(await readRegularInside(projectRoot, ONBOARDING_RECEIPT_PATH)),
+  );
+  const predecessorPin = requirePinShape(
+    parseStrictJson(await readRegularInside(projectRoot, PIN_PATH)),
+  );
+  const { bundle: predecessorBundle, knowledgeRoot: predecessorKnowledgeRoot } =
+    await requireBundle(projectRoot);
+  if (
+    onboardingReceipt.profile !== predecessorPin.root_profile ||
+    onboardingReceipt.profile !== predecessorBundle.root.profile ||
+    onboardingReceipt.knowledge_root !== predecessorKnowledgeRoot
+  ) {
+    fail("The predecessor onboarding receipt does not match the installed bundle and release pin.");
+  }
+  const predecessorTask = ELIGIBLE_TOPOLOGY_PREDECESSORS.get(predecessorPin.adopter.sha256);
+  if (predecessorTask === undefined) {
+    fail("Topology repair is limited to trusted NKF-013 or NKF-015 onboarding predecessors.");
+  }
+  const predecessorAdopter = await readRegularInside(projectRoot, ADOPTER_PATH);
+  if (digest(predecessorAdopter) !== predecessorPin.adopter.sha256) {
+    fail("The predecessor adopter bytes do not match their trusted receipt lineage.");
+  }
+  const predecessorArchive = await readRegularInside(projectRoot, predecessorPin.archive.project_path);
+  const predecessorVerification = verifyReleaseArchive(predecessorArchive, predecessorPin.archive.sha256);
+  if (
+    predecessorVerification.release_commit !== predecessorPin.source_commit ||
+    predecessorVerification.checker_sha256 !== predecessorPin.checker_sha256
+  ) {
+    fail("The predecessor release archive differs from its installed pin.");
+  }
+  const predecessorInvocation = await invokeVerifiedChecker(predecessorVerification, [
+    "--project",
+    projectRoot,
+    "--level",
+    "full-bundle",
+    "--runner",
+    "nourd-nkf-topology-predecessor",
+    "--no-persist",
+  ]);
+  const predecessorReport = parseStrictJson(Buffer.from(predecessorInvocation.stdout, "utf8"));
+  if (predecessorReport.conformance !== "passed") {
+    fail("The predecessor snapshot is not conformant under its pinned checker.");
+  }
+
+  const expectedSha256 = requireSha256(options.sha256);
+  const successorArchive = await acquireArchive(options, expectedSha256);
+  const successorVerification = verifyReleaseArchive(successorArchive, expectedSha256);
+  const topology = await buildPortableTopologyRepair(projectRoot, onboardingReceipt);
+  const integration = await targetFiles(
+    projectRoot,
+    successorArchive,
+    successorVerification,
+    predecessorPin.root_profile,
+  );
+  const files = new Map(topology.files);
+  for (const [relative, bytes] of integration) files.set(relative, bytes);
+  const createdPaths = [];
+  const changedPaths = [];
+  for (const [relative, bytes] of files) {
+    const current = await readRegularInside(projectRoot, relative, false);
+    if (current === null) createdPaths.push(relative);
+    else if (!current.equals(bytes)) changedPaths.push(relative);
+  }
+  createdPaths.push(TOPOLOGY_REPAIR_RECEIPT_PATH);
+  createdPaths.sort();
+  changedPaths.sort();
+  const removedPaths = [...topology.removals].sort();
+  const repairReceipt = {
+    contract: "nkf.topology-repair-receipt",
+    nkf_version: "0.1",
+    predecessor_release: {
+      task: predecessorTask,
+      archive_sha256: predecessorPin.archive.sha256,
+      source_commit: predecessorPin.source_commit,
+      adopter_sha256: predecessorPin.adopter.sha256,
+    },
+    successor_release: {
+      archive_sha256: successorVerification.archive_sha256,
+      source_commit: successorVerification.release_commit,
+      checker_sha256: successorVerification.checker_sha256,
+      adopter_sha256: digest(await currentExecutableBytes()),
+    },
+    candidate_sha256: repairCandidateSha256(files, removedPaths),
+    created_paths: createdPaths,
+    changed_paths: changedPaths,
+    removed_paths: removedPaths,
+    preserved_paths: topology.preserved_paths,
+  };
+  files.set(TOPOLOGY_REPAIR_RECEIPT_PATH, serializeOnboardingReceipt(repairReceipt));
+  await validateCompleteCandidate(projectRoot, files, removedPaths);
+  const installed = await writeTransaction(
+    projectRoot,
+    files,
+    () => {
+      if (process.env.NKF_TOPOLOGY_REPAIR_TEST_FAIL_AFTER_WRITE === "1") {
+        fail("Injected topology-repair transaction failure.");
+      }
+      return verifyInstalled(projectRoot, true);
+    },
+    removedPaths,
+  );
+  return {
+    contract: "nkf.topology-repair-result",
+    nkf_version: "0.1",
+    state: "repaired",
+    project: projectRoot,
+    receipt: repairReceipt,
+    validation: {
+      conformance: installed.report?.conformance ?? "passed",
+      governing_use: installed.report?.governing_use ?? "not-ready",
+    },
+  };
+}
+
 async function main() {
   const { command, options } = parseArguments(process.argv.slice(2));
   if (command === "inspect") return inspectForOnboarding(options);
@@ -1112,6 +1466,7 @@ async function main() {
     return sealOnboardingPlan(options.project, options.plan);
   }
   if (command === "onboard") return onboard(options);
+  if (command === "repair-topology") return repairTopology(options);
   if (command === "install" || command === "update") {
     return installOrUpdate(command, options);
   }

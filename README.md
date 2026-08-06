@@ -32,18 +32,24 @@ NKF 0.1 consists of one automatic Common Specification and one selected Root
 Profile. The currently defined Root Profiles are Product and Technology. The
 repository self-hosts as an NKF Technology bundle.
 
-The current Markdown/YAML authority pair is accepted, and the current Schemas,
-checker, fixtures, deterministic build, self-hosting, layered enforcement,
-release, public-documentation, and consumer-adoption Realizations are
-confirmed. The current NKF 0.1 checker is published as an internal private
-content-addressed prerelease. Authorized consumers pin the full archive
-SHA-256 through the public-safe adopter and never follow a moving branch or
-mutable latest release.
+ADR 0073 accepts the corrected current Markdown/YAML authority pair for the
+complete portable Product and Technology topology. ADR 0075 confirms its
+derived Schemas, checker, onboarding and repair tooling, fixtures,
+self-hosting migration, and public-documentation projection. The successor is
+confirmed locally but is not released or published.
 
-The public explanation, topology, lifecycle, adoption guides, and complete
-Product and Technology examples are available in the
-[NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs).
-Task `NKF-008` is complete for this internal release and adoption scope.
+The currently recommended internal private prerelease remains the confirmed
+NKF-015 predecessor. Authorized consumers pin its full archive SHA-256 through
+the public-safe adopter and never follow a moving branch or mutable latest
+release. They do not receive NKF-017 topology behavior until a deliberate
+successor release and migration.
+
+The published
+[NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs)
+describes the confirmed predecessor experience. Updated topology, onboarding,
+recovery, and complete Product and Technology examples are staged locally
+under NKF-017 but are not claimed as published. Task `NKF-008` remains complete
+for its predecessor internal release and adoption scope.
 
 The `NKF Contracts` and explicitly dispatched `NKF Consumer Adoption`
 workflows have passed on observed exact commits. The protected merge gate
@@ -87,11 +93,14 @@ npm run nkf:check
 
 The canonical command verifies agent guidance, type-checks and tests the
 checker, verifies deterministic checker and adopter builds, verifies the
-public documentation and complete examples, verifies the recommended release,
-and validates the complete self-hosted NKF bundle. The checked-in Github
-workflow runs the same command against its exact candidate commit. A
-successful workflow run is not a protected merge gate unless Github
-repository rules require that check.
+public documentation and complete examples, and validates the complete
+self-hosted NKF bundle. The checked-in Github workflow runs the same command
+against its exact candidate commit. A successful workflow run is not a
+protected merge gate unless Github repository rules require that check.
+
+Release review separately runs `npm run verify:recommended-release` to verify
+the published recommendation. It is not part of authoring validation for an
+unreleased successor.
 
 ## Pre-Stable Evolution
 

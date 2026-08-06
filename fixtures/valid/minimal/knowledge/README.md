@@ -1,9 +1,20 @@
 ---
-title: Navigation
-summary: "Provides navigation to the governed Example Product knowledge."
+title: "Knowledge"
+summary: "Provides the canonical map for the governed fixture knowledge."
 created_at: 2026-07-30T07:53:41Z
 ---
 
-# Navigation
+# Knowledge
 
-This file helps people find the governed Product record.
+<!-- nkf-navigation:start -->
+## NKF Navigation
+
+- [Draft Root](product.md)
+- [Tasks](tasks/README.md)
+- [Designs](designs/README.md)
+- [Decisions](decisions/README.md)
+- [Specifications](specifications/README.md)
+- [Realizations](realizations/README.md)
+- [Current System](realizations/current-system.md)
+- [Evidence](evidence/README.md)
+<!-- nkf-navigation:end -->

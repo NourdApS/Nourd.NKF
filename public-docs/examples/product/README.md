@@ -10,18 +10,24 @@ project/
 │   └── knowledge/
 │       ├── bundle.yaml
 │       └── records/
+│           ├── product-current-system.yaml
 │           └── product.yaml
 └── knowledge/
     ├── README.md
     ├── product.md
-    └── task.md
+    ├── tasks/
+    ├── designs/
+    ├── decisions/
+    ├── specifications/
+    ├── realizations/
+    └── evidence/
 ```
 
 Start with the actual
 [bundle](project/.nourd/knowledge/bundle.yaml), then inspect the
 [Product declaration](project/.nourd/knowledge/records/product.yaml) and its
 [canonical Markdown](project/knowledge/product.md). The
-[Task](project/knowledge/task.md) is an explicit non-record and the
+[Task](project/knowledge/tasks/active/task.md) is an explicit non-record and the
 [knowledge README](project/knowledge/README.md) is explicit navigation. No
 Markdown source is left unrepresented.
 

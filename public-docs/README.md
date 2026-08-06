@@ -37,6 +37,13 @@ project-root/
 │   ├── nkf-release.json
 │   └── validation-result.json
 └── <configured-knowledge-root>/
+    ├── README.md
+    ├── tasks/
+    ├── designs/
+    ├── decisions/
+    ├── specifications/
+    ├── realizations/
+    └── evidence/
 ```
 
 `.nourd` is always at the project root. `bundle.yaml` selects exactly one
@@ -143,7 +150,8 @@ evidence and stops without guessing a later brownfield category.
 - [Adopt And Validate](guides/adopt-and-validate.md) covers installation,
   AI-assisted authoring, local checks, and continuous integration.
 - [Update And Recover](guides/update-and-recover.md) covers no-update, explicit
-  updates, rollback, diagnosis, and failure recovery.
+  updates, trusted predecessor topology repair, rollback, diagnosis, and
+  failure recovery.
 - [Product Example](examples/product/README.md) is a complete small Product
   bundle.
 - [Technology Example](examples/technology/README.md) is a complete small

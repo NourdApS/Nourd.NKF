@@ -1,0 +1,42 @@
+contract: nkf.record
+id: adr-0075
+type: decision
+body_contract: nkf.decision
+title: "ADR 0075: Confirm Complete Portable Onboarding Topology"
+source:
+  path: decisions/0075-confirm-complete-portable-onboarding-topology.md
+  digest:
+    algorithm: sha-256
+    value: f351c29c9e09d6f330f29642a9c92beeb9178924c68b24c11ae2a6ba6dc854ca
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: leave-the-realization-unconfirmed-until-release, heading_path: [Alternatives Considered, Leave The Realization Unconfirmed Until Release], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: confirm-only-the-focused-topology-realization, heading_path: [Alternatives Considered, Confirm Only The Focused Topology Realization], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: treat-passing-validation-as-confirmation, heading_path: [Alternatives Considered, Treat Passing Validation As Confirmation], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: extends
+    target: adr-0070
+    source_section: decision
+  - type: realizes
+    target: adr-0071
+    source_section: decision
+  - type: realizes
+    target: adr-0073
+    source_section: decision
+  - type: realizes
+    target: adr-0074
+    source_section: decision

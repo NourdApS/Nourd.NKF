@@ -18,7 +18,16 @@ evidence. It also contains the whole-repository development-support audit
 covering agent guidance, human and Knowledge Engine consumption, monolithic
 applications, coherence, completeness, enforcement, and current readiness,
 plus the NKF-015 exact public-projection publication and fresh-clone
-verification Evidence.
+verification Evidence. The NKF-017 Agent SDK onboarding topology exercise
+binds the concrete minimal-scaffold and duplicate-map result that initiated
+the portable-topology correction. The NKF-017 portable-topology Design audit
+records the independent Common/Profile, navigation, enforcement, migration,
+and compatibility review of the exact Active proposal. The NKF-017
+Realization impact inventory identifies every authority, checker, onboarding,
+fixture, self-hosting, documentation, release, and migration surface that must
+move together after adoption. The NKF-017 whole-repository completion audit
+records the final authority, coherence, completeness, enforcement, safety,
+compatibility, documentation, and recovery review of the exact successor.
 
 ## Decision Inputs
 
