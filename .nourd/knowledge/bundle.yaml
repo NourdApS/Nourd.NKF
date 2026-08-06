@@ -176,6 +176,8 @@ non_records:
     kind: task
   - path: tasks/active/NKF-019-decision-applicability-gate.md
     kind: task
+  - path: tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md
+    kind: task
 canonical_terms:
   - ADR
   - AI

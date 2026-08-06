@@ -1,40 +1,40 @@
 ---
-id: nkf-0.11-specification
+id: nkf-0.2-specification
 type: specification
-title: NKF 0.11 — Product And Technology Knowledge Format
-summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.11 supports Product and Technology knowledge and adds the required Decision Applicability Gate for Task non-records.
+title: NKF 0.2 — Product And Technology Knowledge Format
+summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.2 supports Product and Technology knowledge and adds the required Decision Applicability Gate for Task non-records.
 created_at: 2026-08-06T22:24:00Z
 record_lifecycle: immutable
 record_status: draft
 task: NKF-019
 ---
 
-# NKF 0.11 — Product And Technology Knowledge Format
+# NKF 0.2 — Product And Technology Knowledge Format
 
 - **Status:** Draft candidate pending acceptance
 - **Task:** `NKF-019`
-- **Version:** `0.11`
+- **Version:** `0.2`
 - **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted source baseline:** `kaveh6202/Nourd.Studio@13a82fbc1b72c1350e9765f59d1538c375f3fa69`
 - **Accepted source digest:** `77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a`
 - **Source acceptance:** [Nourd Studio ADR 0012](../evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md)
 - **Predecessor canonical baseline:** `knowledge/specifications/nkf-0.1.md`
 - **Predecessor canonical digest:** `df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0`
-- **Canonical destination:** `knowledge/specifications/nkf-0.11.md`
-- **Executable companion destination:** `contracts/nkf/0.11/nkf.yaml`
-- **Acceptance Decisions:** ADR 0076, ADR 0077, and the reserved pair
-  acceptance ADR 0078
-- **Independent governing inputs:** ADRs 0001 through 0077
+- **Canonical destination:** `knowledge/specifications/nkf-0.2.md`
+- **Executable companion destination:** `contracts/nkf/0.2/nkf.yaml`
+- **Acceptance Decisions:** ADR 0076, ADR 0077, ADR 0078, and the reserved
+  pair acceptance ADR 0079
+- **Independent governing inputs:** ADRs 0001 through 0078
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
-> This exact revision is the candidate canonical NKF 0.11 specification. It
-> governs only when ADR 0078 accepts it with its executable companion. It
+> This exact revision is the candidate canonical NKF 0.2 specification. It
+> governs only when ADR 0079 accepts it with its executable companion. It
 > is not the public stable NKF 1.0 release.
 
 ## Purpose
 
 The **Nourd Knowledge Format (NKF)** is a human-readable, machine-verifiable
-format for durable governed knowledge. NKF 0.11 supports Product and Technology
+format for durable governed knowledge. NKF 0.2 supports Product and Technology
 knowledge through two concrete Root Profiles.
 
 The automatically applicable **Common Specification**, also called General in
@@ -61,13 +61,15 @@ it does not define the format.
 The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
 
-NKF 0.11 is a pre-stable format version produced under the versioned
+NKF 0.2 is a pre-stable format version produced under the versioned
 contract evolution accepted by ADR 0076. ADRs 0045 through 0073 remain the
 acceptance lineage of the immutable NKF 0.1 predecessor, including the
 Product and Technology profile division and the complete portable topology.
 ADR 0077 adopts the Decision Applicability Gate direction realized by this
-revision. This exact candidate pair governs as NKF 0.11 only when ADR 0078
-accepts it.
+revision. ADR 0078 allocates the version coordinate `0.2` to the correction
+because it carries breaking changes, and keeps release, adoption, and
+breaking-change process definition outside format meaning. This exact
+candidate pair governs as NKF 0.2 only when ADR 0079 accepts it.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
@@ -119,17 +121,17 @@ ADR 0076 establishes versioned contract evolution after first consumer
 adoption. ADR 0077 adopts the Decision Applicability Gate direction from the
 evidenced Nourd Tiles failure, in which a conditional renderer decision lost
 its conditions in successor Tasks and proxy evidence was represented as
-outcome success. This NKF 0.11 revision realizes that adopted direction as a
+outcome success. This NKF 0.2 revision realizes that adopted direction as a
 versioned successor: NKF 0.1 remains immutable authority for repositories
 that declare it, and consumers migrate deliberately.
 
 ## Scope
 
-NKF 0.11 defines Common contracts and two concrete Root Profiles: Product and
+NKF 0.2 defines Common contracts and two concrete Root Profiles: Product and
 Technology. Company, Organization, and other root knowledge remain unsupported
 until their requirements are understood and accepted.
 
-NKF 0.11 defines:
+NKF 0.2 defines:
 
 - a project-contained knowledge bundle with fixed `.nourd` metadata and a
   configurable canonical knowledge root;
@@ -148,7 +150,7 @@ NKF 0.11 defines:
 - one content-addressed initial checker release package and manifest; and
 - a deliberate export mapping to OKF 0.2.
 
-NKF 0.11 does not define:
+NKF 0.2 does not define:
 
 - a Task or business lifecycle;
 - Task state, Workflow Runs, Steps, sessions, checks, deployments, current
@@ -224,54 +226,37 @@ NKF format versions use `<major>.<minor>`.
   earlier supported version remains valid against that version's immutable
   meaning; nothing migrates by implication.
 
-### Shipping A New Version
-
-Shipping a new NKF version requires, in order:
-
-1. an immutable Decision adopting the change and allocating the version under
-   the rules above;
-2. Human Product Owner acceptance of the exact new Specification revision and
-   its digest-bound executable companion;
-3. Schemas, checker enforcement, diagnostics, fixtures, tests, onboarding
-   output, agent guidance, and documentation derived from that accepted
-   meaning;
-4. a passing complete authoring gate on the exact successor snapshot,
-   including the publishing repository's own migration to the new version;
-5. independent audit Evidence and a separate Decision confirming the exact
-   successor Realization;
-6. one content-addressed versioned release archive and manifest produced and
-   verified under Release Distribution; and
-7. explicit migration meaning for consumers, who migrate deliberately while
-   prior versions remain immutable and validatable.
-
-A release does not accept knowledge, confirm a Realization, prove
-conformance, or migrate a consumer by implication. Skipping a step and
-representing a later step as satisfied fails the shipping process closed.
+How the NKF repository releases a new version, how an adopted repository
+adopts one, and how breaking changes are classified and signaled are
+repository and governance process, not format meaning. They are deliberately
+deferred to their own governed process definition and remain listed under
+Unresolved Matters. Each version's changes and required migration meaning are
+still recorded with its release.
 
 NKF has one version namespace: the NKF format version. A bundle MUST declare
-`nkf_version`. NKF 0.11 uses the unversioned canonical identities `nkf.bundle`,
+`nkf_version`. NKF 0.2 uses the unversioned canonical identities `nkf.bundle`,
 `nkf.record`, `nkf.contract-set`, `nkf.release-manifest`, `nkf.common`,
 `nkf.profile.product`, `nkf.profile.technology`, and the supported body
-identities. They are all governed by the one NKF version coordinate, `0.11`.
+identities. They are all governed by the one NKF version coordinate, `0.2`.
 Profile identity is not an independent version coordinate.
 
-The sole NKF 0.11 record definition includes explicit responsibility bindings.
+The sole NKF 0.2 record definition includes explicit responsibility bindings.
 Older external record structures are legacy-consumer formats, not supported
 parallel NKF contracts. They may be retained as provenance and deliberately
-migrated by their consumers, but MUST NOT be reported as native NKF 0.11
+migrated by their consumers, but MUST NOT be reported as native NKF 0.2
 conformance or automatically converted.
 
 A repository or distribution MUST pin the exact specification revision it
 uses through immutable distribution metadata or version control. The human
-version `0.11` alone does not identify editorial changes to a draft.
+version `0.2` alone does not identify editorial changes to a draft.
 
-NKF 0.11 uses OKF 0.2 as its interoperability baseline. A later OKF release
+NKF 0.2 uses OKF 0.2 as its interoperability baseline. A later OKF release
 does not automatically change NKF. Each rebase MUST be reviewed deliberately,
 document compatibility effects, update the mapping, and produce a new NKF
 revision when needed.
 
 Existing `nourd.knowledge.*` contracts remain the Nourd Studio bootstrap
-contracts. NKF 0.11 does not silently rename or reinterpret them. A controlled
+contracts. NKF 0.2 does not silently rename or reinterpret them. A controlled
 migration or verified profile mapping is required before a repository using
 those identifiers can claim native NKF contract conformance.
 
@@ -286,7 +271,7 @@ outside the native diagnostic contract, MUST NOT construct or persist an
 MUST NOT follow an unsafe `.nourd/` path.
 
 After the invocation precondition passes, the project root is the directory
-that directly contains `.nourd/`. Native NKF 0.11 fixes:
+that directly contains `.nourd/`. Native NKF 0.2 fixes:
 
 ```text
 <project-root>/
@@ -306,7 +291,7 @@ The manifest is a closed object with these required fields:
 
 | Field | Responsibility |
 | --- | --- |
-| `nkf_version` | Constant NKF version `"0.11"` |
+| `nkf_version` | Constant NKF version `"0.2"` |
 | `contract` | Constant bundle identity `nkf.bundle` |
 | `id` | Non-empty stable bundle identity |
 | `root` | Closed object selecting one root record and one concrete Root Profile |
@@ -315,7 +300,7 @@ The manifest is a closed object with these required fields:
 
 It may additionally contain only `canonical_terms`, `governed_artifacts`,
 `extension_contracts`, and `extensions` under the contracts below. Unknown
-top-level fields fail closed. Native NKF 0.11 has no `product_record`,
+top-level fields fail closed. Native NKF 0.2 has no `product_record`,
 `record_contract`, `markdown_root`, `records_root`, `required_extensions`, or
 free-form top-level extension field.
 
@@ -414,7 +399,7 @@ apply.
 
 ### Portable Knowledge Topology
 
-Every Product and Technology bundle using this successor NKF 0.11 revision
+Every Product and Technology bundle using this successor NKF 0.2 revision
 MUST contain the following Common portable topology under its configured
 `knowledge_root`:
 
@@ -769,7 +754,7 @@ governed reference emits `markdown.frontmatter.reference.unresolved`.
 
 ### Deterministic Markdown Structure
 
-Native NKF 0.11 interprets the Markdown source body using CommonMark 0.31.2.
+Native NKF 0.2 interprets the Markdown source body using CommonMark 0.31.2.
 Only heading nodes that are direct children of the CommonMark document root
 participate in NKF title, section, path, occurrence, and casing checks.
 Headings inside block quotes, lists, or other containers remain content. Both
@@ -921,7 +906,7 @@ Optional source-bound structures have these exact minimum shapes:
 An entity reference contains `record` and `entity`.
 
 Except for `governance.accepted_at`, whose ISO 8601 date shape is explicit
-above, NKF 0.11 does not impose a narrower lexical format on the optional
+above, NKF 0.2 does not impose a narrower lexical format on the optional
 factual-time strings in these structures. A later format revision may
 standardize them through the governed change process.
 
@@ -929,7 +914,7 @@ Array order carries no meaning except `heading_path`. Native serialization
 emits responsibility IDs in body-contract order for deterministic review.
 Optional empty structures are omitted.
 
-Native NKF 0.11 defines no presentation-guidance field. Markdown is the default
+Native NKF 0.2 defines no presentation-guidance field. Markdown is the default
 readable form. Portable display metadata uses a separately governed optional
 extension and remains subject to ADR 0020 and future governed reconsideration
 through NKF-004.
@@ -1009,7 +994,7 @@ A bundle MUST have exactly one root of the type required by its selected
 profile. Every governed record MUST resolve to that root through
 `scope.root`. Scope membership does not itself create a semantic relationship.
 
-Cross-bundle identity and typed relationships are deferred in NKF 0.11.
+Cross-bundle identity and typed relationships are deferred in NKF 0.2.
 External material and authority are addressed through provenance locators and
 external-authority bindings instead.
 
@@ -1167,7 +1152,7 @@ classifies the source.
 
 ## Relationships
 
-NKF 0.11 defines these record relationship types:
+NKF 0.2 defines these record relationship types:
 
 | Type | Directional meaning |
 | --- | --- |
@@ -1234,7 +1219,7 @@ an explicitly granted acceptance role.
 
 Core governance values are declarations, not proof. `status` states the
 claimed state; `authority` names who may decide it; and optional `accepted_at`
-states the claimed original acceptance date. Native NKF 0.11 has no universal
+states the claimed original acceptance date. Native NKF 0.2 has no universal
 `acceptance_source`, `acceptance_event`, `proposal_revision`, or equivalent
 proof field.
 
@@ -1294,7 +1279,7 @@ relationship to the record, a durable locator or resolution rule, and the
 source section that establishes the boundary.
 
 NKF MAY record factual production, verification, observation, and
-last-modified times. NKF 0.11 does not define `stale_after` or a universal
+last-modified times. NKF 0.2 does not define `stale_after` or a universal
 freshness policy.
 
 ## Semantic Entities And Bindings
@@ -1932,13 +1917,13 @@ An extension ID is lowercase, owner-namespaced, and matches:
 The first namespace `nkf` is reserved for extensions owned and accepted by
 NKF. Other namespaces belong to their stated authority. Namespace text is an
 ownership claim, not proof. Extension IDs have no independent version;
-`nkf_version: "0.11"` is the only version coordinate and artifact digests bind
+`nkf_version: "0.2"` is the only version coordinate and artifact digests bind
 exact revisions.
 
 Every used extension has a digest-bound authority pair:
 
 1. normative Markdown owning its complete human-readable meaning; and
-2. executable YAML with identity `nkf.extension`, `nkf_version: "0.11"`, the
+2. executable YAML with identity `nkf.extension`, `nkf_version: "0.2"`, the
    extension ID, application sites, payload shape, vocabularies, constraints,
    and deterministic validation.
 
@@ -2010,13 +1995,13 @@ style, whitespace, and key order need not survive. A consumer unable to
 preserve unsupported payload operates read-only or fails instead of dropping
 it.
 
-Native NKF 0.11 accepts no concrete extension. Portable presentation guidance
+Native NKF 0.2 accepts no concrete extension. Portable presentation guidance
 is deliberately outside the native record; future NKF-owned presentation work
 is deferred under NKF-004.
 
 ## Native Project Organization
 
-The fixed `.nourd` layout in the bundle contract is native NKF 0.11, not a
+The fixed `.nourd` layout in the bundle contract is native NKF 0.2, not a
 separate Nourd repository profile. The configured `knowledge_root` may be
 named `knowledge` or another project-contained path.
 
@@ -2071,7 +2056,7 @@ Design or Realization profile, while receipts and per-run attestation remain
 operational Evidence. An exporter MUST NOT invent that mapping without a
 declared profile.
 
-NKF 0.11 is based on the official
+NKF 0.2 is based on the official
 [OKF 0.2 specification](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
 and the
 [Google Cloud 0.2 release explanation](https://cloud.google.com/blog/products/data-analytics/okf-v0-2-adds-trust-signals/).
@@ -2106,14 +2091,14 @@ cannot maintain competing normative meaning.
 Derived schemas use:
 
 ```text
-contracts/nkf/0.11/schemas/
-  bundle.schema.json   # urn:nkf:0.11:schema:bundle
-  record.schema.json   # urn:nkf:0.11:schema:record
+contracts/nkf/0.2/schemas/
+  bundle.schema.json   # urn:nkf:0.2:schema:bundle
+  record.schema.json   # urn:nkf:0.2:schema:record
   validation-result.schema.json
-                       # urn:nkf:0.11:schema:validation-result
+                       # urn:nkf:0.2:schema:validation-result
 ```
 
-The `0.11` component is the one NKF version coordinate. Each schema carries
+The `0.2` component is the one NKF version coordinate. Each schema carries
 non-normative source metadata for `nkf_version`, exact Markdown path/digest,
 and exact YAML path/digest. Release metadata carries the schema's own digest.
 Exact schema bytes remain derived realization.
@@ -2121,8 +2106,8 @@ Exact schema bytes remain derived realization.
 Release-package enforcement separately uses:
 
 ```text
-contracts/nkf/0.11/schemas/release-manifest.schema.json
-                       # urn:nkf:0.11:schema:release-manifest
+contracts/nkf/0.2/schemas/release-manifest.schema.json
+                       # urn:nkf:0.2:schema:release-manifest
 ```
 
 That schema validates release metadata only. It is not a project declaration
@@ -2403,7 +2388,7 @@ excluded from consequential interpretation.
 
 Failure of the project-root `.nourd/` invocation precondition produces no
 validation result. After that precondition passes, the checker emits one
-closed UTF-8 JSON `nkf.validation-result` object with `nkf_version: "0.11"`.
+closed UTF-8 JSON `nkf.validation-result` object with `nkf_version: "0.2"`.
 Unknown fields, comments, duplicate keys, byte-order marks, and non-JSON
 values are invalid. Member order and insignificant whitespace carry no
 meaning.
@@ -2471,7 +2456,7 @@ non-Markdown knowledge assets do not participate unless an accepted rule or
 extension makes them governed inputs.
 
 The checker represents those inputs internally as closed
-`nkf.validation-snapshot` JSON with `nkf_version: "0.11"` and one entry per
+`nkf.validation-snapshot` JSON with `nkf_version: "0.2"` and one entry per
 logical project path. Each entry contains exact project-relative `path`,
 `direct_kind`, `resolution`, nullable `resolved_path`, nullable `final_kind`,
 and nullable `content_sha256`. Multiple selectors merge. Entries sort by exact
@@ -2515,14 +2500,14 @@ unique. Message and remediation wording are non-contractual.
 
 `NKF Verified` means current full-bundle conformance only. A passing receipt
 remains current only while its Governed Validation Inputs still produce the
-snapshot, its core artifact bindings match the current accepted NKF 0.11
+snapshot, its core artifact bindings match the current accepted NKF 0.2
 revision, its recorded profile identity still matches the bundle-selected
 supported profile, and its checker remains recognized and supported for that
 revision. Otherwise it is historical evidence with status **verification
 outdated**.
 
 Normal acceptance changes alter governed inputs through the governed change
-process. NKF 0.11 does not infer a hidden acceptance change, poll an authority,
+process. NKF 0.2 does not infer a hidden acceptance change, poll an authority,
 or impose universal expiry. Universal expiry or separate authority freshness
 remains deferred under NKF-005.
 
@@ -2539,21 +2524,21 @@ review and, where applicable, external Evidence.
 
 ## Release Distribution
 
-NKF 0.11 uses one content-addressed archive attached to a Github Release in
+NKF 0.2 uses one content-addressed archive attached to a Github Release in
 `kaveh6202/Nourd.NKF` as its initial native checker distribution. The archive
 is release metadata and tooling, not governed knowledge, a project declaration,
 an acceptance record, or a conformance result.
 
 The release, tag, asset name, source commit, archive digest, checker digest,
 and schema digests are distribution, provenance, or integrity identities.
-They are not NKF versions. `nkf_version: "0.11"` remains the only format
+They are not NKF versions. `nkf_version: "0.2"` remains the only format
 version.
 
 ### Release Manifest
 
 The archive contains exactly one UTF-8 JSON `release-manifest.json` at its
 distribution root. It has contract identity `nkf.release-manifest` and
-`nkf_version: "0.11"`.
+`nkf_version: "0.2"`.
 
 The manifest is one closed JSON object with exactly six required top-level
 fields in this logical shape:
@@ -2575,15 +2560,15 @@ minimum major version `22`.
 
 `authority` fixes precedence to `normative-markdown` and binds:
 
-- `knowledge/specifications/nkf-0.11.md`; and
-- `contracts/nkf/0.11/nkf.yaml`.
+- `knowledge/specifications/nkf-0.2.md`; and
+- `contracts/nkf/0.2/nkf.yaml`.
 
 `schemas` contains exactly four entries in exact identity order:
 
-1. `urn:nkf:0.11:schema:bundle`;
-2. `urn:nkf:0.11:schema:record`;
-3. `urn:nkf:0.11:schema:release-manifest`; and
-4. `urn:nkf:0.11:schema:validation-result`.
+1. `urn:nkf:0.2:schema:bundle`;
+2. `urn:nkf:0.2:schema:record`;
+3. `urn:nkf:0.2:schema:release-manifest`; and
+4. `urn:nkf:0.2:schema:validation-result`.
 
 Every checker, authority, and schema artifact has its exact fixed relative
 path and one digest object whose algorithm is `sha-256` and whose value is 64
@@ -2606,8 +2591,8 @@ distributed file. This avoids a digest cycle.
 Release package enforcement uses:
 
 ```text
-contracts/nkf/0.11/schemas/release-manifest.schema.json
-  # urn:nkf:0.11:schema:release-manifest
+contracts/nkf/0.2/schemas/release-manifest.schema.json
+  # urn:nkf:0.2:schema:release-manifest
 ```
 
 The schema is derived from this Markdown and the executable YAML companion.
@@ -2638,13 +2623,13 @@ The archive uses uncompressed USTAR and contains exactly eight regular files
 under stable root `nourd-nkf/`, in exact ASCII-byte path order:
 
 ```text
-contracts/nkf/0.11/nkf.yaml
-contracts/nkf/0.11/schemas/bundle.schema.json
-contracts/nkf/0.11/schemas/record.schema.json
-contracts/nkf/0.11/schemas/release-manifest.schema.json
-contracts/nkf/0.11/schemas/validation-result.schema.json
+contracts/nkf/0.2/nkf.yaml
+contracts/nkf/0.2/schemas/bundle.schema.json
+contracts/nkf/0.2/schemas/record.schema.json
+contracts/nkf/0.2/schemas/release-manifest.schema.json
+contracts/nkf/0.2/schemas/validation-result.schema.json
 dist/nourd-nkf-checker.mjs
-knowledge/specifications/nkf-0.11.md
+knowledge/specifications/nkf-0.2.md
 release-manifest.json
 ```
 
@@ -2714,14 +2699,14 @@ asset URL, and Github user interface remain locators; the independently stored
 full archive digest is the consumer trust anchor.
 
 The release is prepared as a draft and published as a prerelease because NKF
-0.11 is pre-stable. Before publication, release automation downloads the
+0.2 is pre-stable. Before publication, release automation downloads the
 uploaded asset and repeats the archive, manifest, artifact, checker-help, and
 source-commit checks. Immutable Github Releases SHOULD be used when supported.
 Artifact attestations MAY add provenance but do not replace the archive
 digest.
 
 Public distribution remains unresolved. Repository visibility or access
-control does not alter the NKF 0.11 format.
+control does not alter the NKF 0.2 format.
 
 ## Security And Privacy
 
@@ -2730,7 +2715,7 @@ A bundle MUST NOT contain live credentials, access tokens, private keys, or
 secrets.
 
 Sensitive governed knowledge MAY require a restricted bundle or access policy,
-but NKF 0.11 does not define that policy. A consumer MUST NOT hide missing
+but NKF 0.2 does not define that policy. A consumer MUST NOT hide missing
 governing knowledge and then present the remaining view as complete.
 
 Provenance, Producers, Verifiers, acceptance authorities, external
@@ -2782,7 +2767,7 @@ fixtures, checker behavior, release, and consumer migration.
 
 ## Unresolved Matters
 
-The following remain deliberately unresolved in NKF 0.11:
+The following remain deliberately unresolved in NKF 0.2:
 
 - universal freshness and staleness policy;
 - required repository and continuous-integration gates;
@@ -2796,18 +2781,20 @@ The following remain deliberately unresolved in NKF 0.11:
 - a future NKP runtime protocol;
 - standardized acceptance-event storage; and
 - attested-computation profiles;
-- the future optional presentation-guidance extension under NKF-004.
+- the future optional presentation-guidance extension under NKF-004; and
+- the version release process, the consumer version-adoption process, and
+  breaking-change classification and signaling, deferred to NKF-020.
 
 These omissions MUST be visible to consumers. A profile MAY resolve one for
 its own scope, but MUST identify the extension and MUST NOT claim that the
-profile decision is part of NKF 0.11 core.
+profile decision is part of NKF 0.2 core.
 
 ## Minimal Example
 
-A logical NKF 0.11 manifest:
+A logical NKF 0.2 manifest:
 
 ```yaml
-nkf_version: "0.11"
+nkf_version: "0.2"
 contract: nkf.bundle
 id: example-product
 root:
@@ -2927,7 +2914,7 @@ separately governed executable contract.
 
 | Failure mode | Consequence | Required response |
 | --- | --- | --- |
-| NKF attempts to model every kind of knowledge immediately | The first version becomes unusable and untestable | Keep 0.11 limited to evidence-backed Product and Technology profiles and add later roots from real needs |
+| NKF attempts to model every kind of knowledge immediately | The first version becomes unusable and untestable | Keep 0.2 limited to evidence-backed Product and Technology profiles and add later roots from real needs |
 | Metadata becomes more authoritative than Markdown | Human review no longer sees complete governed meaning | Reject declarations that assert meaning without exact source sections |
 | Stable identity follows paths or provider resources | Moves and integration changes break history | Preserve bundle, record, section, and entity identity independently |
 | Real instances are copied into Markdown | Operational truth becomes stale and conflicts with its owner | Keep durable bindings in NKF and resolve live state from authoritative systems |

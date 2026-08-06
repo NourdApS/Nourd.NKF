@@ -1,13 +1,13 @@
 contract: nkf.contract-set
-nkf_version: "0.11"
+nkf_version: "0.2"
 
 authority:
   precedence: normative-markdown
-  markdown_path: knowledge/specifications/nkf-0.11.md
-  executable_path: contracts/nkf/0.11/nkf.yaml
+  markdown_path: knowledge/specifications/nkf-0.2.md
+  executable_path: contracts/nkf/0.2/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: dfd0d17a72bf2b0bb805d28b05590464078a1059bfd1ccbf9cb046486098bc15
+    value: 57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -186,7 +186,7 @@ bundle:
     - required_extensions
   fields:
     nkf_version:
-      const: "0.11"
+      const: "0.2"
     contract:
       const: nkf.bundle
     id:
@@ -1636,13 +1636,13 @@ enforcement:
   schema:
     dialect: https://json-schema.org/draft/2020-12/schema
     paths:
-      bundle: contracts/nkf/0.11/schemas/bundle.schema.json
-      record: contracts/nkf/0.11/schemas/record.schema.json
-      validation_result: contracts/nkf/0.11/schemas/validation-result.schema.json
+      bundle: contracts/nkf/0.2/schemas/bundle.schema.json
+      record: contracts/nkf/0.2/schemas/record.schema.json
+      validation_result: contracts/nkf/0.2/schemas/validation-result.schema.json
     ids:
-      bundle: urn:nkf:0.11:schema:bundle
-      record: urn:nkf:0.11:schema:record
-      validation_result: urn:nkf:0.11:schema:validation-result
+      bundle: urn:nkf:0.2:schema:bundle
+      record: urn:nkf:0.2:schema:record
+      validation_result: urn:nkf:0.2:schema:validation-result
     source_metadata:
       - nkf_version
       - markdown_path
@@ -1896,7 +1896,7 @@ governed_validation_inputs:
     - operational-resources
   snapshot_inventory:
     identity: nkf.validation-snapshot
-    nkf_version: "0.11"
+    nkf_version: "0.2"
     persisted: false
     closed: true
     required_fields: [contract, nkf_version, inputs]
@@ -1904,7 +1904,7 @@ governed_validation_inputs:
       contract:
         const: nkf.validation-snapshot
       nkf_version:
-        const: "0.11"
+        const: "0.2"
       inputs:
         type: array
         order: exact-path-rfc8785-unsigned-utf16
@@ -1943,7 +1943,7 @@ governed_validation_inputs:
 
 validation_result:
   identity: nkf.validation-result
-  nkf_version: "0.11"
+  nkf_version: "0.2"
   path: .nourd/validation-result.json
   encoding:
     character_encoding: UTF-8
@@ -1979,7 +1979,7 @@ validation_result:
     contract:
       const: nkf.validation-result
     nkf_version:
-      const: "0.11"
+      const: "0.2"
     execution:
       ref: validation_result.execution
     checker:
@@ -2090,11 +2090,11 @@ validation_result:
           schemas:
             type: array
             exact_items_in_order:
-              - identity: urn:nkf:0.11:schema:bundle
+              - identity: urn:nkf:0.2:schema:bundle
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.11:schema:record
+              - identity: urn:nkf:0.2:schema:record
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.11:schema:validation-result
+              - identity: urn:nkf:0.2:schema:validation-result
                 ref: validation_result.schema_binding
       extensions:
         type: array
@@ -2241,7 +2241,7 @@ release_distribution:
   operational_state_authority: github
   manifest:
     identity: nkf.release-manifest
-    nkf_version: "0.11"
+    nkf_version: "0.2"
     path: release-manifest.json
     encoding:
       character_encoding: UTF-8
@@ -2262,7 +2262,7 @@ release_distribution:
       contract:
         const: nkf.release-manifest
       nkf_version:
-        const: "0.11"
+        const: "0.2"
       source:
         ref: release_distribution.source
       checker:
@@ -2342,7 +2342,7 @@ release_distribution:
     required_fields: [path, digest]
     fields:
       path:
-        const: knowledge/specifications/nkf-0.11.md
+        const: knowledge/specifications/nkf-0.2.md
       digest:
         ref: common.digest
   executable_artifact:
@@ -2350,7 +2350,7 @@ release_distribution:
     required_fields: [path, digest]
     fields:
       path:
-        const: contracts/nkf/0.11/nkf.yaml
+        const: contracts/nkf/0.2/nkf.yaml
       digest:
         ref: common.digest
   schema_artifact:
@@ -2366,21 +2366,21 @@ release_distribution:
   schemas:
     type: array
     exact_items_in_order:
-      - identity: urn:nkf:0.11:schema:bundle
-        path: contracts/nkf/0.11/schemas/bundle.schema.json
+      - identity: urn:nkf:0.2:schema:bundle
+        path: contracts/nkf/0.2/schemas/bundle.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.11:schema:record
-        path: contracts/nkf/0.11/schemas/record.schema.json
+      - identity: urn:nkf:0.2:schema:record
+        path: contracts/nkf/0.2/schemas/record.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.11:schema:release-manifest
-        path: contracts/nkf/0.11/schemas/release-manifest.schema.json
+      - identity: urn:nkf:0.2:schema:release-manifest
+        path: contracts/nkf/0.2/schemas/release-manifest.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.11:schema:validation-result
-        path: contracts/nkf/0.11/schemas/validation-result.schema.json
+      - identity: urn:nkf:0.2:schema:validation-result
+        path: contracts/nkf/0.2/schemas/validation-result.schema.json
         ref: release_distribution.schema_artifact
   schema:
-    identity: urn:nkf:0.11:schema:release-manifest
-    path: contracts/nkf/0.11/schemas/release-manifest.schema.json
+    identity: urn:nkf:0.2:schema:release-manifest
+    path: contracts/nkf/0.2/schemas/release-manifest.schema.json
     scope: release-package-enforcement-only
     project_declaration_schema: false
     governed_validation_input: false
@@ -2399,13 +2399,13 @@ release_distribution:
     explicit_directory_entries: forbidden
     entry_order: exact-ascii-path
     entries:
-      - {path: contracts/nkf/0.11/nkf.yaml, mode: "0644"}
-      - {path: contracts/nkf/0.11/schemas/bundle.schema.json, mode: "0644"}
-      - {path: contracts/nkf/0.11/schemas/record.schema.json, mode: "0644"}
-      - {path: contracts/nkf/0.11/schemas/release-manifest.schema.json, mode: "0644"}
-      - {path: contracts/nkf/0.11/schemas/validation-result.schema.json, mode: "0644"}
+      - {path: contracts/nkf/0.2/nkf.yaml, mode: "0644"}
+      - {path: contracts/nkf/0.2/schemas/bundle.schema.json, mode: "0644"}
+      - {path: contracts/nkf/0.2/schemas/record.schema.json, mode: "0644"}
+      - {path: contracts/nkf/0.2/schemas/release-manifest.schema.json, mode: "0644"}
+      - {path: contracts/nkf/0.2/schemas/validation-result.schema.json, mode: "0644"}
       - {path: dist/nourd-nkf-checker.mjs, mode: "0755"}
-      - {path: knowledge/specifications/nkf-0.11.md, mode: "0644"}
+      - {path: knowledge/specifications/nkf-0.2.md, mode: "0644"}
       - {path: release-manifest.json, mode: "0644"}
     forbidden:
       - symlink

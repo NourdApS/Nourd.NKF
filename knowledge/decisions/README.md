@@ -33,6 +33,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0059: Confirm Governed Frontmatter Realization](0059-confirm-governed-frontmatter-realization.md)
 - [ADR 0061: Confirm Layered Contract Enforcement Realization](0061-confirm-layered-contract-enforcement-realization.md)
 - [ADR 0076: Versioned Contract Evolution](0076-versioned-contract-evolution.md)
+- [ADR 0078: Version The Gate Correction As NKF 0.2](0078-version-gate-correction-as-nkf-0-2.md)
 
 ## Format Model And Serialization
 

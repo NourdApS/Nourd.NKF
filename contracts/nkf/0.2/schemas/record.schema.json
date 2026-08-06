@@ -1,18 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:nkf:0.11:schema:record",
-  "title": "NKF 0.11 record",
+  "$id": "urn:nkf:0.2:schema:record",
+  "title": "NKF 0.2 record",
   "x-nkf-source": {
-    "nkf_version": "0.11",
-    "markdown_path": "knowledge/specifications/nkf-0.11.md",
+    "nkf_version": "0.2",
+    "markdown_path": "knowledge/specifications/nkf-0.2.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "dfd0d17a72bf2b0bb805d28b05590464078a1059bfd1ccbf9cb046486098bc15"
+      "value": "57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88"
     },
-    "executable_path": "contracts/nkf/0.11/nkf.yaml",
+    "executable_path": "contracts/nkf/0.2/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "bd90efb1d5784ea848f90752c67ab3124bee2ccacddef2abb6aa28134f14fbcd"
+      "value": "4d4ece9cda36da4096b768d35757271c01122a2c48fe343f25df0f43371134c5"
     }
   },
   "type": "object",

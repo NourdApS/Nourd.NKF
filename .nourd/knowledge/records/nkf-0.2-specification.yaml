@@ -1,13 +1,13 @@
 contract: nkf.record
-id: nkf-0.11-specification
+id: nkf-0.2-specification
 type: specification
 body_contract: nkf.specification
-title: NKF 0.11 — Product And Technology Knowledge Format
+title: NKF 0.2 — Product And Technology Knowledge Format
 source:
-  path: specifications/nkf-0.11.md
+  path: specifications/nkf-0.2.md
   digest:
     algorithm: sha-256
-    value: dfd0d17a72bf2b0bb805d28b05590464078a1059bfd1ccbf9cb046486098bc15
+    value: 57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88
 governance:
   lifecycle: immutable
   status: draft
@@ -63,13 +63,6 @@ sections:
     role: evolution
     responsibilities:
       - versioning-compatibility-and-migration
-  - id: shipping-a-new-version
-    heading_path:
-      - Versioning
-      - Shipping A New Version
-    occurrence: 1
-    authority: accepted-meaning
-    role: obligation
   - id: bundle-contract
     heading_path:
       - Bundle Contract

@@ -58,10 +58,20 @@ On `2026-08-06`, reviewing the drafted Design, the Human Product Owner
 adopted the gate direction as proposed, directed that the gate be required on
 all Tasks including completed history, and directed versioned delivery:
 NKF updates now follow a defined versioning process, every release is
-versioned, and this correction ships as NKF `0.11` rather than mutating NKF
-0.1, because other repositories use NKF 0.1. The Human Product Owner also
+versioned, and this correction ships as a new version rather than mutating
+NKF 0.1, because other repositories use NKF 0.1. The Human Product Owner also
 directed committing the older completed work and keeping this Task's work as
-its own Git history before continuing.
+its own Git history before continuing. The initial allocation was NKF
+`0.11`.
+
+Later on `2026-08-06`, reviewing the candidate, the Human Product Owner
+directed that the shipping process is repository process rather than rulebook
+meaning and must be removed from the candidate Specification; that a new
+Task be created and deferred to define the version release process, the
+consumer adoption process, and breaking-change classification and signaling;
+and that the correction be versioned NKF `0.2` because it carries breaking
+changes. ADR 0078 records that correction, and `NKF-020` holds the deferred
+process work.
 
 ## Current Progress
 
@@ -72,13 +82,17 @@ its own Git history before continuing.
   NKF `0.11` to this correction.
 - The predecessor NKF-017 work was committed separately as `aca9bad`, and the
   NKF-019 groundwork as `d0afe31`, on local `master`; no push is claimed.
-- The exact NKF 0.11 candidate authority pair is drafted: Markdown SHA-256
-  `dfd0d17a72bf2b0bb805d28b05590464078a1059bfd1ccbf9cb046486098bc15` bound to
+- ADR 0078 reallocated the correction to NKF `0.2`, removed the shipping
+  process from the candidate rulebook, and recorded the deferred `NKF-020`
+  process Task; the removed release outline is preserved there as unaccepted
+  draft input.
+- The exact NKF 0.2 candidate authority pair is drafted: Markdown SHA-256
+  `57552ac918c79eb5ca74b93398fb7646266a3cb5d439b29c57b745382c73ee88` bound to
   executable SHA-256
-  `bd90efb1d5784ea848f90752c67ab3124bee2ccacddef2abb6aa28134f14fbcd`, with
-  derived 0.11 Schema candidates. The remaining boundary before derived
+  `4d4ece9cda36da4096b768d35757271c01122a2c48fe343f25df0f43371134c5`, with
+  derived 0.2 Schema candidates. The remaining boundary before derived
   implementation is Human Product Owner acceptance of those exact bytes
-  through reserved ADR 0078. No normative promotion, implementation,
+  through reserved ADR 0079. No normative promotion, implementation,
   conformance, or confirmation is claimed yet.
 
 ## Triggering External Evidence
