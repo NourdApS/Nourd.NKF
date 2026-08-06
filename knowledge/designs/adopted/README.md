@@ -13,6 +13,7 @@ normative authority remains in Specifications.
 - [Agent-Led Initial Onboarding](agent-led-initial-onboarding.md)
 - [Common And Root Profiles](common-and-root-profiles.md)
 - [Complete Portable Onboarding Topology](complete-portable-onboarding-topology.md)
+- [Decision Applicability Gate](decision-applicability-gate.md)
 - [Enforcement And Diagnostics](enforcement-and-diagnostics.md)
 - [Extension Declaration And Resolution](extension-declaration-and-resolution.md)
 - [Governed Frontmatter](governed-frontmatter.md)

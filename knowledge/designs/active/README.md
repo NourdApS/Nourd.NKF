@@ -7,6 +7,4 @@ created_at: 2026-08-01T08:40:15Z
 # Active Designs
 
 Design disposition is declared by each Design's frontmatter and governing
-provenance.
-
-- [NKF Decision Applicability Gate](decision-applicability-gate.md)
+provenance. No Design is currently Active.

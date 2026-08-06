@@ -54,6 +54,28 @@ Tiles or Wonderer, publishing a release, migrating a consumer, or claiming
 acceptance or confirmation that has not passed its separate authority
 boundary.
 
+On `2026-08-06`, reviewing the drafted Design, the Human Product Owner
+adopted the gate direction as proposed, directed that the gate be required on
+all Tasks including completed history, and directed versioned delivery:
+NKF updates now follow a defined versioning process, every release is
+versioned, and this correction ships as NKF `0.11` rather than mutating NKF
+0.1, because other repositories use NKF 0.1. The Human Product Owner also
+directed committing the older completed work and keeping this Task's work as
+its own Git history before continuing.
+
+## Current Progress
+
+- The read-only Nourd Tiles failure Evidence is bound with exact digests.
+- The Decision Applicability Gate Design was drafted, revised to the directed
+  all-Task and versioned-delivery boundaries, and adopted through ADR 0077.
+- ADR 0076 records the versioned contract evolution process and allocates
+  NKF `0.11` to this correction.
+- The predecessor NKF-017 work was committed separately as `aca9bad`, and the
+  NKF-019 groundwork as `d0afe31`, on local `master`; no push is claimed.
+- The next boundary is the exact NKF 0.11 Specification and executable
+  companion candidate pair for Human Product Owner acceptance. No normative
+  revision, implementation, conformance, or confirmation is claimed yet.
+
 ## Triggering External Evidence
 
 The triggering failure occurred in the Nourd Tiles repository and was

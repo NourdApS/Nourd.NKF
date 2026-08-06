@@ -5,9 +5,11 @@ title: NKF Decision Applicability Gate
 summary: This Design proposes one deterministic Decision Applicability Gate in Task non-records, closed verification-level and capability-finding vocabularies, a completion fail-closed rule, and normative claim rules so conditional decisions and proxy evidence can no longer silently become unconditional success.
 created_at: 2026-08-06T21:29:34Z
 record_lifecycle: immutable
-record_status: draft
+record_status: accepted
 task: NKF-019
-design_disposition: active
+design_disposition: adopted
+design_decisions:
+  - adr-0077
 ---
 
 # NKF Decision Applicability Gate
@@ -31,10 +33,10 @@ actually reached.
 
 The Design covers the portable Common contract for Task non-records, two new
 closed vocabularies, deterministic checker enforcement, authoring protocol and
-skill procedure, onboarding output, fixtures, and deliberate consumer
-migration. It does not modify any consumer repository, define Task execution
-semantics, or claim that semantic contradictions in prose are mechanically
-decidable.
+skill procedure, onboarding output, fixtures, the versioned NKF `0.11`
+successor identity, and deliberate consumer migration. It does not modify any
+consumer repository, define Task execution semantics, or claim that semantic
+contradictions in prose are mechanically decidable.
 
 ## Governing Inputs And Constraints
 
@@ -57,9 +59,10 @@ an extraction is complete, that prose is truthful, or that a summary
 elsewhere contradicts a condition. Those remain authoring-procedure and human
 review obligations, and this Design must not present them otherwise.
 
-NKF retains one `nkf_version: "0.1"` coordinate. Previously completed Tasks
-and accepted immutable records are not rewritten. Consumer adoption of the
-successor contract remains deliberate migration.
+NKF keeps one current version namespace at a time, and the Human Product
+Owner requires every contract-meaning change after first consumer adoption to
+ship as a new version. Accepted immutable records are not rewritten. Consumer
+adoption of a successor version remains deliberate migration.
 
 ## Proposed Direction
 
@@ -71,10 +74,9 @@ rules that keep validation levels separate.
 
 ### Gate Structure
 
-Every Task non-record with `task_status: active` MUST contain exactly one
-top-level H2 whose comparison string is `Decision Applicability`, containing
-exactly two top-level H3 subsections in order: `Applicable Decisions` and
-`Mandatory Capabilities`.
+Every Task non-record MUST contain exactly one top-level H2 whose comparison
+string is `Decision Applicability`, containing exactly two top-level H3
+subsections in order: `Applicable Decisions` and `Mandatory Capabilities`.
 
 The first block of `Applicable Decisions` MUST be exactly one of:
 
@@ -115,9 +117,10 @@ Each `Mandatory Capabilities` row declares:
   act.
 
 Additional explanatory blocks MAY follow the required first block in each
-subsection. Deferred and Completed Tasks MAY contain the gate; when present
-it is validated identically. The gate records extraction; it confers no
-acceptance, adoption, confirmation, conformance, or readiness.
+subsection. A gate added to a pre-existing Task after the fact MUST state in
+an explanatory block that it was added retrospectively rather than implying a
+historical extraction. The gate records extraction; it confers no acceptance,
+adoption, confirmation, conformance, or readiness.
 
 ### Closed Vocabularies
 
@@ -143,7 +146,7 @@ result axes, and none of those may be substituted for them.
 
 The checker enforces, with new registered diagnostics:
 
-1. gate presence and uniqueness for Active Tasks — `task.applicability.missing`;
+1. gate presence and uniqueness for every Task — `task.applicability.missing`;
 2. exact structural grammar: subsection order, first-block form, exact table
    headers, well-formed single-line rows with the exact column count, and the
    exact canonical sentences — `task.applicability.structure.invalid`;
@@ -162,14 +165,16 @@ contract is absent or unsupported.
 | `task_status` | Gate | Completion rule |
 | --- | --- | --- |
 | `active` | Required | Not applicable |
-| `deferred` | Optional; validated when present | Not applicable |
-| `completed` | Optional; validated when present | No row may combine Finding `unsupported` or `unknown` with Exception `none` |
+| `deferred` | Required | Not applicable |
+| `completed` | Required | No row may combine Finding `unsupported` or `unknown` with Exception `none` |
 
-A Completed Task whose gate contains an unexcepted `unsupported` or `unknown`
-mandatory capability fails closed. Previously completed Tasks without a gate
-remain valid; deterministic validation of one snapshot cannot know whether a
-section was removed at completion, so that misrepresentation remains an
-authoring-procedure violation caught by review and audit, not by the checker.
+The Human Product Owner directed that every Task carries the gate, including
+completed history. A Completed Task whose gate contains an unexcepted
+`unsupported` or `unknown` mandatory capability fails closed. A repository
+therefore gates its complete Task history when it migrates to the successor
+version: retrospective gates are added truthfully, declare themselves
+retrospective, and never fabricate a historical extraction. Repositories that
+do not migrate remain valid against the version they declare.
 
 ### Normative Claim Rules
 
@@ -196,6 +201,23 @@ Rules 1 through 4 are deterministic only where the gate structure makes them
 so; their application to free prose remains an authoring obligation under
 human review.
 
+### Versioned Contract Release
+
+The gate ships as NKF `0.11`, a versioned successor contract, by explicit
+Human Product Owner direction. NKF 0.1 meaning, its accepted Specification,
+and its executable contract set remain immutable historical authority for the
+repositories that declare them; nothing mutates NKF 0.1 in place.
+
+The successor establishes the versioned-evolution process: after first
+consumer adoption of a version, every contract-meaning change produces a new
+`<major>.<minor>` version with its own immutable Specification revision,
+executable companion, Schemas, and release. Before NKF `1.0`, a minor version
+MAY include breaking changes when they ship with explicit migration meaning;
+this supersedes the earlier rule that a minor version only adds
+backward-compatible vocabulary. A bundle declares exactly one `nkf_version`,
+and a checker that does not support the declared version fails closed rather
+than validating against a different version's meaning.
+
 ### Authoring Procedure And Skill
 
 The neutral authoring protocol adds the gate procedure: extract applicable
@@ -213,12 +235,17 @@ Initial onboarding generates the active onboarding Task with a gate whose
 subsections carry the canonical no-applicable-decision and
 no-mandatory-capability sentences, and the onboarding procedure directs the
 participating agent to correct that extraction when preserved accepted
-decisions apply. Fixtures and public examples carry conformant gates.
+decisions apply. Preserved pre-existing Tasks receive agent-authored,
+truthful, retrospective gates under the same human confirmation the
+onboarding assessment already uses. Fixtures and public examples carry
+conformant gates.
 
-Already-adopted repositories migrate deliberately: upon adopting the
-successor contract, each Active Task gains a truthful gate. Completed and
-deferred history is not rewritten. Consumer migration is separate future
-work; nothing migrates by implication of this repository's implementation.
+Already-adopted repositories migrate deliberately to NKF `0.11`: the bundle
+declares the successor version and every Task, including completed history,
+gains a truthful gate, retrospective where applicable. Repositories that stay
+on NKF 0.1 remain valid against NKF 0.1. Consumer migration is separate
+future work; nothing migrates by implication of this repository's
+implementation.
 
 ## Responsibilities Interactions And Information Flows
 
@@ -287,10 +314,10 @@ humans and audits.
 
 A structurally valid gate can still be semantically false: the canonical
 sentences and explicit rows make such claims visible, auditable, and
-attributable, but only review establishes truth. A gate deleted at completion
-evades the completion rule; Git history, review, and audit own that case. An
-overlooked applicable decision remains possible; the protocol's extraction
-step and audits reduce, not eliminate, it.
+attributable, but only review establishes truth. Because every Task requires
+the gate, deleting one is caught structurally; falsifying one remains a
+review and audit concern. An overlooked applicable decision remains possible;
+the protocol's extraction step and audits reduce, not eliminate, it.
 
 Fail-closed behavior: a missing executable gate contract, an unresolvable
 reference, an unsupported vocabulary value, and an unexcepted unresolved

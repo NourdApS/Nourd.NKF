@@ -45,7 +45,7 @@ establishes it.
 
 [Active Design Index](active/README.md)
 
-- [NKF Decision Applicability Gate](active/decision-applicability-gate.md)
+No Design is currently classified as Active.
 
 ## Adopted
 
@@ -55,6 +55,7 @@ establishes it.
 - [Agent-Led Initial Onboarding](adopted/agent-led-initial-onboarding.md)
 - [Common And Root Profiles](adopted/common-and-root-profiles.md)
 - [Complete Portable Onboarding Topology](adopted/complete-portable-onboarding-topology.md)
+- [Decision Applicability Gate](adopted/decision-applicability-gate.md)
 - [Enforcement And Diagnostics](adopted/enforcement-and-diagnostics.md)
 - [Extension Declaration And Resolution](adopted/extension-declaration-and-resolution.md)
 - [Governed Frontmatter](adopted/governed-frontmatter.md)

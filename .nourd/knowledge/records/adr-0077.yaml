@@ -1,0 +1,30 @@
+contract: nkf.record
+id: adr-0077
+type: decision
+body_contract: nkf.decision
+title: "ADR 0077: Decision Applicability Gate"
+source:
+  path: decisions/0077-decision-applicability-gate.md
+  digest:
+    algorithm: sha-256
+    value: 613523e34a299e536e8a30a978dda14bb579558d5d138bbda748edd4a4f89ad5
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: realization-requirements, heading_path: [Realization Requirements], occurrence: 1, authority: accepted-meaning, role: evidence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: rationale-for
+    target: design-nkf-019-decision-applicability-gate
+    source_section: decision

@@ -32,6 +32,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0058: Governed Frontmatter](0058-governed-frontmatter.md)
 - [ADR 0059: Confirm Governed Frontmatter Realization](0059-confirm-governed-frontmatter-realization.md)
 - [ADR 0061: Confirm Layered Contract Enforcement Realization](0061-confirm-layered-contract-enforcement-realization.md)
+- [ADR 0076: Versioned Contract Evolution](0076-versioned-contract-evolution.md)
 
 ## Format Model And Serialization
 
@@ -53,6 +54,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0049: Common And Root Profiles](0049-common-and-root-profiles.md)
 - [ADR 0050: Product And Technology Profiles](0050-product-and-technology-profiles.md)
 - [ADR 0051: Self-Hosting Source Migration](0051-self-hosting-source-migration.md)
+- [ADR 0077: Decision Applicability Gate](0077-decision-applicability-gate.md)
 
 ## Executable Authority Validation And Checker
 

@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF Decision Applicability Gate
 source:
-  path: designs/active/decision-applicability-gate.md
+  path: designs/adopted/decision-applicability-gate.md
   digest:
     algorithm: sha-256
-    value: 1ec3b3484f0b9c5cbc14b84a66cfeacd87ac24e4e64d8ecc34b4f6ffa1a4846e
+    value: 546004cc87e7ab3f8b462590e988a77714d84542ad21243573501b8e0cd563c0
 governance:
   lifecycle: immutable
-  status: draft
+  status: accepted
   authority:
     - human-product-owner
 scope:
@@ -24,6 +24,7 @@ sections:
   - {id: deterministic-enforcement, heading_path: [Proposed Direction, Deterministic Enforcement], occurrence: 1, authority: proposal, role: validation}
   - {id: presence-and-completion-matrix, heading_path: [Proposed Direction, Presence And Completion Matrix], occurrence: 1, authority: proposal, role: boundary}
   - {id: normative-claim-rules, heading_path: [Proposed Direction, Normative Claim Rules], occurrence: 1, authority: proposal, role: governing}
+  - {id: versioned-contract-release, heading_path: [Proposed Direction, Versioned Contract Release], occurrence: 1, authority: proposal, role: boundary}
   - {id: authoring-procedure-and-skill, heading_path: [Proposed Direction, Authoring Procedure And Skill], occurrence: 1, authority: proposal, role: interface}
   - {id: onboarding-and-migration, heading_path: [Proposed Direction, Onboarding And Migration], occurrence: 1, authority: proposal, role: boundary}
   - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
