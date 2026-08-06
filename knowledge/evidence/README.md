@@ -27,7 +27,10 @@ Realization impact inventory identifies every authority, checker, onboarding,
 fixture, self-hosting, documentation, release, and migration surface that must
 move together after adoption. The NKF-017 whole-repository completion audit
 records the final authority, coherence, completeness, enforcement, safety,
-compatibility, documentation, and recovery review of the exact successor.
+compatibility, documentation, and recovery review of the exact successor. The
+NKF-019 Nourd Tiles decision applicability failure Evidence binds the
+read-only consumer observations that initiated the Decision Applicability
+Gate.
 
 ## Decision Inputs
 

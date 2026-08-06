@@ -82,6 +82,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-017-whole-repository-completion-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-019-nourd-tiles-decision-applicability-failure.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
@@ -171,6 +173,8 @@ non_records:
   - path: tasks/completed/NKF-015-agent-led-initial-onboarding.md
     kind: task
   - path: tasks/completed/NKF-017-complete-portable-onboarding-topology.md
+    kind: task
+  - path: tasks/active/NKF-019-decision-applicability-gate.md
     kind: task
 canonical_terms:
   - ADR

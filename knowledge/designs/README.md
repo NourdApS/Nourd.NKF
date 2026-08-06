@@ -45,7 +45,7 @@ establishes it.
 
 [Active Design Index](active/README.md)
 
-No Design is currently classified as Active.
+- [NKF Decision Applicability Gate](active/decision-applicability-gate.md)
 
 ## Adopted
 
