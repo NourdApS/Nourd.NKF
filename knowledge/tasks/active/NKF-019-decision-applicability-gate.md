@@ -72,9 +72,14 @@ its own Git history before continuing.
   NKF `0.11` to this correction.
 - The predecessor NKF-017 work was committed separately as `aca9bad`, and the
   NKF-019 groundwork as `d0afe31`, on local `master`; no push is claimed.
-- The next boundary is the exact NKF 0.11 Specification and executable
-  companion candidate pair for Human Product Owner acceptance. No normative
-  revision, implementation, conformance, or confirmation is claimed yet.
+- The exact NKF 0.11 candidate authority pair is drafted: Markdown SHA-256
+  `5fe51c09bb065835699a824b98cf05adc8a0916145aec0a4332ecd3652652838` bound to
+  executable SHA-256
+  `1d81cd3c679cea8659de3c56d4f758b137252aa08a5a8161b1bb76e57b21fcdb`, with
+  derived 0.11 Schema candidates. The remaining boundary before derived
+  implementation is Human Product Owner acceptance of those exact bytes
+  through reserved ADR 0078. No normative promotion, implementation,
+  conformance, or confirmation is claimed yet.
 
 ## Triggering External Evidence
 
