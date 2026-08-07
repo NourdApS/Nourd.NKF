@@ -34,6 +34,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0061: Confirm Layered Contract Enforcement Realization](0061-confirm-layered-contract-enforcement-realization.md)
 - [ADR 0076: Versioned Contract Evolution](0076-versioned-contract-evolution.md)
 - [ADR 0078: Version The Gate Correction As NKF 0.2](0078-version-gate-correction-as-nkf-0-2.md)
+- [ADR 0081: Accept The NKF 0.2 Authority Pair](0081-accept-nkf-0-2-authority-pair.md)
 
 ## Format Model And Serialization
 

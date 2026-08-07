@@ -5,7 +5,7 @@ title: NKF 0.2 — Product And Technology Knowledge Format
 summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.2 supports Product and Technology knowledge and adds the required Decision Applicability Gate for Task non-records.
 created_at: 2026-08-06T22:24:00Z
 record_lifecycle: immutable
-record_status: draft
+record_status: accepted
 task: NKF-019
 ---
 
@@ -27,9 +27,9 @@ task: NKF-019
 - **Independent governing inputs:** ADRs 0001 through 0080
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
-> This exact revision is the candidate canonical NKF 0.2 specification. It
-> governs only when ADR 0081 accepts it with its executable companion. It
-> is not the public stable NKF 1.0 release.
+> This exact revision is the canonical NKF 0.2 specification, accepted with
+> its executable companion through ADR 0081. It governs repositories that
+> declare NKF 0.2. It is not the public stable NKF 1.0 release.
 
 ## Purpose
 
@@ -71,7 +71,10 @@ because it carries breaking changes, and keeps release, adoption, and
 breaking-change process definition outside format meaning. ADR 0079 removes
 the frontmatter title and adds the Task orientation keys. ADR 0080 accepts
 the separate release and adoption process protocols outside format meaning.
-This exact candidate pair governs as NKF 0.2 only when ADR 0081 accepts it.
+ADR 0081 accepts this exact pair as canonical NKF 0.2 after the Human
+Product Owner confirmed each 0.1 difference separately. It governs a
+repository only when that repository deliberately declares `nkf_version`
+`0.2`; NKF 0.1 remains immutable authority for repositories that declare it.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output

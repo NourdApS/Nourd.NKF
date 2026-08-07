@@ -87,6 +87,13 @@ its own version as the first migrator. ADR 0080 records that acceptance; the
 followable procedures are the release and adoption protocols under
 `integrations/`.
 
+On `2026-08-07`, the Human Product Owner received a plain-language
+explanation of every difference from NKF 0.1 and confirmed each change
+separately: the gate section with fail-closed completion, the validation
+levels and claim rules, the versioned-set and guidance-marker rules, and the
+title-free dynamic frontmatter. ADR 0081 records acceptance of the exact
+NKF 0.2 authority pair.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -110,14 +117,16 @@ followable procedures are the release and adoption protocols under
   separated release and adoption processes, documented as the versioned
   release and adoption protocols under `integrations/`; NKF-020 keeps only
   breaking-change classification and signaling plus refinements.
-- The exact NKF 0.2 candidate authority pair is drafted; its current
-  candidate digests are recorded below. The remaining boundary before derived
-  implementation is Human Product Owner acceptance of those exact bytes
-  through reserved ADR 0081. No normative promotion, implementation,
-  conformance, or confirmation is claimed yet.
-- Current candidate digests: Markdown SHA-256
-  `2930d208dc79c71e4869c1fba5a241fe6feed6328dc4ec09fe0032ba911301ce` bound to executable SHA-256
-  `d2337d12f114587b447ed764965c40d7245efed9f405cda453afa3db391f4f97`, with derived 0.2 Schema candidates.
+- ADR 0081 accepts the exact NKF 0.2 authority pair after per-change Human
+  Product Owner confirmation: canonical Markdown SHA-256
+  `bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317` bound to
+  executable SHA-256
+  `3178dd061ab0e9e91f8cf46d3391b9f43fc6bda0f2f3eb4a6cb18c65e86e05bd`. The
+  0.2 Schemas remain derived candidates. The next boundary is release
+  protocol step three: derive the complete 0.2 set — checker enforcement,
+  fixtures, tests, version-stamped guidance, onboarding, and documentation.
+  No 0.2 implementation, conformance, confirmation, release, or adoption is
+  claimed yet; this repository still declares and validates as NKF 0.1.
 
 ## Triggering External Evidence
 
