@@ -7,10 +7,10 @@ source:
   path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: c1ce0b1bcf6cf26b38209e28f0186d16745e4a14d0f0fae47b559acb05a58437
+    value: 0217ef5d8d88d84d987979b1497248664d12fd1d49f0edbfaf3b81b00f7260b4
 governance:
   lifecycle: immutable
-  status: accepted
+  status: draft
   authority:
     - codex-technical-reviewer
     - human-product-owner

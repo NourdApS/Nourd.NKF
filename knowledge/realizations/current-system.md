@@ -2,16 +2,17 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the confirmed NKF-017 complete portable Product and Technology onboarding topology and its deferred boundaries.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the implemented and unconfirmed NKF 0.2 versioned set built under NKF-019 on the confirmed NKF-017 predecessor.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
-record_status: accepted
-task: NKF-017
-confirmation_status: confirmed
+record_status: draft
+task: NKF-019
+confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0068
   - adr-0070
   - adr-0075
+unconfirmed_scope: The NKF-019 successor account of the implemented NKF 0.2 versioned set is unconfirmed; the listed Decisions confirm only the NKF-017 predecessor revision.
 ---
 
 # NKF Current System
@@ -103,6 +104,21 @@ recommended-release verification without weakening release review.
 [ADR 0075](../decisions/0075-confirm-complete-portable-onboarding-topology.md)
 confirms the exact audited NKF-017 successor without publishing it.
 
+Under NKF-019, ADRs 0076 through 0081 adopt versioned contract evolution,
+adopt and accept the Decision Applicability Gate direction, allocate the
+correction as breaking NKF 0.2, remove process from format meaning, remove
+the frontmatter title in favor of the body H1 with optional Task orientation
+keys, accept the separated release and adoption protocols, and accept the
+exact NKF 0.2 authority pair. The implemented 0.2 set in this repository —
+version-dispatching checker with the gate, frontmatter, and
+guidance-version-marker enforcement, 156-rule 0.2 registry beside the
+unchanged 151-rule 0.1 registry, version-stamped guidance, 0.2 onboarding
+output, version-aware release tooling, 0.2 fixtures, and the projected
+public documentation — realizes that accepted meaning. This successor
+account is implemented and deliberately unconfirmed; this repository still
+declares and validates as NKF 0.1 until it adopts 0.2 under the accepted
+adoption protocol after the release completes.
+
 ## Durable Mapping
 
 The current repository topology is:
@@ -153,7 +169,10 @@ Complete Product Or Technology Topology
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| Normative Specification | `knowledge/specifications/nkf-0.1.md` | Accepted complete portable-topology revision | ADR 0073 over ADR 0072 |
+| NKF 0.2 Specification | `knowledge/specifications/nkf-0.2.md` | Accepted canonical NKF 0.2 revision with the Decision Applicability Gate, versioned-set rules, and title-free frontmatter | ADR 0081 |
+| NKF 0.2 executable companion | `contracts/nkf/0.2/nkf.yaml` | Digest-bound accepted companion with derived Schemas and the 156-rule registry | ADR 0081 |
+| Version release and adoption protocols | `integrations/release/`, `integrations/adoption/` | Accepted versioned-set members carrying the NKF Version marker | ADR 0080; unreleased |
+| NKF 0.1 Specification | `knowledge/specifications/nkf-0.1.md` | Accepted complete portable-topology revision; governs this repository until 0.2 adoption | ADR 0073 over ADR 0072 |
 | Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0073 over ADR 0072 |
 | Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas | ADR 0075 over ADR 0059 |
 | Checker library and CLI | `src/checker/`, `src/cli.ts` | Complete portable paths, maps, placement, indexes, and diagnostics implemented | ADR 0075 |

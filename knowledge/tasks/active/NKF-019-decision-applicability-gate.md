@@ -121,12 +121,26 @@ NKF 0.2 authority pair.
   Product Owner confirmation: canonical Markdown SHA-256
   `bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317` bound to
   executable SHA-256
-  `3178dd061ab0e9e91f8cf46d3391b9f43fc6bda0f2f3eb4a6cb18c65e86e05bd`. The
-  0.2 Schemas remain derived candidates. The next boundary is release
-  protocol step three: derive the complete 0.2 set — checker enforcement,
-  fixtures, tests, version-stamped guidance, onboarding, and documentation.
-  No 0.2 implementation, conformance, confirmation, release, or adoption is
-  claimed yet; this repository still declares and validates as NKF 0.1.
+  `3178dd061ab0e9e91f8cf46d3391b9f43fc6bda0f2f3eb4a6cb18c65e86e05bd`.
+- The complete 0.2 set is derived and proven per release protocol steps three
+  and four: the checker dispatches contract sets by the bundle's declared
+  version and fails unsupported versions closed; the Decision Applicability
+  Gate, title-free frontmatter, Task orientation keys, and guidance version
+  marker are enforced for 0.2 bundles under the 156-rule 0.2 registry while
+  the 151-rule 0.1 registry is unchanged; guidance, protocols, and skills are
+  version-stamped with re-pinned registries; onboarding generates gated,
+  title-free 0.2 topologies and strips forbidden title keys as explicit
+  candidate edits; the adopter reads and materializes archives by their own
+  declared version, keeps outputs at 0.2, and fails cross-version topology
+  repair closed toward deliberate adoption; complete 0.2 Product and
+  Technology fixtures and the projected public documentation carry the set;
+  and the full authoring gate passes with 167 tests and zero diagnostics
+  while this repository still declares and validates as NKF 0.1.
+- The consolidated current-system Realization records the implemented 0.2
+  set as a Draft, partially-confirmed successor account. The remaining
+  boundaries are the independent set audit, separate Human Product Owner
+  confirmation, the release archive, and only then this repository's own
+  adoption.
 
 ## Triggering External Evidence
 
