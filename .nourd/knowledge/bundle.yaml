@@ -1077,7 +1077,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: 89a7ac3ec7df177b5a75e3aef9983e5c0e691cd9b7d8511ba8044c48bd5ca8ef
+      value: 820d49d42a469efbc15a7b29de5e73e394ef9a807b62753cd665a2de47741aa3
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
