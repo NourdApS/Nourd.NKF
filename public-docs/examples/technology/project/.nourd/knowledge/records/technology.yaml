@@ -7,7 +7,7 @@ source:
   path: technology.md
   digest:
     algorithm: sha-256
-    value: f14edd7bed31d00fa5a7ea66eb4dd930ea52158de70491e0e045e18977f6d5ef
+    value: 4eb330b3b844f2bb98789235542eb1b4627f0458589287631829625d673d0fab
 governance:
   lifecycle: living
   status: draft

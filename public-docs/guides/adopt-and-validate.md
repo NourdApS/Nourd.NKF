@@ -1,13 +1,13 @@
 # Adopt And Validate
 
-This guide applies to the exact internal NKF 0.1 release recorded in
-`../reference/publication.json`. NKF 0.1 is pre-stable. The checker is private;
+This guide applies to the exact internal NKF 0.2 release recorded in
+`../reference/publication.json`. NKF 0.2 is pre-stable. The checker is private;
 the documentation and adopter are public.
 
 ## Already Structured Projects Only
 
 This guide installs the pinned NKF integration around an already complete
-native NKF 0.1 bundle. For an Empty Repository or a Tiny Knowledge, No Source
+native NKF 0.2 bundle. For an Empty Repository or a Tiny Knowledge, No Source
 Or Configuration repository, begin with
 [Initial Onboarding](initial-onboarding.md). Do not manually create native YAML
 merely to satisfy this install prerequisite.
@@ -103,7 +103,7 @@ checker at `full-bundle`.
 
 The Github workflow runs the same project command against the exact candidate
 commit. Workflow presence and a passing run are not branch protection. The
-current NKF 0.1 adoption path does not claim a protected merge gate.
+current NKF 0.2 adoption path does not claim a protected merge gate.
 
 ## Read The Result
 

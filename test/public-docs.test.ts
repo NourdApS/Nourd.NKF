@@ -15,8 +15,8 @@ async function copyProjection() {
     { recursive: true },
   );
   await cp(
-    path.join(repositoryRoot, "knowledge/specifications/nkf-0.1.md"),
-    path.join(root, "knowledge/specifications/nkf-0.1.md"),
+    path.join(repositoryRoot, "knowledge/specifications/nkf-0.2.md"),
+    path.join(root, "knowledge/specifications/nkf-0.2.md"),
     { recursive: true },
   );
   await cp(
@@ -62,7 +62,7 @@ describe("NKF public documentation", () => {
   it("rejects mirror drift, unexpected files, and private local paths", async () => {
     const mirrorDrift = await copyProjection();
     await writeFile(
-      path.join(mirrorDrift, "public-docs/reference/nkf-0.1.md"),
+      path.join(mirrorDrift, "public-docs/reference/nkf-0.2.md"),
       "# Changed\n",
     );
     await expect(verifyPublicDocs(mirrorDrift)).rejects.toThrow(

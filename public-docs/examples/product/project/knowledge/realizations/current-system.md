@@ -1,7 +1,6 @@
 ---
 id: product-current-system
 type: realization
-title: Example Product Current System
 summary: "Provides the unconfirmed current-system view for the Example Product fixture."
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: living

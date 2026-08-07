@@ -67,7 +67,7 @@ export const PUBLIC_FILES = Object.freeze([
   "guides/adopt-and-validate.md",
   "guides/initial-onboarding.md",
   "guides/update-and-recover.md",
-  "reference/nkf-0.1.md",
+  "reference/nkf-0.2.md",
   "tools/nourd-nkf-adopt.mjs",
   "tools/nkf-onboarding-protocol.md",
 ]);
@@ -138,7 +138,7 @@ function requireSubjects(combined) {
 function verifyRelativeLinks(files, publishedPaths) {
   const fileSet = new Set(publishedPaths);
   for (const [relative, text] of files) {
-    if (relative === "reference/nkf-0.1.md") {
+    if (relative === "reference/nkf-0.2.md") {
       continue;
     }
     for (const match of text.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
@@ -199,9 +199,9 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     );
   }
   const specification = await readFile(
-    path.join(root, "knowledge/specifications/nkf-0.1.md"),
+    path.join(root, "knowledge/specifications/nkf-0.2.md"),
   );
-  const mirror = await readFile(path.join(docsRoot, "reference/nkf-0.1.md"));
+  const mirror = await readFile(path.join(docsRoot, "reference/nkf-0.2.md"));
   if (!mirror.equals(specification)) {
     throw new Error("The public normative Markdown mirror differs from authority.");
   }
@@ -241,7 +241,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
   }
   const combined = [...markdown.values()].join("\n");
   const explanatoryCombined = [...markdown]
-    .filter(([relative]) => relative !== "reference/nkf-0.1.md")
+    .filter(([relative]) => relative !== "reference/nkf-0.2.md")
     .map(([, text]) => text)
     .join("\n");
   requireSubjects(explanatoryCombined);
@@ -249,7 +249,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
   const publicSafeCombined = (
     await Promise.all(
       actual
-        .filter((relative) => relative !== "reference/nkf-0.1.md")
+        .filter((relative) => relative !== "reference/nkf-0.2.md")
         .map((relative) =>
           readFile(path.join(docsRoot, ...relative.split("/")), "utf8"),
         ),

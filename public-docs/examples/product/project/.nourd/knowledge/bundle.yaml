@@ -1,4 +1,4 @@
-nkf_version: "0.1"
+nkf_version: "0.2"
 contract: nkf.bundle
 id: example-product
 root:

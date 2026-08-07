@@ -14,8 +14,8 @@ export async function buildPublicDocs(root = repositoryRoot) {
   await mkdir(path.join(docsRoot, ".agents/skills/nkf-onboarding"), { recursive: true });
   await mkdir(path.join(docsRoot, ".claude/skills/nkf-onboarding"), { recursive: true });
   await copyFile(
-    path.join(root, "knowledge/specifications/nkf-0.1.md"),
-    path.join(docsRoot, "reference/nkf-0.1.md"),
+    path.join(root, "knowledge/specifications/nkf-0.2.md"),
+    path.join(docsRoot, "reference/nkf-0.2.md"),
   );
   await copyFile(
     path.join(root, "dist/nourd-nkf-adopt.mjs"),
@@ -32,7 +32,7 @@ export async function buildPublicDocs(root = repositoryRoot) {
     );
   }
   for (const kind of ["product", "technology"]) {
-    const fixture = kind === "product" ? "minimal" : "technology";
+    const fixture = kind === "product" ? "minimal-0-2" : "technology-0-2";
     const target = path.join(docsRoot, "examples", kind, "project");
     await rm(target, { recursive: true, force: true });
     await cp(path.join(root, "fixtures", "valid", fixture), target, {
