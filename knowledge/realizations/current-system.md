@@ -1,6 +1,7 @@
 ---
 id: nkf-0.1-native-realization
 type: realization
+title: NKF Current System
 summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the implemented and unconfirmed NKF 0.2 versioned set built under NKF-019 on the confirmed NKF-017 predecessor.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
@@ -113,18 +114,10 @@ version-dispatching checker with the gate, frontmatter, and
 guidance-version-marker enforcement, 156-rule 0.2 registry beside the
 unchanged 151-rule 0.1 registry, version-stamped guidance, 0.2 onboarding
 output, version-aware release tooling, 0.2 fixtures, and the projected
-public documentation — realizes that accepted meaning. ADR 0084 recorded the
-unconsumed-release exception, the first adoption was rolled back by
-direction after review found the migration incomplete and two rule gaps,
-and ADRs 0086 through 0088 corrected 0.2: records may carry the
-decision-authority orientation key, restated identity bullets fail closed
-under the 157-rule registry, and the corrected title-free pair is accepted
-and released. This repository has adopted the corrected set: the bundle
-declares 0.2, every Task carries its gate, no non-Evidence document carries
-a title key or identity bullets, the retired 0.1 sources live in Git
-history and the 0.1 release archives, and the complete bundle validates
-with zero diagnostics. The successor account itself remains deliberately
-unconfirmed pending review.
+public documentation — realizes that accepted meaning. This successor
+account is implemented and deliberately unconfirmed; this repository still
+declares and validates as NKF 0.1 until it adopts 0.2 under the accepted
+adoption protocol after the release completes.
 
 ## Durable Mapping
 
@@ -179,7 +172,8 @@ Complete Product Or Technology Topology
 | NKF 0.2 Specification | `knowledge/specifications/nkf-0.2.md` | Accepted canonical NKF 0.2 revision with the Decision Applicability Gate, versioned-set rules, and title-free frontmatter | ADR 0081 |
 | NKF 0.2 executable companion | `contracts/nkf/0.2/nkf.yaml` | Digest-bound accepted companion with derived Schemas and the 156-rule registry | ADR 0081 |
 | Version release and adoption protocols | `integrations/release/`, `integrations/adoption/` | Accepted versioned-set members carrying the NKF Version marker | ADR 0080; unreleased |
-| NKF 0.1 authority | Git history and the 0.1 release archives | Immutable authority for repositories that declare NKF 0.1; retired from this working tree at adoption | ADR 0073 over ADR 0072; retirement under ADR 0080 |
+| NKF 0.1 Specification | `knowledge/specifications/nkf-0.1.md` | Accepted complete portable-topology revision; governs this repository until 0.2 adoption | ADR 0073 over ADR 0072 |
+| Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0073 over ADR 0072 |
 | Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas | ADR 0075 over ADR 0059 |
 | Checker library and CLI | `src/checker/`, `src/cli.ts` | Complete portable paths, maps, placement, indexes, and diagnostics implemented | ADR 0075 |
 | Fixtures and tests | `fixtures/`, `test/` | Complete Product and Technology topology, onboarding, repair, drift, rollback, idempotence, and tamper coverage | ADR 0075 |

@@ -1,4 +1,5 @@
 ---
+title: Example Specification
 id: specification
 type: specification
 summary: "Defines the normative Example Technology contract and its validation boundary."

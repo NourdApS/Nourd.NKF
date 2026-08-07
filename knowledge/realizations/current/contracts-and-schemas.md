@@ -1,6 +1,7 @@
 ---
 id: nkf-contracts-and-schemas
 type: realization
+title: NKF Contracts And Schemas
 summary: This Realization describes the current executable-contract and JSON Schema mapping for NKF 0.1.
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable

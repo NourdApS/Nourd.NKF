@@ -1,6 +1,7 @@
 ---
 id: adr-0065
 type: decision
+title: "ADR 0065: Confirm Current Release-Bound Checker"
 summary: Confirm the current NKF 0.1 authority, Schema, and checker bytes at an exact source checkpoint as the inputs eligible for the successor content-addressed release.
 created_at: 2026-07-31T02:08:43Z
 record_lifecycle: immutable
@@ -10,6 +11,8 @@ task: NKF-008
 
 # ADR 0065: Confirm Current Release-Bound Checker
 
+- **Status:** Accepted
+- **Task:** `NKF-008`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit delegation to complete and independently audit NKF-008
 - **Source Checkpoint:**

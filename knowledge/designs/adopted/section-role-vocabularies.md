@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-section-role-vocabularies
 type: design
+title: NKF 0.1 Section-Role Vocabularies
 summary: Whether the following shared role meanings and body-specific allowed subsets are the complete controlled section-role vocabulary for the ten core NKF 0.1 Product body contracts.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -9,11 +10,13 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0014
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Section-Role Vocabularies
 
+- **Design Disposition:** Adopted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 - **Proposal evidence:** imported NKF-002 checker contract set at
   `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`,

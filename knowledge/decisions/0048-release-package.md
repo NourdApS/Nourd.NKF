@@ -1,16 +1,19 @@
 ---
 id: adr-0048
 type: decision
+title: "ADR 0048: Confirm Initial Release Package Realization"
 summary: ADRs 0042 through 0045 accept the NKF 0.1 release boundary and exact authority. ADR 0046 confirms the four release-package schemas while preserving the three-schema project-validation boundary. ADR 0047 confirms the checker source and portable artifact. The remaining approved work was to realize and audit the deterministic package and bootstrap verifier without publishing it.
 created_at: 2026-07-30T10:04:40Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer acting under explicit Human
 ---
 
 # ADR 0048: Confirm Initial Release Package Realization
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer acting under explicit Human
   Product Owner delegation
 - **Release Source Checkpoint:**
   `50fbc53c7ec1022598029780b5159d5a91c4a087`

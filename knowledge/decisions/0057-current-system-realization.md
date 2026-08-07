@@ -1,16 +1,19 @@
 ---
 id: adr-0057
 type: decision
+title: "ADR 0057: Current System Realization"
 summary: ADRs 0053 through 0056 establish the repaired knowledge architecture, front-matter boundary, and Design vocabulary. The repository now has a consolidated current-system Realization, explicit supporting Realizations, reviewed declarations, current derived Schemas, checker support, and a complete Technology self-host bundle.
 created_at: 2026-07-30T17:44:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
-decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0057: Current System Realization
 
+- **Status:** Accepted
+- **Task:** `NKF-007`
+- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit delegated approval and confirmation authority
 - **Review Evidence:** `knowledge/evidence/audits/nkf-007-final-repository-audit.md`
 

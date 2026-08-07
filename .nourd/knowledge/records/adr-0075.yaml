@@ -7,7 +7,7 @@ source:
   path: decisions/0075-confirm-complete-portable-onboarding-topology.md
   digest:
     algorithm: sha-256
-    value: 2a273a2bec523e1a912eed450e60dbb4a5de8cfde65d65e9ef58ce2a9166145e
+    value: f351c29c9e09d6f330f29642a9c92beeb9178924c68b24c11ae2a6ba6dc854ca
 governance:
   lifecycle: immutable
   status: accepted

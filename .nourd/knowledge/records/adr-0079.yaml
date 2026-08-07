@@ -7,7 +7,7 @@ source:
   path: decisions/0079-dynamic-frontmatter-without-title.md
   digest:
     algorithm: sha-256
-    value: 471721d56c8c33de8f6dffc79b99daf670b175b54e66ced90b9f190df59619f1
+    value: d66438fb21bbaabbc61cbb19536d039377a73c50ada157b8658eb9ef20970f04
 governance:
   lifecycle: immutable
   status: accepted

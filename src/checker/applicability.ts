@@ -22,6 +22,8 @@ export interface GateInput {
   model: MarkdownModel;
   taskStatus: string | null;
   acceptedDecisionIds: ReadonlySet<string>;
+  acceptedDecisionPaths: ReadonlyMap<string, string>;
+  selfPath: string;
   emitter: RuleEmitter;
 }
 
@@ -63,9 +65,40 @@ function isDelimiterLine(line: string): boolean {
   return /^\|[\s|:-]*$/.test(line.trim()) && line.includes("-");
 }
 
-function referenceCellIdentifier(cell: string): string | null {
-  const match = /^`([^`]+)`$/.exec(cell);
-  return match === null ? null : (match[1] ?? null);
+function referenceCellLink(cell: string): { identifier: string; destination: string } | null {
+  const match = /^\[`([^`]+)`\]\(([^()\s]+)\)$/.exec(cell);
+  if (match === null || match[1] === undefined || match[2] === undefined) return null;
+  return { identifier: match[1], destination: match[2] };
+}
+
+function resolveRelative(fromPath: string, destination: string): string | null {
+  if (/^[a-z][a-z0-9+.-]*:/i.test(destination) || destination.startsWith("#")) return null;
+  const segments = fromPath.split("/").slice(0, -1);
+  const target = destination.split("#")[0] ?? "";
+  if (target === "") return null;
+  for (const part of target.split("/")) {
+    if (part === "" || part === ".") continue;
+    if (part === "..") {
+      if (segments.length === 0) return null;
+      segments.pop();
+      continue;
+    }
+    segments.push(part);
+  }
+  return segments.join("/");
+}
+
+function resolvedGateReference(
+  cell: string,
+  gate: GateInput,
+): "resolved" | "unresolved" {
+  const link = referenceCellLink(cell);
+  if (link === null) return "unresolved";
+  const declaredPath = gate.acceptedDecisionPaths.get(link.identifier);
+  if (declaredPath === undefined) return "unresolved";
+  return resolveRelative(gate.selfPath, link.destination) === declaredPath
+    ? "resolved"
+    : "unresolved";
 }
 
 export function validateDecisionApplicabilityGate(input: GateInput): void {
@@ -181,11 +214,10 @@ export function validateDecisionApplicabilityGate(input: GateInput): void {
         continue;
       }
       if (kind !== "record") continue;
-      const identifier = referenceCellIdentifier(reference);
-      if (identifier === null || !gate.acceptedDecisionIds.has(identifier)) {
+      if (resolvedGateReference(reference, gate) !== "resolved") {
         gate.emitter.emit(
           "task.applicability.reference.unresolved",
-          "A record-kind Reference must be one backtick-delimited identifier resolving to an accepted same-bundle Decision record.",
+          "A record-kind Reference must be one link whose text is a backtick-delimited identifier resolving to an accepted same-bundle Decision record and whose destination is that record's source path.",
           context,
         );
       }
@@ -233,11 +265,10 @@ export function validateDecisionApplicabilityGate(input: GateInput): void {
           context,
         );
       }
-      const exceptionIdentifier = referenceCellIdentifier(exception);
-      if (exceptionIdentifier !== null && !gate.acceptedDecisionIds.has(exceptionIdentifier)) {
+      if (/^\[`[^`]+`\]\(/.test(exception) && resolvedGateReference(exception, gate) !== "resolved") {
         gate.emitter.emit(
           "task.applicability.reference.unresolved",
-          "A reference-cell Exception must resolve to an accepted same-bundle Decision record.",
+          "A link Exception must resolve to an accepted same-bundle Decision record with the record's source path as destination.",
           context,
         );
       }

@@ -7,7 +7,7 @@ source:
   path: decisions/0005-historical-record-responsibility-bindings.md
   digest:
     algorithm: sha-256
-    value: 7908a2886f5598d3de03057c88c7867df2c2cf44fd46c9138fa1c3b5dea6f46d
+    value: ecb762da4ac74ea2e0461c614f4e6fff8e999c6b299f5a06fd05757add00eeb8
 governance:
   lifecycle: immutable
   status: accepted

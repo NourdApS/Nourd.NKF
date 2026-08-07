@@ -7,7 +7,7 @@ source:
   path: decisions/0039-invocation-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 156ace2dacf7525c0caf0f9dc8ba9d24487b3bb66fa3b7a0c2f034aca8756561
+    value: a695f089c5f1f25a9f2c960c8de68b0844fa89e1e30b4151611dd95c46427757
 governance:
   lifecycle: immutable
   status: accepted

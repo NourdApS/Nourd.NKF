@@ -1,16 +1,19 @@
 ---
 id: adr-0064
 type: decision
+title: "ADR 0064: Release Documentation And Adoption"
 summary: Adopt the exact NKF-008 direction for a fixed native release archive, separate public documentation projection, self-contained pinned adopter, and authorized self-host consumer exercise.
 created_at: 2026-07-31T02:08:43Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-008
-decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0064: Release Documentation And Adoption
 
+- **Status:** Accepted
+- **Task:** `NKF-008`
+- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit delegation to complete and independently audit NKF-008
 - **Review Evidence:**
   `knowledge/evidence/audits/nkf-008-release-documentation-and-adoption-design-audit.md`

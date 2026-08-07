@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-native-record-serialization
 type: design
+title: NKF 0.1 Native Record Serialization
 summary: Whether the following YAML object shape is the exact native serialization of the logical NKF 0.1 record defined by the accepted Markdown.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -9,11 +10,13 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0013
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Native Record Serialization
 
+- **Design Disposition:** Adopted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 - **Implementation evidence:** imported NKF-002 record schema and TypeScript
   types; neither is authority

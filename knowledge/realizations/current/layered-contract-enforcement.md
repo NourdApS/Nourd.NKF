@@ -1,6 +1,7 @@
 ---
 id: nkf-layered-contract-enforcement
 type: realization
+title: NKF Layered Contract Enforcement
 summary: This Realization maps the NKF-015 successor enforcement command, including adopted-repository and pre-adoption guidance verification, the bounded repository-specific Task-authorization policy, and the preserved protected-gate boundary.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable

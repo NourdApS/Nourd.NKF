@@ -1,6 +1,7 @@
 ---
 id: adr-0059
 type: decision
+title: "ADR 0059: Confirm Governed Frontmatter Realization"
 summary: Confirm the exact audited NKF-010 Realization revisions that implement the accepted NKF 0.1 governed-frontmatter boundary across contracts, checker behavior, fixtures, knowledge, declarations, and self-hosting.
 created_at: 2026-07-30T20:29:37Z
 record_lifecycle: immutable
@@ -10,6 +11,8 @@ task: NKF-010
 
 # ADR 0059: Confirm Governed Frontmatter Realization
 
+- **Status:** Accepted
+- **Task:** `NKF-010`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit authorization to approve and confirm the coherent
   frontmatter adoption

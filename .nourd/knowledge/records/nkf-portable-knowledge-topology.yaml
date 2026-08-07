@@ -7,7 +7,7 @@ source:
   path: realizations/current/portable-knowledge-topology.md
   digest:
     algorithm: sha-256
-    value: 2025fae9513264093007566ff3c4e51627f51f0de3ca4457661b72b62299a145
+    value: e7f753e5cfe90bb30cffb7c3f94bdec7c91902b1fe5e0621bf301fa0954ec2c2
 governance:
   lifecycle: immutable
   status: accepted

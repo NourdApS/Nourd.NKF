@@ -103,17 +103,17 @@ describe("NKF 0.2 release-manifest schema", () => {
     );
     expect(canonicalAssertions).toEqual(rebound);
     expect(sha256(canonical)).toBe(
-      "5c73b00619ccd5cbb32ad77be5e73c41d61be3c0169a1c913539ac96aebeb459",
+      "e50aa9e5a301d07027ed5e537facebf672898b30f2c677a2538274df3b8ae0d4",
     );
     expect(canonicalSource).toMatchObject({
       nkf_version: "0.2",
       markdown_digest: {
         algorithm: "sha-256",
-        value: "df2e457e5e3824004268efebdead93be56df36c3754cf563b2701cee0474c26f",
+        value: "535d47e735b1de3440f91b3dacc9a168c818674e13a843938ca8f77a4f5794d5",
       },
       executable_digest: {
         algorithm: "sha-256",
-        value: "087934ec88de7f6c25b64e9706599403876d28cbc1f0accd50bc9bfbdd419b27",
+        value: "1c47ce78326c0ee11a521cc7953038c9d11c9ea326c2b49061441686f74d9d98",
       },
     });
   });

@@ -7,7 +7,7 @@ source:
   path: decisions/0006-pre-stable-evolution.md
   digest:
     algorithm: sha-256
-    value: 87624a99e3ae32ea793fed05744494445dca26d300e1992778461552def78dd4
+    value: 6077827bb54da2eaff6961111247081749865368cacda59a7aa8943c53061d32
 governance:
   lifecycle: immutable
   status: accepted

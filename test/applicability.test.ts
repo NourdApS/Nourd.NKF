@@ -20,6 +20,8 @@ function run(body: string, taskStatus: string, acceptedDecisionIds: string[] = [
     model: parseMarkdown(body),
     taskStatus,
     acceptedDecisionIds: new Set(acceptedDecisionIds),
+    acceptedDecisionPaths: new Map(acceptedDecisionIds.map((id) => [id, `decisions/${id}.md`])),
+    selfPath: "tasks/active/T-001-example.md",
     emitter,
   });
   return emitter.diagnostics.map((diagnostic) => diagnostic.rule_id);
@@ -58,7 +60,7 @@ describe("decision applicability gate", () => {
       heading +
       "### Applicable Decisions\n\n" +
       "| Reference | Kind | Carried Constraint |\n| --- | --- | --- |\n" +
-      "| `adr-0008` | record | Mapbox only if custom terrain is proved. |\n" +
+      "| [`adr-0008`](../../decisions/adr-0008.md) | record | Mapbox only if custom terrain is proved. |\n" +
       "| Wonderer pilot record | external | Renderer remains replaceable. |\n\n" +
       "Added retrospectively during NKF 0.2 migration.\n\n" +
       "### Mandatory Capabilities\n\n" +
@@ -94,7 +96,7 @@ describe("decision applicability gate", () => {
       "| `adr-9999` | record | Condition. |\n\n" +
       "### Mandatory Capabilities\n\n" +
       "| Capability | Finding | Verification | Exception |\n| --- | --- | --- | --- |\n" +
-      "| Terrain | unknown | none | `adr-9999` |\n";
+      "| Terrain | unknown | none | [`adr-9999`](../../decisions/adr-9999.md) |\n";
     expect(run(body, "active")).toEqual([
       "task.applicability.reference.unresolved",
       "task.applicability.reference.unresolved",
@@ -127,5 +129,74 @@ describe("decision applicability gate", () => {
       "| Terrain \\| navigation | proven | data-validity | none |\n";
     expect(run(prose, "active")).toEqual(["task.applicability.structure.invalid"]);
     expect(run(escaped, "active")).toEqual(["task.applicability.structure.invalid"]);
+  });
+});
+
+import { findIdentityBulletLabels, findUnlinkedReferences } from "../src/checker/markdown.js";
+
+describe("identity bullet duplication", () => {
+  it("finds closed identity labels only at the document root", () => {
+    const body = [
+      "# Doc",
+      "",
+      "- **Task:** `NKF-003`",
+      "- **Design Disposition:** Adopted",
+      "- **Proposal Authority Effect:** None",
+      "- **Implementation evidence:** imported schema",
+      "- **Adopting Decision:** ADR-0013",
+      "- **Authority Boundary:** stays allowed",
+      "",
+      "> - **Status:** quoted, not top-level",
+      "",
+      "```",
+      "- **Owner:** fenced example",
+      "```",
+    ].join("\n");
+    expect(findIdentityBulletLabels(body).map((found) => found.label.toLowerCase())).toEqual([
+      "task",
+      "design disposition",
+      "proposal authority effect",
+      "implementation evidence",
+      "adopting decision",
+    ]);
+  });
+});
+
+describe("deep link references", () => {
+  const maps = {
+    decisionsByNumber: new Map([["0073", "decisions/0073-x.md"]]),
+    recordIdToPath: new Map([["adr-0073", "decisions/0073-x.md"]]),
+    taskIdToPath: new Map([["NKF-017", "tasks/completed/NKF-017-x.md"]]),
+    selfPath: "designs/adopted/example.md",
+  };
+  it("flags unlinked and mistargeted references and accepts correct links", () => {
+    const body = [
+      "# NKF-017 Style Doc",
+      "",
+      "Adopted through ADR 0073 during NKF-017.",
+      "",
+      "The record `adr-0073` applies.",
+      "",
+      "Linked [ADR 0073](../../decisions/0073-x.md) is fine.",
+      "",
+      "Mistargeted [ADR 0073](../../decisions/wrong.md) is not.",
+      "",
+      "A longer [NKF-017 completion audit](../../evidence/audit.md) link is exempt.",
+      "",
+      "```",
+      "ADR 0073 in a fence stays free.",
+      "```",
+    ].join("\n");
+    const found = findUnlinkedReferences(body, maps);
+    expect(found.map((violation) => [violation.token, violation.reason])).toEqual([
+      ["ADR 0073", "unlinked"],
+      ["NKF-017", "unlinked"],
+      ["adr-0073", "unlinked"],
+      ["ADR 0073", "mistargeted"],
+    ]);
+  });
+  it("never flags the document itself", () => {
+    const self = { ...maps, selfPath: "decisions/0073-x.md" };
+    expect(findUnlinkedReferences("# ADR 0073\n\nADR 0073 self mention.\n", self)).toEqual([]);
   });
 });

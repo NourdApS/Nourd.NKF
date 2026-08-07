@@ -1,16 +1,19 @@
 ---
 id: adr-0046
 type: decision
+title: "ADR 0046: Confirm Release Contract Json Schema Bindings"
 summary: ADR 0045 accepts the current NKF 0.1 Markdown/YAML authority pair. The existing bundle, record, and validation-result schemas retain their assertion meaning but require exact source-metadata rebinding. The accepted release contract also requires one separate release-manifest schema that must not enter project validation.
 created_at: 2026-07-30T09:51:47Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer acting under explicit Human
 ---
 
 # ADR 0046: Confirm Release Contract Json Schema Bindings
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer acting under explicit Human
   Product Owner delegation
 - **Accepted Source Pair:** ADR 0045
 

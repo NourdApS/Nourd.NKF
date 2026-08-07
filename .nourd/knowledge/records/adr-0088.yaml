@@ -7,7 +7,7 @@ source:
   path: decisions/0088-bind-the-final-0-2-release-checker.md
   digest:
     algorithm: sha-256
-    value: e6422b3ecfdbe32bfd8e9101bb0a245d9f076a369f91d04529b87211f5dc6362
+    value: d5d612e15811bdf9419cbdc235192257772905d0526e0bbb4e17c2562249661b
 governance:
   lifecycle: immutable
   status: accepted

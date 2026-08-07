@@ -1,16 +1,19 @@
 ---
 id: adr-0035
 type: decision
+title: "ADR 0035: Clarify Product Scope And Structural Hierarchy"
 summary: "NKF 0.1 already distinguishes:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0035: Clarify Product Scope And Structural Hierarchy
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Confirmation Source:** Direct confirmation in the NKF-003 discussion on
   30 July 2026 after review of the exact Product-scope and `part-of`
   alternatives

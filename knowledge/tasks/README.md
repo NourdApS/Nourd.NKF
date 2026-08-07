@@ -1,4 +1,5 @@
 ---
+title: Tasks
 summary: Tasks own durable work intent, constraints, acceptance criteria, and execution plans. Directory placement is a navigation projection of the explicit Task status; it does not establish that status.
 created_at: 2026-07-30T17:03:21Z
 ---

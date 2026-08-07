@@ -1,16 +1,19 @@
 ---
 id: adr-0001
 type: decision
+title: "ADR 0001: Establish Independent NKF Shared Technology Authority"
 summary: NKF 0.1 was accepted inside the Nourd Studio Product repository as the initial Product knowledge format. Subsequent NKF checker work also began there, with a portable consumer path proposed for Shredwise.
 created_at: 2026-07-28T22:01:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0001: Establish Independent NKF Shared Technology Authority
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation in the Nourd Agent SDK
   design discussion on 28 July 2026
 

@@ -1,16 +1,19 @@
 ---
 id: adr-0021
 type: decision
+title: "ADR 0021: Accept NKF 0.1 Native Bundle Serialization"
 summary: ADR 0018 established the fixed manifest path, knowledge_root, declaration directory, Markdown coverage, and path rules. Replacement-pair reconciliation exposed that the exact bundle object, non_records entry shape and kinds, and unknown-field behavior remained undefined.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0021: Accept NKF 0.1 Native Bundle Serialization
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct confirmation of the summarized exact bundle
   structure in the NKF-003 discussion on 29 July 2026
 

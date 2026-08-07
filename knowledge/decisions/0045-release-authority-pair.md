@@ -1,16 +1,19 @@
 ---
 id: adr-0045
 type: decision
+title: "ADR 0045: Accept Release Contract Authority Pair"
 summary: "ADR 0044 accepts the exact NKF 0.1 release contract and structural schema design. The accepted revision is a delta authority: it must be reconciled into one complete canonical Markdown specification and one executable YAML companion so NKF does not retain parallel normative sources."
 created_at: 2026-07-30T09:47:32Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer acting under explicit Human
 ---
 
 # ADR 0045: Accept Release Contract Authority Pair
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer acting under explicit Human
   Product Owner delegation
 - **Semantic Authority:** ADR 0044 and its exact accepted review artifacts
 

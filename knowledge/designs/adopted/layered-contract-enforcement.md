@@ -1,6 +1,7 @@
 ---
 id: design-nkf-011-layered-contract-enforcement
 type: design
+title: NKF Layered Contract Enforcement
 summary: This Design proposes one derived enforcement path from AI-assisted authoring through exact-commit continuous integration without making automation an NKF authority.
 created_at: 2026-07-30T23:11:00Z
 record_lifecycle: immutable
@@ -9,12 +10,14 @@ task: NKF-011
 design_disposition: adopted
 design_decisions:
   - adr-0060
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF Layered Contract Enforcement
 
+- **Task:** `NKF-011`
+- **Design Disposition:** Adopted
 - **Adopting Decision:** `ADR-0060`
+- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** ADR 0060 adopts this direction without making
   it normative NKF 0.1 meaning.
 - **Authority Boundary:** This Design proposes how repositories apply the

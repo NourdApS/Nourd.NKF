@@ -1,4 +1,5 @@
 ---
+title: Example Realization
 id: realization
 type: realization
 summary: "Describes how the Example Technology contract is realized by the fixture artifacts."

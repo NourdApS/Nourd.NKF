@@ -7,7 +7,7 @@ source:
   path: decisions/0085-bind-the-corrected-0-2-release-checker.md
   digest:
     algorithm: sha-256
-    value: ef69b43e82748742ddf5c11f6c0978eace69cd7b3983f304015f4fdaa63f6796
+    value: 3d0ab23468a54de87163c72f75a7ec9ca257e22a9f86bb9b24b0dd888d369f74
 governance:
   lifecycle: immutable
   status: accepted

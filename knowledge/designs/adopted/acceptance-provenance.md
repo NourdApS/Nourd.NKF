@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-acceptance-provenance-boundary
 type: design
+title: NKF 0.1 Acceptance-Provenance Boundary
 summary: Whether native NKF 0.1 should deliberately define no universal acceptance-event or acceptance-proof field and instead establish the exact authority, confirmation, conformance, and extension boundary below.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -9,11 +10,13 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0017
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Acceptance-Provenance Boundary
 
+- **Design Disposition:** Adopted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 - **Proposal evidence:** accepted NKF authority/conformance rules and the
   imported NKF-002 `governance.acceptance_source` Git-revision check; the

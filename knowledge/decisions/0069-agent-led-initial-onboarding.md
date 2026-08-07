@@ -1,6 +1,7 @@
 ---
 id: adr-0069
 type: decision
+title: "ADR 0069: Agent-Led Initial Onboarding"
 summary: Adopt agent-led semantic repository assessment for the two initial onboarding categories while retaining deterministic mechanical capture, sealing, application, rollback, and validation.
 created_at: 2026-07-31T14:05:30Z
 record_lifecycle: immutable

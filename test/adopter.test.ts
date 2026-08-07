@@ -43,17 +43,8 @@ let repairAdopter: string;
 let repairArchivePath: string;
 let repairArchiveSha256: string;
 
-const validFixture0_2 = validFixture;
-const validTechnologyFixture0_2 = validTechnologyFixture;
-
-function withoutTitleLine(bytes: Buffer): Buffer {
-  const lines = bytes.toString("utf8").split("\n");
-  if (lines[0] !== "---") return bytes;
-  const end = lines.indexOf("---", 1);
-  if (end < 0) return bytes;
-  const kept = lines.filter((line, index) => index === 0 || index >= end || !/^title:/.test(line));
-  return Buffer.from(kept.join("\n"), "utf8");
-}
+const validFixture0_2 = validFixture.replace("fixtures/valid/minimal", "fixtures/valid/minimal-0-2");
+const validTechnologyFixture0_2 = validTechnologyFixture.replace("fixtures/valid/technology", "fixtures/valid/technology-0-2");
 
 async function createProject(fixture = validFixture0_2) {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-adopter-test-"));
@@ -649,8 +640,8 @@ describe("NKF consumer adopter", () => {
       expect(seal(project, workspace).status).toBe(0);
       const result = onboard(project, workspace);
       expect(result.status, result.stderr).toBe(0);
-      expect(await readFile(nested)).toEqual(withoutTitleLine(original));
-      expect(JSON.parse(result.stdout).paths.changed).toContain(
+      expect(await readFile(nested)).toEqual(original);
+      expect(JSON.parse(result.stdout).paths.preserved).toContain(
         "knowledge/notes/overview.md",
       );
       const bundle = YAML.parse(
@@ -727,8 +718,8 @@ describe("NKF consumer adopter", () => {
     expect(seal(project, workspace).status).toBe(0);
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
-    expect(await readFile(earlyTaskPath)).toEqual(withoutTitleLine(earlyTask));
-    expect(await readFile(earlyDesignPath)).toEqual(withoutTitleLine(earlyDesign));
+    expect(await readFile(earlyTaskPath)).toEqual(earlyTask);
+    expect(await readFile(earlyDesignPath)).toEqual(earlyDesign);
     await expect(lstat(path.join(project, "knowledge/tasks/active/early-task.md"))).rejects.toMatchObject({
       code: "ENOENT",
     });
@@ -838,7 +829,7 @@ describe("NKF consumer adopter", () => {
     expect(seal(project, workspace).status).toBe(0);
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
-    expect(await readFile(source)).toEqual(withoutTitleLine(original));
+    expect(await readFile(source)).toEqual(original);
     await expect(lstat(path.join(project, "knowledge/product.md"))).rejects.toMatchObject({
       code: "ENOENT",
     });
@@ -849,7 +840,7 @@ describe("NKF consumer adopter", () => {
       ),
     );
     expect(rootDeclaration.source.path).toBe("overview.md");
-    expect(rootDeclaration.source.digest.value).toBe(sha256(withoutTitleLine(original)));
+    expect(rootDeclaration.source.digest.value).toBe(sha256(original));
   });
 
   it("uses an explicitly selected existing Draft Technology Specification without generating a duplicate", async () => {
@@ -962,7 +953,7 @@ describe("NKF consumer adopter", () => {
     expect(seal(project, workspace).status).toBe(0);
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
-    expect(await readFile(source)).toEqual(withoutTitleLine(original));
+    expect(await readFile(source)).toEqual(original);
     await expect(
       lstat(path.join(project, "knowledge/specifications/initial-specification.md")),
     ).rejects.toMatchObject({ code: "ENOENT" });
@@ -975,7 +966,7 @@ describe("NKF consumer adopter", () => {
     expect(specificationDeclaration.source.path).toBe(
       "specifications/technology-contract.md",
     );
-    expect(specificationDeclaration.source.digest.value).toBe(sha256(withoutTitleLine(original)));
+    expect(specificationDeclaration.source.digest.value).toBe(sha256(original));
   });
 
   it("reuses an existing canonical map and never allocates README-2.md", async () => {
@@ -1001,7 +992,7 @@ describe("NKF consumer adopter", () => {
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
     const reconciled = await readFile(map, "utf8");
-    expect(reconciled.startsWith(withoutTitleLine(Buffer.from(original)).toString("utf8"))).toBe(true);
+    expect(reconciled.startsWith(original)).toBe(true);
     expect(reconciled).toContain("<!-- nkf-navigation:start -->");
     expect(reconciled).toContain("## NKF Navigation");
     await expect(lstat(path.join(project, "knowledge/README-2.md"))).rejects.toMatchObject({
@@ -1023,6 +1014,7 @@ describe("NKF consumer adopter", () => {
     await resolveAllAsNavigation(workspace);
     const envelope = Buffer.from([
       "---",
+      "title: Early Knowledge",
       'summary: "Preserves the existing canonical map while adding the required source envelope."',
       "created_at: 2026-07-31T11:00:00Z",
       "---",
@@ -1064,7 +1056,7 @@ describe("NKF consumer adopter", () => {
     const partialResult = onboard(partial.project, partial.workspace);
     expect(partialResult.status, partialResult.stderr).toBe(0);
     const reconciledIndex = await readFile(partialIndex, "utf8");
-    expect(reconciledIndex.startsWith(withoutTitleLine(Buffer.from(originalIndex)).toString("utf8"))).toBe(true);
+    expect(reconciledIndex.startsWith(originalIndex)).toBe(true);
     expect(reconciledIndex).toContain("(active/README.md)");
     expect(reconciledIndex).toContain("(deferred/README.md)");
     expect(reconciledIndex).toContain("(completed/README.md)");
@@ -1426,6 +1418,7 @@ describe("NKF consumer adopter", () => {
     const candidate = path.join(workspace, "candidate", "notes.md");
     const revised = [
       "---",
+      "title: Notes",
       'summary: "Provides early project navigation."',
       "created_at: 2026-07-31T11:00:00Z",
       "---",

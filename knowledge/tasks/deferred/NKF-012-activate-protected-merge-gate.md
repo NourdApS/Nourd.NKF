@@ -1,14 +1,17 @@
 ---
+title: "NKF-012: Activate Protected Merge Gate"
 summary: Activate and prove the Github protected merge gate when repository capabilities permit requiring exact-commit NKF validation, one pull-request approval, and an explicit bypass policy.
 created_at: 2026-07-31T01:40:19Z
 task_id: NKF-012
 task_status: deferred
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-012: Activate Protected Merge Gate
 
+- **Task:** `NKF-012`
+- **Status:** Deferred
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Activation Condition:** Github branch protection or repository rulesets
   must become available for the private `kaveh6202/Nourd.NKF` repository, or
   the Human Product Owner must separately authorize a visibility change.
@@ -67,16 +70,3 @@ observed private-plan blocker. The Human Product Owner directed that NKF-011
 close for its delivered enforcement scope and that the blocked items move to
 this deferred Task. ADR 0063 records that successor allocation and the
 mandatory pull-request approval requirement.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

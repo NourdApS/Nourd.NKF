@@ -1,18 +1,19 @@
 ---
+title: "NKF-017: Establish Complete Portable Onboarding Topology"
 summary: Correct NKF initial onboarding so every supported Product and Technology repository receives a complete, navigable, and enforceable portable knowledge topology instead of only the current minimal Draft scaffold.
 created_at: 2026-07-31T21:42:15Z
 task_id: NKF-017
 task_status: completed
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
-related_tasks:
-  - NKF-007
-  - NKF-013
-  - NKF-014
-  - NKF-015
 ---
 
 # NKF-017: Establish Complete Portable Onboarding Topology
+
+- **Task:** `NKF-017`
+- **Status:** Completed — Confirmed By ADR 0075
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
+- **Repository:** `kaveh6202/Nourd.NKF`
+- **Related Tasks:** `NKF-007`, `NKF-013`, `NKF-014`, `NKF-015`
 
 ## Human Direction
 
@@ -355,16 +356,3 @@ implementation had begun. Later Human Direction, Decisions, and Current
 Progress supersede only those created-state facts. Nourd Agent SDK remains
 unchanged, and no successor Realization, consumer migration, publication, or
 release is claimed merely from implementation or validation progress.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

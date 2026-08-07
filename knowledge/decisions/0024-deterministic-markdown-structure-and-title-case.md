@@ -1,16 +1,19 @@
 ---
 id: adr-0024
 type: decision
+title: "ADR 0024: Accept Deterministic Markdown Structure And Title Case"
 summary: The accepted NKF 0.1 authority pair requires exact Markdown title and section resolution and stable heading diagnostics, but it does not define a Markdown grammar, visible-heading normalization, semantic-heading boundary, or deterministic Title Case policy.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer, acting under explicit
 ---
 
 # ADR 0024: Accept Deterministic Markdown Structure And Title Case
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Codex technical reviewer, acting under explicit
   delegation from and contingent confirmation by the Human Product Owner,
   Nourd ApS
 - **Delegation source:** Direct Human Product Owner instruction in the

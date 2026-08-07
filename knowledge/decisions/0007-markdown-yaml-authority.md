@@ -1,16 +1,19 @@
 ---
 id: adr-0007
 type: decision
+title: "ADR 0007: Establish Markdown And YAML Contract Authority"
 summary: NKF currently has accepted human-readable Product-format meaning and accepted contract decisions, but no complete canonical machine-readable specification. The imported checker snapshot contains proposed JSON Schemas and a contract set; those files remain migration evidence and cannot become authority by implementation.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0007: Establish Markdown And YAML Contract Authority
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation in the NKF-003
   discussion on 29 July 2026
 

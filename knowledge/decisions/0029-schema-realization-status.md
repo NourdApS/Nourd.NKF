@@ -1,16 +1,19 @@
 ---
 id: adr-0029
 type: decision
+title: "ADR 0029: Reconcile NKF 0.1 Schema Realization Status"
 summary: ADR 0027 accepted the current pre-checker NKF 0.1 Markdown/YAML authority pair. ADR 0028 then confirmed and promoted the exact bundle, record, and validation-result JSON Schemas derived from that pair.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer, acting under the Human
 ---
 
 # ADR 0029: Reconcile NKF 0.1 Schema Realization Status
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer, acting under the Human
   Product Owner's direct authorization to approve exact revisions after
   independent review
 - **Authorization Source:** Earlier direct NKF-003 instruction granting the

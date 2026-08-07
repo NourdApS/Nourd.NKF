@@ -1,4 +1,5 @@
 ---
+title: Example Product Current System
 id: product-current-system
 type: realization
 summary: "Provides the unconfirmed current-system view for the Example Product fixture."

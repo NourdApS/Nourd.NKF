@@ -7,7 +7,7 @@ source:
   path: realizations/current/contracts-and-schemas.md
   digest:
     algorithm: sha-256
-    value: ae13a0b503adb7f6b9448686ab5a07adb26319f2148070347be026e81556c2f2
+    value: 966ccd6013e46d22ead1a1162c9e116169a8dd1bddd8b68f7ad7b8527ce21591
 governance:
   lifecycle: immutable
   status: accepted
@@ -58,4 +58,7 @@ sections:
     authority: accepted-meaning
     role: recovery
     responsibilities: [compatibility-verification-and-recovery]
-relationships: []
+relationships:
+  - type: realizes
+    target: nkf-0.1-specification
+    source_section: governed-meaning-realized

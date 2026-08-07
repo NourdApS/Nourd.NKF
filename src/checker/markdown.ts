@@ -249,7 +249,118 @@ const IDENTITY_BULLET_LABELS = new Set([
   "repository",
   "related tasks",
   "version",
+  "adopting decision",
+  "proposal authority effect",
+  "proposal evidence",
+  "implementation evidence",
 ]);
+
+export interface ReferenceMaps {
+  decisionsByNumber: ReadonlyMap<string, string>;
+  recordIdToPath: ReadonlyMap<string, string>;
+  taskIdToPath: ReadonlyMap<string, string>;
+  selfPath: string;
+}
+
+export interface ReferenceViolation {
+  token: string;
+  line: number;
+  reason: "unlinked" | "mistargeted";
+}
+
+function normalizeRelative(fromPath: string, destination: string): string | null {
+  if (/^[a-z][a-z0-9+.-]*:/i.test(destination) || destination.startsWith("#")) return null;
+  const base = fromPath.split("/").slice(0, -1);
+  const target = destination.split("#")[0] ?? "";
+  if (target === "") return null;
+  const segments = [...base];
+  for (const part of target.split("/")) {
+    if (part === "" || part === ".") continue;
+    if (part === "..") {
+      if (segments.length === 0) return null;
+      segments.pop();
+      continue;
+    }
+    segments.push(part);
+  }
+  return segments.join("/");
+}
+
+export function findUnlinkedReferences(body: string, maps: ReferenceMaps): ReferenceViolation[] {
+  const parser = new commonmark.Parser();
+  const document = parser.parse(body);
+  const violations: ReferenceViolation[] = [];
+  const walker = document.walker();
+  let event: { node: any; entering: boolean } | null;
+  const lineOf = (node: any): number => {
+    for (let current = node; current !== null; current = current.parent) {
+      const sourcepos = current.sourcepos as [[number, number]] | undefined;
+      if (sourcepos !== undefined) return sourcepos[0][0];
+    }
+    return 0;
+  };
+  const underneath = (node: any, type: string): boolean => {
+    for (let current = node.parent; current !== null; current = current.parent) {
+      if (current.type === type) return true;
+    }
+    return false;
+  };
+  const targetFor = (token: string): string | undefined => {
+    const adr = /^ADR (\d{4})$/.exec(token);
+    if (adr?.[1] !== undefined) return maps.decisionsByNumber.get(adr[1]);
+    return maps.recordIdToPath.get(token) ?? maps.taskIdToPath.get(token);
+  };
+  const linkText = (link: any): string => {
+    let text = "";
+    const inner = link.walker();
+    let innerEvent: { node: any; entering: boolean } | null;
+    while ((innerEvent = inner.next()) !== null) {
+      const node = innerEvent.node;
+      if (!innerEvent.entering) continue;
+      if (node.type === "text" || node.type === "code") text += node.literal ?? "";
+    }
+    return text.trim();
+  };
+  while ((event = walker.next()) !== null) {
+    const node = event.node;
+    if (!event.entering) continue;
+    if (node.type === "link") {
+      const text = linkText(node);
+      const target = targetFor(text);
+      if (target !== undefined && target !== maps.selfPath) {
+        const resolved = normalizeRelative(maps.selfPath, String(node.destination ?? ""));
+        if (resolved !== target) {
+          violations.push({ token: text, line: lineOf(node), reason: "mistargeted" });
+        }
+      }
+      continue;
+    }
+    if (node.type !== "text" && node.type !== "code") continue;
+    if (underneath(node, "link") || underneath(node, "heading")) continue;
+    const literal = String(node.literal ?? "");
+    if (node.type === "code") {
+      const target = targetFor(literal.trim());
+      if (target !== undefined && target !== maps.selfPath) {
+        violations.push({ token: literal.trim(), line: lineOf(node), reason: "unlinked" });
+      }
+      continue;
+    }
+    for (const match of literal.matchAll(/\bADR (\d{4})\b/g)) {
+      const target = maps.decisionsByNumber.get(match[1] ?? "");
+      if (target !== undefined && target !== maps.selfPath) {
+        violations.push({ token: `ADR ${match[1]}`, line: lineOf(node), reason: "unlinked" });
+      }
+    }
+    for (const match of literal.matchAll(/\b([A-Z][A-Z0-9]*-\d+)\b/g)) {
+      const token = match[1] ?? "";
+      const target = maps.taskIdToPath.get(token);
+      if (target !== undefined && target !== maps.selfPath) {
+        violations.push({ token, line: lineOf(node), reason: "unlinked" });
+      }
+    }
+  }
+  return violations;
+}
 
 export function findIdentityBulletLabels(body: string): { label: string; line: number }[] {
   const parser = new commonmark.Parser();

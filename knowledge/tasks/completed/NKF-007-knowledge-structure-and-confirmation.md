@@ -1,14 +1,16 @@
 ---
+title: "NKF-007: Repair Knowledge Structure And Confirmation"
 summary: "Repair the fundamental knowledge-model, navigation, lifecycle, metadata, and confirmation problems identified after the whole-repository NKF audit before returning to its individual implementation findings. The central knowledge gap is an incomplete Realization boundary: NKF does not yet provide one complete, consolidated, and navigable view of the system as it is currently implemented."
 created_at: 2026-07-30T15:52:40Z
 task_id: NKF-007
 task_status: completed
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-007: Repair Knowledge Structure And Confirmation
 
+- **Status:** Completed
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** This Task authorizes work but does not accept
   Design directions, normative meaning, or Realization confirmation.
 
@@ -229,16 +231,3 @@ not supply the acceptance or confirmation recorded by ADR 0057.
 Publication and external-consumer onboarding remain with NKF-008. Broad
 governed-artifact secret scanning remains with NKF-009. NKF-004, NKF-005, and
 NKF-006 retain their previously deferred scopes.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

@@ -1,4 +1,5 @@
 ---
+title: Example Product
 id: product
 type: product
 summary: "Defines the purpose, people, boundaries, and knowledge map of Example Product."

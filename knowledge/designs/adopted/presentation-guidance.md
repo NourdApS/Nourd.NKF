@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-presentation-guidance-boundary
 type: design
+title: NKF 0.1 Presentation-Guidance Boundary
 summary: Native NKF 0.1 should define no presentation-guidance field.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -9,11 +10,13 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0020
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Presentation-Guidance Boundary
 
+- **Design Disposition:** Adopted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 
 ## Recommendation

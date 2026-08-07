@@ -1,4 +1,5 @@
 ---
+title: Example Technology
 id: technology
 type: technology
 summary: "Defines the purpose, contracts, boundaries, and evolution of Example Technology."

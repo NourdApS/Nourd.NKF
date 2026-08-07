@@ -1,6 +1,7 @@
 ---
 id: nkf-agent-led-initial-onboarding
 type: realization
+title: NKF Agent-Led Initial Onboarding
 summary: This Realization maps the implemented agent-led Category 1 and Category 2 workflow, complete mechanical project snapshot, plan-bound confirmation, deterministic sealing, and existing transaction and validation boundary.
 created_at: 2026-07-31T14:16:33Z
 record_lifecycle: immutable

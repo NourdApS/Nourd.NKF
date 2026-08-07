@@ -1,4 +1,5 @@
 ---
+title: Active Designs
 summary: Active Design proposals currently under consideration.
 created_at: 2026-08-01T08:40:15Z
 ---

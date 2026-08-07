@@ -1,4 +1,5 @@
 ---
+title: Decisions
 summary: Decisions record why a direction was adopted, rejected, or superseded. Accepted Decision revisions are immutable authority snapshots. A later Decision must correct, extend, replace, or reverse them explicitly.
 created_at: 2026-07-28T22:01:17Z
 ---
@@ -100,6 +101,8 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0086: Record Authority And Identity Bullet Rule](0086-record-authority-and-identity-bullet-rule.md)
 - [ADR 0087: Accept The Corrected 0.2 Pair](0087-accept-the-corrected-0-2-pair.md)
 - [ADR 0088: Bind The Final 0.2 Release Checker](0088-bind-the-final-0-2-release-checker.md)
+- [ADR 0089: Title Equality, Deep Links, And Design Orientation](0089-title-equality-deep-links-and-design-orientation.md)
+- [ADR 0090: Accept The Title And Deep Link Pair](0090-accept-the-title-and-deep-link-pair.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)

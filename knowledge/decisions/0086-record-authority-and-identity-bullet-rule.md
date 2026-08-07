@@ -1,5 +1,6 @@
 ---
 id: adr-0086
+title: "ADR 0086: Record Authority And Identity Bullet Rule"
 type: decision
 summary: Correct NKF 0.2 after the first adoption review by giving records an optional decision-authority orientation key and adding the machine-checked identity-bullet duplication rule, replacing the still-unconsumed release under the extended exception.
 created_at: 2026-08-07T15:05:28Z

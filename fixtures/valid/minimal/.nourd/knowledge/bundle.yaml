@@ -1,0 +1,42 @@
+nkf_version: "0.1"
+contract: nkf.bundle
+id: example-product
+root:
+  record: product
+  profile: nkf.profile.product
+knowledge_root: knowledge
+non_records:
+  - path: decisions/README.md
+    kind: navigation
+  - path: designs/active/README.md
+    kind: navigation
+  - path: designs/adopted/README.md
+    kind: navigation
+  - path: designs/README.md
+    kind: navigation
+  - path: designs/rejected/README.md
+    kind: navigation
+  - path: designs/superseded/README.md
+    kind: navigation
+  - path: designs/withdrawn/README.md
+    kind: navigation
+  - path: evidence/README.md
+    kind: evidence
+  - path: README.md
+    kind: navigation
+  - path: realizations/current/README.md
+    kind: navigation
+  - path: realizations/README.md
+    kind: navigation
+  - path: specifications/README.md
+    kind: navigation
+  - path: tasks/active/README.md
+    kind: navigation
+  - path: tasks/active/task.md
+    kind: task
+  - path: tasks/completed/README.md
+    kind: navigation
+  - path: tasks/deferred/README.md
+    kind: navigation
+  - path: tasks/README.md
+    kind: navigation

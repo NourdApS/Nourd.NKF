@@ -1,16 +1,19 @@
 ---
 id: adr-0063
 type: decision
+title: "ADR 0063: Defer Protected Merge Gate"
 summary: Complete NKF-011 for its delivered and confirmed enforcement scope, transfer the externally blocked protected merge gate to deferred NKF-012, and require pull-request approval when that gate is activated.
 created_at: 2026-07-31T01:40:19Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-011
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0063: Defer Protected Merge Gate
 
+- **Status:** Accepted
+- **Task:** `NKF-011`
+- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's delegated technical-confirmation authority
 - **Predecessors:** ADRs 0060, 0061, and 0062

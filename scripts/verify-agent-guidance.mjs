@@ -57,7 +57,9 @@ unsupported, or unknown, and re-extract when the renderer, provider, platform,
 data format, architecture, harness, or a mandatory requirement changes.
 
 Keep orientation identity in frontmatter only; the closed identity labels
-are rejected as top-level body bullets in every non-Evidence document.
+are rejected as top-level body bullets in every non-Evidence document, the
+frontmatter title must equal the H1 exactly, and every same-bundle document
+reference must be a deep link to the referenced document's source path.
 
 Run \`npm run nkf:check\` after one coherent governed change and before handoff.
 Treat the protocol as derived procedure and accepted NKF Specifications as the

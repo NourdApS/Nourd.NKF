@@ -7,7 +7,7 @@ source:
   path: decisions/0047-release-checker.md
   digest:
     algorithm: sha-256
-    value: fd097714d4432673033ffe8091491d460051ff22cef0418e56366fc4f098b377
+    value: c52299ac75a23f065ad4045a2efd3190808d391e7d5e384afdb801a86a615df9
 governance:
   lifecycle: immutable
   status: accepted

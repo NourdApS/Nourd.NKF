@@ -7,7 +7,7 @@ source:
   path: designs/adopted/technology-root-profile.md
   digest:
     algorithm: sha-256
-    value: 96cb5a2e8873c7c64a7d30b783773bae3fe4adc9c404afb791eb83593621357b
+    value: c4b9a6010b9f008b4f9f5645a1d30c180a1e4ca943f4d87c62901ae05d2a1b1e
 governance:
   lifecycle: immutable
   status: accepted

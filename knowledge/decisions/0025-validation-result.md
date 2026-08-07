@@ -1,16 +1,19 @@
 ---
 id: adr-0025
 type: decision
+title: "ADR 0025: Accept NKF 0.1 Validation Result Contract"
 summary: ADR 0019 accepts the logical nkf.validation-result boundary but does not define an encoding, exact object shape, persistence rule, validated-snapshot algorithm, artifact bindings, or the relationship between conformance and Governing Use Ready.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner for consequential semantics;
 ---
 
 # ADR 0025: Accept NKF 0.1 Validation Result Contract
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Human Product Owner for consequential semantics;
   Codex technical reviewer for exact structural serialization under direct
   bounded delegation
 - **Delegation Source:** Direct Human Product Owner instruction in the

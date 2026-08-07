@@ -1,16 +1,19 @@
 ---
 id: adr-0052
 type: decision
+title: "ADR 0052: Confirm Dynamic Root And Self-Hosting Realization"
 summary: ADR 0050 accepts the exact Common, Product, and Technology authority pair. ADR 0051 accepts the bounded heading-only migration required to represent legacy NKF knowledge as native records without weakening Title Case or hiding the earlier source revisions.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0052: Confirm Dynamic Root And Self-Hosting Realization
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit dynamic-root feature delegation
 - **Normative Markdown Digest:** `sha256:8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50`
 - **Executable YAML Digest:** `sha256:fd60ad052ff5b58a20b285fec03aede560cd84d18221f7b2d88b7db7fdf67dbd`

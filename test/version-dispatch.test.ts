@@ -77,6 +77,15 @@ describe("NKF 0.2 version dispatch", () => {
     expect(ruleIds(result.diagnostics)).toContain("task.applicability.completion.blocked");
   });
 
+  it("requires the frontmatter title to equal the heading on 0.2 documents", async () => {
+    const project = await copyFixture();
+    await edit(project, taskPath, (text) =>
+      text.replace(/^title: .*$/m, 'title: "Wrong Title"'),
+    );
+    const result = await validateProject(options(project));
+    expect(ruleIds(result.diagnostics)).toContain("markdown.frontmatter.title-mismatch");
+  });
+
   it("rejects restated identity bullets outside Evidence", async () => {
     const project = await copyFixture();
     await edit(project, taskPath, (text) =>
@@ -86,13 +95,13 @@ describe("NKF 0.2 version dispatch", () => {
     expect(ruleIds(result.diagnostics)).toContain("markdown.body.identity-duplication");
   });
 
-  it("rejects a frontmatter title key on 0.2 documents", async () => {
+  it("requires same-bundle references to be deep links", async () => {
     const project = await copyFixture();
-    await edit(project, taskPath, (text) =>
-      text.replace("summary:", 'title: "TEST-001: Maintain Example Product Knowledge"\nsummary:'),
+    await edit(project, "knowledge/README.md", (text) =>
+      `${text.trimEnd()}\n\nSee TEST-001 for the active work.\n`,
     );
     const result = await validateProject(options(project));
-    expect(ruleIds(result.diagnostics)).toContain("markdown.frontmatter.key.unsupported");
+    expect(ruleIds(result.diagnostics)).toContain("markdown.reference.deep-link.required");
   });
 
   it("accepts matching guidance markers and rejects mismatched ones", async () => {

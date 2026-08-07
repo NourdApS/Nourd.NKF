@@ -1,6 +1,7 @@
 ---
 id: adr-0068
 type: decision
+title: "ADR 0068: Confirm Initial Greenfield Onboarding"
 summary: Confirm the exact independently audited NKF-013 successor Realizations and complete the initial Product and Technology greenfield-onboarding Task while preserving the deferred NKF-014 expansion seam.
 created_at: 2026-07-31T12:06:29Z
 record_lifecycle: immutable
@@ -10,6 +11,8 @@ task: NKF-013
 
 # ADR 0068: Confirm Initial Greenfield Onboarding
 
+- **Status:** Accepted
+- **Task:** `NKF-013`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit delegation to complete, independently audit, confirm,
   commit, and push NKF-013

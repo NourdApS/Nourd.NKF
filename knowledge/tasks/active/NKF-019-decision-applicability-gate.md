@@ -1,17 +1,19 @@
 ---
+title: "NKF-019: Establish The Decision Applicability Gate"
 summary: Prevent conditional technology decisions from losing their conditions, negative findings, and unresolved unknowns in successor Tasks, and prevent lower-level validation evidence from being represented as higher-level outcome success.
 created_at: 2026-08-06T21:23:12Z
 task_id: NKF-019
 task_status: active
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
-related_tasks:
-  - NKF-005
-  - NKF-016
-  - NKF-017
 ---
 
 # NKF-019: Establish The Decision Applicability Gate
+
+- **Task:** `NKF-019`
+- **Status:** Active
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
+- **Repository:** `kaveh6202/Nourd.NKF`
+- **Related Tasks:** `NKF-005`, `NKF-016`, `NKF-017`
 
 ## Human Direction
 
@@ -99,6 +101,15 @@ and directed: roll back only this repository's 0.2 adoption without losing
 any document or Decision, fix the 0.2 rules, validations, and skills for
 these gaps under version 0.2, release again, and adopt again.
 
+On `2026-08-07`, reviewing migrated documents in a frontmatter property
+panel, the Human Product Owner directed a further 0.2 correction round:
+same-bundle document references must be deep links rather than plain text;
+the frontmatter title returns with checker-enforced heading equality so the
+panel shows the document title; and the Design proposal header bullets move
+into frontmatter keys. The adoption was rolled back again under the same
+lose-nothing rule, and ADRs 0086 through 0088 from the second round were
+preserved.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -127,6 +138,17 @@ these gaps under version 0.2, release again, and adopt again.
   `bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317` bound to
   executable SHA-256
   `3178dd061ab0e9e91f8cf46d3391b9f43fc6bda0f2f3eb4a6cb18c65e86e05bd`.
+- ADRs 0086 through 0088 recorded the second correction round: the record
+  `decision_authority` key, the identity-bullet duplication rule, the
+  corrected pair, and its release, which was adopted and then rolled back
+  again when the third review round arrived; every Decision was preserved.
+- ADR 0089 adopted the third correction round and ADR 0090 accepts its
+  corrected pair: the title returns with enforced heading equality, all
+  same-bundle references become machine-verified deep links including gate
+  table cells, Design records gain the proposal orientation keys, and the
+  0.2 registry reaches 159 rules. The release-before-adoption order is
+  restored because the titled canonical record is valid under both
+  envelopes.
 - The complete 0.2 set is derived and proven per release protocol steps three
   and four: the checker dispatches contract sets by the bundle's declared
   version and fails unsupported versions closed; the Decision Applicability
@@ -333,30 +355,3 @@ adopted, that normative meaning has changed, that any enforcement exists,
 that any consumer must migrate, or that a Realization has been confirmed.
 Later Decisions and recorded progress supersede only these created-state
 facts.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-| Reference | Kind | Carried Constraint |
-| --- | --- | --- |
-| `adr-0006` | record | Pre-stable evolution requires evidence, compatibility analysis, and Human Product Owner confirmation. |
-| `adr-0076` | record | This correction ships as a new immutable version; NKF 0.1 stays frozen for its repositories. |
-| `adr-0077` | record | The gate is required on every Task including completed history, with retrospective disclosure. |
-| `adr-0078` | record | The version coordinate is 0.2 because the change is breaking. |
-| `adr-0079` | record | Frontmatter carries no title; orientation keys replace body identity bullets. |
-| `adr-0080` | record | Release and adoption stay separate deliberate processes with this repository as first adopter. |
-| `adr-0084` | record | The unconsumed-release exception covers replacement corrections until any repository adopts a 0.2 release. |
-| `adr-0086` | record | Records may carry decision_authority, and identity bullet duplication fails closed under the closed label registry. |
-| Nourd Tiles TILES-008 and TILES-012 records | external | The triggering failure evidence is read-only; Nourd Tiles and Wonderer must not be modified under this Task. |
-
-### Mandatory Capabilities
-
-| Capability | Finding | Verification | Exception |
-| --- | --- | --- | --- |
-| Gate structure enforcement fails closed on 0.2 bundles | proven | runtime-behaviour | none |
-| Version dispatch keeps 0.1 repositories validating unchanged | proven | runtime-behaviour | none |
-| Identity bullet duplication fails closed outside Evidence | proven | runtime-behaviour | none |
-| Released archive verifies by independent re-download | proven | runtime-behaviour | none |
-| Semantic truthfulness of gate prose is machine-detectable | unsupported | none | Accepted by the Human Product Owner in the NKF-019 direction: prose contradictions remain human-reviewed. |
-

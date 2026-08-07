@@ -605,7 +605,7 @@ export async function createOnboardingWorkspace(options) {
     await mkdir(path.dirname(target), { recursive: true });
     const sourceBytes = await readFile(source);
     const candidateBytes = document.path.endsWith(".md")
-      ? stripEnvelopeTitleKey(sourceBytes)
+      ? ensureEnvelopeTitle(sourceBytes)
       : sourceBytes;
     await writeFile(target, candidateBytes, { flag: "wx" });
   }
@@ -870,8 +870,7 @@ function section(id, heading, role, responsibility = id) {
 }
 
 function frontmatter(values) {
-  const { title: _bodyH1OwnsTheTitle, ...envelope } = values;
-  return `---\n${YAML.stringify(envelope, { lineWidth: 0 }).trimEnd()}\n---\n\n`;
+  return `---\n${YAML.stringify(values, { lineWidth: 0 }).trimEnd()}\n---\n\n`;
 }
 
 function rootScaffold(plan, kind) {
@@ -1129,28 +1128,25 @@ function indexScaffold(plan, definition, expectedTargets) {
   return Buffer.from(`${frontmatter(values)}# ${definition.title}\n\n${body}\n`, "utf8");
 }
 
-function stripEnvelopeTitleKey(bytes) {
+function ensureEnvelopeTitle(bytes) {
   const text = bytes.toString("utf8");
   const lines = text.split("\n");
   if (lines[0] !== "---") return bytes;
   const end = lines.indexOf("---", 1);
   if (end < 0) return bytes;
-  const kept = [];
-  let removing = false;
-  let removed = false;
-  for (let index = 1; index < end; index += 1) {
-    const line = lines[index];
-    if (/^title:/.test(line)) {
-      removing = true;
-      removed = true;
-      continue;
-    }
-    if (removing && /^[ \t]/.test(line)) continue;
-    removing = false;
-    kept.push(line);
+  const h1 = lines.slice(end + 1).find((line) => line.startsWith("# "));
+  if (h1 === undefined) return bytes;
+  const title = h1.slice(2).trim();
+  const serialized = YAML.stringify({ title }, { lineWidth: 0 }).trimEnd();
+  const index = lines.findIndex((line, at) => at > 0 && at < end && /^title:/.test(line));
+  if (index === -1) {
+    lines.splice(1, 0, serialized);
+    return Buffer.from(lines.join("\n"), "utf8");
   }
-  if (!removed) return bytes;
-  return Buffer.from([lines[0], ...kept, ...lines.slice(end)].join("\n"), "utf8");
+  const current = lines[index];
+  if (current === serialized) return bytes;
+  lines[index] = serialized;
+  return Buffer.from(lines.join("\n"), "utf8");
 }
 
 function sourceFrontmatter(bytes, sourcePath) {

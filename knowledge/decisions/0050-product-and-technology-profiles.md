@@ -1,16 +1,19 @@
 ---
 id: adr-0050
 type: decision
+title: "ADR 0050: Accept Product And Technology Root Profiles"
 summary: ADR 0049 accepted an automatically applicable, non-selectable Common Specification and one concrete Root Profile per bundle. It deliberately left the exact Product and Technology allocation, serialization, validation, and realization unresolved.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0050: Accept Product And Technology Root Profiles
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit feature-limited delegation
 - **Delegation Source:** Direct instruction on 30 July 2026 to audit, accept,
   and confirm only the changes necessary for the dynamic root feature

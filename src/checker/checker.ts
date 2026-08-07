@@ -15,7 +15,7 @@ import { bindingsForVersion, unsupportedVersionBindings } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
 import { validateExtensions } from "./extensions.js";
-import { findIdentityBulletLabels, parseMarkdown, type MarkdownModel } from "./markdown.js";
+import { findIdentityBulletLabels, findUnlinkedReferences, parseMarkdown, type MarkdownModel, type ReferenceMaps } from "./markdown.js";
 import {
   discoverMarkdown,
   observationDiagnostics,
@@ -170,10 +170,10 @@ function securityScan(
 }
 
 const COMMON_FRONTMATTER_KEYS = ["title", "summary", "created_at"] as const;
-const COMMON_FRONTMATTER_KEYS_0_2 = ["summary", "created_at"] as const;
 const TASK_ORIENTATION_KEYS_0_2 = ["owner", "decision_authority", "related_tasks"] as const;
-function commonFrontMatterKeysFor(nkfVersion: "0.1" | "0.2"): readonly string[] {
-  return nkfVersion === "0.2" ? COMMON_FRONTMATTER_KEYS_0_2 : COMMON_FRONTMATTER_KEYS;
+const DESIGN_ORIENTATION_KEYS_0_2 = ["proposal_authority_effect", "proposal_evidence", "implementation_evidence"] as const;
+function commonFrontMatterKeysFor(_nkfVersion: "0.1" | "0.2"): readonly string[] {
+  return COMMON_FRONTMATTER_KEYS;
 }
 const RECORD_FRONTMATTER_KEYS = ["id", "type", "record_lifecycle", "record_status"] as const;
 const LIFECYCLE_RECORD_TYPES = new Set(["design", "decision", "specification", "realization"]);
@@ -279,6 +279,25 @@ function rejectUnsupportedFrontMatterKeys(
   }
 }
 
+function deepLinkChecks(
+  model: MarkdownModel,
+  artifact: string,
+  maps: ReferenceMaps | null,
+  emitter: RuleEmitter,
+  recordId?: string,
+): void {
+  if (maps === null) return;
+  for (const violation of findUnlinkedReferences(model.body, maps)) {
+    emitter.emit(
+      "markdown.reference.deep-link.required",
+      violation.reason === "unlinked"
+        ? `The same-bundle reference ${violation.token} must be a deep link to its document.`
+        : `The link for ${violation.token} does not target the referenced document's source path.`,
+      recordId === undefined ? { artifact } : { artifact, record_id: recordId },
+    );
+  }
+}
+
 function identityBulletChecks(
   model: MarkdownModel,
   artifact: string,
@@ -312,8 +331,7 @@ function commonFrontMatterChecks(
   const frontMatter = model.frontMatter;
   requiredFrontMatterKeys(frontMatter, commonFrontMatterKeysFor(nkfVersion), artifact, emitter, recordId);
 
-  const shapeCheckedKeys = nkfVersion === "0.2" ? (["summary"] as const) : (["title", "summary"] as const);
-  for (const key of shapeCheckedKeys) {
+  for (const key of ["title", "summary"] as const) {
     if (hasOwn(frontMatter, key) && !orientationString(frontMatter[key])) {
       emitter.emit(
         "markdown.frontmatter.value.invalid",
@@ -337,7 +355,6 @@ function commonFrontMatterChecks(
       frontMatterContext(artifact, recordId),
     );
   } else if (
-    nkfVersion === "0.1" &&
     orientationString(frontMatter.title) &&
     frontMatter.title !== model.h1[0]?.text
   ) {
@@ -355,6 +372,7 @@ function recordFrontMatterChecks(
   model: MarkdownModel,
   emitter: RuleEmitter,
   nkfVersion: "0.1" | "0.2" = "0.1",
+  referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
   if (declaration === null || declaration.type === "evidence") return;
@@ -378,14 +396,19 @@ function recordFrontMatterChecks(
   const allowed = new Set<string>([...commonFrontMatterKeysFor(nkfVersion), ...RECORD_FRONTMATTER_KEYS]);
   if (nkfVersion === "0.2") {
     allowed.add("decision_authority");
-    if (hasOwn(frontMatter, "decision_authority") && !orientationString(frontMatter.decision_authority)) {
-      emitter.emit(
-        "markdown.frontmatter.value.invalid",
-        "The decision_authority value must be a non-empty, trimmed, single-line string.",
-        frontMatterContext(artifact, recordId, "decision_authority"),
-      );
+    const orientationKeys = ["decision_authority", ...(type === "design" ? DESIGN_ORIENTATION_KEYS_0_2 : [])];
+    if (type === "design") DESIGN_ORIENTATION_KEYS_0_2.forEach((key) => allowed.add(key));
+    for (const key of orientationKeys) {
+      if (hasOwn(frontMatter, key) && !orientationString(frontMatter[key])) {
+        emitter.emit(
+          "markdown.frontmatter.value.invalid",
+          `The ${key} value must be a non-empty, trimmed, single-line string.`,
+          frontMatterContext(artifact, recordId, key),
+        );
+      }
     }
     identityBulletChecks(model, artifact, emitter, recordId);
+    deepLinkChecks(model, artifact, referenceMaps, emitter, recordId);
   }
   if (LIFECYCLE_RECORD_TYPES.has(type)) allowed.add("task");
   if (type === "design") DESIGN_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
@@ -397,7 +420,7 @@ function recordFrontMatterChecks(
     type: declaration.type,
     record_lifecycle: declaration.governance?.lifecycle,
     record_status: declaration.governance?.status,
-    ...(nkfVersion === "0.2" ? {} : { title: declaration.title }),
+    title: declaration.title,
   };
   for (const [key, value] of Object.entries(expected)) {
     if (hasOwn(frontMatter, key) && frontMatter[key] !== value) {
@@ -539,6 +562,7 @@ function sourceChecks(
   projectTerms: string[],
   emitter: RuleEmitter,
   nkfVersion: "0.1" | "0.2" = "0.1",
+  referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
   if (declaration === null || record.sourceObservation?.bytes === null || record.sourceObservation?.bytes === undefined) {
@@ -568,7 +592,7 @@ function sourceChecks(
     );
     return;
   }
-  recordFrontMatterChecks(record, model, emitter, nkfVersion);
+  recordFrontMatterChecks(record, model, emitter, nkfVersion, referenceMaps);
   const h1 = model.h1[0];
   if (h1 !== undefined && declaration.title !== h1.text) {
     emitter.emit("record.title.mismatch", "The declaration title does not equal the Markdown H1.", {
@@ -656,6 +680,8 @@ function nonRecordSourceChecks(
   emitter: RuleEmitter,
   nkfVersion: "0.1" | "0.2" = "0.1",
   acceptedDecisionIds: ReadonlySet<string> = new Set(),
+  referenceMaps: ReferenceMaps | null = null,
+  acceptedDecisionPaths: ReadonlyMap<string, string> = new Map(),
 ): void {
   const artifact = nonRecord.observation.entry.path;
   const bytes = nonRecord.observation.bytes;
@@ -683,7 +709,10 @@ function nonRecordSourceChecks(
 
   const frontMatter = commonFrontMatterChecks(model, artifact, emitter, undefined, nkfVersion);
   if (frontMatter === null) return;
-  if (nkfVersion === "0.2") identityBulletChecks(model, artifact, emitter);
+  if (nkfVersion === "0.2") {
+    identityBulletChecks(model, artifact, emitter);
+    deepLinkChecks(model, artifact, referenceMaps, emitter);
+  }
   const allowed = new Set<string>(commonFrontMatterKeysFor(nkfVersion));
   if (nonRecord.declaration.kind === "task") {
     TASK_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
@@ -741,6 +770,8 @@ function nonRecordSourceChecks(
         model,
         taskStatus: typeof frontMatter.task_status === "string" ? frontMatter.task_status : null,
         acceptedDecisionIds,
+        acceptedDecisionPaths,
+        selfPath: String(nonRecord.declaration.path),
         emitter,
       });
     }
@@ -1375,6 +1406,47 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
 
   if (phasePassed("project")) {
     evaluated.add("source");
+    const acceptedDecisionIds = new Set<string>();
+    const acceptedDecisionPaths = new Map<string, string>();
+    const recordIdToPath = new Map<string, string>();
+    const decisionsByNumber = new Map<string, string>();
+    const taskIdToPath = new Map<string, string>();
+    for (const record of uniqueRecords) {
+      const declaration = record.value as Record<string, any> | null;
+      const sourcePath = declaration?.source?.path;
+      if (typeof declaration?.id !== "string" || typeof sourcePath !== "string") continue;
+      recordIdToPath.set(declaration.id, sourcePath);
+      if (declaration?.type === "decision" && declaration?.governance?.status === "accepted") {
+        acceptedDecisionIds.add(declaration.id);
+        acceptedDecisionPaths.set(declaration.id, sourcePath);
+        const number = /^adr-(\d{4})$/.exec(declaration.id)?.[1];
+        if (number !== undefined) decisionsByNumber.set(number, sourcePath);
+      }
+    }
+    for (const nonRecord of parsedNonRecords) {
+      if (nonRecord.declaration.kind !== "task" || nonRecord.observation.bytes === null) continue;
+      let text: string;
+      try {
+        text = new TextDecoder("utf-8", { fatal: true }).decode(nonRecord.observation.bytes);
+      } catch {
+        continue;
+      }
+      const lines = text.split("\n");
+      if (lines[0] !== "---") continue;
+      const close = lines.indexOf("---", 1);
+      if (close < 0) continue;
+      const taskIdLine = lines.slice(1, close).find((line) => line.startsWith("task_id:"));
+      const taskId = taskIdLine?.slice("task_id:".length).trim();
+      if (taskId !== undefined && taskId !== "") {
+        taskIdToPath.set(taskId, String(nonRecord.declaration.path));
+      }
+    }
+    const referenceMapsFor = (selfPath: string): ReferenceMaps => ({
+      decisionsByNumber,
+      recordIdToPath,
+      taskIdToPath,
+      selfPath,
+    });
     for (const record of uniqueRecords) {
       if (record.value === null || record.sourceObservation?.bytes === null || record.sourceObservation?.bytes === undefined) continue;
       const expected = record.value.source?.digest?.value;
@@ -1386,25 +1458,29 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           instance_pointer: "/source/digest/value",
         });
       }
-      sourceChecks(record, projectTerms, emitter, resultVersion);
-    }
-    const acceptedDecisionIds = new Set<string>();
-    for (const record of uniqueRecords) {
-      const declaration = record.value as Record<string, any> | null;
-      if (
-        declaration?.type === "decision" &&
-        declaration?.governance?.status === "accepted" &&
-        typeof declaration?.id === "string"
-      ) {
-        acceptedDecisionIds.add(declaration.id);
-      }
+      sourceChecks(
+        record,
+        projectTerms,
+        emitter,
+        resultVersion,
+        resultVersion === "0.2" && typeof record.value.source?.path === "string"
+          ? referenceMapsFor(String(record.value.source.path))
+          : null,
+      );
     }
     for (const nonRecord of parsedNonRecords) {
       if (
         nonRecord.declaration.path.endsWith(".md") &&
         nonRecord.observation.bytes !== null
       ) {
-        nonRecordSourceChecks(nonRecord, emitter, resultVersion, acceptedDecisionIds);
+        nonRecordSourceChecks(
+          nonRecord,
+          emitter,
+          resultVersion,
+          acceptedDecisionIds,
+          resultVersion === "0.2" ? referenceMapsFor(String(nonRecord.declaration.path)) : null,
+          acceptedDecisionPaths,
+        );
       }
     }
     frontMatterReferenceChecks(uniqueRecords, parsedNonRecords, emitter, resultVersion);

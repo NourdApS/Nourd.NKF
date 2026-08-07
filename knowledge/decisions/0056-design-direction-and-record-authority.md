@@ -1,16 +1,19 @@
 ---
 id: adr-0056
 type: decision
+title: "ADR 0056: Design Direction And Record Authority"
 summary: NKF defines a Design as governed proposal knowledge containing a possible direction, alternatives, and trade-offs. Earlier repository wording still used acceptance both for the direction proposed by a Design and for authority over the exact Design record revision. It also attempted to derive native record governance from Design disposition.
 created_at: 2026-07-30T17:34:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
-decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0056: Design Direction And Record Authority
 
+- **Status:** Accepted
+- **Task:** `NKF-007`
+- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit direction to choose vocabulary consistent with NKF’s
   Design concept
 

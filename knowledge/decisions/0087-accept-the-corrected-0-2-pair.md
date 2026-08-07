@@ -1,12 +1,12 @@
 ---
 id: adr-0087
+title: "ADR 0087: Accept The Corrected 0.2 Pair"
 type: decision
 summary: Accept the corrected NKF 0.2 authority pair carrying the record decision-authority key, the identity-bullet duplication rule, and the title-free canonical bytes.
 created_at: 2026-08-07T15:05:28Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-019
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0087: Accept The Corrected 0.2 Pair

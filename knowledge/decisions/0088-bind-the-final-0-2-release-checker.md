@@ -1,12 +1,12 @@
 ---
 id: adr-0088
+title: "ADR 0088: Bind The Final 0.2 Release Checker"
 type: decision
 summary: Bind the corrected 0.2 release packaging to the exact re-adopted checker bytes and source commit.
 created_at: 2026-08-07T15:14:39Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-019
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0088: Bind The Final 0.2 Release Checker

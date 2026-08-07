@@ -7,7 +7,7 @@ source:
   path: decisions/0045-release-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 89fc284e18499ff339441a0ae557c829086c84072843eedd0203950eb3563533
+    value: 9cbeaa91cdf4ba2a221cef0c82982548fdb8e85759d56c8d5f7abe6818a69cd1
 governance:
   lifecycle: immutable
   status: accepted

@@ -1,16 +1,19 @@
 ---
 id: adr-0005
 type: decision
+title: "ADR 0005: Accept Record V2 Responsibility Bindings"
 summary: ADR 0004 introduces nkf.record/v2 for the explicit responsibility-binding mechanism established by ADR 0002 and the Product responsibility identifiers accepted by ADR 0003.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0005: Accept Record V2 Responsibility Bindings
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation in the NKF-003
   discussion on 29 July 2026
 

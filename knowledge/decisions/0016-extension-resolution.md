@@ -1,16 +1,19 @@
 ---
 id: adr-0016
 type: decision
+title: "ADR 0016: Accept NKF 0.1 Extension Declaration And Resolution"
 summary: The accepted NKF 0.1 specification requires unknown extensions to remain visible and round-trippable and requires consumers to fail closed when a required extension is unsupported. It does not completely define extension identity, contract binding, declaration fields, requirement semantics, or support resolution.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0016: Accept NKF 0.1 Extension Declaration And Resolution
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct confirmation in the NKF-003 discussion on
   29 July 2026
 

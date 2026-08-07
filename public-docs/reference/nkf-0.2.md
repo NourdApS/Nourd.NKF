@@ -1,12 +1,12 @@
 ---
 id: nkf-0.2-specification
+title: NKF 0.2 — Product And Technology Knowledge Format
 type: specification
 summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.2 supports Product and Technology knowledge and adds the required Decision Applicability Gate for Task non-records.
 created_at: 2026-08-06T22:24:00Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-019
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.2 — Product And Technology Knowledge Format
@@ -18,15 +18,15 @@ decision_authority: Human Product Owner, Nourd ApS
 - **Predecessor canonical digest:** `df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0`
 - **Canonical destination:** `knowledge/specifications/nkf-0.2.md`
 - **Executable companion destination:** `contracts/nkf/0.2/nkf.yaml`
-- **Acceptance Decisions:** ADR 0076 through ADR 0081, ADR 0084, ADR 0086,
-  and the corrected pair acceptance ADR 0087
-- **Independent governing inputs:** ADRs 0001 through 0086
+- **Acceptance Decisions:** [ADR 0076](../decisions/0076-versioned-contract-evolution.md) through [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md), [ADR 0084](../decisions/0084-replace-the-unconsumed-0-2-release.md), ADRs 0086
+  through 0089, and the corrected pair acceptance ADR 0090
+- **Independent governing inputs:** ADRs 0001 through 0089
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision is the canonical NKF 0.2 specification: accepted with
-> its executable companion through ADR 0081 and corrected through ADRs 0084
-> and 0087 before any consumer adopted it. It governs repositories that
-> declare NKF 0.2. It is not the public stable NKF 1.0 release.
+> its executable companion through [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md) and corrected through ADRs 0084,
+> 0087, and 0090 before any consumer adopted it. It governs repositories
+> that declare NKF 0.2. It is not the public stable NKF 1.0 release.
 
 ## Purpose
 
@@ -59,16 +59,16 @@ The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHOULD**, **SHOULD NOT**,
 and **MAY** express normative requirements in this specification.
 
 NKF 0.2 is a pre-stable format version produced under the versioned
-contract evolution accepted by ADR 0076. ADRs 0045 through 0073 remain the
+contract evolution accepted by [ADR 0076](../decisions/0076-versioned-contract-evolution.md). ADRs 0045 through 0073 remain the
 acceptance lineage of the immutable NKF 0.1 predecessor, including the
 Product and Technology profile division and the complete portable topology.
-ADR 0077 adopts the Decision Applicability Gate direction realized by this
-revision. ADR 0078 allocates the version coordinate `0.2` to the correction
+[ADR 0077](../decisions/0077-decision-applicability-gate.md) adopts the Decision Applicability Gate direction realized by this
+revision. [ADR 0078](../decisions/0078-version-gate-correction-as-nkf-0-2.md) allocates the version coordinate `0.2` to the correction
 because it carries breaking changes, and keeps release, adoption, and
-breaking-change process definition outside format meaning. ADR 0079 removes
-the frontmatter title and adds the Task orientation keys. ADR 0080 accepts
+breaking-change process definition outside format meaning. [ADR 0079](../decisions/0079-dynamic-frontmatter-without-title.md) removes
+the frontmatter title and adds the Task orientation keys. [ADR 0080](../decisions/0080-release-and-adoption-process.md) accepts
 the separate release and adoption process protocols outside format meaning.
-ADR 0081 accepts this exact pair as canonical NKF 0.2 after the Human
+[ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md) accepts this exact pair as canonical NKF 0.2 after the Human
 Product Owner confirmed each 0.1 difference separately. It governs a
 repository only when that repository deliberately declares `nkf_version`
 `0.2`; NKF 0.1 remains immutable authority for repositories that declare it.
@@ -98,16 +98,16 @@ version namespace, Markdown-plus-YAML authority pair, deterministic
 declarations, body responsibilities, validation, release, security, and
 pre-stable evolution rules.
 
-ADR 0049 and the Technology-first NKF self-hosting exercise establish the
-Common, Product, and Technology division. ADR 0058 establishes the governed
+[ADR 0049](../decisions/0049-common-and-root-profiles.md) and the Technology-first NKF self-hosting exercise establish the
+Common, Product, and Technology division. [ADR 0058](../decisions/0058-governed-frontmatter.md) establishes the governed
 frontmatter successor revision under the Human Product Owner's accepted
 orientation boundary and explicit authorization for coherent NKF 0.1
 adoption. That authority does not accept a future profile, extension,
 consumer meaning, or unrelated format change.
 
-ADR 0071 adopts the complete portable onboarding topology after exercise of
-the confirmed predecessor against Nourd Agent SDK. ADR 0072 accepted the
-initial successor authority pair. ADR 0073 corrects that pair's Markdown
+[ADR 0071](../decisions/0071-complete-portable-onboarding-topology.md) adopts the complete portable onboarding topology after exercise of
+the confirmed predecessor against Nourd Agent SDK. [ADR 0072](../decisions/0072-portable-topology-authority-pair.md) accepted the
+initial successor authority pair. [ADR 0073](../decisions/0073-correct-portable-topology-diagnostic-registry.md) corrects that pair's Markdown
 diagnostic registry omission without changing the adopted topology behavior.
 The change adds a durable Common lifecycle envelope, one canonical reconciled
 knowledge map, lifecycle placement and index completeness, profile-specific
@@ -119,8 +119,8 @@ replacement did not rewrite their historical meaning; it deliberately
 migrated the then-current NKF 0.1 authority and required consumers to migrate
 to the new root declaration.
 
-ADR 0076 establishes versioned contract evolution after first consumer
-adoption. ADR 0077 adopts the Decision Applicability Gate direction from the
+[ADR 0076](../decisions/0076-versioned-contract-evolution.md) establishes versioned contract evolution after first consumer
+adoption. [ADR 0077](../decisions/0077-decision-applicability-gate.md) adopts the Decision Applicability Gate direction from the
 evidenced Nourd Tiles failure, in which a conditional renderer decision lost
 its conditions in successor Tasks and proxy evidence was represented as
 outcome success. This NKF 0.2 revision realizes that adopted direction as a
@@ -552,7 +552,7 @@ Conflicting record use, unsupported file kind, unsafe path, symbolic link,
 duplicate physical target, or semantic ambiguity stops before project
 mutation.
 
-A project created by the confirmed NKF-013 or NKF-015 predecessor may use an
+A project created by the confirmed [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor may use an
 explicit `repair-topology` workflow only when a trustworthy onboarding receipt
 identifies the predecessor release and exact generated paths. The workflow
 constructs and seals a candidate outside the project, creates missing indexes,
@@ -647,18 +647,19 @@ Every applicable Markdown document requires exactly these common keys:
 
 ```yaml
 ---
+title: "Human-Readable Document Title"
 summary: "A concise orientation summary."
 created_at: 2026-07-30T19:47:30Z
 ---
 ```
 
-Frontmatter carries no `title` key. The document MUST have exactly one
-top-level H1, and that H1's comparison string is the document title. For a
-record, the declaration `title` MUST exactly equal it; repeating the title in
-frontmatter is unsupported duplication and fails closed as an unsupported
-key. `summary` MUST be a non-empty, trimmed, single-line string. It helps a
-person or agent orient to the document; its presence and shape do not prove
-semantic correctness, completeness, or acceptance.
+`title` and `summary` MUST be non-empty, trimmed, single-line strings. The
+document MUST have exactly one top-level H1, and `title` MUST exactly equal
+its comparison string, so the envelope and the body can never disagree about
+the document title; disagreement emits `markdown.frontmatter.title-mismatch`.
+For a record, the declaration `title` MUST also exactly equal it. `summary`
+helps a person or agent orient to the document; its presence and shape do
+not prove semantic correctness, completeness, or acceptance.
 
 `created_at` MUST be a real calendar instant serialized exactly as
 `YYYY-MM-DDTHH:mm:ssZ`. It records the first evidenced repository appearance
@@ -675,13 +676,16 @@ record_lifecycle: immutable
 record_status: accepted
 ```
 
-The frontmatter `id`, `type`, `record_lifecycle`, and `record_status` MUST
-exactly equal declaration `id`, `type`, `governance.lifecycle`, and
-`governance.status`, respectively. A mismatch fails conformance; the checker
+The frontmatter `id`, `type`, `record_lifecycle`, `record_status`, and
+`title` MUST exactly equal declaration `id`, `type`, `governance.lifecycle`,
+`governance.status`, and `title`, respectively. A mismatch fails conformance; the checker
 does not select a winner or rewrite either representation. Any record source
 MAY additionally declare `decision_authority` as a non-empty, trimmed,
 single-line orientation string naming its human decision authority; it
 orients readers and does not replace the declaration's `governance.authority`.
+A Design record MAY additionally declare `proposal_authority_effect`,
+`proposal_evidence`, and `implementation_evidence` as non-empty, trimmed,
+single-line orientation strings replacing the former header bullets.
 
 Design, Decision, Specification, and Realization record sources additionally
 require one non-empty `task` value. It MUST exactly resolve to one Task
@@ -752,9 +756,9 @@ The allowed keys are:
 
 | Applicable document | Required keys | Conditional keys |
 | --- | --- | --- |
-| Non-Evidence Markdown | `summary`, `created_at` | None |
+| Non-Evidence Markdown | `title`, `summary`, `created_at` | None |
 | Record source | Common plus `id`, `type`, `record_lifecycle`, `record_status` | `decision_authority` plus the type profile |
-| Design record | Record plus `task`, `design_disposition` | `design_decisions`, `superseded_by`, `withdrawal_source` |
+| Design record | Record plus `task`, `design_disposition` | `design_decisions`, `superseded_by`, `withdrawal_source`, `proposal_authority_effect`, `proposal_evidence`, `implementation_evidence` |
 | Decision or Specification record | Record plus `task` | None |
 | Realization record | Record plus `task`, `confirmation_status` | `confirmation_decisions`, `unconfirmed_scope` |
 | Task non-record | Common plus `task_id`, `task_status` | `owner`, `decision_authority`, `related_tasks` |
@@ -790,10 +794,23 @@ restate orientation identity as bullet lines. A top-level body line that
 begins with `- **<Label>:**` or `- **<Label>**`, where the
 whitespace-trimmed label case-insensitively equals one of the closed
 identity labels `Task`, `Status`, `Owner`, `Decision Authority`,
-`Design Disposition`, `Repository`, `Related Tasks`, or `Version`, emits
+`Design Disposition`, `Repository`, `Related Tasks`, `Version`,
+`Adopting Decision`, `Proposal Authority Effect`, `Proposal Evidence`, or
+`Implementation Evidence`, emits
 `markdown.body.identity-duplication`. Only these exact bulleted forms are
 detected; restated identity in free prose remains a human-review concern,
 and Evidence bytes are never scanned.
+
+Same-bundle document references MUST be deep links. Inside a non-Evidence
+body, outside headings, code fences, and existing links, a reference that
+matches one of the closed reference grammars MUST be the visible text of a
+CommonMark link whose destination resolves to the referenced document's
+exact source path: the text form `ADR NNNN` naming a same-bundle Decision
+record `adr-NNNN`; a code span holding a same-bundle record identifier; or
+a text or code-span token equal to a same-bundle Task identifier. A
+document never links to itself, and an unlinked or mistargeted reference
+emits `markdown.reference.deep-link.required`. Only these grammars are
+detected; other prose mentions remain a human-review concern.
 
 Native NKF 0.2 interprets the Markdown source body using CommonMark 0.31.2.
 Only heading nodes that are direct children of the CommonMark document root
@@ -957,8 +974,8 @@ Optional empty structures are omitted.
 
 Native NKF 0.2 defines no presentation-guidance field. Markdown is the default
 readable form. Portable display metadata uses a separately governed optional
-extension and remains subject to ADR 0020 and future governed reconsideration
-through NKF-004.
+extension and remains subject to [ADR 0020](../decisions/0020-presentation-guidance.md) and future governed reconsideration
+through [NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md).
 
 Common defines these record types:
 
@@ -1834,9 +1851,10 @@ The first block of `Applicable Decisions` MUST be exactly one of:
 Each data row declares one applicable decision constraint:
 
 - `Kind` MUST be exactly `record` or `external`.
-- For kind `record`, `Reference` MUST be a reference cell whose identifier
-  resolves to exactly one same-bundle Decision record whose declared
-  governance status is `accepted`.
+- For kind `record`, `Reference` MUST be one CommonMark link whose visible
+  text is a reference cell identifier resolving to exactly one same-bundle
+  Decision record whose declared governance status is `accepted`, and whose
+  destination resolves to that record's exact source path.
 - For kind `external`, `Reference` MUST be non-empty prose naming the
   external authority and record; native validation does not resolve it.
 - `Carried Constraint` MUST be non-empty prose carrying the applicable
@@ -1861,9 +1879,10 @@ Each data row declares one mandatory capability:
   capability was directly verified. For findings `unsupported` and `unknown`,
   `Verification` MUST be exactly `none`.
 - `Exception` MUST be exactly `none`, or an explicit Human Product Owner
-  exception: either a reference cell resolving to an accepted same-bundle
-  Decision record or non-empty prose identifying the recorded human
-  exception act.
+  exception: either a link whose visible text is a reference cell
+  identifier resolving to an accepted same-bundle Decision record with the
+  record's source path as destination, or non-empty prose identifying the
+  recorded human exception act.
 
 Additional explanatory blocks MAY follow the required first block in each
 subsection. A gate added to a pre-existing Task after the fact MUST state in
@@ -1955,7 +1974,7 @@ An extension ID is lowercase, owner-namespaced, and matches:
 ^[a-z][a-z0-9]*(?:\.[a-z](?:[a-z0-9-]*[a-z0-9])?){2,}$
 ```
 
-The first namespace `nkf` is reserved for extensions owned and accepted by
+The first namespace [`nkf`](../nkf.md) is reserved for extensions owned and accepted by
 NKF. Other namespaces belong to their stated authority. Namespace text is an
 ownership claim, not proof. Extension IDs have no independent version;
 `nkf_version: "0.2"` is the only version coordinate and artifact digests bind
@@ -2038,7 +2057,7 @@ it.
 
 Native NKF 0.2 accepts no concrete extension. Portable presentation guidance
 is deliberately outside the native record; future NKF-owned presentation work
-is deferred under NKF-004.
+is deferred under [NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md).
 
 ## Native Project Organization
 
@@ -2304,7 +2323,9 @@ warning is non-blocking.
 | `markdown.frontmatter.value.invalid` | error |
 | `markdown.frontmatter.created-at.invalid` | error |
 | `markdown.frontmatter.record-mismatch` | error |
+| `markdown.frontmatter.title-mismatch` | error |
 | `markdown.body.identity-duplication` | error |
+| `markdown.reference.deep-link.required` | error |
 | `markdown.frontmatter.design.invalid` | error |
 | `markdown.frontmatter.confirmation.invalid` | error |
 | `markdown.frontmatter.task.invalid` | error |
@@ -2551,7 +2572,7 @@ outdated**.
 Normal acceptance changes alter governed inputs through the governed change
 process. NKF 0.2 does not infer a hidden acceptance change, poll an authority,
 or impose universal expiry. Universal expiry or separate authority freshness
-remains deferred under NKF-005.
+remains deferred under [NKF-005](../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md).
 
 The result is operational state outside `knowledge_root`, excluded from its
 own snapshot, and ordinarily uncommitted. It excludes usernames, hostnames,
@@ -2823,9 +2844,9 @@ The following remain deliberately unresolved in NKF 0.2:
 - a future NKP runtime protocol;
 - standardized acceptance-event storage; and
 - attested-computation profiles;
-- the future optional presentation-guidance extension under NKF-004; and
-- breaking-change classification and signaling, deferred to NKF-020; the
-  release and adoption processes themselves are accepted through ADR 0080
+- the future optional presentation-guidance extension under [NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md); and
+- breaking-change classification and signaling, deferred to [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md); the
+  release and adoption processes themselves are accepted through [ADR 0080](../decisions/0080-release-and-adoption-process.md)
   outside format meaning.
 
 These omissions MUST be visible to consumers. A profile MAY resolve one for

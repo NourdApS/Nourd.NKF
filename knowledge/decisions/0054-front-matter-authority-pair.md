@@ -1,16 +1,19 @@
 ---
 id: adr-0054
 type: decision
+title: "ADR 0054: Front-Matter Authority Pair"
 summary: ADR 0053 adopted the NKF-007 repository knowledge-architecture direction and authorized the minimum native source-envelope meaning required for honest front-matter use. Its exact Design input remains immutable Decision provenance.
 created_at: 2026-07-30T17:12:13Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
-decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0054: Front-Matter Authority Pair
 
+- **Status:** Accepted
+- **Task:** `NKF-007`
+- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit authorization for NKF-007 supporting changes
 - **Review Evidence SHA-256:** `db4651f51c69369cddd831c73b4f6f189328af0e32544a0e3d6d59f8d4f22d03`
 

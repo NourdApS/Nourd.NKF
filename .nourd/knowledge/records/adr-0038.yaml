@@ -7,7 +7,7 @@ source:
   path: decisions/0038-nourd-invocation-precondition.md
   digest:
     algorithm: sha-256
-    value: 1c6e4809499ce12293986c310626d899fa1be066025ee85787e1d3a6542912f3
+    value: fd931caacd1c9a6c20c6c78b4df8547c1fce6a999b1cbb89780a0c3def1cc72f
 governance:
   lifecycle: immutable
   status: accepted

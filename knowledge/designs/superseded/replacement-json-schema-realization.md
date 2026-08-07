@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-replacement-json-schemas
 type: design
+title: NKF 0.1 Replacement JSON Schemas
 summary: This proposal derives the first current JSON Schema 2020-12 realization from the exact NKF 0.1 Markdown/YAML authority pair accepted by ADR 0022. It replaces the obsolete markdown_root, records_root, open-object, and shallow record assumptions in the preliminary schema files without treating schema code as normative meaning.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
@@ -11,11 +12,13 @@ design_decisions:
   - adr-0023
 superseded_by:
   - adr-0030
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Replacement JSON Schemas
 
+- **Design Disposition:** Superseded
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted authority pair:** ADR 0022
 - **Proposal Authority Effect:** None
 

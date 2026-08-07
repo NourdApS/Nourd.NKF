@@ -1,6 +1,7 @@
 ---
 id: adr-0071
 type: decision
+title: "ADR 0071: Complete Portable Onboarding Topology"
 summary: Adopt one complete lifecycle-first knowledge topology for Product and Technology onboarding, with a single reconciled knowledge map, continuing conformance, and deliberate predecessor repair.
 created_at: 2026-07-31T22:46:02Z
 record_lifecycle: immutable

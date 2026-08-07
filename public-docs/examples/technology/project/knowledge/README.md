@@ -1,4 +1,5 @@
 ---
+title: Knowledge
 summary: "Provides the canonical map for the governed fixture knowledge."
 created_at: 2026-07-30T07:53:41Z
 ---

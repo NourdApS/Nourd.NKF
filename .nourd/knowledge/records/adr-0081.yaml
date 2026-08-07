@@ -7,7 +7,7 @@ source:
   path: decisions/0081-accept-nkf-0-2-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 90ce9376cb84a3bb2394dace2e168f6b278f804f97517726d3684262eb70edcd
+    value: f2e7655106049a9985dcad2592e57cbb9f7c47d1fb8b94e5be3f308c4b86959f
 governance:
   lifecycle: immutable
   status: accepted

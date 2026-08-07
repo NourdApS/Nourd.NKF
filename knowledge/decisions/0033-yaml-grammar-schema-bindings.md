@@ -1,16 +1,19 @@
 ---
 id: adr-0033
 type: decision
+title: "ADR 0033: Confirm Yaml Grammar-Corrected Json Schema Bindings"
 summary: ADR 0032 corrects three invalid YAML flow scalars without changing parsed contract meaning. The schemas confirmed by ADR 0030 therefore require only an exact x-nkf-source.executable_digest rebind.
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Codex technical reviewer, acting under the Human
 ---
 
 # ADR 0033: Confirm Yaml Grammar-Corrected Json Schema Bindings
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision Authority:** Codex technical reviewer, acting under the Human
   Product Owner's authorization to approve exact derived revisions after
   independent review
 - **Accepted Source Pair:** ADR 0032

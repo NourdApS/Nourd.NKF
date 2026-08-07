@@ -7,7 +7,7 @@ source:
   path: product.md
   digest:
     algorithm: sha-256
-    value: ba4c5bc963dfd65f3915a3c1240c1f3c45aabacf0a4aba53fa5cfa9f1b8fd339
+    value: bdf6537ce5e16a096854802d21a965121c65346ed0679e2fd6ad10489db92847
 governance:
   lifecycle: living
   status: draft

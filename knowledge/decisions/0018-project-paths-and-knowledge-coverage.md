@@ -1,16 +1,19 @@
 ---
 id: adr-0018
 type: decision
+title: "ADR 0018: Accept NKF 0.1 Project Path And Knowledge Coverage"
 summary: "The accepted NKF 0.1 specification describes a location-independent bundle with manifest-relative markdown_root and records_root values. Review of actual Nourd project organization established a different intended boundary: .nourd is always at the project root, declarations have one fixed location, and only the canonical knowledge entry point is configurable."
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0018: Accept NKF 0.1 Project Path And Knowledge Coverage
 
+- **Status:** Accepted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation of the exact fixed
   `.nourd` and configurable knowledge-root interpretation in the NKF-003
   discussion on 29 July 2026

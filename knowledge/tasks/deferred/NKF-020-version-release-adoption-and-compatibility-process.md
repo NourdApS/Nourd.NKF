@@ -1,17 +1,19 @@
 ---
+title: "NKF-020: Define Version Release, Adoption, And Compatibility Process"
 summary: Define the governed process for releasing a new NKF version, the process by which an adopted repository adopts a new version, and how breaking changes are classified and signaled to consumers.
 created_at: 2026-08-06T23:30:03Z
 task_id: NKF-020
 task_status: deferred
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
-related_tasks:
-  - NKF-016
-  - NKF-018
-  - NKF-019
 ---
 
 # NKF-020: Define Version Release, Adoption, And Compatibility Process
+
+- **Task:** `NKF-020`
+- **Status:** Deferred
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
+- **Repository:** `kaveh6202/Nourd.NKF`
+- **Related Tasks:** `NKF-016`, `NKF-018`, `NKF-019`
 
 ## Human Direction
 
@@ -129,21 +131,3 @@ One governed process definition covering:
 This Task records required future work only. It does not claim that any
 process has been selected, accepted, implemented, or followed, and it does
 not authorize beginning the work.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-| Reference | Kind | Carried Constraint |
-| --- | --- | --- |
-| `adr-0076` | record | Every contract-meaning change after first consumer adoption ships as a new immutable version. |
-| `adr-0078` | record | Release, adoption, and breaking-change process stay outside format meaning. |
-| `adr-0080` | record | Only breaking-change classification and signaling plus process refinements remain in this Task's scope. |
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added when the Task was created before NKF 0.2 was adopted and
-was normalized during the self-migration.
-

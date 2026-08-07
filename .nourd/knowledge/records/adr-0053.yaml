@@ -7,7 +7,7 @@ source:
   path: decisions/0053-repository-knowledge-architecture.md
   digest:
     algorithm: sha-256
-    value: 412d297e53045960d75b54c369d4fbaa46db6f8457b4ad480b7a25492e8a0ace
+    value: bc384cd9fae3078353dcc7913d5c7ae0f99796dc38f38c2d273554059f2519e7
 governance:
   lifecycle: immutable
   status: accepted

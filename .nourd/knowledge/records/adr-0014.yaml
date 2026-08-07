@@ -7,7 +7,7 @@ source:
   path: decisions/0014-section-role-vocabularies.md
   digest:
     algorithm: sha-256
-    value: 6a02af9e530bc531d147cadb53fd10e54285408b1cebc7d7c2c033e4956dbdd9
+    value: b9b1e5170227a595141c41f2979ffd13ee86404616f54ae013916a4cd6408b0c
 governance:
   lifecycle: immutable
   status: accepted

@@ -7,7 +7,7 @@ source:
   path: decisions/0030-source-bound-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 69966414c437d49caf346c919cd734dda5d11d8b3dfb4c2b7a3a069b2b8c40fe
+    value: ed422378eb256baf6943651a970ef9f5e84b51b277c8ae04960a4cc2679cd751
 governance:
   lifecycle: immutable
   status: accepted

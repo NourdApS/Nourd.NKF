@@ -1,14 +1,18 @@
 ---
+title: "NKF-004: Define portable presentation-guidance extension"
 summary: Define an NKF-owned optional contract for portable presentation guidance when real consumer projects demonstrate that native NKF semantics and canonical Markdown are insufficient to communicate consistent display intent across interfaces.
 created_at: 2026-07-29T20:06:17Z
 task_id: NKF-004
 task_status: deferred
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-004: Define portable presentation-guidance extension
 
+- **Task:** `NKF-004`
+- **Status:** Deferred
+- **Owner:** Nourd ApS
+- **Decision authority:** Human Product Owner, Nourd ApS
+- **Repository:** `kaveh6202/Nourd.NKF`
 - **Governing boundary:** `ADR 0020`
 
 ## Desired outcome
@@ -98,16 +102,3 @@ This Task preserves an intended future capability; it does not claim that the
 capability is specified, accepted, implemented, released, supported, or
 conformant. Work begins through a recorded execution slice when the activation
 evidence exists.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

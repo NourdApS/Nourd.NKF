@@ -1,16 +1,19 @@
 ---
 id: adr-0060
 type: decision
+title: "ADR 0060: Layered Contract Enforcement"
 summary: Adopt one AI-neutral NKF authoring protocol, verified agent-host-surface adapters, portable skill representations, one deterministic project command, exact-commit continuous integration, and a separately activated protected merge gate.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-011
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0060: Layered Contract Enforcement
 
+- **Status:** Accepted
+- **Task:** `NKF-011`
+- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Review Evidence:**
   `knowledge/evidence/audits/nkf-011-ai-neutral-enforcement-design-reaudit.md`
 

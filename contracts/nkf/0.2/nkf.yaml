@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.2/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: df2e457e5e3824004268efebdead93be56df36c3754cf563b2701cee0474c26f
+    value: 535d47e735b1de3440f91b3dacc9a168c818674e13a843938ca8f77a4f5794d5
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -620,10 +620,11 @@ markdown:
           fractional_seconds: forbidden
           generic_updated_at: undefined
         common:
-          required_fields: [summary, created_at]
-          title_key: forbidden
-          title_authority: commonmark-body-single-H1-comparison-string
+          required_fields: [title, summary, created_at]
           fields:
+            title:
+              ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+              equals: commonmark-body-single-H1-comparison-string
             summary:
               ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
               semantic_adequacy_from_validation: false
@@ -644,6 +645,8 @@ markdown:
               equals: declaration.governance.lifecycle
             record_status:
               equals: declaration.governance.status
+            title:
+              equals: declaration.title
         lifecycle_record_task:
           applies_to_types: [design, decision, specification, realization]
           required_field: task
@@ -656,6 +659,7 @@ markdown:
         design:
           applies_to_type: design
           required_fields: [task, design_disposition]
+          orientation_fields: [proposal_authority_effect, proposal_evidence, implementation_evidence]
           dispositions: [active, adopted, rejected, superseded, withdrawn]
           provenance:
             active:
@@ -772,10 +776,10 @@ markdown:
             retrospective_gate_disclosure: required
         allowed_keys:
           closed_by_applicable_document_class: true
-          common: [summary, created_at]
+          common: [title, summary, created_at]
           record: [id, type, record_lifecycle, record_status, decision_authority]
           lifecycle_record: [task]
-          design: [design_disposition, design_decisions, superseded_by, withdrawal_source]
+          design: [design_disposition, design_decisions, superseded_by, withdrawal_source, proposal_authority_effect, proposal_evidence, implementation_evidence]
           realization: [confirmation_status, confirmation_decisions, unconfirmed_scope]
           task_non_record: [task_id, task_status, owner, decision_authority, related_tasks]
         reference_resolution:
@@ -1711,7 +1715,22 @@ identity_bullet_labels:
     - Repository
     - Related Tasks
     - Version
+    - Adopting Decision
+    - Proposal Authority Effect
+    - Proposal Evidence
+    - Implementation Evidence
   evidence_scanned: false
+  prose_restatement_detection: human-review
+
+deep_link_references:
+  closed: true
+  applies_to: non-evidence-bodies
+  exempt: [headings, code-fences, existing-links, self-document]
+  grammars:
+    - text form "ADR NNNN" naming a same-bundle decision record adr-NNNN
+    - code span holding a same-bundle record identifier
+    - text or code-span token equal to a same-bundle task identifier
+  destination: referenced-document-exact-source-path
   prose_restatement_detection: human-review
 
 guidance_versioning:
@@ -1803,6 +1822,8 @@ diagnostics:
     markdown.frontmatter.value.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.created-at.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.record-mismatch: {severity: error, blocking: conformance, phase: source}
+    markdown.frontmatter.title-mismatch: {severity: error, blocking: conformance, phase: source}
+    markdown.reference.deep-link.required: {severity: error, blocking: conformance, phase: source}
     markdown.body.identity-duplication: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.design.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.confirmation.invalid: {severity: error, blocking: conformance, phase: source}

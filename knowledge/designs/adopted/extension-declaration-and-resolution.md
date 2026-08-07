@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-extension-declaration-and-resolution
 type: design
+title: NKF 0.1 Extension Declaration And Resolution
 summary: Whether the following extension identity, contract binding, declaration, support, round-trip, and fail-closed rules are the native NKF 0.1 extension mechanism.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -9,11 +10,13 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0016
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Extension Declaration And Resolution
 
+- **Design Disposition:** Adopted
+- **Task:** `NKF-003`
+- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 - **Proposal evidence:** imported NKF-002 `required_extensions`,
   `extensions`, and `supported_extensions` shapes and checker behavior; none
