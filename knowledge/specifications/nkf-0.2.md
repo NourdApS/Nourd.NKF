@@ -22,13 +22,13 @@ task: NKF-019
 - **Predecessor canonical digest:** `df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0`
 - **Canonical destination:** `knowledge/specifications/nkf-0.2.md`
 - **Executable companion destination:** `contracts/nkf/0.2/nkf.yaml`
-- **Acceptance Decisions:** ADR 0076, ADR 0077, ADR 0078, ADR 0079, and the
-  reserved pair acceptance ADR 0080
-- **Independent governing inputs:** ADRs 0001 through 0079
+- **Acceptance Decisions:** ADR 0076, ADR 0077, ADR 0078, ADR 0079, ADR
+  0080, and the reserved pair acceptance ADR 0081
+- **Independent governing inputs:** ADRs 0001 through 0080
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
 > This exact revision is the candidate canonical NKF 0.2 specification. It
-> governs only when ADR 0080 accepts it with its executable companion. It
+> governs only when ADR 0081 accepts it with its executable companion. It
 > is not the public stable NKF 1.0 release.
 
 ## Purpose
@@ -69,8 +69,9 @@ ADR 0077 adopts the Decision Applicability Gate direction realized by this
 revision. ADR 0078 allocates the version coordinate `0.2` to the correction
 because it carries breaking changes, and keeps release, adoption, and
 breaking-change process definition outside format meaning. ADR 0079 removes
-the frontmatter title and adds the Task orientation keys. This exact
-candidate pair governs as NKF 0.2 only when ADR 0080 accepts it.
+the frontmatter title and adds the Task orientation keys. ADR 0080 accepts
+the separate release and adoption process protocols outside format meaning.
+This exact candidate pair governs as NKF 0.2 only when ADR 0081 accepts it.
 
 The `0.x` version communicates that public governance and compatibility are not
 yet stable. A validator result, Git commit, merge, file status, or tool output
@@ -245,12 +246,13 @@ or a declared version different from the bundle's `nkf_version` emits
 `guidance.version.mismatch`. Absent guidance files are not themselves a
 conformance failure.
 
-How the NKF repository releases a new version, how an adopted repository
-adopts one, and how breaking changes are classified and signaled are
-repository and governance process, not format meaning. They are deliberately
-deferred to their own governed process definition and remain listed under
-Unresolved Matters. Each version's changes and required migration meaning are
-still recorded with its release.
+How the NKF repository releases a new version and how an adopted repository
+adopts one are repository and governance process, not format meaning. ADR
+0080 accepts their governed definition as the release and adoption
+protocols, which are members of the versioned set. Breaking-change
+classification and signaling remain deferred under Unresolved Matters. Each
+version's changes and required migration meaning are recorded with its
+release.
 
 NKF has one version namespace: the NKF format version. A bundle MUST declare
 `nkf_version`. NKF 0.2 uses the unversioned canonical identities `nkf.bundle`,
@@ -2808,8 +2810,9 @@ The following remain deliberately unresolved in NKF 0.2:
 - standardized acceptance-event storage; and
 - attested-computation profiles;
 - the future optional presentation-guidance extension under NKF-004; and
-- the version release process, the consumer version-adoption process, and
-  breaking-change classification and signaling, deferred to NKF-020.
+- breaking-change classification and signaling, deferred to NKF-020; the
+  release and adoption processes themselves are accepted through ADR 0080
+  outside format meaning.
 
 These omissions MUST be visible to consumers. A profile MAY resolve one for
 its own scope, but MUST identify the extension and MUST NOT claim that the

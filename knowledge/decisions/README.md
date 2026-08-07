@@ -103,3 +103,4 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0073: Correct Portable Topology Diagnostic Registry](0073-correct-portable-topology-diagnostic-registry.md)
 - [ADR 0074: Separate Authoring And Recommended Release Verification](0074-separate-authoring-and-recommended-release-verification.md)
 - [ADR 0075: Confirm Complete Portable Onboarding Topology](0075-confirm-complete-portable-onboarding-topology.md)
+- [ADR 0080: Release And Adoption Process](0080-release-and-adoption-process.md)

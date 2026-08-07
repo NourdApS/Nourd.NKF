@@ -78,6 +78,15 @@ frontmatter title, moving the repeated top-of-document identity properties
 into type-dynamic frontmatter, and ending the duplication between frontmatter
 and body openings. ADR 0079 records that direction for NKF 0.2.
 
+The Human Product Owner then directed that guidance, protocols, and agent
+instructions be versioned per NKF version as one complete frozen set, agreed
+that superseded versions live in Git history rather than beside the current
+tree, and on `2026-08-07` accepted the proposed separated release and
+adoption processes with the NKF repository releasing first and then adopting
+its own version as the first migrator. ADR 0080 records that acceptance; the
+followable procedures are the release and adoption protocols under
+`integrations/`.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -96,14 +105,19 @@ and body openings. ADR 0079 records that direction for NKF 0.2.
   `related_tasks`, and removed `markdown.frontmatter.title-mismatch` from the
   0.2 registry; this repository's own documents migrate to the new envelope
   during the 0.2 self-migration.
+- The 0.2 candidate now defines the versioned set and the guidance version
+  marker with `guidance.version.mismatch` enforcement. ADR 0080 accepts the
+  separated release and adoption processes, documented as the versioned
+  release and adoption protocols under `integrations/`; NKF-020 keeps only
+  breaking-change classification and signaling plus refinements.
 - The exact NKF 0.2 candidate authority pair is drafted; its current
   candidate digests are recorded below. The remaining boundary before derived
   implementation is Human Product Owner acceptance of those exact bytes
-  through reserved ADR 0080. No normative promotion, implementation,
+  through reserved ADR 0081. No normative promotion, implementation,
   conformance, or confirmation is claimed yet.
 - Current candidate digests: Markdown SHA-256
-  `bf95f49589c5e5a363bfa7b2361487fa4514a24cc4d944f2f9a3630c143c254a` bound to executable SHA-256
-  `6af4de7bb281329ba4484151b2af963d7866eae14dad36fd728ca408b5a78fc1`, with derived 0.2 Schema candidates.
+  `2930d208dc79c71e4869c1fba5a241fe6feed6328dc4ec09fe0032ba911301ce` bound to executable SHA-256
+  `d2337d12f114587b447ed764965c40d7245efed9f405cda453afa3db391f4f97`, with derived 0.2 Schema candidates.
 
 ## Triggering External Evidence
 

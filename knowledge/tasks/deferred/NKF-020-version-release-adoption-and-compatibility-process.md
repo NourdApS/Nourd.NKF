@@ -28,6 +28,14 @@ Creation does not authorize Design, Decision, Specification, implementation,
 release, or consumer work. Begin only after a separate explicit human
 direction to start `NKF-020`.
 
+## Scope Reduction
+
+On `2026-08-07`, ADR 0080 under `NKF-019` accepted the separated release and
+adoption processes and their followable protocols, consuming most of this
+Task's directed scope ahead of activation. The remaining deferred scope is
+breaking-change classification and signaling, plus process refinements from
+real release and adoption experience.
+
 ## Problem
 
 ADR 0076 establishes that every contract-meaning change after first consumer
