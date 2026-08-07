@@ -1403,7 +1403,7 @@ governed_artifacts:
     path: src/checker/checker.ts
     digest:
       algorithm: sha-256
-      value: 44bd32238d151890f07546975a16789c85fb03144632a44857d2e4eaa86037e2
+      value: cc8c5d2534eb57d9aed889459f35822f0f61dec5d08a10f5b501161d722673e2
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-contracts-ts
@@ -1443,7 +1443,7 @@ governed_artifacts:
     path: src/checker/markdown.ts
     digest:
       algorithm: sha-256
-      value: adb5dccd1072d6f5724fa72d012db545ee5cbadef55652789c5884f024652fd8
+      value: 2a9e15895b418b686ece010090505b1b9cae94fd15e59f0eb00ee12e3104c5ce
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-project-ts
@@ -1476,6 +1476,14 @@ governed_artifacts:
     digest:
       algorithm: sha-256
       value: 196ec52aace1772317c661a1e46b8eebc4abd3c3f0c55ef1b8a3b6584f0b90ed
+    record: nkf-0.1-native-realization
+    source_section: durable-mapping
+  - id: artifact-src-checker-applicability-ts
+    kind: checker-source
+    path: src/checker/applicability.ts
+    digest:
+      algorithm: sha-256
+      value: 9e15023188628d5d560723162acb1d6251b849789242f32ad8dba569dac6fbfa
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-topology-ts
@@ -1518,6 +1526,14 @@ governed_artifacts:
       value: cdeef86c0fd1b2ea91fcd44b3bb68cd428b1564152099fab4fd19eac67e62768
     record: nkf-0.1-native-realization
     source_section: durable-mapping
+  - id: artifact-test-applicability-test-ts
+    kind: test
+    path: test/applicability.test.ts
+    digest:
+      algorithm: sha-256
+      value: b9b7c9635ce1f5230808c939af3e7900617fb129bb64f35e78e6ae7149900322
+    record: nkf-0.1-native-realization
+    source_section: compatibility-verification-and-recovery
   - id: artifact-test-adopter-test-ts
     kind: test
     path: test/adopter.test.ts

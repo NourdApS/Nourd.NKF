@@ -15,6 +15,7 @@ const whitespace = new Set(whiteSpaceCodePoints);
 
 export interface Heading {
   level: number;
+  line: number;
   text: string;
   protectedRanges: ProtectedRange[];
   path: string[];
@@ -275,7 +276,9 @@ export function parseMarkdown(text: string): MarkdownModel {
     const key = JSON.stringify(path);
     const count = (occurrence.get(key) ?? 0) + 1;
     occurrence.set(key, count);
-    headings.push({ level, text: derived.text, protectedRanges: derived.protectedRanges, path, occurrence: count });
+    const sourcepos = (node as { sourcepos?: [[number, number], [number, number]] }).sourcepos;
+    const line = sourcepos === undefined ? 0 : sourcepos[0][0];
+    headings.push({ level, line, text: derived.text, protectedRanges: derived.protectedRanges, path, occurrence: count });
   }
 
   return {

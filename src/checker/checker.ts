@@ -10,6 +10,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import path from "node:path";
+import { validateDecisionApplicabilityGate } from "./applicability.js";
 import { bindingsForVersion } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
@@ -169,6 +170,11 @@ function securityScan(
 }
 
 const COMMON_FRONTMATTER_KEYS = ["title", "summary", "created_at"] as const;
+const COMMON_FRONTMATTER_KEYS_0_2 = ["summary", "created_at"] as const;
+const TASK_ORIENTATION_KEYS_0_2 = ["owner", "decision_authority", "related_tasks"] as const;
+function commonFrontMatterKeysFor(nkfVersion: "0.1" | "0.2"): readonly string[] {
+  return nkfVersion === "0.2" ? COMMON_FRONTMATTER_KEYS_0_2 : COMMON_FRONTMATTER_KEYS;
+}
 const RECORD_FRONTMATTER_KEYS = ["id", "type", "record_lifecycle", "record_status"] as const;
 const LIFECYCLE_RECORD_TYPES = new Set(["design", "decision", "specification", "realization"]);
 const DESIGN_FRONTMATTER_KEYS = [
@@ -278,6 +284,7 @@ function commonFrontMatterChecks(
   artifact: string,
   emitter: RuleEmitter,
   recordId?: string,
+  nkfVersion: "0.1" | "0.2" = "0.1",
 ): Record<string, unknown> | null {
   if (!model.frontMatterPresent || model.frontMatter === null) {
     emitter.emit(
@@ -288,9 +295,10 @@ function commonFrontMatterChecks(
     return null;
   }
   const frontMatter = model.frontMatter;
-  requiredFrontMatterKeys(frontMatter, COMMON_FRONTMATTER_KEYS, artifact, emitter, recordId);
+  requiredFrontMatterKeys(frontMatter, commonFrontMatterKeysFor(nkfVersion), artifact, emitter, recordId);
 
-  for (const key of ["title", "summary"] as const) {
+  const shapeCheckedKeys = nkfVersion === "0.2" ? (["summary"] as const) : (["title", "summary"] as const);
+  for (const key of shapeCheckedKeys) {
     if (hasOwn(frontMatter, key) && !orientationString(frontMatter[key])) {
       emitter.emit(
         "markdown.frontmatter.value.invalid",
@@ -314,6 +322,7 @@ function commonFrontMatterChecks(
       frontMatterContext(artifact, recordId),
     );
   } else if (
+    nkfVersion === "0.1" &&
     orientationString(frontMatter.title) &&
     frontMatter.title !== model.h1[0]?.text
   ) {
@@ -330,12 +339,13 @@ function recordFrontMatterChecks(
   record: ParsedRecord,
   model: MarkdownModel,
   emitter: RuleEmitter,
+  nkfVersion: "0.1" | "0.2" = "0.1",
 ): void {
   const declaration = record.value;
   if (declaration === null || declaration.type === "evidence") return;
   const recordId = String(declaration.id);
   const artifact = record.sourceObservation?.entry.path ?? record.artifact;
-  const frontMatter = commonFrontMatterChecks(model, artifact, emitter, recordId);
+  const frontMatter = commonFrontMatterChecks(model, artifact, emitter, recordId, nkfVersion);
   if (frontMatter === null) return;
 
   requiredFrontMatterKeys(frontMatter, RECORD_FRONTMATTER_KEYS, artifact, emitter, recordId);
@@ -350,18 +360,18 @@ function recordFrontMatterChecks(
     requiredFrontMatterKeys(frontMatter, ["confirmation_status"], artifact, emitter, recordId);
   }
 
-  const allowed = new Set<string>([...COMMON_FRONTMATTER_KEYS, ...RECORD_FRONTMATTER_KEYS]);
+  const allowed = new Set<string>([...commonFrontMatterKeysFor(nkfVersion), ...RECORD_FRONTMATTER_KEYS]);
   if (LIFECYCLE_RECORD_TYPES.has(type)) allowed.add("task");
   if (type === "design") DESIGN_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
   if (type === "realization") REALIZATION_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
   rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter, recordId);
 
-  const expected = {
+  const expected: Record<string, unknown> = {
     id: declaration.id,
     type: declaration.type,
     record_lifecycle: declaration.governance?.lifecycle,
     record_status: declaration.governance?.status,
-    title: declaration.title,
+    ...(nkfVersion === "0.2" ? {} : { title: declaration.title }),
   };
   for (const [key, value] of Object.entries(expected)) {
     if (hasOwn(frontMatter, key) && frontMatter[key] !== value) {
@@ -502,6 +512,7 @@ function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
   emitter: RuleEmitter,
+  nkfVersion: "0.1" | "0.2" = "0.1",
 ): void {
   const declaration = record.value;
   if (declaration === null || record.sourceObservation?.bytes === null || record.sourceObservation?.bytes === undefined) {
@@ -531,7 +542,7 @@ function sourceChecks(
     );
     return;
   }
-  recordFrontMatterChecks(record, model, emitter);
+  recordFrontMatterChecks(record, model, emitter, nkfVersion);
   const h1 = model.h1[0];
   if (h1 !== undefined && declaration.title !== h1.text) {
     emitter.emit("record.title.mismatch", "The declaration title does not equal the Markdown H1.", {
@@ -617,6 +628,8 @@ function sourceChecks(
 function nonRecordSourceChecks(
   nonRecord: ParsedNonRecord,
   emitter: RuleEmitter,
+  nkfVersion: "0.1" | "0.2" = "0.1",
+  acceptedDecisionIds: ReadonlySet<string> = new Set(),
 ): void {
   const artifact = nonRecord.observation.entry.path;
   const bytes = nonRecord.observation.bytes;
@@ -642,11 +655,41 @@ function nonRecordSourceChecks(
   }
   if (nonRecord.declaration.kind === "evidence") return;
 
-  const frontMatter = commonFrontMatterChecks(model, artifact, emitter);
+  const frontMatter = commonFrontMatterChecks(model, artifact, emitter, undefined, nkfVersion);
   if (frontMatter === null) return;
-  const allowed = new Set<string>(COMMON_FRONTMATTER_KEYS);
+  const allowed = new Set<string>(commonFrontMatterKeysFor(nkfVersion));
   if (nonRecord.declaration.kind === "task") {
     TASK_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
+    if (nkfVersion === "0.2") {
+      TASK_ORIENTATION_KEYS_0_2.forEach((key) => allowed.add(key));
+      for (const key of ["owner", "decision_authority"] as const) {
+        if (hasOwn(frontMatter, key) && !orientationString(frontMatter[key])) {
+          emitter.emit(
+            "markdown.frontmatter.value.invalid",
+            `The ${key} value must be a non-empty, trimmed, single-line string.`,
+            frontMatterContext(artifact, undefined, key),
+          );
+        }
+      }
+      if (hasOwn(frontMatter, "related_tasks")) {
+        const related = frontMatter.related_tasks;
+        const items = Array.isArray(related) ? related : null;
+        const ownTaskId = typeof frontMatter.task_id === "string" ? frontMatter.task_id : null;
+        if (
+          items === null ||
+          items.length === 0 ||
+          items.some((item) => !orientationString(item)) ||
+          new Set(items).size !== items.length ||
+          (ownTaskId !== null && items.includes(ownTaskId))
+        ) {
+          emitter.emit(
+            "markdown.frontmatter.value.invalid",
+            "related_tasks must be a non-empty, duplicate-free sequence of other Task identifiers.",
+            frontMatterContext(artifact, undefined, "related_tasks"),
+          );
+        }
+      }
+    }
     requiredFrontMatterKeys(frontMatter, TASK_FRONTMATTER_KEYS, artifact, emitter);
     if (hasOwn(frontMatter, "task_id") && !orientationString(frontMatter.task_id)) {
       emitter.emit(
@@ -665,14 +708,68 @@ function nonRecordSourceChecks(
         frontMatterContext(artifact, undefined, "task_status"),
       );
     }
+    if (nkfVersion === "0.2") {
+      validateDecisionApplicabilityGate({
+        artifact,
+        model,
+        taskStatus: typeof frontMatter.task_status === "string" ? frontMatter.task_status : null,
+        acceptedDecisionIds,
+        emitter,
+      });
+    }
   }
   rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter);
+}
+
+async function guidanceVersionChecks(
+  executable: Record<string, any>,
+  nkfVersion: string,
+  collector: SnapshotCollector,
+  emitter: RuleEmitter,
+): Promise<void> {
+  const contract = executable.guidance_versioning as Record<string, any> | undefined;
+  if (contract === undefined) return;
+  const prefix = typeof contract.marker_line_prefix === "string" ? contract.marker_line_prefix : "NKF Version: ";
+  const paths = Array.isArray(contract.checked_paths) ? contract.checked_paths : [];
+  for (const candidate of paths) {
+    if (typeof candidate !== "string") continue;
+    const observation = await collector.observe(candidate, { content: true });
+    if (observation === undefined || observation.entry.final_kind !== "regular-file" || observation.bytes === null) {
+      continue;
+    }
+    let text: string;
+    try {
+      text = new TextDecoder("utf-8", { fatal: true }).decode(observation.bytes);
+    } catch {
+      emitter.emit(
+        "guidance.version.mismatch",
+        "The installed guidance file must decode as UTF-8 and declare its NKF version marker.",
+        { artifact: candidate },
+      );
+      continue;
+    }
+    const marker = text
+      .split("\n")
+      .map((line) => (line.endsWith("\r") ? line.slice(0, -1) : line))
+      .find((line) => line.startsWith(prefix));
+    const declared = marker?.slice(prefix.length).trim();
+    if (declared !== nkfVersion) {
+      emitter.emit(
+        "guidance.version.mismatch",
+        declared === undefined
+          ? "The installed guidance file does not declare the required NKF version marker."
+          : `The installed guidance declares NKF ${declared} but the bundle declares NKF ${nkfVersion}.`,
+        { artifact: candidate },
+      );
+    }
+  }
 }
 
 function frontMatterReferenceChecks(
   records: ParsedRecord[],
   nonRecords: ParsedNonRecord[],
   emitter: RuleEmitter,
+  nkfVersion: "0.1" | "0.2" = "0.1",
 ): void {
   const taskGroups = new Map<string, ParsedNonRecord[]>();
   for (const nonRecord of nonRecords) {
@@ -691,6 +788,26 @@ function frontMatterReferenceChecks(
         `The Task identity ${taskId} is duplicated.`,
         frontMatterContext(nonRecord.observation.entry.path, undefined, "task_id"),
       );
+    }
+  }
+
+  if (nkfVersion === "0.2") {
+    for (const nonRecord of nonRecords) {
+      if (nonRecord.declaration.kind !== "task") continue;
+      const frontMatter = nonRecord.markdown?.frontMatter;
+      const related = frontMatter?.related_tasks;
+      if (!Array.isArray(related)) continue;
+      const ownTaskId = typeof frontMatter?.task_id === "string" ? frontMatter.task_id : null;
+      for (const target of related) {
+        if (!orientationString(target) || target === ownTaskId) continue;
+        if ((taskGroups.get(target)?.length ?? 0) !== 1) {
+          emitter.emit(
+            "markdown.frontmatter.reference.unresolved",
+            `The related_tasks reference ${target} does not resolve exactly once to another same-bundle Task.`,
+            frontMatterContext(nonRecord.observation.entry.path, undefined, "related_tasks"),
+          );
+        }
+      }
     }
   }
 
@@ -1219,6 +1336,9 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         knowledgeRoot: String(bundle.knowledge_root),
         emitter,
       });
+      if (resultVersion === "0.2") {
+        await guidanceVersionChecks(loaded.executable, resultVersion, collector, emitter);
+      }
     }
   }
 
@@ -1235,17 +1355,28 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           instance_pointer: "/source/digest/value",
         });
       }
-      sourceChecks(record, projectTerms, emitter);
+      sourceChecks(record, projectTerms, emitter, resultVersion);
+    }
+    const acceptedDecisionIds = new Set<string>();
+    for (const record of uniqueRecords) {
+      const declaration = record.value as Record<string, any> | null;
+      if (
+        declaration?.type === "decision" &&
+        declaration?.governance?.status === "accepted" &&
+        typeof declaration?.id === "string"
+      ) {
+        acceptedDecisionIds.add(declaration.id);
+      }
     }
     for (const nonRecord of parsedNonRecords) {
       if (
         nonRecord.declaration.path.endsWith(".md") &&
         nonRecord.observation.bytes !== null
       ) {
-        nonRecordSourceChecks(nonRecord, emitter);
+        nonRecordSourceChecks(nonRecord, emitter, resultVersion, acceptedDecisionIds);
       }
     }
-    frontMatterReferenceChecks(uniqueRecords, parsedNonRecords, emitter);
+    frontMatterReferenceChecks(uniqueRecords, parsedNonRecords, emitter, resultVersion);
     for (const record of uniqueRecords) {
       record.sourceValid = !emitter.diagnostics.some(
         (diagnostic) =>
