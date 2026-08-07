@@ -23,6 +23,7 @@ const {
   createUstar,
   serializeReleaseManifest,
   sha256,
+  releaseEntriesForVersion,
 } = release;
 import {
   repositoryRoot,
@@ -352,12 +353,9 @@ async function buildPredecessorRelease(
   }
 
   const predecessorEntries = new Map<string, Buffer>();
-  for (const entry of RELEASE_ENTRIES) {
+  for (const entry of releaseEntriesForVersion("0.1")) {
     if (entry.path === "release-manifest.json") continue;
-    const predecessorPath = entry.path
-      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
-      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md");
-    predecessorEntries.set(predecessorPath, await readFile(path.join(predecessorRoot, predecessorPath)));
+    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
   }
   const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
   const predecessorManifest = constructReleaseManifest({
@@ -372,13 +370,7 @@ async function buildPredecessorRelease(
     nkfVersion: "0.1",
   });
   predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
-  const predecessorMembers = RELEASE_ENTRIES.map((entry: { path: string; mode: number }) => ({
-    ...entry,
-    path: entry.path
-      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
-      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md"),
-  }));
-  const predecessorArchive = createUstar(predecessorEntries, predecessorMembers);
+  const predecessorArchive = createUstar(predecessorEntries, releaseEntriesForVersion("0.1"));
   const archiveSha256 = sha256(predecessorArchive);
   const archivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${archiveSha256}.tar`);
   await writeFile(archivePath, predecessorArchive);
@@ -496,12 +488,9 @@ beforeAll(async () => {
     "c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387",
   );
   const predecessorEntries = new Map<string, Buffer>();
-  for (const entry of RELEASE_ENTRIES) {
+  for (const entry of releaseEntriesForVersion("0.1")) {
     if (entry.path === "release-manifest.json") continue;
-    const predecessorPath = entry.path
-      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
-      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md");
-    predecessorEntries.set(predecessorPath, await readFile(path.join(predecessorRoot, predecessorPath)));
+    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
   }
   const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
   const predecessorManifest = constructReleaseManifest({
@@ -516,13 +505,7 @@ beforeAll(async () => {
     nkfVersion: "0.1",
   });
   predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
-  const predecessorMembers = RELEASE_ENTRIES.map((entry: { path: string; mode: number }) => ({
-    ...entry,
-    path: entry.path
-      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
-      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md"),
-  }));
-  const predecessorArchive = createUstar(predecessorEntries, predecessorMembers);
+  const predecessorArchive = createUstar(predecessorEntries, releaseEntriesForVersion("0.1"));
   predecessorArchiveSha256 = sha256(predecessorArchive);
   predecessorArchivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${predecessorArchiveSha256}.tar`);
   await writeFile(predecessorArchivePath, predecessorArchive);

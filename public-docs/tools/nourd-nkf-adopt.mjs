@@ -19693,6 +19693,16 @@ import {
 import os from "node:os";
 import path2 from "node:path";
 var ARCHIVE_ROOT = "nourd-nkf";
+var LEGACY_0_1_ENTRIES = Object.freeze([
+  { path: "contracts/nkf/0.1/nkf.yaml", mode: 420 },
+  { path: "contracts/nkf/0.1/schemas/bundle.schema.json", mode: 420 },
+  { path: "contracts/nkf/0.1/schemas/record.schema.json", mode: 420 },
+  { path: "contracts/nkf/0.1/schemas/release-manifest.schema.json", mode: 420 },
+  { path: "contracts/nkf/0.1/schemas/validation-result.schema.json", mode: 420 },
+  { path: "dist/nourd-nkf-checker.mjs", mode: 493 },
+  { path: "knowledge/specifications/nkf-0.1.md", mode: 420 },
+  { path: "release-manifest.json", mode: 420 }
+]);
 var RELEASE_ENTRIES = Object.freeze([
   { path: "contracts/nkf/0.2/nkf.yaml", mode: 420 },
   {
@@ -19713,6 +19723,14 @@ var RELEASE_ENTRIES = Object.freeze([
   },
   { path: "dist/nourd-nkf-checker.mjs", mode: 493 },
   { path: "knowledge/specifications/nkf-0.2.md", mode: 420 },
+  { path: "integrations/ai/nkf-authoring-protocol.md", mode: 420 },
+  { path: "integrations/onboarding/nkf-onboarding-protocol.md", mode: 420 },
+  { path: "integrations/release/nkf-release-protocol.md", mode: 420 },
+  { path: "integrations/adoption/nkf-adoption-protocol.md", mode: 420 },
+  { path: ".agents/skills/nkf-authoring/SKILL.md", mode: 420 },
+  { path: ".claude/skills/nkf-authoring/SKILL.md", mode: 420 },
+  { path: ".agents/skills/nkf-onboarding/SKILL.md", mode: 420 },
+  { path: ".claude/skills/nkf-onboarding/SKILL.md", mode: 420 },
   { path: "release-manifest.json", mode: 420 }
 ]);
 var SCHEMA_BINDINGS = Object.freeze([
@@ -19978,14 +19996,9 @@ function safeArchivePath(name) {
   }
 }
 function releaseEntriesForVersion(nkfVersion = "0.2") {
-  if (!/^0\.[0-9]+$/.test(nkfVersion)) fail2("Unsupported release entry version.");
-  return RELEASE_ENTRIES.map((entry) => ({
-    ...entry,
-    path: entry.path.replace("contracts/nkf/0.2/", `contracts/nkf/${nkfVersion}/`).replace(
-      "knowledge/specifications/nkf-0.2.md",
-      `knowledge/specifications/nkf-${nkfVersion}.md`
-    )
-  }));
+  if (nkfVersion === "0.2") return RELEASE_ENTRIES;
+  if (nkfVersion === "0.1") return LEGACY_0_1_ENTRIES;
+  fail2("Unsupported release entry version.");
 }
 function sniffArchiveVersion(archive) {
   const name = readName(archive.subarray(0, 100));

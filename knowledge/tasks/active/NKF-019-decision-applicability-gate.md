@@ -109,6 +109,11 @@ into frontmatter keys. The adoption was rolled back again under the same
 lose-nothing rule, and ADRs 0086 through 0088 from the second round were
 preserved.
 
+On `2026-08-07`, the Human Product Owner directed a sanity audit ensuring
+the 0.2 rules are sound, onboarding and upgrading are flawless including
+the skills and AI guidance, and the guidance makes the AI audit a completed
+onboarding independently.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -160,6 +165,16 @@ preserved.
   bullet-free migration validating at zero diagnostics through the full
   gate with 172 tests. Migration closure and Realization confirmation
   await Human Product Owner review.
+- The directed sanity audit passed rule-consistency checks and three
+  end-to-end exercises against the published release — empty onboarding,
+  adversarial Tiny Knowledge with fail-closed rollback and sealed-edit
+  resolution, and a documented 0.1 upgrade — and produced three corrections
+  under [ADR 0094](../../decisions/0094-carry-the-set-and-audit-independently.md):
+  the archive now carries the complete versioned set, the adoption protocol
+  states the current migration meaning, and onboarding and adoption
+  guidance require an independent post-action audit. The
+  [audit Evidence](../../evidence/audits/nkf-019-onboarding-and-upgrade-audit.md)
+  records the method and observations.
 - The complete 0.2 set is derived and proven per release protocol steps three
   and four: the checker dispatches contract sets by the bundle's declared
   version and fails unsupported versions closed; the Decision Applicability

@@ -34,6 +34,11 @@ recommended and no explicit Category 2 human override is supplied. Onboarding
 creates a Draft candidate; it cannot accept meaning, prove its category, or
 confirm a Realization.
 
+After a successful onboard, independently audit the action before reporting
+it: rerun the installed checker, verify the pin, receipt, and guidance
+version markers, walk the generated topology against the protocol, and
+record the audit with any findings in the onboarding Task.
+
 For an already adopted NKF-013 or NKF-015 predecessor, do not run initial
 onboarding or improvise a folder migration. Follow the documented trusted
 `repair-topology` workflow and require its receipt, drift, staged validation,

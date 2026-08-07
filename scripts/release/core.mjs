@@ -16,6 +16,17 @@ import addFormats from "ajv-formats";
 export const REPOSITORY =
   "https://github.com/kaveh6202/Nourd.NKF.git";
 export const ARCHIVE_ROOT = "nourd-nkf";
+const LEGACY_0_1_ENTRIES = Object.freeze([
+  { path: "contracts/nkf/0.1/nkf.yaml", mode: 0o644 },
+  { path: "contracts/nkf/0.1/schemas/bundle.schema.json", mode: 0o644 },
+  { path: "contracts/nkf/0.1/schemas/record.schema.json", mode: 0o644 },
+  { path: "contracts/nkf/0.1/schemas/release-manifest.schema.json", mode: 0o644 },
+  { path: "contracts/nkf/0.1/schemas/validation-result.schema.json", mode: 0o644 },
+  { path: "dist/nourd-nkf-checker.mjs", mode: 0o755 },
+  { path: "knowledge/specifications/nkf-0.1.md", mode: 0o644 },
+  { path: "release-manifest.json", mode: 0o644 },
+]);
+
 export const RELEASE_ENTRIES = Object.freeze([
   { path: "contracts/nkf/0.2/nkf.yaml", mode: 0o644 },
   {
@@ -36,6 +47,14 @@ export const RELEASE_ENTRIES = Object.freeze([
   },
   { path: "dist/nourd-nkf-checker.mjs", mode: 0o755 },
   { path: "knowledge/specifications/nkf-0.2.md", mode: 0o644 },
+  { path: "integrations/ai/nkf-authoring-protocol.md", mode: 0o644 },
+  { path: "integrations/onboarding/nkf-onboarding-protocol.md", mode: 0o644 },
+  { path: "integrations/release/nkf-release-protocol.md", mode: 0o644 },
+  { path: "integrations/adoption/nkf-adoption-protocol.md", mode: 0o644 },
+  { path: ".agents/skills/nkf-authoring/SKILL.md", mode: 0o644 },
+  { path: ".claude/skills/nkf-authoring/SKILL.md", mode: 0o644 },
+  { path: ".agents/skills/nkf-onboarding/SKILL.md", mode: 0o644 },
+  { path: ".claude/skills/nkf-onboarding/SKILL.md", mode: 0o644 },
   { path: "release-manifest.json", mode: 0o644 },
 ]);
 
@@ -443,16 +462,9 @@ function safeArchivePath(name) {
 }
 
 export function releaseEntriesForVersion(nkfVersion = "0.2") {
-  if (!/^0\.[0-9]+$/.test(nkfVersion)) fail("Unsupported release entry version.");
-  return RELEASE_ENTRIES.map((entry) => ({
-    ...entry,
-    path: entry.path
-      .replace("contracts/nkf/0.2/", `contracts/nkf/${nkfVersion}/`)
-      .replace(
-        "knowledge/specifications/nkf-0.2.md",
-        `knowledge/specifications/nkf-${nkfVersion}.md`,
-      ),
-  }));
+  if (nkfVersion === "0.2") return RELEASE_ENTRIES;
+  if (nkfVersion === "0.1") return LEGACY_0_1_ENTRIES;
+  fail("Unsupported release entry version.");
 }
 
 function sniffArchiveVersion(archive) {

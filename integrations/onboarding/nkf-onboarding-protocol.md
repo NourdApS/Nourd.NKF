@@ -247,6 +247,12 @@ accept meaning, confirm a Realization, or prove NKF conformance.
 
 ## Apply One Complete Candidate
 
+When staged validation rejects preserved documents — a missing envelope, a
+title that does not equal its H1, restated identity bullets, or an unlinked
+same-bundle reference — resolve each finding as an explicit sealed candidate
+edit and re-seal; never weaken the plan, misclassify a document, or edit the
+project directly to pass.
+
 Run `onboard` with the sealed plan, exact adopter, and independently trusted
 release archive SHA-256. The onboarder repeats the source and candidate checks,
 generates native knowledge and integration, creates the complete portable
@@ -293,3 +299,15 @@ govern all later knowledge changes.
 Projects created by the trusted NKF-013 or NKF-015 predecessor use the
 separate `repair-topology` command documented by the update-and-recovery
 guide. Do not imitate that migration by manually deleting a competing map.
+
+## Independent Post-Onboarding Audit
+
+After `onboard` reports success, audit the result independently before
+reporting it: with a fresh reading rather than this session's assumptions,
+rerun the installed checker through `check` to zero diagnostics, verify the
+release pin and receipt digests, confirm the guidance files carry the
+release's NKF version marker, walk the generated topology against this
+protocol's promises, and confirm every preserved document survived with its
+meaning intact. Record the audit and any findings in the onboarding Task as
+findings, not as success language, and leave acceptance, confirmation, and
+Governing Use to their separate authorities.

@@ -28,18 +28,27 @@ follow it.
    published migration meaning. For NKF 0.2 this means: the bundle declares
    `nkf_version: "0.2"`; every Task non-record carries its Decision
    Applicability section, with pre-existing completed Tasks gated
-   retrospectively and saying so; frontmatter drops `title` and may adopt the
-   Task orientation keys; and repeated identity bullet blocks leave document
-   bodies.
+   retrospectively and saying so; every frontmatter `title` exactly equals
+   its H1; repeated identity bullet blocks leave document bodies, with
+   orientation moving into the Task, record, and Design frontmatter keys;
+   every same-bundle document reference becomes a deep link to the
+   referenced document's exact source path, including gate table cells; and
+   record source digests are re-pinned for every edited document.
 4. Remove superseded own-version artifacts from the working tree where the
    repository carries them; they remain retrievable from version-control
    history and release archives.
 5. Validate the complete bundle with the released version's checker to zero
    diagnostics.
-6. Record the migration in the repository's own knowledge and close it
-   through the repository's human review. Validation is conformance for the
-   observed snapshot; it is not acceptance, Realization confirmation, or
-   review.
+6. Independently audit the completed migration before human review: with a
+   fresh reading rather than the migrating session's assumptions, rerun the
+   version's checker to zero diagnostics, verify the installed pin, receipt,
+   and archive digests, compare the migrated topology and a sample of
+   migrated documents against this protocol's promises, and record findings
+   as findings in the owning Task instead of declaring success.
+7. Record the migration and the audit outcome in the repository's own
+   knowledge and close it through the repository's human review. Validation
+   is conformance for the observed snapshot; it is not acceptance,
+   Realization confirmation, or review.
 
 ## Boundaries
 
