@@ -137,10 +137,13 @@ NKF 0.2 authority pair.
   and the full authoring gate passes with 167 tests and zero diagnostics
   while this repository still declares and validates as NKF 0.1.
 - The consolidated current-system Realization records the implemented 0.2
-  set as a Draft, partially-confirmed successor account. The remaining
-  boundaries are the independent set audit, separate Human Product Owner
-  confirmation, the release archive, and only then this repository's own
-  adoption.
+  set as a Draft, partially-confirmed successor account.
+- The
+  [set completion audit](../../evidence/audits/nkf-019-versioned-set-completion-audit.md)
+  records the requirement and set review at commit `455ef7a` with no
+  unresolved material finding. The remaining boundaries are separate Human
+  Product Owner confirmation, the release archive, and only then this
+  repository's own adoption.
 
 ## Triggering External Evidence
 
