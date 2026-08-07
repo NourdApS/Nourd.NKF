@@ -130,7 +130,7 @@ const verification = verifyReleaseArchive(archiveSecond, archiveSha256, {
 });
 await invokeVerifiedChecker(verification, [
   "--project",
-  path.join(repositoryRoot, "fixtures/valid/minimal"),
+  path.join(repositoryRoot, "fixtures/valid/minimal-0-2"),
   "--level",
   "full-bundle",
   "--runner",
