@@ -1395,7 +1395,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: 1192eec0e927440d26c47a12be0e2b7fe243d8c18a2e06e23fc453441f08091c
+      value: 1a14e841a22dbf2479eec67522d0f6a9ef2eeab989a054189387010fa08efe08
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -1403,7 +1403,7 @@ governed_artifacts:
     path: src/checker/checker.ts
     digest:
       algorithm: sha-256
-      value: 5c5546a37890968be41455c324781ff382836ea1c5196617dc8f297d382190f4
+      value: 44bd32238d151890f07546975a16789c85fb03144632a44857d2e4eaa86037e2
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-contracts-ts
@@ -1411,7 +1411,7 @@ governed_artifacts:
     path: src/checker/contracts.ts
     digest:
       algorithm: sha-256
-      value: 30115acdc107c4a311c8ebfd0f72bc9f3b99bb9c43ac96a59aa7efa7de7d8b2d
+      value: 69b2d9d5834fff121350248a829761dce5058c8647a5566e300c19344caeac69
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-diagnostics-ts
@@ -1427,7 +1427,7 @@ governed_artifacts:
     path: src/checker/extensions.ts
     digest:
       algorithm: sha-256
-      value: b3fd331dccb3572dce587bb77e63ca4e5cc7e74fc96a4a725cca2fdd845597b9
+      value: 9ace1e6795ee5133bba32a624ede062158520a647cc8633ad48fd2562e4b29e5
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-index-ts
@@ -1491,7 +1491,7 @@ governed_artifacts:
     path: src/checker/types.ts
     digest:
       algorithm: sha-256
-      value: e0293dc79476be7e42a813b92443640affd2501a962f6c6be74f1a33ba57e305
+      value: f26e2bc47e4d3a061b6015667ab42c2dfb9ebe91270008ddbd8856391f796e3b
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-util-ts
@@ -1499,7 +1499,7 @@ governed_artifacts:
     path: src/checker/util.ts
     digest:
       algorithm: sha-256
-      value: c8525b164715fc4dd4c9d19ee300652cec779c4761be0bf8a84eb7e6508a1beb
+      value: b2ebe540b115364a077f3818603a45679303c362952546c68c24fcc4e8eea9ab
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-yaml-ts

@@ -10,6 +10,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import path from "node:path";
+import { bindingsForVersion } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
 import { validateExtensions } from "./extensions.js";
@@ -790,13 +791,34 @@ async function persistResult(projectRoot: string, result: ValidationResult): Pro
   }
 }
 
+async function peekBundleNkfVersion(projectRoot: string): Promise<string | null> {
+  try {
+    const bytes = await readFile(path.join(projectRoot, ".nourd", "knowledge", "bundle.yaml"));
+    const parsed = parseNativeYaml(bytes, ".nourd/knowledge/bundle.yaml");
+    const version = (parsed.value as Record<string, unknown> | null)?.["nkf_version"];
+    return typeof version === "string" ? version : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function validateProject(options: ValidateOptions): Promise<ValidationResult> {
   validateRequest(options);
   const projectRoot = await realpath(path.resolve(options.projectRoot));
   await assertNourdInvocationPrecondition(projectRoot);
   const started = (options.now ?? (() => new Date()))();
   const executionId = (options.executionId ?? randomUUID)().toLowerCase();
-  const loaded = await loadContracts(path.resolve(options.contractRoot));
+  const declaredVersion = await peekBundleNkfVersion(projectRoot);
+  const nkfVersion = declaredVersion ?? "0.1";
+  const requestedContractRoot = path.resolve(options.contractRoot);
+  const requestedBase = path.basename(requestedContractRoot);
+  const versionContractRoot =
+    requestedBase !== nkfVersion && bindingsForVersion(requestedBase) !== undefined
+      ? path.join(path.dirname(requestedContractRoot), nkfVersion)
+      : requestedContractRoot;
+  const loaded = await loadContracts(versionContractRoot, bindingsForVersion(nkfVersion), nkfVersion);
+  const resultVersion: "0.1" | "0.2" =
+    bindingsForVersion(nkfVersion) === undefined ? "0.1" : (nkfVersion as "0.1" | "0.2");
   const emitter = new RuleEmitter(loaded.executable);
   const diagnostics: Diagnostic[] = [...loaded.diagnostics];
   const evaluated = new Set<Phase>(["contracts"]);
@@ -1261,6 +1283,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       options.extensionResolver,
       emitter,
       loaded.artifacts,
+      resultVersion,
     );
   }
   if (phasePassed("extension-resolution")) {
@@ -1418,7 +1441,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const completed = observedCompletion < started ? started : observedCompletion;
   const result: ValidationResult = {
     contract: "nkf.validation-result",
-    nkf_version: "0.1",
+    nkf_version: resultVersion,
     execution: {
       id: executionId,
       runner: options.runner ?? "nourd-nkf-cli",
@@ -1438,7 +1461,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         : loaded.executable.root_profiles?.selectable?.[bundle.root.profile] !== undefined
           ? { identity: bundle.root.profile, binding: "verified" }
           : { identity: bundle.root.profile, binding: "unsupported" },
-    validated_snapshot: snapshot(collector.values()),
+    validated_snapshot: snapshot(collector.values(), resultVersion),
     phases: PHASES.map((id) => ({ id, state: state(id) })),
     conformance,
     records: recordResults,

@@ -3,7 +3,7 @@ import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import YAML from "yaml";
-import { CORE_BINDINGS } from "./bindings.js";
+import { CORE_BINDINGS, type CoreBindings } from "./bindings.js";
 import type {
   ArtifactBinding,
   ContractArtifacts,
@@ -59,20 +59,24 @@ function strictJson(bytes: Buffer): Record<string, unknown> | null {
   }
 }
 
-export async function loadContracts(contractRoot: string): Promise<LoadedContracts> {
+export async function loadContracts(
+  contractRoot: string,
+  bindings: CoreBindings = CORE_BINDINGS,
+  nkfVersion = "0.1",
+): Promise<LoadedContracts> {
   const diagnostics: Diagnostic[] = [];
   const repositoryRoot = path.resolve(contractRoot, "../../..");
-  const specificationPath = path.join(repositoryRoot, CORE_BINDINGS.specification.path);
-  const executablePath = path.join(repositoryRoot, CORE_BINDINGS.executable.path);
+  const specificationPath = path.join(repositoryRoot, bindings.specification.path);
+  const executablePath = path.join(repositoryRoot, bindings.executable.path);
   const schemaRoot = path.join(contractRoot, "schemas");
 
   const specificationRead = await readArtifact(specificationPath);
   const executableRead = await readArtifact(executablePath);
   const specificationBinding = binding(
-    CORE_BINDINGS.specification.sha256,
+    bindings.specification.sha256,
     specificationRead.observed,
   );
-  const executableBinding = binding(CORE_BINDINGS.executable.sha256, executableRead.observed);
+  const executableBinding = binding(bindings.executable.sha256, executableRead.observed);
 
   if (specificationBinding.binding !== "verified" || executableBinding.binding !== "verified") {
     const unavailable =
@@ -81,14 +85,14 @@ export async function loadContracts(contractRoot: string): Promise<LoadedContrac
       contractDiagnostic(
         unavailable ? "contract-set.unavailable" : "contract-set.binding-mismatch",
         unavailable
-          ? "The accepted NKF 0.1 authority pair is unavailable."
-          : "The observed NKF 0.1 authority pair does not match its accepted digests.",
+          ? `The accepted NKF ${nkfVersion} authority pair is unavailable.`
+          : `The observed NKF ${nkfVersion} authority pair does not match its accepted digests.`,
       ),
     );
   }
 
   const schemaReads = await Promise.all(
-    CORE_BINDINGS.schemas.map(async (schema) => ({
+    bindings.schemas.map(async (schema) => ({
       ...schema,
       ...(await readArtifact(path.join(schemaRoot, schema.file))),
     })),
@@ -99,7 +103,7 @@ export async function loadContracts(contractRoot: string): Promise<LoadedContrac
   }));
   for (const [index, schema] of schemaBindings.entries()) {
     if (schema.binding !== "verified") {
-      const source = CORE_BINDINGS.schemas[index];
+      const source = bindings.schemas[index];
       if (source === undefined) continue;
       diagnostics.push(
         contractDiagnostic(
@@ -107,7 +111,7 @@ export async function loadContracts(contractRoot: string): Promise<LoadedContrac
           schema.binding === "unavailable"
             ? `Required schema ${schema.identity} is unavailable.`
             : `Schema ${schema.identity} does not match its accepted digest.`,
-          `${CORE_BINDINGS.executable.path.slice(0, -"nkf.yaml".length)}schemas/${source.file}`,
+          `${bindings.executable.path.slice(0, -"nkf.yaml".length)}schemas/${source.file}`,
         ),
       );
     }
@@ -129,8 +133,8 @@ export async function loadContracts(contractRoot: string): Promise<LoadedContrac
     }
     if (
       executable.contract !== "nkf.contract-set" ||
-      executable.nkf_version !== "0.1" ||
-      executable.authority?.markdown_digest?.value !== CORE_BINDINGS.specification.sha256
+      executable.nkf_version !== nkfVersion ||
+      executable.authority?.markdown_digest?.value !== bindings.specification.sha256
     ) {
       diagnostics.push(
         contractDiagnostic(
@@ -145,21 +149,21 @@ export async function loadContracts(contractRoot: string): Promise<LoadedContrac
     schema.bytes !== null && schema.observed === schema.sha256 ? strictJson(schema.bytes) : null,
   );
   for (const [index, parsed] of parsedSchemas.entries()) {
-    const accepted = CORE_BINDINGS.schemas[index];
+    const accepted = bindings.schemas[index];
     const source = parsed?.["x-nkf-source"] as Record<string, any> | undefined;
     if (
       accepted !== undefined &&
       parsed !== null &&
       (parsed.$id !== accepted.identity ||
-        source?.nkf_version !== "0.1" ||
-        source?.markdown_digest?.value !== CORE_BINDINGS.specification.sha256 ||
-        source?.executable_digest?.value !== CORE_BINDINGS.executable.sha256)
+        source?.nkf_version !== nkfVersion ||
+        source?.markdown_digest?.value !== bindings.specification.sha256 ||
+        source?.executable_digest?.value !== bindings.executable.sha256)
     ) {
       diagnostics.push(
         contractDiagnostic(
           "schema.binding-mismatch",
           `Schema ${accepted.identity} has inconsistent source metadata.`,
-          `${CORE_BINDINGS.executable.path.slice(0, -"nkf.yaml".length)}schemas/${accepted.file}`,
+          `${bindings.executable.path.slice(0, -"nkf.yaml".length)}schemas/${accepted.file}`,
         ),
       );
     }

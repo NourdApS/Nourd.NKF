@@ -34,6 +34,7 @@ export async function validateExtensions(
   resolver: ExtensionResolver | undefined,
   emitter: RuleEmitter,
   artifacts: ContractArtifacts,
+  nkfVersion: string = "0.1",
 ): Promise<void> {
   const catalog = values<Record<string, any>>(bundle.extension_contracts);
   const catalogById = new Map<string, Record<string, any>>();
@@ -173,7 +174,7 @@ export async function validateExtensions(
       resolved.id !== id ||
       extensionValue?.contract !== "nkf.extension" ||
       extensionValue?.id !== id ||
-      extensionValue?.nkf_version !== "0.1"
+      extensionValue?.nkf_version !== nkfVersion
     ) {
       for (const { site, use } of relevantUses) {
         if (use.requirement === "required") {

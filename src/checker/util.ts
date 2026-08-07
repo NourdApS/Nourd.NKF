@@ -49,14 +49,14 @@ export function jcs(value: unknown): string {
   throw new TypeError(`JCS cannot encode ${typeof value}.`);
 }
 
-export function snapshot(entries: Iterable<SnapshotEntry>): {
+export function snapshot(entries: Iterable<SnapshotEntry>, nkfVersion: string = "0.1"): {
   algorithm: "sha-256";
   canonicalization: "rfc8785-jcs";
   value: string;
   entry_count: number;
 } {
   const inputs = [...entries].sort((left, right) => utf16Compare(left.path, right.path));
-  const inventory = { contract: "nkf.validation-snapshot", nkf_version: "0.1", inputs };
+  const inventory = { contract: "nkf.validation-snapshot", nkf_version: nkfVersion, inputs };
   return {
     algorithm: "sha-256",
     canonicalization: "rfc8785-jcs",

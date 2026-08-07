@@ -119,7 +119,7 @@ export interface ValidateOptions {
 
 export interface ValidationResult {
   contract: "nkf.validation-result";
-  nkf_version: "0.1";
+  nkf_version: "0.1" | "0.2";
   execution: {
     id: string;
     runner: string;
