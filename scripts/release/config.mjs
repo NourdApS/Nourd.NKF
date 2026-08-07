@@ -7,16 +7,16 @@ export const CHECKER_CONFIRMATION = Object.freeze({
 });
 
 export const ACCEPTED_ARTIFACT_DIGESTS = Object.freeze({
-  "knowledge/specifications/nkf-0.1.md":
-    "428bcc1b2fbda43052582663630fe808b536e5b424caba0afdabbf298d87c6be",
-  "contracts/nkf/0.1/nkf.yaml":
-    "b05d4e7d34d5f2b8472045feed547ae44ff4a0a57299da0630b3a538dc6ab2fd",
-  "contracts/nkf/0.1/schemas/bundle.schema.json":
-    "05f9303d799f8e07a64dc2fb571317ca3d28491dd02d5ed0a446b77065468a1f",
-  "contracts/nkf/0.1/schemas/record.schema.json":
-    "397f83707112022b16f7860882e3b48afb83b9c46c62cc82043483e7a727859b",
-  "contracts/nkf/0.1/schemas/release-manifest.schema.json":
-    "00058b5e86f29edb005f0a4125125c32ccd18a986a244c69f60f8605cab11f23",
-  "contracts/nkf/0.1/schemas/validation-result.schema.json":
-    "155f94a6c3ff7c86a57c58590fa9d3a6a2afc609a5ab6a9a6191a9c9e9708248",
+  "knowledge/specifications/nkf-0.2.md":
+    "bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317",
+  "contracts/nkf/0.2/nkf.yaml":
+    "3178dd061ab0e9e91f8cf46d3391b9f43fc6bda0f2f3eb4a6cb18c65e86e05bd",
+  "contracts/nkf/0.2/schemas/bundle.schema.json":
+    "1ab867601b4034e4be57a08c9e38b60802083b98037afba5ef5d7e925c72082a",
+  "contracts/nkf/0.2/schemas/record.schema.json":
+    "e6d0ce6fea16668525b57b3900aea99c689eb897fe439fbf20cacb8d6221f37a",
+  "contracts/nkf/0.2/schemas/release-manifest.schema.json":
+    "d7869f22ba7223c8ca27266c9a6611c17e238ec75d52e4528dd4f01d190fc3ef",
+  "contracts/nkf/0.2/schemas/validation-result.schema.json":
+    "0724267fee1ef16154893ca94d9902d5db98dc1f4705e37c60144febae325956",
 });

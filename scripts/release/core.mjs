@@ -17,44 +17,44 @@ export const REPOSITORY =
   "https://github.com/kaveh6202/Nourd.NKF.git";
 export const ARCHIVE_ROOT = "nourd-nkf";
 export const RELEASE_ENTRIES = Object.freeze([
-  { path: "contracts/nkf/0.1/nkf.yaml", mode: 0o644 },
+  { path: "contracts/nkf/0.2/nkf.yaml", mode: 0o644 },
   {
-    path: "contracts/nkf/0.1/schemas/bundle.schema.json",
+    path: "contracts/nkf/0.2/schemas/bundle.schema.json",
     mode: 0o644,
   },
   {
-    path: "contracts/nkf/0.1/schemas/record.schema.json",
+    path: "contracts/nkf/0.2/schemas/record.schema.json",
     mode: 0o644,
   },
   {
-    path: "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+    path: "contracts/nkf/0.2/schemas/release-manifest.schema.json",
     mode: 0o644,
   },
   {
-    path: "contracts/nkf/0.1/schemas/validation-result.schema.json",
+    path: "contracts/nkf/0.2/schemas/validation-result.schema.json",
     mode: 0o644,
   },
   { path: "dist/nourd-nkf-checker.mjs", mode: 0o755 },
-  { path: "knowledge/specifications/nkf-0.1.md", mode: 0o644 },
+  { path: "knowledge/specifications/nkf-0.2.md", mode: 0o644 },
   { path: "release-manifest.json", mode: 0o644 },
 ]);
 
 const SCHEMA_BINDINGS = Object.freeze([
   {
-    identity: "urn:nkf:0.1:schema:bundle",
-    path: "contracts/nkf/0.1/schemas/bundle.schema.json",
+    identity: "urn:nkf:0.2:schema:bundle",
+    path: "contracts/nkf/0.2/schemas/bundle.schema.json",
   },
   {
-    identity: "urn:nkf:0.1:schema:record",
-    path: "contracts/nkf/0.1/schemas/record.schema.json",
+    identity: "urn:nkf:0.2:schema:record",
+    path: "contracts/nkf/0.2/schemas/record.schema.json",
   },
   {
-    identity: "urn:nkf:0.1:schema:release-manifest",
-    path: "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+    identity: "urn:nkf:0.2:schema:release-manifest",
+    path: "contracts/nkf/0.2/schemas/release-manifest.schema.json",
   },
   {
-    identity: "urn:nkf:0.1:schema:validation-result",
-    path: "contracts/nkf/0.1/schemas/validation-result.schema.json",
+    identity: "urn:nkf:0.2:schema:validation-result",
+    path: "contracts/nkf/0.2/schemas/validation-result.schema.json",
   },
 ]);
 
@@ -85,19 +85,19 @@ export function constructReleaseManifest({
   releaseCommit,
   checkerConfirmation,
   entries,
+  nkfVersion = "0.2",
 }) {
   if (!/^[0-9a-f]{40}$/.test(releaseCommit)) {
     fail("Release commit must be 40 lowercase hexadecimal characters.");
   }
+  const specificationPath = `knowledge/specifications/nkf-${nkfVersion}.md`;
+  const contractsPrefix = `contracts/nkf/${nkfVersion}/`;
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
-  const markdown = requireBuffer(
-    entries,
-    "knowledge/specifications/nkf-0.1.md",
-  );
-  const executable = requireBuffer(entries, "contracts/nkf/0.1/nkf.yaml");
+  const markdown = requireBuffer(entries, specificationPath);
+  const executable = requireBuffer(entries, `${contractsPrefix}nkf.yaml`);
   return {
     contract: "nkf.release-manifest",
-    nkf_version: "0.1",
+    nkf_version: nkfVersion,
     source: {
       repository: REPOSITORY,
       release_commit: releaseCommit,
@@ -120,18 +120,18 @@ export function constructReleaseManifest({
     authority: {
       precedence: "normative-markdown",
       markdown: {
-        path: "knowledge/specifications/nkf-0.1.md",
+        path: specificationPath,
         digest: digest(markdown),
       },
       executable: {
-        path: "contracts/nkf/0.1/nkf.yaml",
+        path: `${contractsPrefix}nkf.yaml`,
         digest: digest(executable),
       },
     },
     schemas: SCHEMA_BINDINGS.map((schema) => ({
-      identity: schema.identity,
-      path: schema.path,
-      digest: digest(requireBuffer(entries, schema.path)),
+      identity: schema.identity.replace(":0.2:", `:${nkfVersion}:`),
+      path: schema.path.replace("contracts/nkf/0.2/", contractsPrefix),
+      digest: digest(requireBuffer(entries, schema.path.replace("contracts/nkf/0.2/", contractsPrefix))),
     })),
   };
 }
@@ -379,9 +379,9 @@ function zeroPadding(length) {
   return Buffer.alloc(remainder === 0 ? 0 : 512 - remainder);
 }
 
-export function createUstar(entries) {
+export function createUstar(entries, memberEntries = RELEASE_ENTRIES) {
   const parts = [];
-  for (const expected of RELEASE_ENTRIES) {
+  for (const expected of memberEntries) {
     const bytes = requireBuffer(entries, expected.path);
     const name = `${ARCHIVE_ROOT}/${expected.path}`;
     parts.push(headerFor(name, expected.mode, bytes.length));
@@ -442,11 +442,32 @@ function safeArchivePath(name) {
   }
 }
 
+export function releaseEntriesForVersion(nkfVersion = "0.2") {
+  if (!/^0\.[0-9]+$/.test(nkfVersion)) fail("Unsupported release entry version.");
+  return RELEASE_ENTRIES.map((entry) => ({
+    ...entry,
+    path: entry.path
+      .replace("contracts/nkf/0.2/", `contracts/nkf/${nkfVersion}/`)
+      .replace(
+        "knowledge/specifications/nkf-0.2.md",
+        `knowledge/specifications/nkf-${nkfVersion}.md`,
+      ),
+  }));
+}
+
+function sniffArchiveVersion(archive) {
+  const name = readName(archive.subarray(0, 100));
+  const match = /^nourd-nkf\/contracts\/nkf\/(0\.[0-9]+)\/nkf\.yaml$/.exec(name);
+  return match === null ? "0.2" : match[1];
+}
+
 export function inspectUstar(archiveBytes) {
   const archive = Buffer.from(archiveBytes);
   if (archive.length < 1024 || archive.length % 512 !== 0) {
     fail("USTAR archive length is invalid.");
   }
+  const nkfVersion = sniffArchiveVersion(archive);
+  const memberEntries = releaseEntriesForVersion(nkfVersion);
   const dataEnd = archive.length - 1024;
   requireZero(archive.subarray(dataEnd), "USTAR final blocks");
   const entries = new Map();
@@ -454,7 +475,7 @@ export function inspectUstar(archiveBytes) {
   let offset = 0;
   let index = 0;
   while (offset < dataEnd) {
-    const expected = RELEASE_ENTRIES[index];
+    const expected = memberEntries[index];
     if (!expected) fail("USTAR contains an unexpected ninth entry.");
     const header = archive.subarray(offset, offset + 512);
     if (header.length !== 512 || header.every((byte) => byte === 0)) {
@@ -542,24 +563,24 @@ export function inspectUstar(archiveBytes) {
     offset = nextOffset;
     index += 1;
   }
-  if (offset !== dataEnd || index !== RELEASE_ENTRIES.length) {
+  if (offset !== dataEnd || index !== memberEntries.length) {
     fail("USTAR archive is missing one or more required files.");
   }
   return entries;
 }
 
-function requireManifestBootstrap(manifest) {
+function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   if (
     manifest?.contract !== "nkf.release-manifest" ||
-    manifest?.nkf_version !== "0.1"
+    manifest?.nkf_version !== nkfVersion
   ) {
     fail("Release manifest bootstrap contract or NKF version is invalid.");
   }
   const schema = manifest?.schemas?.[2];
   if (
-    schema?.identity !== "urn:nkf:0.1:schema:release-manifest" ||
+    schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` ||
     schema?.path !==
-      "contracts/nkf/0.1/schemas/release-manifest.schema.json" ||
+      `contracts/nkf/${nkfVersion}/schemas/release-manifest.schema.json` ||
     schema?.digest?.algorithm !== "sha-256" ||
     !/^[0-9a-f]{64}$/.test(schema?.digest?.value ?? "")
   ) {
@@ -641,9 +662,10 @@ export function verifyReleaseArchive(
     fail("Release archive digest does not match the independent consumer pin.");
   }
   const entries = inspectUstar(archiveBytes);
+  const archiveVersion = sniffArchiveVersion(Buffer.from(archiveBytes));
   const manifestBytes = requireBuffer(entries, "release-manifest.json");
   const manifest = parseStrictJson(manifestBytes);
-  requireManifestBootstrap(manifest);
+  requireManifestBootstrap(manifest, archiveVersion);
   if (!manifestBytes.equals(serializeReleaseManifest(manifest))) {
     fail("Release manifest bytes are not in canonical contract order and format.");
   }
@@ -688,7 +710,8 @@ export async function invokeVerifiedChecker(
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nourd-nkf-release-"));
   try {
     const root = path.join(temporary, ARCHIVE_ROOT);
-    for (const expected of RELEASE_ENTRIES) {
+    const memberEntries = releaseEntriesForVersion(verification.manifest.nkf_version);
+    for (const expected of memberEntries) {
       const target = path.join(root, expected.path);
       await mkdir(path.dirname(target), { recursive: true });
       await writeFile(target, requireBuffer(verification.entries, expected.path));

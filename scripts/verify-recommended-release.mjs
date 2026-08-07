@@ -74,7 +74,7 @@ const assetName = `nourd-nkf-sha256-${archiveSha256}.tar`;
 const tag = `release-sha256-${archiveSha256}`;
 if (
   catalog.contract !== "nkf.recommended-release" ||
-  catalog.nkf_version !== "0.1" ||
+  catalog.nkf_version !== "0.2" ||
   catalog.state !== "recommended" ||
   catalog.channel !== "internal-private-github-prerelease" ||
   !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
@@ -87,9 +87,9 @@ if (
   !/^[0-9a-f]{40}$/.test(catalog.source_commit ?? "") ||
   catalog.checker_sha256 !== CHECKER_CONFIRMATION.checkerSha256 ||
   catalog.authority.markdown_sha256 !==
-    ACCEPTED_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.1.md"] ||
+    ACCEPTED_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.2.md"] ||
   catalog.authority.executable_sha256 !==
-    ACCEPTED_ARTIFACT_DIGESTS["contracts/nkf/0.1/nkf.yaml"] ||
+    ACCEPTED_ARTIFACT_DIGESTS["contracts/nkf/0.2/nkf.yaml"] ||
   catalog.release.url !==
     `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}` ||
   !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(

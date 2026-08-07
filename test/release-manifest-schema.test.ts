@@ -8,7 +8,7 @@ import { repositoryRoot } from "./helpers.js";
 
 const schemaPath = path.join(
   repositoryRoot,
-  "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+  "contracts/nkf/0.2/schemas/release-manifest.schema.json",
 );
 const proposalPath = path.join(
   repositoryRoot,
@@ -22,7 +22,7 @@ function digest(): { algorithm: "sha-256"; value: string } {
 function validManifest(): Record<string, any> {
   return {
     contract: "nkf.release-manifest",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     source: {
       repository: "https://github.com/kaveh6202/Nourd.NKF.git",
       release_commit: "b".repeat(40),
@@ -45,33 +45,33 @@ function validManifest(): Record<string, any> {
     authority: {
       precedence: "normative-markdown",
       markdown: {
-        path: "knowledge/specifications/nkf-0.1.md",
+        path: "knowledge/specifications/nkf-0.2.md",
         digest: digest(),
       },
       executable: {
-        path: "contracts/nkf/0.1/nkf.yaml",
+        path: "contracts/nkf/0.2/nkf.yaml",
         digest: digest(),
       },
     },
     schemas: [
       {
-        identity: "urn:nkf:0.1:schema:bundle",
-        path: "contracts/nkf/0.1/schemas/bundle.schema.json",
+        identity: "urn:nkf:0.2:schema:bundle",
+        path: "contracts/nkf/0.2/schemas/bundle.schema.json",
         digest: digest(),
       },
       {
-        identity: "urn:nkf:0.1:schema:record",
-        path: "contracts/nkf/0.1/schemas/record.schema.json",
+        identity: "urn:nkf:0.2:schema:record",
+        path: "contracts/nkf/0.2/schemas/record.schema.json",
         digest: digest(),
       },
       {
-        identity: "urn:nkf:0.1:schema:release-manifest",
-        path: "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+        identity: "urn:nkf:0.2:schema:release-manifest",
+        path: "contracts/nkf/0.2/schemas/release-manifest.schema.json",
         digest: digest(),
       },
       {
-        identity: "urn:nkf:0.1:schema:validation-result",
-        path: "contracts/nkf/0.1/schemas/validation-result.schema.json",
+        identity: "urn:nkf:0.2:schema:validation-result",
+        path: "contracts/nkf/0.2/schemas/validation-result.schema.json",
         digest: digest(),
       },
     ],
@@ -82,7 +82,7 @@ function clone<T>(value: T): T {
   return structuredClone(value);
 }
 
-describe("NKF 0.1 release-manifest schema", () => {
+describe("NKF 0.2 release-manifest schema", () => {
   it("preserves the reviewed assertion graph while rebinding to the accepted pair", async () => {
     const [canonical, proposal] = await Promise.all([
       readFile(schemaPath),
@@ -92,19 +92,28 @@ describe("NKF 0.1 release-manifest schema", () => {
     const proposalValue = JSON.parse(proposal.toString("utf8"));
     const { "x-nkf-source": canonicalSource, ...canonicalAssertions } = canonicalValue;
     const { "x-nkf-source": _proposalSource, ...proposalAssertions } = proposalValue;
-    expect(canonicalAssertions).toEqual(proposalAssertions);
+    const rebound = JSON.parse(
+      JSON.stringify(proposalAssertions)
+        .replaceAll("contracts/nkf/0.1/", "contracts/nkf/0.2/")
+        .replaceAll("knowledge/specifications/nkf-0.1.md", "knowledge/specifications/nkf-0.2.md")
+        .replaceAll("urn:nkf:0.1:", "urn:nkf:0.2:")
+        .replaceAll("NKF 0.1 release manifest", "NKF 0.2 release manifest")
+        .replaceAll('"const":"0.1"', '"const":"0.2"')
+        .replaceAll('"const": "0.1"', '"const": "0.2"'),
+    );
+    expect(canonicalAssertions).toEqual(rebound);
     expect(sha256(canonical)).toBe(
-      "d7191964c7dd1a2335be52c1ac6cc055f95ec07d3eef480545d2e0cc19306cfa",
+      "d7869f22ba7223c8ca27266c9a6611c17e238ec75d52e4528dd4f01d190fc3ef",
     );
     expect(canonicalSource).toMatchObject({
-      nkf_version: "0.1",
+      nkf_version: "0.2",
       markdown_digest: {
         algorithm: "sha-256",
-        value: "df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0",
+        value: "bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317",
       },
       executable_digest: {
         algorithm: "sha-256",
-        value: "3cd00712ecf5fc4d4ae6faa275fd04373d28802eb1de80f6c47f6f039026f0aa",
+        value: "3178dd061ab0e9e91f8cf46d3391b9f43fc6bda0f2f3eb4a6cb18c65e86e05bd",
       },
     });
   });
@@ -133,7 +142,7 @@ describe("NKF 0.1 release-manifest schema", () => {
       (value) => (value.contract = "nkf.release-manifest/v1"),
       (value) => (value.extra = true),
       (value) => delete value.nkf_version,
-      (value) => (value.nkf_version = "0.2"),
+      (value) => (value.nkf_version = "0.1"),
       (value) => delete value.source.repository,
       (value) => (value.source.repository = "https://example.com/NKF.git"),
       (value) => (value.source.release_commit = "A".repeat(40)),
@@ -155,7 +164,7 @@ describe("NKF 0.1 release-manifest schema", () => {
       (value) => value.schemas.pop(),
       (value) => value.schemas.push(clone(value.schemas[0])),
       (value) => value.schemas.reverse(),
-      (value) => (value.schemas[0].identity = "urn:nkf:0.1:schema:record"),
+      (value) => (value.schemas[0].identity = "urn:nkf:0.2:schema:record"),
       (value) => (value.schemas[2].path = "release-manifest.schema.json"),
       (value) => (value.schemas[3].extra = true),
     ];

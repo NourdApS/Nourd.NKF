@@ -500,7 +500,7 @@ export async function inspectOnboardingProject(projectRootInput, knowledgeRootIn
   );
   return {
     contract: "nkf.onboarding-inspection",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     mechanically_ready: diagnostics.length === 0,
     knowledge_root: knowledgeRoot,
     observed: {
@@ -603,11 +603,15 @@ export async function createOnboardingWorkspace(options) {
     const source = path.join(projectRoot, ...inspection.knowledge_root.split("/"), ...document.path.split("/"));
     const target = path.join(outputRoot, "candidate", ...document.path.split("/"));
     await mkdir(path.dirname(target), { recursive: true });
-    await writeFile(target, await readFile(source), { flag: "wx" });
+    const sourceBytes = await readFile(source);
+    const candidateBytes = document.path.endsWith(".md")
+      ? stripEnvelopeTitleKey(sourceBytes)
+      : sourceBytes;
+    await writeFile(target, candidateBytes, { flag: "wx" });
   }
   const plan = {
     contract: "nkf.onboarding-plan",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     inspection: {
       knowledge_root: inspection.knowledge_root,
       snapshot_sha256: inspection.snapshot_sha256,
@@ -664,7 +668,7 @@ function validatePlanEnvelope(plan) {
     ["contract", "nkf_version", "inspection", "assessment", "project", "scaffold", "documents"],
     "plan",
   );
-  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.1") {
+  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.2") {
     fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.1 onboarding plan.");
   }
   requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
@@ -847,7 +851,7 @@ export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   await writeFile(loaded.planPath, sealed);
   return {
     contract: "nkf.onboarding-plan-seal-result",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     state: "sealed",
     plan_sha256: sha256(sealed),
     documents: loaded.plan.documents.length,
@@ -866,7 +870,8 @@ function section(id, heading, role, responsibility = id) {
 }
 
 function frontmatter(values) {
-  return `---\n${YAML.stringify(values, { lineWidth: 0 }).trimEnd()}\n---\n\n`;
+  const { title: _bodyH1OwnsTheTitle, ...envelope } = values;
+  return `---\n${YAML.stringify(envelope, { lineWidth: 0 }).trimEnd()}\n---\n\n`;
 }
 
 function rootScaffold(plan, kind) {
@@ -965,7 +970,7 @@ function taskScaffold(plan) {
     task_id: plan.project.task.id,
     task_status: "active",
   };
-  return Buffer.from(`${frontmatter(values)}# ${plan.project.task.title}\n\nThis Task owns review of the Draft root, unresolved meaning, current-system\nRealization, and the exact candidate produced by onboarding.\n\n## Acceptance Criteria\n\n- Project authority reviews every Draft and unresolved statement.\n- Later accepted meaning follows the governed NKF lifecycle.\n- Validation remains separate from acceptance and Realization confirmation.\n`, "utf8");
+  return Buffer.from(`${frontmatter(values)}# ${plan.project.task.title}\n\nThis Task owns review of the Draft root, unresolved meaning, current-system\nRealization, and the exact candidate produced by onboarding.\n\n## Acceptance Criteria\n\n- Project authority reviews every Draft and unresolved statement.\n- Later accepted meaning follows the governed NKF lifecycle.\n- Validation remains separate from acceptance and Realization confirmation.\n\n## Decision Applicability\n\n### Applicable Decisions\n\nNo accepted decision applies to this Task.\n\n### Mandatory Capabilities\n\nNo mandatory capability is implicated by this Task.\n`, "utf8");
 }
 
 function topologyLink(from, target, label) {
@@ -1049,6 +1054,10 @@ function mapScaffold(plan) {
   return Buffer.from(`${frontmatter(values)}# ${title}\n\nBegin with the current-system Realization, then follow Draft or preserved\nknowledge only as its declared authority permits.\n\n${navigationBlock(plan)}\n`, "utf8");
 }
 
+function predecessorFrontmatter(values) {
+  return `---\n${YAML.stringify(values, { lineWidth: 0 }).trimEnd()}\n---\n\n`;
+}
+
 function predecessorMapScaffold(plan, existingPaths) {
   const title = `${plan.project.root.title} Knowledge`;
   const values = {
@@ -1065,7 +1074,7 @@ function predecessorMapScaffold(plan, existingPaths) {
     links.splice(1, 0, [plan.scaffold.initial_specification, "Initial Draft Specification"]);
   }
   for (const existing of existingPaths) links.push([existing, `Preserved ${existing}`]);
-  return Buffer.from(`${frontmatter(values)}# ${title}\n\nBegin with the current-system Realization, then follow Draft or preserved\nknowledge only as its declared authority permits.\n\n## Knowledge Map\n\n${links.map(([target, label]) => topologyLink(plan.scaffold.knowledge_map, target, label)).join("\n")}\n`, "utf8");
+  return Buffer.from(`${predecessorFrontmatter(values)}# ${title}\n\nBegin with the current-system Realization, then follow Draft or preserved\nknowledge only as its declared authority permits.\n\n## Knowledge Map\n\n${links.map(([target, label]) => topologyLink(plan.scaffold.knowledge_map, target, label)).join("\n")}\n`, "utf8");
 }
 
 function markdownLinkTargets(sourcePath, bytes) {
@@ -1118,6 +1127,30 @@ function indexScaffold(plan, definition, expectedTargets) {
     ? "No applicable item is currently represented."
     : expectedTargets.map((target) => topologyLink(definition.path, target, path.posix.basename(target) === "README.md" ? path.posix.basename(path.posix.dirname(target)) || "Knowledge" : path.posix.basename(target, ".md"))).join("\n");
   return Buffer.from(`${frontmatter(values)}# ${definition.title}\n\n${body}\n`, "utf8");
+}
+
+function stripEnvelopeTitleKey(bytes) {
+  const text = bytes.toString("utf8");
+  const lines = text.split("\n");
+  if (lines[0] !== "---") return bytes;
+  const end = lines.indexOf("---", 1);
+  if (end < 0) return bytes;
+  const kept = [];
+  let removing = false;
+  let removed = false;
+  for (let index = 1; index < end; index += 1) {
+    const line = lines[index];
+    if (/^title:/.test(line)) {
+      removing = true;
+      removed = true;
+      continue;
+    }
+    if (removing && /^[ \t]/.test(line)) continue;
+    removing = false;
+    kept.push(line);
+  }
+  if (!removed) return bytes;
+  return Buffer.from([lines[0], ...kept, ...lines.slice(end)].join("\n"), "utf8");
 }
 
 function sourceFrontmatter(bytes, sourcePath) {
@@ -1549,7 +1582,7 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
     );
   }
   const bundle = {
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     contract: "nkf.bundle",
     id: plan.project.root.id,
     root: { record: plan.project.root.id, profile: plan.project.profile },

@@ -114,7 +114,7 @@ const manifestBytes = serializeReleaseManifest(manifest);
 validateReleaseManifest(
   manifest,
   entries.get(
-    "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+    "contracts/nkf/0.2/schemas/release-manifest.schema.json",
   ),
 );
 entries.set("release-manifest.json", manifestBytes);

@@ -39,8 +39,23 @@ let predecessorArchiveSha256: string;
 let predecessor13Adopter: string;
 let predecessor13ArchivePath: string;
 let predecessor13ArchiveSha256: string;
+let repairAdopter: string;
+let repairArchivePath: string;
+let repairArchiveSha256: string;
 
-async function createProject(fixture = validFixture) {
+const validFixture0_2 = validFixture.replace("fixtures/valid/minimal", "fixtures/valid/minimal-0-2");
+const validTechnologyFixture0_2 = validTechnologyFixture.replace("fixtures/valid/technology", "fixtures/valid/technology-0-2");
+
+function withoutTitleLine(bytes: Buffer): Buffer {
+  const lines = bytes.toString("utf8").split("\n");
+  if (lines[0] !== "---") return bytes;
+  const end = lines.indexOf("---", 1);
+  if (end < 0) return bytes;
+  const kept = lines.filter((line, index) => index === 0 || index >= end || !/^title:/.test(line));
+  return Buffer.from(kept.join("\n"), "utf8");
+}
+
+async function createProject(fixture = validFixture0_2) {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-adopter-test-"));
   const project = path.join(parent, "project");
   await cp(fixture, project, { recursive: true });
@@ -261,7 +276,7 @@ function expectTreeEqual(actual: Map<string, Buffer>, expected: Map<string, Buff
 
 async function buildPredecessorRelease(
   predecessorCommit: string,
-  expectedAdopterSha256: string,
+  expectedAdopterSha256: string | null,
 ) {
   const predecessorRoot = await mkdtemp(path.join(os.tmpdir(), "nkf-predecessor-source-"));
   const archivedSource = spawnSync("git", ["archive", predecessorCommit], {
@@ -341,12 +356,17 @@ async function buildPredecessorRelease(
       js: '#!/usr/bin/env node\nimport { createRequire as __nkfCreateRequire } from "node:module";\nconst require = __nkfCreateRequire(import.meta.url);',
     },
   });
-  expect(sha256(await readFile(adopterPath))).toBe(expectedAdopterSha256);
+  if (expectedAdopterSha256 !== null) {
+    expect(sha256(await readFile(adopterPath))).toBe(expectedAdopterSha256);
+  }
 
   const predecessorEntries = new Map<string, Buffer>();
   for (const entry of RELEASE_ENTRIES) {
     if (entry.path === "release-manifest.json") continue;
-    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
+    const predecessorPath = entry.path
+      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
+      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md");
+    predecessorEntries.set(predecessorPath, await readFile(path.join(predecessorRoot, predecessorPath)));
   }
   const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
   const predecessorManifest = constructReleaseManifest({
@@ -358,9 +378,16 @@ async function buildPredecessorRelease(
       checkerSourceCommit: "57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc",
     },
     entries: predecessorEntries,
+    nkfVersion: "0.1",
   });
   predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
-  const predecessorArchive = createUstar(predecessorEntries);
+  const predecessorMembers = RELEASE_ENTRIES.map((entry: { path: string; mode: number }) => ({
+    ...entry,
+    path: entry.path
+      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
+      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md"),
+  }));
+  const predecessorArchive = createUstar(predecessorEntries, predecessorMembers);
   const archiveSha256 = sha256(predecessorArchive);
   const archivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${archiveSha256}.tar`);
   await writeFile(archivePath, predecessorArchive);
@@ -480,7 +507,10 @@ beforeAll(async () => {
   const predecessorEntries = new Map<string, Buffer>();
   for (const entry of RELEASE_ENTRIES) {
     if (entry.path === "release-manifest.json") continue;
-    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
+    const predecessorPath = entry.path
+      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
+      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md");
+    predecessorEntries.set(predecessorPath, await readFile(path.join(predecessorRoot, predecessorPath)));
   }
   const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
   const predecessorManifest = constructReleaseManifest({
@@ -492,9 +522,16 @@ beforeAll(async () => {
       checkerSourceCommit: "57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc",
     },
     entries: predecessorEntries,
+    nkfVersion: "0.1",
   });
   predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
-  const predecessorArchive = createUstar(predecessorEntries);
+  const predecessorMembers = RELEASE_ENTRIES.map((entry: { path: string; mode: number }) => ({
+    ...entry,
+    path: entry.path
+      .replace("contracts/nkf/0.2/", "contracts/nkf/0.1/")
+      .replace("knowledge/specifications/nkf-0.2.md", "knowledge/specifications/nkf-0.1.md"),
+  }));
+  const predecessorArchive = createUstar(predecessorEntries, predecessorMembers);
   predecessorArchiveSha256 = sha256(predecessorArchive);
   predecessorArchivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${predecessorArchiveSha256}.tar`);
   await writeFile(predecessorArchivePath, predecessorArchive);
@@ -506,7 +543,15 @@ beforeAll(async () => {
   predecessor13Adopter = predecessor13.adopterPath;
   predecessor13ArchivePath = predecessor13.archivePath;
   predecessor13ArchiveSha256 = predecessor13.archiveSha256;
-}, 30_000);
+
+  const lastZeroOne = await buildPredecessorRelease(
+    "aca9bade923b529fb3e60f781c6dcfcbdb46e001",
+    null,
+  );
+  repairAdopter = lastZeroOne.adopterPath;
+  repairArchivePath = lastZeroOne.archivePath;
+  repairArchiveSha256 = lastZeroOne.archiveSha256;
+}, 60_000);
 
 describe("NKF consumer adopter", () => {
   it("onboards empty Product and Technology repositories without native assembly", async () => {
@@ -604,8 +649,8 @@ describe("NKF consumer adopter", () => {
       expect(seal(project, workspace).status).toBe(0);
       const result = onboard(project, workspace);
       expect(result.status, result.stderr).toBe(0);
-      expect(await readFile(nested)).toEqual(original);
-      expect(JSON.parse(result.stdout).paths.preserved).toContain(
+      expect(await readFile(nested)).toEqual(withoutTitleLine(original));
+      expect(JSON.parse(result.stdout).paths.changed).toContain(
         "knowledge/notes/overview.md",
       );
       const bundle = YAML.parse(
@@ -682,8 +727,8 @@ describe("NKF consumer adopter", () => {
     expect(seal(project, workspace).status).toBe(0);
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
-    expect(await readFile(earlyTaskPath)).toEqual(earlyTask);
-    expect(await readFile(earlyDesignPath)).toEqual(earlyDesign);
+    expect(await readFile(earlyTaskPath)).toEqual(withoutTitleLine(earlyTask));
+    expect(await readFile(earlyDesignPath)).toEqual(withoutTitleLine(earlyDesign));
     await expect(lstat(path.join(project, "knowledge/tasks/active/early-task.md"))).rejects.toMatchObject({
       code: "ENOENT",
     });
@@ -793,7 +838,7 @@ describe("NKF consumer adopter", () => {
     expect(seal(project, workspace).status).toBe(0);
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
-    expect(await readFile(source)).toEqual(original);
+    expect(await readFile(source)).toEqual(withoutTitleLine(original));
     await expect(lstat(path.join(project, "knowledge/product.md"))).rejects.toMatchObject({
       code: "ENOENT",
     });
@@ -804,7 +849,7 @@ describe("NKF consumer adopter", () => {
       ),
     );
     expect(rootDeclaration.source.path).toBe("overview.md");
-    expect(rootDeclaration.source.digest.value).toBe(sha256(original));
+    expect(rootDeclaration.source.digest.value).toBe(sha256(withoutTitleLine(original)));
   });
 
   it("uses an explicitly selected existing Draft Technology Specification without generating a duplicate", async () => {
@@ -917,7 +962,7 @@ describe("NKF consumer adopter", () => {
     expect(seal(project, workspace).status).toBe(0);
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
-    expect(await readFile(source)).toEqual(original);
+    expect(await readFile(source)).toEqual(withoutTitleLine(original));
     await expect(
       lstat(path.join(project, "knowledge/specifications/initial-specification.md")),
     ).rejects.toMatchObject({ code: "ENOENT" });
@@ -930,7 +975,7 @@ describe("NKF consumer adopter", () => {
     expect(specificationDeclaration.source.path).toBe(
       "specifications/technology-contract.md",
     );
-    expect(specificationDeclaration.source.digest.value).toBe(sha256(original));
+    expect(specificationDeclaration.source.digest.value).toBe(sha256(withoutTitleLine(original)));
   });
 
   it("reuses an existing canonical map and never allocates README-2.md", async () => {
@@ -956,7 +1001,7 @@ describe("NKF consumer adopter", () => {
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);
     const reconciled = await readFile(map, "utf8");
-    expect(reconciled.startsWith(original)).toBe(true);
+    expect(reconciled.startsWith(withoutTitleLine(Buffer.from(original)).toString("utf8"))).toBe(true);
     expect(reconciled).toContain("<!-- nkf-navigation:start -->");
     expect(reconciled).toContain("## NKF Navigation");
     await expect(lstat(path.join(project, "knowledge/README-2.md"))).rejects.toMatchObject({
@@ -978,7 +1023,6 @@ describe("NKF consumer adopter", () => {
     await resolveAllAsNavigation(workspace);
     const envelope = Buffer.from([
       "---",
-      "title: Early Knowledge",
       'summary: "Preserves the existing canonical map while adding the required source envelope."',
       "created_at: 2026-07-31T11:00:00Z",
       "---",
@@ -1020,7 +1064,7 @@ describe("NKF consumer adopter", () => {
     const partialResult = onboard(partial.project, partial.workspace);
     expect(partialResult.status, partialResult.stderr).toBe(0);
     const reconciledIndex = await readFile(partialIndex, "utf8");
-    expect(reconciledIndex.startsWith(originalIndex)).toBe(true);
+    expect(reconciledIndex.startsWith(withoutTitleLine(Buffer.from(originalIndex)).toString("utf8"))).toBe(true);
     expect(reconciledIndex).toContain("(active/README.md)");
     expect(reconciledIndex).toContain("(deferred/README.md)");
     expect(reconciledIndex).toContain("(completed/README.md)");
@@ -1096,14 +1140,21 @@ describe("NKF consumer adopter", () => {
     const competing = path.join(project, "knowledge/README-2.md");
     const predecessorMap = await readFile(competing);
 
+    const crossVersion = run("repair-topology", project, [
+      "--archive", archivePath,
+      "--sha256", archiveSha256,
+    ]);
+    expect(crossVersion.status).toBe(1);
+    expect(crossVersion.stderr).toContain("version migration is a separate deliberate adoption");
+
     const onboardingReceiptPath = path.join(project, ".nourd/onboarding-receipt.json");
     const onboardingReceiptBytes = await readFile(onboardingReceiptPath);
     const mismatchedReceipt = JSON.parse(onboardingReceiptBytes.toString("utf8"));
     mismatchedReceipt.profile = "nkf.profile.technology";
     await writeFile(onboardingReceiptPath, `${JSON.stringify(mismatchedReceipt, null, 2)}\n`);
-    const mismatched = run("repair-topology", project, [
-      "--archive", archivePath,
-      "--sha256", archiveSha256,
+    const mismatched = runWith(repairAdopter, "repair-topology", project, [
+      "--archive", repairArchivePath,
+      "--sha256", repairArchiveSha256,
     ]);
     expect(mismatched.status).toBe(1);
     expect(mismatched.stderr).toContain(
@@ -1112,9 +1163,9 @@ describe("NKF consumer adopter", () => {
     await writeFile(onboardingReceiptPath, onboardingReceiptBytes);
 
     await appendFile(competing, "\nConsumer drift.\n");
-    const drifted = run("repair-topology", project, [
-      "--archive", archivePath,
-      "--sha256", archiveSha256,
+    const drifted = runWith(repairAdopter, "repair-topology", project, [
+      "--archive", repairArchivePath,
+      "--sha256", repairArchiveSha256,
     ]);
     expect(drifted.status).toBe(1);
     expect(drifted.stderr).toContain("NKF-TOPOLOGY-REPAIR-DRIFT");
@@ -1124,10 +1175,11 @@ describe("NKF consumer adopter", () => {
     await writeFile(competing, predecessorMap);
 
     const beforeRollback = await snapshotTree(project);
-    const rolledBack = run(
+    const rolledBack = runWith(
+      repairAdopter,
       "repair-topology",
       project,
-      ["--archive", archivePath, "--sha256", archiveSha256],
+      ["--archive", repairArchivePath, "--sha256", repairArchiveSha256],
       { NKF_TOPOLOGY_REPAIR_TEST_FAIL_AFTER_WRITE: "1" },
     );
     expect(rolledBack.status).toBe(1);
@@ -1135,9 +1187,9 @@ describe("NKF consumer adopter", () => {
     expectTreeEqual(await snapshotTree(project), beforeRollback);
 
     const repairStartedAt = Math.floor(Date.now() / 1000) * 1000;
-    const repaired = run("repair-topology", project, [
-      "--archive", archivePath,
-      "--sha256", archiveSha256,
+    const repaired = runWith(repairAdopter, "repair-topology", project, [
+      "--archive", repairArchivePath,
+      "--sha256", repairArchiveSha256,
     ]);
     expect(repaired.status, repaired.stderr).toBe(0);
     const result = JSON.parse(repaired.stdout);
@@ -1176,9 +1228,9 @@ describe("NKF consumer adopter", () => {
       repairStartedAt,
     );
     expect(new Date(generatedCreatedAt ?? "").getTime()).toBeLessThanOrEqual(Date.now());
-    const repeat = run("repair-topology", project, [
-      "--archive", archivePath,
-      "--sha256", archiveSha256,
+    const repeat = runWith(repairAdopter, "repair-topology", project, [
+      "--archive", repairArchivePath,
+      "--sha256", repairArchiveSha256,
     ]);
     expect(repeat.status, repeat.stderr).toBe(0);
     expect(JSON.parse(repeat.stdout).state).toBe("no-update");
@@ -1187,9 +1239,9 @@ describe("NKF consumer adopter", () => {
     const repairReceipt = JSON.parse(await readFile(repairReceiptPath, "utf8"));
     repairReceipt.successor_release.checker_sha256 = "0".repeat(64);
     await writeFile(repairReceiptPath, `${JSON.stringify(repairReceipt, null, 2)}\n`);
-    const tamperedReceipt = run("repair-topology", project, [
-      "--archive", archivePath,
-      "--sha256", archiveSha256,
+    const tamperedReceipt = runWith(repairAdopter, "repair-topology", project, [
+      "--archive", repairArchivePath,
+      "--sha256", repairArchiveSha256,
     ]);
     expect(tamperedReceipt.status).toBe(1);
     expect(tamperedReceipt.stderr).toContain(
@@ -1248,9 +1300,9 @@ describe("NKF consumer adopter", () => {
     );
     expect(predecessorReceipt.assessment).toBeUndefined();
 
-    const repaired = run("repair-topology", project, [
-      "--archive", archivePath,
-      "--sha256", archiveSha256,
+    const repaired = runWith(repairAdopter, "repair-topology", project, [
+      "--archive", repairArchivePath,
+      "--sha256", repairArchiveSha256,
     ]);
     expect(repaired.status, repaired.stderr).toBe(0);
     const result = JSON.parse(repaired.stdout);
@@ -1374,7 +1426,6 @@ describe("NKF consumer adopter", () => {
     const candidate = path.join(workspace, "candidate", "notes.md");
     const revised = [
       "---",
-      "title: Notes",
       'summary: "Provides early project navigation."',
       "created_at: 2026-07-31T11:00:00Z",
       "---",
@@ -1692,7 +1743,7 @@ describe("NKF consumer adopter", () => {
   });
 
   it("installs the same pinned experience for a Technology repository", async () => {
-    const project = await createProject(validTechnologyFixture);
+    const project = await createProject(validTechnologyFixture0_2);
     const result = run("install", project, [
       "--archive",
       archivePath,

@@ -278,8 +278,8 @@ async function requireBundle(projectRoot) {
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (bundle?.nkf_version !== "0.1" || bundle?.contract !== "nkf.bundle") {
-    fail("The project must already declare an NKF 0.1 bundle.");
+  if (!["0.1", "0.2"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+    fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
     fail("The bundle must select the Product or Technology Root Profile.");
@@ -576,7 +576,7 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
     PIN_PATH,
     serializeJson({
       contract: "nkf.consumer-release-pin",
-      nkf_version: "0.1",
+      nkf_version: "0.2",
       repository: "kaveh6202/Nourd.NKF",
       archive: {
         sha256: verification.archive_sha256,
@@ -718,7 +718,7 @@ function requirePinShape(pin) {
   exactKeys(pin.adopter, ["path", "sha256"], "Pinned adopter");
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    pin?.nkf_version !== "0.1" ||
+    !["0.1", "0.2"].includes(pin?.nkf_version) ||
     pin?.repository !== "kaveh6202/Nourd.NKF" ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
     pin?.archive?.asset_name !==
@@ -979,7 +979,7 @@ async function inspectForOnboarding(options) {
   });
   return {
     contract: "nkf.onboarding-inspect-result",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     state: result.inspection.mechanically_ready ? "workspace-created" : "blocked",
     mechanically_ready: result.inspection.mechanically_ready,
     workspace: result.workspace,
@@ -1015,7 +1015,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    value?.nkf_version !== "0.1" ||
+    !["0.1", "0.2"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -1067,7 +1067,7 @@ function requirePredecessorOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    value?.nkf_version !== "0.1" ||
+    !["0.1", "0.2"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -1097,7 +1097,7 @@ function requirePredecessorOnboardingReceipt(value) {
 function onboardingResult(state, projectRoot, receipt, installed, knowledge = null) {
   return {
     contract: "nkf.onboarding-result",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     state,
     project: projectRoot,
     profile: receipt.profile,
@@ -1213,7 +1213,7 @@ async function onboard(options) {
   changedPaths.sort();
   const receipt = {
     contract: "nkf.onboarding-receipt",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     plan_sha256: knowledge.plan_sha256,
     inspection_sha256: knowledge.inspection.snapshot_sha256,
     profile: knowledge.plan.project.profile,
@@ -1256,7 +1256,7 @@ function requireTopologyRepairReceipt(value) {
   );
   if (
     value?.contract !== "nkf.topology-repair-receipt" ||
-    value?.nkf_version !== "0.1" ||
+    !["0.1", "0.2"].includes(value?.nkf_version) ||
     typeof value?.predecessor_release !== "object" ||
     typeof value?.successor_release !== "object" ||
     !/^[0-9a-f]{64}$/.test(value?.candidate_sha256 ?? "") ||
@@ -1335,7 +1335,7 @@ async function repairTopology(options) {
     }
     return {
       contract: "nkf.topology-repair-result",
-      nkf_version: "0.1",
+      nkf_version: "0.2",
       state: "no-update",
       project: projectRoot,
       receipt,
@@ -1389,6 +1389,11 @@ async function repairTopology(options) {
   const expectedSha256 = requireSha256(options.sha256);
   const successorArchive = await acquireArchive(options, expectedSha256);
   const successorVerification = verifyReleaseArchive(successorArchive, expectedSha256);
+  if (successorVerification.manifest.nkf_version !== predecessorBundle.nkf_version) {
+    fail(
+      `The successor release serves NKF ${successorVerification.manifest.nkf_version} but the project declares NKF ${predecessorBundle.nkf_version}; version migration is a separate deliberate adoption.`,
+    );
+  }
   const topology = await buildPortableTopologyRepair(projectRoot, onboardingReceipt);
   const integration = await targetFiles(
     projectRoot,
@@ -1411,7 +1416,7 @@ async function repairTopology(options) {
   const removedPaths = [...topology.removals].sort();
   const repairReceipt = {
     contract: "nkf.topology-repair-receipt",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     predecessor_release: {
       task: predecessorTask,
       archive_sha256: predecessorPin.archive.sha256,
@@ -1445,7 +1450,7 @@ async function repairTopology(options) {
   );
   return {
     contract: "nkf.topology-repair-result",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     state: "repaired",
     project: projectRoot,
     receipt: repairReceipt,
@@ -1487,7 +1492,7 @@ try {
 } catch (error) {
   const structured = {
     contract: "nkf.adopter-error",
-    nkf_version: "0.1",
+    nkf_version: "0.2",
     state: "failed",
     diagnostics: [
       {

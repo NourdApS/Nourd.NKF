@@ -25,11 +25,11 @@ async function releaseFixture() {
   const schema = await readFile(
     path.join(
       repositoryRoot,
-      "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+      "contracts/nkf/0.2/schemas/release-manifest.schema.json",
     ),
   );
   entries.set(
-    "contracts/nkf/0.1/schemas/release-manifest.schema.json",
+    "contracts/nkf/0.2/schemas/release-manifest.schema.json",
     schema,
   );
   const manifest = constructReleaseManifest({
