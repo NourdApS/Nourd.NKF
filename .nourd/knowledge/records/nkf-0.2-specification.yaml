@@ -7,7 +7,7 @@ source:
   path: specifications/nkf-0.2.md
   digest:
     algorithm: sha-256
-    value: 761312803f043ca5ba31d83fee14f8fceb9e67a7d61547b55ae933a5ffea5283
+    value: bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317
 governance:
   lifecycle: immutable
   status: accepted
@@ -362,3 +362,6 @@ relationships:
   - type: governs
     target: nkf
     source_section: scope
+  - type: supersedes
+    target: nkf-0.1-specification
+    source_section: versioning

@@ -1,6 +1,7 @@
 ---
 id: adr-0050
 type: decision
+title: "ADR 0050: Accept Product And Technology Root Profiles"
 summary: ADR 0049 accepted an automatically applicable, non-selectable Common Specification and one concrete Root Profile per bundle. It deliberately left the exact Product and Technology allocation, serialization, validation, and realization unresolved.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

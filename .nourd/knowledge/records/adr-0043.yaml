@@ -7,7 +7,7 @@ source:
   path: decisions/0043-release-manifest.md
   digest:
     algorithm: sha-256
-    value: 4968ec914f8829e24bee251c5b87ff62fda6bf6fe10bb9c73b538c27db543904
+    value: 97ddc8b5b469488e363618949c6e0226d221e699f2c85b475c9e4fd9f1496dc9
 governance:
   lifecycle: immutable
   status: accepted

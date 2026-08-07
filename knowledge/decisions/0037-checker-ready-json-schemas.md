@@ -1,6 +1,7 @@
 ---
 id: adr-0037
 type: decision
+title: "ADR 0037: Confirm Checker-Findings-Resolved Json Schema Bindings"
 summary: ADR 0036 accepts and promotes the exact NKF 0.1 Markdown/YAML pair that realizes ADRs 0034 and 0035. The schemas confirmed by ADR 0033 retain their assertion meaning, but their x-nkf-source metadata binds the historical source pair.
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

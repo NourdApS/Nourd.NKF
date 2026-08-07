@@ -7,7 +7,7 @@ source:
   path: designs/adopted/initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
-    value: 0d3c18bb6c17a2d69a1da13cafdef943b4a39e13806a81123ca3aeb924a53cad
+    value: 339a8e3ff98557fd7bd59c3577d7f76e170657612ff9d49c3b806904820d1d75
 governance:
   lifecycle: immutable
   status: accepted

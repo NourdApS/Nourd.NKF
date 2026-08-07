@@ -7,7 +7,7 @@ source:
   path: decisions/0068-confirm-initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
-    value: 81bd2e3fa4aec191cee59fe4add9c498f42f4088d62a3082e08ffe96f070aa34
+    value: f7a582cefb64df986467ef047babfca4f3583bb6f6434117e23c2ba8104e286a
 governance:
   lifecycle: immutable
   status: accepted

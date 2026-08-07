@@ -7,7 +7,7 @@ source:
   path: decisions/0003-product-responsibility-identifiers.md
   digest:
     algorithm: sha-256
-    value: 924e871cb2ac2a6e4e3fa36e4daa9a7207cd3656be91da272ab4a7f207a1404f
+    value: a399ccada4c4b1cb06ab59306672f25acbf1e3f60774b0d543380a948a092741
 governance:
   lifecycle: immutable
   status: accepted

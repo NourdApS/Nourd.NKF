@@ -30,8 +30,8 @@ async function copyProjection() {
     { recursive: true },
   );
   await cp(
-    path.join(repositoryRoot, "contracts/nkf/0.2"),
-    path.join(root, "contracts/nkf/0.2"),
+    path.join(repositoryRoot, "contracts/nkf/0.1"),
+    path.join(root, "contracts/nkf/0.1"),
     { recursive: true },
   );
   await cp(

@@ -1,6 +1,7 @@
 ---
 id: adr-0052
 type: decision
+title: "ADR 0052: Confirm Dynamic Root And Self-Hosting Realization"
 summary: ADR 0050 accepts the exact Common, Product, and Technology authority pair. ADR 0051 accepts the bounded heading-only migration required to represent legacy NKF knowledge as native records without weakening Title Case or hiding the earlier source revisions.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

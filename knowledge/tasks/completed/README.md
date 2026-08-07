@@ -1,4 +1,5 @@
 ---
+title: Completed Tasks
 summary: Completed Tasks retained as durable intent and completion provenance.
 created_at: 2026-08-01T08:40:15Z
 ---

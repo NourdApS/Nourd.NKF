@@ -7,7 +7,7 @@ source:
   path: decisions/0046-release-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 75d5deb204b1e4af42704877a043d411d3fb87f47c44783c10f7635f820f87ac
+    value: ee3e3376d811ee7a8c81030ba226380bc1a70ba8228aa6cfce6373576f9c4dec
 governance:
   lifecycle: immutable
   status: accepted

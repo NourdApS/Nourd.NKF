@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { VERSION_BINDINGS } from "../src/checker/bindings.js";
 import { loadContracts } from "../src/checker/contracts.js";
 import { RuleEmitter } from "../src/checker/diagnostics.js";
 import { validateExtensions } from "../src/checker/extensions.js";
@@ -70,7 +69,7 @@ async function rules(
   bundleValue: Record<string, unknown>,
   extensionResolver: ExtensionResolver | undefined,
 ): Promise<string[]> {
-  const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
+  const loaded = await loadContracts(contractRoot);
   const emitter = new RuleEmitter(loaded.executable);
   const artifacts = structuredClone(loaded.artifacts);
   await validateExtensions(

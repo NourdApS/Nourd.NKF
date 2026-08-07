@@ -1,6 +1,7 @@
 ---
 id: adr-0066
 type: decision
+title: "ADR 0066: Confirm Release Documentation And Adoption"
 summary: Confirm the exact audited NKF-008 successor Realizations and complete the Task for the current internal release, public documentation, and pinned consumer-adoption scope.
 created_at: 2026-07-31T02:57:30Z
 record_lifecycle: immutable

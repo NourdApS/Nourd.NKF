@@ -7,7 +7,7 @@ source:
   path: decisions/0069-agent-led-initial-onboarding.md
   digest:
     algorithm: sha-256
-    value: a25d32a6fb3aefd878a7880b5bf6df1103b999e177047e4cdb6dcbe6d229905d
+    value: dc508596a16937f0501343635b09790c271ddae07214a1b267c93908c0572d42
 governance:
   lifecycle: immutable
   status: accepted

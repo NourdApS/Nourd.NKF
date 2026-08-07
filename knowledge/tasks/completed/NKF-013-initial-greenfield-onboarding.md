@@ -1,14 +1,23 @@
 ---
+title: "NKF-013: Establish Initial Greenfield Onboarding"
 summary: Define, implement, validate, document, and release one seamless first-iteration NKF onboarding path for greenfield Product and Technology repositories with an empty or small reviewable Markdown set.
 created_at: 2026-07-31T09:29:17Z
 task_id: NKF-013
 task_status: completed
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-013: Establish Initial Greenfield Onboarding
 
+- **Task:** `NKF-013`
+- **Status:** Completed
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
+- **Iteration:** First
+- **Scope Boundary:** Greenfield or near-greenfield Product and Technology
+  repositories with an empty or small, reviewable Markdown set and no
+  substantial existing knowledge or implementation requiring reconstruction
+- **Deferred Successor:**
+  [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
 
 ## Purpose
 
@@ -525,16 +534,3 @@ Execution Plan step 9 therefore did not trigger a new native release: none of
 its governed inputs changed. The separately digest-bound adopter and public
 projection were published and freshly verified as derived distribution
 surfaces under ADR 0067; they are not a replacement native NKF 0.1 archive.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

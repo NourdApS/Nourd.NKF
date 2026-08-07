@@ -7,7 +7,7 @@ source:
   path: decisions/0049-common-and-root-profiles.md
   digest:
     algorithm: sha-256
-    value: a2fd29f8c4f3e362fe485d8903193fec976a81d95239c74dfdc47847c114915d
+    value: 1c3b193788c4620fdb71486e7fa3b1a5e4438c50703f5fb6b5f413328a8b1160
 governance:
   lifecycle: immutable
   status: accepted

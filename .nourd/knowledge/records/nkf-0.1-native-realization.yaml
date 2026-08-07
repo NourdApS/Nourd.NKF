@@ -7,7 +7,7 @@ source:
   path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: 539545ca21cbfee1223f27149e7c433fa6700559f1f683348d614e912d183a0e
+    value: 0217ef5d8d88d84d987979b1497248664d12fd1d49f0edbfaf3b81b00f7260b4
 governance:
   lifecycle: immutable
   status: draft
@@ -74,6 +74,9 @@ sections:
     responsibilities:
       - compatibility-verification-and-recovery
 relationships:
+  - type: realizes
+    target: nkf-0.1-specification
+    source_section: governed-meaning-realized
   - type: realizes
     target: adr-0075
     source_section: compatibility-verification-and-recovery

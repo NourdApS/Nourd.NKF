@@ -1,6 +1,7 @@
 ---
 id: adr-0072
 type: decision
+title: "ADR 0072: Portable Topology Authority Pair"
 summary: Accept the exact successor NKF 0.1 Markdown and executable YAML authority pair that defines the complete portable Product and Technology knowledge topology adopted by ADR 0071.
 created_at: 2026-08-01T08:40:15Z
 record_lifecycle: immutable

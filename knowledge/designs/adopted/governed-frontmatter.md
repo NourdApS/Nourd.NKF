@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-governed-frontmatter
 type: design
+title: NKF 0.1 Governed Frontmatter
 summary: This Design addresses the missing human-orientation and synchronization contract for NKF Markdown frontmatter.
 created_at: 2026-07-30T19:47:30Z
 record_lifecycle: immutable

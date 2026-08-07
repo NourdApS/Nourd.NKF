@@ -7,7 +7,7 @@ source:
   path: realizations/current/self-hosting.md
   digest:
     algorithm: sha-256
-    value: 633069898ebc9794a2a82efb81240cb047c8d3d6c95d68ba94409c459a322265
+    value: 0eb18f6477db9f9820055313c8dd96e69fcee000325ba8ceb04240b671c3a81a
 governance:
   lifecycle: immutable
   status: accepted
@@ -58,4 +58,7 @@ sections:
     authority: accepted-meaning
     role: recovery
     responsibilities: [compatibility-verification-and-recovery]
-relationships: []
+relationships:
+  - type: realizes
+    target: nkf-0.1-specification
+    source_section: governed-meaning-realized

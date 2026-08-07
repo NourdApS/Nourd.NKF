@@ -1,10 +1,9 @@
 ---
+title: "NKF-010: Adopt Governed Frontmatter"
 summary: Make frontmatter an immediately useful, governed document-orientation boundary in NKF 0.1 and migrate the NKF repository to that boundary without weakening Markdown authority, Evidence preservation, lifecycle vocabulary, source binding, or conformance integrity.
 created_at: 2026-07-30T19:47:30Z
 task_id: NKF-010
 task_status: completed
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-010: Adopt Governed Frontmatter
@@ -138,16 +137,3 @@ The canonical contract, executable companion, Schemas, checker, fixtures,
 knowledge sources, declarations, governed artifacts, and consolidated current
 system are synchronized. Full validation and all 102 tests pass without
 treating conformance as acceptance or confirmation.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

@@ -1,6 +1,7 @@
 ---
 id: adr-0070
 type: decision
+title: "ADR 0070: Confirm Agent-Led Initial Onboarding"
 summary: Confirm the exact independently audited and published NKF-015 successor Realizations and complete the agent-led initial-onboarding Task while preserving the consumer-operation and deferred NKF-014 boundaries.
 created_at: 2026-07-31T18:40:52Z
 record_lifecycle: immutable

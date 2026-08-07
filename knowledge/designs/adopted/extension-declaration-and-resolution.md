@@ -1,6 +1,7 @@
 ---
 id: design-nkf-0-1-extension-declaration-and-resolution
 type: design
+title: NKF 0.1 Extension Declaration And Resolution
 summary: Whether the following extension identity, contract binding, declaration, support, round-trip, and fail-closed rules are the native NKF 0.1 extension mechanism.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

@@ -7,7 +7,7 @@ source:
   path: decisions/0072-portable-topology-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 85fbd667afa9d30e904e9c336a264d60ee57c36e552b060a4eccf471e49de49e
+    value: b47aa96ac0bbe08ad0785b8ff16c2fbb05a186507f61bb781ef38b15a5abce6c
 governance:
   lifecycle: immutable
   status: accepted
@@ -28,4 +28,7 @@ sections:
 relationships:
   - type: extends
     target: adr-0071
+    source_section: decision
+  - type: governs
+    target: nkf-0.1-specification
     source_section: decision

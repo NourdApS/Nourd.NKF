@@ -203,6 +203,7 @@ describe("bundle-aware checker", () => {
       "---",
       "id: decision",
       "type: decision",
+      'title: "Example Decision"',
       'summary: "Records the example Product decision used by the checker fixture."',
       "created_at: 2026-07-30T07:53:41Z",
       "record_lifecycle: living",
@@ -405,7 +406,7 @@ describe("bundle-aware checker", () => {
     await writeFile(
       invalidFile,
       (await readFile(invalidFile, "utf8"))
-        .replace('summary:', 'title: "Wrong Navigation"\nsummary:')
+        .replace('title: "Deferred Tasks"', 'title: "Wrong Navigation"')
         .replace(
           'summary: "Provides the required NKF navigation index for Deferred Tasks."',
           'summary: " invalid orientation "',
@@ -420,7 +421,7 @@ describe("bundle-aware checker", () => {
       expect.arrayContaining([
         "markdown.frontmatter.value.invalid",
         "markdown.frontmatter.created-at.invalid",
-        "markdown.frontmatter.key.unsupported",
+        "markdown.frontmatter.title-mismatch",
       ]),
     );
 

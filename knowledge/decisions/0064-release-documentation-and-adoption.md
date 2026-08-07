@@ -1,6 +1,7 @@
 ---
 id: adr-0064
 type: decision
+title: "ADR 0064: Release Documentation And Adoption"
 summary: Adopt the exact NKF-008 direction for a fixed native release archive, separate public documentation projection, self-contained pinned adopter, and authorized self-host consumer exercise.
 created_at: 2026-07-31T02:08:43Z
 record_lifecycle: immutable

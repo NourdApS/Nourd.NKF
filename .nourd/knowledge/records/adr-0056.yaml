@@ -7,7 +7,7 @@ source:
   path: decisions/0056-design-direction-and-record-authority.md
   digest:
     algorithm: sha-256
-    value: f49516a559ad863af566d44ec316e7e4e67ba4a19ab9880b4927825861cdda30
+    value: d6c83e401ee385e26dafa40a655c045c59685182fbba1b096950a125d8f9d3b0
 governance:
   lifecycle: immutable
   status: accepted

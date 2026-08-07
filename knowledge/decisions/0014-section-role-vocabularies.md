@@ -1,6 +1,7 @@
 ---
 id: adr-0014
 type: decision
+title: "ADR 0014: Accept NKF 0.1 Section-Role Vocabularies"
 summary: The accepted NKF 0.1 record model requires each semantic section to have one body-contract-controlled role, but the accepted authority pair does not provide complete role meanings or allowed subsets for all ten core Product body contracts.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

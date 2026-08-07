@@ -7,7 +7,7 @@ source:
   path: decisions/0037-checker-ready-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 9bf3616b24ef722259f6f2220614020e78728cd2f2431a4efd129b82b5bd9f71
+    value: 06cd6986833734552166ba647677ec207c0a803106fb455c930e39fede73c928
 governance:
   lifecycle: immutable
   status: accepted

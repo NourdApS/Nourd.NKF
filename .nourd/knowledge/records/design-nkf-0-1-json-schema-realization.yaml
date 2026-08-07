@@ -7,7 +7,7 @@ source:
   path: designs/superseded/initial-json-schema-realization.md
   digest:
     algorithm: sha-256
-    value: 9302649d50b5f2ce76a18325aaea38afb9feb88265906ae229e6774f8402c0f7
+    value: 3f245ea977d611b0a212cb0ad1696b00dc206c939248e0eecc4053b186910350
 governance:
   lifecycle: immutable
   status: superseded

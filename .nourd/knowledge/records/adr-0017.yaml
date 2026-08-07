@@ -7,7 +7,7 @@ source:
   path: decisions/0017-acceptance-provenance.md
   digest:
     algorithm: sha-256
-    value: 2190b0572c9b49bd320cad9b1ea3be056b50f7541c026029d66ed808573ff7f6
+    value: 902433a9835a244afaaeb9902ff7fbe896ba916e50cd33dd1771a53c55b30796
 governance:
   lifecycle: immutable
   status: accepted

@@ -1,18 +1,19 @@
 ---
+title: "NKF-019: Establish The Decision Applicability Gate"
 summary: Prevent conditional technology decisions from losing their conditions, negative findings, and unresolved unknowns in successor Tasks, and prevent lower-level validation evidence from being represented as higher-level outcome success.
 created_at: 2026-08-06T21:23:12Z
 task_id: NKF-019
 task_status: active
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
-related_tasks:
-  - NKF-005
-  - NKF-016
-  - NKF-017
 ---
 
 # NKF-019: Establish The Decision Applicability Gate
 
+- **Task:** `NKF-019`
+- **Status:** Active
+- **Owner:** Nourd ApS
+- **Decision Authority:** Human Product Owner, Nourd ApS
+- **Repository:** `kaveh6202/Nourd.NKF`
+- **Related Tasks:** `NKF-005`, `NKF-016`, `NKF-017`
 
 ## Human Direction
 
@@ -93,6 +94,13 @@ levels and claim rules, the versioned-set and guidance-marker rules, and the
 title-free dynamic frontmatter. ADR 0081 records acceptance of the exact
 NKF 0.2 authority pair.
 
+On `2026-08-07`, after reviewing a migrated Design document, the Human
+Product Owner found identity facts still duplicated between frontmatter and
+body bullet blocks and no frontmatter home for record decision authority,
+and directed: roll back only this repository's 0.2 adoption without losing
+any document or Decision, fix the 0.2 rules, validations, and skills for
+these gaps under version 0.2, release again, and adopt again.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -140,24 +148,9 @@ NKF 0.2 authority pair.
 - The
   [set completion audit](../../evidence/audits/nkf-019-versioned-set-completion-audit.md)
   records the requirement and set review at commit `455ef7a` with no
-  unresolved material finding. ADR 0082 records the Human Product Owner
-  confirmation through explicitly delegated technical review.
-- Dogfooded adoption exposed one legacy title line in the canonical 0.2
-  specification. ADR 0084 accepted the corrected pair — Markdown SHA-256
-  `761312803f043ca5ba31d83fee14f8fceb9e67a7d61547b55ae933a5ffea5283` bound
-  to executable SHA-256
-  `5c94a0004995b39fbe9513fa6a1fec0f0a10fa38de302937c6f095f5d976e8ab` — and
-  the recorded exception replacing the never-consumed first archive; ADR
-  0085 binds the released checker.
-- NKF 0.2 is released as tag
-  `release-sha256-a6dd7a0cfaef50d84c4090b2878744f08274a3263e1f4f930b1ebccb681bc929`
-  from commit `b5a7b91`, verified by independent re-download.
-- This repository adopted NKF 0.2 under the adoption protocol: the bundle
-  declares 0.2, all eighteen Tasks carry gates with truthful retrospective
-  disclosure, titles and identity bullet blocks are gone, the 0.1
-  specification, contracts, and fixtures are retired to Git history, and the
-  complete gate passes with 167 tests and zero diagnostics. Migration
-  closure and Realization confirmation await Human Product Owner review.
+  unresolved material finding. The remaining boundaries are separate Human
+  Product Owner confirmation, the release archive, and only then this
+  repository's own adoption.
 
 ## Triggering External Evidence
 
@@ -342,28 +335,3 @@ adopted, that normative meaning has changed, that any enforcement exists,
 that any consumer must migrate, or that a Realization has been confirmed.
 Later Decisions and recorded progress supersede only these created-state
 facts.
-
-## Decision Applicability
-
-### Applicable Decisions
-
-| Reference | Kind | Carried Constraint |
-| --- | --- | --- |
-| `adr-0006` | record | Pre-stable evolution requires evidence, compatibility analysis, and Human Product Owner confirmation. |
-| `adr-0076` | record | This correction ships as a new immutable version; NKF 0.1 stays frozen for its repositories. |
-| `adr-0077` | record | The gate is required on every Task including completed history, with retrospective disclosure. |
-| `adr-0078` | record | The version coordinate is 0.2 because the change is breaking. |
-| `adr-0079` | record | Frontmatter carries no title; Tasks may carry the three orientation keys. |
-| `adr-0080` | record | Release first, then this repository adopts its own release as first migrator. |
-| `adr-0081` | record | Only the exact accepted pair digests are canonical NKF 0.2. |
-| Nourd Tiles TILES-008 and TILES-012 records | external | The triggering failure evidence is read-only; Nourd Tiles and Wonderer must not be modified under this Task. |
-
-### Mandatory Capabilities
-
-| Capability | Finding | Verification | Exception |
-| --- | --- | --- | --- |
-| Gate structure enforcement fails closed on 0.2 bundles | proven | runtime-behaviour | none |
-| Version dispatch keeps 0.1 repositories validating unchanged | proven | runtime-behaviour | none |
-| Released archive verifies by independent re-download | proven | runtime-behaviour | none |
-| Semantic truthfulness of gate prose is machine-detectable | unsupported | none | Accepted by the Human Product Owner in the NKF-019 direction: prose contradictions remain human-reviewed. |
-

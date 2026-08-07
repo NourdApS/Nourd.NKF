@@ -1,6 +1,7 @@
 ---
 id: nkf-release-documentation-and-adoption
 type: realization
+title: NKF Release Documentation And Adoption
 summary: This Realization describes the NKF-015 successor release-documentation and adoption surface, including agent-led initial onboarding and its updated public adopter while preserving the confirmed native archive.
 created_at: 2026-07-31T02:26:24Z
 record_lifecycle: immutable

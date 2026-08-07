@@ -1,5 +1,6 @@
 ---
 id: adr-0085
+title: "ADR 0085: Bind The Corrected 0.2 Release Checker"
 type: decision
 summary: Bind the corrected NKF 0.2 release packaging to the exact adopted checker bytes and source commit.
 created_at: 2026-08-07T12:17:51Z

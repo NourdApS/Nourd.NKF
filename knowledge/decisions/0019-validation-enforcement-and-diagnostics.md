@@ -1,6 +1,7 @@
 ---
 id: adr-0019
 type: decision
+title: "ADR 0019: Accept NKF 0.1 Enforcement And Diagnostics"
 summary: NKF 0.1 needs one deterministic enforcement model that assigns each machine-checkable rule to schema validation, bundle-aware checking, external resolution, or human review without allowing implementation to create normative meaning.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

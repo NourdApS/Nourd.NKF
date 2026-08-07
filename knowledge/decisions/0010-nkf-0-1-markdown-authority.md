@@ -1,6 +1,7 @@
 ---
 id: adr-0010
 type: decision
+title: "ADR 0010: Accept Canonical NKF 0.1 Markdown"
 summary: The exact reconciled composite Markdown revision is accepted as the official canonical NKF 0.1 specification at ../specifications/nkf-0.1.md.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

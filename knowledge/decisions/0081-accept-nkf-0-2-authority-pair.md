@@ -1,6 +1,7 @@
 ---
 id: adr-0081
 type: decision
+title: "ADR 0081: Accept The NKF 0.2 Authority Pair"
 summary: Accept the exact NKF 0.2 canonical Specification revision and its digest-bound executable companion after the Human Product Owner confirmed each difference from NKF 0.1 separately.
 created_at: 2026-08-07T07:44:23Z
 record_lifecycle: immutable

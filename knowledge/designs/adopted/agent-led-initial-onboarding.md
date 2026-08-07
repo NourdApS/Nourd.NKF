@@ -1,6 +1,7 @@
 ---
 id: design-nkf-015-agent-led-initial-onboarding
 type: design
+title: NKF Agent-Led Initial Onboarding
 summary: This Design proposes an agent-led semantic assessment for the two initial repository categories while retaining deterministic source binding, candidate sealing, transactional application, and NKF validation.
 created_at: 2026-07-31T14:02:00Z
 record_lifecycle: immutable

@@ -1,4 +1,5 @@
 ---
+title: Designs
 summary: A Design is governed proposal knowledge. It presents a direction, alternatives, and trade-offs so a Decision can adopt, reject, or supersede that direction.
 created_at: 2026-07-28T22:01:17Z
 ---

@@ -1,14 +1,18 @@
 ---
+title: "NKF-003: Establish Independent NKF Authority"
 summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.
 created_at: 2026-07-28T22:01:17Z
 task_id: NKF-003
 task_status: completed
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-003: Establish Independent NKF Authority
 
+- **Task:** `NKF-003`
+- **Status:** Completed
+- **Owner:** Nourd ApS
+- **Decision authority:** Human Product Owner, Nourd ApS
+- **Repository:** `kaveh6202/Nourd.NKF`
 
 ## Desired outcome
 
@@ -2435,16 +2439,3 @@ confirmation.
 | `kaveh6202/Nourd.Studio:knowledge/designs/nkf-0.1.md` | `13a82fbc1b72c1350e9765f59d1538c375f3fa69` | Accepted NKF 0.1 specification |
 | `kaveh6202/Nourd.Studio:knowledge/designs/plans/nkf-002-nkf-0-1-conformance-checker.md` | `06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Task plan and migration evidence |
 | `kaveh6202/Nourd.Studio:src/core/knowledge/` | `06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Proposed checker implementation evidence |
-
-## Decision Applicability
-
-### Applicable Decisions
-
-No accepted decision applies to this Task.
-
-### Mandatory Capabilities
-
-No mandatory capability is implicated by this Task.
-
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.

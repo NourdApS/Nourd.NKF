@@ -1,5 +1,4 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { VERSION_BINDINGS } from "../src/checker/bindings.js";
 import { loadContracts } from "../src/checker/contracts.js";
 import { RuleEmitter } from "../src/checker/diagnostics.js";
 import {
@@ -13,7 +12,7 @@ import { contractRoot } from "./helpers.js";
 let executable: Record<string, any>;
 
 beforeAll(async () => {
-  executable = (await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2")).executable;
+  executable = (await loadContracts(contractRoot)).executable;
 });
 
 function unit(

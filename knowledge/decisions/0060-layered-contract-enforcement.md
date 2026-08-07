@@ -1,6 +1,7 @@
 ---
 id: adr-0060
 type: decision
+title: "ADR 0060: Layered Contract Enforcement"
 summary: Adopt one AI-neutral NKF authoring protocol, verified agent-host-surface adapters, portable skill representations, one deterministic project command, exact-commit continuous integration, and a separately activated protected merge gate.
 created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable

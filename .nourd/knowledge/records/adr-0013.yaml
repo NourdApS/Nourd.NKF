@@ -7,7 +7,7 @@ source:
   path: decisions/0013-native-record-serialization.md
   digest:
     algorithm: sha-256
-    value: 379b2a8e2ceddab4e4aaaf9f450e221d8c28ad028d20c3ef6f57e4c8ba40e6ab
+    value: 54dc130cbe19998c7feebb589246df95944522897baa67cf735d5ca36da43958
 governance:
   lifecycle: immutable
   status: accepted

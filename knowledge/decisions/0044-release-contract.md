@@ -1,6 +1,7 @@
 ---
 id: adr-0044
 type: decision
+title: "ADR 0044: Accept NKF 0.1 Release Contract"
 summary: ADRs 0042 and 0043 accept one content-addressed Github Release archive as the initial checker distribution and establish nkf.release-manifest as an unversioned native NKF 0.1 contract enforced separately from project validation.
 created_at: 2026-07-30T09:39:33Z
 record_lifecycle: immutable

@@ -1,4 +1,5 @@
 ---
+title: Decisions
 summary: Decisions record why a direction was adopted, rejected, or superseded. Accepted Decision revisions are immutable authority snapshots. A later Decision must correct, extend, replace, or reverse them explicitly.
 created_at: 2026-07-28T22:01:17Z
 ---
