@@ -7,7 +7,7 @@ source:
   path: decisions/0052-dynamic-root-self-hosting.md
   digest:
     algorithm: sha-256
-    value: 08831f5f2f6f30b462fce6fa99312af86d1ae0846423866e305b9fc17a85606b
+    value: 5e715d93cc1a354b2f7a8fdfa2690326858a4b0e9c606b767d9d0d8cee7c87c8
 governance:
   lifecycle: immutable
   status: accepted

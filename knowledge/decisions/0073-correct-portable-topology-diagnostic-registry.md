@@ -1,7 +1,6 @@
 ---
 id: adr-0073
 type: decision
-title: "ADR 0073: Correct Portable Topology Diagnostic Registry"
 summary: Accept the corrected NKF 0.1 authority pair that restores eight omitted portable-topology diagnostics to the normative Markdown registry without changing topology behavior.
 created_at: 2026-08-01T14:58:34Z
 record_lifecycle: immutable

@@ -7,7 +7,7 @@ source:
   path: nkf.md
   digest:
     algorithm: sha-256
-    value: ebf55e1ba68acf01dc2a84368a47ee7aea89b8a79b7f1cf59ffbbf9b3ce18cdb
+    value: d8b59cb53ed9a15b3bf947de869769cb57b0e343bfd0d8b9c7064b67d5a7160e
 governance:
   lifecycle: living
   status: accepted
@@ -88,9 +88,6 @@ sections:
     responsibilities:
       - evolution-and-retirement
 relationships:
-  - type: references
-    target: nkf-0.1-specification
-    source_section: technology-map
   - type: references
     target: nkf-0.1-native-realization
     source_section: technology-map

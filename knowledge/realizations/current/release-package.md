@@ -1,7 +1,6 @@
 ---
 id: nkf-release-package
 type: realization
-title: NKF Release Package
 summary: This Realization describes the repository-owned build, archive, manifest, and verification tooling for a portable native NKF checker release.
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable

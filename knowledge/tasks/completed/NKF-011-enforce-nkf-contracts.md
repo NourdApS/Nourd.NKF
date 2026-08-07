@@ -1,17 +1,15 @@
 ---
-title: "NKF-011: Enforce NKF Contracts"
 summary: Establish and confirm AI-neutral authoring guidance, deterministic local validation, and exact-commit continuous integration, while transferring the externally blocked protected merge gate to deferred NKF-012.
 created_at: 2026-07-30T23:07:00Z
 task_id: NKF-011
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-011: Enforce NKF Contracts
 
-- **Status:** Completed
 - **Completed At:** `2026-07-31T01:40:19Z`
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** The Human Product Owner has accepted the enforcement
   boundary and authorized work through the exact Design. Consequential
   normative or integration choices still require explicit acceptance before
@@ -276,3 +274,16 @@ Release and consumer work remain deferred to NKF-008.
 5. Synchronize record declarations, non-record paths, indexes, and governed
    artifact digests.
 6. Run `npm run nkf:check` and audit the coherent candidate before handoff.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

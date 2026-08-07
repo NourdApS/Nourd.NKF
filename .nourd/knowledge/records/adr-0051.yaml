@@ -7,7 +7,7 @@ source:
   path: decisions/0051-self-hosting-source-migration.md
   digest:
     algorithm: sha-256
-    value: 080310ee0149b714343bb588b5c591ffe04dc307709d1641e14e3826965310c6
+    value: 4baeea25e0009412d725a48ff59f09dfd34a03b85c9220e131d05e663a6aa91a
 governance:
   lifecycle: immutable
   status: accepted

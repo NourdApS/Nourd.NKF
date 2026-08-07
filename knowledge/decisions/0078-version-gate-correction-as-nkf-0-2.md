@@ -1,7 +1,6 @@
 ---
 id: adr-0078
 type: decision
-title: "ADR 0078: Version The Gate Correction As NKF 0.2"
 summary: Reallocate the Decision Applicability Gate correction from NKF 0.11 to NKF 0.2 because it carries breaking changes, keep release and adoption process outside format meaning, and defer process definition to NKF-020.
 created_at: 2026-08-06T23:30:03Z
 record_lifecycle: immutable

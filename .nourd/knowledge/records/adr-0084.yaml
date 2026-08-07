@@ -7,7 +7,7 @@ source:
   path: decisions/0084-replace-the-unconsumed-0-2-release.md
   digest:
     algorithm: sha-256
-    value: 878784b9ef0310543f2a1f837fe268dca20f590c32f86efd798dda8949184941
+    value: 52a13712e4d2d88acb32a222b75c869d9b015ef41939647db6db4bdddd80eab7
 governance:
   lifecycle: immutable
   status: accepted

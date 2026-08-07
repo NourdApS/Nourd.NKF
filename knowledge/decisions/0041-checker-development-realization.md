@@ -1,19 +1,16 @@
 ---
 id: adr-0041
 type: decision
-title: "ADR 0041: Confirm Native Checker Development Realization"
 summary: ADR 0031 establishes the private Node.js 22 TypeScript ESM development package, validation-only responsibility, and portable checker identity. ADRs 0034 through 0040 govern all authority findings exposed during implementation and establish the exact current NKF 0.1 authority and source-bound schemas.
 created_at: 2026-07-30T07:57:12Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human
 ---
 
 # ADR 0041: Confirm Native Checker Development Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
   Product Owner's authorization to confirm the exact technical realization
   after independent audit
 - **Source Checkpoint:**

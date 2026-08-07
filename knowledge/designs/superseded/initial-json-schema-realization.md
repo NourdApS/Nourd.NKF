@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-json-schema-realization
 type: design
-title: NKF 0.1 JSON Schema Realization
 summary: Whether NKF should realize the accepted executable YAML companion as JSON Schema files at the proposed paths below, using the stated structural mapping.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -15,13 +14,11 @@ superseded_by:
   - adr-0016
   - adr-0017
   - adr-0018
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 JSON Schema Realization
 
-- **Design Disposition:** Superseded
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted inputs:** canonical NKF 0.1 Markdown (ADR 0010) and executable
   YAML companion (ADR 0011)
 - **Proposal Authority Effect:** None

@@ -1,7 +1,6 @@
 ---
 id: design-nkf-record-v2-responsibility-bindings
 type: design
-title: NKF Record V2 Responsibility Bindings
 summary: Whether nkf.record/v2 should represent responsibility bindings as a section-local YAML list named responsibilities and enforce complete body-contract coverage across the record.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -12,13 +11,11 @@ design_decisions:
   - adr-0005
 superseded_by:
   - adr-0009
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF Record V2 Responsibility Bindings
 
-- **Design Disposition:** Superseded
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
 ## Decision Sought

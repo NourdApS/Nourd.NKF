@@ -1,7 +1,6 @@
 ---
 id: design-nkf-007-knowledge-architecture
 type: design
-title: NKF-007 Knowledge Architecture
 summary: This repository-architecture Design addresses the NKF-007 knowledge organization, current-system navigation, filename, front-matter, date, Design-disposition, Task-transfer, Realization, migration, and self-adoption problems.
 created_at: 2026-07-30T16:27:13Z
 record_lifecycle: immutable
@@ -10,14 +9,12 @@ task: NKF-007
 design_disposition: adopted
 design_decisions:
   - adr-0053
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-007 Knowledge Architecture
 
-- **Task:** `NKF-007`
-- **Design Disposition:** Adopted
 - **Adopting Decision:** `ADR-0053`
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** The Design remains proposal knowledge. ADR 0053
   adopts its direction; current normative meaning belongs to Specifications.
 

@@ -1,19 +1,16 @@
 ---
 id: adr-0047
 type: decision
-title: "ADR 0047: Confirm Release-Bound Checker Realization"
 summary: ADR 0045 replaces the canonical NKF 0.1 authority pair and ADR 0046 confirms the exact source-bound schemas. The native project checker must bind the new pair and the three project schemas without treating release-package verification as project conformance.
 created_at: 2026-07-30T09:52:27Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer acting under explicit Human
 ---
 
 # ADR 0047: Confirm Release-Bound Checker Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
   Product Owner delegation
 - **Source Checkpoint:**
   `0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f`

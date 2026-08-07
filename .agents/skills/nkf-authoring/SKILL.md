@@ -16,6 +16,9 @@ negative findings, and unknowns, classify mandatory capabilities as proven,
 unsupported, or unknown, and re-extract when the renderer, provider, platform,
 data format, architecture, harness, or a mandatory requirement changes.
 
+Keep orientation identity in frontmatter only; the closed identity labels
+are rejected as top-level body bullets in every non-Evidence document.
+
 Run `npm run nkf:check` after one coherent governed change and before handoff.
 Treat the protocol as derived procedure and accepted NKF Specifications as the
 authority for format meaning.

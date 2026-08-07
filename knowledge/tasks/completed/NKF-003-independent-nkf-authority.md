@@ -1,18 +1,13 @@
 ---
-title: "NKF-003: Establish Independent NKF Authority"
 summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.
 created_at: 2026-07-28T22:01:17Z
 task_id: NKF-003
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-003: Establish Independent NKF Authority
-
-- **Task:** `NKF-003`
-- **Status:** Completed
-- **Owner:** Nourd ApS
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
 
 ## Desired outcome
 
@@ -1273,7 +1268,6 @@ text remain non-contractual and do not determine ordering.
 
 - **Scope:** Gap 3 in
   [`../designs/nkf-0.1-checker-realization-gaps.md`](../../evidence/audits/nkf-0.1-checker-realization-gaps.md)
-- **Decision authority:** Human Product Owner for consequential semantics;
   Codex technical reviewer for remaining trivial structural serialization
   under direct delegation
 - **Authority effect:** May confirm only the mechanical serialization derived
@@ -1373,7 +1367,6 @@ That Task does not change the current result proposal by implication.
 - **Scope:** Complete the validation-result and native secret-pattern
   boundaries, then replace and rebind the NKF 0.1 authority pair and derived
   schemas before checker implementation
-- **Decision Authority:** Human Product Owner for consequential result and
   security semantics; Codex technical reviewer for previously delegated
   result serialization mechanics and mechanics derived directly from the
   confirmed security boundary
@@ -1484,7 +1477,6 @@ checker repository layout and development artifact identity.
 - **Scope:** Record the confirmed checker development boundary, implement the
   native NKF 0.1 checker and its complete conformance fixture matrix, and stop
   before distribution or release
-- **Decision Authority:** Human Product Owner for checker layout and identity;
   Codex technical reviewer for implementation mechanics derived from accepted
   NKF 0.1 authority
 - **Authority Effect:** The confirmed layout and identity may be recorded as
@@ -1635,7 +1627,6 @@ slice.
 
 - **Scope:** Realize ADR 0038 in the exact NKF 0.1 authority pair, derived
   schemas, checker invocation behavior, and diagnostic fixture matrix
-- **Decision Authority:** Human Product Owner for the invocation and
   diagnostic boundary; Codex technical reviewer for exact derived artifacts
   and implementation mechanics
 - **Authority Effect:** ADR 0038 accepts the semantic boundary; exact
@@ -1714,7 +1705,6 @@ outside this execution slice.
 - **Scope:** Bind the completed native checker implementation and fixture
   matrix to an immutable Git checkpoint, audit that exact state, and record a
   bounded development-Realization confirmation if it passes
-- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's prior authorization to confirm the technical realization after
   independent review
 - **Authority Effect:** None on NKF format meaning; any confirmation applies
@@ -1769,7 +1759,6 @@ knowledge. Those remain separately governed work.
 - **Scope:** Step 6 of the accepted realization order, limited to the initial
   checker distribution boundary, deterministic archive contents,
   release-manifest design, and exact consumer-pinning model
-- **Decision Authority:** Human Product Owner for the distribution boundary;
   Codex technical reviewer for a non-authoritative exact mechanics proposal
 - **Authority Effect:** The confirmed boundary may be recorded in an immutable
   Decision. Archive layout, manifest serialization, packaging implementation,
@@ -1841,7 +1830,6 @@ separately reviewable.
 - **Scope:** Record the accepted release-manifest authority boundary, preserve
   it in a Git checkpoint, and prepare the exact authority, schema, and checker
   reconciliation required before deterministic packaging
-- **Decision Authority:** Human Product Owner for release-contract meaning;
   Codex technical reviewer for derived serialization, schema, checker binding,
   fixtures, and reproducibility mechanics
 - **Authority Effect:** ADR 0043 accepts the native contract boundary. Exact
@@ -1942,7 +1930,6 @@ derived realization.
   the exact release-contract revision, replace and rebind canonical NKF 0.1
   authority, realize its schemas and checker bindings, and implement the
   deterministic release package without publishing it
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
   Product Owner delegation for the exact reviewed revision and derived
   technical realization
 - **Authority Effect:** May accept only the exact review artifacts bound in
@@ -2012,7 +1999,6 @@ derived realization.
 - **Scope:** Exercise the Human Product Owner's explicit instruction to
   continue from the confirmed local release-package boundary by publishing the
   exact initial NKF 0.1 package through the accepted Github Release channel
-- **Decision Authority:** Human Product Owner for external publication;
   accepted release mechanics from ADRs 0042 through 0048
 - **Repository Visibility:** Private at execution start; publication therefore
   remains limited to authorized repository users and does not resolve public
@@ -2055,7 +2041,6 @@ derived realization.
   Nourd Agent SDK without Product misclassification while keeping future
   root-specific specifications, hierarchies, validators, and protocols easy to
   add
-- **Decision Authority:** Human Product Owner for root-model and semantic
   meaning; Codex technical reviewer for proposal consistency, derived
   serialization analysis, and realization planning
 - **Authority Effect:** None. The Human Product Owner explicitly paused
@@ -2135,7 +2120,6 @@ acceptance, canonical promotion, or derived realization.
 - **Scope:** Record and develop the Human Product Owner's accepted architecture
   for one non-selectable Common Specification and exactly one concrete Root
   Profile per bundle
-- **Decision Authority:** Human Product Owner for the architecture and semantic
   division; Codex technical reviewer for proposal consistency, impact
   analysis, and derived realization planning
 - **Authority Effect:** The Common-Specification and concrete-Root-Profile
@@ -2218,7 +2202,6 @@ Profile semantics. No extraction is accepted yet.
 - **Scope:** Correct the derivation order by defining a Technology Profile from
   NKF's actual knowledge needs before comparing it with the accepted Product
   specification
-- **Decision Authority:** Human Product Owner for Technology, Common, and
   Product Profile meaning; Codex technical reviewer for independent derivation,
   comparison, and consistency analysis
 - **Authority Effect:** None. The comparison method is accepted, but the
@@ -2439,3 +2422,16 @@ confirmation.
 | `kaveh6202/Nourd.Studio:knowledge/designs/nkf-0.1.md` | `13a82fbc1b72c1350e9765f59d1538c375f3fa69` | Accepted NKF 0.1 specification |
 | `kaveh6202/Nourd.Studio:knowledge/designs/plans/nkf-002-nkf-0-1-conformance-checker.md` | `06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Task plan and migration evidence |
 | `kaveh6202/Nourd.Studio:src/core/knowledge/` | `06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Proposed checker implementation evidence |
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

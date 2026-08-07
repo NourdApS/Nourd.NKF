@@ -7,7 +7,7 @@ source:
   path: decisions/0041-checker-development-realization.md
   digest:
     algorithm: sha-256
-    value: d39a832809dbb71b8f625794f83eed5a341ac1306e9d767a10621326d9c211a5
+    value: f7d2bf0cc958ecaaa29a08286b808fa4deebae3654e494e0d6131fdc695775e2
 governance:
   lifecycle: immutable
   status: accepted

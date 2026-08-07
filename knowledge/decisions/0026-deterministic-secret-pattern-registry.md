@@ -1,19 +1,16 @@
 ---
 id: adr-0026
 type: decision
-title: "ADR 0026: Accept Deterministic Secret Pattern Registry"
 summary: ADR 0019 prohibits live credentials, access tokens, private keys, and secrets. It makes a high-confidence security.secret-pattern finding block native conformance while warning that a passing scan does not prove absence.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS, with exact matching
 ---
 
 # ADR 0026: Accept Deterministic Secret Pattern Registry
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS, with exact matching
   mechanics derived and confirmed by the Codex technical reviewer
 - **Confirmation Source:** Direct Human Product Owner confirmation in the
   NKF-003 discussion on 30 July 2026 after review of the exact scan scope,

@@ -1,19 +1,16 @@
 ---
 id: adr-0036
 type: decision
-title: "ADR 0036: Accept Checker-Findings-Resolved Authority Pair"
 summary: "ADRs 0034 and 0035 resolve all four authority findings exposed by the first native checker implementation:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting within delegated
 ---
 
 # ADR 0036: Accept Checker-Findings-Resolved Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting within delegated
   authority to compose and approve exact technical artifacts from the Human
   Product Owner boundary accepted in ADR 0035 and the mechanical completions
   accepted in ADR 0034

@@ -7,7 +7,7 @@ source:
   path: decisions/0032-yaml-scalar-grammar.md
   digest:
     algorithm: sha-256
-    value: d7494061e84959d00195449bb1ba4a52bf6bb13cbf631250aba4700a2047d168
+    value: 464f3f6fc6aaa51f8da60f78540f6dd16074a4b571e46fbc1bc1cadeb45db2ad
 governance:
   lifecycle: immutable
   status: accepted

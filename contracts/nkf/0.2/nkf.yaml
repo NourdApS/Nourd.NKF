@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.2/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317
+    value: df2e457e5e3824004268efebdead93be56df36c3754cf563b2701cee0474c26f
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -631,6 +631,10 @@ markdown:
               ref: markdown.source_envelope.front_matter.governed_orientation.created_at
         record:
           required_fields: [id, type, record_lifecycle, record_status]
+          optional_fields: [decision_authority]
+          decision_authority:
+            ref: markdown.source_envelope.front_matter.governed_orientation.scalar_string
+            replaces_declaration_authority: false
           fields:
             id:
               equals: declaration.id
@@ -769,7 +773,7 @@ markdown:
         allowed_keys:
           closed_by_applicable_document_class: true
           common: [summary, created_at]
-          record: [id, type, record_lifecycle, record_status]
+          record: [id, type, record_lifecycle, record_status, decision_authority]
           lifecycle_record: [task]
           design: [design_disposition, design_decisions, superseded_by, withdrawal_source]
           realization: [confirmation_status, confirmation_decisions, unconfirmed_scope]
@@ -1694,6 +1698,22 @@ enforcement:
   warnings_fail_native_conformance: false
   passing_secret_scan_proves_absence: false
 
+identity_bullet_labels:
+  closed: true
+  case_insensitive: true
+  bullet_forms: ["- **<label>:**", "- **<label>**"]
+  labels:
+    - Task
+    - Status
+    - Owner
+    - Decision Authority
+    - Design Disposition
+    - Repository
+    - Related Tasks
+    - Version
+  evidence_scanned: false
+  prose_restatement_detection: human-review
+
 guidance_versioning:
   marker_line_prefix: "NKF Version: "
   declared_version_must_equal_bundle: true
@@ -1783,6 +1803,7 @@ diagnostics:
     markdown.frontmatter.value.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.created-at.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.record-mismatch: {severity: error, blocking: conformance, phase: source}
+    markdown.body.identity-duplication: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.design.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.confirmation.invalid: {severity: error, blocking: conformance, phase: source}
     markdown.frontmatter.task.invalid: {severity: error, blocking: conformance, phase: source}

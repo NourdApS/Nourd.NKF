@@ -7,7 +7,7 @@ source:
   path: decisions/0029-schema-realization-status.md
   digest:
     algorithm: sha-256
-    value: e39bfb10a036273264040af1315d456710cf5682bfbe80eabe65b1bf44e65cb1
+    value: 609d4e1e23eba8f1e79d4db966946ebe7432c92407fc5a688b48d700877b600f
 governance:
   lifecycle: immutable
   status: accepted

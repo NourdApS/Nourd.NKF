@@ -7,7 +7,7 @@ source:
   path: designs/adopted/initial-release-distribution.md
   digest:
     algorithm: sha-256
-    value: 5ec9ad18757b40dc3d33baefaf541d89da14917c66a8a74afb59a5aa3fb2a9a2
+    value: a9e957b6ef380711cab0324ba6ae27f23cf87e9b26b05542f4481e0f1f788ed5
 governance:
   lifecycle: immutable
   status: accepted

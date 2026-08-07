@@ -1,7 +1,6 @@
 ---
 id: adr-0067
 type: decision
-title: "ADR 0067: Initial Greenfield Onboarding"
 summary: Adopt the exact NKF-013 inspect-plan-apply direction for deterministic, AI-neutral onboarding of empty and small-document Product and Technology repositories while preserving a stable expansion boundary for NKF-014.
 created_at: 2026-07-31T10:47:13Z
 record_lifecycle: immutable

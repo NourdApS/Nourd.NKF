@@ -1,19 +1,16 @@
 ---
 id: adr-0015
 type: decision
-title: "ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies"
 summary: The accepted NKF 0.1 record serialization permits semantic entities, entity relationships, and durable Realization bindings. The accepted specification requires their controlled vocabularies to be supplied by body contracts or supported profiles, but the current authority pair does not define complete values, meanings, ownership, or deterministic constraints.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation to proceed in the
   NKF-003 discussion on 29 July 2026
 

@@ -1,7 +1,6 @@
 ---
 id: nkf-checker-and-validation
 type: realization
-title: NKF Checker And Validation
 summary: This Realization describes the native TypeScript checker, command-line interface, deterministic diagnostics, fixtures, tests, and validation-result production.
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable

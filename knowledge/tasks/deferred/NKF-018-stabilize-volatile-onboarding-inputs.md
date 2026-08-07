@@ -1,19 +1,17 @@
 ---
-title: "NKF-018: Stabilize Volatile Onboarding Inputs"
 summary: Define and realize a safe onboarding snapshot boundary that remains sensitive to meaningful repository drift without repeatedly failing on volatile incidental operating-system metadata such as .DS_Store.
 created_at: 2026-08-01T18:41:40Z
 task_id: NKF-018
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-013
+  - NKF-015
+  - NKF-017
 ---
 
 # NKF-018: Stabilize Volatile Onboarding Inputs
-
-- **Task:** `NKF-018`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-013`, `NKF-015`, `NKF-017`
 
 ## Human Direction
 
@@ -174,3 +172,16 @@ This Task records required future work only. It does not select an exclusion
 model, classify every operating-system file as safe, change the current
 onboarding snapshot contract, authorize another Agent SDK retry, or claim that
 implementation has begun.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

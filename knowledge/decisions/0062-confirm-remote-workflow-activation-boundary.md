@@ -1,7 +1,6 @@
 ---
 id: adr-0062
 type: decision
-title: "ADR 0062: Confirm Remote Workflow Activation Boundary"
 summary: Confirm the exact successor Realization revisions that account for the successfully observed remote NKF Contracts workflow while preserving the unavailable protected merge gate as an explicit blocker.
 created_at: 2026-07-31T01:03:41Z
 record_lifecycle: immutable
@@ -11,8 +10,6 @@ task: NKF-011
 
 # ADR 0062: Confirm Remote Workflow Activation Boundary
 
-- **Status:** Accepted
-- **Task:** `NKF-011`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's prior delegated technical-confirmation instruction and current
   authorization to execute NKF-011 through remote hard-gate activation

@@ -1,5 +1,4 @@
 ---
-title: Superseded Designs
 summary: Design proposals replaced by later governed directions.
 created_at: 2026-08-01T08:40:15Z
 ---

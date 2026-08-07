@@ -7,7 +7,7 @@ source:
   path: decisions/0001-independent-nkf-authority.md
   digest:
     algorithm: sha-256
-    value: 6eaa1799862c4ec8c3c524e4f3ea659d6252d6e75a4905ee5c65601c8c063f18
+    value: f1b0c7983cfb3887b793c3920eaf6452b4f0910a32980807bf865a2ac147af38
 governance:
   lifecycle: immutable
   status: accepted

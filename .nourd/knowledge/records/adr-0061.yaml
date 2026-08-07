@@ -7,7 +7,7 @@ source:
   path: decisions/0061-confirm-layered-contract-enforcement-realization.md
   digest:
     algorithm: sha-256
-    value: f9d0e46fbeddfadef7983a8de018c52830e20c7e77ba82a020ccf6effbba34eb
+    value: 7a6b3e2be6abb6ce6bae14ce1791b6108e533e3659802e108632556603866462
 governance:
   lifecycle: immutable
   status: accepted

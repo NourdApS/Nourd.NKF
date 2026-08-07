@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-native-bundle-serialization
 type: design
-title: NKF 0.1 Native Bundle Serialization
 summary: ADR 0018 defines the fixed manifest location, knowledge_root, Markdown coverage, and declaration directory, but not the exact bundle object or non_records entry shape. The executable companion and schemas cannot choose those details by implication.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -10,13 +9,11 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0021
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Native Bundle Serialization
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 
 ## Gap

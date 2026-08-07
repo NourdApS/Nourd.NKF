@@ -77,7 +77,7 @@ async function main(): Promise<void> {
     acceptance_binding: argumentsValue.acceptanceBinding ? "requested" : "not-requested",
   };
   const checkerArtifact = fileURLToPath(import.meta.url);
-  const contractRoot = fileURLToPath(new URL("../contracts/nkf/0.1", import.meta.url));
+  const contractRoot = fileURLToPath(new URL("../contracts/nkf/0.2", import.meta.url));
   const result = await validateProject({
     projectRoot: argumentsValue.project,
     contractRoot,

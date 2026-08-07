@@ -7,7 +7,7 @@ source:
   path: designs/adopted/knowledge-architecture.md
   digest:
     algorithm: sha-256
-    value: 2e044ecfab2da50b6fd891526dcc77e75bac40aeea630b094f3724222dbfb9d5
+    value: b972efad331bb0e8babc0b3bece7da330b7085abd97afdad6346633eed90455c
 governance:
   lifecycle: immutable
   status: accepted

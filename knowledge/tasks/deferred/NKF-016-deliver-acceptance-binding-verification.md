@@ -1,19 +1,18 @@
 ---
-title: "NKF-016: Deliver Acceptance-Binding Verification"
 summary: Define, implement, verify, document, and distribute at least one usable NKF 0.1 acceptance-authority resolver path so acceptance binding can be verified in practice rather than existing only as a library interface.
 created_at: 2026-07-31T18:06:25Z
 task_id: NKF-016
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-003
+  - NKF-005
+  - NKF-008
+  - NKF-011
 ---
 
 # NKF-016: Deliver Acceptance-Binding Verification
-
-- **Task:** `NKF-016`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-003`, `NKF-005`, `NKF-008`, `NKF-011`
 
 ## Human Direction
 
@@ -208,3 +207,16 @@ This Task records required future work only. It does not claim that a resolver
 design has been selected, that any authority source is supported, that any
 record's acceptance is verified, that Governing Use is Ready, or that the work
 has begun.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

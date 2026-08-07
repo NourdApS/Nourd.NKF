@@ -1,7 +1,6 @@
 ---
 id: nkf-initial-greenfield-onboarding
 type: realization
-title: NKF Initial Greenfield Onboarding
 summary: This Realization maps the implemented inspect-plan-seal-onboard path for empty and small-document Product and Technology repositories, including AI-neutral guidance, whole-project staging, rollback, public documentation, and the NKF-014 extension boundary.
 created_at: 2026-07-31T11:08:00Z
 record_lifecycle: immutable

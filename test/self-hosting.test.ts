@@ -15,7 +15,7 @@ describe("NKF repository self-hosting", () => {
     expect(result.records.map((record) => record.record_id)).toEqual(
       expect.arrayContaining([
         "nkf",
-        "nkf-0.1-specification",
+        "nkf-0.2-specification",
         "nkf-0.1-native-realization",
         "adr-0050",
       ]),

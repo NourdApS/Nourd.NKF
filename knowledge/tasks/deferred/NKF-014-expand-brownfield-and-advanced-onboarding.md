@@ -1,17 +1,14 @@
 ---
-title: "NKF-014: Expand Brownfield And Advanced Onboarding"
 summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows.
 created_at: 2026-07-31T09:51:12Z
 task_id: NKF-014
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-014: Expand Brownfield And Advanced Onboarding
 
-- **Task:** `NKF-014`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Activation Condition:** `NKF-013` must remain complete as historical
   provenance, `NKF-015` must deliver and confirm its released successor
   initial-onboarding path, and the Human Product Owner must separately
@@ -210,3 +207,16 @@ already installed NKF skill merely to discover and run onboarding. The
 project-local, content-bound bootstrap direction is recorded here for later
 Design and activation rather than being added to the current NKF-015
 realization.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

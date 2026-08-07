@@ -7,7 +7,7 @@ source:
   path: realizations/current/release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
-    value: 34475ad4d7313a0ca7e7be6d14ebbf53bd419d90e9db118b95c3ee0a2bf3fc4c
+    value: e5a6d848d393e74e3aad42394ea87b5ad869d8fdcd846df5d5c10b1fbb4f69b4
 governance:
   lifecycle: immutable
   status: accepted
@@ -59,7 +59,4 @@ sections:
     authority: accepted-meaning
     role: recovery
     responsibilities: [compatibility-verification-and-recovery]
-relationships:
-  - type: realizes
-    target: nkf-0.1-specification
-    source_section: governed-meaning-realized
+relationships: []

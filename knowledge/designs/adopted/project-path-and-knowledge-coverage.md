@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-path-and-distribution-boundary
 type: design
-title: NKF 0.1 Project Path And Knowledge Coverage
 summary: Native NKF 0.1 fixes .nourd at the project root while allowing the canonical knowledge directory to be configured inside that project.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -10,13 +9,11 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0018
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Project Path And Knowledge Coverage
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None by itself. ADR 0018 later adopted the
   proposed direction and records the governing Decision.
 - **Supersedes within this design:** the earlier unaccepted abstract

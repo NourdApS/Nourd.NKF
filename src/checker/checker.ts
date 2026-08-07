@@ -15,7 +15,7 @@ import { bindingsForVersion, unsupportedVersionBindings } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
 import { validateExtensions } from "./extensions.js";
-import { parseMarkdown, type MarkdownModel } from "./markdown.js";
+import { findIdentityBulletLabels, parseMarkdown, type MarkdownModel } from "./markdown.js";
 import {
   discoverMarkdown,
   observationDiagnostics,
@@ -279,6 +279,21 @@ function rejectUnsupportedFrontMatterKeys(
   }
 }
 
+function identityBulletChecks(
+  model: MarkdownModel,
+  artifact: string,
+  emitter: RuleEmitter,
+  recordId?: string,
+): void {
+  for (const bullet of findIdentityBulletLabels(model.body)) {
+    emitter.emit(
+      "markdown.body.identity-duplication",
+      `The body restates the orientation identity label ${bullet.label} as a bullet; frontmatter owns document orientation.`,
+      recordId === undefined ? { artifact } : { artifact, record_id: recordId },
+    );
+  }
+}
+
 function commonFrontMatterChecks(
   model: MarkdownModel,
   artifact: string,
@@ -361,6 +376,17 @@ function recordFrontMatterChecks(
   }
 
   const allowed = new Set<string>([...commonFrontMatterKeysFor(nkfVersion), ...RECORD_FRONTMATTER_KEYS]);
+  if (nkfVersion === "0.2") {
+    allowed.add("decision_authority");
+    if (hasOwn(frontMatter, "decision_authority") && !orientationString(frontMatter.decision_authority)) {
+      emitter.emit(
+        "markdown.frontmatter.value.invalid",
+        "The decision_authority value must be a non-empty, trimmed, single-line string.",
+        frontMatterContext(artifact, recordId, "decision_authority"),
+      );
+    }
+    identityBulletChecks(model, artifact, emitter, recordId);
+  }
   if (LIFECYCLE_RECORD_TYPES.has(type)) allowed.add("task");
   if (type === "design") DESIGN_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
   if (type === "realization") REALIZATION_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
@@ -657,6 +683,7 @@ function nonRecordSourceChecks(
 
   const frontMatter = commonFrontMatterChecks(model, artifact, emitter, undefined, nkfVersion);
   if (frontMatter === null) return;
+  if (nkfVersion === "0.2") identityBulletChecks(model, artifact, emitter);
   const allowed = new Set<string>(commonFrontMatterKeysFor(nkfVersion));
   if (nonRecord.declaration.kind === "task") {
     TASK_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
@@ -926,7 +953,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const started = (options.now ?? (() => new Date()))();
   const executionId = (options.executionId ?? randomUUID)().toLowerCase();
   const declaredVersion = await peekBundleNkfVersion(projectRoot);
-  const nkfVersion = declaredVersion ?? "0.1";
+  const nkfVersion = declaredVersion ?? "0.2";
   const requestedContractRoot = path.resolve(options.contractRoot);
   const requestedBase = path.basename(requestedContractRoot);
   const versionContractRoot =

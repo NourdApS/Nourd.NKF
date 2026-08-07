@@ -240,6 +240,44 @@ function comparison(node: any): { text: string; protectedRanges: ProtectedRange[
   return { text, protectedRanges };
 }
 
+const IDENTITY_BULLET_LABELS = new Set([
+  "task",
+  "status",
+  "owner",
+  "decision authority",
+  "design disposition",
+  "repository",
+  "related tasks",
+  "version",
+]);
+
+export function findIdentityBulletLabels(body: string): { label: string; line: number }[] {
+  const parser = new commonmark.Parser();
+  const document = parser.parse(body);
+  const found: { label: string; line: number }[] = [];
+  const walker = document.walker();
+  let event: { node: any; entering: boolean } | null;
+  while ((event = walker.next()) !== null) {
+    const node = event.node;
+    if (!event.entering || node.type !== "item") continue;
+    if (node.parent?.type !== "list" || node.parent?.parent?.type !== "document") continue;
+    const paragraph = node.firstChild;
+    if (paragraph?.type !== "paragraph") continue;
+    const strong = paragraph.firstChild;
+    if (strong?.type !== "strong") continue;
+    let text = "";
+    for (let child = strong.firstChild; child !== null; child = child.next) {
+      if (child.type === "text" || child.type === "code") text += child.literal ?? "";
+    }
+    const label = text.trim().replace(/:$/, "").trim().toLowerCase();
+    if (IDENTITY_BULLET_LABELS.has(label)) {
+      const sourcepos = (node as { sourcepos?: [[number, number], [number, number]] }).sourcepos;
+      found.push({ label: text.trim().replace(/:$/, ""), line: sourcepos?.[0]?.[0] ?? 0 });
+    }
+  }
+  return found;
+}
+
 export function parseMarkdown(text: string): MarkdownModel {
   const envelope = parseFrontMatter(text);
   const parser = new commonmark.Parser();

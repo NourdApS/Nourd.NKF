@@ -1,19 +1,16 @@
 ---
 id: adr-0034
 type: decision
-title: "ADR 0034: Accept Checker-Derived Mechanical Completions"
 summary: "The first independent native checker implementation exposed two states that current normative meaning already requires to fail but for which the stable diagnostic registry has no rule:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting within the delegated
 ---
 
 # ADR 0034: Accept Checker-Derived Mechanical Completions
 
-- **Status:** Accepted; canonical realization pending coordinated replacement
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting within the delegated
   authority for deterministic enforcement mechanics derived from already
   accepted NKF 0.1 meaning
 - **Evidence:** First native checker implementation and fixture execution

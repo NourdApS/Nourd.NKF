@@ -77,6 +77,15 @@ describe("NKF 0.2 version dispatch", () => {
     expect(ruleIds(result.diagnostics)).toContain("task.applicability.completion.blocked");
   });
 
+  it("rejects restated identity bullets outside Evidence", async () => {
+    const project = await copyFixture();
+    await edit(project, taskPath, (text) =>
+      text.replace("This Task remains", "- **Task:** `TEST-001`\n\nThis Task remains"),
+    );
+    const result = await validateProject(options(project));
+    expect(ruleIds(result.diagnostics)).toContain("markdown.body.identity-duplication");
+  });
+
   it("rejects a frontmatter title key on 0.2 documents", async () => {
     const project = await copyFixture();
     await edit(project, taskPath, (text) =>

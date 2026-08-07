@@ -1,20 +1,16 @@
 ---
 id: nkf-0.2-specification
 type: specification
-title: NKF 0.2 — Product And Technology Knowledge Format
 summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.2 supports Product and Technology knowledge and adds the required Decision Applicability Gate for Task non-records.
 created_at: 2026-08-06T22:24:00Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-019
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.2 — Product And Technology Knowledge Format
 
-- **Status:** Draft candidate pending acceptance
-- **Task:** `NKF-019`
-- **Version:** `0.2`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted source baseline:** `kaveh6202/Nourd.Studio@13a82fbc1b72c1350e9765f59d1538c375f3fa69`
 - **Accepted source digest:** `77869d6f6cfe2ba8086e4eeba28fc5e545aa2c1896b9a28488b6d53b1b03bc5a`
 - **Source acceptance:** [Nourd Studio ADR 0012](../evidence/source-snapshots/nourd-studio/13a82fbc1b72c1350e9765f59d1538c375f3fa69/knowledge/decisions/0012-initial-knowledge-declaration-contracts.md)
@@ -22,13 +18,14 @@ task: NKF-019
 - **Predecessor canonical digest:** `df0235ee01ba951fe5beea50990213e4d1063b2e7014f460657de6904d5fabc0`
 - **Canonical destination:** `knowledge/specifications/nkf-0.2.md`
 - **Executable companion destination:** `contracts/nkf/0.2/nkf.yaml`
-- **Acceptance Decisions:** ADR 0076, ADR 0077, ADR 0078, ADR 0079, ADR
-  0080, and the reserved pair acceptance ADR 0081
-- **Independent governing inputs:** ADRs 0001 through 0080
+- **Acceptance Decisions:** ADR 0076 through ADR 0081, ADR 0084, ADR 0086,
+  and the corrected pair acceptance ADR 0087
+- **Independent governing inputs:** ADRs 0001 through 0086
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
-> This exact revision is the canonical NKF 0.2 specification, accepted with
-> its executable companion through ADR 0081. It governs repositories that
+> This exact revision is the canonical NKF 0.2 specification: accepted with
+> its executable companion through ADR 0081 and corrected through ADRs 0084
+> and 0087 before any consumer adopted it. It governs repositories that
 > declare NKF 0.2. It is not the public stable NKF 1.0 release.
 
 ## Purpose
@@ -681,7 +678,10 @@ record_status: accepted
 The frontmatter `id`, `type`, `record_lifecycle`, and `record_status` MUST
 exactly equal declaration `id`, `type`, `governance.lifecycle`, and
 `governance.status`, respectively. A mismatch fails conformance; the checker
-does not select a winner or rewrite either representation.
+does not select a winner or rewrite either representation. Any record source
+MAY additionally declare `decision_authority` as a non-empty, trimmed,
+single-line orientation string naming its human decision authority; it
+orients readers and does not replace the declaration's `governance.authority`.
 
 Design, Decision, Specification, and Realization record sources additionally
 require one non-empty `task` value. It MUST exactly resolve to one Task
@@ -753,7 +753,7 @@ The allowed keys are:
 | Applicable document | Required keys | Conditional keys |
 | --- | --- | --- |
 | Non-Evidence Markdown | `summary`, `created_at` | None |
-| Record source | Common plus `id`, `type`, `record_lifecycle`, `record_status` | Type profile |
+| Record source | Common plus `id`, `type`, `record_lifecycle`, `record_status` | `decision_authority` plus the type profile |
 | Design record | Record plus `task`, `design_disposition` | `design_decisions`, `superseded_by`, `withdrawal_source` |
 | Decision or Specification record | Record plus `task` | None |
 | Realization record | Record plus `task`, `confirmation_status` | `confirmation_decisions`, `unconfirmed_scope` |
@@ -784,6 +784,16 @@ emits `markdown.frontmatter.task.invalid`; and an unresolved or ambiguous
 governed reference emits `markdown.frontmatter.reference.unresolved`.
 
 ### Deterministic Markdown Structure
+
+Frontmatter owns document orientation, so a non-Evidence body MUST NOT
+restate orientation identity as bullet lines. A top-level body line that
+begins with `- **<Label>:**` or `- **<Label>**`, where the
+whitespace-trimmed label case-insensitively equals one of the closed
+identity labels `Task`, `Status`, `Owner`, `Decision Authority`,
+`Design Disposition`, `Repository`, `Related Tasks`, or `Version`, emits
+`markdown.body.identity-duplication`. Only these exact bulleted forms are
+detected; restated identity in free prose remains a human-review concern,
+and Evidence bytes are never scanned.
 
 Native NKF 0.2 interprets the Markdown source body using CommonMark 0.31.2.
 Only heading nodes that are direct children of the CommonMark document root
@@ -2294,6 +2304,7 @@ warning is non-blocking.
 | `markdown.frontmatter.value.invalid` | error |
 | `markdown.frontmatter.created-at.invalid` | error |
 | `markdown.frontmatter.record-mismatch` | error |
+| `markdown.body.identity-duplication` | error |
 | `markdown.frontmatter.design.invalid` | error |
 | `markdown.frontmatter.confirmation.invalid` | error |
 | `markdown.frontmatter.task.invalid` | error |

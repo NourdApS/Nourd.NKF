@@ -1,19 +1,16 @@
 ---
 id: adr-0032
 type: decision
-title: "ADR 0032: Correct NKF 0.1 Yaml Flow Scalar Grammar"
 summary: "The accepted executable companion uses three flow sequences to describe the OpenAI-prefixed-token detector's body and boundary alphabets. Each sequence contains a standalone unquoted -:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human
 ---
 
 # ADR 0032: Correct NKF 0.1 Yaml Flow Scalar Grammar
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
   Product Owner's authorization to approve exact technical corrections after
   independent review
 - **Discovery Context:** Native checker realization under ADR 0031

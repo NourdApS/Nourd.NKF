@@ -1,6 +1,5 @@
 ---
 id: adr-0084
-title: "ADR 0084: Replace The Unconsumed 0.2 Release"
 type: decision
 summary: Accept the corrected NKF 0.2 authority pair after self-migration exposed a forbidden legacy title line in the canonical specification, and record the explicit exception replacing the hour-old unconsumed release instead of shipping a new version.
 created_at: 2026-08-07T12:00:27Z

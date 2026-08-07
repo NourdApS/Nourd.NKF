@@ -1,19 +1,16 @@
 ---
 id: adr-0030
 type: decision
-title: "ADR 0030: Confirm Rebound NKF 0.1 Json Schemas"
 summary: ADR 0029 replaces the NKF 0.1 authority pair solely to reconcile its realization-status statements after schema confirmation. The JSON Schemas confirmed by ADR 0028 still contain the ADR 0027 source digests and therefore cannot identify current NKF 0.1 authority without exact rebinding.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human
 ---
 
 # ADR 0030: Confirm Rebound NKF 0.1 Json Schemas
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
   Product Owner's direct authorization to approve exact derived revisions
   after independent review
 - **Authorization Source:** Earlier direct NKF-003 instruction granting the

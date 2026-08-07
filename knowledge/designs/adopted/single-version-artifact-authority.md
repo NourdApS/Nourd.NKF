@@ -1,7 +1,6 @@
 ---
 id: design-reconcile-single-version-artifact-authority
 type: design
-title: Reconcile Single-Version Artifact Authority
 summary: "ADR 0009 establishes exactly one NKF version namespace: the format version, currently 0.1. ADR 0007 still requires independent versions for the YAML contract set and each supported bundle, record, body, and extension contract. Both cannot govern current NKF simultaneously."
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
@@ -10,13 +9,11 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0012
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # Reconcile Single-Version Artifact Authority
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Proposal Authority Effect:** None
 
 ## Problem

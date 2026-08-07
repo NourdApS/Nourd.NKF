@@ -1,7 +1,6 @@
 ---
 id: design-nkf-008-release-documentation-and-adoption
 type: design
-title: NKF Release Documentation And Adoption
 summary: This Design proposes a content-addressed internal NKF release, a separately governed public explanation, and one pinned installer and checker experience for deliberate Product and Technology adoption.
 created_at: 2026-07-31T02:03:35Z
 record_lifecycle: immutable
@@ -14,8 +13,6 @@ design_decisions:
 
 # NKF Release Documentation And Adoption
 
-- **Task:** `NKF-008`
-- **Design Disposition:** Adopted
 - **Adopting Decision:** `ADR-0064`
 - **Proposal Authority Effect:** ADR 0064 adopts this direction without making
   it normative NKF 0.1 meaning

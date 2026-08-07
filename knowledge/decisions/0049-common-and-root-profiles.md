@@ -1,19 +1,16 @@
 ---
 id: adr-0049
 type: decision
-title: "ADR 0049: Establish Common Specification And Concrete Root Profiles"
 summary: NKF 0.1 was developed as a Product-knowledge format. Its common record governance, source binding, authority, provenance, relationships, extensions, security, and validation-result mechanics may serve other knowledge roots, but its current root, scope, hierarchy, body, vocabulary, and checker rules are Product-specific.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0049: Establish Common Specification And Concrete Root Profiles
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Acceptance Source:** Direct informed confirmation after the NKF
   self-hosting and root-extensibility discussion on 30 July 2026
 

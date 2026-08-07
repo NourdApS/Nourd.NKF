@@ -1,19 +1,16 @@
 ---
 id: adr-0014
 type: decision
-title: "ADR 0014: Accept NKF 0.1 Section-Role Vocabularies"
 summary: The accepted NKF 0.1 record model requires each semantic section to have one body-contract-controlled role, but the accepted authority pair does not provide complete role meanings or allowed subsets for all ten core Product body contracts.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0014: Accept NKF 0.1 Section-Role Vocabularies
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation in the NKF-003
   discussion on 29 July 2026
 

@@ -1,19 +1,16 @@
 ---
 id: adr-0058
 type: decision
-title: "ADR 0058: Governed Frontmatter"
 summary: ADR 0054 established a safe optional YAML source envelope but deliberately assigned no portable NKF meaning to arbitrary frontmatter keys. The resulting NKF repository exposes only creation provenance in most current documents, while basic identity, declared authority state, lifecycle orientation, and purpose remain distributed across H1 headings, body metadata, .nourd declarations, paths, and repository conventions.
 created_at: 2026-07-30T19:58:36Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-010
+decision_authority: Codex technical reviewer under the Human Product
 ---
 
 # ADR 0058: Governed Frontmatter
 
-- **Status:** Accepted
-- **Task:** `NKF-010`
-- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's explicit acceptance of the frontmatter boundary and authorization to
   complete its coherent NKF 0.1 adoption
 - **Review Evidence:** `knowledge/evidence/audits/nkf-010-frontmatter-design-review.md`

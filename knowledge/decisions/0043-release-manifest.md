@@ -1,19 +1,16 @@
 ---
 id: adr-0043
 type: decision
-title: "ADR 0043: Establish Native Release Manifest Contract"
 summary: ADR 0042 selects one content-addressed Github Release archive as NKF's initial checker distribution. The exact distribution proposal identified that a release manifest implemented only by packaging code would create a second, ungoverned contract authority.
 created_at: 2026-07-30T08:39:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0043: Establish Native Release Manifest Contract
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Confirmation Source:** Direct confirmation in the NKF-003 discussion on
   30 July 2026 after review of the exact authority and enforcement boundary
 

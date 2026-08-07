@@ -1,7 +1,6 @@
 ---
 id: adr-0061
 type: decision
-title: "ADR 0061: Confirm Layered Contract Enforcement Realization"
 summary: Confirm the exact independently audited NKF-011 local Realization revisions that implement ADR 0060 through a neutral authoring protocol, explicit host adapters, portable skills, deterministic project command, integrity verification, tests, governed bindings, and a local exact-commit workflow.
 created_at: 2026-07-31T00:37:28Z
 record_lifecycle: immutable
@@ -11,8 +10,6 @@ task: NKF-011
 
 # ADR 0061: Confirm Layered Contract Enforcement Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-011`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit instruction to confirm the exact local Realization through
   independent audit judgment

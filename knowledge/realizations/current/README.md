@@ -1,5 +1,4 @@
 ---
-title: Supporting Current Realizations
 summary: Supporting views of how accepted NKF meaning is currently implemented.
 created_at: 2026-08-01T08:40:15Z
 ---

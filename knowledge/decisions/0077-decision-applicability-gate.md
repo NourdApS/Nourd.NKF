@@ -1,7 +1,6 @@
 ---
 id: adr-0077
 type: decision
-title: "ADR 0077: Decision Applicability Gate"
 summary: Adopt the Decision Applicability Gate direction for NKF 0.11, establishing a required deterministic gate in every Task non-record, closed verification-level and capability-finding vocabularies, a completion fail-closed rule, and normative claim rules.
 created_at: 2026-08-06T22:10:25Z
 record_lifecycle: immutable

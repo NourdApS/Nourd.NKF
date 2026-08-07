@@ -1,19 +1,16 @@
 ---
 id: adr-0017
 type: decision
-title: "ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary"
 summary: Native NKF 0.1 declares governance status, acceptance authority, and an optional acceptance date while preserving that copied metadata does not prove acceptance. Authority systems vary across immutable Decisions, Git history, signed events, databases, and review systems.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct confirmation in the NKF-003 discussion on
   29 July 2026
 

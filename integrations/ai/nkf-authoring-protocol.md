@@ -111,9 +111,13 @@ work under a Task:
    was added retrospectively.
 
 Under NKF 0.2 frontmatter, the body H1 is the only document title: no
-governed document carries a frontmatter `title` key, and Task non-records may
-declare `owner`, `decision_authority`, and `related_tasks` orientation keys
-instead of repeating identity facts in the body.
+governed document carries a frontmatter `title` key, Task non-records may
+declare `owner`, `decision_authority`, and `related_tasks` orientation keys,
+and any record may declare `decision_authority`. Never restate orientation
+identity as body bullet lines: the closed labels Task, Status, Owner,
+Decision Authority, Design Disposition, Repository, Related Tasks, and
+Version are rejected as top-level `- **Label:**` bullets in every
+non-Evidence document.
 
 ## Validate During Authoring
 
