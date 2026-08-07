@@ -61,6 +61,10 @@ are rejected as top-level body bullets in every non-Evidence document, the
 frontmatter title must equal the H1 exactly, and every same-bundle document
 reference must be a deep link to the referenced document's source path.
 
+Perform governed mechanics through the deterministic adopter commands —
+\`task\`, \`repin\`, \`linkify\`, \`refs\`, and \`migrate\` — supplying only the
+prose; never hand-edit what a command performs.
+
 Run \`npm run nkf:check\` after one coherent governed change and before handoff.
 Treat the protocol as derived procedure and accepted NKF Specifications as the
 authority for format meaning.

@@ -108,6 +108,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0093: Bind The Adopted 0.2 Release Checker](0093-bind-the-adopted-0-2-release-checker.md)
 - [ADR 0094: Carry The Set And Audit Independently](0094-carry-the-set-and-audit-independently.md)
 - [ADR 0095: Review Guidance Before Cutting](0095-review-guidance-before-cutting.md)
+- [ADR 0096: Deterministic Governed Mechanics](0096-deterministic-governed-mechanics.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)

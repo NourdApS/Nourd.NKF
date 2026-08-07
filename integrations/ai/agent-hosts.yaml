@@ -30,7 +30,7 @@ skills:
   representations:
     - .agents/skills/nkf-authoring/SKILL.md
     - .claude/skills/nkf-authoring/SKILL.md
-  sha256: 1b31fb1a9933c550facd0c633ad7d43f1e957bcf647b1a1ed870ed1732d47df3
+  sha256: 78751de20a44d2bdb5ac18c2d1191bbd5973a5c6b1a609b7b3692606974d9d4c
 surfaces:
   - id: openai-codex-cli
     provider: OpenAI

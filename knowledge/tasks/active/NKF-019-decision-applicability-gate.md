@@ -184,6 +184,14 @@ onboarding independently.
   diff was the round-three rule set — title equality, deep links, Design
   orientation keys — and the eight guidance members were re-read with no
   further stale statement found.
+- [ADR 0096](../../decisions/0096-deterministic-governed-mechanics.md)
+  directs deterministic governed mechanics in the 0.2 set. The recorded
+  execution plan: implement `repin`, `refs`, `linkify`, `migrate`, and the
+  `task` status transitions in the adopter with staged validation and
+  rollback; cover each with tests including the gate-blocked close and the
+  link rewrite; point the authoring guidance at the commands; and replace
+  the unconsumed release. Record scaffolding, Design disposition
+  transitions, and a release publication wrapper are parked candidates.
 - The complete 0.2 set is derived and proven per release protocol steps three
   and four: the checker dispatches contract sets by the bundle's declared
   version and fails unsupported versions closed; the Decision Applicability

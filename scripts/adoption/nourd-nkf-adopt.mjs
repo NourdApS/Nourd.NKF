@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import {
   cp,
   lstat,
@@ -181,9 +181,14 @@ function parseArguments(values) {
     "check",
     "status",
     "integration-check",
+    "task",
+    "repin",
+    "refs",
+    "linkify",
+    "migrate",
   ].includes(result.command)) {
     fail(
-      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|repair-topology|install|update|check|status|integration-check> [options]",
+      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|repair-topology|install|update|check|status|integration-check|task|repin|refs|linkify|migrate> [options]",
     );
   }
   for (let index = 1; index < values.length; index += 2) {
@@ -221,8 +226,10 @@ function parseArguments(values) {
       "project",
       "sha256",
     ]);
-  } else if (["install", "update", "repair-topology"].includes(result.command)) {
+  } else if (["install", "update", "repair-topology", "migrate"].includes(result.command)) {
     allowed = new Set(["archive", "github-repository", "project", "sha256"]);
+  } else if (result.command === "task") {
+    allowed = new Set(["project", "task", "to", "result-file", "checker"]);
   } else {
     allowed = new Set(["project"]);
   }
@@ -855,7 +862,7 @@ async function verifyInstalled(projectRoot, runChecker) {
   return { pin, verification, report };
 }
 
-async function validateCompleteCandidate(projectRoot, files, removedPaths = []) {
+async function validateCompleteCandidate(projectRoot, files, removedPaths = [], verifier = null) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-candidate-"));
   const candidate = path.join(temporary, "project");
   try {
@@ -886,7 +893,7 @@ async function validateCompleteCandidate(projectRoot, files, removedPaths = []) 
       await mkdir(path.dirname(target), { recursive: true });
       await writeFile(target, bytes);
     }
-    return await verifyInstalled(candidate, true);
+    return await (verifier ?? ((root) => verifyInstalled(root, true)))(candidate);
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
@@ -1461,6 +1468,406 @@ async function repairTopology(options) {
   };
 }
 
+
+// --- Deterministic governed mechanics (ADR 0096) ---
+
+const IDENTITY_GATE_HEADER = "| Capability | Finding | Verification | Exception |";
+
+async function loadGovernedContext(projectRoot) {
+  const { bundle, knowledgeRoot } = await requireBundle(projectRoot);
+  const recordsDir = path.join(projectRoot, ".nourd/knowledge/records");
+  const records = new Map();
+  const decisionsByNumber = new Map();
+  for (const entry of (await readdir(recordsDir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
+    if (!entry.name.endsWith(".yaml")) continue;
+    const declarationPath = path.join(recordsDir, entry.name);
+    const value = YAML.parse(await readFile(declarationPath, "utf8"));
+    if (typeof value?.id !== "string" || typeof value?.source?.path !== "string") continue;
+    records.set(value.id, {
+      sourcePath: value.source.path,
+      declarationFile: `.nourd/knowledge/records/${entry.name}`,
+      type: value.type,
+      status: value.governance?.status,
+    });
+    const adr = /^adr-(\d{4})$/.exec(value.id);
+    if (adr && value.governance?.status === "accepted") decisionsByNumber.set(adr[1], value.source.path);
+  }
+  const tasks = new Map();
+  const taskEntries = [];
+  for (const item of bundle.non_records ?? []) {
+    if (item?.kind !== "task" || typeof item?.path !== "string") continue;
+    const absolute = path.join(projectRoot, knowledgeRoot, ...item.path.split("/"));
+    let text;
+    try {
+      text = await readFile(absolute, "utf8");
+    } catch {
+      continue;
+    }
+    const lines = text.split("\n");
+    const close = lines[0] === "---" ? lines.indexOf("---", 1) : -1;
+    const taskId = close > 0 ? lines.slice(1, close).find((line) => line.startsWith("task_id:"))?.slice(8).trim() : undefined;
+    if (taskId) {
+      tasks.set(taskId, item.path);
+      taskEntries.push({ taskId, path: item.path });
+    }
+  }
+  return { bundle, knowledgeRoot, records, decisionsByNumber, tasks, taskEntries };
+}
+
+function relativeLink(fromRelative, toRelative) {
+  const fromDirectory = fromRelative.split("/").slice(0, -1);
+  const target = toRelative.split("/");
+  let common = 0;
+  while (common < fromDirectory.length && common < target.length - 1 && fromDirectory[common] === target[common]) common += 1;
+  const up = fromDirectory.length - common;
+  return [...Array(up).fill(".."), ...target.slice(common)].join("/") || target[target.length - 1];
+}
+
+function linkifyText(text, maps, selfRelative) {
+  const lines = text.split("\n");
+  const close = lines[0] === "---" ? lines.indexOf("---", 1) : 0;
+  let inFence = false;
+  let changed = false;
+  const targetFor = (token) => {
+    const adr = /^ADR (\d{4})$/.exec(token);
+    if (adr) return maps.decisionsByNumber.get(adr[1]);
+    return maps.records.get(token)?.sourcePath !== undefined
+      ? maps.records.get(token).sourcePath
+      : maps.tasks.get(token);
+  };
+  for (let index = close + 1; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (line.trim().startsWith("```")) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence || line.startsWith("#")) continue;
+    const parts = line.split(/(\[[^\]]*\]\([^)]*\)|`[^`]+`)/g);
+    for (let position = 0; position < parts.length; position += 1) {
+      const part = parts[position];
+      if (position % 2 === 1) {
+        if (part.startsWith("`") && part.endsWith("`")) {
+          const token = part.slice(1, -1);
+          const target = targetFor(token);
+          if (target !== undefined && target !== selfRelative) {
+            parts[position] = `[${part}](${relativeLink(selfRelative, target)})`;
+            changed = true;
+          }
+        }
+        continue;
+      }
+      parts[position] = part
+        .replace(/\bADR (\d{4})\b/g, (whole, number) => {
+          const target = maps.decisionsByNumber.get(number);
+          if (target === undefined || target === selfRelative) return whole;
+          changed = true;
+          return `[ADR ${number}](${relativeLink(selfRelative, target)})`;
+        })
+        .replace(/\b([A-Z][A-Z0-9]*-\d+)\b/g, (whole, token) => {
+          const target = maps.tasks.get(token);
+          if (target === undefined || target === selfRelative) return whole;
+          changed = true;
+          return `[${token}](${relativeLink(selfRelative, target)})`;
+        });
+    }
+    lines[index] = parts.join("");
+  }
+  return { text: lines.join("\n"), changed };
+}
+
+async function knowledgeMarkdownFiles(projectRoot, knowledgeRoot, bundle) {
+  const evidence = new Set(
+    (bundle.non_records ?? []).filter((item) => item?.kind === "evidence").map((item) => item.path),
+  );
+  const results = [];
+  async function walk(relative) {
+    const absolute = path.join(projectRoot, knowledgeRoot, ...relative.split("/").filter(Boolean));
+    for (const entry of await readdir(absolute, { withFileTypes: true })) {
+      const childRelative = relative === "" ? entry.name : `${relative}/${entry.name}`;
+      if (entry.isDirectory()) {
+        if (childRelative === "evidence" || childRelative.startsWith("evidence/")) continue;
+        await walk(childRelative);
+      } else if (entry.name.endsWith(".md") && !evidence.has(childRelative)) {
+        results.push(childRelative);
+      }
+    }
+  }
+  await walk("");
+  return results.sort();
+}
+
+async function repinGoverned(projectRoot) {
+  const context = await loadGovernedContext(projectRoot);
+  let repinnedRecords = 0;
+  for (const [, record] of context.records) {
+    const declarationAbsolute = path.join(projectRoot, ...record.declarationFile.split("/"));
+    const sourceAbsolute = path.join(projectRoot, context.knowledgeRoot, ...record.sourcePath.split("/"));
+    let sourceBytes;
+    try {
+      sourceBytes = await readFile(sourceAbsolute);
+    } catch {
+      continue;
+    }
+    const observed = digest(sourceBytes);
+    const declarationText = await readFile(declarationAbsolute, "utf8");
+    const updated = declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${observed}`);
+    if (updated !== declarationText) {
+      await writeFile(declarationAbsolute, updated);
+      repinnedRecords += 1;
+    }
+  }
+  const bundlePath = path.join(projectRoot, ".nourd/knowledge/bundle.yaml");
+  let bundleText = await readFile(bundlePath, "utf8");
+  let repinnedArtifacts = 0;
+  const artifactPattern = /(    path: ([^\n]+)\n    digest:\n      algorithm: sha-256\n      value: )([0-9a-f]{64})/g;
+  const replacements = [];
+  for (const match of bundleText.matchAll(artifactPattern)) {
+    let bytes;
+    try {
+      bytes = await readFile(path.join(projectRoot, ...match[2].split("/")));
+    } catch {
+      continue;
+    }
+    const observed = digest(bytes);
+    if (observed !== match[3]) replacements.push([match[0], `${match[1]}${observed}`]);
+  }
+  for (const [from, to] of replacements) {
+    bundleText = bundleText.replace(from, to);
+    repinnedArtifacts += 1;
+  }
+  if (repinnedArtifacts > 0) await writeFile(bundlePath, bundleText);
+  return { state: "repinned", records: repinnedRecords, artifacts: repinnedArtifacts };
+}
+
+async function exportReferences(projectRoot) {
+  const context = await loadGovernedContext(projectRoot);
+  return {
+    state: "exported",
+    knowledge_root: context.knowledgeRoot,
+    records: Object.fromEntries([...context.records].map(([id, record]) => [id, record.sourcePath])),
+    decisions: Object.fromEntries(context.decisionsByNumber),
+    tasks: Object.fromEntries(context.tasks),
+  };
+}
+
+async function linkifyProject(projectRoot) {
+  const context = await loadGovernedContext(projectRoot);
+  const files = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
+  let changed = 0;
+  for (const relative of files) {
+    const absolute = path.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
+    const original = await readFile(absolute, "utf8");
+    const result = linkifyText(original, context, relative);
+    if (result.changed) {
+      await writeFile(absolute, result.text);
+      changed += 1;
+    }
+  }
+  const repin = await repinGoverned(projectRoot);
+  return { state: "linkified", files: files.length, changed, repinned_records: repin.records };
+}
+
+function externalCheckerVerifier(checkerPath) {
+  return (root) => {
+    const invocation = spawnSync(process.execPath, [checkerPath, "--project", root, "--level", "full-bundle", "--no-persist"], {
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+    });
+    const report = invocation.stdout === "" ? null : JSON.parse(invocation.stdout);
+    if (report?.conformance !== "passed") {
+      fail(`External checker validation failed: ${invocation.stderr || invocation.stdout || "no output"}`);
+    }
+    return { report };
+  };
+}
+
+function gateBlocksCompletion(text) {
+  const lines = text.split("\n");
+  const headerIndex = lines.findIndex((line) => line.trim() === IDENTITY_GATE_HEADER);
+  if (headerIndex === -1) return [];
+  const blocked = [];
+  for (let index = headerIndex + 2; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (!line.startsWith("|")) break;
+    const cells = line.split("|").map((cell) => cell.trim()).filter((cell, at, all) => at > 0 && at < all.length - 1);
+    if (cells.length !== 4) continue;
+    if ((cells[1] === "unsupported" || cells[1] === "unknown") && cells[3] === "none") blocked.push(cells[0]);
+  }
+  return blocked;
+}
+
+async function transitionTask(options) {
+  const projectRoot = await requireProjectRoot(options.project);
+  const transition = { close: "completed", defer: "deferred", activate: "active" }[options.to ?? ""];
+  if (transition === undefined) fail("task requires --to close|defer|activate.");
+  if (typeof options.task !== "string" || options.task === "") fail("task requires --task <task_id>.");
+  const context = await loadGovernedContext(projectRoot);
+  const currentRelative = context.tasks.get(options.task);
+  if (currentRelative === undefined) fail(`Unknown task_id: ${options.task}`);
+  const currentAbsolute = path.join(projectRoot, context.knowledgeRoot, ...currentRelative.split("/"));
+  const original = await readFile(currentAbsolute, "utf8");
+  const statusMatch = original.match(/^task_status: (\w+)$/m);
+  if (statusMatch === null) fail("The task has no task_status line.");
+  if (statusMatch[1] === transition) fail(`The task already has task_status ${transition}.`);
+  if (transition === "completed") {
+    const blockers = gateBlocksCompletion(original);
+    if (blockers.length > 0) {
+      fail(`The gate blocks completion: unexcepted findings for ${blockers.join(", ")}.`);
+    }
+  }
+  const fileName = currentRelative.split("/").pop();
+  const targetRelative = `tasks/${transition === "active" ? "active" : transition}/${fileName}`;
+  let updated = original.replace(/^task_status: \w+$/m, `task_status: ${transition}`);
+  if (transition === "completed" && typeof options["result-file"] === "string") {
+    const result = (await readFile(options["result-file"], "utf8")).trim();
+    if (!updated.includes("## Completion Result")) {
+      updated = updated.replace("\n## Decision Applicability\n", `\n## Completion Result\n\n${result}\n\n## Decision Applicability\n`);
+    }
+  }
+  const files = new Map();
+  const removedPaths = [`${context.knowledgeRoot}/${currentRelative}`];
+  files.set(`${context.knowledgeRoot}/${targetRelative}`, Buffer.from(updated, "utf8"));
+
+  const bundlePath = ".nourd/knowledge/bundle.yaml";
+  const bundleText = await readFile(path.join(projectRoot, bundlePath), "utf8");
+  files.set(bundlePath, Buffer.from(bundleText.replace(`path: ${currentRelative}`, `path: ${targetRelative}`), "utf8"));
+
+  const h1 = updated.split("\n").find((line) => line.startsWith("# "))?.slice(2).trim() ?? options.task;
+  const markdown = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
+  let linksRewritten = 0;
+  const sourceDirectory = currentRelative.split("/").slice(0, -1).join("/");
+  const targetDirectory = targetRelative.split("/").slice(0, -1).join("/");
+  for (const relative of markdown) {
+    if (relative === currentRelative) continue;
+    const absolute = path.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
+    let text = await readFile(absolute, "utf8");
+    const before = text;
+    const directory = relative.split("/").slice(0, -1).join("/");
+    const isSourceIndex = directory === sourceDirectory && relative.endsWith("README.md");
+    const isTargetIndex = directory === targetDirectory && relative.endsWith("README.md");
+    if (isSourceIndex) {
+      text = text
+        .split("\n")
+        .filter((line) => !line.includes(`](${fileName})`))
+        .join("\n")
+        .replace(/\n{3,}/g, "\n\n");
+    } else {
+      const oldLink = relativeLink(relative, currentRelative);
+      const newLink = relativeLink(relative, targetRelative);
+      text = text.split(`](${oldLink})`).join(`](${newLink})`);
+    }
+    if (isTargetIndex && !text.includes(`](${fileName})`)) {
+      text = `${text.trimEnd()}\n- [${h1}](${fileName})\n`;
+    }
+    if (text !== before) {
+      files.set(`${context.knowledgeRoot}/${relative}`, Buffer.from(text, "utf8"));
+      linksRewritten += 1;
+    }
+  }
+  for (const [, record] of context.records) {
+    const changedPath = `${context.knowledgeRoot}/${record.sourcePath}`;
+    const staged = files.get(changedPath);
+    if (staged === undefined) continue;
+    const declarationText = await readFile(path.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
+    const repinned = declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${digest(staged)}`);
+    files.set(record.declarationFile, Buffer.from(repinned, "utf8"));
+  }
+  const pinPresent = (await readRegularInside(projectRoot, PIN_PATH, false)) !== null;
+  const verifier = pinPresent
+    ? null
+    : typeof options.checker === "string"
+      ? externalCheckerVerifier(path.resolve(options.checker))
+      : fail("task requires an installed release pin or an explicit --checker.");
+  await validateCompleteCandidate(projectRoot, files, removedPaths, verifier);
+  await writeTransaction(
+    projectRoot,
+    files,
+    () => (verifier ?? (() => verifyInstalled(projectRoot, true)))(projectRoot),
+    removedPaths,
+  );
+  return {
+    state: "transitioned",
+    task: options.task,
+    from: currentRelative,
+    to: targetRelative,
+    task_status: transition,
+    documents_rewritten: linksRewritten,
+  };
+}
+
+async function migrateToCurrent(options) {
+  const projectRoot = await requireProjectRoot(options.project);
+  const { bundle, knowledgeRoot } = await requireBundle(projectRoot);
+  if (bundle.nkf_version !== "0.1") fail("migrate requires a project that declares NKF 0.1.");
+  const expectedSha256 = requireSha256(options.sha256);
+  const archiveBytes = await acquireArchive(options, expectedSha256);
+  const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
+  if (verification.manifest.nkf_version !== "0.2") fail("migrate requires an NKF 0.2 release archive.");
+
+  const files = new Map();
+  const bundlePath = ".nourd/knowledge/bundle.yaml";
+  const bundleText = await readFile(path.join(projectRoot, bundlePath), "utf8");
+  files.set(bundlePath, Buffer.from(bundleText.replace('nkf_version: "0.1"', 'nkf_version: "0.2"'), "utf8"));
+
+  const retroGate = [
+    "",
+    "## Decision Applicability",
+    "",
+    "### Applicable Decisions",
+    "",
+    "No accepted decision applies to this Task.",
+    "",
+    "### Mandatory Capabilities",
+    "",
+    "No mandatory capability is implicated by this Task.",
+    "",
+    "This gate was added retrospectively during the NKF 0.2 migration; no",
+    "historical extraction is implied.",
+    "",
+  ].join("\n");
+  const context = await loadGovernedContext(projectRoot);
+  let gated = 0;
+  for (const { path: taskRelative } of context.taskEntries) {
+    const absolute = path.join(projectRoot, knowledgeRoot, ...taskRelative.split("/"));
+    const text = await readFile(absolute, "utf8");
+    if (!text.includes("## Decision Applicability")) {
+      files.set(`${knowledgeRoot}/${taskRelative}`, Buffer.from(`${text.trimEnd()}\n${retroGate}`, "utf8"));
+      gated += 1;
+    }
+  }
+  const markdown = await knowledgeMarkdownFiles(projectRoot, knowledgeRoot, context.bundle);
+  let linkified = 0;
+  for (const relative of markdown) {
+    const key = `${knowledgeRoot}/${relative}`;
+    const current = files.get(key)?.toString("utf8") ?? (await readFile(path.join(projectRoot, knowledgeRoot, ...relative.split("/")), "utf8"));
+    const result = linkifyText(current, context, relative);
+    if (result.changed || files.has(key)) {
+      files.set(key, Buffer.from(result.text, "utf8"));
+      if (result.changed) linkified += 1;
+    }
+  }
+  for (const [, record] of context.records) {
+    const key = `${knowledgeRoot}/${record.sourcePath}`;
+    const staged = files.get(key);
+    if (staged === undefined) continue;
+    const declarationText = await readFile(path.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
+    files.set(record.declarationFile, Buffer.from(declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${digest(staged)}`), "utf8"));
+  }
+  const integration = await targetFiles(projectRoot, archiveBytes, verification, bundle.root?.profile ?? "nkf.profile.product");
+  for (const [relative, bytes] of integration) files.set(relative, bytes);
+  await validateCompleteCandidate(projectRoot, files, []);
+  const installed = await writeTransaction(projectRoot, files, () => verifyInstalled(projectRoot, true), []);
+  return {
+    state: "migrated",
+    nkf_version: "0.2",
+    tasks_gated: gated,
+    documents_linkified: linkified,
+    validation: {
+      conformance: installed.report?.conformance ?? "passed",
+    },
+  };
+}
+
 async function main() {
   const { command, options } = parseArguments(process.argv.slice(2));
   if (command === "inspect") return inspectForOnboarding(options);
@@ -1475,6 +1882,11 @@ async function main() {
   if (command === "install" || command === "update") {
     return installOrUpdate(command, options);
   }
+  if (command === "repin") return repinGoverned(await requireProjectRoot(options.project));
+  if (command === "refs") return exportReferences(await requireProjectRoot(options.project));
+  if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project));
+  if (command === "task") return transitionTask(options);
+  if (command === "migrate") return migrateToCurrent(options);
   const projectRoot = await requireProjectRoot(options.project);
   const installed = await verifyInstalled(projectRoot, command === "check");
   return {

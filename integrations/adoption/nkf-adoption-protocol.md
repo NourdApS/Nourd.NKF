@@ -25,7 +25,9 @@ follow it.
    carrying the released set in its own tree. Installed guidance is the
    version-stamped set from that release.
 3. Migrate the knowledge to the version's contract, following the release's
-   published migration meaning. For NKF 0.2 this means: the bundle declares
+   published migration meaning; for a declared NKF 0.1 consumer the
+   deterministic `migrate` adopter command performs these mechanics through
+   staged validation with rollback. For NKF 0.2 this means: the bundle declares
    `nkf_version: "0.2"`; every Task non-record carries its Decision
    Applicability section, with pre-existing completed Tasks gated
    retrospectively and saying so; every frontmatter `title` exactly equals
