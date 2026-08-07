@@ -1,5 +1,7 @@
 # NKF Authoring Protocol
 
+NKF Version: 0.2
+
 This is the complete vendor-neutral procedure for creating, changing,
 classifying, migrating, auditing, or validating NKF-governed knowledge in an
 adopted repository.
@@ -81,6 +83,37 @@ meaning from a filename.
 Accepted immutable records remain historical snapshots. A correction,
 extension, replacement, or reversal requires an explicit governed successor
 with provenance and compatibility treatment.
+
+## Maintain The Decision Applicability Gate
+
+Every Task non-record carries one Decision Applicability section whose exact
+structure and vocabularies the accepted Specification owns. Before Git-backed
+work under a Task:
+
+1. Extract every applicable accepted decision into the gate with its carried
+   condition, negative finding, rejected capability, supersession, or
+   unresolved unknown. State `Unconditional.` only when the decision truly
+   carries no condition, and never restate a conditional decision without its
+   condition.
+2. Classify each capability a governing requirement makes mandatory as
+   `proven`, `unsupported`, or `unknown`. A `proven` finding names the exact
+   verification level actually reached: `data-validity`,
+   `adapter-compatibility`, `runtime-behaviour`, `human-experience`, or
+   `production-suitability`. Never represent a lower level as a higher one,
+   and never treat available inputs, invoked methods, differing screenshots,
+   or simulated gestures as proof that a required outcome occurred.
+3. Re-extract the gate whenever the renderer, provider, platform, data
+   format, architecture, harness, or a mandatory requirement changes.
+4. Do not set `task_status` to `completed` while any mandatory capability
+   remains `unsupported` or `unknown` without an explicit recorded Human
+   Product Owner exception in the gate.
+5. A gate added to a pre-existing Task states in an explanatory block that it
+   was added retrospectively.
+
+Under NKF 0.2 frontmatter, the body H1 is the only document title: no
+governed document carries a frontmatter `title` key, and Task non-records may
+declare `owner`, `decision_authority`, and `related_tasks` orientation keys
+instead of repeating identity facts in the body.
 
 ## Validate During Authoring
 

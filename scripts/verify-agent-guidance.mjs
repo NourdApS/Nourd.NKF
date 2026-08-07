@@ -45,8 +45,16 @@ description: Author, change, classify, migrate, audit, or validate NKF-governed 
 
 # NKF Authoring
 
+NKF Version: 0.2
+
 From the project root, read and follow
 \`integrations/ai/nkf-authoring-protocol.md\` before editing governed knowledge.
+
+Maintain each affected Task's Decision Applicability section before Git-backed
+work: extract the applicable accepted decisions with their conditions,
+negative findings, and unknowns, classify mandatory capabilities as proven,
+unsupported, or unknown, and re-extract when the renderer, provider, platform,
+data format, architecture, harness, or a mandatory requirement changes.
 
 Run \`npm run nkf:check\` after one coherent governed change and before handoff.
 Treat the protocol as derived procedure and accepted NKF Specifications as the
