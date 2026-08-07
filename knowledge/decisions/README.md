@@ -99,6 +99,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0085: Bind The Corrected 0.2 Release Checker](0085-bind-the-corrected-0-2-release-checker.md)
 - [ADR 0086: Record Authority And Identity Bullet Rule](0086-record-authority-and-identity-bullet-rule.md)
 - [ADR 0087: Accept The Corrected 0.2 Pair](0087-accept-the-corrected-0-2-pair.md)
+- [ADR 0088: Bind The Final 0.2 Release Checker](0088-bind-the-final-0-2-release-checker.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
