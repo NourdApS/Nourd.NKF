@@ -7,13 +7,11 @@ created_at: 2026-07-31T00:03:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-011
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0060: Layered Contract Enforcement
 
-- **Status:** Accepted
-- **Task:** `NKF-011`
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Review Evidence:**
   `knowledge/evidence/audits/nkf-011-ai-neutral-enforcement-design-reaudit.md`
 

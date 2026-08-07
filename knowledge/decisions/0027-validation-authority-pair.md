@@ -7,16 +7,12 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact revisions after independent review
 ---
 
 # ADR 0027: Accept Pre-Checker NKF 0.1 Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's direct authorization to approve exact revisions after
-  independent review
-- **Authorization Source:** Earlier direct NKF-003 instruction granting the
+- **Authorization Source:** Earlier direct [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) instruction granting the
   reviewer permission to accept an exact revision if approved, together with
   the 30 July 2026 direction to complete all remaining work before checker
   implementation
@@ -27,14 +23,14 @@ task: NKF-003
 
 ## Context
 
-ADR 0022 accepted the current coherent NKF 0.1 Markdown/YAML pair. ADR 0024
+[ADR 0022](0022-native-authority-pair.md) accepted the current coherent NKF 0.1 Markdown/YAML pair. [ADR 0024](0024-deterministic-markdown-structure-and-title-case.md)
 subsequently accepted deterministic CommonMark interpretation, complete
 top-level heading coverage, Title Case, canonical terms, and the Mermaid
-boundary. ADR 0025 accepted the exact operational validation-result contract,
-and ADR 0026 accepted the deterministic native secret-pattern registry.
+boundary. [ADR 0025](0025-validation-result.md) accepted the exact operational validation-result contract,
+and [ADR 0026](0026-deterministic-secret-pattern-registry.md) accepted the deterministic native secret-pattern registry.
 
 Those later Decisions change normative meaning and cannot be realized only in
-checker code. ADR 0006 requires a reviewed replacement authority pair before
+checker code. [ADR 0006](0006-pre-stable-evolution.md) requires a reviewed replacement authority pair before
 derived schemas or checker implementation.
 
 The replacement proposals preserve the sole NKF `0.1` version coordinate and
@@ -82,17 +78,17 @@ digest-bound executable companion and cannot replace, extend, or reinterpret
 the Markdown. Conflict fails closed.
 
 The accepted pair incorporates ADRs 0024, 0025, and 0026. It also records
-NKF-005 as the deferred investigation path for universal expiry or separate
+[NKF-005](../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md) as the deferred investigation path for universal expiry or separate
 authority freshness without introducing either feature now.
 
 ## Supersession And Compatibility
 
-This exact pair replaces the ADR 0022 revisions as the current canonical
-authority. ADR 0022 and its exact artifacts remain immutable historical
+This exact pair replaces the [ADR 0022](0022-native-authority-pair.md) revisions as the current canonical
+authority. [ADR 0022](0022-native-authority-pair.md) and its exact artifacts remain immutable historical
 accepted snapshots.
 
-The bundle and record schemas confirmed by ADR 0023 remain historical
-confirmed realizations of the ADR 0022 source pair. Their source bindings no
+The bundle and record schemas confirmed by [ADR 0023](0023-native-json-schemas.md) remain historical
+confirmed realizations of the [ADR 0022](0022-native-authority-pair.md) source pair. Their source bindings no
 longer match current authority, so they cannot claim current NKF 0.1 schema or
 conformance realization after this Decision.
 

@@ -7,7 +7,7 @@ source:
   path: decisions/0076-versioned-contract-evolution.md
   digest:
     algorithm: sha-256
-    value: ce2c5defc54460c5fbaa7f4e7463d333e48bf5f80a73d3799ef7a17f8f3c1863
+    value: 280bb18114d61d99c644bcb5304dd1f1ab0c09ad1c678f395ec43c771660bf78
 governance:
   lifecycle: immutable
   status: accepted

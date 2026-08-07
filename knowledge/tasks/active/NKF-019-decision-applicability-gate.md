@@ -4,16 +4,15 @@ summary: Prevent conditional technology decisions from losing their conditions, 
 created_at: 2026-08-06T21:23:12Z
 task_id: NKF-019
 task_status: active
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-005
+  - NKF-016
+  - NKF-017
 ---
 
 # NKF-019: Establish The Decision Applicability Gate
-
-- **Task:** `NKF-019`
-- **Status:** Active
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-005`, `NKF-016`, `NKF-017`
 
 ## Human Direction
 
@@ -70,20 +69,20 @@ meaning and must be removed from the candidate Specification; that a new
 Task be created and deferred to define the version release process, the
 consumer adoption process, and breaking-change classification and signaling;
 and that the correction be versioned NKF `0.2` because it carries breaking
-changes. ADR 0078 records that correction, and `NKF-020` holds the deferred
+changes. [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) records that correction, and [`NKF-020`](../deferred/NKF-020-version-release-adoption-and-compatibility-process.md) holds the deferred
 process work.
 
 Still on `2026-08-06`, the Human Product Owner directed removing the
 frontmatter title, moving the repeated top-of-document identity properties
 into type-dynamic frontmatter, and ending the duplication between frontmatter
-and body openings. ADR 0079 records that direction for NKF 0.2.
+and body openings. [ADR 0079](../../decisions/0079-dynamic-frontmatter-without-title.md) records that direction for NKF 0.2.
 
 The Human Product Owner then directed that guidance, protocols, and agent
 instructions be versioned per NKF version as one complete frozen set, agreed
 that superseded versions live in Git history rather than beside the current
 tree, and on `2026-08-07` accepted the proposed separated release and
 adoption processes with the NKF repository releasing first and then adopting
-its own version as the first migrator. ADR 0080 records that acceptance; the
+its own version as the first migrator. [ADR 0080](../../decisions/0080-release-and-adoption-process.md) records that acceptance; the
 followable procedures are the release and adoption protocols under
 `integrations/`.
 
@@ -91,7 +90,7 @@ On `2026-08-07`, the Human Product Owner received a plain-language
 explanation of every difference from NKF 0.1 and confirmed each change
 separately: the gate section with fail-closed completion, the validation
 levels and claim rules, the versioned-set and guidance-marker rules, and the
-title-free dynamic frontmatter. ADR 0081 records acceptance of the exact
+title-free dynamic frontmatter. [ADR 0081](../../decisions/0081-accept-nkf-0-2-authority-pair.md) records acceptance of the exact
 NKF 0.2 authority pair.
 
 On `2026-08-07`, after reviewing a migrated Design document, the Human
@@ -114,26 +113,26 @@ preserved.
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
 - The Decision Applicability Gate Design was drafted, revised to the directed
-  all-Task and versioned-delivery boundaries, and adopted through ADR 0077.
-- ADR 0076 records the versioned contract evolution process and allocates
+  all-Task and versioned-delivery boundaries, and adopted through [ADR 0077](../../decisions/0077-decision-applicability-gate.md).
+- [ADR 0076](../../decisions/0076-versioned-contract-evolution.md) records the versioned contract evolution process and allocates
   NKF `0.11` to this correction.
-- The predecessor NKF-017 work was committed separately as `aca9bad`, and the
+- The predecessor [NKF-017](../completed/NKF-017-complete-portable-onboarding-topology.md) work was committed separately as `aca9bad`, and the
   NKF-019 groundwork as `d0afe31`, on local `master`; no push is claimed.
-- ADR 0078 reallocated the correction to NKF `0.2`, removed the shipping
-  process from the candidate rulebook, and recorded the deferred `NKF-020`
+- [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) reallocated the correction to NKF `0.2`, removed the shipping
+  process from the candidate rulebook, and recorded the deferred [`NKF-020`](../deferred/NKF-020-version-release-adoption-and-compatibility-process.md)
   process Task; the removed release outline is preserved there as unaccepted
   draft input.
-- ADR 0079 removed the frontmatter title from the 0.2 candidate, added the
+- [ADR 0079](../../decisions/0079-dynamic-frontmatter-without-title.md) removed the frontmatter title from the 0.2 candidate, added the
   optional Task orientation keys `owner`, `decision_authority`, and
   `related_tasks`, and removed `markdown.frontmatter.title-mismatch` from the
   0.2 registry; this repository's own documents migrate to the new envelope
   during the 0.2 self-migration.
 - The 0.2 candidate now defines the versioned set and the guidance version
-  marker with `guidance.version.mismatch` enforcement. ADR 0080 accepts the
+  marker with `guidance.version.mismatch` enforcement. [ADR 0080](../../decisions/0080-release-and-adoption-process.md) accepts the
   separated release and adoption processes, documented as the versioned
-  release and adoption protocols under `integrations/`; NKF-020 keeps only
+  release and adoption protocols under `integrations/`; [NKF-020](../deferred/NKF-020-version-release-adoption-and-compatibility-process.md) keeps only
   breaking-change classification and signaling plus refinements.
-- ADR 0081 accepts the exact NKF 0.2 authority pair after per-change Human
+- [ADR 0081](../../decisions/0081-accept-nkf-0-2-authority-pair.md) accepts the exact NKF 0.2 authority pair after per-change Human
   Product Owner confirmation: canonical Markdown SHA-256
   `bac288b2299e2e3dc9f7eecf41158b2717b427d4ccc59842e4927b1b9f8b7317` bound to
   executable SHA-256
@@ -142,7 +141,7 @@ preserved.
   `decision_authority` key, the identity-bullet duplication rule, the
   corrected pair, and its release, which was adopted and then rolled back
   again when the third review round arrived; every Decision was preserved.
-- ADR 0089 adopted the third correction round and ADR 0090 accepts its
+- [ADR 0089](../../decisions/0089-title-equality-deep-links-and-design-orientation.md) adopted the third correction round and [ADR 0090](../../decisions/0090-accept-the-title-and-deep-link-pair.md) accepts its
   corrected pair: the title returns with enforced heading equality, all
   same-bundle references become machine-verified deep links including gate
   table cells, Design records gain the proposal orientation keys, and the
@@ -355,3 +354,32 @@ adopted, that normative meaning has changed, that any enforcement exists,
 that any consumer must migrate, or that a Realization has been confirmed.
 Later Decisions and recorded progress supersede only these created-state
 facts.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+| Reference | Kind | Carried Constraint |
+| --- | --- | --- |
+| [`adr-0006`](../../decisions/0006-pre-stable-evolution.md) | record | Pre-stable evolution requires evidence, compatibility analysis, and Human Product Owner confirmation. |
+| [`adr-0076`](../../decisions/0076-versioned-contract-evolution.md) | record | This correction ships as a new immutable version; NKF 0.1 stays frozen for its repositories. |
+| [`adr-0077`](../../decisions/0077-decision-applicability-gate.md) | record | The gate is required on every Task including completed history, with retrospective disclosure. |
+| [`adr-0078`](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) | record | The version coordinate is 0.2 because the change is breaking. |
+| [`adr-0079`](../../decisions/0079-dynamic-frontmatter-without-title.md) | record | Orientation keys replace body identity bullets; the title portion is reversed by [ADR 0089](../../decisions/0089-title-equality-deep-links-and-design-orientation.md). |
+| [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Release and adoption stay separate deliberate processes with this repository as first adopter. |
+| [`adr-0084`](../../decisions/0084-replace-the-unconsumed-0-2-release.md) | record | The unconsumed-release exception covers replacement corrections until any repository adopts a 0.2 release. |
+| [`adr-0086`](../../decisions/0086-record-authority-and-identity-bullet-rule.md) | record | Records may carry decision_authority, and identity bullet duplication fails closed under the closed label registry. |
+| [`adr-0089`](../../decisions/0089-title-equality-deep-links-and-design-orientation.md) | record | The title equals the heading, references are deep links, and Design orientation lives in frontmatter. |
+| Nourd Tiles TILES-008 and TILES-012 records | external | The triggering failure evidence is read-only; Nourd Tiles and Wonderer must not be modified under this Task. |
+
+### Mandatory Capabilities
+
+| Capability | Finding | Verification | Exception |
+| --- | --- | --- | --- |
+| Gate structure enforcement fails closed on 0.2 bundles | proven | runtime-behaviour | none |
+| Version dispatch keeps 0.1 repositories validating unchanged | proven | runtime-behaviour | none |
+| Identity bullet duplication fails closed outside Evidence | proven | runtime-behaviour | none |
+| Unlinked same-bundle references fail closed outside Evidence | proven | runtime-behaviour | none |
+| Released archive verifies by independent re-download | proven | runtime-behaviour | none |
+| Semantic truthfulness of gate prose is machine-detectable | unsupported | none | Accepted by the Human Product Owner in the NKF-019 direction: prose contradictions remain human-reviewed. |
+

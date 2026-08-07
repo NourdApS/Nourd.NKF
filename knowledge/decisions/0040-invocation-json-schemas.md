@@ -7,21 +7,17 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
 ---
 
 # ADR 0040: Confirm Invocation-Precondition Json Schema Bindings
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's authorization to approve exact derived revisions after
-  independent review
-- **Accepted Source Pair:** ADR 0039
+- **Accepted Source Pair:** [ADR 0039](0039-invocation-authority-pair.md)
 
 ## Context
 
-ADR 0039 accepts and promotes the exact NKF 0.1 Markdown/YAML pair that
-realizes ADR 0038. The schemas confirmed by ADR 0037 retain their assertion
+[ADR 0039](0039-invocation-authority-pair.md) accepts and promotes the exact NKF 0.1 Markdown/YAML pair that
+realizes [ADR 0038](0038-nourd-invocation-precondition.md). The schemas confirmed by [ADR 0037](0037-checker-ready-json-schemas.md) retain their assertion
 meaning, but their `x-nkf-source` metadata binds the historical source pair.
 
 The invocation precondition and stable-diagnostic retirement do not alter the
@@ -38,7 +34,7 @@ The reviewer audited:
 - [`../evidence/decision-inputs/adr-0039-0040/nkf-0.1-invocation-precondition-validation-result-schema-proposal.json`](../evidence/decision-inputs/adr-0039-0040/nkf-0.1-invocation-precondition-validation-result-schema-proposal.json).
 
 Duplicate-aware parsing passed. Removing `x-nkf-source` from each proposal
-produces an object byte-structurally equal to its ADR 0037 schema. All three
+produces an object byte-structurally equal to its [ADR 0037](0037-checker-ready-json-schemas.md) schema. All three
 compile strictly with Ajv `8.20.0` and `ajv-formats` `3.0.1` and pass 32
 renewed focused probes.
 

@@ -7,7 +7,7 @@ source:
   path: decisions/0019-validation-enforcement-and-diagnostics.md
   digest:
     algorithm: sha-256
-    value: 8f4df470ee054bd84d145038a864c843440cbc39b71a1ffd5eb5350ff22d9f47
+    value: aac1c13d4108441d356cee21563c1a40e40e6d4f0c884c2f5b1696556d7e7522
 governance:
   lifecycle: immutable
   status: accepted

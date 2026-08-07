@@ -19,7 +19,7 @@ task: NKF-019
 - **Canonical destination:** `knowledge/specifications/nkf-0.2.md`
 - **Executable companion destination:** `contracts/nkf/0.2/nkf.yaml`
 - **Acceptance Decisions:** [ADR 0076](../decisions/0076-versioned-contract-evolution.md) through [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md), [ADR 0084](../decisions/0084-replace-the-unconsumed-0-2-release.md), ADRs 0086
-  through 0089, and the corrected pair acceptance ADR 0090
+  through 0089, and the corrected pair acceptance [ADR 0090](../decisions/0090-accept-the-title-and-deep-link-pair.md)
 - **Independent governing inputs:** ADRs 0001 through 0089
 - **Interoperability baseline:** Open Knowledge Format 0.2
 

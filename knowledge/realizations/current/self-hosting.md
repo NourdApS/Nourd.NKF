@@ -35,33 +35,33 @@ The bundle is `.nourd/knowledge/bundle.yaml`; record declarations are direct
 `.yaml` children of `.nourd/knowledge/records/`; the latest result is
 `.nourd/validation-result.json`.
 
-ADR 0059 confirms the current self-host structure after NKF-010. It preserves
+[ADR 0059](../../decisions/0059-confirm-governed-frontmatter-realization.md) confirms the current self-host structure after [NKF-010](../../tasks/completed/NKF-010-governed-frontmatter-adoption.md). It preserves
 stable record IDs, adds governed orientation to every non-Evidence source,
 classifies operational Tasks and Evidence explicitly as non-record kinds, and
 binds exact source and governed-artifact digests.
 
-ADR 0060 adopts the layered enforcement direction. NKF-011 adds the neutral
+[ADR 0060](../../decisions/0060-layered-contract-enforcement.md) adopts the layered enforcement direction. [NKF-011](../../tasks/completed/NKF-011-enforce-nkf-contracts.md) adds the neutral
 authoring protocol, four instruction adapters, two byte-identical skill
 representations, twelve surface registry entries, the adapter verifier, the
 unified project command, negative tests, and the exact-commit workflow.
-ADR 0061 confirms this exact audited local self-hosting successor. Remote
+[ADR 0061](../../decisions/0061-confirm-layered-contract-enforcement-realization.md) confirms this exact audited local self-hosting successor. Remote
 workflow activation was then observed successfully and its current
-protection limit recorded as remote Evidence. ADR 0062 confirms the exact
+protection limit recorded as remote Evidence. [ADR 0062](../../decisions/0062-confirm-remote-workflow-activation-boundary.md) confirms the exact
 successor Realization account without claiming that the protected gate exists.
-ADR 0063 completes NKF-011 for that delivered enforcement scope and transfers
-protected-gate activation and proof to deferred NKF-012.
+[ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) completes [NKF-011](../../tasks/completed/NKF-011-enforce-nkf-contracts.md) for that delivered enforcement scope and transfers
+protected-gate activation and proof to deferred [NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
 
-NKF-008 adds its adopted Design, Decisions, current Realization, audit
+[NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) adds its adopted Design, Decisions, current Realization, audit
 Evidence, release rebinding, adopter, public-documentation projection, focused
 tests, and consumer exercise. The pre-closure candidate contained 98 record
 declarations, 54 explicit non-record sources, and 95 governed artifacts. The
 confirmed successor contains 99 record declarations, 57
 explicit non-record sources, and 109 governed artifacts, including the
 complete public Product and Technology example trees. Every Markdown file
-under `knowledge` remains represented exactly once. ADR 0066 confirms the
+under `knowledge` remains represented exactly once. [ADR 0066](../../decisions/0066-confirm-release-documentation-and-adoption.md) confirms the
 successor after live publication and final audit.
 
-NKF-013 adds its completed and deferred Tasks, adopted onboarding Design,
+[NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) adds its completed and deferred Tasks, adopted onboarding Design,
 adopting Decision, current onboarding Realization, provider-neutral
 pre-adoption guidance, deterministic onboarding core, expanded adopter,
 transaction and boundary tests, public onboarding documentation, and exact
@@ -69,7 +69,7 @@ artifact bindings. The confirmed completion state contains 103 record
 declarations, 60 explicit non-record sources, and 119 governed artifacts.
 The separate completion Evidence, final Decision, and completed Task account
 for the two successor knowledge entries beyond the pre-confirmation candidate.
-ADR 0068 confirms this exact audited self-hosting revision.
+[ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md) confirms this exact audited self-hosting revision.
 
 ## Responsibilities And Ownership Boundaries
 
@@ -98,7 +98,7 @@ Every applicable enforcement integration file is declared as a Technology
 The registry and verifier apply an additional fail-closed regular-file rule to
 instruction adapters and portable skills.
 
-Every applicable NKF-008 adopter source, deterministic build and verification
+Every applicable [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) adopter source, deterministic build and verification
 tool, public documentation source and mirror, focused test, and consumer
 workflow is declared as a Technology `governed_artifact` and bound to the
 Release Documentation And Adoption Realization.
@@ -115,7 +115,7 @@ Self-hosting validates the repository snapshot only. It does not accept NKF,
 confirm the implementation, publish a release, infer remote Git or Github
 state, activate branch protection, or migrate consumers. Remote workflow and
 protection observations remain sourced from Github and retained as Evidence.
-Deferred NKF-012 owns the unavailable required check, mandatory
+Deferred [NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md) owns the unavailable required check, mandatory
 pull-request approval, bypass policy, and blocked-invalid-candidate proof.
 
 The persisted result is latest-run state rather than historical knowledge.
@@ -138,14 +138,14 @@ The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
 records no unresolved material local-implementation finding. The latest
 persisted result covers the new Governed Validation Inputs but remains a
-conformance observation rather than the source of confirmation. ADR 0061
-supplies the separate local confirmation act, and ADR 0062 confirms the exact
+conformance observation rather than the source of confirmation. [ADR 0061](../../decisions/0061-confirm-layered-contract-enforcement-realization.md)
+supplies the separate local confirmation act, and [ADR 0062](../../decisions/0062-confirm-remote-workflow-activation-boundary.md) confirms the exact
 successor account of remote workflow activation and the protection blocker.
-ADR 0063 confirms the successor Task allocation and current counts without
+[ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) confirms the successor Task allocation and current counts without
 claiming protected enforcement.
 The
 [NKF-008 Completion Audit](../../evidence/audits/nkf-008-completion-audit.md)
-records no unresolved material successor finding, and ADR 0066 confirms the
+records no unresolved material successor finding, and [ADR 0066](../../decisions/0066-confirm-release-documentation-and-adoption.md) confirms the
 release, documentation, consumer, integration, and self-hosting account
 without turning publication or conformance into confirmation.
 Recovery uses predecessor declarations and reviewed artifact digests in Git
@@ -154,4 +154,4 @@ rather than regenerating semantic content heuristically.
 The later
 [NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
 records the exact local, remote, public, coverage, recovery, and deferred-scope
-review. ADR 0068 supplies the separate confirmation act for this revision.
+review. [ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md) supplies the separate confirmation act for this revision.

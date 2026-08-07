@@ -10,16 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0013
+implementation_evidence: imported NKF-002 record schema and TypeScript types; neither is authority
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Native Record Serialization
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-- **Implementation evidence:** imported NKF-002 record schema and TypeScript
-  types; neither is authority
 
 ## Decision Sought
 

@@ -13,14 +13,14 @@ task: NKF-017
 
 ## Context And Problem
 
-The confirmed NKF-013 and NKF-015 onboarding realization creates a valid
+The confirmed [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) and [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) onboarding realization creates a valid
 minimum Draft bundle. Exercise against Nourd Agent SDK showed that this leaves
 the knowledge tree materially smaller than the lifecycle structure people and
 agents expect to navigate. When an existing `knowledge/README.md` is present,
 the predecessor also allocates `README-2.md`, leaving two apparent entry
 points.
 
-The Human Product Owner directed NKF-017 to establish a complete portable
+The Human Product Owner directed [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) to establish a complete portable
 topology for the currently supported Product and Technology onboarding path.
 The exact proposal was independently audited, reduced to five consequential
 boundaries, and adopted by the Human Product Owner on
@@ -65,10 +65,10 @@ This Decision governs the successor NKF 0.1 Specification revision,
 executable companion, Schemas, checker, onboarding and repair workflows,
 receipts, fixtures, integrations, skills, public documentation, self-hosting
 migration, compatibility guidance, and Realization knowledge required by
-NKF-017.
+[NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md).
 
 It applies to Category 1 and Category 2 Product and Technology onboarding.
-Later repository categories remain deferred to NKF-014. It does not authorize
+Later repository categories remain deferred to [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md). It does not authorize
 mutation of Nourd Agent SDK or another consumer repository.
 
 ## Rationale
@@ -133,7 +133,7 @@ agent guidance, public documentation, fixtures, and Product and Technology
 exercises.
 
 The exact successor Realization must pass `npm run nkf:check`, then undergo the
-whole-repository audit required by NKF-017. A separate Decision must confirm
+whole-repository audit required by [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md). A separate Decision must confirm
 the audited Realization before Task completion or release.
 
 ## Non-Claims
@@ -144,6 +144,6 @@ This Decision does not:
 - implement or confirm the successor Realization;
 - make the current worktree conform to the proposed successor contract;
 - migrate or conform a consumer repository;
-- define the deferred NKF-014 categories;
+- define the deferred [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) categories;
 - publish or release an artifact; or
 - establish remote protected-branch enforcement.

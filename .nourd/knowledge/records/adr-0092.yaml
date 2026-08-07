@@ -1,13 +1,13 @@
 contract: nkf.record
-id: adr-0091
+id: adr-0092
 type: decision
 body_contract: nkf.decision
-title: "ADR 0091: Bind The Deep Link Release Checker"
+title: "ADR 0092: Accept The Final Pair"
 source:
-  path: decisions/0091-bind-the-deep-link-release-checker.md
+  path: decisions/0092-accept-the-final-pair.md
   digest:
     algorithm: sha-256
-    value: fdc467725e6456edf241040b842175a90628c91b253d6a48f3d729efdc7afb60
+    value: 80b0830510b897c8b089401e86681f7d3643ebc91bdd628d8b4843ca17c5aec8
 governance:
   lifecycle: immutable
   status: accepted

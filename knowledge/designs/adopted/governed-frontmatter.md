@@ -10,16 +10,13 @@ task: NKF-010
 design_disposition: adopted
 design_decisions:
   - adr-0058
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Governed Frontmatter
 
-- **Task:** `NKF-010`
-- **Design Disposition:** Adopted
-- **Adopting Decision:** `ADR-0058`
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** This Design proposes the exact realization of the
-  accepted frontmatter direction. ADR 0058 adopts it, while current normative
+  accepted frontmatter direction. [ADR 0058](../../decisions/0058-governed-frontmatter.md) adopts it, while current normative
   meaning belongs to the NKF 0.1 Specification.
 
 ## Design Kind Problem And Scope

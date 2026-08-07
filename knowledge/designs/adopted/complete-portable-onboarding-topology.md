@@ -28,8 +28,8 @@ of `README-2.md`, creating two apparent knowledge maps.
 
 The Design covers Category 1 and Category 2 Product and Technology onboarding,
 continuing topology conformance, and deliberate repair of repositories created
-by the confirmed NKF-013 or NKF-015 predecessor. It does not define the later
-repository categories owned by NKF-014 or authorize mutation of Agent SDK.
+by the confirmed [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor. It does not define the later
+repository categories owned by [NKF-014](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) or authorize mutation of Agent SDK.
 
 ## Governing Inputs And Constraints
 
@@ -246,7 +246,7 @@ to fail when the contract is no longer satisfied.
 ### Predecessor Repair
 
 The adopter adds an explicit `repair-topology` workflow for a repository with
-a valid NKF-013 or NKF-015 onboarding receipt. It does not repeat semantic
+a valid [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) onboarding receipt. It does not repeat semantic
 category assessment or initial adoption.
 
 Repair inspects the current adopted project, constructs a candidate outside
@@ -265,7 +265,7 @@ migration plan rather than automatic repair. Agent SDK remains outside this
 Task until its authority separately directs that consumer migration.
 
 The NKF repository itself does not rely on the consumer repair command. As the
-self-hosted Technology authority and first successor implementation, NKF-017
+self-hosted Technology authority and first successor implementation, [NKF-017](../../tasks/completed/NKF-017-complete-portable-onboarding-topology.md)
 must deliberately add its missing portable indexes, reconcile its navigation,
 update native declarations, and validate that exact migration before the
 successor can be confirmed.
@@ -389,7 +389,7 @@ Task completion or release.
 
 ## Unresolved Matters
 
-ADR 0071 resolves the exact Common path set, profile additions, continuing
+[ADR 0071](../../decisions/0071-complete-portable-onboarding-topology.md) resolves the exact Common path set, profile additions, continuing
 conformance, canonical-map reconciliation, and trusted-receipt predecessor
 repair boundaries. No unresolved Design matter blocks derivation of the
 successor Specification and Realization.

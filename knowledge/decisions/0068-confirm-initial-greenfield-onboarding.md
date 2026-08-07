@@ -11,18 +11,16 @@ task: NKF-013
 
 # ADR 0068: Confirm Initial Greenfield Onboarding
 
-- **Status:** Accepted
-- **Task:** `NKF-013`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit delegation to complete, independently audit, confirm,
-  commit, and push NKF-013
-- **Predecessor:** ADR 0067
+  commit, and push [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md)
+- **Predecessor:** [ADR 0067](0067-initial-greenfield-onboarding.md)
 
 ## Context And Problem
 
-ADR 0067 adopts deterministic, AI-neutral initial onboarding for empty and
+[ADR 0067](0067-initial-greenfield-onboarding.md) adopts deterministic, AI-neutral initial onboarding for empty and
 small-document Product and Technology repositories. It does not implement or
-confirm that direction. NKF-013 can complete only after the exact successor
+confirm that direction. [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) can complete only after the exact successor
 implementation satisfies its full validation matrix, an adversarial audit
 repairs every material finding, external execution and public-byte facts are
 recorded separately, and an authorized Decision confirms the resulting
@@ -35,11 +33,11 @@ Realizations:
 
 | Record | Source | Confirmed SHA-256 |
 | --- | --- | --- |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `2a868eb2e5180089f18aeba63851bf261877e5c9d61bf875371b3eaab5364199` |
-| `nkf-initial-greenfield-onboarding` | `knowledge/realizations/current/initial-greenfield-onboarding.md` | `ee93d89964c09a57fae98b8669284501bcd95b8101d132c04bd4b3e34336ce3f` |
-| `nkf-release-documentation-and-adoption` | `knowledge/realizations/current/release-documentation-and-adoption.md` | `0212edf11aeb80c92b8c75b719433c68bab44a5a30ca8b3422eccd8bf0b92675` |
-| `nkf-layered-contract-enforcement` | `knowledge/realizations/current/layered-contract-enforcement.md` | `811ed5c3544d890ad3fe1efcf40187478286bc6908350562342549bbe0563044` |
-| `nkf-self-hosting` | `knowledge/realizations/current/self-hosting.md` | `0eb18f6477db9f9820055313c8dd96e69fcee000325ba8ceb04240b671c3a81a` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `2a868eb2e5180089f18aeba63851bf261877e5c9d61bf875371b3eaab5364199` |
+| [`nkf-initial-greenfield-onboarding`](../realizations/current/initial-greenfield-onboarding.md) | `knowledge/realizations/current/initial-greenfield-onboarding.md` | `ee93d89964c09a57fae98b8669284501bcd95b8101d132c04bd4b3e34336ce3f` |
+| [`nkf-release-documentation-and-adoption`](../realizations/current/release-documentation-and-adoption.md) | `knowledge/realizations/current/release-documentation-and-adoption.md` | `0212edf11aeb80c92b8c75b719433c68bab44a5a30ca8b3422eccd8bf0b92675` |
+| [`nkf-layered-contract-enforcement`](../realizations/current/layered-contract-enforcement.md) | `knowledge/realizations/current/layered-contract-enforcement.md` | `811ed5c3544d890ad3fe1efcf40187478286bc6908350562342549bbe0563044` |
+| [`nkf-self-hosting`](../realizations/current/self-hosting.md) | `knowledge/realizations/current/self-hosting.md` | `0eb18f6477db9f9820055313c8dd96e69fcee000325ba8ceb04240b671c3a81a` |
 
 The separate
 `knowledge/evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md`
@@ -48,7 +46,7 @@ revision with SHA-256
 supports this review. It remains Evidence and cannot confirm a Realization by
 itself.
 
-NKF-013 is Completed for:
+[NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) is Completed for:
 
 1. deterministic inspection and stale-plan rejection over the relevant
    project surface;
@@ -78,7 +76,7 @@ adopter remains a separately digest-bound derived artifact.
 Agent SDK was evaluated against the accepted eligibility rule. Its mature
 Task, Design, Decision, and acceptance history makes it ineligible for this
 greenfield path, so it remains unmodified and is deliberately deferred to
-NKF-014 rather than used to expand NKF-013.
+[NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) rather than used to expand [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md).
 
 ## Rationale
 
@@ -98,14 +96,14 @@ Realization accounts sufficiently evidenced for the delegated reviewer to
 confirm them, but the authority act remains this Decision rather than any
 check, workflow, publication, or Git operation.
 
-The inspect-plan-apply boundary preserves a deliberate NKF-014 seam: later
+The inspect-plan-apply boundary preserves a deliberate [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) seam: later
 analyzers, provenance reconstruction, checkpointing, resumability, and
 advanced recovery may produce richer resolved candidates before the same
 fail-closed validation and transactional application boundary.
 
 ## Alternatives Considered
 
-Completing NKF-013 after the first locally green candidate was rejected
+Completing [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) after the first locally green candidate was rejected
 because independent inspection found material safety and remote-runtime gaps.
 
 Forcing Agent SDK through the initial path was rejected because corpus size
@@ -120,7 +118,7 @@ confirmation was rejected because operational systems and validation do not
 exercise semantic confirmation authority.
 
 Expanding the Task into reconstruction, long-lived resumability, or protected
-merge enforcement was rejected because NKF-014 and NKF-012 own those distinct
+merge enforcement was rejected because [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) and [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md) own those distinct
 boundaries.
 
 ## Consequences And Trade-Offs
@@ -132,12 +130,12 @@ explicit semantic-plan review before application.
 
 The initial path remains intentionally narrow. Repositories with mature
 lifecycle knowledge, large or complex corpora, source-derived reconstruction
-needs, or advanced interrupted-state recovery receive an explicit NKF-014
+needs, or advanced interrupted-state recovery receive an explicit [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
 deferral instead of an unsafe partial migration.
 
 The confirmed self-host state contains 103 record declarations, 60 explicit
 non-record sources, and 119 governed artifacts. The protected `master` gate
-remains unavailable and unconfirmed under deferred NKF-012.
+remains unavailable and unconfirmed under deferred [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
 
 ## Non-Claims
 
@@ -147,7 +145,7 @@ This Decision does not:
   consumer project;
 - infer Product or Technology meaning from source code, paths, or prose;
 - onboard or modify Agent SDK;
-- activate NKF-014 or promise backward-compatible operational plan additions;
+- activate [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) or promise backward-compatible operational plan additions;
 - make external Github state, package state, or public repository state part
   of native NKF authority;
 - publish a new native NKF 0.1 release archive;

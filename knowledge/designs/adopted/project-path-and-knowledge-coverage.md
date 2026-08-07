@@ -10,15 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0018
+proposal_authority_effect: None by itself. ADR 0018 later adopted the proposed direction and records the governing Decision.
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Project Path And Knowledge Coverage
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None by itself. ADR 0018 later adopted the
-  proposed direction and records the governing Decision.
 - **Supersedes within this design:** the earlier unaccepted abstract
   distribution-root, fixed `knowledge/`, variable records-root, no-symlink,
   and cross-platform filename proposals

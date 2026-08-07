@@ -7,22 +7,19 @@ created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit dynamic-root feature delegation
 ---
 
 # ADR 0052: Confirm Dynamic Root And Self-Hosting Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit dynamic-root feature delegation
 - **Normative Markdown Digest:** `sha256:8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50`
 - **Executable YAML Digest:** `sha256:fd60ad052ff5b58a20b285fec03aede560cd84d18221f7b2d88b7db7fdf67dbd`
 - **Portable Checker Digest:** `sha256:9d7f63778c8794ef5326b4704d0daac5c6eac7e65c5df17bd4c95d19d1fd8f57`
 
 ## Context
 
-ADR 0050 accepts the exact Common, Product, and Technology authority pair.
-ADR 0051 accepts the bounded heading-only migration required to represent
+[ADR 0050](0050-product-and-technology-profiles.md) accepts the exact Common, Product, and Technology authority pair.
+[ADR 0051](0051-self-hosting-source-migration.md) accepts the bounded heading-only migration required to represent
 legacy NKF knowledge as native records without weakening Title Case or hiding
 the earlier source revisions.
 
@@ -97,7 +94,7 @@ after this Decision and is not authority for the confirmation recorded here.
 
 ## Separation Of Claims
 
-ADR 0050 supplies semantic acceptance. This Decision supplies confirmed
+[ADR 0050](0050-product-and-technology-profiles.md) supplies semantic acceptance. This Decision supplies confirmed
 derived realization. A current passing full-bundle result supplies
 conformance. These facts remain separate.
 

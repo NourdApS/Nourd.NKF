@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-NKF-019 produced the NKF 0.2 candidate authority pair realizing the adopted
+[NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) produced the NKF 0.2 candidate authority pair realizing the adopted
 Decision Applicability Gate direction together with the directed versioning,
 process-boundary, and frontmatter corrections of ADRs 0076 through 0080. The
 release protocol requires Human Product Owner acceptance of the exact pair
@@ -36,7 +36,7 @@ authority pair:
   binding that exact Markdown digest.
 
 Those exact bytes are canonical NKF 0.2. The pair governs a repository only
-when it deliberately declares `nkf_version` `0.2`. NKF 0.1 under ADR 0073
+when it deliberately declares `nkf_version` `0.2`. NKF 0.1 under [ADR 0073](0073-correct-portable-topology-diagnostic-registry.md)
 remains immutable authority for repositories that declare NKF 0.1, including
 this repository until it adopts 0.2.
 

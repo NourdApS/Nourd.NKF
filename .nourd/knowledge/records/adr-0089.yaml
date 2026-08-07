@@ -7,7 +7,7 @@ source:
   path: decisions/0089-title-equality-deep-links-and-design-orientation.md
   digest:
     algorithm: sha-256
-    value: 605e0d7d1df90a0603fc28806c8b5ac723a0c80f95050c0eb41a0f47f071d163
+    value: d19567287a9f28abff42391f017b7396697346affec84880445c890eb0ebcd71
 governance:
   lifecycle: immutable
   status: accepted

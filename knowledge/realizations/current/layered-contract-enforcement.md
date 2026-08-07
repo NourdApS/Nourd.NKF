@@ -18,13 +18,13 @@ confirmation_decisions:
 ## Realization Identity And Kind
 
 This Realization maps the repository implementation of the direction adopted
-by ADR 0060. It describes durable integration artifacts and their current
+by [ADR 0060](../../decisions/0060-layered-contract-enforcement.md). It describes durable integration artifacts and their current
 implementation status. It is not normative NKF meaning, an acceptance act, a
 confirmation act, or live Github state.
 
 ## Governed Meaning Realized
 
-ADR 0060 adopts one vendor-neutral CommonMark authoring protocol, thin
+[ADR 0060](../../decisions/0060-layered-contract-enforcement.md) adopts one vendor-neutral CommonMark authoring protocol, thin
 agent-host-surface adapters, byte-identical portable skill representations,
 one deterministic project command, exact-commit continuous integration, and a
 separately activated protected merge gate.
@@ -33,25 +33,25 @@ The implementation applies accepted NKF 0.1 meaning without revising the
 Specification, executable YAML companion, Root Profiles, or conformance
 definition.
 
-ADR 0063 completes NKF-011 for the implemented and confirmed authoring,
+[ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) completes [NKF-011](../../tasks/completed/NKF-011-enforce-nkf-contracts.md) for the implemented and confirmed authoring,
 local-validation, and exact-commit workflow scope. It transfers activation
 and proof of the separately governed protected merge gate to deferred
-NKF-012.
+[NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
 
-NKF-008 preserves the exact `npm run nkf:check` interface and adds
+[NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) preserves the exact `npm run nkf:check` interface and adds
 deterministic adopter-build and public-documentation verification inside that
 command. It also adds a separately dispatched consumer-adoption exercise
-workflow. ADR 0066 confirms the successor package and workflow account after
+workflow. [ADR 0066](../../decisions/0066-confirm-release-documentation-and-adoption.md) confirms the successor package and workflow account after
 the final audit and successful exact-release remote exercise.
 
-NKF-013 adds a separate provider-neutral pre-adoption protocol, portable skill,
+[NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) adds a separate provider-neutral pre-adoption protocol, portable skill,
 and integrity verifier before the existing authoring procedure. The canonical
-command now verifies both guidance boundaries. ADR 0068 confirms the exact
+command now verifies both guidance boundaries. [ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md) confirms the exact
 audited successor after separate remote workflow and public-projection
 observations were recorded.
 
-NKF-015 replaces deterministic semantic onboarding eligibility with the
-agent-led workflow adopted by ADR 0069 while retaining the same deterministic
+[NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) replaces deterministic semantic onboarding eligibility with the
+agent-led workflow adopted by [ADR 0069](../../decisions/0069-agent-led-initial-onboarding.md) while retaining the same deterministic
 output gate. The NKF repository additionally requires explicit human
 direction before an agent creates, opens, or begins a Task. That instruction
 is bounded repository policy in `AGENTS.md`; it is not portable NKF protocol
@@ -74,7 +74,7 @@ meaning and is not copied into the neutral protocol or portable skills.
 | Pre-adoption skills | `.agents/skills/nkf-onboarding/SKILL.md` and `.claude/skills/nkf-onboarding/SKILL.md` | Byte-identical portable discovery routes |
 | Pre-adoption verifier | `scripts/verify-onboarding-guidance.mjs` | Exact skill equality, required procedure, and provider-neutrality checks |
 | Local command | `package.json` | `npm run nkf:check`, now verifying authoring guidance, onboarding guidance, engineering, builds, public projection, release catalog, and full bundle |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to NKF-012 |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Present on remote `master`; exact-commit push run passed; required protection unavailable and deferred to [NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md) |
 | Consumer exercise workflow | `.github/workflows/nkf-consumer-adoption.yml` | Separately dispatched exact-release exercise; successor run `30628889305` passed on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130` without annotations |
 | Negative verification | `test/agent-guidance.test.ts` | Eighteen focused cases covering missing, divergent, unregistered, nested, symlinked, stale, vendor-specific, lifecycle-wrapper, and workflow-weakening failures |
 | Pre-adoption verification | `test/onboarding-guidance.test.ts` and `test/adopter.test.ts` | Two guidance-integrity cases plus eleven initial-onboarding, transaction, path, surface-drift, compatibility, and tamper cases |
@@ -138,7 +138,7 @@ because the repository is private under the current plan. Required-check
 protection, review ownership, bypass policy, and a blocked intentionally
 invalid candidate therefore remain unavailable and unconfirmed. Completing
 the protected gate requires Github Pro or a separately governed change to
-public repository visibility. Deferred NKF-012 requires the exact `Validate`
+public repository visibility. Deferred [NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md) requires the exact `Validate`
 check, at least one approving pull-request review, an explicit bypass policy,
 and an observed blocked invalid candidate when that capability becomes
 available.
@@ -150,9 +150,9 @@ confirmation even when candidate continuous integration passes.
 
 The predecessor consumer-adoption path is active for deliberately authorized
 Product and Technology repositories through the separately verified private
-release owned by NKF-008. The workflow observation is retained in
+release owned by [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md). The workflow observation is retained in
 [consumer workflow Evidence](../../evidence/audits/nkf-008-consumer-workflow-execution.md).
-The NKF-013 successor extends that exercise to initial Product and Technology
+The [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) successor extends that exercise to initial Product and Technology
 onboarding. Consumer run `30628889305` and contract run `30628878063` both
 passed on exact commit `b50493ddb42c87ed426eeb3bb11d3568652d8130`
 with empty annotation sets. The governed workflow pins use current immutable
@@ -169,34 +169,34 @@ integrity failures.
 
 The canonical command also exited nonzero when exercised against a temporary
 unrepresented Markdown source, demonstrating that the author identity does
-not alter the output gate. The NKF-008 successor passes `npm run nkf:check`,
+not alter the output gate. The [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) successor passes `npm run nkf:check`,
 eighteen test files with 126 tests, deterministic checker and adopter build
 verification, two checker-conformant complete public examples, and
 full-bundle self-validation.
 
-The NKF-013 successor passes nineteen test files with 135 tests,
+The [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) successor passes nineteen test files with 135 tests,
 the separate onboarding-guidance verifier, a local unborn-Git Product and
 Technology exercise through the installed package command, deterministic
 adopter verification, and full-bundle self-validation. The exact-commit
 contract and consumer workflows separately passed without annotations.
 
-The NKF-015 successor keeps the four-adapter and twelve-surface authoring
+The [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) successor keeps the four-adapter and twelve-surface authoring
 shape, rebinds the authorized bounded root instruction, and verifies the
 agent-led onboarding procedure separately. Its final test, publication, and
-exact-worktree observations are recorded by the NKF-015 completion Evidence.
-ADR 0070 confirms this exact successor separately; the observations do not
+exact-worktree observations are recorded by the [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) completion Evidence.
+[ADR 0070](../../decisions/0070-confirm-agent-led-initial-onboarding.md) confirms this exact successor separately; the observations do not
 confirm it by themselves.
 
 The separate
 [NKF-011 Realization Audit](../../evidence/audits/nkf-011-layered-contract-enforcement-realization-audit.md)
 records no unresolved material local-implementation finding. These results
-establish conformance Evidence only. ADR 0061 independently confirms the
-local implementation through delegated technical-review authority. ADR 0062
+establish conformance Evidence only. [ADR 0061](../../decisions/0061-confirm-layered-contract-enforcement-realization.md) independently confirms the
+local implementation through delegated technical-review authority. [ADR 0062](../../decisions/0062-confirm-remote-workflow-activation-boundary.md)
 confirms this exact successor account of the observed remote workflow and
-protection limit. ADR 0063 confirms this later Task-allocation successor and
-completes NKF-011 without claiming the protected gate. The protected remote
-hard gate remains unconfirmed under deferred NKF-012. ADR 0066 confirms only
-the NKF-008 successor command and consumer-workflow account.
+protection limit. [ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) confirms this later Task-allocation successor and
+completes [NKF-011](../../tasks/completed/NKF-011-enforce-nkf-contracts.md) without claiming the protected gate. The protected remote
+hard gate remains unconfirmed under deferred [NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md). [ADR 0066](../../decisions/0066-confirm-release-documentation-and-adoption.md) confirms only
+the [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) successor command and consumer-workflow account.
 
 Recovery restores reviewed artifact bytes and registry digests from Git,
 reruns `npm run nkf:check`, and uses a later governed successor when accepted
@@ -206,5 +206,5 @@ enforcement-surface revision.
 The
 [NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
 records the workflow-runtime finding, exact pin repair, and successor remote
-observations. ADR 0068 separately confirms this exact revision rather than
+observations. [ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md) separately confirms this exact revision rather than
 deriving confirmation from the green runs.

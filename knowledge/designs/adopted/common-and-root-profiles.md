@@ -11,20 +11,16 @@ design_disposition: adopted
 design_decisions:
   - adr-0049
   - adr-0050
+proposal_authority_effect: ADR 0049 accepts the architecture only. Every exact contract, identity, serialization, extraction, validation, artifact, and migration detail below remains proposed.
 ---
 
 # NKF 0.1 Common And Root Profile Proposal
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Governing Direction:** `ADR 0049`
-- **Proposal Authority Effect:** ADR 0049 accepts the architecture only. Every exact
-  contract, identity, serialization, extraction, validation, artifact, and
-  migration detail below remains proposed.
+- **Governing Direction:** [`ADR 0049`](../../decisions/0049-common-and-root-profiles.md)
 
 ## Purpose
 
-Develop the smallest coherent realization of ADR 0049: specify repeated NKF
+Develop the smallest coherent realization of [ADR 0049](../../decisions/0049-common-and-root-profiles.md): specify repeated NKF
 mechanics once, require one concrete profile for every knowledge root, preserve
 Product meaning, and make later profile-specific specifications and validators
 possible without redesigning the bundle envelope.

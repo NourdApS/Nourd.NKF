@@ -7,13 +7,11 @@ created_at: 2026-07-28T22:01:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0001: Establish Independent NKF Shared Technology Authority
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation in the Nourd Agent SDK
   design discussion on 28 July 2026
 

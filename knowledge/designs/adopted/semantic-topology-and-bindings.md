@@ -10,18 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0015
+proposal_evidence: imported NKF-002 checker contract set at `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`, SHA-256 `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Semantic-Topology And Binding Vocabularies
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-- **Proposal evidence:** imported NKF-002 checker contract set at
-  `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`,
-  SHA-256
-  `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8`
 
 ## Decision Sought
 
@@ -199,7 +193,7 @@ profile may add namespaced kinds or relationship types only through a
 separately accepted extension boundary. Unknown required meaning fails closed.
 
 Changing a value's meaning, removing a value, changing body ownership, or
-weakening a constraint is an NKF format change governed by ADR 0006.
+weakening a constraint is an NKF format change governed by [ADR 0006](../../decisions/0006-pre-stable-evolution.md).
 
 ## Exact Confirmation Requested
 

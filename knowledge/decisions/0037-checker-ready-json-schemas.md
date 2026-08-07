@@ -7,21 +7,17 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
 ---
 
 # ADR 0037: Confirm Checker-Findings-Resolved Json Schema Bindings
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's authorization to approve exact derived revisions after
-  independent review
-- **Accepted Source Pair:** ADR 0036
+- **Accepted Source Pair:** [ADR 0036](0036-checker-ready-authority-pair.md)
 
 ## Context
 
-ADR 0036 accepts and promotes the exact NKF 0.1 Markdown/YAML pair that
-realizes ADRs 0034 and 0035. The schemas confirmed by ADR 0033 retain their
+[ADR 0036](0036-checker-ready-authority-pair.md) accepts and promotes the exact NKF 0.1 Markdown/YAML pair that
+realizes ADRs 0034 and 0035. The schemas confirmed by [ADR 0033](0033-yaml-grammar-schema-bindings.md) retain their
 assertion meaning, but their `x-nkf-source` metadata binds the historical
 source pair.
 
@@ -40,7 +36,7 @@ The reviewer audited:
 - [`../evidence/decision-inputs/adr-0036-0037/nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json`](../evidence/decision-inputs/adr-0036-0037/nkf-0.1-checker-findings-resolved-validation-result-schema-proposal.json).
 
 Duplicate-aware JSON parsing passed. Removing `x-nkf-source` from each
-proposal produces an object byte-structurally equal to its ADR 0033 schema.
+proposal produces an object byte-structurally equal to its [ADR 0033](0033-yaml-grammar-schema-bindings.md) schema.
 All three compile strictly with Ajv `8.20.0` and `ajv-formats` `3.0.1` and
 pass 32 renewed focused probes.
 

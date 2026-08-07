@@ -11,21 +11,19 @@ task: NKF-015
 
 # ADR 0070: Confirm Agent-Led Initial Onboarding
 
-- **Status:** Accepted
-- **Task:** `NKF-015`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit authorization to independently verify, confirm, commit,
-  push, publish, and close NKF-015
-- **Predecessor:** ADR 0069
+  push, publish, and close [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md)
+- **Predecessor:** [ADR 0069](0069-agent-led-initial-onboarding.md)
 
 ## Context And Problem
 
-ADR 0069 adopts agent-led semantic assessment for the two supported initial
+[ADR 0069](0069-agent-led-initial-onboarding.md) adopts agent-led semantic assessment for the two supported initial
 onboarding categories while retaining deterministic mechanical capture,
 sealing, application, rollback, and validation. It does not implement or
 confirm that direction.
 
-NKF-015 can complete only after its exact successor implementation satisfies
+[NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) can complete only after its exact successor implementation satisfies
 the accepted requirement matrix, an independent audit records and resolves
 every material finding, the deliberate recommendation and public projection
 are published and freshly verified, and an authorized Decision confirms the
@@ -39,10 +37,10 @@ Realizations:
 
 | Record | Source | Confirmed SHA-256 |
 | --- | --- | --- |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `24f59bcf284e283f18bb81449a36786a22cf16d68bc8856462916835f8692cf8` |
-| `nkf-agent-led-initial-onboarding` | `knowledge/realizations/current/agent-led-initial-onboarding.md` | `c7f00c0a31e76693febc74c11128a79d4794eac77278cd7c5d73a0b1abe76e39` |
-| `nkf-layered-contract-enforcement` | `knowledge/realizations/current/layered-contract-enforcement.md` | `c579a94ef6d19563f180d7d7a0e768ca18cba9636d5adc9f153ea1383a797452` |
-| `nkf-release-documentation-and-adoption` | `knowledge/realizations/current/release-documentation-and-adoption.md` | `34475ad4d7313a0ca7e7be6d14ebbf53bd419d90e9db118b95c3ee0a2bf3fc4c` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `24f59bcf284e283f18bb81449a36786a22cf16d68bc8856462916835f8692cf8` |
+| [`nkf-agent-led-initial-onboarding`](../realizations/current/agent-led-initial-onboarding.md) | `knowledge/realizations/current/agent-led-initial-onboarding.md` | `c7f00c0a31e76693febc74c11128a79d4794eac77278cd7c5d73a0b1abe76e39` |
+| [`nkf-layered-contract-enforcement`](../realizations/current/layered-contract-enforcement.md) | `knowledge/realizations/current/layered-contract-enforcement.md` | `c579a94ef6d19563f180d7d7a0e768ca18cba9636d5adc9f153ea1383a797452` |
+| [`nkf-release-documentation-and-adoption`](../realizations/current/release-documentation-and-adoption.md) | `knowledge/realizations/current/release-documentation-and-adoption.md` | `34475ad4d7313a0ca7e7be6d14ebbf53bd419d90e9db118b95c3ee0a2bf3fc4c` |
 
 The independent completion audit at
 `knowledge/evidence/audits/nkf-015-agent-led-initial-onboarding-audit.md`
@@ -54,7 +52,7 @@ SHA-256
 `e9f5ea892826311a97563277fc72721cc9c681c89b87d31aee3a7d39b08c16c6`.
 Both support this review; neither can confirm a Realization by itself.
 
-NKF-015 is Completed for:
+[NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) is Completed for:
 
 1. complete agent-led assessment of unadopted Empty and Tiny Knowledge
    repositories through one portable, vendor-neutral procedure;
@@ -83,13 +81,13 @@ listed above. It confirms the current agent-led onboarding, release and
 documentation integration, layered enforcement, and consolidated
 current-system accounts.
 
-Consumer-repository onboarding is outside NKF-015. The Human Product Owner
+Consumer-repository onboarding is outside [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md). The Human Product Owner
 removed that operation from the Task and retained it for separate manual use.
 This Decision neither performs nor confirms any consumer onboarding.
 
 Category 3 through Category 10 criteria and their onboarding behavior remain
-deferred to NKF-014. Protected merge enforcement remains deferred to NKF-012,
-and acceptance-binding resolution remains deferred to NKF-016.
+deferred to [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md). Protected merge enforcement remains deferred to [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md),
+and acceptance-binding resolution remains deferred to [NKF-016](../tasks/deferred/NKF-016-deliver-acceptance-binding-verification.md).
 
 This Decision does not change the NKF 0.1 Specification, executable YAML
 companion, JSON Schemas, Root Profiles, checker bytes, native eight-file

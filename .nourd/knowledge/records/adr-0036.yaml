@@ -7,7 +7,7 @@ source:
   path: decisions/0036-checker-ready-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 0b9c6af595d284451ec5fe723b0151a8f786ce926624ec58fbddecbb54f96919
+    value: 9ba0fb7162c8822372d60bc063c4beebabfcca96a6e2cbb094e281710fc725b8
 governance:
   lifecycle: immutable
   status: accepted

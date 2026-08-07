@@ -7,7 +7,7 @@ source:
   path: decisions/0024-deterministic-markdown-structure-and-title-case.md
   digest:
     algorithm: sha-256
-    value: 45cdc50af569a268868306f9b175d59eb82893036abd42f62086dac075e19c37
+    value: 63105470859cc31552420ad1f53d575367afcb7ce35f703ad034625a49ad9e7c
 governance:
   lifecycle: immutable
   status: accepted

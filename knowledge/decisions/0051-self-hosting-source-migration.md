@@ -7,14 +7,11 @@ created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit dynamic-root feature delegation
 ---
 
 # ADR 0051: Govern Self-Hosting Heading Migration
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit dynamic-root feature delegation
 - **Scope:** Mechanical NKF self-hosting migration only
 
 ## Context

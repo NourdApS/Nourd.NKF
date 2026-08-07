@@ -7,7 +7,7 @@ source:
   path: decisions/0055-design-responsibility-vocabulary.md
   digest:
     algorithm: sha-256
-    value: 481559d2d9b8fdd8282df4d330527ff3123867e7a1ef3ef134142649563f18ab
+    value: 08d0eeaff2f92aa1a72fff57091f9fb906ee2fcd04571d49aa2f56333ad455eb
 governance:
   lifecycle: immutable
   status: accepted

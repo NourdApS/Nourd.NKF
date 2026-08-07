@@ -11,17 +11,15 @@ task: NKF-011
 
 # ADR 0062: Confirm Remote Workflow Activation Boundary
 
-- **Status:** Accepted
-- **Task:** `NKF-011`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's prior delegated technical-confirmation instruction and current
-  authorization to execute NKF-011 through remote hard-gate activation
+  authorization to execute [NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md) through remote hard-gate activation
 - **Remote Evidence:**
   `knowledge/evidence/audits/nkf-011-remote-enforcement-activation.md`
 
 ## Context And Problem
 
-ADR 0061 confirms the exact local NKF-011 implementation while explicitly
+[ADR 0061](0061-confirm-layered-contract-enforcement-realization.md) confirms the exact local [NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md) implementation while explicitly
 leaving remote workflow presence, successful execution, protection, review,
 bypass control, and a blocked invalid pull request unconfirmed.
 
@@ -44,9 +42,9 @@ remote boundary:
 
 | Record | Source | Confirmed Candidate SHA-256 |
 | --- | --- | --- |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `a3936204043638af8cbe52e8da35b510382830119ffc28c2734a2ebf33a34183` |
-| `nkf-layered-contract-enforcement` | `knowledge/realizations/current/layered-contract-enforcement.md` | `36d1e9f3198a53bce3e0c1b7158129bcae53889f73fa0c6d497bf0ed00848561` |
-| `nkf-self-hosting` | `knowledge/realizations/current/self-hosting.md` | `646a0517975492c576e217d303da4487dca9c268c858761cb177cb4996fe580d` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `a3936204043638af8cbe52e8da35b510382830119ffc28c2734a2ebf33a34183` |
+| [`nkf-layered-contract-enforcement`](../realizations/current/layered-contract-enforcement.md) | `knowledge/realizations/current/layered-contract-enforcement.md` | `36d1e9f3198a53bce3e0c1b7158129bcae53889f73fa0c6d497bf0ed00848561` |
+| [`nkf-self-hosting`](../realizations/current/self-hosting.md) | `knowledge/realizations/current/self-hosting.md` | `646a0517975492c576e217d303da4487dca9c268c858761cb177cb4996fe580d` |
 
 This confirmation establishes that those revisions accurately state:
 
@@ -69,7 +67,7 @@ This Decision does not make external operational state immutable. A later
 plan, visibility, workflow, rule, run, or repository change requires fresh
 Evidence and a successor Realization before a new current claim is confirmed.
 
-NKF-011 remains Active. Completion still requires the required check,
+[NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md) remains Active. Completion still requires the required check,
 governed review and bypass controls, and an observed blocked intentionally
 invalid pull request.
 
@@ -127,6 +125,6 @@ This Decision does not:
 - establish that an invalid pull request was blocked;
 - make Github operational state part of NKF conformance;
 - change NKF 0.1 normative meaning;
-- complete NKF-011;
+- complete [NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md);
 - change repository visibility or subscription; or
 - publish, replace, or modify a release or consumer integration.

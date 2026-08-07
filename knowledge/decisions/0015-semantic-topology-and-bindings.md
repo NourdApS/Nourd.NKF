@@ -7,15 +7,13 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct informed confirmation to proceed in the
-  NKF-003 discussion on 29 July 2026
+  [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on 29 July 2026
 
 ## Context
 
@@ -63,7 +61,7 @@ A supported profile may add namespaced vocabulary only through a separately
 accepted extension boundary. Unknown required meaning fails closed.
 
 Changing a value's meaning, removing a value, changing body ownership, or
-weakening a constraint is an NKF format change governed by ADR 0006.
+weakening a constraint is an NKF format change governed by [ADR 0006](0006-pre-stable-evolution.md).
 
 ## Not Decided
 

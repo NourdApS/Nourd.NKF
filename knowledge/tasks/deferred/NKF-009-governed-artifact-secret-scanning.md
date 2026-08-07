@@ -4,13 +4,11 @@ summary: Determine and implement the correct security-scanning boundary for gove
 created_at: 2026-07-30T17:03:21Z
 task_id: NKF-009
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-009: Extend Secret Scanning Across Governed Artifacts
-
-- **Task:** `NKF-009`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
 
 ## Purpose
 
@@ -38,6 +36,19 @@ validation inputs that are not Markdown sources.
 
 ## Origin
 
-The NKF-007 audit confirmed that governed artifact bindings may participate in
-validation while the current secret scanner is source-oriented. NKF-007 keeps
+The [NKF-007](../completed/NKF-007-knowledge-structure-and-confirmation.md) audit confirmed that governed artifact bindings may participate in
+validation while the current secret scanner is source-oriented. [NKF-007](../completed/NKF-007-knowledge-structure-and-confirmation.md) keeps
 that limitation explicit and transfers broader enforcement here.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

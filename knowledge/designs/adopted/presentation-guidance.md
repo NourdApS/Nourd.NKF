@@ -10,14 +10,11 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0020
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Presentation-Guidance Boundary
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
 
 ## Recommendation
 
@@ -29,7 +26,7 @@ non-authoritative interface without copying display instructions into every
 native record declaration.
 
 When portable presentation metadata is genuinely needed, it should use a
-separately governed optional extension under ADR 0016. This decision would not
+separately governed optional extension under [ADR 0016](../../decisions/0016-extension-resolution.md). This decision would not
 create or accept such an extension.
 
 ## Boundary
@@ -56,7 +53,7 @@ depend on it.
 
 The replacement NKF 0.1 specification would clarify that its earlier allowance
 for deterministic presentation guidance is realized only through a supported
-optional extension. ADR 0013's native record shape remains unchanged.
+optional extension. [ADR 0013](../../decisions/0013-native-record-serialization.md)'s native record shape remains unchanged.
 
 ## Exact Confirmation Requested
 

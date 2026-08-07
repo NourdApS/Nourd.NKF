@@ -7,7 +7,7 @@ source:
   path: decisions/0012-nkf-0-1-artifact-authority.md
   digest:
     algorithm: sha-256
-    value: fdfe905f75f71036e9df5a5cc8f02d6cf796bc8046001453a021bff71f1a2147
+    value: 79bb5ae9d8252d8c319a2bf5656869906cc30ccba0befa9e4490f0b0fe3cf6a5
 governance:
   lifecycle: immutable
   status: accepted

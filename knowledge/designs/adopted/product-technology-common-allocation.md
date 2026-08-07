@@ -11,18 +11,15 @@ design_disposition: adopted
 design_decisions:
   - adr-0049
   - adr-0050
+proposal_authority_effect: None. The current Product specification is accepted; the Technology specification and every allocation below remain proposed.
 ---
 
 # NKF 0.1 Product–Technology Common Comparison
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Governing Architecture:** `ADR 0049`
+- **Governing Architecture:** [`ADR 0049`](../../decisions/0049-common-and-root-profiles.md)
 - **Product Source:** `knowledge/specifications/nkf-0.1.md`
 - **Technology Source:**
   `knowledge/designs/adopted/technology-root-profile.md`
-- **Proposal Authority Effect:** None. The current Product specification is accepted;
-  the Technology specification and every allocation below remain proposed.
 
 ## Purpose
 

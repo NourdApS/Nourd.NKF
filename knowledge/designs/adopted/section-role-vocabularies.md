@@ -10,18 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0014
+proposal_evidence: imported NKF-002 checker contract set at `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`, SHA-256 `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Section-Role Vocabularies
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-- **Proposal evidence:** imported NKF-002 checker contract set at
-  `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`,
-  SHA-256
-  `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8`
 
 ## Decision Sought
 
@@ -136,12 +130,12 @@ Order is editorial only and carries no semantic meaning.
 ## Compatibility
 
 These values belong to the sole NKF 0.1 version namespace and use the
-unversioned body identities accepted by ADR 0009. They do not preserve the
+unversioned body identities accepted by [ADR 0009](../../decisions/0009-nkf-0-1-version-namespace.md). They do not preserve the
 imported checker's `/v1` body identities as current support.
 
 Changing a role's meaning, removing a role, changing an allowed subset, or
 weakening a guardrail is an NKF format change. It requires the pre-stable
-change process in ADR 0006, an accepted replacement authority pair, compatible
+change process in [ADR 0006](../../decisions/0006-pre-stable-evolution.md), an accepted replacement authority pair, compatible
 derived artifacts, and deliberate consumer migration.
 
 ## Exact Confirmation Requested

@@ -7,15 +7,12 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
 ---
 
 # ADR 0022: Accept Coherent NKF 0.1 Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Codex technical reviewer, acting under explicit
-  delegation from the Human Product Owner, Nourd ApS
-- **Delegation source:** Direct instruction in the NKF-003 discussion on
+- **Delegation source:** Direct instruction in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   29 July 2026: the reviewer has permission to accept the pair if the reviewer
   approves it
 
@@ -28,7 +25,7 @@ diagnostics, and the current presentation boundary. The previously accepted
 Markdown/YAML pair predates those Decisions and remains an immutable
 historical snapshot rather than their coherent current realization.
 
-NKF-003 prepared one exact replacement Markdown specification and one
+[NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) prepared one exact replacement Markdown specification and one
 digest-bound YAML companion. Before exercising the delegated authority, the
 reviewer independently reverified:
 

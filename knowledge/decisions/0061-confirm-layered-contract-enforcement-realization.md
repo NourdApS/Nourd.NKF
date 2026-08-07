@@ -11,8 +11,6 @@ task: NKF-011
 
 # ADR 0061: Confirm Layered Contract Enforcement Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-011`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit instruction to confirm the exact local Realization through
   independent audit judgment
@@ -21,11 +19,11 @@ task: NKF-011
 
 ## Context And Problem
 
-ADR 0060 adopted the Layered Contract Enforcement Design without confirming
+[ADR 0060](0060-layered-contract-enforcement.md) adopted the Layered Contract Enforcement Design without confirming
 that its protocol, adapters, skills, registry, verifier, command, tests,
 workflow, bindings, or Realizations existed.
 
-NKF-011 produced the local reference implementation and a separate
+[NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md) produced the local reference implementation and a separate
 implementation audit. That audit found incomplete competing-instruction
 discovery and weaknesses in path, command, and workflow integrity checks. The
 candidate was repaired, retested, rebound, and reaudited until no unresolved
@@ -38,14 +36,14 @@ and does not supply that authority.
 ## Decision
 
 The authorized technical reviewer independently confirms the following exact
-candidate revisions as an accurate current account of the local NKF-011
+candidate revisions as an accurate current account of the local [NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md)
 implementation:
 
 | Record | Source | Confirmed Candidate SHA-256 |
 | --- | --- | --- |
-| `nkf-layered-contract-enforcement` | `knowledge/realizations/current/layered-contract-enforcement.md` | `5329c18779c9b330ae6dfc6608cb6e9e2cf6dc7dc10dda1dbf8b95db12bf7e63` |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `8b59859f9d074d4a9785631dd43dfe2a96adfbf9e73816b71c9d51ba83f066c6` |
-| `nkf-self-hosting` | `knowledge/realizations/current/self-hosting.md` | `f1cd78669f1cd7bfc943793e0acebe95f8c173ab554799afda69828c37274e2b` |
+| [`nkf-layered-contract-enforcement`](../realizations/current/layered-contract-enforcement.md) | `knowledge/realizations/current/layered-contract-enforcement.md` | `5329c18779c9b330ae6dfc6608cb6e9e2cf6dc7dc10dda1dbf8b95db12bf7e63` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `8b59859f9d074d4a9785631dd43dfe2a96adfbf9e73816b71c9d51ba83f066c6` |
+| [`nkf-self-hosting`](../realizations/current/self-hosting.md) | `knowledge/realizations/current/self-hosting.md` | `f1cd78669f1cd7bfc943793e0acebe95f8c173ab554799afda69828c37274e2b` |
 
 This confirmation covers the neutral protocol, four instruction adapters, two
 byte-identical portable skill representations, twelve-surface registry,
@@ -58,7 +56,7 @@ revisions.
 
 Confirmation applies only to the local NKF repository implementation and the
 exact candidate revisions listed above. It confirms that those revisions
-accurately describe the implemented local boundary adopted by ADR 0060.
+accurately describe the implemented local boundary adopted by [ADR 0060](0060-layered-contract-enforcement.md).
 
 The workflow is confirmed as a local file with the documented read-only,
 exact-commit behavior. Remote workflow presence, a successful remote run,
@@ -67,7 +65,7 @@ and an observed blocked invalid pull request remain unconfirmed Github
 operational state.
 
 The Task remains Active for those later Git and Github steps. Consumer
-activation remains deferred to NKF-008 and a separately verified current
+activation remains deferred to [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) and a separately verified current
 checker release.
 
 ## Rationale
@@ -113,7 +111,7 @@ Realization, and a later confirmation Decision. A candidate-controlled green
 check cannot silently confirm its own weakening.
 
 Adding this Decision creates the ninety-second explicit record in the
-self-host bundle. NKF-011 remains Active until its separately authorized
+self-host bundle. [NKF-011](../tasks/completed/NKF-011-enforce-nkf-contracts.md) remains Active until its separately authorized
 remote enforcement work and evidence are complete.
 
 ## Non-Claims

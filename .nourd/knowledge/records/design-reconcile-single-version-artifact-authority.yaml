@@ -7,7 +7,7 @@ source:
   path: designs/adopted/single-version-artifact-authority.md
   digest:
     algorithm: sha-256
-    value: c71cc7a719f44b086891de716267557b946a885bb58e669f372604b8a558a0a0
+    value: 73fd03ef9fdc8d6ff189b43ce508c47e4ee1b3b59f1e0bab9d98862d5f3841ad
 governance:
   lifecycle: immutable
   status: accepted

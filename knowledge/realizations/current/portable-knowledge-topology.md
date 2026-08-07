@@ -17,9 +17,9 @@ confirmation_decisions:
 ## Realization Identity And Kind
 
 This is the confirmed implementation Realization for the portable topology
-meaning adopted through ADR 0071 and bound to the corrected canonical NKF 0.1
-Markdown and executable companion by ADR 0073. ADR 0075 confirms this exact
-revision after the NKF-017 completion audit.
+meaning adopted through [ADR 0071](../../decisions/0071-complete-portable-onboarding-topology.md) and bound to the corrected canonical NKF 0.1
+Markdown and executable companion by [ADR 0073](../../decisions/0073-correct-portable-topology-diagnostic-registry.md). [ADR 0075](../../decisions/0075-confirm-complete-portable-onboarding-topology.md) confirms this exact
+revision after the [NKF-017](../../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) completion audit.
 
 This record does not publish a release, migrate a consumer, or make generated
 Draft knowledge accepted.
@@ -64,9 +64,9 @@ Product And Technology Fixtures + Self-Hosted NKF Bundle
 | Onboarding core | `scripts/onboarding/core.mjs` | Complete topology generation, existing-map reconciliation, profile additions, native declarations, sealing, and candidate construction |
 | Public adopter | `scripts/adoption/nourd-nkf-adopt.mjs` and built mirrors | Initial onboarding plus receipt-bound `repair-topology` orchestration |
 | Product and Technology fixtures | `fixtures/valid/minimal/` and `fixtures/valid/technology/` | Conforming complete topology examples used by checker and adopter tests |
-| Focused verification | `test/checker.test.ts`, `test/project-source.test.ts`, `test/dynamic-root.test.ts`, and `test/adopter.test.ts` | Missing and misclassified paths, duplicate maps, managed-block violations, all lifecycle placements and indexes, symlinks, non-default knowledge roots, existing Draft root and Specification reuse, byte-preserving reconciliation, rollback, idempotence, and exact NKF-013 and NKF-015 predecessor repair |
+| Focused verification | `test/checker.test.ts`, `test/project-source.test.ts`, `test/dynamic-root.test.ts`, and `test/adopter.test.ts` | Missing and misclassified paths, duplicate maps, managed-block violations, all lifecycle placements and indexes, symlinks, non-default knowledge roots, existing Draft root and Specification reuse, byte-preserving reconciliation, rollback, idempotence, and exact [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) and [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor repair |
 | Neutral agent integration | `integrations/onboarding/nkf-onboarding-protocol.md`, `.agents/skills/nkf-onboarding/SKILL.md`, and `.claude/skills/nkf-onboarding/SKILL.md` | AI-neutral preparation and handoff instructions for complete topology and deliberate repair |
-| Authoring validation | `package.json` and `scripts/verify-agent-guidance.mjs` | Current-snapshot authoring validation separated from the mandatory release-recommendation verifier under ADR 0074 |
+| Authoring validation | `package.json` and `scripts/verify-agent-guidance.mjs` | Current-snapshot authoring validation separated from the mandatory release-recommendation verifier under [ADR 0074](../../decisions/0074-separate-authoring-and-recommended-release-verification.md) |
 | Public guidance | `public-docs/` | User-facing topology explanation, onboarding, recovery, reference, and complete Product and Technology examples |
 | Self-hosted bundle | `knowledge/` and `.nourd/knowledge/` | NKF repository exercise of the same required topology and declaration boundary |
 
@@ -96,7 +96,7 @@ preserves its exact bytes and source identity instead of generating a duplicate.
 The executable does not infer this selection from a filename.
 
 `repair-topology` is a separate transaction. It resolves the installed
-predecessor archive and adopter from a trusted NKF-013 or NKF-015 receipt,
+predecessor archive and adopter from a trusted [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) receipt,
 verifies their published digests, reconstructs the predecessor-generated map
 bytes, rejects consumer drift, stages a complete successor candidate, checks
 it, and only then applies a rollback-capable replacement. It does not repeat
@@ -110,7 +110,7 @@ results remain operational facts in their owning systems. This Realization
 records durable artifact mappings but does not make those external facts
 current by assertion.
 
-No Nourd Agent SDK files are modified by NKF-017. Existing consumers retain
+No Nourd Agent SDK files are modified by [NKF-017](../../tasks/completed/NKF-017-complete-portable-onboarding-topology.md). Existing consumers retain
 their installed predecessor until project authority deliberately invokes an
 eligible repair or later onboarding path.
 
@@ -133,8 +133,8 @@ derived behavior. The complete authoring gate passes nineteen test files with
 151 tests, deterministic checker and adopter builds, public-documentation
 verification, and full self-host validation with zero diagnostics. Receipt
 tamper tests cover predecessor profile and successor archive, source, checker,
-and adopter bindings. ADR 0074 separates current-snapshot authoring validation
+and adopter bindings. [ADR 0074](../../decisions/0074-separate-authoring-and-recommended-release-verification.md) separates current-snapshot authoring validation
 from the explicit recommended-release verifier. The independent completion
-audit records no unresolved material finding and ADR 0075 separately confirms
+audit records no unresolved material finding and [ADR 0075](../../decisions/0075-confirm-complete-portable-onboarding-topology.md) separately confirms
 this exact Realization. The predecessor recommendation remains unchanged;
 release and publication remain separate future boundaries.

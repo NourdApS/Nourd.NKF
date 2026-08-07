@@ -7,16 +7,12 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact technical corrections after independent review
 ---
 
 # ADR 0032: Correct NKF 0.1 Yaml Flow Scalar Grammar
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's authorization to approve exact technical corrections after
-  independent review
-- **Discovery Context:** Native checker realization under ADR 0031
+- **Discovery Context:** Native checker realization under [ADR 0031](0031-checker-layout-and-identity.md)
 - **Executable YAML Proposal:**
   [`../evidence/decision-inputs/adr-0032-0033/nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml`](../evidence/decision-inputs/adr-0032-0033/nkf-0.1-yaml-grammar-corrected-contract-proposal.yaml)
 
@@ -37,7 +33,7 @@ rejects all three occurrences. The earlier Psych-based structural audit did
 not expose this grammar incompatibility.
 
 This prevents a conforming checker from loading the accepted executable
-contract set. The intended alphabet is unambiguous because ADR 0026 and the
+contract set. The intended alphabet is unambiguous because [ADR 0026](0026-deterministic-secret-pattern-registry.md) and the
 normative Markdown both define the character as the literal ASCII hyphen.
 
 ## Classification
@@ -56,7 +52,7 @@ The exact proposal is accepted as the current executable YAML companion. It:
 - preserves the accepted canonical Markdown bytes and SHA-256
   `b83ab1ca6c93a1fed5a344a47a3d21d7691d93e141926f05e3d1c00ba8fe4e8c`;
 - quotes exactly the three standalone hyphen scalars as `"-"`;
-- advances the accepted baseline to the ADR 0029 pair;
+- advances the accepted baseline to the [ADR 0029](0029-schema-realization-status.md) pair;
 - adds ADR 0032 to the governing-decision sequence; and
 - changes no parsed value or normative meaning.
 
@@ -72,7 +68,7 @@ unique keys, and no parser warnings.
 
 ## Rebinding
 
-The schemas confirmed by ADR 0030 retain unchanged assertion meaning but their
+The schemas confirmed by [ADR 0030](0030-source-bound-json-schemas.md) retain unchanged assertion meaning but their
 embedded executable-companion digest becomes historical after this Decision.
 They require exact source-metadata rebinding and renewed confirmation before
 claiming current realization.

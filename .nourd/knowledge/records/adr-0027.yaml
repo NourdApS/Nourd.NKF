@@ -7,7 +7,7 @@ source:
   path: decisions/0027-validation-authority-pair.md
   digest:
     algorithm: sha-256
-    value: e7c360f400187f78e20c1cd7ad7784d78af5d8c562b4f289f0ca5c6e3319367d
+    value: 7f4acfaff130310777b5afcb311d90f315de8bb626d8e3dc008b366f6e9cbfcf
 governance:
   lifecycle: immutable
   status: accepted

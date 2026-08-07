@@ -7,7 +7,7 @@ source:
   path: decisions/0028-validation-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 9815f139862aa158d005ee7b576fa45513ef8d317c7572b6335bd4599b6a232c
+    value: c16e510092df18efe27fc4260541cc7aca01577544486e4d9fc454e460210997
 governance:
   lifecycle: immutable
   status: accepted

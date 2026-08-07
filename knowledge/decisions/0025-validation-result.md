@@ -7,17 +7,13 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner for consequential semantics; Codex technical reviewer for exact structural serialization under direct bounded delegation
 ---
 
 # ADR 0025: Accept NKF 0.1 Validation Result Contract
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner for consequential semantics;
-  Codex technical reviewer for exact structural serialization under direct
-  bounded delegation
 - **Delegation Source:** Direct Human Product Owner instruction in the
-  NKF-003 discussion on 30 July 2026: “i will let you do through this trivial
+  [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on 30 July 2026: “i will let you do through this trivial
   structural stuff on your own and confirm them on your own”
 - **Reviewed Design:**
   [`../evidence/audits/nkf-0.1-checker-realization-gaps.md`](../evidence/audits/nkf-0.1-checker-realization-gaps.md)
@@ -32,7 +28,7 @@ task: NKF-003
 
 ## Context
 
-ADR 0019 accepts the logical `nkf.validation-result` boundary but does not
+[ADR 0019](0019-validation-enforcement-and-diagnostics.md) accepts the logical `nkf.validation-result` boundary but does not
 define an encoding, exact object shape, persistence rule, validated-snapshot
 algorithm, artifact bindings, or the relationship between conformance and
 Governing Use Ready.
@@ -326,7 +322,7 @@ This Decision accepts the exact result meaning and serialization boundary. It
 does not promote the reviewed structural proposal to the canonical schema
 path and does not modify the current Markdown/YAML authority pair in place.
 
-The current authority pair must be replaced and rebound through ADR 0006.
+The current authority pair must be replaced and rebound through [ADR 0006](0006-pre-stable-evolution.md).
 Only then may a source-bound validation-result schema be derived, validated,
 and separately confirmed.
 

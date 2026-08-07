@@ -11,8 +11,6 @@ task: NKF-010
 
 # ADR 0059: Confirm Governed Frontmatter Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-010`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit authorization to approve and confirm the coherent
   frontmatter adoption
@@ -21,11 +19,11 @@ task: NKF-010
 
 ## Context And Problem
 
-ADR 0058 accepted the exact governed-frontmatter Design and NKF 0.1 authority
+[ADR 0058](0058-governed-frontmatter.md) accepted the exact governed-frontmatter Design and NKF 0.1 authority
 pair. It explicitly withheld any claim that checker code, Schemas, fixtures,
 repository migration, or passing validation had been realized or confirmed.
 
-NKF-010 subsequently produced an exact implementation candidate and migrated
+[NKF-010](../tasks/completed/NKF-010-governed-frontmatter-adoption.md) subsequently produced an exact implementation candidate and migrated
 the NKF repository. A separate audit corrected material gaps and found no
 remaining implementation defect. The five current Realization candidates
 deliberately reference this Decision, so their confirmation requires a
@@ -35,16 +33,16 @@ results.
 ## Decision
 
 The authorized technical reviewer confirms the exact Realization revisions
-listed below as the current implementation account for the accepted ADR 0058
+listed below as the current implementation account for the accepted [ADR 0058](0058-governed-frontmatter.md)
 boundary:
 
 | Record | Source | Confirmed SHA-256 |
 | --- | --- | --- |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `b92ecd0ce26dd2ab043841cfb5bc1698363af15302cf71ecc5f3219358eb9175` |
-| `nkf-checker-and-validation` | `knowledge/realizations/current/checker-and-validation.md` | `b23ef0940fddd52b906c3a1a1f49cf43cfd5396a996c90789375227b68bf5596` |
-| `nkf-contracts-and-schemas` | `knowledge/realizations/current/contracts-and-schemas.md` | `966ccd6013e46d22ead1a1162c9e116169a8dd1bddd8b68f7ad7b8527ce21591` |
-| `nkf-release-package` | `knowledge/realizations/current/release-package.md` | `f6d827e07c8f0c397dd5664fab0f93d3a0d892d2515f4fbe56856b2c00d55015` |
-| `nkf-self-hosting` | `knowledge/realizations/current/self-hosting.md` | `c179c4592961c194284d4eb779db825ead626206ce5a842d84b7950783aa5251` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `b92ecd0ce26dd2ab043841cfb5bc1698363af15302cf71ecc5f3219358eb9175` |
+| [`nkf-checker-and-validation`](../realizations/current/checker-and-validation.md) | `knowledge/realizations/current/checker-and-validation.md` | `b23ef0940fddd52b906c3a1a1f49cf43cfd5396a996c90789375227b68bf5596` |
+| [`nkf-contracts-and-schemas`](../realizations/current/contracts-and-schemas.md) | `knowledge/realizations/current/contracts-and-schemas.md` | `966ccd6013e46d22ead1a1162c9e116169a8dd1bddd8b68f7ad7b8527ce21591` |
+| [`nkf-release-package`](../realizations/current/release-package.md) | `knowledge/realizations/current/release-package.md` | `f6d827e07c8f0c397dd5664fab0f93d3a0d892d2515f4fbe56856b2c00d55015` |
+| [`nkf-self-hosting`](../realizations/current/self-hosting.md) | `knowledge/realizations/current/self-hosting.md` | `c179c4592961c194284d4eb779db825ead626206ce5a842d84b7950783aa5251` |
 
 This confirmation includes the exact contract, Schema, checker, fixture,
 declaration, governed-artifact, deterministic-build, and self-host mappings
@@ -111,5 +109,5 @@ This Decision does not:
 - prove external Task operational state;
 - publish a checker release;
 - migrate or conform an external consumer;
-- make ADR 0058 or ADR 0059 part of the NKF version namespace; or
+- make [ADR 0058](0058-governed-frontmatter.md) or ADR 0059 part of the NKF version namespace; or
 - confirm any later revision by implication.

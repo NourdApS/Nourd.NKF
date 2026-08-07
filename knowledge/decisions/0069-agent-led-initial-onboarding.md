@@ -13,7 +13,7 @@ task: NKF-015
 
 ## Context And Problem
 
-ADR 0067 adopted a deterministic initial eligibility boundary based on
+[ADR 0067](0067-initial-greenfield-onboarding.md) adopted a deterministic initial eligibility boundary based on
 Markdown counts, byte limits, and lifecycle-frontmatter indicators. Exercise
 against Agent SDK exposed the conceptual defect: those observations are useful
 mechanical facts but cannot determine whether a repository contains useful
@@ -23,7 +23,7 @@ or mature history requiring another onboarding path.
 The Human Product Owner subsequently defined ten conceptual repository
 starting categories, assigned only Empty Repository and Tiny Knowledge With No
 Source Or Configuration to the initial path, and deferred the other categories
-to NKF-014 pending later criteria confirmation. The same authority explicitly
+to [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) pending later criteria confirmation. The same authority explicitly
 accepted agent-led inspection and classification, human confirmation where
 required, and deterministic sealing, application, and validation.
 
@@ -57,7 +57,7 @@ The adopted direction establishes:
 
 The executable may establish only mechanical readiness. If the agent cannot
 recommend Category 1 or Category 2, it reports evidence and stops without
-guessing a later category. NKF-014 remains deferred and its Category 3 through
+guessing a later category. [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) remains deferred and its Category 3 through
 Category 10 criteria remain unresolved.
 
 ## Scope And Applicability
@@ -66,8 +66,8 @@ This Decision governs the derived pre-adoption protocol, portable onboarding
 skill, plan envelope, adopter behavior, diagnostics, tests, public guidance,
 distribution projection, and successor current-system Realization.
 
-It supersedes ADR 0067 only where ADR 0067 assigns semantic eligibility or
-maturity to numeric limits and deterministic content heuristics. ADR 0067's
+It supersedes [ADR 0067](0067-initial-greenfield-onboarding.md) only where [ADR 0067](0067-initial-greenfield-onboarding.md) assigns semantic eligibility or
+maturity to numeric limits and deterministic content heuristics. [ADR 0067](0067-initial-greenfield-onboarding.md)'s
 project-authority boundary, Product and Technology profiles, candidate
 workspace, generated native declarations, release integrity, staged
 full-bundle check, transaction, rollback, idempotence, and status separation
@@ -133,7 +133,7 @@ Existing adopted repositories continue using `install`, `update`, `check`,
 `status`, and `integration-check`; their pins and knowledge do not move
 automatically.
 
-Unapplied NKF-013 onboarding workspaces must be regenerated with the successor
+Unapplied [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) onboarding workspaces must be regenerated with the successor
 adopter because they lack the assessment and complete source-manifest
 semantics. Those workspaces are short-lived operational state, not canonical
 knowledge or a supported migration contract.
@@ -162,8 +162,8 @@ This Decision does not:
 - prove that an agent reviewed every file semantically;
 - accept or conform a consumer repository;
 - define Category 3 through Category 10 criteria;
-- activate NKF-014;
+- activate [NKF-014](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md);
 - authorize Agent SDK mutation;
 - publish an adopter or release;
 - establish protected branch enforcement; or
-- complete NKF-015.
+- complete [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md).

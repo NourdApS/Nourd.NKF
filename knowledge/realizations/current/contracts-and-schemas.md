@@ -26,7 +26,7 @@ The authoritative human meaning is
 `contracts/nkf/0.1/nkf.yaml` represents that meaning and binds its exact
 SHA-256 digest.
 
-ADR 0058 accepts the current pair:
+[ADR 0058](../../decisions/0058-governed-frontmatter.md) accepts the current pair:
 
 | Artifact | SHA-256 |
 | --- | --- |
@@ -51,9 +51,9 @@ validation; the release-manifest Schema remains part of release tooling.
 | `urn:nkf:0.1:schema:release-manifest` | `contracts/nkf/0.1/schemas/release-manifest.schema.json` | `00058b5e86f29edb005f0a4125125c32ccd18a986a244c69f60f8605cab11f23` |
 
 The bundle Schema extends `non_records[].kind` with `task` and `evidence`; the
-other assertion graphs remain unchanged from the ADR 0057 baseline. All four
-Schemas carry non-assertive source annotations bound to the ADR 0058
-authority pair. ADR 0059 confirms these exact derived revisions.
+other assertion graphs remain unchanged from the [ADR 0057](../../decisions/0057-current-system-realization.md) baseline. All four
+Schemas carry non-assertive source annotations bound to the [ADR 0058](../../decisions/0058-governed-frontmatter.md)
+authority pair. [ADR 0059](../../decisions/0059-confirm-governed-frontmatter-realization.md) confirms these exact derived revisions.
 
 ## Responsibilities And Ownership Boundaries
 

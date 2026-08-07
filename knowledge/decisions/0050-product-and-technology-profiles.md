@@ -7,14 +7,11 @@ created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit feature-limited delegation
 ---
 
 # ADR 0050: Accept Product And Technology Root Profiles
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit feature-limited delegation
 - **Delegation Source:** Direct instruction on 30 July 2026 to audit, accept,
   and confirm only the changes necessary for the dynamic root feature
 - **Normative Markdown Digest:** `sha256:8fa484035c2fccf401cb966cf39ae57e17d214178c0153ad43d53790d7832e50`
@@ -22,7 +19,7 @@ task: NKF-003
 
 ## Context
 
-ADR 0049 accepted an automatically applicable, non-selectable Common
+[ADR 0049](0049-common-and-root-profiles.md) accepted an automatically applicable, non-selectable Common
 Specification and one concrete Root Profile per bundle. It deliberately left
 the exact Product and Technology allocation, serialization, validation, and
 realization unresolved.
@@ -128,7 +125,7 @@ contract.
 Product and Technology bundles now share one accepted Common envelope while
 retaining different semantic contracts and enforcement. Later root kinds
 require their own evidence, accepted profile, executable realization,
-fixtures, release support, and deliberate migration under NKF-006.
+fixtures, release support, and deliberate migration under [NKF-006](../tasks/deferred/NKF-006-extensible-root-models.md).
 
 The canonical Markdown remains authoritative over YAML, schemas, checker
 code, fixtures, project declarations, and validation results.

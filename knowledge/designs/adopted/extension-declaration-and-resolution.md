@@ -10,17 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0016
+proposal_evidence: imported NKF-002 `required_extensions`, `extensions`, and `supported_extensions` shapes and checker behavior; none is authority
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Extension Declaration And Resolution
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-- **Proposal evidence:** imported NKF-002 `required_extensions`,
-  `extensions`, and `supported_extensions` shapes and checker behavior; none
-  is authority
 
 ## Decision Sought
 
@@ -55,7 +50,7 @@ An extension has one lowercase owner-namespaced identifier matching:
 
 Examples: `com.example.presentation` and `org.example.attestation`.
 
-The first namespace `nkf` is reserved for extensions owned and accepted by
+The first namespace [`nkf`](../../nkf.md) is reserved for extensions owned and accepted by
 NKF. Other namespaces must be controlled by the extension authority. Namespace
 text is an ownership claim, not proof of ownership.
 
@@ -73,12 +68,12 @@ Every used extension is governed by its own digest-bound pair:
    application sites, payload shape, vocabularies, constraints, and
    deterministic validation rules.
 
-The pair follows ADR 0007 and ADR 0012: Markdown remains human authority, YAML
+The pair follows [ADR 0007](../../decisions/0007-markdown-yaml-authority.md) and [ADR 0012](../../decisions/0012-nkf-0-1-artifact-authority.md): Markdown remains human authority, YAML
 is the executable companion, and a conflict fails closed. An extension
 artifact digest is an exact revision identifier, not another semantic version.
 
 Acceptance of an extension contract belongs to its stated authority. NKF core
-acceptance is required only for an `nkf`-owned extension or for presenting
+acceptance is required only for an [`nkf`](../../nkf.md)-owned extension or for presenting
 external extension meaning as native core meaning.
 
 ## Bundle Extension Catalog

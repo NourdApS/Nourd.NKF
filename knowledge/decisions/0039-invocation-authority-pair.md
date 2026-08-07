@@ -7,15 +7,11 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting within delegated authority to compose and approve exact technical artifacts from the Human Product Owner boundary accepted in ADR 0038
 ---
 
 # ADR 0039: Accept Invocation-Precondition Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting within delegated
-  authority to compose and approve exact technical artifacts from the Human
-  Product Owner boundary accepted in ADR 0038
 - **Normative Markdown Proposal:**
   [`../evidence/decision-inputs/adr-0039-0040/nkf-0.1-invocation-precondition-specification-proposal.md`](../evidence/decision-inputs/adr-0039-0040/nkf-0.1-invocation-precondition-specification-proposal.md)
 - **Executable YAML Proposal:**
@@ -23,7 +19,7 @@ task: NKF-003
 
 ## Context
 
-ADR 0038 establishes project-root `.nourd` as a native-checker invocation
+[ADR 0038](0038-nourd-invocation-precondition.md) establishes project-root `.nourd` as a native-checker invocation
 precondition and retires `project.nourd.missing` from the stable native
 diagnostic registry. That Decision accepts the exact semantics but does not
 replace the canonical Markdown/YAML bytes by implication.
@@ -52,7 +48,7 @@ The replacement:
 - retains `bundle.manifest.missing` after the invocation precondition passes
   but the fixed manifest is absent;
 - retires `project.nourd.missing`, leaving 115 stable native diagnostics;
-- advances the accepted baseline to the ADR 0036 pair;
+- advances the accepted baseline to the [ADR 0036](0036-checker-ready-authority-pair.md) pair;
 - records ADRs 0038 and 0039 in executable provenance; and
 - changes no unrelated NKF 0.1 rule.
 
@@ -79,7 +75,7 @@ checker completeness or consumer conformance.
 
 ## Schema Effect
 
-The three schemas confirmed by ADR 0037 retain their assertion meaning but
+The three schemas confirmed by [ADR 0037](0037-checker-ready-json-schemas.md) retain their assertion meaning but
 their `x-nkf-source` Markdown and executable digests are now historical. Exact
 source-metadata-only rebindings require independent compilation and probe
 confirmation before becoming current realization.

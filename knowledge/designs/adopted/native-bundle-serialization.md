@@ -10,18 +10,15 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0021
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Native Bundle Serialization
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-
 ## Gap
 
-ADR 0018 defines the fixed manifest location, `knowledge_root`, Markdown
+[ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md) defines the fixed manifest location, `knowledge_root`, Markdown
 coverage, and declaration directory, but not the exact bundle object or
 `non_records` entry shape. The executable companion and schemas cannot choose
 those details by implication.
@@ -42,8 +39,8 @@ non_records: []
 
 It may additionally contain only:
 
-- `extension_contracts`, with the exact ADR 0016 catalog shape; and
-- `extensions`, with the exact ADR 0016 extension-use shape.
+- `extension_contracts`, with the exact [ADR 0016](../../decisions/0016-extension-resolution.md) catalog shape; and
+- `extensions`, with the exact [ADR 0016](../../decisions/0016-extension-resolution.md) extension-use shape.
 
 Unknown top-level fields fail closed. There is no `record_contract`,
 `markdown_root`, `records_root`, `required_extensions`, or free-form
@@ -61,7 +58,7 @@ reason: <optional non-empty explanation>
 
 Rules:
 
-- `path` is required and follows ADR 0018's knowledge-root-relative path
+- `path` is required and follows [ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md)'s knowledge-root-relative path
   rules;
 - it resolves to an existing regular file;
 - `kind` is required and is one of:
@@ -84,7 +81,7 @@ contract may govern an asset when required.
 
 - `id` and `product_record` are non-empty identifiers.
 - `product_record` resolves to the bundle's one `product` record.
-- `knowledge_root` follows ADR 0018 exactly.
+- `knowledge_root` follows [ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md) exactly.
 - Every Markdown file recursively under `knowledge_root` has exactly one
   record declaration or one `non_records` entry.
 - Optional empty `extension_contracts` and `extensions` lists are omitted.
@@ -95,7 +92,7 @@ semantics remain unchanged.
 
 ## Exact Confirmation Requested
 
-> Accept the closed native bundle shape, required fields, optional ADR 0016
+> Accept the closed native bundle shape, required fields, optional [ADR 0016](../../decisions/0016-extension-resolution.md)
 > extension fields, exact `non_records` object, four non-record kinds, and
 > stated bundle constraints above for NKF 0.1.
 

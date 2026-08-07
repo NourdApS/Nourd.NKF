@@ -7,14 +7,12 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0009: Establish The Single NKF 0.1 Version Namespace
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct informed clarification in the NKF-003
+- **Acceptance source:** Direct informed clarification in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md)
   discussion on 29 July 2026
 
 ## Context
@@ -51,7 +49,7 @@ authorized by this Decision.
 ## Supersession And Preservation
 
 This Decision supersedes the versioned-contract identity and parallel-contract
-model in ADR 0002, ADR 0003, ADR 0004, ADR 0005, and ADR 0008. It preserves
+model in [ADR 0002](0002-body-responsibility-bindings.md), [ADR 0003](0003-product-responsibility-identifiers.md), [ADR 0004](0004-historical-record-contract-versioning.md), [ADR 0005](0005-historical-record-responsibility-bindings.md), and [ADR 0008](0008-nkf-0-1-artifact-paths.md). It preserves
 their accepted semantic content where not inconsistent with this Decision:
 
 - responsibility identifiers and their Product meaning;
@@ -72,7 +70,7 @@ for a separate contract version.
 - Checker and distribution work must identify `nkf_version: "0.1"` and must
   not dispatch historical record-contract versions as current NKF support.
 - Any future semantic or structural change requires a later NKF format version
-  under ADR 0006.
+  under [ADR 0006](0006-pre-stable-evolution.md).
 
 ## Not Decided
 

@@ -7,14 +7,12 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0014: Accept NKF 0.1 Section-Role Vocabularies
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct informed confirmation in the NKF-003
+- **Acceptance source:** Direct informed confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md)
   discussion on 29 July 2026
 
 ## Context
@@ -66,7 +64,7 @@ accepted role vocabulary. The core list does not authorize profile roles by
 analogy.
 
 Changing a role meaning, removing a role, changing an allowed subset, or
-weakening a guardrail is an NKF format change governed by ADR 0006.
+weakening a guardrail is an NKF format change governed by [ADR 0006](0006-pre-stable-evolution.md).
 
 ## Not Decided
 

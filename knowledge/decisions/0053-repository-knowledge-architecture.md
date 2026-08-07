@@ -7,14 +7,11 @@ created_at: 2026-07-30T16:47:43Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
+decision_authority: Human Product Owner direction with independent Codex technical review
 ---
 
 # ADR 0053: Repository Knowledge Architecture
 
-- **Status:** Accepted
-- **Task:** `NKF-007`
-- **Decision Authority:** Human Product Owner direction with independent Codex
-  technical review
 - **Architecture Design SHA-256:** `e732de725ecf309db3d1194e53a8f846c8262377b1886914e00a306e1f27926f`
 - **Migration Map SHA-256:** `d49c6270212674c14e0bfd64610a0bbe2de0783b44242a59558eb31460a4b7ce`
 - **Review Evidence SHA-256:** `0d0d0f2cb2e9031747bb348197418874b608f052a79472fd36890a3ba4ec95c9`
@@ -24,7 +21,7 @@ task: NKF-007
 NKF established an independent authority, one NKF 0.1 version namespace, a
 Common Specification with Product and Technology Profiles, executable
 contracts, schemas, checker tooling, release packaging, and an initial
-Technology self-hosting realization through NKF-003.
+Technology self-hosting realization through [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md).
 
 The resulting knowledge structure remained history-first and difficult to
 navigate. Its current state was reconstructed through 52 sequential
@@ -75,7 +72,7 @@ The repository adopts:
 - evidence-backed UTC `created_at` front matter for every non-Evidence
   Markdown file;
 - explicit Design-disposition front matter and provenance;
-- explicit transfer of unfinished NKF-003 work;
+- explicit transfer of unfinished [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) work;
 - non-inferential `.nourd` declarations; and
 - current-system-first navigation for humans and agents.
 
@@ -92,7 +89,7 @@ self-validation.
 
 It authorizes the exact mapped file moves and renames, evidence-backed
 front-matter addition, unsupported date-only structured-metadata removal,
-active-link repair, Design classification, NKF-003 closure transfer,
+active-link repair, Design classification, [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) closure transfer,
 Realization creation, and explicit declaration rebuild.
 
 It governs successor serialization revisions of earlier accepted Decision
@@ -191,12 +188,12 @@ migration manifest, and ordinary Git history.
 
 ## Deferred Work
 
-NKF-008 owns future publication, external-consumer pinning, onboarding,
+[NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) owns future publication, external-consumer pinning, onboarding,
 migration, and handover.
 
-NKF-009 owns governed-artifact secret-scan scope and enforcement expansion.
+[NKF-009](../tasks/deferred/NKF-009-governed-artifact-secret-scanning.md) owns governed-artifact secret-scan scope and enforcement expansion.
 
-NKF-004, NKF-005, and NKF-006 retain their existing deferred presentation,
+[NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md), [NKF-005](../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md), and [NKF-006](../tasks/deferred/NKF-006-extensible-root-models.md) retain their existing deferred presentation,
 freshness, and additional-root investigations.
 
 ## Non-Claims
@@ -204,7 +201,7 @@ freshness, and additional-root investigations.
 This Decision does not claim that:
 
 - any mapped file has moved;
-- NKF-003 is already closed;
+- [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) is already closed;
 - the canonical front-matter authority pair exists;
 - schemas or checker behavior have been updated;
 - current-system Realizations have been created;

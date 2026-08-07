@@ -7,14 +7,11 @@ created_at: 2026-07-31T02:08:43Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-008
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit delegation to complete and independently audit NKF-008
 ---
 
 # ADR 0064: Release Documentation And Adoption
 
-- **Status:** Accepted
-- **Task:** `NKF-008`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit delegation to complete and independently audit NKF-008
 - **Review Evidence:**
   `knowledge/evidence/audits/nkf-008-release-documentation-and-adoption-design-audit.md`
 
@@ -25,7 +22,7 @@ checker. The published private prerelease is stale, however. A consumer has no
 one-operation installation path, and a user without private repository access
 has no complete public explanation.
 
-NKF-008 requires a current internal publication, an immutable consumer pin,
+[NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) requires a current internal publication, an immutable consumer pin,
 public documentation, Product and Technology examples, and an authorized
 consumer exercise without allowing those derived surfaces to compete with
 normative authority.
@@ -60,7 +57,7 @@ The adopted boundaries are:
    digests and never follow a moving branch or `latest`;
 9. the NKF repository exercises the complete path as the already authorized
    first governed consumer using only synthetic consumer knowledge; and
-10. protected merge enforcement remains deferred to NKF-012.
+10. protected merge enforcement remains deferred to [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
 
 ## Scope And Applicability
 
@@ -149,7 +146,7 @@ Realization requires:
    proof;
 8. separate Evidence for release, documentation, consumer, and workflow state;
 9. complete current Realization mappings and governed-artifact bindings;
-10. a final adversarial NKF-008 completion audit; and
+10. a final adversarial [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) completion audit; and
 11. a later Decision confirming the exact successor Realization and Task
    completion.
 
@@ -166,4 +163,4 @@ This Decision does not:
   protected merge gate;
 - make explanatory documentation normative;
 - make a release recommendation a mutable consumer dependency; or
-- complete NKF-008.
+- complete [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md).

@@ -7,7 +7,7 @@ source:
   path: decisions/0050-product-and-technology-profiles.md
   digest:
     algorithm: sha-256
-    value: 0ef295ecb9be3ef1d1a0749bb47e42e6e4902c538dcbcc77d35f877e5b2a3df7
+    value: 1123937f8eb876dc95f59c15acc0f3cbc30ac2dff49f9f7a6a158b618baa1194
 governance:
   lifecycle: immutable
   status: accepted

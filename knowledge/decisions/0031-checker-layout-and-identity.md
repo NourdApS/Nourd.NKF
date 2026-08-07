@@ -7,18 +7,14 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0031: Establish Checker Development Layout And Identity
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Confirmation Source:** Direct confirmation in the NKF-003 discussion on
+- **Confirmation Source:** Direct confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   30 July 2026 after review of the exact package layout, artifact identity,
   validation-only responsibility, and distribution boundary
-- **Implementation Evidence:** Imported Nourd Studio `@nourd/knowledge-core`
-  snapshot preserved under `knowledge/evidence/source-snapshots/`
 
 ## Context
 

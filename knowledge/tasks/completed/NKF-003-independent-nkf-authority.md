@@ -4,15 +4,11 @@ summary: Establish Nourd Knowledge Format as independent Company-owned Shared Te
 created_at: 2026-07-28T22:01:17Z
 task_id: NKF-003
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-003: Establish Independent NKF Authority
-
-- **Task:** `NKF-003`
-- **Status:** Completed
-- **Owner:** Nourd ApS
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
 
 ## Desired outcome
 
@@ -322,8 +318,8 @@ created.
 1. Record the accepted NKF 0.1 artifact identities and paths.
 2. Copy the exact accepted Studio NKF 0.1 Markdown source into a proposed
    independent specification without changing its source evidence.
-3. Incorporate only the explicitly accepted ADR 0002 through ADR 0005 and
-   ADR 0009
+3. Incorporate only the explicitly accepted [ADR 0002](../../decisions/0002-body-responsibility-bindings.md) through [ADR 0005](../../decisions/0005-historical-record-responsibility-bindings.md) and
+   [ADR 0009](../../decisions/0009-nkf-0-1-version-namespace.md)
    contract changes, each with provenance.
 4. Preserve every other imported NKF-002 amendment as proposal evidence.
 5. Compare the composite Markdown against the accepted source and present the
@@ -447,14 +443,14 @@ change requires Product Owner review before final promotion.
 
 ## AI execution slice: reconcile single-version artifact authority
 
-- **Scope:** Reconcile ADR 0007's artifact-version language with ADR 0009's
+- **Scope:** Reconcile [ADR 0007](../../decisions/0007-markdown-yaml-authority.md)'s artifact-version language with [ADR 0009](../../decisions/0009-nkf-0-1-version-namespace.md)'s
   single NKF version namespace
 - **Authority effect:** None until the exact reconciliation is accepted by the
   Human Product Owner
 
 ### Plan
 
-1. Preserve ADR 0007's Markdown-over-YAML authority, completeness, digest
+1. Preserve [ADR 0007](../../decisions/0007-markdown-yaml-authority.md)'s Markdown-over-YAML authority, completeness, digest
    binding, conflict handling, and derived-artifact rules.
 2. Remove only its independent contract-set and contract-version requirements.
 3. Require released artifacts to identify the one NKF version and exact
@@ -476,7 +472,7 @@ is recorded in
 
 ### Plan
 
-1. Preserve the ADR 0010 and ADR 0011 artifacts as immutable accepted
+1. Preserve the [ADR 0010](../../decisions/0010-nkf-0-1-markdown-authority.md) and [ADR 0011](../../decisions/0011-nkf-0-1-yaml-authority.md) artifacts as immutable accepted
    revisions.
 2. Produce a new Markdown proposal that accurately states its current accepted
    baseline and governing Decisions without changing Product meaning.
@@ -747,7 +743,7 @@ artifacts and derived realization remain pending.
 
 ### Plan
 
-1. Inventory every accepted deterministic NKF 0.1 rule after ADR 0018.
+1. Inventory every accepted deterministic NKF 0.1 rule after [ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md).
 2. Assign each rule to JSON Schema, bundle-aware checker, authority/external
    resolver, or human semantic review without duplicating authority.
 3. Define conformance phases, failure behavior, diagnostic identity, severity,
@@ -791,7 +787,7 @@ Markdown/YAML authority pair can be authored and reviewed.
 ### Plan
 
 1. Reconcile the specification's optional presentation allowance with ADR
-   0013's deliberate omission of presentation fields and ADR 0016's optional
+   0013's deliberate omission of presentation fields and [ADR 0016](../../decisions/0016-extension-resolution.md)'s optional
    extension mechanism.
 2. Prefer the smallest boundary that preserves canonical Markdown order and
    prevents display metadata from becoming Product meaning.
@@ -810,7 +806,7 @@ extension. The immutable result is
 
 The intended future extension is preserved separately as deferred Task
 [`NKF-004`](../deferred/NKF-004-portable-presentation-guidance.md).
-ADR 0020 is explicitly subject to governed reconsideration through that Task,
+[ADR 0020](../../decisions/0020-presentation-guidance.md) is explicitly subject to governed reconsideration through that Task,
 but Task activity cannot change the accepted boundary without a later
 Decision.
 
@@ -830,7 +826,7 @@ Decision.
    version namespace, and Markdown-over-YAML authority.
 3. Author one complete YAML companion proposal containing every accepted
    deterministic structure, vocabulary, constraint, diagnostic, and
-   conformance rule without inventing NKF-004 presentation fields.
+   conformance rule without inventing [NKF-004](../deferred/NKF-004-portable-presentation-guidance.md) presentation fields.
 4. Bind the YAML proposal to the exact Markdown proposal digest and record the
    governing Decisions.
 5. Validate Markdown links, YAML syntax and data model, vocabulary coverage,
@@ -847,7 +843,7 @@ Decision.
   separately accepted.
 - Do not edit preliminary schemas or claim checker realization, fixture
   coverage, release, conformance, or consumer migration.
-- Do not activate or design NKF-004 through this replacement.
+- Do not activate or design [NKF-004](../deferred/NKF-004-portable-presentation-guidance.md) through this replacement.
 
 ### Reconciliation finding
 
@@ -869,8 +865,8 @@ authoring is paused at this newly exposed boundary.
 
 ### Plan
 
-1. Preserve ADR 0018 paths, Markdown coverage, and declaration layout.
-2. Preserve ADR 0016's exact optional extension catalog/use structures.
+1. Preserve [ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md) paths, Markdown coverage, and declaration layout.
+2. Preserve [ADR 0016](../../decisions/0016-extension-resolution.md)'s exact optional extension catalog/use structures.
 3. Define the smallest closed bundle shape needed for deterministic
    realization.
 4. Keep non-Markdown assets outside mandatory enumeration and prevent
@@ -888,7 +884,7 @@ record serialization boundaries.
 
 ## AI execution slice: coherent replacement authority-pair proposal resumed
 
-- **Scope:** Complete and audit the exact replacement pair after ADR 0021
+- **Scope:** Complete and audit the exact replacement pair after [ADR 0021](../../decisions/0021-native-bundle-serialization.md)
 - **Authority effect:** None until the exact pair is separately accepted
 
 ### Result
@@ -911,10 +907,10 @@ entity-relationship types, eleven binding kinds, eleven record-relationship
 types, four section-authority classes, ten record/body pairs, and 110 stable
 diagnostic IDs; matching diagnostic severity/blocking behavior; valid
 governed-document links; exact accepted proposal digests for ADRs 0013 through
-0019 and ADR 0021; and an exact Markdown-to-YAML digest binding.
+0019 and [ADR 0021](../../decisions/0021-native-bundle-serialization.md); and an exact Markdown-to-YAML digest binding.
 
 The audit also corrected proposal-only defects before this digest was fixed:
-temporary-path binding, omitted ADR 0008 traceability, shortened accepted
+temporary-path binding, omitted [ADR 0008](../../decisions/0008-nkf-0-1-artifact-paths.md) traceability, shortened accepted
 vocabulary meanings, a presentation-labelled required-extension example,
 unjustified date-time narrowing for optional factual-time strings, and missing
 executable catalog-resolution and declaration-filename rules.
@@ -943,14 +939,14 @@ The realization order is:
    full-bundle checks, and obtaining separate Human Product Owner confirmation
    of the resulting self-hosting evidence; and
 8. only then pilot deliberate external-consumer onboarding and migration,
-   processing findings through ADR 0006 before claiming any consumer's
+   processing findings through [ADR 0006](../../decisions/0006-pre-stable-evolution.md) before claiming any consumer's
    conformance.
 
 The self-hosting checker result establishes conformance only. It does not
 accept repository knowledge, confirm semantic adequacy, prove release
 readiness by itself, or authorize external consumer migration. Any
 specification, contract, checker, distribution, migration, or consumer defect
-found during self-hosting is classified and governed through ADR 0006.
+found during self-hosting is classified and governed through [ADR 0006](../../decisions/0006-pre-stable-evolution.md).
 
 ## AI execution slice: authority-pair acceptance and promotion
 
@@ -1002,7 +998,7 @@ derivation is the next realization step and has not begun in this slice.
 ## AI execution slice: replacement JSON Schema derivation
 
 - **Scope:** Derive exact JSON Schema 2020-12 proposals from the authority pair
-  accepted by ADR 0022
+  accepted by [ADR 0022](../../decisions/0022-native-authority-pair.md)
 - **Authority effect:** None; the exact schema bytes remain proposed derived
   realization until separately reviewed and confirmed
 
@@ -1115,7 +1111,7 @@ slice.
 3. Identify any stable diagnostic trigger, parsing behavior, or required
    output that cannot be implemented deterministically from accepted
    authority.
-4. Classify each finding through ADR 0006 and propose one consequential
+4. Classify each finding through [ADR 0006](../../decisions/0006-pre-stable-evolution.md) and propose one consequential
    boundary at a time for Human Product Owner confirmation.
 5. Defer checker source, fixture, package, and distribution structure until
    the governing behavior is sufficiently determined.
@@ -1273,7 +1269,6 @@ text remain non-contractual and do not determine ordering.
 
 - **Scope:** Gap 3 in
   [`../designs/nkf-0.1-checker-realization-gaps.md`](../../evidence/audits/nkf-0.1-checker-realization-gaps.md)
-- **Decision authority:** Human Product Owner for consequential semantics;
   Codex technical reviewer for remaining trivial structural serialization
   under direct delegation
 - **Authority effect:** May confirm only the mechanical serialization derived
@@ -1373,7 +1368,6 @@ That Task does not change the current result proposal by implication.
 - **Scope:** Complete the validation-result and native secret-pattern
   boundaries, then replace and rebind the NKF 0.1 authority pair and derived
   schemas before checker implementation
-- **Decision Authority:** Human Product Owner for consequential result and
   security semantics; Codex technical reviewer for previously delegated
   result serialization mechanics and mechanics derived directly from the
   confirmed security boundary
@@ -1392,7 +1386,7 @@ That Task does not change the current result proposal by implication.
 3. Record the result and security decisions as immutable accepted snapshots
    with exact provenance and non-claims.
 4. Derive one coherent replacement of the canonical Markdown/YAML authority
-   pair incorporating ADR 0024, the validation-result contract, and the
+   pair incorporating [ADR 0024](../../decisions/0024-deterministic-markdown-structure-and-title-case.md), the validation-result contract, and the
    secret-pattern trigger.
 5. Rebind and validate the bundle, record, and validation-result schemas
    against the replacement authority pair.
@@ -1410,7 +1404,7 @@ That Task does not change the current result proposal by implication.
 - Do not restore the imported AWS access-key-identifier-only failure: an
   identifier alone is not the secret credential.
 - Do not add universal validation expiry or external authority polling through
-  this slice; that question remains deferred under NKF-005.
+  this slice; that question remains deferred under [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md).
 - Do not implement checker code, package identity, fixtures, CI, distribution,
   releases, or consumer migration.
 
@@ -1452,7 +1446,7 @@ checks. The three schemas compiled strictly with Ajv 8.17.1 and ajv-formats
 probes. Canonical promotions are byte-identical to reviewed proposals.
 
 A final coherence audit then found that the accepted specification still
-listed exact schema bytes as unresolved after ADR 0028 had confirmed them. The
+listed exact schema bytes as unresolved after [ADR 0028](../../decisions/0028-validation-json-schemas.md) had confirmed them. The
 reviewer corrected that false realization-status statement through the
 governed replacement process rather than editing accepted meaning silently:
 
@@ -1472,7 +1466,7 @@ governed replacement process rather than editing accepted meaning silently:
 
 The rebound schemas are duplicate-free JSON, compile strictly, retain
 byte-structurally identical assertion graphs after removing source metadata,
-and pass 32 renewed focused probes. The ADR 0027 pair and ADR 0028 schemas
+and pass 32 renewed focused probes. The [ADR 0027](../../decisions/0027-validation-authority-pair.md) pair and [ADR 0028](../../decisions/0028-validation-json-schemas.md) schemas
 remain immutable historical accepted and confirmed snapshots.
 
 No checker, fixture suite, package, CI, distribution, release, consumer
@@ -1484,7 +1478,6 @@ checker repository layout and development artifact identity.
 - **Scope:** Record the confirmed checker development boundary, implement the
   native NKF 0.1 checker and its complete conformance fixture matrix, and stop
   before distribution or release
-- **Decision Authority:** Human Product Owner for checker layout and identity;
   Codex technical reviewer for implementation mechanics derived from accepted
   NKF 0.1 authority
 - **Authority Effect:** The confirmed layout and identity may be recorded as
@@ -1560,8 +1553,8 @@ consumer migration, or consumer conformance is claimed.
 
 ### Accepted Finding-Closure Plan
 
-The Human Product Owner confirmed ADR 0035's exact hierarchy boundary on 30
-July 2026. Together with the delegated mechanical completions in ADR 0034,
+The Human Product Owner confirmed [ADR 0035](../../decisions/0035-product-scope-and-hierarchy.md)'s exact hierarchy boundary on 30
+July 2026. Together with the delegated mechanical completions in [ADR 0034](../../decisions/0034-checker-derived-mechanical-completions.md),
 all four checker-derived authority findings now have accepted resolutions.
 
 The next execution sequence is:
@@ -1633,12 +1626,11 @@ slice.
 
 ## AI Execution Slice: Close The Nourd Invocation Boundary
 
-- **Scope:** Realize ADR 0038 in the exact NKF 0.1 authority pair, derived
+- **Scope:** Realize [ADR 0038](../../decisions/0038-nourd-invocation-precondition.md) in the exact NKF 0.1 authority pair, derived
   schemas, checker invocation behavior, and diagnostic fixture matrix
-- **Decision Authority:** Human Product Owner for the invocation and
   diagnostic boundary; Codex technical reviewer for exact derived artifacts
   and implementation mechanics
-- **Authority Effect:** ADR 0038 accepts the semantic boundary; exact
+- **Authority Effect:** [ADR 0038](../../decisions/0038-nourd-invocation-precondition.md) accepts the semantic boundary; exact
   replacement artifacts and derived schema bytes require governed review
 
 ### Plan
@@ -1673,12 +1665,12 @@ slice.
 Completed as accepted authority, confirmed derived schemas, and unconfirmed
 checker realization evidence on 30 July 2026.
 
-- ADR 0039 accepts and promotes the exact current Markdown/YAML pair:
+- [ADR 0039](../../decisions/0039-invocation-authority-pair.md) accepts and promotes the exact current Markdown/YAML pair:
   - Markdown SHA-256
     `2274d569d147eadd658de8e8f00a790630be1f30a5303f3c608b085fac020f48`;
   - YAML SHA-256
     `7fc193f8622f8068c56a24fc5f4cfbe11ea2787f3bba3bb612f9a39d49f8e413`.
-- ADR 0040 confirms and promotes the exact source-metadata-only schema
+- [ADR 0040](../../decisions/0040-invocation-json-schemas.md) confirms and promotes the exact source-metadata-only schema
   rebindings:
   - bundle SHA-256
     `7718ad7ffdc5cf8884b68b163edef58cb3b080eec6316ec4edc7e79de52208b4`;
@@ -1714,7 +1706,6 @@ outside this execution slice.
 - **Scope:** Bind the completed native checker implementation and fixture
   matrix to an immutable Git checkpoint, audit that exact state, and record a
   bounded development-Realization confirmation if it passes
-- **Decision Authority:** Codex technical reviewer under the Human Product
   Owner's prior authorization to confirm the technical realization after
   independent review
 - **Authority Effect:** None on NKF format meaning; any confirmation applies
@@ -1769,7 +1760,6 @@ knowledge. Those remain separately governed work.
 - **Scope:** Step 6 of the accepted realization order, limited to the initial
   checker distribution boundary, deterministic archive contents,
   release-manifest design, and exact consumer-pinning model
-- **Decision Authority:** Human Product Owner for the distribution boundary;
   Codex technical reviewer for a non-authoritative exact mechanics proposal
 - **Authority Effect:** The confirmed boundary may be recorded in an immutable
   Decision. Archive layout, manifest serialization, packaging implementation,
@@ -1833,7 +1823,7 @@ That recommendation is not yet accepted. No canonical authority artifact,
 schema, checker source, package, tag, release, consumer, or conformance result
 was changed by this slice. Work is paused at this exact release-contract
 boundary for Human Product Owner review. The Human Product Owner later
-accepted that boundary through ADR 0043; the exact realization remained
+accepted that boundary through [ADR 0043](../../decisions/0043-release-manifest.md); the exact realization remained
 separately reviewable.
 
 ## AI Execution Slice: Reconcile Native Release Contract
@@ -1841,10 +1831,9 @@ separately reviewable.
 - **Scope:** Record the accepted release-manifest authority boundary, preserve
   it in a Git checkpoint, and prepare the exact authority, schema, and checker
   reconciliation required before deterministic packaging
-- **Decision Authority:** Human Product Owner for release-contract meaning;
   Codex technical reviewer for derived serialization, schema, checker binding,
   fixtures, and reproducibility mechanics
-- **Authority Effect:** ADR 0043 accepts the native contract boundary. Exact
+- **Authority Effect:** [ADR 0043](../../decisions/0043-release-manifest.md) accepts the native contract boundary. Exact
   fields and canonical replacement bytes remain proposals until reviewed and
   separately accepted; derived schemas and checker bytes remain unconfirmed
   until separately audited and bound to immutable checkpoints.
@@ -1876,7 +1865,7 @@ separately reviewable.
 - Do not add a release-manifest declaration to `bundle.yaml`, project
   Governed Validation Inputs, or the validation-result schema list.
 - Do not let packager implementation define normative release behavior.
-- Do not mutate ADR 0041 or treat its development artifact as the future
+- Do not mutate [ADR 0041](../../decisions/0041-checker-development-realization.md) or treat its development artifact as the future
   release checker without independent rebinding and confirmation.
 - Do not promote proposals, publish, push, tag, create a Github Release,
   self-host, migrate a consumer, or claim conformance in this slice.
@@ -1942,7 +1931,6 @@ derived realization.
   the exact release-contract revision, replace and rebind canonical NKF 0.1
   authority, realize its schemas and checker bindings, and implement the
   deterministic release package without publishing it
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
   Product Owner delegation for the exact reviewed revision and derived
   technical realization
 - **Authority Effect:** May accept only the exact review artifacts bound in
@@ -1990,17 +1978,17 @@ derived realization.
 
 ### Execution Record
 
-- ADR 0044 records delegated acceptance of the exact release contract.
-- Commit `fbdb42f` and ADR 0045 preserve the exact accepted canonical
+- [ADR 0044](../../decisions/0044-release-contract.md) records delegated acceptance of the exact release contract.
+- Commit `fbdb42f` and [ADR 0045](../../decisions/0045-release-authority-pair.md) preserve the exact accepted canonical
   Markdown/YAML authority pair separately from derived realization.
-- ADR 0046 confirms four exact source-bound schemas. The bundle, record, and
+- [ADR 0046](../../decisions/0046-release-json-schemas.md) confirms four exact source-bound schemas. The bundle, record, and
   validation-result assertion graphs are unchanged after source metadata is
   removed. The release-manifest schema is release-package enforcement only and
   does not expand the project checker's three-schema boundary.
-- ADR 0047 confirms the rebound project checker at source checkpoint
+- [ADR 0047](../../decisions/0047-release-checker.md) confirms the rebound project checker at source checkpoint
   `0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f` and portable checker SHA-256
   `f71226e5f632cdd0918a0eedae1cbbc5d5f17b450395d98e744ae572dfd73579`.
-- ADR 0048 confirms release tooling at source checkpoint
+- [ADR 0048](../../decisions/0048-release-package.md) confirms release tooling at source checkpoint
   `50fbc53c7ec1022598029780b5159d5a91c4a087` and two independent,
   byte-identical 1,159,680-byte archives at SHA-256
   `c8d0df6e68889d5be0c4ca9e215188748d28399f10d10d03728d0561eaf86b4d`.
@@ -2012,7 +2000,6 @@ derived realization.
 - **Scope:** Exercise the Human Product Owner's explicit instruction to
   continue from the confirmed local release-package boundary by publishing the
   exact initial NKF 0.1 package through the accepted Github Release channel
-- **Decision Authority:** Human Product Owner for external publication;
   accepted release mechanics from ADRs 0042 through 0048
 - **Repository Visibility:** Private at execution start; publication therefore
   remains limited to authorized repository users and does not resolve public
@@ -2055,7 +2042,6 @@ derived realization.
   Nourd Agent SDK without Product misclassification while keeping future
   root-specific specifications, hierarchies, validators, and protocols easy to
   add
-- **Decision Authority:** Human Product Owner for root-model and semantic
   meaning; Codex technical reviewer for proposal consistency, derived
   serialization analysis, and realization planning
 - **Authority Effect:** None. The Human Product Owner explicitly paused
@@ -2135,7 +2121,6 @@ acceptance, canonical promotion, or derived realization.
 - **Scope:** Record and develop the Human Product Owner's accepted architecture
   for one non-selectable Common Specification and exactly one concrete Root
   Profile per bundle
-- **Decision Authority:** Human Product Owner for the architecture and semantic
   division; Codex technical reviewer for proposal consistency, impact
   analysis, and derived realization planning
 - **Authority Effect:** The Common-Specification and concrete-Root-Profile
@@ -2160,7 +2145,7 @@ acceptance, canonical promotion, or derived realization.
 5. Keep Technology, Specification-record, serialization, artifact-layout, and
    migration details proposed until their exact boundaries are separately
    reviewed.
-6. Reconcile NKF-006 and repository indexes with the accepted architecture.
+6. Reconcile [NKF-006](../deferred/NKF-006-extensible-root-models.md) and repository indexes with the accepted architecture.
 7. Audit fail-closed profile resolution, validator trust, compatibility,
    authority binding, and future-profile extensibility.
 8. Return the next single consequential semantic decision before changing
@@ -2218,7 +2203,6 @@ Profile semantics. No extraction is accepted yet.
 - **Scope:** Correct the derivation order by defining a Technology Profile from
   NKF's actual knowledge needs before comparing it with the accepted Product
   specification
-- **Decision Authority:** Human Product Owner for Technology, Common, and
   Product Profile meaning; Codex technical reviewer for independent derivation,
   comparison, and consistency analysis
 - **Authority Effect:** None. The comparison method is accepted, but the
@@ -2380,10 +2364,10 @@ Realization.
 
 The slice is realized through ADRs 0050 through 0052:
 
-- ADR 0050 accepts the exact Common, Product, and Technology authority pair;
-- ADR 0051 governs the heading-only source revision required for honest native
+- [ADR 0050](../../decisions/0050-product-and-technology-profiles.md) accepts the exact Common, Product, and Technology authority pair;
+- [ADR 0051](../../decisions/0051-self-hosting-source-migration.md) governs the heading-only source revision required for honest native
   self-hosting while preserving predecessor provenance; and
-- ADR 0052 confirms the derived schemas, checker, fixtures, build,
+- [ADR 0052](../../decisions/0052-dynamic-root-self-hosting.md) confirms the derived schemas, checker, fixtures, build,
   declaration generator, and self-hosting realization separately from
   acceptance and conformance.
 
@@ -2399,7 +2383,7 @@ coverage.
 
 An attempted direct heading normalization of older accepted Decisions was
 identified during audit as an ungoverned immutable-snapshot change. It was
-reverted, governed explicitly through ADR 0051, then reapplied as the accepted
+reverted, governed explicitly through [ADR 0051](../../decisions/0051-self-hosting-source-migration.md), then reapplied as the accepted
 current serialization revision. This preserves the distinction between a
 mechanical migration and a silent edit.
 
@@ -2418,13 +2402,13 @@ realization, and exercised the initial Technology self-hosting boundary.
 Completion does not claim that every later repository issue was solved. The
 following work is transferred explicitly:
 
-- NKF-007 owns repository knowledge architecture, complete current
+- [NKF-007](NKF-007-knowledge-structure-and-confirmation.md) owns repository knowledge architecture, complete current
   Realizations, front-matter source-envelope support, declaration correction,
   and renewed self-validation.
-- NKF-008 owns future release publication, distribution activation, and
+- [NKF-008](NKF-008-publish-and-onboard-consumers.md) owns future release publication, distribution activation, and
   deliberate external-consumer onboarding or migration.
-- NKF-009 owns expansion of secret scanning to every governed artifact kind.
-- NKF-004, NKF-005, and NKF-006 retain their existing deferred scopes.
+- [NKF-009](../deferred/NKF-009-governed-artifact-secret-scanning.md) owns expansion of secret scanning to every governed artifact kind.
+- [NKF-004](../deferred/NKF-004-portable-presentation-guidance.md), [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md), and [NKF-006](../deferred/NKF-006-extensible-root-models.md) retain their existing deferred scopes.
 
 The pre-remediation audit that exposed the transferred gaps remains historical
 Evidence. NKF-003 completion does not retroactively turn its generator,
@@ -2439,3 +2423,16 @@ confirmation.
 | `kaveh6202/Nourd.Studio:knowledge/designs/nkf-0.1.md` | `13a82fbc1b72c1350e9765f59d1538c375f3fa69` | Accepted NKF 0.1 specification |
 | `kaveh6202/Nourd.Studio:knowledge/designs/plans/nkf-002-nkf-0-1-conformance-checker.md` | `06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Task plan and migration evidence |
 | `kaveh6202/Nourd.Studio:src/core/knowledge/` | `06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1` | Proposed checker implementation evidence |
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

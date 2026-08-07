@@ -13,8 +13,8 @@ task: NKF-019
 
 ## Context And Problem
 
-NKF 0.1 evolved in place while it had no external consumers: NKF-010 through
-NKF-017 revised the canonical Specification and executable companion under
+NKF 0.1 evolved in place while it had no external consumers: [NKF-010](../tasks/completed/NKF-010-governed-frontmatter-adoption.md) through
+[NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) revised the canonical Specification and executable companion under
 the pre-stable evolution rule without changing the version coordinate.
 Adopted repositories now exist and pin NKF 0.1 releases. Continuing to mutate
 NKF 0.1 meaning in place would silently change the contract those
@@ -25,7 +25,7 @@ adds backward-compatible optional vocabulary, which leaves no room for a
 pre-stable corrective release that strengthens requirements, while NKF `1.0`
 remains reserved for the first public stable release.
 
-On `2026-08-06`, while adopting the NKF-019 Decision Applicability Gate
+On `2026-08-06`, while adopting the [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) Decision Applicability Gate
 direction, the Human Product Owner directed that there be a defined process
 for updating and versioning NKF, that every release be versioned now that
 other repositories use NKF 0.1, and that the gate correction be NKF `0.11`.
@@ -49,14 +49,14 @@ other repositories use NKF 0.1, and that the gate correction be NKF `0.11`.
 4. Consumers migrate deliberately. A repository that declares an earlier
    supported version remains valid against that version's immutable meaning;
    nothing migrates by implication of a newer version existing.
-5. The NKF-019 Decision Applicability Gate correction is allocated NKF
+5. The [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) Decision Applicability Gate correction is allocated NKF
    `0.11` and is the first version produced under this process.
 
 ## Scope And Applicability
 
 This Decision governs how the NKF repository evolves and versions NKF
 contract meaning from now on, and allocates the `0.11` coordinate to the
-NKF-019 correction. It does not itself define gate meaning, revise a
+[NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) correction. It does not itself define gate meaning, revise a
 Specification, implement a checker, publish a release, or migrate any
 consumer repository.
 

@@ -10,17 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0019
+proposal_evidence: accepted NKF 0.1 Decisions through ADR 0018 and the imported NKF-002 schemas, checker phases, diagnostics, and result type; imported implementation remains evidence only
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Enforcement And Diagnostics
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-- **Proposal evidence:** accepted NKF 0.1 Decisions through ADR 0018 and the
-  imported NKF-002 schemas, checker phases, diagnostics, and result type;
-  imported implementation remains evidence only
 
 ## Decision Sought
 
@@ -354,7 +349,7 @@ All rules above block conformance.
 
 An unresolved, digest-mismatched, identity-mismatched, or otherwise unsupported
 optional extension emits only `extension.optional.unvalidated` and remains
-subject to ADR 0016's visibility, round-trip, and non-consequential-use rules.
+subject to [ADR 0016](../../decisions/0016-extension-resolution.md)'s visibility, round-trip, and non-consequential-use rules.
 
 ## Validation Result
 
@@ -405,7 +400,7 @@ This proposal:
 
 - removes repository, Git base-ref, and Git-specific acceptance-source rules
   from native conformance;
-- uses current unversioned NKF identities and ADR 0018 project paths;
+- uses current unversioned NKF identities and [ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md) project paths;
 - adds complete role, entity, binding, extension, and Markdown-coverage rules;
 - separates authority-binding results from conformance;
 - makes phase non-evaluation explicit;

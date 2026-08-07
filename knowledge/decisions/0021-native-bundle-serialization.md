@@ -7,19 +7,17 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0021: Accept NKF 0.1 Native Bundle Serialization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Acceptance source:** Direct confirmation of the summarized exact bundle
-  structure in the NKF-003 discussion on 29 July 2026
+  structure in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on 29 July 2026
 
 ## Context
 
-ADR 0018 established the fixed manifest path, `knowledge_root`, declaration
+[ADR 0018](0018-project-paths-and-knowledge-coverage.md) established the fixed manifest path, `knowledge_root`, declaration
 directory, Markdown coverage, and path rules. Replacement-pair reconciliation
 exposed that the exact bundle object, `non_records` entry shape and kinds, and
 unknown-field behavior remained undefined.
@@ -36,7 +34,7 @@ The accepted boundary includes:
 
 - required `nkf_version`, `contract`, `id`, `product_record`,
   `knowledge_root`, and `non_records` fields;
-- optional `extension_contracts` and `extensions` fields using ADR 0016;
+- optional `extension_contracts` and `extensions` fields using [ADR 0016](0016-extension-resolution.md);
 - closed handling of unknown top-level and non-record-entry fields;
 - removal of `record_contract`, `markdown_root`, `records_root`,
   `required_extensions`, and free-form top-level extension fields;

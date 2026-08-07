@@ -7,7 +7,7 @@ source:
   path: decisions/0087-accept-the-corrected-0-2-pair.md
   digest:
     algorithm: sha-256
-    value: 82f457dfa49c353f4a5de85a2799c410db9798b1711716ea6bc62826e02b3d6e
+    value: 71041a6f69cdfa88fb18c3ae9855e047f65502b093b36a7daa726d098ee485ed
 governance:
   lifecycle: immutable
   status: accepted

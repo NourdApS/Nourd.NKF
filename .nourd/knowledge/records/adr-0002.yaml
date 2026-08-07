@@ -7,7 +7,7 @@ source:
   path: decisions/0002-body-responsibility-bindings.md
   digest:
     algorithm: sha-256
-    value: 3ea86394695fd2efe0f14c2676c3372e500082e1eec2384e0e9aa383645f5f89
+    value: 434659edcbcf9806411a4aeee2dbf3a7132523d333f9c0259e3be24e354bee5e
 governance:
   lifecycle: immutable
   status: accepted

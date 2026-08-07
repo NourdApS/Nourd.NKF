@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-The NKF 0.2 set was implemented and audited under NKF-019 at commit
+The NKF 0.2 set was implemented and audited under [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) at commit
 `455ef7a` with the completion audit recording no unresolved material
 finding. The release protocol requires separate Human Product Owner
 confirmation before the release archive is produced.
@@ -23,7 +23,7 @@ confirmation before the release archive is produced.
 On `2026-08-07`, the Human Product Owner confirmed the implemented NKF 0.2
 versioned set and authorized producing and publishing the 0.2 release and
 then migrating this repository to 0.2 as the first adopter. The confirmation
-was made through explicitly delegated technical review, in the ADR 0061
+was made through explicitly delegated technical review, in the [ADR 0061](0061-confirm-layered-contract-enforcement-realization.md)
 tradition: the Human Product Owner did not personally read the audited
 artifacts and relied on the recorded audit Evidence and the passing complete
 gate.
@@ -55,4 +55,4 @@ recorded audit Evidence.
 ## Non-Claims
 
 This Decision does not publish a release, migrate any repository, prove
-later conformance, or close NKF-019.
+later conformance, or close [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md).

@@ -7,14 +7,12 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0007: Establish Markdown And YAML Contract Authority
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct informed confirmation in the NKF-003
+- **Acceptance source:** Direct informed confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md)
   discussion on 29 July 2026
 
 ## Context
@@ -59,7 +57,7 @@ If they conflict:
 
 1. a checker or generator must fail closed;
 2. the YAML must not override the human-readable normative meaning;
-3. the mismatch must be classified under ADR 0006;
+3. the mismatch must be classified under [ADR 0006](0006-pre-stable-evolution.md);
 4. the intended rule must be confirmed from accepted authority; and
 5. the affected specification, contract set, derived artifacts, versioning,
    and migration must be reconciled explicitly.
@@ -86,7 +84,7 @@ checker defect, but it must be validated against the bound normative Markdown.
 If accepted authority does not already determine the correction, it requires
 governed normative confirmation before implementation.
 
-All changes follow the pre-stable evolution process in ADR 0006.
+All changes follow the pre-stable evolution process in [ADR 0006](0006-pre-stable-evolution.md).
 
 ## Not Decided
 

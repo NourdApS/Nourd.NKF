@@ -11,21 +11,19 @@ task: NKF-017
 
 # ADR 0075: Confirm Complete Portable Onboarding Topology
 
-- **Status:** Accepted
-- **Task:** `NKF-017`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit authorization to independently audit and confirm the
   Product and Technology dynamic-root and complete-topology work
-- **Predecessors:** ADR 0070, ADR 0071, ADR 0073, and ADR 0074
+- **Predecessors:** [ADR 0070](0070-confirm-agent-led-initial-onboarding.md), [ADR 0071](0071-complete-portable-onboarding-topology.md), [ADR 0073](0073-correct-portable-topology-diagnostic-registry.md), and [ADR 0074](0074-separate-authoring-and-recommended-release-verification.md)
 
 ## Context And Problem
 
-ADR 0071 adopts the complete portable Product and Technology topology. ADR
-0073 accepts the corrected current NKF 0.1 authority pair, and ADR 0074
+[ADR 0071](0071-complete-portable-onboarding-topology.md) adopts the complete portable Product and Technology topology. ADR
+0073 accepts the corrected current NKF 0.1 authority pair, and [ADR 0074](0074-separate-authoring-and-recommended-release-verification.md)
 separates unreleased authoring validation from recommended-release review.
 Those Decisions do not confirm that the derived implementation is correct.
 
-NKF-017 can complete only after the checker, onboarding, deliberate repair,
+[NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) can complete only after the checker, onboarding, deliberate repair,
 fixtures, neutral agent guidance, public-documentation projection,
 self-hosting declarations, and consolidated current-system account agree with
 that accepted meaning; the complete gate passes; and an independent audit
@@ -38,8 +36,8 @@ Realizations:
 
 | Record | Source | Confirmed SHA-256 |
 | --- | --- | --- |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `c1ce0b1bcf6cf26b38209e28f0186d16745e4a14d0f0fae47b559acb05a58437` |
-| `nkf-portable-knowledge-topology` | `knowledge/realizations/current/portable-knowledge-topology.md` | `e7f753e5cfe90bb30cffb7c3f94bdec7c91902b1fe5e0621bf301fa0954ec2c2` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `c1ce0b1bcf6cf26b38209e28f0186d16745e4a14d0f0fae47b559acb05a58437` |
+| [`nkf-portable-knowledge-topology`](../realizations/current/portable-knowledge-topology.md) | `knowledge/realizations/current/portable-knowledge-topology.md` | `e7f753e5cfe90bb30cffb7c3f94bdec7c91902b1fe5e0621bf301fa0954ec2c2` |
 
 The supporting independent completion audit at
 `knowledge/evidence/audits/nkf-017-whole-repository-completion-audit.md` has
@@ -47,7 +45,7 @@ SHA-256
 `d9df601de2c2ed6a207b6dead4523ba06345ac2a22d4f6e06045ba279726e685`.
 It supports this review but cannot confirm a Realization by itself.
 
-NKF-017 is Completed for:
+[NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) is Completed for:
 
 1. one complete continuously required portable Common topology with Product
    and Technology profile additions;
@@ -57,7 +55,7 @@ NKF-017 is Completed for:
    Product and Technology public examples;
 4. agent-led initial onboarding that produces the complete topology for the
    already supported Empty and Tiny Knowledge categories;
-5. deliberate receipt-bound repair for trusted NKF-013 and NKF-015
+5. deliberate receipt-bound repair for trusted [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) and [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md)
    predecessors, with drift protection, staged checking, rollback,
    idempotence, and tamper rejection;
 6. AI-neutral onboarding guidance and public topology and recovery guidance;
@@ -68,11 +66,11 @@ NKF-017 is Completed for:
 
 This confirmation applies only to the exact Realization bytes listed above
 and their governed artifact mappings. It confirms local implementation
-correctness within NKF-017; it does not alter the already accepted normative
+correctness within [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md); it does not alter the already accepted normative
 pair.
 
-New supported onboarding produces the complete topology. Existing NKF-013 and
-NKF-015 consumers retain their installed predecessor until project authority
+New supported onboarding produces the complete topology. Existing [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) and
+[NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) consumers retain their installed predecessor until project authority
 deliberately repairs or migrates them. No consumer repository is changed by
 this Decision.
 
@@ -95,7 +93,7 @@ of those checks.
 
 Rejected. Release is an external distribution act. Requiring publication to
 confirm a validated local implementation would recreate the circular boundary
-removed by ADR 0074.
+removed by [ADR 0074](0074-separate-authoring-and-recommended-release-verification.md).
 
 ### Confirm Only The Focused Topology Realization
 
@@ -109,12 +107,12 @@ authority.
 
 ## Consequences And Trade-Offs
 
-- NKF-017 has no remaining active work inside its accepted scope.
+- [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) has no remaining active work inside its accepted scope.
 - The confirmed local successor can become input to separately authorized
   release and publication work.
 - Existing consumers do not change automatically.
 - The recommended release and published public documentation remain the
-  NKF-015 predecessor until separately updated and verified.
+  [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor until separately updated and verified.
 - The complete topology creates more initial navigation files than the
   predecessor scaffold, intentionally trading minimal file count for
   predictable human and agent navigation.

@@ -22,7 +22,7 @@ proxy evidence being represented as outcome success until direct human
 inspection contradicted it. NKF 0.1 validates only Task identity, status, and
 placement, so every deterministic check passed while that failure developed.
 
-The Human Product Owner directed NKF-019 to establish the smallest coherent
+The Human Product Owner directed [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) to establish the smallest coherent
 NKF-owned safeguard. On `2026-08-06`, the Human Product Owner adopted the
 proposed gate direction, directed that the gate be required on all Tasks
 including completed history, and directed versioned delivery as NKF `0.11`
@@ -74,7 +74,7 @@ The adopted direction establishes, as NKF 0.11 Common meaning:
 This Decision governs the NKF 0.11 Specification revision, executable
 companion, Schemas, checker, diagnostics, onboarding output, fixtures,
 tests, authoring protocol and skills, public documentation, self-hosting
-migration, and Realization knowledge required by NKF-019. It binds adopted
+migration, and Realization knowledge required by [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md). It binds adopted
 repositories only when they deliberately migrate to NKF 0.11. It does not
 modify Nourd Tiles, Wonderer, or any other consumer repository.
 

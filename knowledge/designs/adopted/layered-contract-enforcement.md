@@ -10,18 +10,14 @@ task: NKF-011
 design_disposition: adopted
 design_decisions:
   - adr-0060
+proposal_authority_effect: ADR 0060 adopts this direction without making it normative NKF 0.1 meaning.
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF Layered Contract Enforcement
 
-- **Task:** `NKF-011`
-- **Design Disposition:** Adopted
-- **Adopting Decision:** `ADR-0060`
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** ADR 0060 adopts this direction without making
-  it normative NKF 0.1 meaning.
 - **Authority Boundary:** This Design proposes how repositories apply the
-  accepted NKF 0.1 contract. ADR 0060 adopts that proposal. Neither the Design
+  accepted NKF 0.1 contract. [ADR 0060](../../decisions/0060-layered-contract-enforcement.md) adopts that proposal. Neither the Design
   nor its adoption changes the format, confirms an implementation, establishes
   conformance, publishes a checker, or activates remote repository protection.
 
@@ -69,7 +65,7 @@ legitimate active Task or Design has become stale.
   `.nourd/validation-result.json`.
 - The current checker requires Node.js 22 or later.
 - The current release package is stale relative to the accepted authority pair;
-  publication and consumer onboarding remain deferred to NKF-008.
+  publication and consumer onboarding remain deferred to [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md).
 - Models do not discover repository files by themselves. Agent hosts and
   coding tools define discovery conventions, and the same model may behave
   differently in different hosts.
@@ -427,7 +423,7 @@ surface. A change to the enforcement surface itself requires:
 7. remote protection review when a workflow, required check, ownership rule,
    or bypass condition changes.
 
-A candidate's own green check cannot supply those decisions. Before NKF-008
+A candidate's own green check cannot supply those decisions. Before [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md)
 publishes a current independently pinned checker, the NKF repository's
 workflow is exact-commit self-checking evidence, not an independent trust
 anchor against enforcement weakening.
@@ -462,14 +458,14 @@ must be adapted to the consumer's actual knowledge map, Task policy, command,
 branch, authority boundary, and supported agent-host surfaces without changing the
 portable lifecycle meaning.
 
-Consumer adoption cannot be called ready while NKF-008 still lacks a current
+Consumer adoption cannot be called ready while [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) still lacks a current
 published checker distribution. This Design may realize and validate the NKF
 repository reference implementation now; it must label consumer activation as
 pending rather than pin a consumer to unreleased source.
 
 ### Commit-Time Boundary
 
-NKF-011 does not install a Git pre-commit or pre-push hook.
+[NKF-011](../../tasks/completed/NKF-011-enforce-nkf-contracts.md) does not install a Git pre-commit or pre-push hook.
 
 A naïve hook running `npm run nkf:check` observes the working tree, while the
 commit is constructed from the Git index. It can pass against bytes that are
@@ -688,7 +684,7 @@ The Decision adopting this Design must state whether it accepts:
 ## Unresolved Matters
 
 - Publication of the current checker and consumer onboarding remain owned by
-  NKF-008.
+  [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md).
 - The exact remote branch rule cannot be activated or confirmed without
   separate authorization and a workflow run on Github.
 - Staged-snapshot local enforcement is deferred until its Git-index semantics

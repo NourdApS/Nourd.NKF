@@ -12,13 +12,11 @@ design_decisions:
   - adr-0005
 superseded_by:
   - adr-0009
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF Record V2 Responsibility Bindings
 
-- **Design Disposition:** Superseded
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
 ## Decision Sought
@@ -99,7 +97,7 @@ Reconciliation may reorder an already valid list deterministically. It must
 not add, remove, or change responsibility identifiers.
 
 Migration from `nkf.record/v1` requires reviewed mapping of exact source
-sections to the ADR 0003 identifiers. A tool may propose mappings, but it must
+sections to the [ADR 0003](../../decisions/0003-product-responsibility-identifiers.md) identifiers. A tool may propose mappings, but it must
 label them non-authoritative and may not change the record contract to v2
 without reviewed confirmation.
 

@@ -7,7 +7,7 @@ source:
   path: decisions/0060-layered-contract-enforcement.md
   digest:
     algorithm: sha-256
-    value: f37c94630756cc12f7fa865b71aa26b5e654f90afc8177e4e4ca64c2da69579a
+    value: 6ea65be5dba939cb2b54f01cdc0fa4006437279be162ac1ea489f390c2d42c77
 governance:
   lifecycle: immutable
   status: accepted

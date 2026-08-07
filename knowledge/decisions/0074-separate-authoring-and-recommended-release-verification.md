@@ -35,7 +35,7 @@ or publishing a release recommendation, but it is not part of ordinary
 authoring validation for an unreleased successor.
 
 The existing recommended release remains unchanged until a separate deliberate
-NKF-017 release and recommendation process is authorized and completed.
+[NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) release and recommendation process is authorized and completed.
 
 ## Scope And Applicability
 
@@ -85,7 +85,7 @@ gate, and separate confirmation of the enforcement-surface successor.
 
 This Decision does not:
 
-- verify, publish, or recommend an NKF-017 release;
+- verify, publish, or recommend an [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) release;
 - confirm the changed enforcement Realization;
 - weaken release catalog verification;
 - establish consumer conformance; or

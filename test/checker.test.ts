@@ -406,7 +406,7 @@ describe("bundle-aware checker", () => {
     await writeFile(
       invalidFile,
       (await readFile(invalidFile, "utf8"))
-        .replace('title: "Deferred Tasks"', 'title: "Wrong Navigation"')
+        .replace(/^title: .*$/m, 'title: "Wrong Navigation"')
         .replace(
           'summary: "Provides the required NKF navigation index for Deferred Tasks."',
           'summary: " invalid orientation "',

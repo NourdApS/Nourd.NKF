@@ -7,7 +7,7 @@ source:
   path: decisions/0074-separate-authoring-and-recommended-release-verification.md
   digest:
     algorithm: sha-256
-    value: bbaa9649be47247cddef283f5b2f1d9204656dd395fe396f2a2af78db1e942df
+    value: e483a5e55b872dfb26adbad52e5a1052b34783f1c1b9605d60c912df3d638cac
 governance:
   lifecycle: immutable
   status: accepted

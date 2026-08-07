@@ -22,7 +22,7 @@ The corrected NKF 0.2 release checker is the deterministic build
 `dist/nourd-nkf-checker.mjs` with SHA-256
 `c4fa53db760673c32ac611dfabf48b0dc0fccd360796a9481af18abc981bd435`
 from adopted source commit
-`717b3d2df2afb3a067fcbd8b09c21bf04aeef69f`. This supersedes the ADR 0085
+`717b3d2df2afb3a067fcbd8b09c21bf04aeef69f`. This supersedes the [ADR 0085](0085-bind-the-corrected-0-2-release-checker.md)
 binding.
 
 ## Scope And Applicability
@@ -36,7 +36,7 @@ and 0085.
 
 ## Alternatives Considered
 
-Reusing the ADR 0085 binding was impossible: the corrected pair and rules
+Reusing the [ADR 0085](0085-bind-the-corrected-0-2-release-checker.md) binding was impossible: the corrected pair and rules
 changed the checker bytes.
 
 ## Consequences And Trade-Offs

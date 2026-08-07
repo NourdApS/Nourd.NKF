@@ -7,21 +7,19 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0020: Establish Current Presentation-Guidance Boundary
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Follow-up Task:** `NKF-004`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct confirmation in the NKF-003 discussion on
+- **Follow-up Task:** [`NKF-004`](../tasks/deferred/NKF-004-portable-presentation-guidance.md)
+- **Acceptance source:** Direct confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   29 July 2026
 
 ## Context
 
 The NKF 0.1 specification permits non-authoritative presentation guidance,
-while ADR 0013 deliberately reserves no native field for it. Discussion using
+while [ADR 0013](0013-native-record-serialization.md) deliberately reserves no native field for it. Discussion using
 a concrete project established that native NKF semantics already provide
 records, canonical Markdown, section structure, types, hierarchy,
 relationships, governance, and provenance from which an interface can build a
@@ -59,9 +57,9 @@ This boundary is intentionally current rather than permanent. Task
 owns future evidence gathering and design of a portable presentation-guidance
 extension and may propose refining, extending, or superseding this boundary.
 
-NKF-004 does not change this Decision merely by producing a design,
+[NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md) does not change this Decision merely by producing a design,
 implementation, fixture, or successful demonstration. Any consequential
-change must follow ADR 0006 and be accepted in a later Decision that preserves
+change must follow [ADR 0006](0006-pre-stable-evolution.md) and be accepted in a later Decision that preserves
 ADR 0020 as historical provenance.
 
 ## Not Established

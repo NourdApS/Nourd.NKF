@@ -13,13 +13,11 @@ design_decisions:
 superseded_by:
   - adr-0009
   - adr-0012
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Authoritative Artifacts
 
-- **Design Disposition:** Superseded
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
 ## Decision Sought

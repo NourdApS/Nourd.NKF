@@ -10,16 +10,12 @@ task: NKF-008
 design_disposition: adopted
 design_decisions:
   - adr-0064
+proposal_authority_effect: ADR 0064 adopts this direction without making it normative NKF 0.1 meaning
 ---
 
 # NKF Release Documentation And Adoption
 
-- **Task:** `NKF-008`
-- **Design Disposition:** Adopted
-- **Adopting Decision:** `ADR-0064`
-- **Proposal Authority Effect:** ADR 0064 adopts this direction without making
-  it normative NKF 0.1 meaning
-- **Authority Boundary:** The Human Product Owner accepted the NKF-008 outcome
+- **Authority Boundary:** The Human Product Owner accepted the [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) outcome
   and delegated technical completion. This Design proposes the exact
   publication and adoption mechanics; it does not publish, confirm, or
   establish conformance by existing.
@@ -71,7 +67,7 @@ authorize changes to an external consumer repository.
 - Public documentation may explain and mirror exact public-safe authoritative
   bytes but may not expose private repository contents, credentials, consumer
   knowledge, local paths, or operational data.
-- NKF-012, not this Task, owns required-check protection, mandatory
+- [NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md), not this Task, owns required-check protection, mandatory
   pull-request approval, bypass policy, and blocked-invalid-candidate proof.
 - The public adopter supports Product and Technology bundles only. Common
   Specification rules are inherited through either concrete Root Profile;
@@ -276,8 +272,8 @@ conformance only for the Governed Validation Inputs observed in that run.
 
 ### Authorized Consumer Exercise
 
-ADR 0042 already authorizes the NKF repository to exercise the release as the
-first governed consumer without migrating an external repository. NKF-008
+[ADR 0042](../../decisions/0042-release-distribution.md) already authorizes the NKF repository to exercise the release as the
+first governed consumer without migrating an external repository. [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md)
 therefore adds a Product adoption fixture and a deterministic exercise that:
 
 1. initializes an isolated temporary Git repository from the fixture;
@@ -412,9 +408,9 @@ claiming authority over Agent SDK or another project.
 
 Before adoption, review must verify:
 
-1. compatibility with ADRs 0042 through 0048 and ADR 0060;
+1. compatibility with ADRs 0042 through 0048 and [ADR 0060](../../decisions/0060-layered-contract-enforcement.md);
 2. no native NKF 0.1 semantic or archive-layout change;
-3. complete NKF-008 requirement coverage;
+3. complete [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) requirement coverage;
 4. truthful authority, confirmation, conformance, publication, and consumer
    boundaries;
 5. deterministic and safe release, adopter, and publication algorithms;
@@ -434,7 +430,7 @@ remote state belong in Evidence.
 
 The public repository may later feed a dedicated website, package registry,
 or public checker distribution. Those are later publication choices and are
-not required for NKF-008.
+not required for [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md).
 
-NKF-012 remains responsible for protected merge enforcement when the required
+[NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md) remains responsible for protected merge enforcement when the required
 Github capability becomes available.

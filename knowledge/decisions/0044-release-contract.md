@@ -7,17 +7,14 @@ created_at: 2026-07-30T09:39:33Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
 ---
 
 # ADR 0044: Accept NKF 0.1 Release Contract
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
-  Product Owner delegation
 - **Delegation Source:** The Human Product Owner directed the reviewer to
   approve the exact reviewed release-contract revision on the Product Owner's
-  behalf in the NKF-003 discussion on 30 July 2026
+  behalf in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on 30 July 2026
 - **Review Checkpoint:** `70f9e4f24203880f4162d522c8157c48c2a6dc47`
 
 ## Context

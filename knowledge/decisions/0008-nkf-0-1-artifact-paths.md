@@ -7,19 +7,17 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0008: Accept NKF 0.1 Artifact Identities
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct informed confirmation in the NKF-003
+- **Acceptance source:** Direct informed confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md)
   discussion on 29 July 2026
 
 ## Context
 
-ADR 0007 establishes a digest-bound pair of normative Markdown and complete
+[ADR 0007](0007-markdown-yaml-authority.md) establishes a digest-bound pair of normative Markdown and complete
 executable YAML, but deliberately leaves their version, paths, and YAML
 contract-set identity undecided.
 
@@ -62,7 +60,7 @@ remaining serialization shapes, or executable schemas.
 - The YAML contract set has a neutral identifier independent of its checker.
 - Format `0.1` can contain independently versioned record contracts.
 - The Markdown/YAML pair still requires exact revision and digest binding
-  under ADR 0007.
+  under [ADR 0007](0007-markdown-yaml-authority.md).
 
 ## Not Decided
 

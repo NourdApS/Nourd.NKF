@@ -12,21 +12,18 @@ design_decisions:
   - adr-0042
   - adr-0043
   - adr-0044
+proposal_authority_effect: None until the consequential release-contract boundary and exact realization are separately accepted and confirmed
 ---
 
 # NKF 0.1 Initial Release Distribution
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision Basis:** ADR 0042
-- **Proposal Authority Effect:** None until the consequential release-contract boundary
-  and exact realization are separately accepted and confirmed
+- **Decision Basis:** [ADR 0042](../../decisions/0042-release-distribution.md)
 
 ## Purpose
 
 This proposal defines one reproducible distribution unit for the confirmed
 native NKF 0.1 checker and the exact authority artifacts it implements. It
-turns ADR 0042's accepted channel boundary into reviewable archive, manifest,
+turns [ADR 0042](../../decisions/0042-release-distribution.md)'s accepted channel boundary into reviewable archive, manifest,
 integrity, pinning, and release mechanics.
 
 It does not publish a release, change NKF 0.1 meaning, or claim conformance.
@@ -179,7 +176,7 @@ archive is built. It may be distinct from the checker source checkpoint when
 packaging-only work changes no distributed checker byte. The manifest binds
 both identities explicitly.
 
-ADR 0041 and executable SHA-256
+[ADR 0041](../../decisions/0041-checker-development-realization.md) and executable SHA-256
 `f64d772cb628d6c1fe7dd337baceecb75007fdabe74f91bd87971e063a362d0c`
 remain the current development baseline. They cannot be copied into the first
 release manifest by implication: adding the native release-manifest contract
@@ -799,7 +796,7 @@ The YAML says schema self-digests live in release metadata but does not define
 that metadata's contract. A release-manifest implementation created only in
 packaging code would therefore become an ungoverned parallel contract.
 
-ADR 0043 resolves the first authority question by accepting
+[ADR 0043](../../decisions/0043-release-manifest.md) resolves the first authority question by accepting
 `nkf.release-manifest` as an unversioned native identity governed solely by
 `nkf_version: "0.1"`. The remaining reconciliation is to:
 
@@ -835,7 +832,7 @@ the confirmed checker's required relative paths and separates:
 - distribution acceptance from release realization; and
 - installed-tool pinning from knowledge declaration and validation evidence.
 
-ADR 0043 resolves the native-contract and project-validation separation
+[ADR 0043](../../decisions/0043-release-manifest.md) resolves the native-contract and project-validation separation
 boundary. The remaining consequential boundary is acceptance of the exact
 manifest fields, deterministic USTAR contract, consumer pin, verification
 order, Github Release mechanics, and Markdown/YAML delta proposed above.

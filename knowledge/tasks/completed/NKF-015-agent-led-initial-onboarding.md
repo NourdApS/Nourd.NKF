@@ -4,14 +4,12 @@ summary: Replace deterministic repository-category assessment in initial NKF onb
 created_at: 2026-07-31T13:58:38Z
 task_id: NKF-015
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-015: Establish Agent-Led Initial Onboarding
 
-- **Task:** `NKF-015`
-- **Status:** Completed
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Predecessor:**
   [`NKF-013`](../completed/NKF-013-initial-greenfield-onboarding.md)
 - **Deferred Successor:**
@@ -73,7 +71,7 @@ Category 2 onboarding after reviewing that evidence, but cannot override a
 mechanical safety failure such as an escaping path, prohibited symbolic link,
 conflicting `.nourd` state, incomplete source coverage, or changed snapshot.
 
-All other starting categories remain with deferred `NKF-014`. Their semantic
+All other starting categories remain with deferred [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md). Their semantic
 criteria require later Human Product Owner confirmation and are not defined or
 inferred by this Task.
 
@@ -81,7 +79,7 @@ inferred by this Task.
 
 This Task owns:
 
-1. a successor Design and Decision that preserve NKF-013 as historical
+1. a successor Design and Decision that preserve [NKF-013](NKF-013-initial-greenfield-onboarding.md) as historical
    provenance while replacing its deterministic eligibility interpretation;
 2. the portable agent-led repository inspection, evidence, recommendation,
    confirmation, candidate-resolution, and handoff procedure;
@@ -96,7 +94,7 @@ This Task owns:
 
 ## Guardrails
 
-- Do not rewrite the completed NKF-013 Task, adopted Design, Decisions, audit,
+- Do not rewrite the completed [NKF-013](NKF-013-initial-greenfield-onboarding.md) Task, adopted Design, Decisions, audit,
   or confirmed Realization to make the new direction look historical.
 - Do not let the agent's recommendation become acceptance, confirmation, or a
   conformance result.
@@ -123,7 +121,7 @@ This Task owns:
   meaning deterministically.
 - Final sealing and application independently verify complete source coverage,
   exact bytes, safety, release integrity, native generation, and conformance.
-- Existing NKF-013 users and accepted historical records receive explicit
+- Existing [NKF-013](NKF-013-initial-greenfield-onboarding.md) users and accepted historical records receive explicit
   compatibility and provenance treatment.
 - The `.agents/skills` and `.claude/skills` representations remain
   byte-identical and route every supported AI host to the same neutral
@@ -137,14 +135,14 @@ This Task owns:
 
 ## Task Execution Plan
 
-1. Audit the confirmed NKF-013 Design, Decisions, Realization, protocol,
+1. Audit the confirmed [NKF-013](NKF-013-initial-greenfield-onboarding.md) Design, Decisions, Realization, protocol,
    skills, adopter, tests, public documentation, and release bindings against
    the accepted agent-led boundary.
 2. Draft a successor Design that allocates semantic repository inspection to
    the portable skill and exact mechanical enforcement to seal, apply, and
    validation.
 3. Record the Human Product Owner's accepted boundary in a successor Decision
-   with explicit NKF-013 compatibility and provenance.
+   with explicit [NKF-013](NKF-013-initial-greenfield-onboarding.md) compatibility and provenance.
 4. Revise the neutral protocol and byte-identical skills before changing the
    executable surface.
 5. Replace deterministic eligibility classification with a final mechanical
@@ -162,7 +160,7 @@ This Task owns:
 
 ## Authorized Completion Plan
 
-1. Reconcile current-system navigation so superseded NKF-013 eligibility is
+1. Reconcile current-system navigation so superseded [NKF-013](NKF-013-initial-greenfield-onboarding.md) eligibility is
    clearly historical and live validation state is not copied into durable
    Realization meaning.
 2. Bind the authorized repository-specific `AGENTS.md` Task-creation policy as
@@ -183,7 +181,7 @@ This Task owns:
 
 ## Current Status
 
-The Task is completed. ADR 0069 adopts the exact successor Design, and ADR
+The Task is completed. [ADR 0069](../../decisions/0069-agent-led-initial-onboarding.md) adopts the exact successor Design, and ADR
 0070 confirms the exact independently audited successor Realizations through
 delegated technical-review authority.
 
@@ -206,3 +204,16 @@ unresolved material completion finding.
 Consumer-repository onboarding is excluded from NKF-015. The Human Product
 Owner retained that operation for separate manual execution, so no consumer
 mutation or conformance claim is part of this completion.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

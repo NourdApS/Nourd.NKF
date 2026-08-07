@@ -7,14 +7,12 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct confirmation in the NKF-003 discussion on
+- **Acceptance source:** Direct confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   29 July 2026
 
 ## Context
@@ -58,7 +56,7 @@ identity, exact Markdown digest, exact declaration revision or digest, and
 absence of supersession, revocation, or contradiction by the same authority.
 
 Portable authority-specific evidence or resolver configuration uses a
-required extension governed by ADR 0016. It does not become core by use.
+required extension governed by [ADR 0016](0016-extension-resolution.md). It does not become core by use.
 
 ## Compatibility
 

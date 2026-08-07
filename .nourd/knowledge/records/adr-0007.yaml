@@ -7,7 +7,7 @@ source:
   path: decisions/0007-markdown-yaml-authority.md
   digest:
     algorithm: sha-256
-    value: 3320a4dcbdea5286ea007b4e9aec7f2f3ba90274155392a88182b55607705a36
+    value: 2ca1eedc48f3446a19f1688d0a7c92572286af9f24ffc2f78816b1ac75d25f39
 governance:
   lifecycle: immutable
   status: accepted

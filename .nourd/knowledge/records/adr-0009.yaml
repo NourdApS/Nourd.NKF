@@ -7,7 +7,7 @@ source:
   path: decisions/0009-nkf-0-1-version-namespace.md
   digest:
     algorithm: sha-256
-    value: ec4a280f7e1627720c7dfe4cf957e4b05790428d49672128fd5b70d0cc53bd38
+    value: 04546fb577e4a29b7d6dbd28f1784b650919884bbe923d4d974ba18bc6e2b763
 governance:
   lifecycle: immutable
   status: accepted

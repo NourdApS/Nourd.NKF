@@ -11,16 +11,12 @@ design_disposition: adopted
 design_decisions:
   - adr-0049
   - adr-0050
+proposal_authority_effect: None. This document defines a reviewable Technology candidate derived from NKF's own needs. It does not accept a Technology Profile, change canonical NKF 0.1 authority, or establish conformance.
 ---
 
 # NKF 0.1 Technology Root Profile Specification Proposal
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Governing Architecture:** `ADR 0049`
-- **Proposal Authority Effect:** None. This document defines a reviewable Technology
-  candidate derived from NKF's own needs. It does not accept a Technology
-  Profile, change canonical NKF 0.1 authority, or establish conformance.
+- **Governing Architecture:** [`ADR 0049`](../../decisions/0049-common-and-root-profiles.md)
 
 ## Purpose
 
@@ -45,7 +41,7 @@ The proposal is derived from the following current NKF responsibilities:
 - executable contracts, schemas, checker code, fixtures, and release tooling;
 - compatibility, migration, distribution, security, and lifecycle ownership;
   and
-- the governed pre-stable feedback loop accepted by ADR 0006.
+- the governed pre-stable feedback loop accepted by [ADR 0006](../../decisions/0006-pre-stable-evolution.md).
 
 Product terminology, the Product body, and the Product–Domain–Capability
 hierarchy are not derivation sources for this Technology model.
@@ -509,12 +505,12 @@ Its initial file-level classification is:
 
 | Proposed representation | Current files | Count |
 | --- | --- | ---: |
-| Decision records | ADR 0001 through ADR 0049 | 49 |
+| Decision records | [ADR 0001](../../decisions/0001-independent-nkf-authority.md) through [ADR 0049](../../decisions/0049-common-and-root-profiles.md) | 49 |
 | Design records | Non-index Markdown directly under `knowledge/designs` | 29 |
 | Specification records | Canonical `knowledge/specifications/nkf-0.1.md` | 1 |
 | Evidence records | Reconciliation plus substantive byte-preserved source-snapshot Markdown | 8 |
 | Navigation non-records | Knowledge, Decisions, Designs, Evidence, Specifications, and source-snapshot indexes | 6 |
-| Task non-records | NKF-003 through NKF-006 | 4 |
+| Task non-records | [NKF-003](../../tasks/completed/NKF-003-independent-nkf-authority.md) through [NKF-006](../../tasks/deferred/NKF-006-extensible-root-models.md) | 4 |
 | **Total** |  | **97** |
 
 This classification covers every current Markdown file exactly once. A later

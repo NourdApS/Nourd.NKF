@@ -7,24 +7,21 @@ created_at: 2026-07-30T09:47:32Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
 ---
 
 # ADR 0045: Accept Release Contract Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
-  Product Owner delegation
-- **Semantic Authority:** ADR 0044 and its exact accepted review artifacts
+- **Semantic Authority:** [ADR 0044](0044-release-contract.md) and its exact accepted review artifacts
 
 ## Context
 
-ADR 0044 accepts the exact NKF 0.1 release contract and structural schema
+[ADR 0044](0044-release-contract.md) accepts the exact NKF 0.1 release contract and structural schema
 design. The accepted revision is a delta authority: it must be reconciled into
 one complete canonical Markdown specification and one executable YAML
 companion so NKF does not retain parallel normative sources.
 
-The reviewer composed a full replacement pair from the current ADR 0039
+The reviewer composed a full replacement pair from the current [ADR 0039](0039-invocation-authority-pair.md)
 authority plus only the accepted release-contract changes. The pair was
 reviewed before schema or checker rebinding.
 
@@ -52,7 +49,7 @@ The canonical promotions are byte-identical to the reviewed proposals.
 
 The independent review confirmed:
 
-- exact byte parity with ADR 0044's accepted normative Markdown section and
+- exact byte parity with [ADR 0044](0044-release-contract.md)'s accepted normative Markdown section and
   executable YAML mapping;
 - one strict JSON-compatible YAML document with unique string keys and no
   tags, merge keys, anchors, or aliases;
@@ -96,7 +93,7 @@ Product knowledge declaration shapes, project Governed Validation Inputs,
 project diagnostics, validation phases, acceptance semantics, or conformance
 meaning.
 
-The ADR 0039 pair remains immutable historical authority. Consumers do not
+The [ADR 0039](0039-invocation-authority-pair.md) pair remains immutable historical authority. Consumers do not
 inherit this revision until they deliberately pin a later confirmed release.
 
 ## Non-Claims

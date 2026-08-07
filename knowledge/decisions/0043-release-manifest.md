@@ -7,19 +7,17 @@ created_at: 2026-07-30T08:39:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0043: Establish Native Release Manifest Contract
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Confirmation Source:** Direct confirmation in the NKF-003 discussion on
+- **Confirmation Source:** Direct confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   30 July 2026 after review of the exact authority and enforcement boundary
 
 ## Context
 
-ADR 0042 selects one content-addressed Github Release archive as NKF's initial
+[ADR 0042](0042-release-distribution.md) selects one content-addressed Github Release archive as NKF's initial
 checker distribution. The exact distribution proposal identified that a
 release manifest implemented only by packaging code would create a second,
 ungoverned contract authority.
@@ -83,7 +81,7 @@ meaning.
 
 Because the canonical Markdown/YAML pair will change, the checker must be
 rebound to the resulting exact authority digests and independently reconfirmed
-before release. ADR 0041 remains the immutable development baseline and does
+before release. [ADR 0041](0041-checker-development-realization.md) remains the immutable development baseline and does
 not become the release Realization by implication.
 
 ## Non-Claims

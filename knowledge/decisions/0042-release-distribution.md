@@ -7,20 +7,18 @@ created_at: 2026-07-30T08:39:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0042: Establish Initial Release Distribution Boundary
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Confirmation Source:** Direct confirmation in the NKF-003 discussion on
+- **Confirmation Source:** Direct confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   30 July 2026 after review of the initial checker-distribution alternatives
 
 ## Context
 
-ADR 0041 confirms one exact native NKF 0.1 development Realization, but
-expressly leaves distribution and release unresolved. NKF-003 requires one
+[ADR 0041](0041-checker-development-realization.md) confirms one exact native NKF 0.1 development Realization, but
+expressly leaves distribution and release unresolved. [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) requires one
 pinned checker distribution before the NKF repository can exercise that
 distribution as its first governed consumer.
 

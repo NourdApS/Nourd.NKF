@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-ADR 0089 adopted the round-three corrections under the continued
+[ADR 0089](0089-title-equality-deep-links-and-design-orientation.md) adopted the round-three corrections under the continued
 unconsumed-release exception. The corrected canonical bytes must be
 accepted exactly.
 

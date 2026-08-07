@@ -7,7 +7,7 @@ source:
   path: decisions/0026-deterministic-secret-pattern-registry.md
   digest:
     algorithm: sha-256
-    value: 944989e5fb52142db95870a1e5fc7dd773e41cbaffe8677b7063987fa82c5314
+    value: c27d25296f0b9a23f4e67bdaae73811686cdd4122ba312f73857774601c5acbb
 governance:
   lifecycle: immutable
   status: accepted

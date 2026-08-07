@@ -7,7 +7,7 @@ source:
   path: designs/adopted/extension-declaration-and-resolution.md
   digest:
     algorithm: sha-256
-    value: 1551e14b713942e35bc02723690bc7d293e7cac0acc1e0abba273c0fa6e174b0
+    value: d9e53ceae3fd41e6e5109f2ed993bb5be24ae4a42abad2045c4a23695da83d70
 governance:
   lifecycle: immutable
   status: accepted

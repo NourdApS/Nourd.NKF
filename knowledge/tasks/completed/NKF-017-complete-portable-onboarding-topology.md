@@ -4,16 +4,16 @@ summary: Correct NKF initial onboarding so every supported Product and Technolog
 created_at: 2026-07-31T21:42:15Z
 task_id: NKF-017
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-007
+  - NKF-013
+  - NKF-014
+  - NKF-015
 ---
 
 # NKF-017: Establish Complete Portable Onboarding Topology
-
-- **Task:** `NKF-017`
-- **Status:** Completed — Confirmed By ADR 0075
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-007`, `NKF-013`, `NKF-014`, `NKF-015`
 
 ## Human Direction
 
@@ -66,7 +66,7 @@ separate authority boundaries.
   [Complete Portable Onboarding Topology](../../designs/adopted/complete-portable-onboarding-topology.md)
   Design proposed the exact Common path set, Product and Technology additions,
   durable empty-area indexes, one canonical map, lifecycle placement and index
-  completeness, continuing enforcement, and predecessor repair. ADR 0071 has
+  completeness, continuing enforcement, and predecessor repair. [ADR 0071](../../decisions/0071-complete-portable-onboarding-topology.md) has
   now adopted that direction.
 - The exact Design revision with SHA-256
   `5de809c5e76d5e8a6c1db7b0b6045c61867edf61ffb31d5bba6d7fad43a27afa`
@@ -79,12 +79,12 @@ separate authority boundaries.
   release inputs must move together.
 - On `2026-07-31T22:46:02Z`, the Human Product Owner adopted the concise exact
   topology proposal after the audited Design had been reduced to its five
-  consequential boundaries. ADR 0071 records that adoption.
-- Before ADR 0072, no Specification revision, implementation, Realization
+  consequential boundaries. [ADR 0071](../../decisions/0071-complete-portable-onboarding-topology.md) records that adoption.
+- Before [ADR 0072](../../decisions/0072-portable-topology-authority-pair.md), no Specification revision, implementation, Realization
   confirmation, consumer migration, or release had been accepted or claimed.
   The next boundary at that stage was the exact normative Specification and
-  executable companion revision derived from ADR 0071.
-- The exact ADR 0072 candidate authority pair is now drafted and independently
+  executable companion revision derived from [ADR 0071](../../decisions/0071-complete-portable-onboarding-topology.md).
+- The exact [ADR 0072](../../decisions/0072-portable-topology-authority-pair.md) candidate authority pair is now drafted and independently
   audited. It binds Markdown SHA-256
   `3da17ce0b16be89f3aae8be9d2245a8df161a8e9cc9c4b9afff9c706983e694b`
   to executable SHA-256
@@ -104,20 +104,20 @@ separate authority boundaries.
   guidance, and documentation checks pass. The supporting Realization remains
   explicitly Draft and unconfirmed while self-host artifact reconciliation,
   the complete gate, independent audit, and exact confirmation are pending.
-- Requirement-by-requirement audit added proof for exact NKF-013 predecessor
+- Requirement-by-requirement audit added proof for exact [NKF-013](NKF-013-initial-greenfield-onboarding.md) predecessor
   repair, truthful repair-created timestamps, partial-index preservation,
   ambiguous-map refusal, safe non-default knowledge roots, explicit
   frontmatter-envelope candidate edits, and deliberate reuse of an existing
   safe Draft root or Technology Specification without duplicate generation.
-- Repository navigation audit repaired one stale NKF-006 link in the parent
+- Repository navigation audit repaired one stale [NKF-006](../deferred/NKF-006-extensible-root-models.md) link in the parent
   Task map. A CommonMark link-resolution pass over the root README and all
   current knowledge sources now reports no unresolved current link. It reports
   `25` unresolved links only inside immutable historical Evidence and source
   snapshots; those bytes remain preserved rather than rewritten as current
   knowledge.
 - On `2026-08-01T14:58:34Z`, the Human Product Owner approved both pending
-  corrections. ADR 0073 accepts the corrected diagnostic registry authority
-  pair. ADR 0074 keeps recommended-release verification mandatory for release
+  corrections. [ADR 0073](../../decisions/0073-correct-portable-topology-diagnostic-registry.md) accepts the corrected diagnostic registry authority
+  pair. [ADR 0074](../../decisions/0074-separate-authoring-and-recommended-release-verification.md) keeps recommended-release verification mandatory for release
   review while separating it from current-snapshot authoring validation.
 - The implementation audit then tightened repair-receipt integrity: exact
   receipt keys, safe unique and disjoint path partitions, installed profile and
@@ -127,7 +127,7 @@ separate authority boundaries.
   deterministic checker and adopter builds, the 60-file public projection with
   two complete examples, and full self-host conformance with zero diagnostics.
 - The whole-repository completion audit records no unresolved material finding.
-  ADR 0075 separately confirms the exact portable-topology and consolidated
+  [ADR 0075](../../decisions/0075-confirm-complete-portable-onboarding-topology.md) separately confirms the exact portable-topology and consolidated
   current-system Realizations. No release, publication, consumer migration,
   commit, push, acceptance-binding verification, or protected merge gate is
   claimed.
@@ -147,7 +147,7 @@ navigation and currently says they should exist only when real material needs
 them. The adopter therefore generates only those minimum files and preserves
 existing paths instead of establishing a complete lifecycle topology.
 
-ADR 0053 establishes the fuller Task, Design, Decision, Specification,
+[ADR 0053](../../decisions/0053-repository-knowledge-architecture.md) establishes the fuller Task, Design, Decision, Specification,
 Realization, and Evidence organization only for the NKF repository. Its scope
 does not make that organization a portable NKF Core or Root Profile
 requirement.
@@ -211,7 +211,7 @@ documents, adopt Designs, confirm Realizations, or make Governing Use ready.
 - update onboarding plan, sealing, transaction, rollback, receipt, status,
   and idempotence behavior for the accepted structure;
 - define deliberate migration for repositories already onboarded with the
-  minimal NKF-013 or NKF-015 scaffold;
+  minimal [NKF-013](NKF-013-initial-greenfield-onboarding.md) or [NKF-015](NKF-015-agent-led-initial-onboarding.md) scaffold;
 - update Product and Technology fixtures, tests, public documentation,
   adopter distribution, release bindings, and compatibility guidance; and
 - independently audit and confirm the exact successor before release.
@@ -241,11 +241,11 @@ documents, adopt Designs, confirm Realizations, or make Governing Use ready.
 
 Resolve these boundaries with the Human Product Owner one consequential
 decision at a time. Do not infer the final topology from the NKF repository's
-local ADR 0053 organization.
+local [ADR 0053](../../decisions/0053-repository-knowledge-architecture.md) organization.
 
 ## Guardrails
 
-- Do not reopen or rewrite completed NKF-013 or NKF-015 records.
+- Do not reopen or rewrite completed [NKF-013](NKF-013-initial-greenfield-onboarding.md) or [NKF-015](NKF-015-agent-led-initial-onboarding.md) records.
 - Preserve their Designs, Decisions, Realizations, audits, and releases as
   predecessor provenance.
 - Do not treat directory placement as semantic authority or infer lifecycle
@@ -267,8 +267,8 @@ local ADR 0053 organization.
 
 1. Capture the Nourd Agent SDK result as reproducible external exercise
    Evidence without importing its canonical meaning into NKF.
-2. Audit NKF 0.1 project-organization meaning, ADR 0053's repository-local
-   scope, NKF-013 and NKF-015 onboarding authority, generator paths, fixtures,
+2. Audit NKF 0.1 project-organization meaning, [ADR 0053](../../decisions/0053-repository-knowledge-architecture.md)'s repository-local
+   scope, [NKF-013](NKF-013-initial-greenfield-onboarding.md) and [NKF-015](NKF-015-agent-led-initial-onboarding.md) onboarding authority, generator paths, fixtures,
    public guidance, and checker enforcement.
 3. Draft a portable-topology Design comparing mandatory complete structure,
    populated-only structure, declared navigation indexes, logical topology,
@@ -318,7 +318,7 @@ local ADR 0053 organization.
 - Public guidance explains the complete created topology, ownership of every
   area, and the distinction between scaffold presence and semantic authority.
 - A deliberate migration path repairs repositories created by the minimal
-  NKF-013 and NKF-015 scaffold without rerunning category assessment or
+  [NKF-013](NKF-013-initial-greenfield-onboarding.md) and [NKF-015](NKF-015-agent-led-initial-onboarding.md) scaffold without rerunning category assessment or
   silently changing meaning.
 - Independent audit Evidence records no unresolved material finding, and a
   separate Decision confirms the exact successor Realization before release.
@@ -340,7 +340,7 @@ unauthorized.
 
 - selecting the final directory names or index contents;
 - drafting or adopting the portable-topology Design;
-- changing ADR 0053, the NKF 0.1 Specification, or executable companion;
+- changing [ADR 0053](../../decisions/0053-repository-knowledge-architecture.md), the NKF 0.1 Specification, or executable companion;
 - changing Schemas, checker, diagnostics, adopter, fixtures, tests, skills,
   protocol, public documentation, recommendation, or release artifacts;
 - moving or rewriting any Nourd Agent SDK file;
@@ -356,3 +356,16 @@ implementation had begun. Later Human Direction, Decisions, and Current
 Progress supersede only those created-state facts. Nourd Agent SDK remains
 unchanged, and no successor Realization, consumer migration, publication, or
 release is claimed merely from implementation or validation progress.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

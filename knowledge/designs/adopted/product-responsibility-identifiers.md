@@ -10,13 +10,11 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Product Responsibility Identifiers
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
 - **Accepted meaning changed:** None
 
 ## Decision Sought

@@ -7,21 +7,17 @@ created_at: 2026-07-30T17:23:58Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit direction to use vocabulary consistent with NKF’s Design concept
 ---
 
 # ADR 0055: Design Responsibility Vocabulary
 
-- **Status:** Accepted
-- **Task:** `NKF-007`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit direction to use vocabulary consistent with NKF’s Design
-  concept
 - **Review Evidence SHA-256:** `52c8b0859918aba24df9c9442e11172ff90b04970d2bc603fdaa068c135c90c4`
 
 ## Context
 
 NKF defines a Design as governed proposal knowledge containing alternatives
-and trade-offs. ADR 0054 distinguishes acceptance of an exact Design record
+and trade-offs. [ADR 0054](0054-front-matter-authority-pair.md) distinguishes acceptance of an exact Design record
 revision from adoption of the direction proposed by that Design.
 
 The current native Design body nevertheless retained two historical
@@ -65,7 +61,7 @@ recorded in each Design’s disposition provenance.
 ## Supersession And Compatibility
 
 This Decision supersedes the two predecessor Design responsibility identities
-in ADR 0003 and ADR 0054 for current NKF 0.1 use. Those Decisions remain
+in [ADR 0003](0003-product-responsibility-identifiers.md) and [ADR 0054](0054-front-matter-authority-pair.md) for current NKF 0.1 use. Those Decisions remain
 immutable provenance.
 
 The Design body still has eight required responsibilities. No other body,
@@ -88,7 +84,7 @@ The current Schema candidates are rebound without assertion-graph changes:
 | Record Schema | `0b11a7faaeb2ac9993d83f8102fc2ae25c7c32436ef4496f3a5aeb97eb6b5ff1` |
 | Validation Result Schema | `f7873cbbd9b3a7a24dd4b0374c68b165cc4b3cf85d98e7fdcd5c51bc6c315ed4` |
 
-Their confirmation remains part of the complete NKF-007 Realization and
+Their confirmation remains part of the complete [NKF-007](../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) Realization and
 self-hosting confirmation.
 
 ## Non-Claims

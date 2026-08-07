@@ -7,26 +7,21 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS, with exact matching mechanics derived and confirmed by the Codex technical reviewer
 ---
 
 # ADR 0026: Accept Deterministic Secret Pattern Registry
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Human Product Owner, Nourd ApS, with exact matching
-  mechanics derived and confirmed by the Codex technical reviewer
 - **Confirmation Source:** Direct Human Product Owner confirmation in the
-  NKF-003 discussion on 30 July 2026 after review of the exact scan scope,
+  [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on 30 July 2026 after review of the exact scan scope,
   blocking signature classes, exclusions, diagnostic behavior, and governed
   evolution boundary
 - **Reviewed Design:**
   [`../evidence/audits/nkf-0.1-checker-realization-gaps.md`](../evidence/audits/nkf-0.1-checker-realization-gaps.md)
-- **Implementation Evidence:**
-  [`../evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/src/nkf.ts`](../evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/src/nkf.ts)
 
 ## Context
 
-ADR 0019 prohibits live credentials, access tokens, private keys, and secrets.
+[ADR 0019](0019-validation-enforcement-and-diagnostics.md) prohibits live credentials, access tokens, private keys, and secrets.
 It makes a high-confidence `security.secret-pattern` finding block native
 conformance while warning that a passing scan does not prove absence.
 
@@ -167,7 +162,7 @@ security diagnostics for its scope.
 
 Changing native scan scope, detector grammar, contextual treatment,
 exclusions, blocking effect, or diagnostic cardinality is a consequential
-conformance change. It must follow ADR 0006, update the normative
+conformance change. It must follow [ADR 0006](0006-pre-stable-evolution.md), update the normative
 Markdown/executable YAML pair, update derived fixtures and checker behavior,
 produce a governed release, and require deliberate consumer migration.
 

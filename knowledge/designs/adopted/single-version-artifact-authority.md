@@ -10,25 +10,22 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0012
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # Reconcile Single-Version Artifact Authority
 
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-
 ## Problem
 
-ADR 0009 establishes exactly one NKF version namespace: the format version,
-currently `0.1`. ADR 0007 still requires independent versions for the YAML
+[ADR 0009](../../decisions/0009-nkf-0-1-version-namespace.md) establishes exactly one NKF version namespace: the format version,
+currently `0.1`. [ADR 0007](../../decisions/0007-markdown-yaml-authority.md) still requires independent versions for the YAML
 contract set and each supported bundle, record, body, and extension contract.
 Both cannot govern current NKF simultaneously.
 
 ## Proposed Reconciliation
 
-Preserve ADR 0007's accepted authority model:
+Preserve [ADR 0007](../../decisions/0007-markdown-yaml-authority.md)'s accepted authority model:
 
 - canonical Markdown owns complete human-readable meaning;
 - one complete YAML contract set is its executable companion;
@@ -36,7 +33,7 @@ Preserve ADR 0007's accepted authority model:
 - conflict fails closed and Markdown cannot be overridden by YAML; and
 - schemas, checker tables, fixtures, and distributions are derived artifacts.
 
-Supersede only ADR 0007's independent version-coordinate requirements:
+Supersede only [ADR 0007](../../decisions/0007-markdown-yaml-authority.md)'s independent version-coordinate requirements:
 
 - `nkf_version` is the only version coordinate;
 - `nkf.contract-set`, `nkf.bundle`, `nkf.record`, and body/extension identities
@@ -53,14 +50,14 @@ version namespace.
 This correction does not change NKF 0.1 Product meaning, responsibility
 vocabularies, declaration structure, or conformance intent. It removes an
 internal governance contradiction and makes artifact pinning compatible with
-ADR 0009.
+[ADR 0009](../../decisions/0009-nkf-0-1-version-namespace.md).
 
 Historical imported and superseded `/v1` and `/v2` identifiers remain evidence
 only. They are not supported current NKF contracts.
 
 ## Exact Confirmation Requested
 
-> Keep `nkf_version` as NKF's only version coordinate. Preserve ADR 0007's
+> Keep `nkf_version` as NKF's only version coordinate. Preserve [ADR 0007](../../decisions/0007-markdown-yaml-authority.md)'s
 > complete Markdown/YAML authority pair, but supersede its requirements for
 > independent contract-set, bundle, record, body, and extension versions.
 > Identify exact artifact revisions through NKF version plus Markdown/YAML

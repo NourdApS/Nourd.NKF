@@ -4,20 +4,19 @@ summary: Define the governed process for releasing a new NKF version, the proces
 created_at: 2026-08-06T23:30:03Z
 task_id: NKF-020
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-016
+  - NKF-018
+  - NKF-019
 ---
 
 # NKF-020: Define Version Release, Adoption, And Compatibility Process
 
-- **Task:** `NKF-020`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-016`, `NKF-018`, `NKF-019`
-
 ## Human Direction
 
-On `2026-08-06`, while reviewing the NKF 0.2 candidate under `NKF-019`, the
+On `2026-08-06`, while reviewing the NKF 0.2 candidate under [`NKF-019`](../active/NKF-019-decision-applicability-gate.md), the
 Human Product Owner directed that the shipping process be removed from the
 NKF rulebook and that this Task be created and deferred. The directed scope
 is to define how a new NKF version is released, how a repository adopts a
@@ -30,7 +29,7 @@ direction to start `NKF-020`.
 
 ## Scope Reduction
 
-On `2026-08-07`, ADR 0080 under `NKF-019` accepted the separated release and
+On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../active/NKF-019-decision-applicability-gate.md) accepted the separated release and
 adoption processes and their followable protocols, consuming most of this
 Task's directed scope ahead of activation. The remaining deferred scope is
 breaking-change classification and signaling, plus process refinements from
@@ -38,8 +37,8 @@ real release and adoption experience.
 
 ## Problem
 
-ADR 0076 establishes that every contract-meaning change after first consumer
-adoption ships as a new immutable NKF version, and ADR 0078 keeps release
+[ADR 0076](../../decisions/0076-versioned-contract-evolution.md) establishes that every contract-meaning change after first consumer
+adoption ships as a new immutable NKF version, and [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) keeps release
 and adoption process outside format meaning. No governed process yet defines
 the exact release steps, the consumer adoption and migration procedure, or
 how breaking and non-breaking versions are classified and signaled. Until
@@ -49,7 +48,7 @@ per-release migration notes.
 ## Draft Process Input
 
 The following release outline was drafted inside the NKF 0.2 candidate and
-removed by ADR 0078. It is unaccepted draft input for this Task, not
+removed by [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md). It is unaccepted draft input for this Task, not
 established process:
 
 1. an immutable Decision adopting the change and allocating the version;
@@ -80,7 +79,7 @@ One governed process definition covering:
 
 ## Scope
 
-- reconcile ADR 0076, ADR 0078, the accepted version semantics, release
+- reconcile [ADR 0076](../../decisions/0076-versioned-contract-evolution.md), [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md), the accepted version semantics, release
   tooling, adopter behavior, and existing migration precedent;
 - compare candidate homes for the process: governed process knowledge,
   Realization knowledge, release tooling contracts, or an NKF extension;
@@ -98,7 +97,7 @@ One governed process definition covering:
 - implementing release or adoption tooling changes;
 - publishing a release or migrating any consumer;
 - changing NKF 0.1 or NKF 0.2 meaning; and
-- defining acceptance-binding verification, which remains `NKF-016`.
+- defining acceptance-binding verification, which remains [`NKF-016`](NKF-016-deliver-acceptance-binding-verification.md).
 
 ## Future Execution Plan
 
@@ -131,3 +130,21 @@ One governed process definition covering:
 This Task records required future work only. It does not claim that any
 process has been selected, accepted, implemented, or followed, and it does
 not authorize beginning the work.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+| Reference | Kind | Carried Constraint |
+| --- | --- | --- |
+| [`adr-0076`](../../decisions/0076-versioned-contract-evolution.md) | record | Every contract-meaning change after first consumer adoption ships as a new immutable version. |
+| [`adr-0078`](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) | record | Release, adoption, and breaking-change process stay outside format meaning. |
+| [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Only breaking-change classification and signaling plus process refinements remain in this Task's scope. |
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added when the Task was created before NKF 0.2 was adopted and
+was normalized during the self-migration.
+

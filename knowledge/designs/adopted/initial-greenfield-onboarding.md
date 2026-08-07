@@ -28,14 +28,14 @@ confirmation remain separate project-authority acts.
 
 Large documented corpora, source-rich reconstruction, recovered historical
 authority, interrupted long-lived sessions, and advanced already-adopted
-migration remain deferred to `NKF-014`.
+migration remain deferred to [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 
 ## Governing Inputs And Constraints
 
-The Design is governed by accepted NKF 0.1 meaning, ADR 0018 project-root and
-knowledge-root boundaries, ADRs 0042 through 0048 release integrity, ADR 0057
-current-system Realization navigation, ADR 0060 AI-neutral enforcement, and
-ADR 0064 pinned consumer adoption.
+The Design is governed by accepted NKF 0.1 meaning, [ADR 0018](../../decisions/0018-project-paths-and-knowledge-coverage.md) project-root and
+knowledge-root boundaries, ADRs 0042 through 0048 release integrity, [ADR 0057](../../decisions/0057-current-system-realization.md)
+current-system Realization navigation, [ADR 0060](../../decisions/0060-layered-contract-enforcement.md) AI-neutral enforcement, and
+[ADR 0064](../../decisions/0064-release-documentation-and-adoption.md) pinned consumer adoption.
 
 The project root directly contains `.nourd` after adoption. The selected
 knowledge root is a safe relative directory inside that project. Exactly one
@@ -87,7 +87,7 @@ Those qualitative gates prevent a numerically small but semantically mature
 repository from being mislabeled greenfield. They also make the restored
 Agent SDK snapshot ineligible for automatic initial onboarding because it
 contains existing Task, Design, Decision, and acceptance history requiring
-deliberate migration. That result is a correct `NKF-014` deferral, not a reason
+deliberate migration. That result is a correct [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) deferral, not a reason
 to weaken the initial boundary.
 
 Eligibility is based only on the configured knowledge-root Markdown corpus
@@ -125,7 +125,7 @@ non-record representation, the plan supplies its NKF non-record kind and any
 required reason.
 
 Unresolved, incomplete, stale, duplicate, escaping, unsupported, or ambiguous
-plans fail before project mutation. A later `NKF-014` analyzer may create more
+plans fail before project mutation. A later [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) analyzer may create more
 complex candidate bytes and plan entries, but it must preserve this exact
 source-binding and apply contract unless a later governed Decision identifies
 a demonstrated incompatibility.
@@ -188,7 +188,7 @@ A different plan against an adopted repository fails closed and directs the
 user to a deliberate authoring or later migration workflow.
 
 Long-lived resumability, repair of arbitrarily interrupted historical states,
-and user-directed rollback beyond the active transaction remain `NKF-014`.
+and user-directed rollback beyond the active transaction remain [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 
 ### AI-Neutral Semantic Handoff
 
@@ -218,7 +218,7 @@ separate:
 - release and adopter digests; and
 - local or remote Git state only when separately observed.
 
-An out-of-scope result names `NKF-014` and leaves the project unchanged. A
+An out-of-scope result names [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) and leaves the project unchanged. A
 passing staged or installed check is never called acceptance or confirmation.
 
 ## Responsibilities Interactions And Information Flows
@@ -236,7 +236,7 @@ fixed. The adopter remains a separately digest-bound public artifact, so this
 derived onboarding change does not force a new native release when checker and
 authority bytes are unchanged.
 
-`NKF-014` may later add analyzers, source-derived candidate generation,
+[`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) may later add analyzers, source-derived candidate generation,
 provenance graphs, checkpoint stores, and recovery controllers before the same
 resolved-plan apply boundary. It must not weaken authority separation or make
 model interpretation authoritative.
@@ -264,7 +264,7 @@ attempt and lets source digests, declarations, and integration bytes drift.
 
 Rejected for the initial release. A separate candidate workspace permits
 complete review, deterministic source binding, and zero project mutation on an
-unresolved or invalid plan. `NKF-014` may later add resumable workspace state
+unresolved or invalid plan. [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) may later add resumable workspace state
 without changing final apply semantics.
 
 ### Treat Every Numerically Small Corpus As Greenfield
@@ -293,7 +293,7 @@ removes every transaction-created file or empty directory.
 
 The initial operation is intentionally short-lived. If the process is killed
 outside its handled failure boundary, Git or filesystem recovery may still be
-needed; robust interruption journaling belongs to `NKF-014`. The staged-first
+needed; robust interruption journaling belongs to [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md). The staged-first
 design minimizes that exposure and leaves no durable project write before a
 complete candidate passes.
 
@@ -310,7 +310,7 @@ generation.
 The public projection must include complete onboarding instructions and empty
 and small-document examples. Deterministic adopter, guidance, public-doc, and
 full-bundle verification must pass. A separate adversarial audit must map every
-`NKF-013` acceptance criterion and assess whether later `NKF-014` work can
+[`NKF-013`](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) acceptance criterion and assess whether later [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) work can
 extend analysis and recovery without replacing the apply boundary.
 
 ## Unresolved Matters

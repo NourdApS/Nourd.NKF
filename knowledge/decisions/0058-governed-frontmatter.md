@@ -7,20 +7,16 @@ created_at: 2026-07-30T19:58:36Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-010
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit acceptance of the frontmatter boundary and authorization to complete its coherent NKF 0.1 adoption
 ---
 
 # ADR 0058: Governed Frontmatter
 
-- **Status:** Accepted
-- **Task:** `NKF-010`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit acceptance of the frontmatter boundary and authorization to
-  complete its coherent NKF 0.1 adoption
 - **Review Evidence:** `knowledge/evidence/audits/nkf-010-frontmatter-design-review.md`
 
 ## Context And Problem
 
-ADR 0054 established a safe optional YAML source envelope but deliberately
+[ADR 0054](0054-front-matter-authority-pair.md) established a safe optional YAML source envelope but deliberately
 assigned no portable NKF meaning to arbitrary frontmatter keys. The resulting
 NKF repository exposes only creation provenance in most current documents,
 while basic identity, declared authority state, lifecycle orientation, and
@@ -131,7 +127,7 @@ This is one pre-stable successor serialization revision within NKF `0.1`. It
 does not create a frontmatter sub-version, another record contract, or a
 parallel supported legacy envelope.
 
-ADR 0054 remains immutable provenance for the safe parser boundary. This
+[ADR 0054](0054-front-matter-authority-pair.md) remains immutable provenance for the safe parser boundary. This
 Decision supersedes only its rule that arbitrary frontmatter keys have no
 portable NKF Core meaning.
 

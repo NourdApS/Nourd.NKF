@@ -7,16 +7,11 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting within delegated authority to compose and approve exact technical artifacts from the Human Product Owner boundary accepted in ADR 0035 and the mechanical completions accepted in ADR 0034
 ---
 
 # ADR 0036: Accept Checker-Findings-Resolved Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting within delegated
-  authority to compose and approve exact technical artifacts from the Human
-  Product Owner boundary accepted in ADR 0035 and the mechanical completions
-  accepted in ADR 0034
 - **Normative Markdown Proposal:**
   [`../evidence/decision-inputs/adr-0036-0037/nkf-0.1-checker-findings-resolved-specification-proposal.md`](../evidence/decision-inputs/adr-0036-0037/nkf-0.1-checker-findings-resolved-specification-proposal.md)
 - **Executable YAML Proposal:**
@@ -56,7 +51,7 @@ The replacement:
 - limits required native `part-of` reachability to Domain and Capability;
 - does not create hierarchy from Product scope;
 - corrects four minimal-example headings and their declaration paths;
-- advances the accepted baseline to the prior ADR 0029/0032 pair;
+- advances the accepted baseline to the prior [ADR 0029](0029-schema-realization-status.md)/0032 pair;
 - records ADRs 0034 through 0036 in executable provenance; and
 - changes no unrelated NKF 0.1 rule.
 
@@ -82,7 +77,7 @@ semantic adequacy or checker conformance.
 
 ## Schema Effect
 
-The three schemas confirmed by ADR 0033 retain their assertion meaning but
+The three schemas confirmed by [ADR 0033](0033-yaml-grammar-schema-bindings.md) retain their assertion meaning but
 their `x-nkf-source` Markdown and executable digests are now historical. Exact
 source-metadata-only rebindings require independent compilation and probe
 confirmation before becoming current realization.

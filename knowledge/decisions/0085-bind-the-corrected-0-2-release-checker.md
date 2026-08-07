@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-ADR 0084 accepted the corrected 0.2 pair and authorized replacing the
+[ADR 0084](0084-replace-the-unconsumed-0-2-release.md) accepted the corrected 0.2 pair and authorized replacing the
 unconsumed release. Packaging requires an immutable Decision binding the
 exact checker realization.
 
@@ -23,7 +23,7 @@ The corrected NKF 0.2 release checker is the deterministic build
 `dist/nourd-nkf-checker.mjs` with SHA-256
 `6915021cc0fa139a7915b6ec4adad5fc6bb72cec417e3b5c15b699b5f6ead5af`
 from adopted source commit
-`7438b436d6e8eb1d4c6ed6466a6509ed9a283d95`. This supersedes the ADR 0083
+`7438b436d6e8eb1d4c6ed6466a6509ed9a283d95`. This supersedes the [ADR 0083](0083-bind-nkf-0-2-release-checker.md)
 binding.
 
 ## Scope And Applicability
@@ -32,12 +32,12 @@ This Decision binds release packaging inputs only.
 
 ## Rationale
 
-The identifiers belong in an immutable Decision, matching ADR 0065 and ADR
+The identifiers belong in an immutable Decision, matching [ADR 0065](0065-confirm-current-release-bound-checker.md) and ADR
 0083.
 
 ## Alternatives Considered
 
-Reusing the ADR 0083 binding was impossible: the corrected pair and the
+Reusing the [ADR 0083](0083-bind-nkf-0-2-release-checker.md) binding was impossible: the corrected pair and the
 adoption changed the checker bytes.
 
 ## Consequences And Trade-Offs

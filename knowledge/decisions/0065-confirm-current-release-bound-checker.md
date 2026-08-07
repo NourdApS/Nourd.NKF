@@ -11,18 +11,16 @@ task: NKF-008
 
 # ADR 0065: Confirm Current Release-Bound Checker
 
-- **Status:** Accepted
-- **Task:** `NKF-008`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit delegation to complete and independently audit NKF-008
+  Owner's explicit delegation to complete and independently audit [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md)
 - **Source Checkpoint:**
   `57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc`
 - **Exact-Commit Workflow Evidence:** Github Actions run `30597538635`
 
 ## Context And Problem
 
-ADR 0047 confirms the earlier release-bound checker at an older source
-checkpoint. ADR 0059 confirms the current governed-frontmatter implementation,
+[ADR 0047](0047-release-checker.md) confirms the earlier release-bound checker at an older source
+checkpoint. [ADR 0059](0059-confirm-governed-frontmatter-realization.md) confirms the current governed-frontmatter implementation,
 including the current checker and Schemas, but the release packager requires
 one exact Decision that directly binds its eligible source checkpoint and
 checker executable digest.
@@ -68,8 +66,8 @@ binds both checkpoints separately.
 ## Scope And Applicability
 
 This confirmation applies only to the exact checker executable and release
-inputs listed above. It succeeds ADR 0047 for a new release without rewriting
-or invalidating the historical release that ADR 0047 supported.
+inputs listed above. It succeeds [ADR 0047](0047-release-checker.md) for a new release without rewriting
+or invalidating the historical release that [ADR 0047](0047-release-checker.md) supported.
 
 ## Rationale
 
@@ -78,17 +76,17 @@ older confirmation by implication. It also makes the release packager verify
 that the configured Decision text contains both the source checkpoint and
 checker digest before archive construction.
 
-ADR 0059 supplies the independent implementation audit and exact
+[ADR 0059](0059-confirm-governed-frontmatter-realization.md) supplies the independent implementation audit and exact
 Realization-level confirmation. The successful exact-commit workflow supplies
 reproducible build and validation evidence at the selected source checkpoint.
 Neither evidence substitutes for this explicit release eligibility act.
 
 ## Alternatives Considered
 
-Reusing ADR 0047 was rejected because it binds predecessor checker and
+Reusing [ADR 0047](0047-release-checker.md) was rejected because it binds predecessor checker and
 authority bytes.
 
-Treating ADR 0059 as the package binding was rejected because it does not name
+Treating [ADR 0059](0059-confirm-governed-frontmatter-realization.md) as the package binding was rejected because it does not name
 one checker source checkpoint and executable digest in the exact form the
 release packager verifies.
 
@@ -99,7 +97,7 @@ checkpoints separately.
 
 ## Consequences And Trade-Offs
 
-`scripts/release/config.mjs` can now be updated from ADR 0047 to ADR 0065 and
+`scripts/release/config.mjs` can now be updated from [ADR 0047](0047-release-checker.md) to ADR 0065 and
 from stale artifact digests to the current values.
 
 Any later change to a distributed authority, Schema, or checker byte requires
@@ -117,4 +115,4 @@ This Decision does not:
 - accept knowledge;
 - make the checker public;
 - activate protected branch enforcement; or
-- complete NKF-008.
+- complete [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md).

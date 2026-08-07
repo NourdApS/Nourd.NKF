@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-ADR 0076 allocated the coordinate `0.11` to the Decision Applicability Gate
+[ADR 0076](0076-versioned-contract-evolution.md) allocated the coordinate `0.11` to the Decision Applicability Gate
 correction. Reviewing the candidate, the Human Product Owner directed on
 `2026-08-06` that the shipping process does not belong in the NKF rulebook,
 that a new deferred Task define how a version is released, how a repository
@@ -23,7 +23,7 @@ that the correction be versioned NKF `0.2` because it has breaking changes.
 ## Decision
 
 1. The Decision Applicability Gate correction is versioned NKF `0.2`. This
-   extends ADR 0076 by replacing its `0.11` allocation; the next minor
+   extends [ADR 0076](0076-versioned-contract-evolution.md) by replacing its `0.11` allocation; the next minor
    coordinate communicates a breaking successor more clearly.
 2. How the NKF repository releases a new version, how an adopted repository
    adopts one, and how breaking changes are classified and signaled are
@@ -33,7 +33,7 @@ that the correction be versioned NKF `0.2` because it has breaking changes.
    pre-stable breaking minors with explicit migration meaning, one current
    namespace, fail-closed unsupported versions, and deliberate migration.
 3. Defining the release process, the adoption process, and breaking-change
-   classification and signaling is deferred to `NKF-020`, created by explicit
+   classification and signaling is deferred to [`NKF-020`](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md), created by explicit
    direction and deferred without authorizing work.
 
 ## Scope And Applicability
@@ -57,16 +57,16 @@ Keeping `0.11` was rejected by direction as misleading for a breaking
 change. Keeping the shipping steps inside the Specification was rejected
 because the format would start governing internal workflow and every process
 tweak would force a format version. Defining the processes immediately inside
-NKF-019 was rejected to keep the gate correction the smallest coherent
+[NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) was rejected to keep the gate correction the smallest coherent
 change; the questions get their own deferred Task.
 
 ## Consequences And Trade-Offs
 
 All candidate artifacts, identities, and paths move from `0.11` to `0.2`
-before acceptance; ADR 0076 and ADR 0077 remain immutable with their
-historical `0.11` references, corrected by this Decision. Until NKF-020 is
+before acceptance; [ADR 0076](0076-versioned-contract-evolution.md) and [ADR 0077](0077-decision-applicability-gate.md) remain immutable with their
+historical `0.11` references, corrected by this Decision. Until [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md) is
 activated and completed, release and adoption follow the accepted governance
-rules of ADR 0076 plus recorded per-release migration meaning, without a
+rules of [ADR 0076](0076-versioned-contract-evolution.md) plus recorded per-release migration meaning, without a
 finished step-by-step process contract.
 
 ## Non-Claims
@@ -75,6 +75,6 @@ This Decision does not:
 
 - accept the NKF 0.2 Specification or executable companion;
 - define, accept, or implement the release, adoption, or breaking-change
-  processes deferred to NKF-020;
-- authorize beginning NKF-020 work; and
+  processes deferred to [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md);
+- authorize beginning [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md) work; and
 - implement, validate, confirm, release, or migrate anything.

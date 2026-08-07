@@ -12,20 +12,18 @@ design_decisions:
   - adr-0023
 superseded_by:
   - adr-0030
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Replacement JSON Schemas
 
-- **Design Disposition:** Superseded
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Accepted authority pair:** ADR 0022
-- **Proposal Authority Effect:** None
+- **Accepted authority pair:** [ADR 0022](../../decisions/0022-native-authority-pair.md)
 
 ## Purpose
 
 This proposal derives the first current JSON Schema 2020-12 realization from
-the exact NKF 0.1 Markdown/YAML authority pair accepted by ADR 0022. It
+the exact NKF 0.1 Markdown/YAML authority pair accepted by [ADR 0022](../../decisions/0022-native-authority-pair.md). It
 replaces the obsolete `markdown_root`, `records_root`, open-object, and shallow
 record assumptions in the preliminary schema files without treating schema
 code as normative meaning.
@@ -54,7 +52,7 @@ inside its bytes.
 ## Schema-Owned Enforcement
 
 The proposals enforce only local deterministic structure assigned to JSON
-Schema by ADR 0019 and the accepted authority pair:
+Schema by [ADR 0019](../../decisions/0019-validation-enforcement-and-diagnostics.md) and the accepted authority pair:
 
 - closed bundle, record, and nested object fields;
 - required fields, primitive types, constants, and local cardinality;
@@ -82,7 +80,7 @@ The record schema intentionally represents semantic controlled values such as
 record type, body contract, section authority and role, responsibility,
 relationship type, entity kind, entity-relationship type, and binding kind as
 non-empty identifiers rather than duplicating their accepted vocabularies.
-ADR 0019 assigns their support, body-specific allowance, correspondence, and
+[ADR 0019](../../decisions/0019-validation-enforcement-and-diagnostics.md) assigns their support, body-specific allowance, correspondence, and
 semantic conditions to the later bundle-aware `record-contract` or
 `bundle-graph` phase with stable specific diagnostics.
 

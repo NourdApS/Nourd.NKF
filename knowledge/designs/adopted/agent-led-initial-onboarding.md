@@ -21,7 +21,7 @@ Design. It corrects the initial onboarding implementation without changing
 native NKF 0.1 format meaning, the Product or Technology Root Profiles, or the
 authority of consumer knowledge.
 
-NKF-013 made initial onboarding executable, but allocated repository
+[NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) made initial onboarding executable, but allocated repository
 eligibility to fixed Markdown counts, byte limits, and frontmatter heuristics.
 Those checks can observe syntax and size; they cannot determine whether a
 repository contains useful knowledge, meaningful source code, project
@@ -30,7 +30,7 @@ onboarding path.
 
 This Design covers Category 1, Empty Repository, and Category 2, Tiny
 Knowledge With No Source Or Configuration. It does not define the criteria for
-the later categories owned by deferred NKF-014.
+the later categories owned by deferred [NKF-014](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 
 ## Governing Inputs And Constraints
 
@@ -166,7 +166,7 @@ source-language presence, or inferred category.
 ### Diagnostics And Handoff
 
 Mechanical inspection reports `mechanically-ready` or `blocked`; it does not
-report `eligible` or `deferred`. Semantic deferral to NKF-014 is an agent
+report `eligible` or `deferred`. Semantic deferral to [NKF-014](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) is an agent
 workflow outcome, accompanied by evidence, not an executable conclusion.
 
 The final result reports the plan-supplied category, recommendation, and human
@@ -240,7 +240,7 @@ symbolic link, special file, existing `.nourd`, owned-path conflict, release
 failure, staged checker failure, or transaction failure stops onboarding.
 
 Existing adopted repositories remain on their current integration path.
-Unapplied NKF-013 workspaces lack the assessment and complete manifest
+Unapplied [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) workspaces lack the assessment and complete manifest
 semantics and must be regenerated; they are short-lived operational state, not
 canonical knowledge or a supported migration format.
 
@@ -258,7 +258,7 @@ knowledge-root document coverage; symbolic links and special files; candidate
 drift; owned-path conflicts; rollback; same-plan idempotence; public guidance;
 byte-identical skill copies; and vendor-neutral language.
 
-The audit must compare every NKF-015 acceptance criterion against the Design,
+The audit must compare every [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) acceptance criterion against the Design,
 Decision, implementation, tests, public projection, current-system
 Realization, and exact validation result. Agent SDK remains a later authorized
 consumer exercise and is not evidence that NKF can accept its meaning.
@@ -268,5 +268,5 @@ consumer exercise and is not evidence that NKF can accept its meaning.
 No unresolved matter blocks implementation of the accepted responsibility
 allocation. Release publication and the separately authorized Agent SDK
 exercise remain later operational steps. Criteria and workflows for Category
-3 through Category 10 remain deferred to NKF-014 and require later Human
+3 through Category 10 remain deferred to [NKF-014](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) and require later Human
 Product Owner confirmation.

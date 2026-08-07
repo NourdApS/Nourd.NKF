@@ -28,8 +28,8 @@ NKF 0.2: Markdown SHA-256
 bound to executable SHA-256
 `5c94a0004995b39fbe9513fa6a1fec0f0a10fa38de302937c6f095f5d976e8ab`.
 The only Markdown change is the removal of that title line; the executable
-change is the re-pinned Markdown digest. This extends ADR 0081 to the
-corrected bytes and supersedes the ADR 0083 packaging binding.
+change is the re-pinned Markdown digest. This extends [ADR 0081](0081-accept-nkf-0-2-authority-pair.md) to the
+corrected bytes and supersedes the [ADR 0083](0083-bind-nkf-0-2-release-checker.md) packaging binding.
 
 ## Scope And Applicability
 

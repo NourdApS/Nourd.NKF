@@ -13,7 +13,7 @@ task: NKF-017
 
 ## Context And Problem
 
-ADR 0072 accepted the initial complete-topology NKF 0.1 Markdown and executable
+[ADR 0072](0072-portable-topology-authority-pair.md) accepted the initial complete-topology NKF 0.1 Markdown and executable
 YAML pair. Implementation audit then found that the executable companion and
 checker defined eight portable-topology diagnostics that the normative
 Markdown diagnostic registry accidentally omitted. The omission made the
@@ -42,7 +42,7 @@ digest-bound executable companion.
 
 ## Scope And Applicability
 
-This Decision corrects the canonical NKF 0.1 authority pair used by NKF-017
+This Decision corrects the canonical NKF 0.1 authority pair used by [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md)
 and all derived successor artifacts. It does not change the adopted topology,
 diagnostic severity, checker phase, Root Profiles, version coordinate, or
 consumer migration boundary.
@@ -65,7 +65,7 @@ was rejected because the authority pair must fail closed on disagreement.
 
 All derived source bindings, Schema metadata, checker bindings, public
 normative mirrors, self-host declarations, and governed-artifact digests must
-be rebound to the corrected pair. The initial ADR 0072 pair remains immutable
+be rebound to the corrected pair. The initial [ADR 0072](0072-portable-topology-authority-pair.md) pair remains immutable
 historical provenance and is not retroactively changed.
 
 ## Compatibility
@@ -77,14 +77,14 @@ successor release must deliberately carry the corrected exact pair.
 ## Realization Requirements
 
 Realization requires exact Markdown/YAML parity, synchronized derived
-bindings, a passing complete repository gate, the NKF-017 whole-repository
+bindings, a passing complete repository gate, the [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) whole-repository
 audit, and separate confirmation of the exact implementation before release.
 
 ## Non-Claims
 
 This Decision does not:
 
-- confirm the NKF-017 Realization;
+- confirm the [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) Realization;
 - prove the current worktree is conformant before derived bindings are updated;
 - publish or recommend a release;
 - migrate a consumer repository; or

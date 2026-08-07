@@ -7,14 +7,11 @@ created_at: 2026-07-30T17:44:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit delegated approval and confirmation authority
 ---
 
 # ADR 0057: Current System Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-007`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit delegated approval and confirmation authority
 - **Review Evidence:** `knowledge/evidence/audits/nkf-007-final-repository-audit.md`
 
 ## Context And Problem
@@ -36,7 +33,7 @@ implementation within their stated boundaries.
 
 The authority also confirms the exact current core Schemas and checker build
 listed below as derived implementation of the NKF 0.1 authority pair accepted
-by ADR 0056.
+by [ADR 0056](0056-design-direction-and-record-authority.md).
 
 The Release Package Realization is confirmed as an accurate account of the
 implemented release mechanism and its current stale-publication boundary. It
@@ -50,7 +47,7 @@ explicit self-host declarations, governed-artifact bindings, and Realization
 documentation.
 
 It applies to the exact revisions and candidate state reviewed by the
-NKF-007 final audit. A later change requires new Evidence and a governed
+[NKF-007](../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) final audit. A later change requires new Evidence and a governed
 successor confirmation.
 
 ## Rationale
@@ -70,7 +67,7 @@ cannot accept knowledge or establish implementation truth.
 
 Confirming the release as current was rejected because release configuration
 still binds the predecessor release baseline and publication is deferred to
-NKF-008.
+[NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md).
 
 ## Consequences And Trade-Offs
 
@@ -131,8 +128,8 @@ identify whether it changes normative meaning, derived implementation,
 declarations, migration, or consumer conformance and follow the applicable
 governed path.
 
-This Decision supersedes ADR 0052 only as the current repository
-implementation confirmation. ADR 0052 remains immutable predecessor
+This Decision supersedes [ADR 0052](0052-dynamic-root-self-hosting.md) only as the current repository
+implementation confirmation. [ADR 0052](0052-dynamic-root-self-hosting.md) remains immutable predecessor
 provenance.
 
 ## Non-Claims

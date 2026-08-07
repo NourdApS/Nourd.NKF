@@ -7,7 +7,7 @@ source:
   path: decisions/0031-checker-layout-and-identity.md
   digest:
     algorithm: sha-256
-    value: c63c6e9c3ff1233ef855d6a1c297f00185c41c6af7afa04d4c6ce31ef64388d2
+    value: a654886750a669ff5c0186c02f6caaad44bd620024365918ee9b2b20a31492d6
 governance:
   lifecycle: immutable
   status: accepted

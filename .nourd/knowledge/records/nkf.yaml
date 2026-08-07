@@ -89,8 +89,5 @@ sections:
       - evolution-and-retirement
 relationships:
   - type: references
-    target: nkf-0.1-specification
-    source_section: technology-map
-  - type: references
     target: nkf-0.1-native-realization
     source_section: technology-map

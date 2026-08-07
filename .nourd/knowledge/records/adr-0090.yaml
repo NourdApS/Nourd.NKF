@@ -7,7 +7,7 @@ source:
   path: decisions/0090-accept-the-title-and-deep-link-pair.md
   digest:
     algorithm: sha-256
-    value: af426486e7bf2deef427ffde7c77cfe883f8aa82f57c24eb21650cc7fdca1ec9
+    value: adb88b248e95348049cb4193d9dec11e16d2a5a22edbc818e21960497591339b
 governance:
   lifecycle: immutable
   status: accepted

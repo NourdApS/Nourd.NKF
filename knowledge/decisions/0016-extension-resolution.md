@@ -7,14 +7,12 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0016: Accept NKF 0.1 Extension Declaration And Resolution
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct confirmation in the NKF-003 discussion on
+- **Acceptance source:** Direct confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   29 July 2026
 
 ## Context
@@ -40,7 +38,7 @@ is accepted for native NKF 0.1.
 
 The accepted boundary includes:
 
-- the owner-namespaced extension identifier grammar and `nkf` reservation;
+- the owner-namespaced extension identifier grammar and [`nkf`](../nkf.md) reservation;
 - unversioned extension identities governed by the sole `nkf_version`
   coordinate and exact artifact digests;
 - digest-bound normative Markdown and executable YAML extension authority

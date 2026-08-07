@@ -17,7 +17,7 @@ confirmation_decisions:
 ## Realization Identity And Kind
 
 This is the current implementation Realization for the initial NKF onboarding
-path adopted by ADR 0067. It describes derived tooling and user experience. It
+path adopted by [ADR 0067](../../decisions/0067-initial-greenfield-onboarding.md). It describes derived tooling and user experience. It
 does not revise native NKF 0.1 meaning.
 
 The implementation supports an empty or small-document unadopted repository
@@ -26,7 +26,7 @@ corpus exceeds the accepted quantitative or qualitative greenfield boundary.
 
 ## Governed Meaning Realized
 
-ADR 0067 adopts an AI-neutral `inspect → resolved plan workspace → seal →
+[ADR 0067](../../decisions/0067-initial-greenfield-onboarding.md) adopts an AI-neutral `inspect → resolved plan workspace → seal →
 onboard` path. Markdown remains canonical project meaning; the onboarder
 generates native YAML, digests, release integration, and validation mechanics
 from a fully resolved candidate plan.
@@ -40,7 +40,7 @@ acceptance or confirmation.
 The initial boundary is twenty Markdown files, 256 KiB total, and 64 KiB per
 file. Existing accepted authority, Task lifecycle, Design disposition,
 Decision, Specification, or Realization confirmation receives a deterministic
-`NKF-014` deferral diagnostic.
+[`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) deferral diagnostic.
 
 The inspection snapshot also binds relevant existing project surfaces:
 supported AI instructions, package and lock files, all top-level Github
@@ -153,7 +153,7 @@ than the source of confirmation.
 
 The restored Agent SDK snapshot was inspected only as eligibility Evidence. It
 contains mature Task, Design, Decision, and acceptance history and therefore
-receives the intended `NKF-014` deferral. No Agent SDK byte is modified by this
+receives the intended [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) deferral. No Agent SDK byte is modified by this
 Realization.
 
 ## Compatibility Verification And Recovery
@@ -169,7 +169,7 @@ closed. Candidate edits require an updated sealed digest, source inspection
 or relevant project-surface drift blocks application, and every handled
 failure restores predecessor bytes and removes transaction-created paths.
 
-The stable plan/apply boundary permits `NKF-014` to add large-corpus analyzers,
+The stable plan/apply boundary permits [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) to add large-corpus analyzers,
 source-grounded candidate producers, provenance graphs, checkpoints, session
 resumption, and advanced recovery before final apply. Those extensions cannot
 infer authority or weaken the final source binding, staged checker, or
@@ -178,6 +178,6 @@ transaction contract.
 The separate
 [NKF-013 Completion Audit](../../evidence/audits/nkf-013-initial-greenfield-onboarding-completion-audit.md)
 records the requirement-by-requirement review, repaired findings, local and
-remote execution, public-byte verification, and `NKF-014` extension
-assessment. ADR 0068 separately confirms this exact revision; the audit,
+remote execution, public-byte verification, and [`NKF-014`](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) extension
+assessment. [ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md) separately confirms this exact revision; the audit,
 publication, and passing checks do not confirm it by themselves.

@@ -7,22 +7,19 @@ created_at: 2026-07-30T10:04:40Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
 ---
 
 # ADR 0048: Confirm Initial Release Package Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
-  Product Owner delegation
 - **Release Source Checkpoint:**
   `50fbc53c7ec1022598029780b5159d5a91c4a087`
 
 ## Context
 
 ADRs 0042 through 0045 accept the NKF 0.1 release boundary and exact authority.
-ADR 0046 confirms the four release-package schemas while preserving the
-three-schema project-validation boundary. ADR 0047 confirms the checker source
+[ADR 0046](0046-release-json-schemas.md) confirms the four release-package schemas while preserving the
+three-schema project-validation boundary. [ADR 0047](0047-release-checker.md) confirms the checker source
 and portable artifact. The remaining approved work was to realize and audit
 the deterministic package and bootstrap verifier without publishing it.
 
@@ -43,7 +40,7 @@ The release source checkpoint implements:
 - checker invocation only from a verified in-memory-inspected distribution.
 
 The packager fails unless it starts and finishes checks at one clean unchanged
-Git commit, reproduces the confirmed checker twice, verifies ADR 0047 and all
+Git commit, reproduces the confirmed checker twice, verifies [ADR 0047](0047-release-checker.md) and all
 accepted artifact digests, reproduces the archive twice, verifies the completed
 archive, and runs its checker successfully against the accepted valid fixture.
 

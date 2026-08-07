@@ -4,16 +4,13 @@ summary: Define an NKF-owned optional contract for portable presentation guidanc
 created_at: 2026-07-29T20:06:17Z
 task_id: NKF-004
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-004: Define portable presentation-guidance extension
 
-- **Task:** `NKF-004`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Governing boundary:** `ADR 0020`
+- **Governing boundary:** [`ADR 0020`](../../decisions/0020-presentation-guidance.md)
 
 ## Desired outcome
 
@@ -30,7 +27,7 @@ meaning or requiring every NKF consumer to implement a particular interface.
 
 The feature is intentionally deferred and does not exist today.
 
-Under ADR 0020:
+Under [ADR 0020](../../decisions/0020-presentation-guidance.md):
 
 - native NKF records contain no presentation-guidance field;
 - Markdown is the default readable form;
@@ -64,7 +61,7 @@ Begin design work only when exercise of a real NKF project supplies:
 5. Analyze compatibility, round-trip behavior, security, and whether the
    extension remains genuinely optional.
 6. Obtain Human Product Owner confirmation for consequential meaning and any
-   change to ADR 0020.
+   change to [ADR 0020](../../decisions/0020-presentation-guidance.md).
 7. Update accepted authority before deriving schemas, checker rules, fixtures,
    distribution metadata, and consumer migration guidance.
 
@@ -80,7 +77,7 @@ Begin design work only when exercise of a real NKF project supplies:
 - Exact positive, negative, unsupported-consumer, and round-trip fixtures
   exist.
 - Checker and schema behavior derive from accepted extension meaning.
-- Any refinement or supersession of ADR 0020 is recorded in a later accepted
+- Any refinement or supersession of [ADR 0020](../../decisions/0020-presentation-guidance.md) is recorded in a later accepted
   Decision.
 - A release identifies exact artifacts, integrity data, compatibility, and
   deliberate consumer onboarding.
@@ -102,3 +99,16 @@ This Task preserves an intended future capability; it does not claim that the
 capability is specified, accepted, implemented, released, supported, or
 conformant. Work begins through a recorded execution slice when the activation
 evidence exists.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

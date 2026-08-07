@@ -7,26 +7,22 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact derived revisions after independent review
 ---
 
 # ADR 0030: Confirm Rebound NKF 0.1 Json Schemas
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's direct authorization to approve exact derived revisions
-  after independent review
-- **Authorization Source:** Earlier direct NKF-003 instruction granting the
+- **Authorization Source:** Earlier direct [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) instruction granting the
   reviewer permission to accept exact revisions if approved, together with
   the 30 July 2026 direction to complete all work before checker
   implementation
-- **Accepted Source Pair:** ADR 0029
+- **Accepted Source Pair:** [ADR 0029](0029-schema-realization-status.md)
 
 ## Context
 
-ADR 0029 replaces the NKF 0.1 authority pair solely to reconcile its
+[ADR 0029](0029-schema-realization-status.md) replaces the NKF 0.1 authority pair solely to reconcile its
 realization-status statements after schema confirmation. The JSON Schemas
-confirmed by ADR 0028 still contain the ADR 0027 source digests and therefore
+confirmed by [ADR 0028](0028-validation-json-schemas.md) still contain the [ADR 0027](0027-validation-authority-pair.md) source digests and therefore
 cannot identify current NKF 0.1 authority without exact rebinding.
 
 The format rules and schema assertion graphs are unchanged. This Decision
@@ -47,7 +43,7 @@ The review verified:
 - exact current Markdown and YAML source paths and SHA-256 digests;
 - byte-structural equality of every schema after removing only the
   `x-nkf-source` annotation;
-- zero schema assertion-graph changes from ADR 0028;
+- zero schema assertion-graph changes from [ADR 0028](0028-validation-json-schemas.md);
 - strict compilation of all three schemas with Ajv `8.17.1`,
   `ajv-formats` `3.0.1`, Draft 2020-12, all errors, and explicit
   non-assertive registration of `x-nkf-source`; and
@@ -81,9 +77,9 @@ Schema self-digests remain release metadata and are not embedded recursively.
 
 ## Supersession And Compatibility
 
-These exact schemas replace the ADR 0028 revisions as the current confirmed
-schema realization. ADR 0028 and its exact artifacts remain immutable
-historical confirmation of the ADR 0027 authority pair.
+These exact schemas replace the [ADR 0028](0028-validation-json-schemas.md) revisions as the current confirmed
+schema realization. [ADR 0028](0028-validation-json-schemas.md) and its exact artifacts remain immutable
+historical confirmation of the [ADR 0027](0027-validation-authority-pair.md) authority pair.
 
 No NKF sub-version or schema version is introduced. The schema assertions and
 consumer obligations are unchanged.

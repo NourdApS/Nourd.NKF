@@ -4,16 +4,13 @@ summary: Determine how NKF should support additional independently governed know
 created_at: 2026-07-30T15:59:54Z
 task_id: NKF-006
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-006: Define Extensible Root Knowledge Models
 
-- **Task:** `NKF-006`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Governing Boundary:** `ADR 0049`
+- **Governing Boundary:** [`ADR 0049`](../../decisions/0049-common-and-root-profiles.md)
 
 ## Desired Outcome
 
@@ -27,7 +24,7 @@ conformance, explicit compatibility, and consumer-controlled acceptance.
 
 ## Current State
 
-ADR 0049 accepts one non-selectable Common Specification and exactly one
+[ADR 0049](../../decisions/0049-common-and-root-profiles.md) accepts one non-selectable Common Specification and exactly one
 concrete Root Profile per bundle. It does not accept the exact Common
 extraction, Product Profile realization, Technology Profile, another concrete
 profile, hierarchy, validator interface, serialization, or compatibility
@@ -98,3 +95,16 @@ accepted enumeration.
 - Letting a checker, schema, consumer, or Knowledge Engine define root meaning
   by implementation.
 - Changing Product-and-Technology support merely because this Task exists.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

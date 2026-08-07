@@ -4,16 +4,16 @@ summary: Define, implement, verify, document, and distribute at least one usable
 created_at: 2026-07-31T18:06:25Z
 task_id: NKF-016
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-003
+  - NKF-005
+  - NKF-008
+  - NKF-011
 ---
 
 # NKF-016: Deliver Acceptance-Binding Verification
-
-- **Task:** `NKF-016`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-003`, `NKF-005`, `NKF-008`, `NKF-011`
 
 ## Human Direction
 
@@ -41,7 +41,7 @@ for a checker to perform acceptance or treat copied metadata as proof.
 
 ## Existing Authority Boundary
 
-ADR 0017 currently requires authority-system verification of:
+[ADR 0017](../../decisions/0017-acceptance-provenance.md) currently requires authority-system verification of:
 
 1. an authoritative event or immutable Decision;
 2. an actor exercising an authority declared by the record;
@@ -51,7 +51,7 @@ ADR 0017 currently requires authority-system verification of:
 6. exact declaration revision or digest; and
 7. applicable supersession, revocation, or contradiction behavior.
 
-ADR 0017 deliberately defines no universal native acceptance-event or proof
+[ADR 0017](../../decisions/0017-acceptance-provenance.md) deliberately defines no universal native acceptance-event or proof
 field. Portable authority-specific evidence or resolver configuration currently
 belongs in a required accepted extension. The native supported-extension set is
 empty.
@@ -111,7 +111,7 @@ not satisfy the outcome.
 7. How do offline validation, deterministic replay, historical Evidence, and
    network-dependent authority systems coexist?
 8. What belongs to acceptance verification now, and what remains the separate
-   expiry or authority-freshness question deferred under NKF-005?
+   expiry or authority-freshness question deferred under [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md)?
 9. How do consumers migrate deliberately without making previous
    `not-verified` results appear rejected or invalid?
 
@@ -131,7 +131,7 @@ not satisfy the outcome.
 - Do not copy secret or authority-owned operational payloads into governed
   knowledge or validation results.
 - Do not absorb universal expiry or continuing authority freshness into this
-  Task without explicitly reconciling NKF-005.
+  Task without explicitly reconciling [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md).
 - Unsupported required authority machinery fails closed for consequential
   governing use.
 - A passing resolver test cannot accept the resolver's own normative meaning or
@@ -146,7 +146,7 @@ not satisfy the outcome.
 3. Produce a Design comparing at least the extension, shipped adapter, trusted
    repository material, offline proof, and external resolver alternatives.
 4. Resolve circular trust, authority ownership, security, privacy, availability,
-   deterministic replay, and NKF-005 freshness boundaries.
+   deterministic replay, and [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md) freshness boundaries.
 5. Obtain a Human Product Owner Decision on one exact semantic and trust model.
 6. Update the canonical Specification and executable companion when the
    accepted direction changes or completes NKF 0.1 meaning.
@@ -181,7 +181,7 @@ not satisfy the outcome.
   local paths do not leak into portable results or governed knowledge.
 - Offline, unavailable-authority, historical-replay, partial-bundle, and
   recovery behavior are explicit and tested.
-- NKF-005 expiry and authority-freshness questions remain separately visible
+- [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md) expiry and authority-freshness questions remain separately visible
   unless an explicit governed Decision transfers a bounded part of them.
 - Release, public documentation, consumer adoption, and migration preserve the
   distinction between accepted, binding verified, conformant, confirmed,
@@ -193,7 +193,7 @@ not satisfy the outcome.
 
 - selecting the first authority implementation;
 - drafting or adopting an acceptance-proof extension;
-- changing ADR 0017 or the NKF 0.1 Specification;
+- changing [ADR 0017](../../decisions/0017-acceptance-provenance.md) or the NKF 0.1 Specification;
 - implementing resolver, checker, CLI, adopter, Schema, fixture, or release
   changes;
 - rebinding any existing record as acceptance verified;
@@ -208,3 +208,16 @@ This Task records required future work only. It does not claim that a resolver
 design has been selected, that any authority source is supported, that any
 record's acceptance is verified, that Governing Use is Ready, or that the work
 has begun.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

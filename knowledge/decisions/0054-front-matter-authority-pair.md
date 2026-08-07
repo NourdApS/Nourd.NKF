@@ -7,19 +7,16 @@ created_at: 2026-07-30T17:12:13Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-007
+decision_authority: Codex technical reviewer under the Human Product Owner's explicit authorization for NKF-007 supporting changes
 ---
 
 # ADR 0054: Front-Matter Authority Pair
 
-- **Status:** Accepted
-- **Task:** `NKF-007`
-- **Decision Authority:** Codex technical reviewer under the Human Product
-  Owner's explicit authorization for NKF-007 supporting changes
 - **Review Evidence SHA-256:** `db4651f51c69369cddd831c73b4f6f189328af0e32544a0e3d6d59f8d4f22d03`
 
 ## Context
 
-ADR 0053 adopted the NKF-007 repository knowledge-architecture direction and
+[ADR 0053](0053-repository-knowledge-architecture.md) adopted the [NKF-007](../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) repository knowledge-architecture direction and
 authorized the minimum native source-envelope meaning required for honest
 front-matter use. Its exact Design input remains immutable Decision
 provenance.
@@ -41,10 +38,10 @@ NKF distinguishes the concepts precisely:
 - the resulting Decision and Specification, not the Design, own current
   authority.
 
-Where ADR 0053 says it accepts the exact repository-architecture Design, that
+Where [ADR 0053](0053-repository-knowledge-architecture.md) says it accepts the exact repository-architecture Design, that
 acceptance governs the exact record revision with SHA-256
 `e732de725ecf309db3d1194e53a8f846c8262377b1886914e00a306e1f27926f`.
-ADR 0053 adopts the direction proposed by that Design. This Decision accepts
+[ADR 0053](0053-repository-knowledge-architecture.md) adopts the direction proposed by that Design. This Decision accepts
 the terminology-corrected successor Design record revision:
 
 | Artifact | SHA-256 |

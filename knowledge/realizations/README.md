@@ -29,8 +29,8 @@ conformance.
 ## Confirmed Predecessor Provenance
 
 - [Initial Greenfield Onboarding](current/initial-greenfield-onboarding.md) —
-  the exact NKF-013 implementation confirmed by ADR 0068; its deterministic
-  semantic-eligibility behavior was superseded by ADR 0069 and is not current
+  the exact [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) implementation confirmed by [ADR 0068](../decisions/0068-confirm-initial-greenfield-onboarding.md); its deterministic
+  semantic-eligibility behavior was superseded by [ADR 0069](../decisions/0069-agent-led-initial-onboarding.md) and is not current
   onboarding guidance
 
 Begin audits and implementation reviews with the consolidated current-system

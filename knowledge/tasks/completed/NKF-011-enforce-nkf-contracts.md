@@ -4,14 +4,13 @@ summary: Establish and confirm AI-neutral authoring guidance, deterministic loca
 created_at: 2026-07-30T23:07:00Z
 task_id: NKF-011
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-011: Enforce NKF Contracts
 
-- **Status:** Completed
 - **Completed At:** `2026-07-31T01:40:19Z`
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** The Human Product Owner has accepted the enforcement
   boundary and authorized work through the exact Design. Consequential
   normative or integration choices still require explicit acceptance before
@@ -49,7 +48,7 @@ default branch once the required remote protection is activated.
 [ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) completes
 NKF-011 for the delivered and confirmed authoring, local-validation, and
 exact-commit workflow scope. It transfers the externally blocked protected
-merge gate to deferred Task `NKF-012`.
+merge gate to deferred Task [`NKF-012`](../deferred/NKF-012-activate-protected-merge-gate.md).
 
 This successor allocation does not claim that invalid knowledge is currently
 prevented from reaching `master`. The required `Validate` check, one mandatory
@@ -170,11 +169,11 @@ observation remain required before the protected gate may be claimed.
 - Do not pin consumers to an unreleased local commit by implication.
 - Do not make a working-tree check appear to validate the staged commit.
 - Do not broaden this Task into checker publication or consumer migration
-  owned by NKF-008.
+  owned by [NKF-008](NKF-008-publish-and-onboard-consumers.md).
 
 ## Current Progress
 
-ADR 0060 adopts the exact Layered Contract Enforcement Design. The local
+[ADR 0060](../../decisions/0060-layered-contract-enforcement.md) adopts the exact Layered Contract Enforcement Design. The local
 reference implementation now includes the neutral protocol, explicit
 host-surface registry, four instruction adapters, two byte-identical portable
 skill representations, integrity verifier, unified project command,
@@ -187,11 +186,11 @@ records no unresolved material local finding after repairing incomplete
 competing-instruction discovery and strengthening path, command, and workflow
 integrity checks.
 
-The confirmed local implementation passes the canonical gate. ADR 0061
-records the delegated independent local confirmation. ADR 0062 confirms the
+The confirmed local implementation passes the canonical gate. [ADR 0061](../../decisions/0061-confirm-layered-contract-enforcement-realization.md)
+records the delegated independent local confirmation. [ADR 0062](../../decisions/0062-confirm-remote-workflow-activation-boundary.md) confirms the
 successful exact-commit remote workflow observation and the unavailable
-protection boundary. ADR 0063 confirms the final successor Realization account
-and separates the remaining protected-gate work into deferred NKF-012.
+protection boundary. [ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) confirms the final successor Realization account
+and separates the remaining protected-gate work into deferred [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md).
 
 ## AI Execution Slice: Activate Remote Enforcement
 
@@ -243,9 +242,9 @@ features.
 
 The remote workflow is therefore active, but the protected hard gate is not.
 No required-check rule, review or bypass enforcement, or blocked invalid pull
-request is claimed. ADR 0063 completes NKF-011 for the scope actually
-delivered and transfers those blocked requirements to deferred NKF-012.
-Release and consumer work remain deferred to NKF-008.
+request is claimed. [ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) completes NKF-011 for the scope actually
+delivered and transfers those blocked requirements to deferred [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md).
+Release and consumer work remain deferred to [NKF-008](NKF-008-publish-and-onboard-consumers.md).
 
 ## AI Execution Slice: Separate Blocked Remote Protection
 
@@ -255,7 +254,7 @@ Release and consumer work remain deferred to NKF-008.
   deferred Task. The Human Product Owner subsequently confirmed that the
   future protected gate must require pull-request approval.
 - **Scope:** Record a successor Decision, complete NKF-011 for its delivered
-  and confirmed enforcement scope, create deferred NKF-012 for the protected
+  and confirmed enforcement scope, create deferred [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md) for the protected
   merge gate, update current Realizations and navigation, synchronize `.nourd`
   declarations and digests, and validate the complete bundle.
 - **Non-Claims:** This slice does not activate branch protection, require a
@@ -267,7 +266,7 @@ Release and consumer work remain deferred to NKF-008.
 
 1. Record the exact successor completion and Task-allocation boundary without
    rewriting ADRs 0060 through 0062.
-2. Create deferred NKF-012 with the required check, one mandatory
+2. Create deferred [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md) with the required check, one mandatory
    pull-request approval, explicit bypass policy, and blocked-invalid-candidate
    Evidence as its activation criteria.
 3. Complete NKF-011 and update the Task map.
@@ -276,3 +275,16 @@ Release and consumer work remain deferred to NKF-008.
 5. Synchronize record declarations, non-record paths, indexes, and governed
    artifact digests.
 6. Run `npm run nkf:check` and audit the coherent candidate before handoff.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

@@ -7,27 +7,24 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
 ---
 
 # ADR 0023: Confirm NKF 0.1 JSON Schema Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Codex technical reviewer, acting under explicit
-  delegation from the Human Product Owner, Nourd ApS
-- **Delegation source:** Direct instruction in the NKF-003 discussion on
+- **Delegation source:** Direct instruction in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   29 July 2026 to confirm the exact schema proposals on the reviewer's
   approval
 
 ## Context
 
-ADR 0022 accepts the exact current NKF 0.1 Markdown/YAML authority pair. The
+[ADR 0022](0022-native-authority-pair.md) accepts the exact current NKF 0.1 Markdown/YAML authority pair. The
 schema files previously present at the canonical paths were preliminary
 proposal evidence bound to an obsolete open-field, `markdown_root`, and
 `records_root` model. They were not a current realization of the accepted
 authority pair.
 
-NKF-003 derived and audited two replacement JSON Schema 2020-12 proposals.
+[NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) derived and audited two replacement JSON Schema 2020-12 proposals.
 Before exercising the delegated authority, the reviewer reverified:
 
 - unchanged proposal and accepted authority-pair digests;

@@ -7,16 +7,12 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact revisions after independent review
 ---
 
 # ADR 0029: Reconcile NKF 0.1 Schema Realization Status
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's direct authorization to approve exact revisions after
-  independent review
-- **Authorization Source:** Earlier direct NKF-003 instruction granting the
+- **Authorization Source:** Earlier direct [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) instruction granting the
   reviewer permission to accept an exact revision if approved, together with
   the 30 July 2026 direction to complete all remaining work before checker
   implementation
@@ -27,29 +23,29 @@ task: NKF-003
 
 ## Context
 
-ADR 0027 accepted the current pre-checker NKF 0.1 Markdown/YAML authority pair.
-ADR 0028 then confirmed and promoted the exact bundle, record, and
+[ADR 0027](0027-validation-authority-pair.md) accepted the current pre-checker NKF 0.1 Markdown/YAML authority pair.
+[ADR 0028](0028-validation-json-schemas.md) then confirmed and promoted the exact bundle, record, and
 validation-result JSON Schemas derived from that pair.
 
 The canonical Markdown still listed "exact schema/checker bytes" together as
-an unresolved matter and still described ADR 0010 as its current independent
+an unresolved matter and still described [ADR 0010](0010-nkf-0-1-markdown-authority.md) as its current independent
 canonical revision. Those realization-status statements became false after
 ADRs 0027 and 0028. Leaving them unchanged would make the accepted authority
 internally inconsistent even though the normative format rules themselves are
 unchanged.
 
-Because correcting canonical Markdown changes its digest, ADR 0006 requires a
+Because correcting canonical Markdown changes its digest, [ADR 0006](0006-pre-stable-evolution.md) requires a
 reviewed replacement Markdown/YAML pair and exact downstream source rebinding.
 
 ## Review
 
-The reviewer compared the proposals byte-for-byte with the ADR 0027 pair and
+The reviewer compared the proposals byte-for-byte with the [ADR 0027](0027-validation-authority-pair.md) pair and
 verified that the only Markdown changes are:
 
-- proposal and acceptance metadata advance from ADR 0027 to ADR 0029;
-- the accepted canonical baseline digest becomes the ADR 0027 Markdown digest;
-- the normative-status and provenance text correctly identifies ADR 0027 as
-  the accepted current baseline and ADR 0028 as the schema confirmation;
+- proposal and acceptance metadata advance from [ADR 0027](0027-validation-authority-pair.md) to ADR 0029;
+- the accepted canonical baseline digest becomes the [ADR 0027](0027-validation-authority-pair.md) Markdown digest;
+- the normative-status and provenance text correctly identifies [ADR 0027](0027-validation-authority-pair.md) as
+  the accepted current baseline and [ADR 0028](0028-validation-json-schemas.md) as the schema confirmation;
 - the unresolved-matters list removes confirmed schema bytes while retaining
   checker implementation bytes, schema/checker packaging, and public
   distribution as unresolved.
@@ -57,7 +53,7 @@ verified that the only Markdown changes are:
 The YAML changes are limited to:
 
 - the replacement Markdown digest;
-- the ADR 0027 Markdown/YAML pair as the accepted baseline; and
+- the [ADR 0027](0027-validation-authority-pair.md) Markdown/YAML pair as the accepted baseline; and
 - ADRs 0028 and 0029 in the governing-decision sequence.
 
 The final pair audit verified:
@@ -90,11 +86,11 @@ assertion, checker behavior, or consumer obligation.
 
 ## Supersession And Rebinding
 
-This exact pair replaces the ADR 0027 pair as current canonical authority.
-ADR 0027 and its exact artifacts remain an immutable accepted historical
+This exact pair replaces the [ADR 0027](0027-validation-authority-pair.md) pair as current canonical authority.
+[ADR 0027](0027-validation-authority-pair.md) and its exact artifacts remain an immutable accepted historical
 snapshot.
 
-The ADR 0028 schemas remain confirmed derivations of the ADR 0027 pair, but
+The [ADR 0028](0028-validation-json-schemas.md) schemas remain confirmed derivations of the [ADR 0027](0027-validation-authority-pair.md) pair, but
 their embedded source digests no longer identify current authority after this
 Decision. They require exact metadata rebinding and renewed confirmation
 before they can again claim current NKF 0.1 schema realization.

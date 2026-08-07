@@ -7,7 +7,7 @@ source:
   path: decisions/0073-correct-portable-topology-diagnostic-registry.md
   digest:
     algorithm: sha-256
-    value: c8164cdefce1cf4c222b1de0d194377c2d1b635b0b93bc9298ca5d99e2b44931
+    value: 5633f0d3fef33a8604f4049506522a17453279bec688f3802e01cb0c35bb40c8
 governance:
   lifecycle: immutable
   status: accepted
@@ -28,7 +28,4 @@ sections:
 relationships:
   - type: supersedes
     target: adr-0072
-    source_section: decision
-  - type: governs
-    target: nkf-0.1-specification
     source_section: decision

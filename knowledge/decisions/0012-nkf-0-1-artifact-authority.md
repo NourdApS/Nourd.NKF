@@ -7,20 +7,18 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # ADR 0012: Reconcile Single-Version Artifact Authority
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Acceptance source:** Direct informed confirmation in the NKF-003 discussion
+- **Acceptance source:** Direct informed confirmation in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion
   on 29 July 2026
 
 ## Context
 
-ADR 0009 establishes exactly one NKF version namespace: the format version.
-ADR 0007 otherwise preserves the correct Markdown-over-YAML authority model,
+[ADR 0009](0009-nkf-0-1-version-namespace.md) establishes exactly one NKF version namespace: the format version.
+[ADR 0007](0007-markdown-yaml-authority.md) otherwise preserves the correct Markdown-over-YAML authority model,
 but contains earlier requirements for independently versioned contract-set,
 bundle, record, body, and extension identities.
 
@@ -28,7 +26,7 @@ bundle, record, body, and extension identities.
 
 `nkf_version` is NKF's only version coordinate.
 
-ADR 0007's complete Markdown/YAML authority pair, exact source and digest
+[ADR 0007](0007-markdown-yaml-authority.md)'s complete Markdown/YAML authority pair, exact source and digest
 binding, fail-closed conflict handling, and derived-artifact rules remain
 accepted.
 

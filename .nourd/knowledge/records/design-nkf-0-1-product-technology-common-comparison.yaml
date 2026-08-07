@@ -7,7 +7,7 @@ source:
   path: designs/adopted/product-technology-common-allocation.md
   digest:
     algorithm: sha-256
-    value: 85dce16559cc9638fbc45020a6c0566de5c23ccca08a0dfa734da0c17358f0be
+    value: ec430c566a1c5e5f983984b6156c3713a7333b1e33ac1a2449358ec74be952c1
 governance:
   lifecycle: immutable
   status: accepted

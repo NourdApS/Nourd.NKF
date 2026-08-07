@@ -17,18 +17,18 @@ confirmation_decisions:
 ## Realization Identity And Kind
 
 This is the current implementation Realization for the onboarding direction
-adopted by ADR 0069. It describes derived pre-adoption guidance, tooling,
+adopted by [ADR 0069](../../decisions/0069-agent-led-initial-onboarding.md). It describes derived pre-adoption guidance, tooling,
 tests, and public documentation. It does not revise native NKF 0.1 meaning.
 
-ADR 0070 confirms this exact successor after the NKF-015 audit, complete
+[ADR 0070](../../decisions/0070-confirm-agent-led-initial-onboarding.md) confirms this exact successor after the [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) audit, complete
 repository validation, public projection, and fresh-clone verification were
-recorded separately. The exact NKF-013 Realization revision confirmed by ADR
+recorded separately. The exact [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) Realization revision confirmed by ADR
 0068 remains historical provenance rather than being rewritten as if this
 direction existed earlier.
 
 ## Governed Meaning Realized
 
-ADR 0069 assigns complete semantic repository review to the portable
+[ADR 0069](../../decisions/0069-agent-led-initial-onboarding.md) assigns complete semantic repository review to the portable
 `nkf-onboarding` skill. The agent distinguishes useful knowledge, source
 implementation, project configuration, incidental material, and unresolved
 items; recommends Empty Repository or Tiny Knowledge, No Source Or
@@ -39,7 +39,7 @@ The public `inspect` command remains but now performs only mechanical source
 capture and candidate-workspace preparation. It no longer emits semantic
 eligibility, numeric size decisions, or frontmatter-based maturity decisions.
 When an agent cannot recommend either supported category, the agent stops and
-refers future work to deferred NKF-014 without guessing another category.
+refers future work to deferred [NKF-014](../../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) without guessing another category.
 
 The existing deterministic boundary remains responsible for plan shape,
 assessment completeness, Category 2 confirmation presence, exact source and
@@ -142,10 +142,10 @@ allowlisted public projection was independently observed at exact commit
 `a14766ca1bdc67bfd8fb9e6d73355fc019017a90`; its manifest binds the
 successor adopter SHA-256
 `c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387`.
-Those external facts are owned by the NKF-015 publication Evidence rather
+Those external facts are owned by the [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md) publication Evidence rather
 than by this confirmation act.
 
-Consumer-repository onboarding is outside this Realization and NKF-015. The
+Consumer-repository onboarding is outside this Realization and [NKF-015](../../tasks/completed/NKF-015-agent-led-initial-onboarding.md). The
 Human Product Owner removed that operation from the Task and will perform it
 separately using trusted release inputs.
 
@@ -154,7 +154,7 @@ separately using trusted release inputs.
 Existing adopted repositories retain `install`, `update`, `check`, `status`,
 and `integration-check`. Their pins do not move automatically.
 
-Unapplied NKF-013 workspaces fail the successor plan envelope because they do
+Unapplied [NKF-013](../../tasks/completed/NKF-013-initial-greenfield-onboarding.md) workspaces fail the successor plan envelope because they do
 not contain the accepted assessment mapping or complete source-manifest
 semantics. Users regenerate those temporary workspaces. This is a deliberate
 pre-stable operational compatibility change, not an NKF format-version change.
@@ -180,5 +180,5 @@ The independent
 records the exact execution, two repaired findings, and the original blockers.
 Its post-audit resolution records the later authority changes. Confirmation,
 the successor publication, and the final exact-worktree check were then
-evidenced separately. ADR 0070 supplies the exact-byte confirmation act rather
+evidenced separately. [ADR 0070](../../decisions/0070-confirm-agent-led-initial-onboarding.md) supplies the exact-byte confirmation act rather
 than deriving confirmation from those observations.

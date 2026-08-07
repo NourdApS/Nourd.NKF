@@ -7,7 +7,7 @@ source:
   path: decisions/0059-confirm-governed-frontmatter-realization.md
   digest:
     algorithm: sha-256
-    value: 2524cea1c127cf679f6a7586d978bcae70f4016a4b4920a6e69670705071a7d4
+    value: 156aaff86682ddc7fa055453f2c15aeecdf1c8aef7618767921d7ea0048523cc
 governance:
   lifecycle: immutable
   status: accepted

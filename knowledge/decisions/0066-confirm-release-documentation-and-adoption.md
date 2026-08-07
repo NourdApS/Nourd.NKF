@@ -11,21 +11,19 @@ task: NKF-008
 
 # ADR 0066: Confirm Release Documentation And Adoption
 
-- **Status:** Accepted
-- **Task:** `NKF-008`
 - **Confirmation Authority:** Codex technical reviewer under the Human Product
   Owner's explicit delegation to complete, independently audit, confirm,
-  commit, and push NKF-008
+  commit, and push [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md)
 - **Predecessors:** ADRs 0064 and 0065
 
 ## Context And Problem
 
-ADR 0064 adopts the exact release, public-documentation, and pinned-adoption
-direction. ADR 0065 confirms the exact release-bound checker and authority
+[ADR 0064](0064-release-documentation-and-adoption.md) adopts the exact release, public-documentation, and pinned-adoption
+direction. [ADR 0065](0065-confirm-current-release-bound-checker.md) confirms the exact release-bound checker and authority
 inputs. Neither Decision confirms that the release, public projection,
 consumer path, or current successor Realizations exist.
 
-NKF-008 can complete only after separate operational Evidence establishes
+[NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) can complete only after separate operational Evidence establishes
 publication and execution, an adversarial audit repairs every material
 finding, and a distinct authority act confirms exact Realization revisions
 without deriving confirmation from passing checks.
@@ -37,11 +35,11 @@ Realizations:
 
 | Record | Source | Confirmed SHA-256 |
 | --- | --- | --- |
-| `nkf-0.1-native-realization` | `knowledge/realizations/current-system.md` | `ca5df7fe34857f14102a2b7b37f0141fbde80856a58285e7ee6443063c28624c` |
-| `nkf-release-documentation-and-adoption` | `knowledge/realizations/current/release-documentation-and-adoption.md` | `962f4686070f4a8820c5e849a59bae9447fc2b2a99a1bead056ee305e9c7d8c0` |
-| `nkf-release-package` | `knowledge/realizations/current/release-package.md` | `12c785bb892bf4533056c25ada402eda7c1412c6c7f8e39dc6cdf93cbf76854d` |
-| `nkf-layered-contract-enforcement` | `knowledge/realizations/current/layered-contract-enforcement.md` | `6235b4efe566be042a34843fafbcf05a354ac76ad768e8ffd4db5a08c4f33faa` |
-| `nkf-self-hosting` | `knowledge/realizations/current/self-hosting.md` | `75b2fceb72e2527d87cf94a4058feb02364b634478a2dfe17528678ad8199be2` |
+| [`nkf-0.1-native-realization`](../realizations/current-system.md) | `knowledge/realizations/current-system.md` | `ca5df7fe34857f14102a2b7b37f0141fbde80856a58285e7ee6443063c28624c` |
+| [`nkf-release-documentation-and-adoption`](../realizations/current/release-documentation-and-adoption.md) | `knowledge/realizations/current/release-documentation-and-adoption.md` | `962f4686070f4a8820c5e849a59bae9447fc2b2a99a1bead056ee305e9c7d8c0` |
+| [`nkf-release-package`](../realizations/current/release-package.md) | `knowledge/realizations/current/release-package.md` | `12c785bb892bf4533056c25ada402eda7c1412c6c7f8e39dc6cdf93cbf76854d` |
+| [`nkf-layered-contract-enforcement`](../realizations/current/layered-contract-enforcement.md) | `knowledge/realizations/current/layered-contract-enforcement.md` | `6235b4efe566be042a34843fafbcf05a354ac76ad768e8ffd4db5a08c4f33faa` |
+| [`nkf-self-hosting`](../realizations/current/self-hosting.md) | `knowledge/realizations/current/self-hosting.md` | `75b2fceb72e2527d87cf94a4058feb02364b634478a2dfe17528678ad8199be2` |
 
 The confirmation is supported by these separate exact Evidence revisions:
 
@@ -52,7 +50,7 @@ The confirmation is supported by these separate exact Evidence revisions:
 | Consumer Workflow Execution | `d34f69768097bdea81811a8faa520a5804a2af6a166806c672f62839525bba3a` |
 | Completion Audit | `b910ec6f07d2a4c5b36ffb32cb012decf09dd3726e83a6771db64532c2f617ee` |
 
-NKF-008 is Completed for:
+[NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) is Completed for:
 
 1. the exact content-addressed internal NKF 0.1 prerelease;
 2. the deliberate recommended-release catalog;
@@ -96,7 +94,7 @@ publication, validation, tests, and Git cannot confirm their own account.
 
 ## Alternatives Considered
 
-Leaving NKF-008 Active after all accepted work was complete was rejected
+Leaving [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) Active after all accepted work was complete was rejected
 because it would make the Task map and current Realization stale.
 
 Treating the first sketch examples as complete was rejected because they were
@@ -111,7 +109,7 @@ confirmation authority.
 
 Expanding completion into Agent SDK migration or protected branch enforcement
 was rejected because external consumers require their own authority and
-NKF-012 owns the protected merge gate.
+[NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md) owns the protected merge gate.
 
 ## Consequences And Trade-Offs
 
@@ -128,8 +126,8 @@ The synthetic consumer exercise proves the distributed path without claiming
 that a real external Product or Technology has migrated. Later consumer
 migrations remain deliberate per-repository work.
 
-No Task is Active after NKF-008 completion. Deferred Tasks remain visible,
-including NKF-012 for the unavailable protected merge gate.
+No Task is Active after [NKF-008](../tasks/completed/NKF-008-publish-and-onboard-consumers.md) completion. Deferred Tasks remain visible,
+including [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md) for the unavailable protected merge gate.
 
 ## Non-Claims
 

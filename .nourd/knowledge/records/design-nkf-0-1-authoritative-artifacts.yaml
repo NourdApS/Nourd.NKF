@@ -7,7 +7,7 @@ source:
   path: designs/superseded/artifact-identities-and-contract-versioning.md
   digest:
     algorithm: sha-256
-    value: 18917747f2dbcb22aac31c7958b36f9ad9acb6b6814801a81f927fd8c05903ca
+    value: c41cad5a101004bceca02be36eb44f1db8548717f39c4397ed54f41213150bf0
 governance:
   lifecycle: immutable
   status: superseded

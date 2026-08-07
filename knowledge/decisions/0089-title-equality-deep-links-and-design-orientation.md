@@ -22,12 +22,12 @@ and adopt again.
 
 ## Decision
 
-For NKF 0.2, under the continued ADR 0084 unconsumed-release exception:
+For NKF 0.2, under the continued [ADR 0084](0084-replace-the-unconsumed-0-2-release.md) unconsumed-release exception:
 
 1. `title` returns as a required frontmatter key and MUST exactly equal the
    H1 comparison string; `markdown.frontmatter.title-mismatch` returns to
    the registry, so the panel title and the heading can never disagree.
-   This reverses ADR 0079 item one while keeping every orientation key.
+   This reverses [ADR 0079](0079-dynamic-frontmatter-without-title.md) item one while keeping every orientation key.
 2. Same-bundle document references MUST be deep links: `ADR NNNN` text,
    record-identifier code spans, and Task identifiers must be link text
    whose destination resolves to the referenced document's exact source

@@ -7,21 +7,17 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
 ---
 
 # ADR 0033: Confirm Yaml Grammar-Corrected Json Schema Bindings
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's authorization to approve exact derived revisions after
-  independent review
-- **Accepted Source Pair:** ADR 0032
+- **Accepted Source Pair:** [ADR 0032](0032-yaml-scalar-grammar.md)
 
 ## Context
 
-ADR 0032 corrects three invalid YAML flow scalars without changing parsed
-contract meaning. The schemas confirmed by ADR 0030 therefore require only an
+[ADR 0032](0032-yaml-scalar-grammar.md) corrects three invalid YAML flow scalars without changing parsed
+contract meaning. The schemas confirmed by [ADR 0030](0030-source-bound-json-schemas.md) therefore require only an
 exact `x-nkf-source.executable_digest` rebind.
 
 ## Review
@@ -33,7 +29,7 @@ The reviewer audited:
 - [`../evidence/decision-inputs/adr-0032-0033/nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json`](../evidence/decision-inputs/adr-0032-0033/nkf-0.1-yaml-grammar-corrected-validation-result-schema-proposal.json).
 
 Duplicate-aware JSON parsing passed. Removing `x-nkf-source` from each
-proposal produces an object byte-structurally equal to its ADR 0030 schema.
+proposal produces an object byte-structurally equal to its [ADR 0030](0030-source-bound-json-schemas.md) schema.
 All three compile strictly with Ajv `8.20.0` and `ajv-formats` `3.0.1` and
 pass 32 renewed focused probes.
 

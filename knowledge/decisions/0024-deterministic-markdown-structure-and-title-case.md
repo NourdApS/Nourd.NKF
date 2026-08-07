@@ -7,17 +7,13 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under explicit delegation from and contingent confirmation by the Human Product Owner, Nourd ApS
 ---
 
 # ADR 0024: Accept Deterministic Markdown Structure And Title Case
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Codex technical reviewer, acting under explicit
-  delegation from and contingent confirmation by the Human Product Owner,
-  Nourd ApS
 - **Delegation source:** Direct Human Product Owner instruction in the
-  NKF-003 discussion on 30 July 2026: “if you confirm then i confirm”
+  [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on 30 July 2026: “if you confirm then i confirm”
 - **Reviewed proposal:**
   [`../evidence/audits/nkf-0.1-checker-realization-gaps.md`](../evidence/audits/nkf-0.1-checker-realization-gaps.md)
 
@@ -197,7 +193,7 @@ This Decision accepts the exact semantic boundary. It does not modify accepted
 Markdown/YAML bytes in place.
 
 The current canonical authority pair must be replaced and rebound through
-ADR 0006. Its derived bundle and record schemas must then be replaced and
+[ADR 0006](0006-pre-stable-evolution.md). Its derived bundle and record schemas must then be replaced and
 reconfirmed against the new source digests. Only after those steps may checker
 code and fixtures claim to realize this boundary.
 

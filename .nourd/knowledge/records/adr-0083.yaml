@@ -7,7 +7,7 @@ source:
   path: decisions/0083-bind-nkf-0-2-release-checker.md
   digest:
     algorithm: sha-256
-    value: c38802447f6d384a95d4ed4019eee02dde72c960efa6012a657cb01d3eb5bc85
+    value: 2c0063fa52b86e160042b0ec69515a6b831b96ac023e9eb27e93c2ce1f8bf9b5
 governance:
   lifecycle: immutable
   status: accepted

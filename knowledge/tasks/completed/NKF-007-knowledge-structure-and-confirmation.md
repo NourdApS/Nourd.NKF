@@ -4,13 +4,12 @@ summary: "Repair the fundamental knowledge-model, navigation, lifecycle, metadat
 created_at: 2026-07-30T15:52:40Z
 task_id: NKF-007
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-007: Repair Knowledge Structure And Confirmation
 
-- **Status:** Completed
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Authority Boundary:** This Task authorizes work but does not accept
   Design directions, normative meaning, or Realization confirmation.
 
@@ -130,7 +129,7 @@ classification is a defect to repair, not a sixth Design disposition.
 
 Design disposition is distinct from the native record governance fields
 `lifecycle: living | immutable` and
-`status: draft | accepted | superseded | retired`. ADR 0056 establishes that
+`status: draft | accepted | superseded | retired`. [ADR 0056](../../decisions/0056-design-direction-and-record-authority.md) establishes that
 the axes are independent: disposition never determines record authority.
 Exact acceptance, supersession, or retirement provenance governs the record
 state.
@@ -160,7 +159,7 @@ state.
 ## AI Execution Slice: Inventory And Target Structure
 
 - **Recorded At:** `2026-07-30T16:27:13Z`
-- **Scope:** Audit the current repository, reconcile NKF-003 closure, define
+- **Scope:** Audit the current repository, reconcile [NKF-003](NKF-003-independent-nkf-authority.md) closure, define
   the exact target knowledge architecture, and prepare a reviewed migration
   before moving or renaming current documents
 - **Authority Effect:** Inventory results are Evidence. Target structure and
@@ -170,7 +169,7 @@ state.
 
 1. Inventory every knowledge file, declaration, Task state, Design
    disposition, structured date, link, filename, and Realization gap.
-2. Separate completed NKF-003 outcomes from work that must transfer to
+2. Separate completed [NKF-003](NKF-003-independent-nkf-authority.md) outcomes from work that must transfer to
    NKF-007, another deferred Task, or a future publication and
    consumer-onboarding Task.
 3. Design a lifecycle-based information architecture that keeps current
@@ -217,7 +216,7 @@ The pre-remediation repository audit is preserved in
 ## Completion
 
 - **Completed At:** `2026-07-30T17:45:47Z`
-- **Confirmation Decision:** `ADR 0057`
+- **Confirmation Decision:** [`ADR 0057`](../../decisions/0057-current-system-realization.md)
 
 NKF-007 completed the accepted knowledge migration, explicit Design
 dispositions, subject-based filenames, front-matter boundary, consolidated
@@ -226,8 +225,21 @@ declarations, Schema and checker rebinding, full repository audit, and final
 Realization confirmation.
 
 The final full-bundle result is a separate conformance observation. It does
-not supply the acceptance or confirmation recorded by ADR 0057.
+not supply the acceptance or confirmation recorded by [ADR 0057](../../decisions/0057-current-system-realization.md).
 
-Publication and external-consumer onboarding remain with NKF-008. Broad
-governed-artifact secret scanning remains with NKF-009. NKF-004, NKF-005, and
-NKF-006 retain their previously deferred scopes.
+Publication and external-consumer onboarding remain with [NKF-008](NKF-008-publish-and-onboard-consumers.md). Broad
+governed-artifact secret scanning remains with [NKF-009](../deferred/NKF-009-governed-artifact-secret-scanning.md). [NKF-004](../deferred/NKF-004-portable-presentation-guidance.md), [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md), and
+[NKF-006](../deferred/NKF-006-extensible-root-models.md) retain their previously deferred scopes.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

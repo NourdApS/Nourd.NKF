@@ -7,20 +7,17 @@ created_at: 2026-07-30T09:52:27Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
 ---
 
 # ADR 0047: Confirm Release-Bound Checker Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
-  Product Owner delegation
 - **Source Checkpoint:**
   `0fe4f0d4f7d6253cb39340c1e8e3b1d8c526da7f`
 
 ## Context
 
-ADR 0045 replaces the canonical NKF 0.1 authority pair and ADR 0046 confirms
+[ADR 0045](0045-release-authority-pair.md) replaces the canonical NKF 0.1 authority pair and [ADR 0046](0046-release-json-schemas.md) confirms
 the exact source-bound schemas. The native project checker must bind the new
 pair and the three project schemas without treating release-package
 verification as project conformance.
@@ -34,7 +31,7 @@ The exact checker source at the source checkpoint:
 - binds executable YAML SHA-256
   `7a2489c3b81ef87e38913629c65f71b8b39e815d9b72efe81939c4500db3510b`;
 - binds exactly the bundle, record, and validation-result schemas confirmed by
-  ADR 0046;
+  [ADR 0046](0046-release-json-schemas.md);
 - keeps `urn:nkf:0.1:schema:release-manifest` outside project contract loading,
   Governed Validation Inputs, validation-result contract artifacts, and
   project conformance; and

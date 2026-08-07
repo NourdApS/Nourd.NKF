@@ -7,15 +7,11 @@ created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting within the delegated authority for deterministic enforcement mechanics derived from already accepted NKF 0.1 meaning
 ---
 
 # ADR 0034: Accept Checker-Derived Mechanical Completions
 
-- **Status:** Accepted; canonical realization pending coordinated replacement
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting within the delegated
-  authority for deterministic enforcement mechanics derived from already
-  accepted NKF 0.1 meaning
 - **Evidence:** First native checker implementation and fixture execution
 - **Related Proposal:**
   [`../evidence/audits/nkf-0.1-native-checker-realization-findings.md`](../evidence/audits/nkf-0.1-native-checker-realization-findings.md)
@@ -37,7 +33,7 @@ rule.
 These are deterministic completion and editorial-realization defects. The
 underlying obligations are already accepted. Selecting a stable diagnostic
 identity, phase, and non-secret location fields is within the same delegated
-technical boundary used for ADR 0019. Correcting an example to satisfy ADR
+technical boundary used for [ADR 0019](0019-validation-enforcement-and-diagnostics.md). Correcting an example to satisfy ADR
 0024 does not change the accepted rule or Product meaning.
 
 The separate Product hierarchy/reachability question is semantic and is not

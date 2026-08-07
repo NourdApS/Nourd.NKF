@@ -7,15 +7,12 @@ created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
 ---
 
 # ADR 0019: Accept NKF 0.1 Enforcement And Diagnostics
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision authority:** Codex technical reviewer, acting under explicit
-  delegation from the Human Product Owner, Nourd ApS
-- **Delegation source:** Direct instruction in the NKF-003 discussion on
+- **Delegation source:** Direct instruction in the [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) discussion on
   29 July 2026 after the Human Product Owner stated that they had not reviewed
   the complete proposal and delegated its approval under the reviewer's
   technical authority
@@ -28,7 +25,7 @@ resolution, or human review without allowing implementation to create
 normative meaning.
 
 The proposal was independently reconciled against accepted Decisions through
-ADR 0018. Its rule registry was checked for duplicate identifiers, its phase
+[ADR 0018](0018-project-paths-and-knowledge-coverage.md). Its rule registry was checked for duplicate identifiers, its phase
 and conformance dependencies were reviewed, and its Markdown links and
 formatting were validated.
 
@@ -86,5 +83,5 @@ The preliminary schemas currently present under
 assumptions. They remain proposal evidence and must not be reported as current
 NKF 0.1 schema realization.
 
-Consequential changes to this accepted enforcement model follow ADR 0006 and
+Consequential changes to this accepted enforcement model follow [ADR 0006](0006-pre-stable-evolution.md) and
 require a later governed Decision.

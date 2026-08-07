@@ -4,14 +4,12 @@ summary: Define, implement, validate, document, and release one seamless first-i
 created_at: 2026-07-31T09:29:17Z
 task_id: NKF-013
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-013: Establish Initial Greenfield Onboarding
 
-- **Task:** `NKF-013`
-- **Status:** Completed
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
 - **Iteration:** First
 - **Scope Boundary:** Greenfield or near-greenfield Product and Technology
   repositories with an empty or small, reviewable Markdown set and no
@@ -63,7 +61,7 @@ The first iteration supports a repository that:
 
 The exact quantitative and qualitative limit for a small reviewable Markdown
 set must be defined by the accepted Design. The process must fail closed with
-an explicit `NKF-014` deferral diagnostic when the repository exceeds that
+an explicit [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) deferral diagnostic when the repository exceeds that
 supported boundary rather than attempting an unsafe partial migration.
 
 ## Desired Outcome
@@ -177,7 +175,7 @@ The narrow first iteration still requires essential safety:
 - never present partial or failed state as successful adoption.
 
 Long-lived resumable sessions, complex interrupted-state repair, user-directed
-historical rollback, and advanced migration recovery belong to `NKF-014`.
+historical rollback, and advanced migration recovery belong to [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 
 ## Authority And Lifecycle Requirements
 
@@ -206,7 +204,7 @@ Implementation must cover at least:
 6. existing project instructions, package manifests, and workflow files;
 7. ambiguous Markdown classification that pauses safely;
 8. a repository exceeding the initial scope that fails closed and directs the
-   user to deferred `NKF-014`;
+   user to deferred [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md);
 9. symbolic-link, path-escape, duplicate, and owned-path conflicts;
 10. transactional failure and automatic rollback;
 11. repeat-operation idempotence;
@@ -266,7 +264,7 @@ owns:
 
 - Do not treat the current installer as complete onboarding by renaming it or
   changing only its documentation.
-- Do not broaden the first iteration into `NKF-014` work to accommodate a
+- Do not broaden the first iteration into [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) work to accommodate a
   convenient test repository.
 - Do not automate away semantic or authority decisions.
 - Do not infer a Root Profile from source code or directory names.
@@ -310,7 +308,7 @@ including documented brownfield migration, source-rich reconstruction,
 partial-state recovery, and already-adopted migration. Before any Design or
 implementation work began, the Human Product Owner narrowed the first
 iteration to greenfield repositories with an empty or small documentation set.
-The broader outcome is preserved as deferred `NKF-014` rather than being
+The broader outcome is preserved as deferred [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) rather than being
 silently discarded or accidentally included.
 
 ## AI Execution Slice: Narrow The First Iteration
@@ -318,7 +316,7 @@ silently discarded or accidentally included.
 - **Recorded At:** `2026-07-31T09:51:12Z`
 - **Authority:** The Human Product Owner limited the first onboarding iteration
   to greenfield projects with some small documentation and deferred the rest.
-- **Scope:** Revise active `NKF-013`, create deferred `NKF-014`, synchronize
+- **Scope:** Revise active `NKF-013`, create deferred [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md), synchronize
   Task navigation and bundle coverage, and validate the coherent change.
 - **Non-Claims:** This slice does not adopt an onboarding Design, change the
   NKF 0.1 Specification, implement tooling, publish a release, or onboard
@@ -330,7 +328,7 @@ silently discarded or accidentally included.
 2. Restrict active requirements and acceptance criteria to empty and
    small-documentation greenfield repositories.
 3. Transfer large brownfield, reconstruction, and advanced recovery work to
-   deferred `NKF-014`.
+   deferred [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 4. Synchronize navigation and the bundle's explicit Task non-record set.
 5. Run `npm run nkf:check` and report validation separately from acceptance,
    implementation, and confirmation.
@@ -354,7 +352,7 @@ silently discarded or accidentally included.
 2. Audit Product and Technology fixtures, small-document coverage, current
    tests, public instructions, AI-neutral bootstrap, and release constraints.
 3. Separate reusable current capabilities from missing onboarding behavior,
-   misleading claims, and scope that belongs to deferred `NKF-014`.
+   misleading claims, and scope that belongs to deferred [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 4. Draft the initial onboarding Design incrementally, beginning with the exact
    supported-input boundary and the handoff between deterministic tooling and
    semantic authoring.
@@ -423,7 +421,7 @@ attempted.
 - **Recorded At:** `2026-07-31T10:47:13Z`
 - **Authority:** The Human Product Owner directed the technical reviewer to
   work until `NKF-013` is independently verified as finished, preserve an
-  extension path that minimizes later `NKF-014` Design change, and then commit
+  extension path that minimizes later [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) Design change, and then commit
   and push the completed work.
 - **Scope:** Govern the onboarding direction, realize the supported initial
   path, verify its complete acceptance matrix, preserve deferred successor
@@ -431,7 +429,7 @@ attempted.
   technical-review authority, complete this Task, and publish the resulting
   Git revision.
 - **Non-Claims:** The delegation does not authorize inferred consumer meaning,
-  activation of `NKF-014`, modification of an ineligible external consumer,
+  activation of [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md), modification of an ineligible external consumer,
   silent NKF 0.1 format change, or treating validation as acceptance or
   Realization confirmation.
 
@@ -441,7 +439,7 @@ attempted.
    authoring, documentation, and validation behavior.
 2. Adopt one AI-neutral Design with a stable inspect-plan-apply boundary,
    explicit initial eligibility policy, complete project transaction, and
-   extension seams for `NKF-014` reconstruction and resumability.
+   extension seams for [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) reconstruction and resumability.
 3. Implement the onboarder, pre-adoption protocol and skill, deterministic
    scaffolds, native generation, integration reuse, rollback, diagnostics,
    and idempotence.
@@ -453,7 +451,7 @@ attempted.
    governed declarations, and derived artifacts without changing normative
    NKF 0.1 meaning unless implementation proves that necessary.
 6. Perform a separate adversarial audit against every acceptance criterion and
-   the `NKF-014` future-extension boundary, repair all material findings, and
+   the [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) future-extension boundary, repair all material findings, and
    confirm only exact audited Realization revisions.
 7. Move `NKF-013` to Completed, run `npm run nkf:check`, verify repository and
    remote identity, commit the coherent revision, push `master`, and verify the
@@ -514,15 +512,15 @@ The final implementation revision
 `30628878063` and consumer-adoption run `30628889305` without annotations.
 Public commit `772d57370a094269ee1d9287ae871b0b3c7f64de` was freshly cloned and
 matched all 28 staged files; both complete examples passed with zero
-diagnostics. Those observations remain external Evidence. ADR 0068 supplies
+diagnostics. Those observations remain external Evidence. [ADR 0068](../../decisions/0068-confirm-initial-greenfield-onboarding.md) supplies
 the separate exact-byte confirmation act.
 
 The completed self-host state contains 103 record declarations, 60 explicit
 non-record sources, and 119 governed artifacts. Agent SDK was inspected,
 found qualitatively outside the accepted greenfield boundary because of its
-mature lifecycle history, and left unchanged. `NKF-014` retains brownfield,
+mature lifecycle history, and left unchanged. [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) retains brownfield,
 source reconstruction, resumability, and advanced recovery behind the same
-resolved-plan application seam. `NKF-012` separately retains protected merge
+resolved-plan application seam. [`NKF-012`](../deferred/NKF-012-activate-protected-merge-gate.md) separately retains protected merge
 enforcement.
 
 No NKF 0.1 normative authority, Schema, checker byte, or native release archive
@@ -533,4 +531,17 @@ consumer meaning, Realization confirmation, or Governing Use readiness.
 Execution Plan step 9 therefore did not trigger a new native release: none of
 its governed inputs changed. The separately digest-bound adopter and public
 projection were published and freshly verified as derived distribution
-surfaces under ADR 0067; they are not a replacement native NKF 0.1 archive.
+surfaces under [ADR 0067](../../decisions/0067-initial-greenfield-onboarding.md); they are not a replacement native NKF 0.1 archive.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

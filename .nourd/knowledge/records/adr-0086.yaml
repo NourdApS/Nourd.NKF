@@ -7,7 +7,7 @@ source:
   path: decisions/0086-record-authority-and-identity-bullet-rule.md
   digest:
     algorithm: sha-256
-    value: 22a02eb412cd1e3ae183cb31822cdbea21b6bea8b02fd8bb60723df515ba4d2d
+    value: 50a9a9a0f0f7ef49913434f57368ff27385fd7bd3f518fc3f062d0a879445dc6
 governance:
   lifecycle: immutable
   status: accepted

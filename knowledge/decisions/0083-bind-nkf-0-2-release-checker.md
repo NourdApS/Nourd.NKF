@@ -14,7 +14,7 @@ task: NKF-019
 ## Context And Problem
 
 Release packaging requires the confirming Decision to bind the exact checker
-realization. ADR 0082 records the delegated confirmation act without the
+realization. [ADR 0082](0082-confirm-nkf-0-2-versioned-set.md) records the delegated confirmation act without the
 mechanical identifiers.
 
 ## Decision
@@ -23,8 +23,8 @@ The confirmed NKF 0.2 release checker is the deterministic build
 `dist/nourd-nkf-checker.mjs` with SHA-256
 `0ae56ecd378f17831ad1d474b03b00c313396b8f5b6660d4a69205863e61ae4e`
 from audited source commit
-`455ef7a0dd334722aa3a46f4b6e6aea4f11e302a`. This extends ADR 0082 with the
-exact bindings in the ADR 0065 tradition.
+`455ef7a0dd334722aa3a46f4b6e6aea4f11e302a`. This extends [ADR 0082](0082-confirm-nkf-0-2-versioned-set.md) with the
+exact bindings in the [ADR 0065](0065-confirm-current-release-bound-checker.md) tradition.
 
 ## Scope And Applicability
 
@@ -37,7 +37,7 @@ configuration alone.
 
 ## Alternatives Considered
 
-Amending accepted ADR 0082 was rejected; accepted revisions are immutable.
+Amending accepted [ADR 0082](0082-confirm-nkf-0-2-versioned-set.md) was rejected; accepted revisions are immutable.
 
 ## Consequences And Trade-Offs
 

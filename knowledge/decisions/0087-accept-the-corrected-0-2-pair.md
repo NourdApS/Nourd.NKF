@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-ADR 0086 adopted the record decision-authority key and the identity-bullet
+[ADR 0086](0086-record-authority-and-identity-bullet-rule.md) adopted the record decision-authority key and the identity-bullet
 duplication rule for NKF 0.2 under the extended unconsumed-release
 exception. The corrected canonical bytes must be accepted exactly.
 

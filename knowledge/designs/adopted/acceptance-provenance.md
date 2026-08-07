@@ -10,17 +10,12 @@ task: NKF-003
 design_disposition: adopted
 design_decisions:
   - adr-0017
+proposal_evidence: accepted NKF authority/conformance rules and the imported NKF-002 `governance.acceptance_source` Git-revision check; the imported field and checker are not authority
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 Acceptance-Provenance Boundary
-
-- **Design Disposition:** Adopted
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Proposal Authority Effect:** None
-- **Proposal evidence:** accepted NKF authority/conformance rules and the
-  imported NKF-002 `governance.acceptance_source` Git-revision check; the
-  imported field and checker are not authority
 
 ## Decision Sought
 
@@ -123,7 +118,7 @@ acceptance remains verified.
 
 When a bundle must carry portable acceptance evidence or a deterministic
 resolver configuration, it uses an authority-owned extension governed by
-ADR 0016.
+[ADR 0016](../../decisions/0016-extension-resolution.md).
 
 That extension must be declared `required` when governing use depends on it
 and must define:

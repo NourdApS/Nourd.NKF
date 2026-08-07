@@ -27,7 +27,7 @@ authority pair. It validates conformance; it cannot accept knowledge, confirm
 a Realization, determine truth or design quality, or change the contract by
 implementation.
 
-The ADR 0058 source-envelope rule is implemented by separating safe YAML
+The [ADR 0058](../../decisions/0058-governed-frontmatter.md) source-envelope rule is implemented by separating safe YAML
 frontmatter from the CommonMark body before document-class and heading
 analysis. Applicable record sources and Markdown non-records require common
 orientation. Record identity and governance must equal the declaration;
@@ -91,7 +91,7 @@ systems.
 
 ## Compatibility Verification And Recovery
 
-ADR 0059 confirms the exact checker source and current derived build after
+[ADR 0059](../../decisions/0059-confirm-governed-frontmatter-realization.md) confirms the exact checker source and current derived build after
 type checking, 15 test files with 102 passing tests, deterministic build
 verification, frontmatter and declaration audit, and passing repository
 self-validation. The confirmed build identity is `nourd-nkf-checker` with

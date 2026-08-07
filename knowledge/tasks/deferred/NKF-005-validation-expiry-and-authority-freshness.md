@@ -4,16 +4,13 @@ summary: "Determine from concrete consumer evidence whether NKF needs:"
 created_at: 2026-07-30T00:27:52Z
 task_id: NKF-005
 task_status: deferred
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-005: Investigate Validation Expiry And Authority Freshness
 
-- **Task:** `NKF-005`
-- **Status:** Deferred
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Task:** `NKF-003`
+- **Related Task:** [`NKF-003`](../completed/NKF-003-independent-nkf-authority.md)
 
 ## Desired Outcome
 
@@ -118,3 +115,16 @@ This Task records a future investigation only. It does not claim that expiry
 or separate authority freshness is necessary, specified, accepted,
 implemented, released, supported, or conformant. Work begins through a
 recorded execution slice after the activation evidence exists.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

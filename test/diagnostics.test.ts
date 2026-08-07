@@ -1,6 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { VERSION_BINDINGS } from "../src/checker/bindings.js";
 import { loadContracts } from "../src/checker/contracts.js";
 import { RuleEmitter } from "../src/checker/diagnostics.js";
 import { PHASES, type Diagnostic } from "../src/checker/types.js";
@@ -9,18 +10,18 @@ import { contractRoot, repositoryRoot } from "./helpers.js";
 
 describe("stable native diagnostic implementation", () => {
   it("binds every accepted rule to exact registry metadata", async () => {
-    const loaded = await loadContracts(contractRoot);
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
     const registry = loaded.executable.diagnostics.rules as Record<
       string,
       Pick<Diagnostic, "severity" | "blocking" | "phase">
     >;
-    expect(Object.keys(registry)).toHaveLength(151);
+    expect(Object.keys(registry)).toHaveLength(159);
 
     const emitter = new RuleEmitter(loaded.executable);
     for (const id of Object.keys(registry)) {
       emitter.emit(id, "Test message");
     }
-    expect(emitter.diagnostics).toHaveLength(151);
+    expect(emitter.diagnostics).toHaveLength(159);
     for (const diagnostic of emitter.diagnostics) {
       expect(diagnostic).toMatchObject({
         rule_id: diagnostic.rule_id,
@@ -30,7 +31,7 @@ describe("stable native diagnostic implementation", () => {
   });
 
   it("has an implementation reference for every accepted rule identity", async () => {
-    const loaded = await loadContracts(contractRoot);
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
     const registry = Object.keys(
       loaded.executable.diagnostics.rules as Record<string, unknown>,
     );
@@ -49,7 +50,7 @@ describe("stable native diagnostic implementation", () => {
   });
 
   it("has a fixture assertion reference for every accepted rule identity", async () => {
-    const loaded = await loadContracts(contractRoot);
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
     const registry = Object.keys(
       loaded.executable.diagnostics.rules as Record<string, unknown>,
     );

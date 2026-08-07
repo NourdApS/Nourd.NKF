@@ -35,20 +35,20 @@ A local archive or build is not a published release.
 `scripts/release/core.mjs` build the release archive and manifest.
 `scripts/verify-release.mjs` independently verifies the archive.
 
-ADR 0065 now binds the current release checker source checkpoint, executable
+[ADR 0065](../../decisions/0065-confirm-current-release-bound-checker.md) now binds the current release checker source checkpoint, executable
 digest, normative Markdown, executable YAML, and four Schema digests.
 `scripts/release/config.mjs` is rebound to those exact values.
 
-The deterministic package mechanism confirmed by ADR 0059 remains unchanged.
-ADR 0065 confirms the rebound release inputs, and ADR 0066 confirms the
+The deterministic package mechanism confirmed by [ADR 0059](../../decisions/0059-confirm-governed-frontmatter-realization.md) remains unchanged.
+[ADR 0065](../../decisions/0065-confirm-current-release-bound-checker.md) confirms the rebound release inputs, and [ADR 0066](../../decisions/0066-confirm-release-documentation-and-adoption.md) confirms the
 successor package account after publication and final audit.
 
-NKF-008 has now built the archive reproducibly from exact source commit
+[NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) has now built the archive reproducibly from exact source commit
 `37c0f557e0b936b1f2e56706c936ef619aacdd9d`, published it as the private
 content-addressed prerelease, re-downloaded identical bytes, independently
 verified them, and recorded the exact recommendation. These are observed
 publication facts rather than confirmation acts. The final audit is complete,
-and ADR 0066 separately confirms the successor Realization.
+and [ADR 0066](../../decisions/0066-confirm-release-documentation-and-adoption.md) separately confirms the successor Realization.
 
 ## Responsibilities And Ownership Boundaries
 

@@ -7,7 +7,7 @@ source:
   path: decisions/0078-version-gate-correction-as-nkf-0-2.md
   digest:
     algorithm: sha-256
-    value: 8e85c08bab8fc37e8acd472f42e707677efa340f4622c965dfae96c566cb73b7
+    value: 197b6d09039ed72804d1519d31093c199b532ef0e13cc9c3a40a459b215d64a3
 governance:
   lifecycle: immutable
   status: accepted

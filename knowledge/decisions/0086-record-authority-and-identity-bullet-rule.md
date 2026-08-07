@@ -35,7 +35,7 @@ For NKF 0.2, extending ADRs 0079 and 0081:
    `markdown.body.identity-duplication` rule. Only these exact bulleted
    forms are machine-detected; prose restatement stays with human review,
    and Evidence bytes are never scanned.
-3. The adoption rollback and this correction stay under the ADR 0084
+3. The adoption rollback and this correction stay under the [ADR 0084](0084-replace-the-unconsumed-0-2-release.md)
    exception: the replaced release was never consumed, so the correction
    ships as NKF 0.2 again rather than a new version.
 

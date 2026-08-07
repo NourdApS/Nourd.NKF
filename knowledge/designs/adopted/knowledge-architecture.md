@@ -10,20 +10,17 @@ task: NKF-007
 design_disposition: adopted
 design_decisions:
   - adr-0053
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-007 Knowledge Architecture
 
-- **Task:** `NKF-007`
-- **Design Disposition:** Adopted
-- **Adopting Decision:** `ADR-0053`
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Authority Boundary:** The Design remains proposal knowledge. ADR 0053
+- **Authority Boundary:** The Design remains proposal knowledge. [ADR 0053](../../decisions/0053-repository-knowledge-architecture.md)
   adopts its direction; current normative meaning belongs to Specifications.
 
 ## Design Kind Problem And Scope
 
-This repository-architecture Design addresses the NKF-007 knowledge
+This repository-architecture Design addresses the [NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) knowledge
 organization, current-system navigation, filename, front-matter, date,
 Design-disposition, Task-transfer, Realization, migration, and self-adoption
 problems.
@@ -76,7 +73,7 @@ The following boundaries govern the proposal:
 ## Proposed Direction
 
 This section records the direction proposed by this Design and adopted through
-ADR 0053. Adoption does not make the Design itself current normative meaning.
+[ADR 0053](../../decisions/0053-repository-knowledge-architecture.md). Adoption does not make the Design itself current normative meaning.
 The Decision records why the direction was adopted, Specifications define
 current normative meaning, and Realizations describe current implementation.
 
@@ -153,12 +150,12 @@ detail without competing with the canonical Specification.
 
 Tasks move according to their explicit Task state:
 
-- NKF-007 moves to `tasks/active/`.
-- NKF-004, NKF-005, and NKF-006 move to `tasks/deferred/`.
-- NKF-003 moves to `tasks/completed/` only after its incomplete obligations
+- [NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) moves to `tasks/active/`.
+- [NKF-004](../../tasks/deferred/NKF-004-portable-presentation-guidance.md), [NKF-005](../../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md), and [NKF-006](../../tasks/deferred/NKF-006-extensible-root-models.md) move to `tasks/deferred/`.
+- [NKF-003](../../tasks/completed/NKF-003-independent-nkf-authority.md) moves to `tasks/completed/` only after its incomplete obligations
   are explicitly transferred.
-- A deferred NKF-008 owns future publication and external-consumer onboarding,
-  which remain outside NKF-007.
+- A deferred [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) owns future publication and external-consumer onboarding,
+  which remain outside [NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md).
 
 Task status is authoritative in the Task body. Directory placement is a
 human-navigation projection that must agree with it and must never be used to
@@ -319,7 +316,7 @@ The proposed minimum boundary is:
 - malformed or unclosed front matter fails source parsing rather than falling
   through as misleading Markdown.
 
-NKF-007 must add this minimum source-envelope meaning to the canonical
+[NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) must add this minimum source-envelope meaning to the canonical
 Markdown/YAML authority pair and derive the parser correction and focused
 fixtures before the repository can validate with front matter.
 
@@ -330,12 +327,12 @@ consumer, or adding broad metadata policy enforcement, remains deferred.
 
 ### Decision And Immutable-Record Migration
 
-ADR 0053 accepts the exact repository-architecture model and governs the
+[ADR 0053](../../decisions/0053-repository-knowledge-architecture.md) accepts the exact repository-architecture model and governs the
 mechanical migration of earlier immutable records. A later authority-pair
 Decision accepts the exact canonical Markdown/YAML revision that realizes the
 front-matter source envelope. Realization confirmation remains separate.
 
-The ADR 0053 migration:
+The [ADR 0053](../../decisions/0053-repository-knowledge-architecture.md) migration:
 
 - preserves stable record IDs;
 - records every old and new path;
@@ -351,20 +348,20 @@ The ADR 0053 migration:
 
 ### NKF-003 Closure And Work Transfer
 
-NKF-003 is completed only after recording:
+[NKF-003](../../tasks/completed/NKF-003-independent-nkf-authority.md) is completed only after recording:
 
 - independent repository authority, the NKF 0.1 authority pair, schemas,
   checker, local release package, Product and Technology profiles, and the
   initial self-hosting realization as completed outcomes;
 - the unresolved source-provenance limitations as preserved Evidence;
-- NKF-007 as owner of repository-structure, Realization, and self-adoption
+- [NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) as owner of repository-structure, Realization, and self-adoption
   remediation;
-- NKF-004, NKF-005, and NKF-006 as owners of their existing deferred
+- [NKF-004](../../tasks/deferred/NKF-004-portable-presentation-guidance.md), [NKF-005](../../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md), and [NKF-006](../../tasks/deferred/NKF-006-extensible-root-models.md) as owners of their existing deferred
   investigations; and
-- deferred NKF-008 as owner of publication, external-consumer pinning,
-  onboarding, migration, and handover that were not completed by NKF-003.
+- deferred [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) as owner of publication, external-consumer pinning,
+  onboarding, migration, and handover that were not completed by [NKF-003](../../tasks/completed/NKF-003-independent-nkf-authority.md).
 
-Closing NKF-003 does not claim those transferred obligations are complete.
+Closing [NKF-003](../../tasks/completed/NKF-003-independent-nkf-authority.md) does not claim those transferred obligations are complete.
 
 ### Current Realization Set
 
@@ -412,13 +409,13 @@ retroactively accept declarations or prove semantic adequacy.
 
 ### Preserved Audit Findings
 
-NKF-007 closes or transfers every material pre-remediation audit finding:
+[NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) closes or transfers every material pre-remediation audit finding:
 
-| Finding | NKF-007 treatment |
+| Finding | [NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) treatment |
 | --- | --- |
 | Keyword-generated semantic bindings | Replace generated declarations with explicit human-reviewed bindings and relationships |
 | Filename-inferred Decision and root acceptance | Derive declaration state only from exact Decision provenance; accept the migrated Technology root revision explicitly |
-| Governed-artifact secret-scan coverage | Preserve as deferred enforcement work under NKF-009 because the Human Product Owner excludes rule-enforcement expansion from this migration |
+| Governed-artifact secret-scan coverage | Preserve as deferred enforcement work under [NKF-009](../../tasks/deferred/NKF-009-governed-artifact-secret-scanning.md) because the Human Product Owner excludes rule-enforcement expansion from this migration |
 | Dynamic-root durability | Preserve the committed checkpoint; later commit the completed migration without publishing or deploying it |
 | History-first authority map | Replace with the consolidated current-system Realization and short lifecycle indexes |
 | Root `README.md` and `AGENTS.md` outside the validated snapshot | Bind them as Technology governed artifacts because they own repository identity and operating rules |
@@ -426,15 +423,15 @@ NKF-007 closes or transfers every material pre-remediation audit finding:
 | One-time heading normalizer remains active | Remove it from active tooling after preserving its accepted role through Decision and Git provenance |
 | Unsafe generator lacks an equality gate | Remove it from the current Realization rather than certifying unsafe inference |
 | Partial source-snapshot links | Preserve unchanged as explicit Evidence limitations |
-| Product-only published prerelease | Transfer updated publication and consumer onboarding to deferred NKF-008 |
+| Product-only published prerelease | Transfer updated publication and consumer onboarding to deferred [NKF-008](../../tasks/completed/NKF-008-publish-and-onboard-consumers.md) |
 
-NKF-009 records rather than silently drops the secret-scan finding. Deferral
+[NKF-009](../../tasks/deferred/NKF-009-governed-artifact-secret-scanning.md) records rather than silently drops the secret-scan finding. Deferral
 does not claim the coverage gap is repaired.
 
 ## Responsibilities Interactions And Information Flows
 
 The Human Product Owner supplies repository direction and acceptance
-authority. NKF-007 owns the execution plan and migration acceptance criteria.
+authority. [NKF-007](../../tasks/completed/NKF-007-knowledge-structure-and-confirmation.md) owns the execution plan and migration acceptance criteria.
 The Design provides alternatives and the proposed target. A Decision accepts
 or rejects the exact architecture and migration boundary. Specifications
 remain unchanged unless independent semantic review proves a normative change
@@ -576,7 +573,7 @@ Acceptance requires an independent review proving:
 - malformed or unclosed front matter fails with focused diagnostic coverage;
 - unsupported date-only structured fields are not assigned invented times;
 - immutable Evidence remains unchanged;
-- NKF-003 remaining work is explicitly transferred;
+- [NKF-003](../../tasks/completed/NKF-003-independent-nkf-authority.md) remaining work is explicitly transferred;
 - the Realization set covers the complete current system;
 - every moved link resolves;
 - every Markdown file has exactly one `.nourd` representation;

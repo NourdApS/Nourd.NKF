@@ -7,7 +7,7 @@ source:
   path: decisions/0048-release-package.md
   digest:
     algorithm: sha-256
-    value: 6be02b5944b8e338989d8709156c00e17b524078687c8e1a70ef35e596424d52
+    value: c7ca71dc1fc4e879f1f824c3da44b405cf8048053a72519733b3b56ee3d2b03a
 governance:
   lifecycle: immutable
   status: accepted

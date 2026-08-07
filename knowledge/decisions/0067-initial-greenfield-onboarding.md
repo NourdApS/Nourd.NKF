@@ -20,9 +20,9 @@ therefore incomplete for an empty or early greenfield repository.
 
 The Human Product Owner narrowed the first correction to empty and small,
 reviewable Product and Technology knowledge and deferred large brownfield,
-source reconstruction, and advanced recovery to `NKF-014`. The same authority
+source reconstruction, and advanced recovery to [`NKF-014`](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md). The same authority
 then delegated completion, independent verification, Realization confirmation,
-commit, and push of `NKF-013` to the technical reviewer.
+commit, and push of [`NKF-013`](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) to the technical reviewer.
 
 ## Decision
 
@@ -47,7 +47,7 @@ The adopted direction establishes:
 7. structured status that separates Draft meaning, confirmation, conformance,
    Governing Use, and Git or remote state;
 8. content-addressed idempotence for the same successful plan; and
-9. a stable plan/apply boundary that later `NKF-014` analyzers, reconstruction,
+9. a stable plan/apply boundary that later [`NKF-014`](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) analyzers, reconstruction,
    resumability, and recovery may extend without weakening authority.
 
 The existing verified installer remains a shared internal integration phase.
@@ -104,7 +104,7 @@ Moving all existing Markdown to Evidence was rejected because it would be an
 unreviewed semantic classification.
 
 Expanding immediately into source-derived reconstruction was rejected because
-it would collapse the narrow initial release into deferred `NKF-014`.
+it would collapse the narrow initial release into deferred [`NKF-014`](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
 
 ## Consequences And Trade-Offs
 
@@ -117,7 +117,7 @@ Participating agents gain a portable protocol and skill, but no instruction can
 prove that a model obeyed it. The deterministic plan validator and checker
 remain the universal output gate.
 
-Mature small repositories receive an explicit `NKF-014` diagnostic instead of
+Mature small repositories receive an explicit [`NKF-014`](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) diagnostic instead of
 unsafe partial migration. Advanced interruption recovery remains deferred, so
 the initial transaction must minimize durable-write exposure and restore all
 handled failures.
@@ -137,7 +137,7 @@ plans.
 Realization requires the exact behavior, safety matrix, guidance, public
 documentation, deterministic build, complete staged checker use, local tests,
 and full-bundle validation named by the Design. It also requires a separate
-adversarial completion audit, an explicit `NKF-014` extension assessment, and a
+adversarial completion audit, an explicit [`NKF-014`](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md) extension assessment, and a
 later Decision confirming exact successor Realization revisions.
 
 ## Non-Claims
@@ -147,8 +147,8 @@ This Decision does not:
 - implement or confirm onboarding;
 - accept or conform a consumer project;
 - authorize inferred Product or Technology meaning;
-- activate `NKF-014`;
+- activate [`NKF-014`](../tasks/deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md);
 - migrate Agent SDK;
 - publish an adopter, public projection, Git commit, or release;
 - establish protected branch enforcement; or
-- complete `NKF-013`.
+- complete [`NKF-013`](../tasks/completed/NKF-013-initial-greenfield-onboarding.md).

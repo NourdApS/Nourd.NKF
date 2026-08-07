@@ -7,19 +7,16 @@ created_at: 2026-07-30T09:51:47Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
 ---
 
 # ADR 0046: Confirm Release Contract Json Schema Bindings
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer acting under explicit Human
-  Product Owner delegation
-- **Accepted Source Pair:** ADR 0045
+- **Accepted Source Pair:** [ADR 0045](0045-release-authority-pair.md)
 
 ## Context
 
-ADR 0045 accepts the current NKF 0.1 Markdown/YAML authority pair. The existing
+[ADR 0045](0045-release-authority-pair.md) accepts the current NKF 0.1 Markdown/YAML authority pair. The existing
 bundle, record, and validation-result schemas retain their assertion meaning
 but require exact source-metadata rebinding. The accepted release contract also
 requires one separate release-manifest schema that must not enter project
@@ -36,7 +33,7 @@ The reviewer audited these exact proposal artifacts:
 - [`../evidence/decision-inputs/adr-0043-0046/nkf-0.1-release-contract-validation-result-schema-proposal.json`](../evidence/decision-inputs/adr-0043-0046/nkf-0.1-release-contract-validation-result-schema-proposal.json).
 
 All four passed duplicate-aware strict parsing. Removing `x-nkf-source` from
-the three project schemas produces object graphs equal to their ADR 0040
+the three project schemas produces object graphs equal to their [ADR 0040](0040-invocation-json-schemas.md)
 predecessors. All four compile strictly with Ajv `8.20.0` and `ajv-formats`
 `3.0.1`. The release-manifest schema accepts the exact positive shape and
 rejects 29 focused mutations covering closed fields, constants, digests,

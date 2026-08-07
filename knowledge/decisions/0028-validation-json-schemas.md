@@ -7,29 +7,25 @@ created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable
 record_status: accepted
 task: NKF-003
+decision_authority: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact derived revisions after independent review
 ---
 
 # ADR 0028: Confirm Pre-Checker NKF 0.1 Json Schema Realization
 
-- **Status:** Accepted
-- **Task:** `NKF-003`
-- **Decision Authority:** Codex technical reviewer, acting under the Human
-  Product Owner's direct authorization to approve exact derived revisions
-  after independent review
-- **Authorization Source:** Earlier direct NKF-003 instruction granting the
+- **Authorization Source:** Earlier direct [NKF-003](../tasks/completed/NKF-003-independent-nkf-authority.md) instruction granting the
   reviewer permission to accept exact revisions if approved, together with
   the 30 July 2026 direction to complete all work before checker
   implementation
-- **Accepted Source Pair:** ADR 0027
+- **Accepted Source Pair:** [ADR 0027](0027-validation-authority-pair.md)
 
 ## Context
 
-ADR 0027 replaces the canonical NKF 0.1 authority pair. The bundle and record
-schemas confirmed by ADR 0023 remain exact historical realization of the
-superseded ADR 0022 pair, but their embedded source digests no longer match
+[ADR 0027](0027-validation-authority-pair.md) replaces the canonical NKF 0.1 authority pair. The bundle and record
+schemas confirmed by [ADR 0023](0023-native-json-schemas.md) remain exact historical realization of the
+superseded [ADR 0022](0022-native-authority-pair.md) pair, but their embedded source digests no longer match
 current authority.
 
-ADR 0024 adds the optional bundle `canonical_terms` field. ADR 0025 requires a
+[ADR 0024](0024-deterministic-markdown-structure-and-title-case.md) adds the optional bundle `canonical_terms` field. [ADR 0025](0025-validation-result.md) requires a
 third schema for the exact operational validation-result structure. All other
 new CommonMark, Title Case, Mermaid, snapshot, ordering, aggregation,
 security, currentness, and semantic requirements remain assigned to checker,
@@ -73,7 +69,7 @@ The schema deltas were mechanically constrained:
 - bundle: current source bindings plus optional `canonical_terms` only;
 - record: current source bindings only; and
 - validation result: current source bindings plus strict object-refinement
-  mechanics only, relative to the ADR 0025 structural proposal.
+  mechanics only, relative to the [ADR 0025](0025-validation-result.md) structural proposal.
 
 ## Decision
 
@@ -113,8 +109,8 @@ Schema as accepted.
 
 ## Supersession And Compatibility
 
-These revisions replace the ADR 0023 schemas as the current canonical schema
-realization. ADR 0023 and its exact files remain immutable historical
+These revisions replace the [ADR 0023](0023-native-json-schemas.md) schemas as the current canonical schema
+realization. [ADR 0023](0023-native-json-schemas.md) and its exact files remain immutable historical
 confirmation of the prior authority pair.
 
 No NKF sub-version or schema version is introduced. Consumers require a

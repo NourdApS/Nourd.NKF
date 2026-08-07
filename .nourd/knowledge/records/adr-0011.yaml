@@ -7,7 +7,7 @@ source:
   path: decisions/0011-nkf-0-1-yaml-authority.md
   digest:
     algorithm: sha-256
-    value: 5c7ca6bed84e96a24a7628bdac2b237f8167d78255709022bb3633450e99a4bc
+    value: 455478b8181477aa10c63921f61a1addf9d4ebfce551f4948b0bdb1f5e615658
 governance:
   lifecycle: immutable
   status: accepted

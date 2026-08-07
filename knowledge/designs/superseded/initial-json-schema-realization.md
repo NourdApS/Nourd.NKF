@@ -15,16 +15,14 @@ superseded_by:
   - adr-0016
   - adr-0017
   - adr-0018
+proposal_authority_effect: None
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF 0.1 JSON Schema Realization
 
-- **Design Disposition:** Superseded
-- **Task:** `NKF-003`
-- **Decision authority:** Human Product Owner, Nourd ApS
-- **Accepted inputs:** canonical NKF 0.1 Markdown (ADR 0010) and executable
-  YAML companion (ADR 0011)
-- **Proposal Authority Effect:** None
+- **Accepted inputs:** canonical NKF 0.1 Markdown ([ADR 0010](../../decisions/0010-nkf-0-1-markdown-authority.md)) and executable
+  YAML companion ([ADR 0011](../../decisions/0011-nkf-0-1-yaml-authority.md))
 
 This proposal is superseded by ADRs 0013 through 0018 and
 [`enforcement-and-diagnostics.md`](../adopted/enforcement-and-diagnostics.md).

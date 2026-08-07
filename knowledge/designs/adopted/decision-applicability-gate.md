@@ -50,7 +50,7 @@ Tasks remain non-records: NKF validates declared shape and reference graph
 and never executes, schedules, completes, or becomes authoritative for a
 Task. Directory placement remains navigation. Substantive canonical meaning
 remains in the CommonMark body under the safe frontmatter envelope accepted
-through ADR 0058. Acceptance, implementation, Realization confirmation,
+through [ADR 0058](../../decisions/0058-governed-frontmatter.md). Acceptance, implementation, Realization confirmation,
 conformance, local Git state, and remote enforcement remain separate facts.
 
 Deterministic validation may establish structure, closed vocabulary use,
@@ -277,7 +277,7 @@ direction requires machine enforcement where reliable.
 
 Encode references, findings, and levels as Task frontmatter keys. Cheaper to
 check, but carried constraints are substantive meaning and belong in the
-CommonMark body under the ADR 0058 boundary; frontmatter would truncate or
+CommonMark body under the [ADR 0058](../../decisions/0058-governed-frontmatter.md) boundary; frontmatter would truncate or
 duplicate canonical meaning and invite silent divergence between the two.
 
 ### Promote Tasks To Records
@@ -334,7 +334,7 @@ authority access is introduced.
 
 Deterministic evidence for an informed Decision: positive fixtures where
 Product and Technology Active Tasks carry conformant gates; negative fixtures
-for each new diagnostic; self-hosting evidence that `NKF-019` itself carries
+for each new diagnostic; self-hosting evidence that [`NKF-019`](../../tasks/active/NKF-019-decision-applicability-gate.md) itself carries
 the first real gate; and the complete `npm run nkf:check` gate passing with
 the new enforcement active.
 
@@ -349,7 +349,7 @@ the Decision can weigh the gate directly against the evidenced failure chain.
   remains open complementary work.
 - Cross-bundle decision references remain `external` prose until NKF defines
   cross-bundle relationships; native resolution stops at the bundle boundary.
-- Acceptance-binding verification remains deferred under `NKF-016`; gate
+- Acceptance-binding verification remains deferred under [`NKF-016`](../../tasks/deferred/NKF-016-deliver-acceptance-binding-verification.md); gate
   reference resolution proves declared status, not verified acceptance.
 - How a future Knowledge Engine consumes gate rows mechanically is out of
   scope for NKF 0.1.
