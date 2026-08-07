@@ -72,3 +72,12 @@ export function bindingsForVersion(version: string): CoreBindings | undefined {
 }
 
 export const CORE_BINDINGS: CoreBindings = VERSION_BINDINGS["0.1"];
+
+export function unsupportedVersionBindings(version: string): CoreBindings {
+  const missing = `contracts/nkf/${version}/nkf.yaml`;
+  return {
+    specification: { path: `${missing}.unsupported`, sha256: "0".repeat(64) },
+    executable: { path: missing, sha256: "0".repeat(64) },
+    schemas: [],
+  };
+}

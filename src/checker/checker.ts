@@ -11,7 +11,7 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import { validateDecisionApplicabilityGate } from "./applicability.js";
-import { bindingsForVersion } from "./bindings.js";
+import { bindingsForVersion, unsupportedVersionBindings } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
 import { validateExtensions } from "./extensions.js";
@@ -933,7 +933,11 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     requestedBase !== nkfVersion && bindingsForVersion(requestedBase) !== undefined
       ? path.join(path.dirname(requestedContractRoot), nkfVersion)
       : requestedContractRoot;
-  const loaded = await loadContracts(versionContractRoot, bindingsForVersion(nkfVersion), nkfVersion);
+  const loaded = await loadContracts(
+    versionContractRoot,
+    bindingsForVersion(nkfVersion) ?? unsupportedVersionBindings(nkfVersion),
+    nkfVersion,
+  );
   const resultVersion: "0.1" | "0.2" =
     bindingsForVersion(nkfVersion) === undefined ? "0.1" : (nkfVersion as "0.1" | "0.2");
   const emitter = new RuleEmitter(loaded.executable);

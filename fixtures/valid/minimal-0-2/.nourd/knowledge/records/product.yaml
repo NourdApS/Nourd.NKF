@@ -1,0 +1,61 @@
+contract: nkf.record
+id: product
+type: product
+body_contract: nkf.product
+title: Example Product
+source:
+  path: product.md
+  digest:
+    algorithm: sha-256
+    value: ba4c5bc963dfd65f3915a3c1240c1f3c45aabacf0a4aba53fa5cfa9f1b8fd339
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: product
+sections:
+  - id: product-definition
+    heading_path: [Product Definition]
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities: [product-definition]
+  - id: purpose
+    heading_path: [Purpose]
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities: [purpose]
+  - id: vision
+    heading_path: [Vision]
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities: [vision]
+  - id: people-served
+    heading_path: [People Served]
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities: [people-served]
+  - id: needs-and-outcomes
+    heading_path: [Needs And Outcomes]
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities: [needs-and-outcomes]
+  - id: boundaries
+    heading_path: [Boundaries]
+    occurrence: 1
+    authority: proposal
+    role: boundary
+    responsibilities: [boundaries]
+  - id: product-map
+    heading_path: [Product Map]
+    occurrence: 1
+    authority: proposal
+    role: catalogue
+    responsibilities: [product-map]
+relationships: []
