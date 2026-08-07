@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.2/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: d460616c6e68f4edd85ca41e3e9c4c35bdaf47c886c9ae817de44f70eb18f3cd
+    value: bf95f49589c5e5a363bfa7b2361487fa4514a24cc4d944f2f9a3630c143c254a
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.1.md
     markdown_digest:
@@ -67,6 +67,8 @@ authority:
     - ADR-0073
     - ADR-0076
     - ADR-0077
+    - ADR-0078
+    - ADR-0079
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
@@ -1692,6 +1694,18 @@ enforcement:
   warnings_fail_native_conformance: false
   passing_secret_scan_proves_absence: false
 
+guidance_versioning:
+  marker_line_prefix: "NKF Version: "
+  declared_version_must_equal_bundle: true
+  absent_file: not-checked
+  checked_paths:
+    - .agents/skills/nkf-authoring/SKILL.md
+    - .agents/skills/nkf-onboarding/SKILL.md
+    - .claude/skills/nkf-authoring/SKILL.md
+    - .claude/skills/nkf-onboarding/SKILL.md
+    - integrations/ai/nkf-authoring-protocol.md
+    - integrations/onboarding/nkf-onboarding-protocol.md
+
 diagnostics:
   shape:
     required_fields: [rule_id, severity, blocking, phase, message]
@@ -1744,6 +1758,7 @@ diagnostics:
     knowledge.topology.path.missing: {severity: error, blocking: conformance, phase: project}
     knowledge.topology.representation.invalid: {severity: error, blocking: conformance, phase: project}
     knowledge.topology.map.invalid: {severity: error, blocking: conformance, phase: project}
+    guidance.version.mismatch: {severity: error, blocking: conformance, phase: project}
     knowledge.topology.map-target.invalid: {severity: error, blocking: conformance, phase: project}
     knowledge.topology.lifecycle-path.invalid: {severity: error, blocking: conformance, phase: project}
     knowledge.topology.index.invalid: {severity: error, blocking: conformance, phase: project}

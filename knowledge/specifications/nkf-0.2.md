@@ -227,6 +227,24 @@ NKF format versions use `<major>.<minor>`.
   earlier supported version remains valid against that version's immutable
   meaning; nothing migrates by implication.
 
+An NKF version identifies one complete frozen set: the normative
+Specification revision, its digest-bound executable companion, the derived
+Schemas, the checker, the authoring and onboarding protocols, the portable
+skills and host-adapter instruction content, and the fixtures, examples, and
+documentation projection. Every artifact in the set declares the version it
+serves, the version's release archive carries the exact set, and nothing in
+a released set changes afterward: a guidance or checker correction is a new
+version exactly like a specification correction. Superseded versions are not
+kept in the working tree; they remain retrievable from version-control
+history and their immutable release archives.
+
+Installed portable guidance MUST declare the NKF version it serves through
+the exact marker defined by the executable companion. When a governed
+project contains a guidance file at a native guidance path, a missing marker
+or a declared version different from the bundle's `nkf_version` emits
+`guidance.version.mismatch`. Absent guidance files are not themselves a
+conformance failure.
+
 How the NKF repository releases a new version, how an adopted repository
 adopts one, and how breaking changes are classified and signaled are
 repository and governance process, not format meaning. They are deliberately
@@ -2246,6 +2264,7 @@ warning is non-blocking.
 | `knowledge.topology.path.missing` | error |
 | `knowledge.topology.representation.invalid` | error |
 | `knowledge.topology.map.invalid` | error |
+| `guidance.version.mismatch` | error |
 | `knowledge.topology.map-target.invalid` | error |
 | `knowledge.topology.lifecycle-path.invalid` | error |
 | `knowledge.topology.index.invalid` | error |

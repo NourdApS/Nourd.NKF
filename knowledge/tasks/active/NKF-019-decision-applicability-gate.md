@@ -102,8 +102,8 @@ and body openings. ADR 0079 records that direction for NKF 0.2.
   through reserved ADR 0080. No normative promotion, implementation,
   conformance, or confirmation is claimed yet.
 - Current candidate digests: Markdown SHA-256
-  `d460616c6e68f4edd85ca41e3e9c4c35bdaf47c886c9ae817de44f70eb18f3cd` bound to executable SHA-256
-  `0c05ad832e47ad86b41b26c65dd57a49b53f140a2b592153390dfc950d6c7e6d`, with derived 0.2 Schema candidates.
+  `bf95f49589c5e5a363bfa7b2361487fa4514a24cc4d944f2f9a3630c143c254a` bound to executable SHA-256
+  `6af4de7bb281329ba4484151b2af963d7866eae14dad36fd728ca408b5a78fc1`, with derived 0.2 Schema candidates.
 
 ## Triggering External Evidence
 
