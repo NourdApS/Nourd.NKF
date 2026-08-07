@@ -1,9 +1,9 @@
 export const CHECKER_CONFIRMATION = Object.freeze({
-  decision: "ADR-0083",
-  path: "knowledge/decisions/0083-bind-nkf-0-2-release-checker.md",
-  checkerSourceCommit: "455ef7a0dd334722aa3a46f4b6e6aea4f11e302a",
+  decision: "ADR-0085",
+  path: "knowledge/decisions/0085-bind-the-corrected-0-2-release-checker.md",
+  checkerSourceCommit: "7438b436d6e8eb1d4c6ed6466a6509ed9a283d95",
   checkerSha256:
-    "0ae56ecd378f17831ad1d474b03b00c313396b8f5b6660d4a69205863e61ae4e",
+    "6915021cc0fa139a7915b6ec4adad5fc6bb72cec417e3b5c15b699b5f6ead5af",
 });
 
 export const ACCEPTED_ARTIFACT_DIGESTS = Object.freeze({
