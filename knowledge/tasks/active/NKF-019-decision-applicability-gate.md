@@ -148,6 +148,18 @@ preserved.
   0.2 registry reaches 159 rules. The release-before-adoption order is
   restored because the titled canonical record is valid under both
   envelopes.
+- The third correction round is complete: [ADR 0089](../../decisions/0089-title-equality-deep-links-and-design-orientation.md) adopted the returned
+  title with enforced heading equality, machine-verified deep links for
+  every same-bundle reference including linked gate cells, and the Design
+  proposal orientation keys; [ADR 0090](../../decisions/0090-accept-the-title-and-deep-link-pair.md) and [ADR 0092](../../decisions/0092-accept-the-final-pair.md) accept the final pair
+  after linkifying its own acceptance reference; [ADR 0093](../../decisions/0093-bind-the-adopted-0-2-release-checker.md) binds the adopted
+  checker; the final release is published as
+  `release-sha256-5f699b5bb519d55c1c188c1d58125abc9f01ec3cbd101555c2eb857db2daed48`
+  from commit `50fed3f` and verified by independent re-download; and this
+  repository adopted the final set with the complete linkified, titled,
+  bullet-free migration validating at zero diagnostics through the full
+  gate with 172 tests. Migration closure and Realization confirmation
+  await Human Product Owner review.
 - The complete 0.2 set is derived and proven per release protocol steps three
   and four: the checker dispatches contract sets by the bundle's declared
   version and fails unsupported versions closed; the Decision Applicability

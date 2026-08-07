@@ -114,10 +114,24 @@ version-dispatching checker with the gate, frontmatter, and
 guidance-version-marker enforcement, 156-rule 0.2 registry beside the
 unchanged 151-rule 0.1 registry, version-stamped guidance, 0.2 onboarding
 output, version-aware release tooling, 0.2 fixtures, and the projected
-public documentation — realizes that accepted meaning. This successor
-account is implemented and deliberately unconfirmed; this repository still
-declares and validates as NKF 0.1 until it adopts 0.2 under the accepted
-adoption protocol after the release completes.
+public documentation — realizes that accepted meaning. Three review-driven
+correction rounds under the recorded unconsumed-release exception then
+completed the contract: [ADR 0086](../decisions/0086-record-authority-and-identity-bullet-rule.md)
+added the record decision-authority key and the identity-bullet rule, and
+[ADR 0089](../decisions/0089-title-equality-deep-links-and-design-orientation.md)
+returned the required title with enforced heading equality, made every
+same-bundle reference a machine-verified deep link including gate table
+cells, and moved the Design proposal bullets into orientation keys, with
+the final pair accepted through
+[ADR 0090](../decisions/0090-accept-the-title-and-deep-link-pair.md) and
+[ADR 0092](../decisions/0092-accept-the-final-pair.md) and packaging bound
+through [ADR 0093](../decisions/0093-bind-the-adopted-0-2-release-checker.md).
+This repository has adopted the final set under the 159-rule registry: the
+bundle declares 0.2, every Task carries its gate, titles equal headings
+everywhere, references are deep links, the retired 0.1 sources live in Git
+history and the 0.1 release archives, and the complete bundle validates
+with zero diagnostics. The successor account itself remains deliberately
+unconfirmed pending review.
 
 ## Durable Mapping
 
