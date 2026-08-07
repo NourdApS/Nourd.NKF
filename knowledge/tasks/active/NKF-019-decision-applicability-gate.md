@@ -175,6 +175,15 @@ onboarding independently.
   guidance require an independent post-action audit. The
   [audit Evidence](../../evidence/audits/nkf-019-onboarding-and-upgrade-audit.md)
   records the method and observations.
+- [ADR 0095](../../decisions/0095-review-guidance-before-cutting.md) adds
+  the mandatory pre-cut guidance review to the release protocol: every
+  shipped protocol and skill is re-read against the version's exact rule
+  diff before the archive is produced, with the reviewed diff recorded for
+  the independent audit. This is the procedural defense against the stale
+  adoption-protocol sentence the audit found. For this release the reviewed
+  diff was the round-three rule set — title equality, deep links, Design
+  orientation keys — and the eight guidance members were re-read with no
+  further stale statement found.
 - The complete 0.2 set is derived and proven per release protocol steps three
   and four: the checker dispatches contract sets by the bundle's declared
   version and fails unsupported versions closed; the Decision Applicability

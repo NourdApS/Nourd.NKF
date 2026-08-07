@@ -32,20 +32,30 @@ substitutes for those two facts.
    the adoption protocol, and the fixtures, examples, and documentation
    projection. Every artifact in the set declares the version it serves
    through the exact guidance marker.
-4. Prove the set against itself: the full test suite over the version's
+4. Review every guidance member against the rules that changed in this
+   version: take the exact rule diff between this version's accepted
+   authority pair and its predecessor, and for each changed rule re-read
+   all shipped protocols and portable skills, correcting any sentence that
+   still describes the previous rule. A reversal of an earlier rule
+   requires searching every guidance member for statements about it. Record
+   which diff was reviewed so the independent audit can verify the review
+   happened.
+5. Prove the set against itself: the full test suite over the version's
    fixtures, deterministic checker and adopter builds, and the guidance and
    documentation verifiers. The publishing repository's own knowledge still
    declares its current earlier version at this stage and continues to
    validate against that version's frozen checker; that is correct, because
    the repository has not adopted the new version yet.
-5. Obtain an independent audit of the exact set, repair material findings,
-   and obtain the separate Human Product Owner confirmation that the exact
-   implementation realizes the accepted authority pair.
-6. Produce one content-addressed release archive and manifest for the exact
+6. Obtain an independent audit of the exact set, including verification
+   that the guidance review of step four was performed against the actual
+   rule diff, repair material findings, and obtain the separate Human
+   Product Owner confirmation that the exact implementation realizes the
+   accepted authority pair.
+7. Produce one content-addressed release archive and manifest for the exact
    confirmed set, verify it by re-download and digest comparison, and retain
    the verification as Evidence. The version is released when this step
    completes.
-7. Publish the version's migration meaning with the release: what changed,
+8. Publish the version's migration meaning with the release: what changed,
    what breaks, and exactly what an adopting repository must do.
 
 ## Boundaries
