@@ -113,10 +113,14 @@ version-dispatching checker with the gate, frontmatter, and
 guidance-version-marker enforcement, 156-rule 0.2 registry beside the
 unchanged 151-rule 0.1 registry, version-stamped guidance, 0.2 onboarding
 output, version-aware release tooling, 0.2 fixtures, and the projected
-public documentation — realizes that accepted meaning. This successor
-account is implemented and deliberately unconfirmed; this repository still
-declares and validates as NKF 0.1 until it adopts 0.2 under the accepted
-adoption protocol after the release completes.
+public documentation — realizes that accepted meaning. ADR 0084 accepted the corrected pair after
+self-migration exposed one legacy title line, with the recorded exception
+replacing the never-consumed first archive, and ADR 0085 binds the released
+checker. This repository has adopted NKF 0.2 under the accepted adoption
+protocol: the bundle declares 0.2, every Task carries its gate, the
+superseded 0.1 sources live in Git history and the 0.1 release archives,
+and the complete bundle validates with zero diagnostics. The successor
+account itself remains deliberately unconfirmed pending review.
 
 ## Durable Mapping
 
@@ -171,8 +175,7 @@ Complete Product Or Technology Topology
 | NKF 0.2 Specification | `knowledge/specifications/nkf-0.2.md` | Accepted canonical NKF 0.2 revision with the Decision Applicability Gate, versioned-set rules, and title-free frontmatter | ADR 0081 |
 | NKF 0.2 executable companion | `contracts/nkf/0.2/nkf.yaml` | Digest-bound accepted companion with derived Schemas and the 156-rule registry | ADR 0081 |
 | Version release and adoption protocols | `integrations/release/`, `integrations/adoption/` | Accepted versioned-set members carrying the NKF Version marker | ADR 0080; unreleased |
-| NKF 0.1 Specification | `knowledge/specifications/nkf-0.1.md` | Accepted complete portable-topology revision; governs this repository until 0.2 adoption | ADR 0073 over ADR 0072 |
-| Executable companion | `contracts/nkf/0.1/nkf.yaml` | Digest-bound executable companion | ADR 0073 over ADR 0072 |
+| NKF 0.1 authority | Git history and the 0.1 release archives | Immutable authority for repositories that declare NKF 0.1; retired from this working tree at adoption | ADR 0073 over ADR 0072; retirement under ADR 0080 |
 | Core JSON Schemas | `contracts/nkf/0.1/schemas/` | Source-bound current Schemas | ADR 0075 over ADR 0059 |
 | Checker library and CLI | `src/checker/`, `src/cli.ts` | Complete portable paths, maps, placement, indexes, and diagnostics implemented | ADR 0075 |
 | Fixtures and tests | `fixtures/`, `test/` | Complete Product and Technology topology, onboarding, repair, drift, rollback, idempotence, and tamper coverage | ADR 0075 |

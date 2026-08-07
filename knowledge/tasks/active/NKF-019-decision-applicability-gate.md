@@ -140,9 +140,24 @@ NKF 0.2 authority pair.
 - The
   [set completion audit](../../evidence/audits/nkf-019-versioned-set-completion-audit.md)
   records the requirement and set review at commit `455ef7a` with no
-  unresolved material finding. The remaining boundaries are separate Human
-  Product Owner confirmation, the release archive, and only then this
-  repository's own adoption.
+  unresolved material finding. ADR 0082 records the Human Product Owner
+  confirmation through explicitly delegated technical review.
+- Dogfooded adoption exposed one legacy title line in the canonical 0.2
+  specification. ADR 0084 accepted the corrected pair — Markdown SHA-256
+  `761312803f043ca5ba31d83fee14f8fceb9e67a7d61547b55ae933a5ffea5283` bound
+  to executable SHA-256
+  `5c94a0004995b39fbe9513fa6a1fec0f0a10fa38de302937c6f095f5d976e8ab` — and
+  the recorded exception replacing the never-consumed first archive; ADR
+  0085 binds the released checker.
+- NKF 0.2 is released as tag
+  `release-sha256-a6dd7a0cfaef50d84c4090b2878744f08274a3263e1f4f930b1ebccb681bc929`
+  from commit `b5a7b91`, verified by independent re-download.
+- This repository adopted NKF 0.2 under the adoption protocol: the bundle
+  declares 0.2, all eighteen Tasks carry gates with truthful retrospective
+  disclosure, titles and identity bullet blocks are gone, the 0.1
+  specification, contracts, and fixtures are retired to Git history, and the
+  complete gate passes with 167 tests and zero diagnostics. Migration
+  closure and Realization confirmation await Human Product Owner review.
 
 ## Triggering External Evidence
 
