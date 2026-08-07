@@ -7,7 +7,7 @@ source:
   path: decisions/0064-release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
-    value: a387d795052804aa65bdbeb985c6b4b2865af7e09cb9fd1e5e28a1bd22f1dd0b
+    value: 91dda0aab0e94ad82f0280ba6c49917a135d590fafbbc21affdc1ce34518811c
 governance:
   lifecycle: immutable
   status: accepted

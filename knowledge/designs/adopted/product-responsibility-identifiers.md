@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-product-responsibility-identifiers
 type: design
-title: NKF 0.1 Product Responsibility Identifiers
 summary: Whether to accept the 69 contract-scoped identifiers proposed by NKF-002 as stable labels for the already accepted NKF 0.1 Product body responsibilities.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

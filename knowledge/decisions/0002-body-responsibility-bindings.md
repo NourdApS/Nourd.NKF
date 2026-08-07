@@ -1,7 +1,6 @@
 ---
 id: adr-0002
 type: decision
-title: "ADR 0002: Establish Body-Responsibility Bindings"
 summary: The accepted NKF 0.1 Product specification defines required body responsibilities in prose, but it does not give those responsibilities stable machine-readable identifiers or define how a declaration binds an exact Markdown section to them.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

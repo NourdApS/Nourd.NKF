@@ -1,21 +1,14 @@
 ---
-title: "NKF-015: Establish Agent-Led Initial Onboarding"
 summary: Replace deterministic repository-category assessment in initial NKF onboarding with a portable agent-led inspection and recommendation workflow while retaining deterministic sealing, application, and validation safeguards.
 created_at: 2026-07-31T13:58:38Z
 task_id: NKF-015
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-015: Establish Agent-Led Initial Onboarding
 
-- **Task:** `NKF-015`
-- **Status:** Completed
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Predecessor:**
-  [`NKF-013`](../completed/NKF-013-initial-greenfield-onboarding.md)
-- **Deferred Successor:**
-  [`NKF-014`](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
 
 ## Purpose
 
@@ -206,3 +199,16 @@ unresolved material completion finding.
 Consumer-repository onboarding is excluded from NKF-015. The Human Product
 Owner retained that operation for separate manual execution, so no consumer
 mutation or conformance claim is part of this completion.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

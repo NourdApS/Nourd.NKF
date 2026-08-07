@@ -1,16 +1,14 @@
 ---
-title: "NKF-008: Publish NKF, Public Documentation, And Consumer Adoption"
 summary: Publish a governed internal NKF release, provide public documentation that makes NKF understandable and usable, and onboard authorized consumer repositories deliberately.
 created_at: 2026-07-30T17:03:21Z
 task_id: NKF-008
 task_status: completed
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-008: Publish NKF, Public Documentation, And Consumer Adoption
 
-- **Task:** `NKF-008`
-- **Status:** Completed
-- **Owner:** Nourd ApS
 
 ## Purpose
 
@@ -237,3 +235,16 @@ here so repository repair does not silently expand into release, public
 documentation, or consumer work. The Human Product Owner expanded this
 deferred scope on 31 July 2026 to make public explanation part of the NKF 0.1
 adoption experience.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+No accepted decision applies to this Task.
+
+### Mandatory Capabilities
+
+No mandatory capability is implicated by this Task.
+
+This gate was added retrospectively during the NKF 0.2 self-migration; no
+historical extraction is implied.

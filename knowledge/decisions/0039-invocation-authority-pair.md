@@ -1,7 +1,6 @@
 ---
 id: adr-0039
 type: decision
-title: "ADR 0039: Accept Invocation-Precondition Authority Pair"
 summary: ADR 0038 establishes project-root .nourd as a native-checker invocation precondition and retires project.nourd.missing from the stable native diagnostic registry. That Decision accepts the exact semantics but does not replace the canonical Markdown/YAML bytes by implication.
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

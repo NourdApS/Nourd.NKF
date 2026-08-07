@@ -7,7 +7,7 @@ source:
   path: realizations/current/checker-and-validation.md
   digest:
     algorithm: sha-256
-    value: b23ef0940fddd52b906c3a1a1f49cf43cfd5396a996c90789375227b68bf5596
+    value: 1aa52bfa487e538646c36a19a2eb8f00dd4e9744f7ad967f1988201a64c1f85b
 governance:
   lifecycle: immutable
   status: accepted
@@ -58,7 +58,4 @@ sections:
     authority: accepted-meaning
     role: recovery
     responsibilities: [compatibility-verification-and-recovery]
-relationships:
-  - type: realizes
-    target: nkf-0.1-specification
-    source_section: governed-meaning-realized
+relationships: []

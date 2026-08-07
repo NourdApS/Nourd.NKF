@@ -1,7 +1,6 @@
 ---
 id: adr-0031
 type: decision
-title: "ADR 0031: Establish Checker Development Layout And Identity"
 summary: ADRs 0029 and 0030 establish the current canonical NKF 0.1 authority pair and all three exact source-bound JSON Schemas. The remaining realization step is a native checker that implements those accepted contracts without becoming another source of normative meaning.
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

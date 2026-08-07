@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-common-and-root-profile-proposal
 type: design
-title: NKF 0.1 Common And Root Profile Proposal
 summary: "Develop the smallest coherent realization of ADR 0049: specify repeated NKF mechanics once, require one concrete profile for every knowledge root, preserve Product meaning, and make later profile-specific specifications and validators possible without redesigning the bundle envelope."
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

@@ -7,7 +7,7 @@ source:
   path: decisions/0054-front-matter-authority-pair.md
   digest:
     algorithm: sha-256
-    value: 6e1d0ea6bff0938e806ce24989eef7c6da8ff538b3090cf025db1c77aefaca8e
+    value: 116aed45b0f6226801bbca7f964ad6ff526bff1707500a7e9d344efd027bbc43
 governance:
   lifecycle: immutable
   status: accepted

@@ -1,7 +1,6 @@
 ---
 id: adr-0028
 type: decision
-title: "ADR 0028: Confirm Pre-Checker NKF 0.1 Json Schema Realization"
 summary: ADR 0027 replaces the canonical NKF 0.1 authority pair. The bundle and record schemas confirmed by ADR 0023 remain exact historical realization of the superseded ADR 0022 pair, but their embedded source digests no longer match current authority.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable

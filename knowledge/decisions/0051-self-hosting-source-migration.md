@@ -1,7 +1,6 @@
 ---
 id: adr-0051
 type: decision
-title: "ADR 0051: Govern Self-Hosting Heading Migration"
 summary: NKF requires every participating H1, H2, and H3 in a governed Markdown record to use Unicode 17 Title Case except exact protected canonical terms. Earlier NKF Decisions, Designs, and Evidence were created before that rule became enforceable against this repository itself. Some exact accepted Decision snapshots therefore contain headings that do not conform.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

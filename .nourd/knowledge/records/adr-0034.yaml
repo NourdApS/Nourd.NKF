@@ -7,7 +7,7 @@ source:
   path: decisions/0034-checker-derived-mechanical-completions.md
   digest:
     algorithm: sha-256
-    value: 65e9ac0634c06bf5db465bb2c553e435e93bb97749a45ec18844c800d5ac78ac
+    value: 39269a151052e73cef2f1d284db1f6422973957bfca1b81d2845d6acb01d09e3
 governance:
   lifecycle: immutable
   status: accepted

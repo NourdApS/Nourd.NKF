@@ -1,7 +1,6 @@
 ---
 id: adr-0034
 type: decision
-title: "ADR 0034: Accept Checker-Derived Mechanical Completions"
 summary: "The first independent native checker implementation exposed two states that current normative meaning already requires to fail but for which the stable diagnostic registry has no rule:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

@@ -7,7 +7,7 @@ source:
   path: designs/adopted/presentation-guidance.md
   digest:
     algorithm: sha-256
-    value: 7ca7d9dc260723ec6a5427331434a4225830e7e937924f9ffb109cf56232c5eb
+    value: 0e7b6e6cecc2e6b0dcea9c858a75797d624f56119a4b26617bdb484951be6c7a
 governance:
   lifecycle: immutable
   status: accepted

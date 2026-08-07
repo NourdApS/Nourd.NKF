@@ -1,7 +1,6 @@
 ---
 id: nkf-0.2-specification
 type: specification
-title: NKF 0.2 — Product And Technology Knowledge Format
 summary: The Nourd Knowledge Format (NKF) is a human-readable, machine-verifiable format for durable governed knowledge. NKF 0.2 supports Product and Technology knowledge and adds the required Decision Applicability Gate for Task non-records.
 created_at: 2026-08-06T22:24:00Z
 record_lifecycle: immutable

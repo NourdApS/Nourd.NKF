@@ -1,7 +1,6 @@
 ---
 id: adr-0038
 type: decision
-title: "ADR 0038: Establish Nourd Invocation Precondition"
 summary: Native NKF fixes its manifest at .nourd/knowledge/bundle.yaml, evaluates parse before project, and stores a completed full-bundle result at .nourd/validation-result.json.
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

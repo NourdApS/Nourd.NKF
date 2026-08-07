@@ -7,7 +7,7 @@ source:
   path: decisions/0033-yaml-grammar-schema-bindings.md
   digest:
     algorithm: sha-256
-    value: 96e51a8d60ba25a58302c4175dca6485958f1483dd6a11c8c407e8faf7138254
+    value: 14c9a982b98a86d733605bee6977c1f97cfc6242610a2728ab75d324c23ef2d0
 governance:
   lifecycle: immutable
   status: accepted

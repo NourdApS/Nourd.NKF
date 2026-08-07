@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-semantic-topology-and-binding-vocabularies
 type: design
-title: NKF 0.1 Semantic-Topology And Binding Vocabularies
 summary: Whether the following entity kinds, entity-relationship types, binding kinds, and constraints are the complete core semantic-topology and durable-binding vocabularies for native NKF 0.1.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

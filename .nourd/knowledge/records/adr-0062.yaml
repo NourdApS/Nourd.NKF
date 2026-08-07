@@ -7,7 +7,7 @@ source:
   path: decisions/0062-confirm-remote-workflow-activation-boundary.md
   digest:
     algorithm: sha-256
-    value: e613a94c3b4f1b755e47a95ffbc6c9c0a4bc281ee6d8ed7b2245d65bbd573ac0
+    value: 44ef077bf748bc3a1cec19fe38b20fc615c65915c3ff1c141abe4ea8dc309b16
 governance:
   lifecycle: immutable
   status: accepted

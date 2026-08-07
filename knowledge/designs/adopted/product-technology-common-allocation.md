@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-product-technology-common-comparison
 type: design
-title: NKF 0.1 Product–Technology Common Comparison
 summary: "Compare the accepted Product knowledge model with an independently derived Technology knowledge model and identify:"
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

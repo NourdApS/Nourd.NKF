@@ -1,13 +1,13 @@
 contract: nkf.record
-id: adr-0077
+id: adr-0084
 type: decision
 body_contract: nkf.decision
-title: "ADR 0077: Decision Applicability Gate"
+title: "ADR 0084: Replace The Unconsumed 0.2 Release"
 source:
-  path: decisions/0077-decision-applicability-gate.md
+  path: decisions/0084-replace-the-unconsumed-0-2-release.md
   digest:
     algorithm: sha-256
-    value: 4fedc2cd11ddd386cf73a24c56e77566340cde7b39dab5df3811dbc617742952
+    value: 52a13712e4d2d88acb32a222b75c869d9b015ef41939647db6db4bdddd80eab7
 governance:
   lifecycle: immutable
   status: accepted
@@ -22,9 +22,8 @@ sections:
   - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
   - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
   - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
-  - {id: realization-requirements, heading_path: [Realization Requirements], occurrence: 1, authority: accepted-meaning, role: evidence}
   - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
 relationships:
-  - type: rationale-for
-    target: design-nkf-019-decision-applicability-gate
+  - type: extends
+    target: adr-0077
     source_section: decision

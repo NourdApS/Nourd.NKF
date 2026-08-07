@@ -7,7 +7,7 @@ source:
   path: decisions/0065-confirm-current-release-bound-checker.md
   digest:
     algorithm: sha-256
-    value: 85613b6e529fc1877d10a84d6389e079a43fe07794c42eaf1f0de75c7ac29fa9
+    value: 91fb9ad7920120fc9da9a298250f5aa37744d8671da0a8f1aef6c2b40d703891
 governance:
   lifecycle: immutable
   status: accepted

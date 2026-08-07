@@ -7,7 +7,7 @@ source:
   path: realizations/current/initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
-    value: ee93d89964c09a57fae98b8669284501bcd95b8101d132c04bd4b3e34336ce3f
+    value: c432b4da89782844e1872c11b18ff8d0480f94eebe674973014dd7f3e083a455
 governance:
   lifecycle: immutable
   status: accepted

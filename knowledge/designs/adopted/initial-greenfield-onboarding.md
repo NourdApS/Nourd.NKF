@@ -1,7 +1,6 @@
 ---
 id: design-nkf-013-initial-greenfield-onboarding
 type: design
-title: NKF Initial Greenfield Onboarding
 summary: This Design proposes one deterministic inspect-plan-apply onboarding path for empty and small-document Product and Technology repositories, with a stable extension boundary for later brownfield reconstruction and advanced recovery.
 created_at: 2026-07-31T10:47:13Z
 record_lifecycle: immutable

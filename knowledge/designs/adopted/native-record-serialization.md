@@ -1,7 +1,6 @@
 ---
 id: design-nkf-0-1-native-record-serialization
 type: design
-title: NKF 0.1 Native Record Serialization
 summary: Whether the following YAML object shape is the exact native serialization of the logical NKF 0.1 record defined by the accepted Markdown.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

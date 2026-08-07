@@ -1,7 +1,6 @@
 ---
 id: design-nkf-019-decision-applicability-gate
 type: design
-title: NKF Decision Applicability Gate
 summary: This Design proposes one deterministic Decision Applicability Gate in Task non-records, closed verification-level and capability-finding vocabularies, a completion fail-closed rule, and normative claim rules so conditional decisions and proxy evidence can no longer silently become unconditional success.
 created_at: 2026-08-06T21:29:34Z
 record_lifecycle: immutable

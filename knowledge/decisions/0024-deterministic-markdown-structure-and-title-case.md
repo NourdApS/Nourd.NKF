@@ -1,7 +1,6 @@
 ---
 id: adr-0024
 type: decision
-title: "ADR 0024: Accept Deterministic Markdown Structure And Title Case"
 summary: The accepted NKF 0.1 authority pair requires exact Markdown title and section resolution and stable heading diagnostics, but it does not define a Markdown grammar, visible-heading normalization, semantic-heading boundary, or deterministic Title Case policy.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable

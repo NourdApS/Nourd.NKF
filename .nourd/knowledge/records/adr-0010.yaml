@@ -7,7 +7,7 @@ source:
   path: decisions/0010-nkf-0-1-markdown-authority.md
   digest:
     algorithm: sha-256
-    value: c9410a754d9bdf89a12c5e2a895f65162e9667d2bcc2caa76f9b63ecfc0ac580
+    value: 09cb6e5827fa8779521b8c8e03109ee1e6c61d8660659a7eda7b15fc289bbfc6
 governance:
   lifecycle: immutable
   status: accepted

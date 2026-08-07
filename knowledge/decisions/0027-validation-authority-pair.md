@@ -1,7 +1,6 @@
 ---
 id: adr-0027
 type: decision
-title: "ADR 0027: Accept Pre-Checker NKF 0.1 Authority Pair"
 summary: ADR 0022 accepted the current coherent NKF 0.1 Markdown/YAML pair. ADR 0024 subsequently accepted deterministic CommonMark interpretation, complete top-level heading coverage, Title Case, canonical terms, and the Mermaid boundary. ADR 0025 accepted the exact operational validation-result contract, and ADR 0026 accepted the deterministic native secret-pattern registry.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable

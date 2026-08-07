@@ -1,7 +1,6 @@
 ---
 id: adr-0003
 type: decision
-title: "ADR 0003: Accept Product Responsibility Identifiers"
 summary: ADR 0002 requires stable, body-contract-scoped identifiers for required responsibilities. The accepted NKF 0.1 Product specification contains ten body contracts and 69 required responsibilities, but it states them only in prose.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

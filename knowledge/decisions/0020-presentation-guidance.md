@@ -1,7 +1,6 @@
 ---
 id: adr-0020
 type: decision
-title: "ADR 0020: Establish Current Presentation-Guidance Boundary"
 summary: The NKF 0.1 specification permits non-authoritative presentation guidance, while ADR 0013 deliberately reserves no native field for it. Discussion using a concrete project established that native NKF semantics already provide records, canonical Markdown, section structure, types, hierarchy, relationships, governance, and provenance from which an interface can build a default presentation.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

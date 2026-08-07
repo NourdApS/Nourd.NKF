@@ -1,7 +1,6 @@
 ---
 id: nkf-self-hosting
 type: realization
-title: NKF Self-Hosting
 summary: This Realization describes the confirmed NKF-013 successor self-hosting bundle, including initial-onboarding knowledge, tooling, guidance, public artifacts, tests, and deferred NKF-014 boundaries.
 created_at: 2026-07-30T17:16:33Z
 record_lifecycle: immutable

@@ -1,7 +1,6 @@
 ---
 id: adr-0075
 type: decision
-title: "ADR 0075: Confirm Complete Portable Onboarding Topology"
 summary: Confirm the exact independently audited NKF-017 successor Realizations and complete the portable Product and Technology onboarding-topology Task without claiming release, publication, consumer migration, acceptance verification, or protected merge enforcement.
 created_at: 2026-08-01T15:26:13Z
 record_lifecycle: immutable

@@ -1,7 +1,6 @@
 ---
 id: adr-0049
 type: decision
-title: "ADR 0049: Establish Common Specification And Concrete Root Profiles"
 summary: NKF 0.1 was developed as a Product-knowledge format. Its common record governance, source binding, authority, provenance, relationships, extensions, security, and validation-result mechanics may serve other knowledge roots, but its current root, scope, hierarchy, body, vocabulary, and checker rules are Product-specific.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

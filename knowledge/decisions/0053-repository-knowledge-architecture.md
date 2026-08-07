@@ -1,7 +1,6 @@
 ---
 id: adr-0053
 type: decision
-title: "ADR 0053: Repository Knowledge Architecture"
 summary: NKF established an independent authority, one NKF 0.1 version namespace, a Common Specification with Product and Technology Profiles, executable contracts, schemas, checker tooling, release packaging, and an initial Technology self-hosting realization through NKF-003.
 created_at: 2026-07-30T16:47:43Z
 record_lifecycle: immutable

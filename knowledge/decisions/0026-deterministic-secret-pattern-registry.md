@@ -1,7 +1,6 @@
 ---
 id: adr-0026
 type: decision
-title: "ADR 0026: Accept Deterministic Secret Pattern Registry"
 summary: ADR 0019 prohibits live credentials, access tokens, private keys, and secrets. It makes a high-confidence security.secret-pattern finding block native conformance while warning that a passing scan does not prove absence.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable

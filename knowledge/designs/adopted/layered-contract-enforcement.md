@@ -1,7 +1,6 @@
 ---
 id: design-nkf-011-layered-contract-enforcement
 type: design
-title: NKF Layered Contract Enforcement
 summary: This Design proposes one derived enforcement path from AI-assisted authoring through exact-commit continuous integration without making automation an NKF authority.
 created_at: 2026-07-30T23:11:00Z
 record_lifecycle: immutable

@@ -43,8 +43,8 @@ let repairAdopter: string;
 let repairArchivePath: string;
 let repairArchiveSha256: string;
 
-const validFixture0_2 = validFixture.replace("fixtures/valid/minimal", "fixtures/valid/minimal-0-2");
-const validTechnologyFixture0_2 = validTechnologyFixture.replace("fixtures/valid/technology", "fixtures/valid/technology-0-2");
+const validFixture0_2 = validFixture;
+const validTechnologyFixture0_2 = validTechnologyFixture;
 
 function withoutTitleLine(bytes: Buffer): Buffer {
   const lines = bytes.toString("utf8").split("\n");

@@ -1,7 +1,6 @@
 ---
 id: adr-0021
 type: decision
-title: "ADR 0021: Accept NKF 0.1 Native Bundle Serialization"
 summary: ADR 0018 established the fixed manifest path, knowledge_root, declaration directory, Markdown coverage, and path rules. Replacement-pair reconciliation exposed that the exact bundle object, non_records entry shape and kinds, and unknown-field behavior remained undefined.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

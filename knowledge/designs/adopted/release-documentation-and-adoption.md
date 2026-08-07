@@ -1,7 +1,6 @@
 ---
 id: design-nkf-008-release-documentation-and-adoption
 type: design
-title: NKF Release Documentation And Adoption
 summary: This Design proposes a content-addressed internal NKF release, a separately governed public explanation, and one pinned installer and checker experience for deliberate Product and Technology adoption.
 created_at: 2026-07-31T02:03:35Z
 record_lifecycle: immutable

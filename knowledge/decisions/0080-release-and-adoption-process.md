@@ -1,7 +1,6 @@
 ---
 id: adr-0080
 type: decision
-title: "ADR 0080: Release And Adoption Process"
 summary: Accept the separated NKF release and adoption processes as governed protocols in the versioned set, with the NKF repository releasing first and then adopting its own version as the first migrator.
 created_at: 2026-08-07T06:49:53Z
 record_lifecycle: immutable

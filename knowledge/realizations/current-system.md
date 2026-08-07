@@ -1,7 +1,6 @@
 ---
 id: nkf-0.1-native-realization
 type: realization
-title: NKF Current System
 summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including the implemented and unconfirmed NKF 0.2 versioned set built under NKF-019 on the confirmed NKF-017 predecessor.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable

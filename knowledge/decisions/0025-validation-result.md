@@ -1,7 +1,6 @@
 ---
 id: adr-0025
 type: decision
-title: "ADR 0025: Accept NKF 0.1 Validation Result Contract"
 summary: ADR 0019 accepts the logical nkf.validation-result boundary but does not define an encoding, exact object shape, persistence rule, validated-snapshot algorithm, artifact bindings, or the relationship between conformance and Governing Use Ready.
 created_at: 2026-07-30T00:27:52Z
 record_lifecycle: immutable

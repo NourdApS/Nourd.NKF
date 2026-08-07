@@ -1,7 +1,6 @@
 ---
 id: design-nkf-017-complete-portable-onboarding-topology
 type: design
-title: NKF Complete Portable Onboarding Topology
 summary: This Design proposes a complete lifecycle-first knowledge topology for every newly onboarded Product and Technology repository, including one canonical knowledge map, durable empty-area navigation, continuing enforcement, and deliberate predecessor repair.
 created_at: 2026-07-31T21:50:32Z
 record_lifecycle: immutable

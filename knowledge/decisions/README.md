@@ -1,5 +1,4 @@
 ---
-title: Decisions
 summary: Decisions record why a direction was adopted, rejected, or superseded. Accepted Decision revisions are immutable authority snapshots. A later Decision must correct, extend, replace, or reverse them explicitly.
 created_at: 2026-07-28T22:01:17Z
 ---
@@ -96,6 +95,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0064: Release Documentation And Adoption](0064-release-documentation-and-adoption.md)
 - [ADR 0065: Confirm Current Release-Bound Checker](0065-confirm-current-release-bound-checker.md)
 - [ADR 0083: Bind The NKF 0.2 Release Checker](0083-bind-nkf-0-2-release-checker.md)
+- [ADR 0084: Replace The Unconsumed 0.2 Release](0084-replace-the-unconsumed-0-2-release.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)

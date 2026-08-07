@@ -1,7 +1,6 @@
 ---
 id: adr-0082
 type: decision
-title: "ADR 0082: Confirm The NKF 0.2 Versioned Set"
 summary: Confirm the exact implemented NKF 0.2 set through explicitly delegated technical review and authorize the first versioned release and this repository's subsequent adoption.
 created_at: 2026-08-07T10:06:20Z
 record_lifecycle: immutable

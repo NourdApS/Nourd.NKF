@@ -7,7 +7,7 @@ source:
   path: designs/adopted/governed-frontmatter.md
   digest:
     algorithm: sha-256
-    value: cae728944979f2341d431606da7b5362e2a25b254b3f8c318e5f6790a57c6312
+    value: 70868b50d8da3cafdd77c9947861ecd876170a505554b548e127cce8de3555c9
 governance:
   lifecycle: immutable
   status: accepted

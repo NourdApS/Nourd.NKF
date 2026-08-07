@@ -1,7 +1,6 @@
 ---
 id: adr-0079
 type: decision
-title: "ADR 0079: Dynamic Frontmatter Without Title"
 summary: Remove the frontmatter title key so the body H1 is the single document title, keep frontmatter type-dynamic, and give Task non-records optional owner, decision-authority, and related-task orientation keys instead of repeated body bullet blocks.
 created_at: 2026-08-06T23:50:33Z
 record_lifecycle: immutable

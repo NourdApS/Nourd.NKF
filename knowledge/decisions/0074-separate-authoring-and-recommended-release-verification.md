@@ -1,7 +1,6 @@
 ---
 id: adr-0074
 type: decision
-title: "ADR 0074: Separate Authoring And Recommended Release Verification"
 summary: Keep the canonical NKF authoring handoff check focused on the current repository snapshot while retaining recommended-release verification as a separate mandatory release operation.
 created_at: 2026-08-01T14:58:34Z
 record_lifecycle: immutable

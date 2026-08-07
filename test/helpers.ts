@@ -5,10 +5,10 @@ import { fileURLToPath } from "node:url";
 import type { ValidateOptions } from "../src/checker/types.js";
 
 export const repositoryRoot = fileURLToPath(new URL("../", import.meta.url));
-export const contractRoot = path.join(repositoryRoot, "contracts/nkf/0.1");
+export const contractRoot = path.join(repositoryRoot, "contracts/nkf/0.2");
 export const checkerArtifact = fileURLToPath(new URL("../src/checker/checker.ts", import.meta.url));
-export const validFixture = path.join(repositoryRoot, "fixtures/valid/minimal");
-export const validTechnologyFixture = path.join(repositoryRoot, "fixtures/valid/technology");
+export const validFixture = path.join(repositoryRoot, "fixtures/valid/minimal-0-2");
+export const validTechnologyFixture = path.join(repositoryRoot, "fixtures/valid/technology-0-2");
 
 export async function copyValidFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-checker-test-"));

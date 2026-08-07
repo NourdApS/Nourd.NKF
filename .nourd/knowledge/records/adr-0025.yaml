@@ -7,7 +7,7 @@ source:
   path: decisions/0025-validation-result.md
   digest:
     algorithm: sha-256
-    value: 4ddd708c3435d0c0b36a70c8a77536bb1ba36ea703cafe379d234012f611c054
+    value: a0a1ee7e8e39fd24c92ea8a64662a37b967ffb2be82566d4001b2a1ade5d29e9
 governance:
   lifecycle: immutable
   status: accepted

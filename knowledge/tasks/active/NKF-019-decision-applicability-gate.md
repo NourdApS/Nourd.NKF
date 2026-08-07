@@ -1,19 +1,18 @@
 ---
-title: "NKF-019: Establish The Decision Applicability Gate"
 summary: Prevent conditional technology decisions from losing their conditions, negative findings, and unresolved unknowns in successor Tasks, and prevent lower-level validation evidence from being represented as higher-level outcome success.
 created_at: 2026-08-06T21:23:12Z
 task_id: NKF-019
 task_status: active
+owner: Nourd ApS
+decision_authority: Human Product Owner, Nourd ApS
+related_tasks:
+  - NKF-005
+  - NKF-016
+  - NKF-017
 ---
 
 # NKF-019: Establish The Decision Applicability Gate
 
-- **Task:** `NKF-019`
-- **Status:** Active
-- **Owner:** Nourd ApS
-- **Decision Authority:** Human Product Owner, Nourd ApS
-- **Repository:** `kaveh6202/Nourd.NKF`
-- **Related Tasks:** `NKF-005`, `NKF-016`, `NKF-017`
 
 ## Human Direction
 
@@ -328,3 +327,28 @@ adopted, that normative meaning has changed, that any enforcement exists,
 that any consumer must migrate, or that a Realization has been confirmed.
 Later Decisions and recorded progress supersede only these created-state
 facts.
+
+## Decision Applicability
+
+### Applicable Decisions
+
+| Reference | Kind | Carried Constraint |
+| --- | --- | --- |
+| `adr-0006` | record | Pre-stable evolution requires evidence, compatibility analysis, and Human Product Owner confirmation. |
+| `adr-0076` | record | This correction ships as a new immutable version; NKF 0.1 stays frozen for its repositories. |
+| `adr-0077` | record | The gate is required on every Task including completed history, with retrospective disclosure. |
+| `adr-0078` | record | The version coordinate is 0.2 because the change is breaking. |
+| `adr-0079` | record | Frontmatter carries no title; Tasks may carry the three orientation keys. |
+| `adr-0080` | record | Release first, then this repository adopts its own release as first migrator. |
+| `adr-0081` | record | Only the exact accepted pair digests are canonical NKF 0.2. |
+| Nourd Tiles TILES-008 and TILES-012 records | external | The triggering failure evidence is read-only; Nourd Tiles and Wonderer must not be modified under this Task. |
+
+### Mandatory Capabilities
+
+| Capability | Finding | Verification | Exception |
+| --- | --- | --- | --- |
+| Gate structure enforcement fails closed on 0.2 bundles | proven | runtime-behaviour | none |
+| Version dispatch keeps 0.1 repositories validating unchanged | proven | runtime-behaviour | none |
+| Released archive verifies by independent re-download | proven | runtime-behaviour | none |
+| Semantic truthfulness of gate prose is machine-detectable | unsupported | none | Accepted by the Human Product Owner in the NKF-019 direction: prose contradictions remain human-reviewed. |
+

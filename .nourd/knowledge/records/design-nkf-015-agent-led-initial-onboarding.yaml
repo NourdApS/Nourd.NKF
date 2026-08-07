@@ -7,7 +7,7 @@ source:
   path: designs/adopted/agent-led-initial-onboarding.md
   digest:
     algorithm: sha-256
-    value: a380ecbcdb1661ecc1689fd2db948ad70339781db28cc23ed8da87d5a95f706e
+    value: 3202b97bec9e2074d5d83208204e8e21e2ec8755d60157c00eeb429af24a16d2
 governance:
   lifecycle: immutable
   status: accepted

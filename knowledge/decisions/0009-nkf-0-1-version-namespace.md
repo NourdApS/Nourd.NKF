@@ -1,7 +1,6 @@
 ---
 id: adr-0009
 type: decision
-title: "ADR 0009: Establish The Single NKF 0.1 Version Namespace"
 summary: Earlier migration decisions used independent versions in bundle, record, body, and contract-set identifiers. The Human Product Owner clarified that this creates an unwanted conceptual split between format and record-contract versions.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

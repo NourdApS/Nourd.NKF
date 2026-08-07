@@ -1,7 +1,6 @@
 ---
 id: nkf-portable-knowledge-topology
 type: realization
-title: NKF Portable Knowledge Topology
 summary: This Realization maps the accepted complete portable Product and Technology knowledge topology to checker, onboarding, repair, fixture, guidance, documentation, and self-hosting artifacts.
 created_at: 2026-08-01T09:26:20Z
 record_lifecycle: immutable

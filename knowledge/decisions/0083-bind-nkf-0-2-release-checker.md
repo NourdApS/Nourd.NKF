@@ -1,7 +1,6 @@
 ---
 id: adr-0083
 type: decision
-title: "ADR 0083: Bind The NKF 0.2 Release Checker"
 summary: Bind the ADR 0082 confirmation to the exact released checker bytes and source commit for release packaging.
 created_at: 2026-08-07T10:10:03Z
 record_lifecycle: immutable

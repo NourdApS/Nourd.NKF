@@ -1,7 +1,6 @@
 ---
 id: adr-0035
 type: decision
-title: "ADR 0035: Clarify Product Scope And Structural Hierarchy"
 summary: "NKF 0.1 already distinguishes:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

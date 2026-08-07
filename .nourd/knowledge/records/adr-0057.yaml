@@ -7,7 +7,7 @@ source:
   path: decisions/0057-current-system-realization.md
   digest:
     algorithm: sha-256
-    value: dd0b841a8d2f8e48cc0a4fa7a1dba391a243dc1961b66071439fcf7a9188ed49
+    value: c6738bcf917e8a1673bc4df0c5bd89cfd454bb40de9e19c8408a11cc6ed1c3bf
 governance:
   lifecycle: immutable
   status: accepted

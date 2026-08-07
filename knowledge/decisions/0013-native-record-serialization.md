@@ -1,7 +1,6 @@
 ---
 id: adr-0013
 type: decision
-title: "ADR 0013: Accept NKF 0.1 Native Record Serialization"
 summary: The accepted NKF 0.1 specification defines the logical record declaration but does not completely determine its native YAML object shape. A complete executable companion cannot derive schemas or checker behavior honestly while those representation choices remain implicit.
 created_at: 2026-07-29T20:06:17Z
 record_lifecycle: immutable

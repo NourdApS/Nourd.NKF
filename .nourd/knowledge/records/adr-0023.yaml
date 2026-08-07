@@ -7,7 +7,7 @@ source:
   path: decisions/0023-native-json-schemas.md
   digest:
     algorithm: sha-256
-    value: 97a45badefef3e7bc5f1f39cd1039a182061164fa5979541919f839b2859243f
+    value: b39d0cc750e2afe89bb9c90bd2af74c7f3c7560880b9c8fe2d581d16041cbb7f
 governance:
   lifecycle: immutable
   status: accepted

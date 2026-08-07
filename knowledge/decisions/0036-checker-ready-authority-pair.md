@@ -1,7 +1,6 @@
 ---
 id: adr-0036
 type: decision
-title: "ADR 0036: Accept Checker-Findings-Resolved Authority Pair"
 summary: "ADRs 0034 and 0035 resolve all four authority findings exposed by the first native checker implementation:"
 created_at: 2026-07-30T07:53:41Z
 record_lifecycle: immutable

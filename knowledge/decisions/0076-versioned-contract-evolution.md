@@ -1,7 +1,6 @@
 ---
 id: adr-0076
 type: decision
-title: "ADR 0076: Versioned Contract Evolution"
 summary: After first consumer adoption of an NKF version, every contract-meaning change ships as a new immutable NKF version; the Decision Applicability Gate correction is allocated NKF 0.11.
 created_at: 2026-08-06T22:10:25Z
 record_lifecycle: immutable

@@ -7,7 +7,7 @@ source:
   path: decisions/0016-extension-resolution.md
   digest:
     algorithm: sha-256
-    value: 8a43180e308f5a39c9975c211669a45917a573d566d5fdcbfa81589ad70a32cb
+    value: d043e5810917ea658467efe4cf4d6c3af70ebdd641c9059776bde13315413f72
 governance:
   lifecycle: immutable
   status: accepted
