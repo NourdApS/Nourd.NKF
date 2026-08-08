@@ -166,6 +166,18 @@ One governed process definition covering:
   from commit `adbe2a5`, verified by independent re-download; the archive's
   own extracted checker validates this bundle with zero diagnostics; the
   superseded unconsumed release was deleted under the recorded exception.
+- [ADR 0101](../../decisions/0101-deterministic-git-mechanics-in-task-transitions.md) embeds the Git actions in the task command: activation requires a
+  clean work tree on the up-to-date default branch and creates the
+  `task/<task_id>` branch; deferral and closure commit, push, and open the
+  merge request carrying the Completion Result; merging stays the human
+  review act. Three regression tests prove the dirty-tree refusal, the
+  branch-commit-push deferral, and the clean-default-branch activation.
+  The set was re-cut as tag
+  `release-sha256-5b6acbb4b1bb9cde46ebe78ddb505d0672956feb82f2e3b422cb674fc91cffa0`
+  from commit `60dfd4c` with the checker binding unchanged, verified by
+  independent re-download, and the archive's extracted checker validates
+  this bundle with zero diagnostics; the branch flow governs transitions
+  from this release onward.
 - The remaining scope is breaking-change classification and signaling, the
   deterministic successor-pair scaffold, and process refinements from
   further release and adoption experience.
