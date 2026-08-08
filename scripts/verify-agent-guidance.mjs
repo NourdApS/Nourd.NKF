@@ -62,7 +62,7 @@ frontmatter title must equal the H1 exactly, and every same-bundle document
 reference must be a deep link to the referenced document's source path.
 
 Perform governed mechanics through the deterministic adopter commands —
-\`task\`, \`repin\`, \`linkify\`, \`refs\`, and \`migrate\` — supplying only the
+\`task\`, \`repin\`, \`linkify\`, \`refs\`, \`set\`, and \`migrate\` — supplying only the
 prose; never hand-edit what a command performs.
 
 Run \`npm run nkf:check\` after one coherent governed change and before handoff.

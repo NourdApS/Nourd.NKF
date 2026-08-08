@@ -114,6 +114,19 @@ the 0.2 rules are sound, onboarding and upgrading are flawless including
 the skills and AI guidance, and the guidance makes the AI audit a completed
 onboarding independently.
 
+On `2026-08-08`, answering the close request, the pre-close assessment found
+the neutral authoring protocol still describing the removed-title rule and
+missing the deep-link rule, the Design orientation keys, and the extended
+label registry — stale since the second correction round, because rule
+propagation started from session memory and the pre-cut review examines only
+each release's own rule diff. The Human Product Owner confirmed the combined
+behavior — agent judgment decides whether the deterministic close may run,
+and here it refused — and directed one further round under the continued
+exception, as the recorded execution plan: repair the protocol member, widen
+the pre-cut review to every member of the versioned set against the complete
+rule set, ship a deterministic `set` enumeration command, re-release, adopt
+again, and then close this Task.
+
 ## Current Progress
 
 - The read-only Nourd Tiles failure Evidence is bound with exact digests.
@@ -214,6 +227,22 @@ onboarding independently.
   unresolved material finding. The remaining boundaries are separate Human
   Product Owner confirmation, the release archive, and only then this
   repository's own adoption.
+- [ADR 0097](../../decisions/0097-full-set-guidance-review-and-enumeration.md)
+  records the close-review finding and this round's direction: the neutral
+  authoring protocol still described the removed-title rule and omitted the
+  deep-link rule, the Design orientation keys, the extended label registry,
+  and the mechanics commands. It is repaired to the current contract, the
+  release protocol's pre-cut review widens to every versioned-set member
+  against the complete rule set, and the closed command family gains the
+  `set` enumeration so review coverage starts from the machine list rather
+  than recollection.
+- The widened pre-cut review was executed for this cut: the `set` command
+  enumerated the fifteen tree members, and all eight guidance members were
+  re-read in full against the current rule set. The corrections are the
+  authoring-protocol repair and the widened review step itself; the
+  onboarding, adoption, and release protocols and the four portable skills
+  otherwise carry no stale statement. The published archive digest binds
+  the exact reviewed member bytes.
 
 ## Triggering External Evidence
 
@@ -414,6 +443,9 @@ facts.
 | [`adr-0084`](../../decisions/0084-replace-the-unconsumed-0-2-release.md) | record | The unconsumed-release exception covers replacement corrections until any repository adopts a 0.2 release. |
 | [`adr-0086`](../../decisions/0086-record-authority-and-identity-bullet-rule.md) | record | Records may carry decision_authority, and identity bullet duplication fails closed under the closed label registry. |
 | [`adr-0089`](../../decisions/0089-title-equality-deep-links-and-design-orientation.md) | record | The title equals the heading, references are deep links, and Design orientation lives in frontmatter. |
+| [`adr-0095`](../../decisions/0095-review-guidance-before-cutting.md) | record | Guidance is reviewed before a release is cut; [ADR 0097](../../decisions/0097-full-set-guidance-review-and-enumeration.md) widens the review to the complete member set. |
+| [`adr-0096`](../../decisions/0096-deterministic-governed-mechanics.md) | record | The deterministic command surface is closed; extending it requires an explicit successor Decision. |
+| [`adr-0097`](../../decisions/0097-full-set-guidance-review-and-enumeration.md) | record | Every versioned-set member is re-read against the complete rule set before a cut, starting from the deterministic enumeration. |
 | Nourd Tiles TILES-008 and TILES-012 records | external | The triggering failure evidence is read-only; Nourd Tiles and Wonderer must not be modified under this Task. |
 
 ### Mandatory Capabilities

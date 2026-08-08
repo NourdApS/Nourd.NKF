@@ -110,14 +110,34 @@ work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under NKF 0.2 frontmatter, the body H1 is the only document title: no
-governed document carries a frontmatter `title` key, Task non-records may
-declare `owner`, `decision_authority`, and `related_tasks` orientation keys,
-and any record may declare `decision_authority`. Never restate orientation
-identity as body bullet lines: the closed labels Task, Status, Owner,
-Decision Authority, Design Disposition, Repository, Related Tasks, and
-Version are rejected as top-level `- **Label:**` bullets in every
-non-Evidence document.
+Under NKF 0.2 frontmatter, every governed document declares a `title` that
+exactly equals its single H1. Task non-records may declare `owner`,
+`decision_authority`, and `related_tasks` orientation keys; any record may
+declare `decision_authority`; and Design documents may declare
+`proposal_authority_effect`, `proposal_evidence`, and
+`implementation_evidence`. Never restate orientation identity as body bullet
+lines: the closed labels Task, Status, Owner, Decision Authority, Design
+Disposition, Repository, Related Tasks, Version, Adopting Decision, Proposal
+Authority Effect, Proposal Evidence, and Implementation Evidence are rejected
+as top-level `- **Label:**` bullets in every non-Evidence document. Every
+same-bundle reference to another governed document — an `ADR NNNN` decision
+mention, a record identifier code span, or a Task identifier — must be a
+deep link resolving to the referenced document's exact source path,
+including the gate's Reference and Exception cells.
+
+## Perform Governed Mechanics Deterministically
+
+Use the deterministic adopter commands for governed mechanics instead of
+hand-editing: `task` transitions a Task between active, deferred, and
+completed states with its file-move, index, inbound-link, result-insertion,
+and digest consequences; `repin` recomputes record and governed-artifact
+digests after edits; `linkify` rewrites plain same-bundle references into
+verified deep links; `refs` exports the identifier-to-path reference map;
+`set` enumerates the versioned-set members with digests and version stamps;
+and `migrate` performs a declared prior-version migration. Every command
+validates its staged result and rolls back on failure. Prose, gate
+truthfulness, classification, and acceptance stay with the author: a command
+supplies no meaning and accepts nothing.
 
 ## Validate During Authoring
 

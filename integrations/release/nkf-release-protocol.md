@@ -32,14 +32,16 @@ substitutes for those two facts.
    the adoption protocol, and the fixtures, examples, and documentation
    projection. Every artifact in the set declares the version it serves
    through the exact guidance marker.
-4. Review every guidance member against the rules that changed in this
-   version: take the exact rule diff between this version's accepted
-   authority pair and its predecessor, and for each changed rule re-read
-   all shipped protocols and portable skills, correcting any sentence that
-   still describes the previous rule. A reversal of an earlier rule
-   requires searching every guidance member for statements about it. Record
-   which diff was reviewed so the independent audit can verify the review
-   happened.
+4. Review every member of the versioned set against the complete current
+   rule set: enumerate the exact member list deterministically — the
+   adopter `set` command emits every member with its digest and version
+   stamp — and re-read each shipped protocol and portable skill in full
+   against this version's accepted authority pair, not only against the
+   rules that changed, correcting any sentence that describes a rule that
+   is not the current rule, including rules reversed in any earlier round.
+   Record the enumerated member list, each reviewed digest, and every
+   correction so the independent audit can verify the review covered the
+   whole set.
 5. Prove the set against itself: the full test suite over the version's
    fixtures, deterministic checker and adopter builds, and the guidance and
    documentation verifiers. The publishing repository's own knowledge still

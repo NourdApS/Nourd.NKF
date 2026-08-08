@@ -32,6 +32,7 @@ import {
 import {
   invokeVerifiedChecker,
   parseStrictJson,
+  releaseEntriesForVersion,
   sha256,
   verifyReleaseArchive,
 } from "../release/core.mjs";
@@ -185,10 +186,11 @@ function parseArguments(values) {
     "repin",
     "refs",
     "linkify",
+    "set",
     "migrate",
   ].includes(result.command)) {
     fail(
-      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|repair-topology|install|update|check|status|integration-check|task|repin|refs|linkify|migrate> [options]",
+      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|repair-topology|install|update|check|status|integration-check|task|repin|refs|linkify|set|migrate> [options]",
     );
   }
   for (let index = 1; index < values.length; index += 2) {
@@ -1650,6 +1652,32 @@ async function exportReferences(projectRoot) {
   };
 }
 
+async function exportVersionedSet(projectRoot) {
+  const bundleBytes = await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml", false);
+  const versionMatch = bundleBytes === null
+    ? null
+    : /^nkf_version: "([^"]+)"$/m.exec(bundleBytes.toString("utf8"));
+  const declared = versionMatch?.[1] ?? "0.2";
+  const members = [];
+  for (const entry of releaseEntriesForVersion(declared)) {
+    if (entry.path === "release-manifest.json") continue;
+    let bytes = null;
+    try {
+      bytes = await readFile(path.join(projectRoot, ...entry.path.split("/")));
+    } catch {
+      bytes = null;
+    }
+    const stamp = bytes === null ? null : /^NKF Version: (.+)$/m.exec(bytes.toString("utf8"));
+    members.push({
+      path: entry.path,
+      present: bytes !== null,
+      sha256: bytes === null ? null : sha256(bytes),
+      nkf_version_stamp: stamp === null ? null : stamp[1],
+    });
+  }
+  return { state: "enumerated", nkf_version: declared, members };
+}
+
 async function linkifyProject(projectRoot) {
   const context = await loadGovernedContext(projectRoot);
   const files = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
@@ -1885,6 +1913,7 @@ async function main() {
   if (command === "repin") return repinGoverned(await requireProjectRoot(options.project));
   if (command === "refs") return exportReferences(await requireProjectRoot(options.project));
   if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project));
+  if (command === "set") return exportVersionedSet(await requireProjectRoot(options.project));
   if (command === "task") return transitionTask(options);
   if (command === "migrate") return migrateToCurrent(options);
   const projectRoot = await requireProjectRoot(options.project);

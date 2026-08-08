@@ -63,6 +63,25 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.tasks["TEST-001"]).toBe("tasks/active/task.md");
   });
 
+  it("enumerates the versioned set with digests and stamps", async () => {
+    const result = run("set", repositoryRoot);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json.state).toBe("enumerated");
+    expect(result.json.nkf_version).toBe("0.2");
+    expect(result.json.members).toHaveLength(15);
+    for (const member of result.json.members) {
+      expect(member.present, member.path).toBe(true);
+      expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
+    }
+    const guidance = result.json.members.filter(
+      (member: { path: string }) => member.path.startsWith("integrations/") || member.path.endsWith("SKILL.md"),
+    );
+    expect(guidance).toHaveLength(8);
+    for (const member of guidance) {
+      expect(member.nkf_version_stamp, member.path).toBe("0.2");
+    }
+  });
+
   it("re-pins record digests after an edit", async () => {
     const project = await copyFixture();
     const doc = path.join(project, "knowledge/product.md");
