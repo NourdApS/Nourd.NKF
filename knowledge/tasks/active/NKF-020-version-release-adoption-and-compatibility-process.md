@@ -188,9 +188,33 @@ One governed process definition covering:
   independent re-download, and the archive's extracted checker validates
   this bundle with zero diagnostics; the branch flow governs transitions
   from this release onward.
+- [ADR 0102](../../decisions/0102-task-worktrees-and-formal-transition-vocabulary.md) replaces the informal transition phrase with the formal term Git
+  transition mechanics and gives every activation its own working tree at
+  the deterministic sibling path, applied inside the working tree so the
+  default-branch checkout never moves; closure releases the working tree
+  after pushing. The set was re-cut as tag
+  `release-sha256-053a51f3fcefee290f43fb94ff398b55b274896c8417e99fef52559425ebd7ac`
+  from commit `d45e828` with the checker binding unchanged.
+- The directed independent audit of that shipment was performed with fresh
+  verification rather than test reruns, and its findings are: the
+  re-downloaded archive matches by digest and byte comparison and its
+  extracted checker validates this bundle with zero diagnostics; the
+  shipped members and the working tree carry no informal transition
+  vocabulary; a full deferral, worktree activation, and worktree-resident
+  closure lifecycle succeeds end to end outside the test suite, ending
+  with the working tree released and the default branch checked out.
+  Two defects and one cosmetic observation are recorded as open findings:
+  a Git step that fails after the applied transition — such as a failed
+  push — surfaces the whole command as failed although the transition and
+  its commit exist, which misleads the reader; an origin remote recorded
+  as a relative filesystem path resolves differently from inside a
+  working tree and cannot be pushed to, which URL remotes do not suffer;
+  and the sibling working-tree parent directory remains, empty, after the
+  last working tree is released. No finding blocks the shipment; the
+  reporting defect is proposed for the next tooling round.
 - The remaining scope is breaking-change classification and signaling, the
-  deterministic successor-pair scaffold, and process refinements from
-  further release and adoption experience.
+  deterministic successor-pair scaffold, process refinements from further
+  release and adoption experience, and the audit's open findings.
 
 ## Acceptance Criteria
 
