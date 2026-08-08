@@ -29,7 +29,7 @@ function markdownRules(source: string): Map<string, "error" | "warning"> {
 }
 
 describe("canonical NKF 0.2 authority realization", () => {
-  it("keeps the corrected 0.2 authority pair bound to ADR 0092", async () => {
+  it("keeps the corrected 0.2 authority pair bound to ADR 0099", async () => {
     const [specification, executable, acceptanceDecision] =
       await Promise.all([
         readFile(specificationPath),
@@ -37,7 +37,7 @@ describe("canonical NKF 0.2 authority realization", () => {
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/decisions/0092-accept-the-final-pair.md",
+            "knowledge/decisions/0099-accept-the-decoupled-0-2-pair.md",
           ),
           "utf8",
         ),

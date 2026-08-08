@@ -39,27 +39,27 @@ export const VERSION_BINDINGS = {
   "0.2": {
     specification: {
       path: "knowledge/specifications/nkf-0.2.md",
-      sha256: "75273f8350e98c516e95ce25dca3fb7174586749060945838faa2e55492f4374",
+      sha256: "6af631cb20571570a6d688caf0fd814531f809f8229517ddce10ac7f30141aec",
     },
     executable: {
       path: "contracts/nkf/0.2/nkf.yaml",
-      sha256: "0d437ffbed00549360a90012e576067fef103b38055697b427631c42635a62e2",
+      sha256: "da5525398523e2f19f49509a60007624f0e529f2dd15a686ea00dd82847b92d2",
     },
     schemas: [
       {
         identity: "urn:nkf:0.2:schema:bundle",
         file: "bundle.schema.json",
-        sha256: "3bd1078a4493749920445a5e0ab833bab19cd690b2df428377ca53cf9486db7f",
+        sha256: "c07dc17b6aacbd77e28252924e1bb2e9ffba036a92c630721f2bbfc29211d618",
       },
       {
         identity: "urn:nkf:0.2:schema:record",
         file: "record.schema.json",
-        sha256: "6c16bfe9960a3fc186cda6213770e0909516449fb4d8ddb1e1a8ce5c3bf3d791",
+        sha256: "767b572320e2e1ff54d3ed6b30ebf5e2d1a594e6d1174d965d238834abf0db46",
       },
       {
         identity: "urn:nkf:0.2:schema:validation-result",
         file: "validation-result.schema.json",
-        sha256: "3a7f1372ddb49af20e59d9c37e22bf1e3faa48d9151be13788db381fc46dcc7b",
+        sha256: "484bcf2b4aa102c5e75a30cf4c52439b56e384b92792191b50345f09b3dd54e4",
       },
     ],
   },

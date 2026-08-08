@@ -57,8 +57,14 @@ substitutes for those two facts.
    confirmed set, verify it by re-download and digest comparison, and retain
    the verification as Evidence. The version is released when this step
    completes.
-8. Publish the version's migration meaning with the release: what changed,
-   what breaks, and exactly what an adopting repository must do.
+8. Publish the version's migration meaning with the release, written for
+   human readers: short named sections stating what is new, what breaks,
+   how to adopt, and how to verify. A compressed single-paragraph summary
+   is not acceptable publication.
+9. Refresh the repository front page as part of the release: its status
+   section states the released version, this repository's own adoption
+   state, and the recommended consumer catalog state, with resolving
+   links only.
 
 ## Boundaries
 
@@ -66,8 +72,11 @@ substitutes for those two facts.
   repository's conformance, or migrate any repository.
 - Skipping a step, or representing a later step as satisfied by an earlier
   one, fails the release closed.
-- Released sets are immutable. A defect discovered after release is fixed in
-  a new version with its own migration meaning.
+- A released set is immutable once any consumer has adopted it; a defect
+  found after consumption is fixed in a new version with its own migration
+  meaning. Until first consumption, a correction re-accepts the candidate
+  pair and replaces the unconsumed release under the recorded governance
+  exception.
 - Superseded versions leave the working tree when this repository adopts
   their successor; they remain retrievable from version-control history and
   their immutable release archives.

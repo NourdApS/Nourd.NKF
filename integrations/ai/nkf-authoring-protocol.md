@@ -125,7 +125,33 @@ mention, a record identifier code span, or a Task identifier — must be a
 deep link resolving to the referenced document's exact source path,
 including the gate's Reference and Exception cells.
 
+## Transition A Task Deliberately
+
+Before activating a Task, semantically review it against current knowledge:
+every requirement is understood, every stale statement and open uncertainty
+is resolved and re-recorded, and each resolution is confirmed by the Human
+Product Owner or by the agent under an explicitly recorded delegation.
+Re-extract the gate and record the activation-time execution plan in the
+Task. Only then run the deterministic activation.
+
+Before closing a Task, determine that the work is sound and coherent: every
+acceptance criterion is satisfied by delivered, validated, and tested
+reality, and each satisfaction is confirmed by the Human Product Owner or
+by the agent under an explicitly recorded delegation. Author the Completion
+Result from that verification. Only then run the deterministic close.
+
+The deterministic transition enforces only the machine-checkable parts —
+gate vocabulary and exceptions, structure, digests, links, and full-bundle
+conformance. It cannot judge whether prose, criteria, or confirmations are
+true. An unmet criterion or unanswered uncertainty means report, not
+transition.
+
 ## Perform Governed Mechanics Deterministically
+
+Every governed operation combines a non-deterministic semantic act with a
+deterministic mechanical act: the author judges meaning, truth, readiness,
+and authority; commands perform mechanics and validate results. Neither
+substitutes for the other.
 
 Use the deterministic adopter commands for governed mechanics instead of
 hand-editing: `task` transitions a Task between active, deferred, and

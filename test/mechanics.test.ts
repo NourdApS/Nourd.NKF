@@ -123,6 +123,23 @@ describe("deterministic governed mechanics", () => {
     expect(JSON.parse(check.stdout).conformance).toBe("passed");
   });
 
+  it("rebases the moved task's own outbound links", async () => {
+    const project = await copyFixture();
+    const task = path.join(project, "knowledge/tasks/active/task.md");
+    await writeFile(task, (await readFile(task, "utf8")).replace(
+      "\n## Decision Applicability\n",
+      "\nSee the [active index](README.md) for peers.\n\n## Decision Applicability\n",
+    ));
+    run("repin", project);
+    const resultFile = path.join(project, "..", "outbound-result.md");
+    await writeFile(resultFile, "Completed with outbound links rebased.\n");
+    const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    const moved = await readFile(path.join(project, "knowledge/tasks/completed/task.md"), "utf8");
+    expect(moved).toContain("](../active/README.md)");
+    expect(moved).not.toContain("](README.md)");
+  });
+
   it("blocks closing when the gate carries unexcepted findings", async () => {
     const project = await copyFixture();
     const task = path.join(project, "knowledge/tasks/active/task.md");

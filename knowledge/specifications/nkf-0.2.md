@@ -228,6 +228,15 @@ NKF format versions use `<major>.<minor>`.
   earlier supported version remains valid against that version's immutable
   meaning; nothing migrates by implication.
 
+Once a version's release has been adopted by any consumer, its accepted
+authority pair is sealed. A change to accepted format meaning never edits a
+sealed pair in place: it begins the next version's candidate pair, derived
+from the sealed pair and accepted separately, while every sealed version
+remains validatable. Until a version's release is first consumed, a
+correction re-accepts that version's candidate pair under the recorded
+governance exception. Task lifecycle state never determines versioning; the
+class of change does.
+
 An NKF version identifies one complete frozen set: the normative
 Specification revision, its digest-bound executable companion, the derived
 Schemas, the checker, the authoring and onboarding protocols, the portable
@@ -552,7 +561,8 @@ Conflicting record use, unsupported file kind, unsafe path, symbolic link,
 duplicate physical target, or semantic ambiguity stops before project
 mutation.
 
-A project created by the confirmed [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor may use an
+A project created by one of the two confirmed predecessor onboarding
+generations may use an
 explicit `repair-topology` workflow only when a trustworthy onboarding receipt
 identifies the predecessor release and exact generated paths. The workflow
 constructs and seals a candidate outside the project, creates missing indexes,
@@ -974,8 +984,8 @@ Optional empty structures are omitted.
 
 Native NKF 0.2 defines no presentation-guidance field. Markdown is the default
 readable form. Portable display metadata uses a separately governed optional
-extension and remains subject to [ADR 0020](../decisions/0020-presentation-guidance.md) and future governed reconsideration
-through [NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md).
+extension and remains subject to [ADR 0020](../decisions/0020-presentation-guidance.md) and future governed
+reconsideration.
 
 Common defines these record types:
 
@@ -2057,7 +2067,7 @@ it.
 
 Native NKF 0.2 accepts no concrete extension. Portable presentation guidance
 is deliberately outside the native record; future NKF-owned presentation work
-is deferred under [NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md).
+remains separate governed work outside this version.
 
 ## Native Project Organization
 
@@ -2572,7 +2582,7 @@ outdated**.
 Normal acceptance changes alter governed inputs through the governed change
 process. NKF 0.2 does not infer a hidden acceptance change, poll an authority,
 or impose universal expiry. Universal expiry or separate authority freshness
-remains deferred under [NKF-005](../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md).
+remains future governed work outside this version.
 
 The result is operational state outside `knowledge_root`, excluded from its
 own snapshot, and ordinarily uncommitted. It excludes usernames, hostnames,
@@ -2844,8 +2854,9 @@ The following remain deliberately unresolved in NKF 0.2:
 - a future NKP runtime protocol;
 - standardized acceptance-event storage; and
 - attested-computation profiles;
-- the future optional presentation-guidance extension under [NKF-004](../tasks/deferred/NKF-004-portable-presentation-guidance.md); and
-- breaking-change classification and signaling, deferred to [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md); the
+- the future optional presentation-guidance extension; and
+- breaking-change classification and signaling, which remain separate
+  governed process work; the
   release and adoption processes themselves are accepted through [ADR 0080](../decisions/0080-release-and-adoption-process.md)
   outside format meaning.
 

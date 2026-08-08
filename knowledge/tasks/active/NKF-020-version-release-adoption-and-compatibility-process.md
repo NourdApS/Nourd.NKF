@@ -3,7 +3,7 @@ title: "NKF-020: Define Version Release, Adoption, And Compatibility Process"
 summary: Define the governed process for releasing a new NKF version, the process by which an adopted repository adopts a new version, and how breaking changes are classified and signaled to consumers.
 created_at: 2026-08-06T23:30:03Z
 task_id: NKF-020
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -26,6 +26,23 @@ that is determined and communicated.
 Creation does not authorize Design, Decision, Specification, implementation,
 release, or consumer work. Begin only after a separate explicit human
 direction to start `NKF-020`.
+
+On `2026-08-08`, the Human Product Owner explicitly directed activating this
+Task and beginning work, with this recorded execution plan for the first
+round: replace the released version's compressed release notes with a
+reader-first version and require named human-readable sections in the
+release protocol; add a front-page refresh step to the release protocol and
+refresh this repository's outdated front page to the released 0.2 state;
+add a deterministic dead-link verification for living surfaces to the
+canonical command, with immutable decisions and Evidence exempt; decouple
+the accepted Specification from Task lifecycle by rewording its six
+Task-file references as timeless scope statements, after the first
+activation attempt proved that a lifecycle transition would otherwise
+change accepted pair bytes and correctly failed closed; correct the task
+command to rebase a moved Task's own outbound links; and re-release the
+corrected set under the continued exception with the revised pair
+re-accepted and the release checker re-bound. Timeless wording was chosen
+so that no future Task lifecycle transition can require a release.
 
 ## Scope Reduction
 
@@ -97,7 +114,7 @@ One governed process definition covering:
 - implementing release or adoption tooling changes;
 - publishing a release or migrating any consumer;
 - changing NKF 0.1 or NKF 0.2 meaning; and
-- defining acceptance-binding verification, which remains [`NKF-016`](NKF-016-deliver-acceptance-binding-verification.md).
+- defining acceptance-binding verification, which remains [`NKF-016`](../deferred/NKF-016-deliver-acceptance-binding-verification.md).
 
 ## Future Execution Plan
 
@@ -129,7 +146,9 @@ One governed process definition covering:
 
 This Task records required future work only. It does not claim that any
 process has been selected, accepted, implemented, or followed, and it does
-not authorize beginning the work.
+not authorize beginning the work. The recorded Human Direction of
+`2026-08-08` supersedes this deferred-state fact: activation and the first
+round follow it.
 
 ## Decision Applicability
 
@@ -140,11 +159,20 @@ not authorize beginning the work.
 | [`adr-0076`](../../decisions/0076-versioned-contract-evolution.md) | record | Every contract-meaning change after first consumer adoption ships as a new immutable version. |
 | [`adr-0078`](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) | record | Release, adoption, and breaking-change process stay outside format meaning. |
 | [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Only breaking-change classification and signaling plus process refinements remain in this Task's scope. |
+| [`adr-0084`](../../decisions/0084-replace-the-unconsumed-0-2-release.md) | record | Replacement corrections stay within the unconsumed-release exception until first consumer adoption. |
+| [`adr-0096`](../../decisions/0096-deterministic-governed-mechanics.md) | record | The deterministic command surface is closed; prose, judgment, and acceptance stay human. |
+| [`adr-0097`](../../decisions/0097-full-set-guidance-review-and-enumeration.md) | record | The pre-cut review covers every set member against the complete rule set from the deterministic enumeration. |
+| [`adr-0098`](../../decisions/0098-semantic-gates-around-deterministic-mechanics.md) | record | Every Task transition pairs a confirmed semantic review with deterministic execution. |
+| [`adr-0099`](../../decisions/0099-accept-the-decoupled-0-2-pair.md) | record | The revised pair digests are the accepted 0.2 authority; schemas and rules are unchanged. |
 
 ### Mandatory Capabilities
 
-No mandatory capability is implicated by this Task.
+| Capability | Finding | Verification | Exception |
+| --- | --- | --- | --- |
+| Living-surface links resolve deterministically in the canonical command | proven | runtime-behaviour | none |
+| Task transitions fail closed before altering accepted pair bytes | proven | runtime-behaviour | none |
 
-This gate was added when the Task was created before NKF 0.2 was adopted and
-was normalized during the self-migration.
+This gate was added when the Task was created before NKF 0.2 was adopted,
+was normalized during the self-migration, and was re-extracted on the
+`2026-08-08` activation.
 

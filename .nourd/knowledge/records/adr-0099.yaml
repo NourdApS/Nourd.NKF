@@ -1,13 +1,13 @@
 contract: nkf.record
-id: adr-0078
+id: adr-0099
 type: decision
 body_contract: nkf.decision
-title: "ADR 0078: Version The Gate Correction As NKF 0.2"
+title: "ADR 0099: Accept The Decoupled 0.2 Pair"
 source:
-  path: decisions/0078-version-gate-correction-as-nkf-0-2.md
+  path: decisions/0099-accept-the-decoupled-0-2-pair.md
   digest:
     algorithm: sha-256
-    value: c04e67beddd8fb64ff7ec255ae0411e5b363e8a5be60c712bd8e447fde47ff49
+    value: a22987746f7b5ea110cf24e3733f0098302d778e5d3f92eb22c771357c9060ba
 governance:
   lifecycle: immutable
   status: accepted
@@ -24,6 +24,6 @@ sections:
   - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
   - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
 relationships:
-  - type: extends
-    target: adr-0076
+  - type: supersedes
+    target: adr-0092
     source_section: decision

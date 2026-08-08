@@ -61,6 +61,13 @@ are rejected as top-level body bullets in every non-Evidence document, the
 frontmatter title must equal the H1 exactly, and every same-bundle document
 reference must be a deep link to the referenced document's source path.
 
+Transition Tasks deliberately: before activating one, semantically resolve
+and confirm every requirement and open uncertainty — the Human Product Owner
+confirms, or the agent confirms under an explicitly recorded delegation;
+before closing one, verify every acceptance criterion is done, tested, and
+confirmed the same way. Only then run the deterministic \`task\` transition,
+which enforces only the machine-checkable parts.
+
 Perform governed mechanics through the deterministic adopter commands —
 \`task\`, \`repin\`, \`linkify\`, \`refs\`, \`set\`, and \`migrate\` — supplying only the
 prose; never hand-edit what a command performs.
@@ -550,13 +557,14 @@ export async function verifyAgentGuidance(projectRootInput) {
   const expectedScripts = {
     build: "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
     check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
-    "nkf:check": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run check && npm run validate:self",
+    "nkf:check": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self",
     test: "vitest run",
     typecheck: "tsc --noEmit",
     "validate:self": "node dist/nourd-nkf-checker.mjs --project . --level full-bundle",
     "verify:agent-guidance": "node scripts/verify-agent-guidance.mjs --project .",
     "verify:adopter": "node scripts/verify-adopter.mjs",
     "verify:build": "node scripts/verify-build.mjs",
+    "verify:links": "node scripts/verify-links.mjs --project .",
     "verify:onboarding-guidance": "node scripts/verify-onboarding-guidance.mjs --project .",
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",

@@ -28,34 +28,31 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.1 consists of one automatic Common Specification and one selected Root
-Profile. The currently defined Root Profiles are Product and Technology. The
-repository self-hosts as an NKF Technology bundle.
+NKF 0.2 is the current released version: one complete versioned set — the
+canonical Specification, its digest-bound executable companion, derived
+Schemas, the deterministic checker, four governed protocols, and four
+portable agent skills — published as a single content-addressed archive
+whose tag is its SHA-256. The
+[GitHub Releases page](https://github.com/kaveh6202/Nourd.NKF/releases)
+carries the current archive and its human-readable migration meaning.
 
-ADR 0073 accepts the corrected current Markdown/YAML authority pair for the
-complete portable Product and Technology topology. ADR 0075 confirms its
-derived Schemas, checker, onboarding and repair tooling, fixtures,
-self-hosting migration, and public-documentation projection. The successor is
-confirmed locally but is not released or published.
+NKF 0.2 requires a Decision Applicability Gate on every Task, separates five
+validation levels with direct-outcome evidence rules, requires heading-equal
+titles and machine-verified deep links, and ships deterministic governed
+mechanics in the adopter. Acceptance and the correction chain are recorded
+in [the Decisions](knowledge/decisions/README.md).
 
-The currently recommended internal private prerelease remains the confirmed
-NKF-015 predecessor. Authorized consumers pin its full archive SHA-256 through
-the public-safe adopter and never follow a moving branch or mutable latest
-release. They do not receive NKF-017 topology behavior until a deliberate
-successor release and migration.
-
-The published
+This repository has adopted NKF 0.2 as its own first adopter. The
+recommended consumer catalog still pins the confirmed NKF 0.1 predecessor
+release; consumer migration to 0.2 is deliberate, separate work under the
+[NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md). The
+published
 [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs)
-describes the confirmed predecessor experience. Updated topology, onboarding,
-recovery, and complete Product and Technology examples are staged locally
-under NKF-017 but are not claimed as published. Task `NKF-008` remains complete
-for its predecessor internal release and adoption scope.
+still describes the predecessor experience until it is deliberately
+republished.
 
-The `NKF Contracts` and explicitly dispatched `NKF Consumer Adoption`
-workflows have passed on observed exact commits. The protected merge gate
-remains unavailable under the observed private-repository plan. Task
-`NKF-011` is complete for the delivered enforcement scope; activation and
-proof of the protected gate are deferred to
+The `NKF Contracts` workflow validates every push and pull request with the
+canonical command. The protected merge gate remains deferred to
 [Task NKF-012](knowledge/tasks/deferred/NKF-012-activate-protected-merge-gate.md).
 The
 [Current System Realization](knowledge/realizations/current-system.md) records
@@ -72,9 +69,10 @@ a consumer.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.1 Specification](knowledge/specifications/nkf-0.1.md) |
-| Inspect the executable companion | [NKF 0.1 YAML Contract](contracts/nkf/0.1/nkf.yaml) |
-| Inspect the closed structural contracts | [NKF 0.1 Schemas](contracts/nkf/0.1/schemas/) |
+| Read the normative format | [NKF 0.2 Specification](knowledge/specifications/nkf-0.2.md) |
+| Inspect the executable companion | [NKF 0.2 YAML Contract](contracts/nkf/0.2/nkf.yaml) |
+| Inspect the closed structural contracts | [NKF 0.2 Schemas](contracts/nkf/0.2/schemas/) |
+| Adopt a released version | [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |
 

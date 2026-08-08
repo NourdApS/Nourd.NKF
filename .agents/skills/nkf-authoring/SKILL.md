@@ -21,6 +21,13 @@ are rejected as top-level body bullets in every non-Evidence document, the
 frontmatter title must equal the H1 exactly, and every same-bundle document
 reference must be a deep link to the referenced document's source path.
 
+Transition Tasks deliberately: before activating one, semantically resolve
+and confirm every requirement and open uncertainty — the Human Product Owner
+confirms, or the agent confirms under an explicitly recorded delegation;
+before closing one, verify every acceptance criterion is done, tested, and
+confirmed the same way. Only then run the deterministic `task` transition,
+which enforces only the machine-checkable parts.
+
 Perform governed mechanics through the deterministic adopter commands —
 `task`, `repin`, `linkify`, `refs`, `set`, and `migrate` — supplying only the
 prose; never hand-edit what a command performs.

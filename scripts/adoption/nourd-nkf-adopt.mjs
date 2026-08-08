@@ -1709,6 +1709,38 @@ function externalCheckerVerifier(checkerPath) {
   };
 }
 
+function rewriteOutboundLinks(text, fromRelative, toRelative) {
+  const fromDirectory = fromRelative.split("/").slice(0, -1);
+  let fenced = false;
+  return text
+    .split("\n")
+    .map((line) => {
+      if (line.trim().startsWith("```")) {
+        fenced = !fenced;
+        return line;
+      }
+      if (fenced) return line;
+      return line.replace(/\]\(([^()\s]+)\)/g, (whole, destination) => {
+        if (/^[a-z][a-z0-9+.-]*:/i.test(destination) || destination.startsWith("#")) return whole;
+        const [target, fragment] = destination.split("#");
+        if (target === undefined || target === "") return whole;
+        const segments = [...fromDirectory];
+        for (const part of target.split("/")) {
+          if (part === "" || part === ".") continue;
+          if (part === "..") {
+            if (segments.length === 0) return whole;
+            segments.pop();
+            continue;
+          }
+          segments.push(part);
+        }
+        const rebased = relativeLink(toRelative, segments.join("/"));
+        return `](${rebased}${fragment === undefined ? "" : `#${fragment}`})`;
+      });
+    })
+    .join("\n");
+}
+
 function gateBlocksCompletion(text) {
   const lines = text.split("\n");
   const headerIndex = lines.findIndex((line) => line.trim() === IDENTITY_GATE_HEADER);
@@ -1745,7 +1777,11 @@ async function transitionTask(options) {
   }
   const fileName = currentRelative.split("/").pop();
   const targetRelative = `tasks/${transition === "active" ? "active" : transition}/${fileName}`;
-  let updated = original.replace(/^task_status: \w+$/m, `task_status: ${transition}`);
+  let updated = rewriteOutboundLinks(
+    original.replace(/^task_status: \w+$/m, `task_status: ${transition}`),
+    currentRelative,
+    targetRelative,
+  );
   if (transition === "completed" && typeof options["result-file"] === "string") {
     const result = (await readFile(options["result-file"], "utf8")).trim();
     if (!updated.includes("## Completion Result")) {
