@@ -48,7 +48,7 @@ checker binding are unchanged.
 
 A frozen set that does not ship its guidance is a promise the archive
 cannot keep, and an onboarding that grades its own work is the exact
-failure mode [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) exists to prevent.
+failure mode [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) exists to prevent.
 
 ## Alternatives Considered
 

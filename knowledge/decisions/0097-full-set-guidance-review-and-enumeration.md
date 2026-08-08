@@ -14,7 +14,7 @@ decision_authority: Human Product Owner, Nourd ApS
 
 ## Context And Problem
 
-The close review for [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) found the neutral authoring protocol still
+The close review for [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) found the neutral authoring protocol still
 describing the removed-title rule: it was last corrected before
 [ADR 0089](0089-title-equality-deep-links-and-design-orientation.md) reversed the title removal, and the
 [ADR 0095](0095-review-guidance-before-cutting.md) review examines only each release's own rule diff, so

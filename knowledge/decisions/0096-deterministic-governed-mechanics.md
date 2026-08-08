@@ -15,7 +15,7 @@ decision_authority: Human Product Owner, Nourd ApS
 ## Context And Problem
 
 Governed mechanics were performed by agents editing files per instructions,
-with the checker as the only deterministic layer. The lived [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) rounds
+with the checker as the only deterministic layer. The lived [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) rounds
 show that this is token-expensive and error-prone even though every miss is
 caught, and the Human Product Owner directed mechanizing what can be
 mechanized.

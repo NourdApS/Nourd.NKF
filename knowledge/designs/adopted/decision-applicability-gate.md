@@ -334,7 +334,7 @@ authority access is introduced.
 
 Deterministic evidence for an informed Decision: positive fixtures where
 Product and Technology Active Tasks carry conformant gates; negative fixtures
-for each new diagnostic; self-hosting evidence that [`NKF-019`](../../tasks/active/NKF-019-decision-applicability-gate.md) itself carries
+for each new diagnostic; self-hosting evidence that [`NKF-019`](../../tasks/completed/NKF-019-decision-applicability-gate.md) itself carries
 the first real gate; and the complete `npm run nkf:check` gate passing with
 the new enforcement active.
 

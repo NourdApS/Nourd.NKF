@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-[NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) produced the NKF 0.2 candidate authority pair realizing the adopted
+[NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) produced the NKF 0.2 candidate authority pair realizing the adopted
 Decision Applicability Gate direction together with the directed versioning,
 process-boundary, and frontmatter corrections of ADRs 0076 through 0080. The
 release protocol requires Human Product Owner acceptance of the exact pair

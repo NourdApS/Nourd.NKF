@@ -13,7 +13,7 @@ task: NKF-019
 
 ## Context And Problem
 
-The NKF 0.2 set was implemented and audited under [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) at commit
+The NKF 0.2 set was implemented and audited under [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) at commit
 `455ef7a` with the completion audit recording no unresolved material
 finding. The release protocol requires separate Human Product Owner
 confirmation before the release archive is produced.
@@ -55,4 +55,4 @@ recorded audit Evidence.
 ## Non-Claims
 
 This Decision does not publish a release, migrate any repository, prove
-later conformance, or close [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md).
+later conformance, or close [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md).

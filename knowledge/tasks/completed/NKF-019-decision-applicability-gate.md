@@ -3,7 +3,7 @@ title: "NKF-019: Establish The Decision Applicability Gate"
 summary: Prevent conditional technology decisions from losing their conditions, negative findings, and unresolved unknowns in successor Tasks, and prevent lower-level validation evidence from being represented as higher-level outcome success.
 created_at: 2026-08-06T21:23:12Z
 task_id: NKF-019
-task_status: active
+task_status: completed
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -243,6 +243,15 @@ again, and then close this Task.
   onboarding, adoption, and release protocols and the four portable skills
   otherwise carry no stale statement. The published archive digest binds
   the exact reviewed member bytes.
+- The corrected release was cut and swapped under the recorded exception:
+  tag
+  `release-sha256-8e81825e479713d3b71c7697b23734e7a56de52b834480ff285b3814269408f1`
+  from commit `ba24c1d`, checker unchanged, verified by independent
+  re-download with byte comparison; the superseded unconsumed release was
+  deleted. This repository re-adopted the set it carries, and the
+  independent post-migration audit passed: the archive's own extracted
+  checker validates this bundle with zero diagnostics, and the guidance and
+  onboarding pins match the enumerated member digests.
 
 ## Triggering External Evidence
 
@@ -427,6 +436,25 @@ adopted, that normative meaning has changed, that any enforcement exists,
 that any consumer must migrate, or that a Realization has been confirmed.
 Later Decisions and recorded progress supersede only these created-state
 facts.
+
+## Completion Result
+
+The gate contract shipped as NKF 0.2 and this repository adopted it: every
+Task carries the Decision Applicability section with the closed finding and
+verification vocabularies, completion fails closed without a recorded Human
+Product Owner exception, and the checker enforces the gate, title-equality,
+identity-bullet, deep-link, orientation-key, and guidance-marker rules under
+version dispatch. The versioned set — specification, executable companion,
+schemas, checker, four protocols, and four portable skills — is released as
+one frozen unit with deterministic governed mechanics, including this close.
+The release tag is
+`release-sha256-8e81825e479713d3b71c7697b23734e7a56de52b834480ff285b3814269408f1`
+from commit `ba24c1d`, verified by independent re-download. Acceptance is
+recorded through [ADR 0081](../../decisions/0081-accept-nkf-0-2-authority-pair.md) and its correction chain ending in
+[ADR 0097](../../decisions/0097-full-set-guidance-review-and-enumeration.md); the Realization remains a Draft successor account pending
+separate confirmation, and consumer migrations remain separate deliberate
+work. This Task was closed by the deterministic `task` command it shipped,
+on the Human Product Owner's close direction of `2026-08-08`.
 
 ## Decision Applicability
 

@@ -7,7 +7,7 @@ source:
   path: decisions/0082-confirm-nkf-0-2-versioned-set.md
   digest:
     algorithm: sha-256
-    value: e316cc9e1e2719c1b10348f1c6417a6e812225c778e54611a6cb21211ed0e593
+    value: 20fc194a530c02c2eb019b3a374764362f214a5254038ba5e8f601f3d56d1189
 governance:
   lifecycle: immutable
   status: accepted

@@ -7,7 +7,7 @@ source:
   path: decisions/0096-deterministic-governed-mechanics.md
   digest:
     algorithm: sha-256
-    value: db7b8455d7f854b3542a7fb8d40ae697374928ca76b037b6207fbe873b49826f
+    value: d0575fa7ff94b2dfc11ae5eebae13ec3baa20d0603ee445cbac0725677f96cd3
 governance:
   lifecycle: immutable
   status: accepted

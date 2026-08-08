@@ -14,7 +14,7 @@ status; it does not establish that status.
 
 [Active Task Index](active/README.md)
 
-- [NKF-019: Establish The Decision Applicability Gate](active/NKF-019-decision-applicability-gate.md)
+- [NKF-019: Establish The Decision Applicability Gate](completed/NKF-019-decision-applicability-gate.md)
 
 ## Deferred
 

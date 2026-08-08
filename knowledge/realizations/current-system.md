@@ -104,7 +104,7 @@ recommended-release verification without weakening release review.
 [ADR 0075](../decisions/0075-confirm-complete-portable-onboarding-topology.md)
 confirms the exact audited [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) successor without publishing it.
 
-Under [NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md), ADRs 0076 through 0081 adopt versioned contract evolution,
+Under [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md), ADRs 0076 through 0081 adopt versioned contract evolution,
 adopt and accept the Decision Applicability Gate direction, allocate the
 correction as breaking NKF 0.2, remove process from format meaning, remove
 the frontmatter title in favor of the body H1 with optional Task orientation

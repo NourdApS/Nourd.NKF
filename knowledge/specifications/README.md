@@ -9,7 +9,7 @@ created_at: 2026-07-28T22:01:17Z
 Specifications own current accepted normative NKF meaning.
 
 [NKF 0.2](nkf-0.2.md) is the accepted successor specification produced under
-[NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md): it adds the Decision Applicability Gate, the versioned-set
+[NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md): it adds the Decision Applicability Gate, the versioned-set
 evolution rules, and the title-free dynamic frontmatter, with its
 digest-bound executable companion at `contracts/nkf/0.2/nkf.yaml`. [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md)
 accepts the exact pair. It governs repositories that declare NKF 0.2;

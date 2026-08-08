@@ -7,7 +7,7 @@ source:
   path: designs/adopted/decision-applicability-gate.md
   digest:
     algorithm: sha-256
-    value: 27771e6ade473b06ffd8168148a3aa05d6c8aa9d5edbe2984274112ffd8d1cac
+    value: 596ca01321b1f084c6d9dd90c4cd86904ffd71f863b2af803884cb6782c0fca8
 governance:
   lifecycle: immutable
   status: accepted

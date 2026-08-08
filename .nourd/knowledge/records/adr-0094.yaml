@@ -7,7 +7,7 @@ source:
   path: decisions/0094-carry-the-set-and-audit-independently.md
   digest:
     algorithm: sha-256
-    value: f8e65e63ac4e15da3ad7bcf8c030191588eb37b60f95b42c5ac8a27e33ee1b64
+    value: d6a55da77eb32c5bd9c2876fc83479d4f9cef40c9178060cd7f66e41927133ed
 governance:
   lifecycle: immutable
   status: accepted

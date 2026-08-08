@@ -57,7 +57,7 @@ Keeping `0.11` was rejected by direction as misleading for a breaking
 change. Keeping the shipping steps inside the Specification was rejected
 because the format would start governing internal workflow and every process
 tweak would force a format version. Defining the processes immediately inside
-[NKF-019](../tasks/active/NKF-019-decision-applicability-gate.md) was rejected to keep the gate correction the smallest coherent
+[NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) was rejected to keep the gate correction the smallest coherent
 change; the questions get their own deferred Task.
 
 ## Consequences And Trade-Offs

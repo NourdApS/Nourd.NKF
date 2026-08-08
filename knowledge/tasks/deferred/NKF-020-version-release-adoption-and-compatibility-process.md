@@ -16,7 +16,7 @@ related_tasks:
 
 ## Human Direction
 
-On `2026-08-06`, while reviewing the NKF 0.2 candidate under [`NKF-019`](../active/NKF-019-decision-applicability-gate.md), the
+On `2026-08-06`, while reviewing the NKF 0.2 candidate under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md), the
 Human Product Owner directed that the shipping process be removed from the
 NKF rulebook and that this Task be created and deferred. The directed scope
 is to define how a new NKF version is released, how a repository adopts a
@@ -29,7 +29,7 @@ direction to start `NKF-020`.
 
 ## Scope Reduction
 
-On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../active/NKF-019-decision-applicability-gate.md) accepted the separated release and
+On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
 adoption processes and their followable protocols, consuming most of this
 Task's directed scope ahead of activation. The remaining deferred scope is
 breaking-change classification and signaling, plus process refinements from

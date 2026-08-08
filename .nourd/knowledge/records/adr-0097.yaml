@@ -7,7 +7,7 @@ source:
   path: decisions/0097-full-set-guidance-review-and-enumeration.md
   digest:
     algorithm: sha-256
-    value: ae1ee50aa528c92460fa4472727fce0667c8ac264a23d5abe58f571ab43b66d0
+    value: f0265ddb7027842297b269ba563fa00f4ba4cc9ac920b698e7ba42eabbe8b591
 governance:
   lifecycle: immutable
   status: accepted

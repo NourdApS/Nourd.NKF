@@ -17,3 +17,4 @@ state without replacing Decisions, Realizations, or validation Evidence.
 - [NKF-013: Establish Initial Greenfield Onboarding](NKF-013-initial-greenfield-onboarding.md)
 - [NKF-015: Establish Agent-Led Initial Onboarding](NKF-015-agent-led-initial-onboarding.md)
 - [NKF-017: Establish Complete Portable Onboarding Topology](NKF-017-complete-portable-onboarding-topology.md)
+- [NKF-019: Establish The Decision Applicability Gate](NKF-019-decision-applicability-gate.md)
