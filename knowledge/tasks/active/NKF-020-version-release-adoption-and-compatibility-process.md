@@ -129,6 +129,37 @@ One governed process definition covering:
 5. Validate with exactly `npm run nkf:check` and present the successor for
    separate audit and confirmation.
 
+## Current Progress
+
+- [ADR 0098](../../decisions/0098-semantic-gates-around-deterministic-mechanics.md) records the combination principle and this round's direction. The
+  authoring protocol and skill carry the explicit open and close
+  procedures, and this Task's own activation was their first execution:
+  semantic review, gate re-extraction, and recorded confirmations first,
+  the deterministic transition second.
+- The specification decoupled from Task lifecycle and states the
+  sealed-pair versioning rule. [ADR 0099](../../decisions/0099-accept-the-decoupled-0-2-pair.md) accepts the revised pair, every
+  digest pin moved in one cascade, and [ADR 0100](../../decisions/0100-bind-the-decoupled-0-2-release-checker.md) binds the rebuilt checker.
+- The release protocol requires human-readable notes and a front-page
+  refresh, the front page was refreshed to the released 0.2 state, and the
+  deterministic link verification joined the canonical command: 799 living
+  links checked with zero dead, immutable decisions and Evidence exempt.
+- The task command rebases a moved Task's own outbound links with a
+  regression test, after the first activation attempt failed closed on the
+  specification's Task links.
+- The widened pre-cut review ran from the deterministic set enumeration:
+  every guidance member was re-read against the complete rule set
+  including the new sealed-pair rule; the corrections were the
+  release-protocol immutability boundary and the members this round
+  changed, and the remaining members carry no stale statement.
+- The corrected release is tag
+  `release-sha256-4c67df321f2482fa4356478011fd1b85bc56d277942b41ab61b5e179b24113f9`
+  from commit `adbe2a5`, verified by independent re-download; the archive's
+  own extracted checker validates this bundle with zero diagnostics; the
+  superseded unconsumed release was deleted under the recorded exception.
+- The remaining scope is breaking-change classification and signaling, the
+  deterministic successor-pair scaffold, and process refinements from
+  further release and adoption experience.
+
 ## Acceptance Criteria
 
 - A Human Product Owner Decision accepts the exact release, adoption, and
