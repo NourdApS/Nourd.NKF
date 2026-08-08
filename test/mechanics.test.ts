@@ -179,6 +179,29 @@ describe("deterministic governed mechanics", () => {
     expect(await readFile(path.join(project, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
   });
 
+  it("cancels a task with a recorded rationale and no completion gate", async () => {
+    const project = await copyFixture();
+    const task = path.join(project, "knowledge/tasks/active/task.md");
+    await writeFile(task, (await readFile(task, "utf8")).replace(
+      "No mandatory capability is implicated by this Task.",
+      "| Capability | Finding | Verification | Exception |\n| --- | --- | --- | --- |\n| Custom terrain | unsupported | none | none |",
+    ));
+    run("repin", project);
+    const noRationale = run("task", project, ["--task", "TEST-001", "--to", "cancel", "--checker", checker]);
+    expect(noRationale.status).toBe(1);
+    expect(noRationale.stderr).toContain("cancellation rationale");
+    const resultFile = path.join(project, "..", "cancel-result.md");
+    await writeFile(resultFile, "Cancelled: the capability is unsupported and the work will not be done.\n");
+    const result = run("task", project, ["--task", "TEST-001", "--to", "cancel", "--result-file", resultFile, "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    const moved = await readFile(path.join(project, "knowledge/tasks/cancelled/task.md"), "utf8");
+    expect(moved).toContain("task_status: cancelled");
+    expect(moved).toContain("## Cancellation Result");
+    const terminal = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
+    expect(terminal.status).toBe(1);
+    expect(terminal.stderr).toContain("terminal");
+  });
+
   it("refuses a git transition on a dirty work tree", async () => {
     const { project } = await gitFixture();
     await writeFile(path.join(project, "dirty.txt"), "x\n");
@@ -214,7 +237,9 @@ describe("deterministic governed mechanics", () => {
     expect(activated.json.git.mode).toBe("worktree");
     const worktree = activated.json.git.worktree as string;
     expect(worktree).toContain("project-worktrees/TEST-001");
-    expect(activated.json.git.pushed).toBe(false);
+    expect(activated.json.git.state).toBe("draft-opened");
+    expect(activated.json.git.pushed).toBe(true);
+    expect(activated.json.git.pull_request).toBe("unsupported-remote");
     expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
     expect(await readFile(path.join(worktree, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
     expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
@@ -224,10 +249,24 @@ describe("deterministic governed mechanics", () => {
     const closed = run("task", worktree, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
     expect(closed.status, closed.stderr).toBe(0);
     expect(closed.json.git.mode).toBe("worktree-resident");
+    expect(closed.json.git.state).toBe("conclusion-proposed");
     expect(closed.json.git.pushed).toBe(true);
     expect(closed.json.git.worktree_state).toBe("removed");
     expect(await lstat(worktree).catch(() => null)).toBeNull();
     expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
+  });
+
+  it("reports an incomplete git step on a successful transition instead of failing", async () => {
+    const { project, g } = await gitFixture();
+    g(["remote", "set-url", "origin", path.join(project, "..", "missing-origin.git")]);
+    const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json.state).toBe("transitioned");
+    expect(result.json.git.state).toBe("incomplete");
+    expect(result.json.git.commit).toMatch(/^[0-9a-f]{40}$/);
+    expect(result.json.git.pushed).toBe(false);
+    expect(result.json.git.git_error).toContain("git");
+    expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
   });
 
   it("migrates a declared 0.1 project to 0.2 through the archive", async () => {
@@ -245,5 +284,8 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.validation.conformance).toBe("passed");
     const bundle = await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8");
     expect(bundle).toContain('nkf_version: "0.2"');
+    expect(bundle).toContain("tasks/cancelled/README.md");
+    expect(await readFile(path.join(project, "knowledge/tasks/cancelled/README.md"), "utf8")).toContain("# Cancelled Tasks");
+    expect(await readFile(path.join(project, "knowledge/tasks/README.md"), "utf8")).toContain("(cancelled/README.md)");
   });
 });

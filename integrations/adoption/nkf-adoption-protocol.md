@@ -34,8 +34,11 @@ follow it.
    its H1; repeated identity bullet blocks leave document bodies, with
    orientation moving into the Task, record, and Design frontmatter keys;
    every same-bundle document reference becomes a deep link to the
-   referenced document's exact source path, including gate table cells; and
-   record source digests are re-pinned for every edited document.
+   referenced document's exact source path, including gate table cells;
+   the Task state vocabulary includes `cancelled`, whose
+   `tasks/cancelled/` index the deterministic migration creates and
+   registers; and record source digests are re-pinned for every edited
+   document.
 4. Remove superseded own-version artifacts from the working tree where the
    repository carries them; they remain retrievable from version-control
    history and release archives.

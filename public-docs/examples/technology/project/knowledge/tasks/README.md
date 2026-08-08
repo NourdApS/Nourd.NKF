@@ -9,3 +9,4 @@ created_at: 2026-07-30T07:53:41Z
 - [Active Tasks](active/README.md)
 - [Deferred Tasks](deferred/README.md)
 - [Completed Tasks](completed/README.md)
+- [Cancelled Tasks](cancelled/README.md)

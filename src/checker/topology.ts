@@ -252,12 +252,14 @@ export function validatePortableTopology(input: TopologyInput): void {
     "tasks/active/README.md",
     "tasks/deferred/README.md",
     "tasks/completed/README.md",
+    "tasks/cancelled/README.md",
   ]);
   const tasks = nonRecords.filter((item) => item.declaration.kind === "task");
   const taskPlacements: Record<string, { prefix: string; index: string }> = {
     active: { prefix: "tasks/active/", index: "tasks/active/README.md" },
     deferred: { prefix: "tasks/deferred/", index: "tasks/deferred/README.md" },
     completed: { prefix: "tasks/completed/", index: "tasks/completed/README.md" },
+    cancelled: { prefix: "tasks/cancelled/", index: "tasks/cancelled/README.md" },
   };
   for (const task of tasks) {
     const taskPath = String(task.declaration.path);

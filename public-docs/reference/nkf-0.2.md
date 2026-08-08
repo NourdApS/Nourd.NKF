@@ -436,10 +436,11 @@ MUST contain the following Common portable topology under its configured
 | Path | Required Native Representation |
 | --- | --- |
 | `README.md` | One `navigation` non-record; the single canonical knowledge map |
-| `tasks/README.md` | One `navigation` non-record linking the three Task-state indexes |
+| `tasks/README.md` | One `navigation` non-record linking the four Task-state indexes |
 | `tasks/active/README.md` | One `navigation` non-record indexing Active Tasks |
 | `tasks/deferred/README.md` | One `navigation` non-record indexing Deferred Tasks |
 | `tasks/completed/README.md` | One `navigation` non-record indexing Completed Tasks |
+| `tasks/cancelled/README.md` | One `navigation` non-record indexing Cancelled Tasks |
 | `designs/README.md` | One `navigation` non-record linking the five Design-disposition indexes |
 | `designs/active/README.md` | One `navigation` non-record indexing Active Designs |
 | `designs/adopted/README.md` | One `navigation` non-record indexing Adopted Designs |
@@ -503,9 +504,9 @@ outside the managed block fails conformance.
 Lifecycle placement and navigation use explicit native metadata as the source
 of truth:
 
-- every Task non-record is below `tasks/active/`, `tasks/deferred/`, or
-  `tasks/completed/` according to its `task_status` and is linked exactly once
-  from the matching state index;
+- every Task non-record is below `tasks/active/`, `tasks/deferred/`,
+  `tasks/completed/`, or `tasks/cancelled/` according to its `task_status`
+  and is linked exactly once from the matching state index;
 - every Design record is below `designs/active/`, `designs/adopted/`,
   `designs/rejected/`, `designs/superseded/`, or `designs/withdrawn/`
   according to `design_disposition` and is linked exactly once from the
@@ -744,7 +745,7 @@ separate operation.
 
 NKF adds `task` and `evidence` to `non_records[].kind`. A Task non-record
 requires a unique, non-empty `task_id` and a `task_status` of `active`,
-`deferred`, or `completed`. It MAY additionally declare `owner` and
+`deferred`, `completed`, or `cancelled`. It MAY additionally declare `owner` and
 `decision_authority` as non-empty, trimmed, single-line strings, and
 `related_tasks` as a non-empty duplicate-free sequence of `task_id` values,
 each resolving to exactly one other same-bundle Task non-record. These
@@ -1926,6 +1927,13 @@ result axes, and none of those may substitute for them.
 | `active` | Required | Not applicable |
 | `deferred` | Required | Not applicable |
 | `completed` | Required | No data row may combine finding `unsupported` or `unknown` with exception `none` |
+| `cancelled` | Required | Not applicable |
+
+A cancelled Task concludes without delivery: it records its cancellation
+rationale, the completion rule does not apply because nothing is claimed
+delivered, and `cancelled` is terminal. A Task is never cancelled from
+`completed`; reversing delivered work is a later Task with its own
+provenance.
 
 A completed Task whose gate carries an unexcepted `unsupported` or `unknown`
 mandatory capability fails closed. A repository gates its complete Task

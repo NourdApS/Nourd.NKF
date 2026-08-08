@@ -25,12 +25,14 @@ Transition Tasks deliberately: before activating one, semantically resolve
 and confirm every requirement and open uncertainty — the Human Product Owner
 confirms, or the agent confirms under an explicitly recorded delegation;
 before closing one, verify every acceptance criterion is done, tested, and
-confirmed the same way. Only then run the deterministic `task` transition,
-which enforces only the machine-checkable parts and performs the Git
-transition mechanics: activation creates the `task/<task_id>` branch and
-its own working tree from the clean, up-to-date default branch; closure
-commits, pushes, opens the merge request, and releases the working tree —
-merging stays the human review act.
+confirmed the same way; before cancelling one, confirm the decision not to
+deliver and record the rationale. Only then run the deterministic `task`
+transition, which enforces only the machine-checkable parts and performs
+the Git transition mechanics: activation creates the `task/<task_id>`
+branch and its working tree from the clean, up-to-date default branch and
+opens the draft merge request; conclusion — close, defer, or cancel —
+commits, pushes, marks the request ready, and releases the working tree. A
+Task branch merges only concluded, and merging stays the human review act.
 
 Perform governed mechanics through the deterministic adopter commands —
 `task`, `repin`, `linkify`, `refs`, `set`, and `migrate` — supplying only the

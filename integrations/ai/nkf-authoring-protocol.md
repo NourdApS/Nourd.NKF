@@ -140,6 +140,12 @@ reality, and each satisfaction is confirmed by the Human Product Owner or
 by the agent under an explicitly recorded delegation. Author the Completion
 Result from that verification. Only then run the deterministic close.
 
+Before cancelling a Task, establish and confirm the decision not to deliver
+the same way, and author the Cancellation Result from it. Cancellation
+claims nothing delivered, so the gate's completion rule does not apply, and
+`cancelled` is terminal: a completed Task is never cancelled, and later
+work on a cancelled subject is a new Task.
+
 The deterministic transition enforces only the machine-checkable parts —
 gate vocabulary and exceptions, structure, digests, links, and full-bundle
 conformance. It cannot judge whether prose, criteria, or confirmations are
@@ -147,14 +153,23 @@ true. An unmet criterion or unanswered uncertainty means report, not
 transition.
 
 The transition also owns the surrounding Git transition mechanics
-deterministically. Activation requires a clean work tree on the up-to-date
-default branch and creates the Task's own `task/<task_id>` branch together
-with its own working tree at a deterministic sibling path, so the
-default-branch checkout never leaves the default branch. Deferral and
-closure commit the transition on the Task branch, push it, open the merge
-request that carries the Completion Result, and release the Task's working
-tree once the branch is pushed. Merging into the default branch is the
-repository's human review act, never the command's.
+deterministically, and a Task branch carries the Task's whole life.
+Activation requires a clean work tree on the up-to-date default branch,
+creates the Task's own `task/<task_id>` branch together with its own
+working tree at a deterministic sibling path, pushes it, and opens the
+draft merge request that makes the active Task visible. The default-branch
+checkout never leaves the default branch, and the default branch only ever
+rests in `deferred`, `completed`, or `cancelled`: a Task branch merges
+only concluded. Deferral, closure, and cancellation conclude the branch —
+they commit the transition, push it, mark the merge request ready carrying
+the Completion or Cancellation Result, and release the Task's working
+tree. Merging into the default branch is the repository's human review
+act, never the command's. The task command without a transition reports
+the pending view — each Task's resting state with any in-flight branch and
+merge request — read from the version control system, never written into
+knowledge. A Git step that fails after the applied transition is reported
+as an incomplete Git report with its error on the successful transition;
+the applied transition never rolls back for a remote error.
 
 ## Perform Governed Mechanics Deterministically
 

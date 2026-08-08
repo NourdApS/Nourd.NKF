@@ -64,6 +64,13 @@ closure runs in that working tree and releases it once the branch is
 pushed. The Human Product Owner also directed an independent audit of the
 completed work, recorded as findings in this Task.
 
+On `2026-08-08`, reviewing the audit findings, the Human Product Owner
+directed addressing the first one: a Git step that fails after the applied
+transition must surface as a successful transition with an explicit
+incomplete Git report and error field, never as a failed command, because
+the transition and its commit exist and the report must not contradict
+them.
+
 ## Scope Reduction
 
 On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
@@ -212,9 +219,24 @@ One governed process definition covering:
   and the sibling working-tree parent directory remains, empty, after the
   last working tree is released. No finding blocks the shipment; the
   reporting defect is proposed for the next tooling round.
+- [ADR 0103](../../decisions/0103-branch-carried-task-life-and-cancelled-state.md) records the confirmed branch-carried Task life and the official
+  `cancelled` state, and [ADR 0104](../../decisions/0104-accept-the-cancelled-state-pair.md) accepts the revised pair carrying it.
+  The delivered cascade: the specification and executable companion define
+  the four-state vocabulary and `tasks/cancelled/` topology; the checker
+  enforces placement and the enum; onboarding generates the cancelled
+  index; the deterministic migration creates and registers it for 0.1
+  consumers; the task command gains `cancel` with a required Cancellation
+  Result, terminal semantics, and no completion-gate application;
+  activation pushes and opens a draft merge request; conclusions mark the
+  request ready; the pending view reports resting state plus in-flight
+  branches and requests; and the Git report never over-claims, folding in
+  the audit's reporting finding. The widened pre-cut review ran against
+  the changed rule with no stale statement in any member; fixtures,
+  examples, and 186 tests validate the complete set.
 - The remaining scope is breaking-change classification and signaling, the
   deterministic successor-pair scaffold, process refinements from further
-  release and adoption experience, and the audit's open findings.
+  release and adoption experience, and the audit's remaining cosmetic
+  findings.
 
 ## Acceptance Criteria
 

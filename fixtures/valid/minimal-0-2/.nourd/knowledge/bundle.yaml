@@ -38,5 +38,7 @@ non_records:
     kind: navigation
   - path: tasks/deferred/README.md
     kind: navigation
+  - path: tasks/cancelled/README.md
+    kind: navigation
   - path: tasks/README.md
     kind: navigation

@@ -1854,58 +1854,150 @@ function gitCompleteTransition(effectiveRoot, plan, transition, taskId, prBody) 
   if (plan.state !== "planned") return { state: "not-a-repository" };
   const run = (...argumentsValue) =>
     execFileSync("git", ["-C", effectiveRoot, ...argumentsValue], { encoding: "utf8" }).trim();
-  const action = { completed: "close", deferred: "defer", active: "activate" }[transition];
-  run("add", "-A");
-  run("commit", "-m", `task: ${action} ${taskId}`);
+  const action = { completed: "close", deferred: "defer", active: "activate", cancelled: "cancel" }[transition];
   const report = {
     state: "committed",
     branch: plan.branch,
     mode: plan.mode,
     worktree: plan.mode === "worktree" ? plan.worktree : plan.mode === "worktree-resident" ? effectiveRoot : null,
-    commit: run("rev-parse", "HEAD"),
+    commit: null,
     pushed: false,
     pull_request: null,
   };
-  if (transition === "active") return report;
-  if (plan.origin_url === null) {
-    report.pull_request = "no-origin-remote";
+  try {
+    run("add", "-A");
+    run("commit", "-m", `task: ${action} ${taskId}`);
+    report.commit = run("rev-parse", "HEAD");
+    if (transition === "active") {
+      if (plan.origin_url === null) {
+        report.pull_request = "no-origin-remote";
+        return report;
+      }
+      run("push", "-u", "origin", plan.branch);
+      report.pushed = true;
+      if (plan.origin_url.includes("github.com")) {
+        const created = spawnSync(
+          "gh",
+          ["pr", "create", "--draft", "--title", `task: activate ${taskId}`, "--body", prBody, "--head", plan.branch],
+          { cwd: effectiveRoot, encoding: "utf8" },
+        );
+        report.pull_request =
+          created.status === 0
+            ? created.stdout.trim()
+            : `not-created: ${(created.stderr || created.stdout || "gh unavailable").split("\n")[0]}`;
+      } else {
+        report.pull_request = "unsupported-remote";
+      }
+      report.state = "draft-opened";
+      return report;
+    }
+    if (plan.origin_url === null) {
+      report.pull_request = "no-origin-remote";
+      return report;
+    }
+    run("push", "-u", "origin", plan.branch);
+    report.pushed = true;
+    if (plan.origin_url.includes("github.com")) {
+      const created = spawnSync(
+        "gh",
+        ["pr", "create", "--title", `task: ${action} ${taskId}`, "--body", prBody, "--head", plan.branch],
+        { cwd: effectiveRoot, encoding: "utf8" },
+      );
+      if (created.status === 0) {
+        report.pull_request = created.stdout.trim();
+      } else {
+        const viewed = spawnSync(
+          "gh",
+          ["pr", "view", plan.branch, "--json", "url", "--jq", ".url"],
+          { cwd: effectiveRoot, encoding: "utf8" },
+        );
+        report.pull_request =
+          viewed.status === 0
+            ? viewed.stdout.trim()
+            : `not-created: ${(created.stderr || created.stdout || "gh unavailable").split("\n")[0]}`;
+      }
+      const readied = spawnSync("gh", ["pr", "ready", plan.branch], { cwd: effectiveRoot, encoding: "utf8" });
+      report.pull_request_state = readied.status === 0 ? "ready" : "not-ready";
+    } else {
+      report.pull_request = "unsupported-remote";
+    }
+    report.state = "conclusion-proposed";
+    if (plan.mode === "worktree-resident") {
+      try {
+        const commonDir = run("rev-parse", "--path-format=absolute", "--git-common-dir");
+        const mainRoot = path.dirname(commonDir);
+        execFileSync("git", ["-C", mainRoot, "worktree", "remove", effectiveRoot], { encoding: "utf8" });
+        report.worktree_state = "removed";
+      } catch {
+        report.worktree_state = "remove-pending";
+      }
+    } else if (plan.mode === "in-place" && plan.create === true) {
+      run("checkout", plan.default_branch);
+      report.restored_branch = plan.default_branch;
+    }
+    return report;
+  } catch (error) {
+    report.state = "incomplete";
+    report.git_error = (error instanceof Error ? error.message : String(error))
+      .split("\n")
+      .find((line) => line.trim() !== "") ?? "A Git step failed after the applied transition.";
     return report;
   }
-  run("push", "-u", "origin", plan.branch);
-  report.pushed = true;
-  if (plan.origin_url.includes("github.com")) {
-    const created = spawnSync(
-      "gh",
-      ["pr", "create", "--title", `task: ${action} ${taskId}`, "--body", prBody, "--head", plan.branch],
-      { cwd: effectiveRoot, encoding: "utf8" },
+}
+
+async function taskPendingView(options) {
+  const projectRoot = await requireProjectRoot(options.project);
+  const context = await loadGovernedContext(projectRoot);
+  const git = await taskGit(projectRoot);
+  const tasks = [];
+  for (const [taskId, relative] of [...context.tasks].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
+    const text = await readFile(
+      path.join(projectRoot, context.knowledgeRoot, ...relative.split("/")),
+      "utf8",
     );
-    report.pull_request =
-      created.status === 0
-        ? created.stdout.trim()
-        : `not-created: ${(created.stderr || created.stdout || "gh unavailable").split("\n")[0]}`;
-  } else {
-    report.pull_request = "unsupported-remote";
-  }
-  if (plan.mode === "worktree-resident") {
-    try {
-      const commonDir = run("rev-parse", "--path-format=absolute", "--git-common-dir");
-      const mainRoot = path.dirname(commonDir);
-      execFileSync("git", ["-C", mainRoot, "worktree", "remove", effectiveRoot], { encoding: "utf8" });
-      report.worktree_state = "removed";
-    } catch {
-      report.worktree_state = "remove-pending";
+    const entry = {
+      task: taskId,
+      task_status: text.match(/^task_status: (\w+)$/m)?.[1] ?? null,
+      path: relative,
+      branch: null,
+      pull_request: null,
+    };
+    if (git !== null) {
+      const branch = `task/${taskId}`;
+      const local = git.optional("rev-parse", "--verify", "--quiet", branch) !== null;
+      const remote = git.optional("rev-parse", "--verify", "--quiet", `origin/${branch}`) !== null;
+      if (local || remote) {
+        entry.branch = { name: branch, local, remote };
+        const viewed = spawnSync(
+          "gh",
+          ["pr", "view", branch, "--json", "state,isDraft,url"],
+          { cwd: projectRoot, encoding: "utf8" },
+        );
+        if (viewed.status === 0) {
+          try {
+            const pullRequest = JSON.parse(viewed.stdout);
+            entry.pull_request = { url: pullRequest.url, state: pullRequest.state, draft: pullRequest.isDraft };
+          } catch {
+            entry.pull_request = "unreadable";
+          }
+        } else {
+          entry.pull_request = "none-or-unavailable";
+        }
+      }
     }
-  } else if (plan.mode === "in-place" && plan.create === true) {
-    run("checkout", plan.default_branch);
-    report.restored_branch = plan.default_branch;
+    tasks.push(entry);
   }
-  return report;
+  return {
+    state: "pending-view",
+    git: git === null ? "not-a-repository" : "inspected",
+    tasks,
+  };
 }
 
 async function transitionTask(options) {
   const projectRoot = await requireProjectRoot(options.project);
-  const transition = { close: "completed", defer: "deferred", activate: "active" }[options.to ?? ""];
-  if (transition === undefined) fail("task requires --to close|defer|activate.");
+  const transition = { close: "completed", defer: "deferred", activate: "active", cancel: "cancelled" }[options.to ?? ""];
+  if (transition === undefined) fail("task requires --to close|defer|activate|cancel, or no --to for the pending view.");
   if (typeof options.task !== "string" || options.task === "") fail("task requires --task <task_id>.");
   const context = await loadGovernedContext(projectRoot);
   const currentRelative = context.tasks.get(options.task);
@@ -1915,6 +2007,15 @@ async function transitionTask(options) {
   const statusMatch = original.match(/^task_status: (\w+)$/m);
   if (statusMatch === null) fail("The task has no task_status line.");
   if (statusMatch[1] === transition) fail(`The task already has task_status ${transition}.`);
+  if (statusMatch[1] === "cancelled") {
+    fail("cancelled is terminal; later work on the subject is a new Task.");
+  }
+  if (transition === "cancelled" && statusMatch[1] === "completed") {
+    fail("A completed Task is never cancelled; reversing delivered work is a later Task.");
+  }
+  if (transition === "cancelled" && typeof options["result-file"] !== "string") {
+    fail("cancel requires --result-file with the cancellation rationale.");
+  }
   if (transition === "completed") {
     const blockers = gateBlocksCompletion(original);
     if (blockers.length > 0) {
@@ -1930,10 +2031,12 @@ async function transitionTask(options) {
     currentRelative,
     targetRelative,
   );
-  if (transition === "completed" && typeof options["result-file"] === "string") {
+  const resultHeading =
+    transition === "completed" ? "## Completion Result" : transition === "cancelled" ? "## Cancellation Result" : null;
+  if (resultHeading !== null && typeof options["result-file"] === "string") {
     const result = (await readFile(options["result-file"], "utf8")).trim();
-    if (!updated.includes("## Completion Result")) {
-      updated = updated.replace("\n## Decision Applicability\n", `\n## Completion Result\n\n${result}\n\n## Decision Applicability\n`);
+    if (!updated.includes(resultHeading)) {
+      updated = updated.replace("\n## Decision Applicability\n", `\n${resultHeading}\n\n${result}\n\n## Decision Applicability\n`);
     }
   }
   const files = new Map();
@@ -2008,9 +2111,11 @@ async function transitionTask(options) {
     removedPaths,
   );
   const prBody =
-    transition === "completed" && updated.includes("## Completion Result")
-      ? `Deterministic close of ${options.task}. The merge is the repository's human review act.\n\n${updated.split("\n## Completion Result\n")[1]?.split("\n## ")[0]?.trim() ?? ""}`
-      : `Deterministic ${transition === "deferred" ? "deferral" : "transition"} of ${options.task}. The merge is the repository's human review act.`;
+    transition === "active"
+      ? `Deterministic activation of ${options.task}. This draft accompanies the Task's whole life; its conclusion marks it ready, and merging is the repository's human review act.`
+      : resultHeading !== null && updated.includes(resultHeading)
+        ? `Deterministic ${transition === "cancelled" ? "cancellation" : "close"} of ${options.task}. The merge is the repository's human review act.\n\n${updated.split(`\n${resultHeading}\n`)[1]?.split("\n## ")[0]?.trim() ?? ""}`
+        : `Deterministic deferral of ${options.task}. The merge is the repository's human review act.`;
   const gitReport =
     git === null || gitPlan.state !== "planned"
       ? { state: "not-a-repository" }
@@ -2066,6 +2171,36 @@ async function migrateToCurrent(options) {
       gated += 1;
     }
   }
+  const cancelledIndexRelative = "tasks/cancelled/README.md";
+  if ((await lstat(path.join(projectRoot, knowledgeRoot, "tasks", "cancelled", "README.md")).catch(() => null)) === null) {
+    const stamp = `${new Date().toISOString().slice(0, 19)}Z`;
+    files.set(
+      `${knowledgeRoot}/${cancelledIndexRelative}`,
+      Buffer.from(
+        `---\ntitle: Cancelled Tasks\nsummary: "Indexes Tasks concluded without delivery."\ncreated_at: ${stamp}\n---\n\n# Cancelled Tasks\n`,
+        "utf8",
+      ),
+    );
+    const stagedBundle = files.get(bundlePath).toString("utf8");
+    const deferredEntry = "  - path: tasks/deferred/README.md\n    kind: navigation\n";
+    if (!stagedBundle.includes(deferredEntry)) {
+      fail("migrate cannot register the cancelled index deterministically in this bundle.");
+    }
+    files.set(
+      bundlePath,
+      Buffer.from(
+        stagedBundle.replace(deferredEntry, `${deferredEntry}  - path: tasks/cancelled/README.md\n    kind: navigation\n`),
+        "utf8",
+      ),
+    );
+    const tasksIndexAbsolute = path.join(projectRoot, knowledgeRoot, "tasks", "README.md");
+    const tasksIndex = await readFile(tasksIndexAbsolute, "utf8");
+    const completedLine = "- [Completed Tasks](completed/README.md)\n";
+    const updatedTasksIndex = tasksIndex.includes(completedLine)
+      ? tasksIndex.replace(completedLine, `${completedLine}- [Cancelled Tasks](cancelled/README.md)\n`)
+      : `${tasksIndex.trimEnd()}\n- [Cancelled Tasks](cancelled/README.md)\n`;
+    files.set(`${knowledgeRoot}/tasks/README.md`, Buffer.from(updatedTasksIndex, "utf8"));
+  }
   const markdown = await knowledgeMarkdownFiles(projectRoot, knowledgeRoot, context.bundle);
   let linkified = 0;
   for (const relative of markdown) {
@@ -2117,7 +2252,7 @@ async function main() {
   if (command === "refs") return exportReferences(await requireProjectRoot(options.project));
   if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project));
   if (command === "set") return exportVersionedSet(await requireProjectRoot(options.project));
-  if (command === "task") return transitionTask(options);
+  if (command === "task") return options.to === undefined ? taskPendingView(options) : transitionTask(options);
   if (command === "migrate") return migrateToCurrent(options);
   const projectRoot = await requireProjectRoot(options.project);
   const installed = await verifyInstalled(projectRoot, command === "check");

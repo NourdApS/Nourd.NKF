@@ -8,15 +8,15 @@ export const CHECKER_CONFIRMATION = Object.freeze({
 
 export const ACCEPTED_ARTIFACT_DIGESTS = Object.freeze({
   "knowledge/specifications/nkf-0.2.md":
-    "6af631cb20571570a6d688caf0fd814531f809f8229517ddce10ac7f30141aec",
+    "336876774b4f2ee02a0a74b29616bdaf35df412edd8046ae3cd1cb18fc1b2a02",
   "contracts/nkf/0.2/nkf.yaml":
-    "da5525398523e2f19f49509a60007624f0e529f2dd15a686ea00dd82847b92d2",
+    "df4e62f9f8e98bee2018cecdc205f92cdc191a8788e6a0ee8e2bb2378b86be07",
   "contracts/nkf/0.2/schemas/bundle.schema.json":
-    "c07dc17b6aacbd77e28252924e1bb2e9ffba036a92c630721f2bbfc29211d618",
+    "200f34e9f4d1f17f39c97778882c85dbf6e095b42d36b086ae9e5bd1c76ce43f",
   "contracts/nkf/0.2/schemas/record.schema.json":
-    "767b572320e2e1ff54d3ed6b30ebf5e2d1a594e6d1174d965d238834abf0db46",
+    "4ca328826f791be6aa76d49681e0217130c5facf02cc175fe18d98cf6edee0a0",
   "contracts/nkf/0.2/schemas/release-manifest.schema.json":
-    "c7f398e4f4bed223457c7f5ace5d307e19769279054307f7696a51db0c6c5af6",
+    "918353226fe2ac0fcc853afaefb43edf008b3b74508c6a30392fe6a37fdd10a4",
   "contracts/nkf/0.2/schemas/validation-result.schema.json":
-    "484bcf2b4aa102c5e75a30cf4c52439b56e384b92792191b50345f09b3dd54e4",
+    "a593c5bbbd36ab6849fc88ade1c1abcc801e1a6e566f1ef77f8c62f21e60d011",
 });

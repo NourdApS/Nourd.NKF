@@ -756,11 +756,11 @@ function nonRecordSourceChecks(
     }
     if (
       hasOwn(frontMatter, "task_status") &&
-      !["active", "deferred", "completed"].includes(String(frontMatter.task_status))
+      !["active", "deferred", "completed", "cancelled"].includes(String(frontMatter.task_status))
     ) {
       emitter.emit(
         "markdown.frontmatter.task.invalid",
-        "task_status must be active, deferred, or completed.",
+        "task_status must be active, deferred, completed, or cancelled.",
         frontMatterContext(artifact, undefined, "task_status"),
       );
     }

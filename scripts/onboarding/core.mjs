@@ -62,6 +62,7 @@ const REQUIRED_TOPOLOGY_NON_RECORDS = [
   { path: "tasks/active/README.md", kind: "navigation", title: "Active Tasks" },
   { path: "tasks/deferred/README.md", kind: "navigation", title: "Deferred Tasks" },
   { path: "tasks/completed/README.md", kind: "navigation", title: "Completed Tasks" },
+  { path: "tasks/cancelled/README.md", kind: "navigation", title: "Cancelled Tasks" },
   { path: "designs/README.md", kind: "navigation", title: "Designs" },
   { path: "designs/active/README.md", kind: "navigation", title: "Active Designs" },
   { path: "designs/adopted/README.md", kind: "navigation", title: "Adopted Designs" },
@@ -1165,7 +1166,7 @@ function sourceFrontmatter(bytes, sourcePath) {
 
 function topologyIndexTargets(declarations, nonRecords, sourceBytes) {
   const uniqueSorted = (values) => [...new Set(values)].sort(utf16Compare);
-  const tasksByStatus = { active: [], deferred: [], completed: [] };
+  const tasksByStatus = { active: [], deferred: [], completed: [], cancelled: [] };
   for (const item of nonRecords.filter((entry) => entry.kind === "task")) {
     const bytes = sourceBytes(item.path);
     const status = bytes === undefined ? undefined : sourceFrontmatter(bytes, item.path)?.task_status;
@@ -1189,10 +1190,11 @@ function topologyIndexTargets(declarations, nonRecords, sourceBytes) {
     if (segments.length > 2) evidenceAreas.push(`evidence/${segments[1]}`);
   }
   return new Map([
-    ["tasks/README.md", ["tasks/active/README.md", "tasks/deferred/README.md", "tasks/completed/README.md"]],
+    ["tasks/README.md", ["tasks/active/README.md", "tasks/deferred/README.md", "tasks/completed/README.md", "tasks/cancelled/README.md"]],
     ["tasks/active/README.md", uniqueSorted(tasksByStatus.active)],
     ["tasks/deferred/README.md", uniqueSorted(tasksByStatus.deferred)],
     ["tasks/completed/README.md", uniqueSorted(tasksByStatus.completed)],
+    ["tasks/cancelled/README.md", uniqueSorted(tasksByStatus.cancelled)],
     ["designs/README.md", ["designs/active/README.md", "designs/adopted/README.md", "designs/rejected/README.md", "designs/superseded/README.md", "designs/withdrawn/README.md"]],
     ["designs/active/README.md", uniqueSorted(designsByDisposition.active)],
     ["designs/adopted/README.md", uniqueSorted(designsByDisposition.adopted)],
