@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, lstat, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
@@ -187,33 +187,47 @@ describe("deterministic governed mechanics", () => {
     expect(result.stderr).toContain("work tree must be clean");
   });
 
-  it("defers on a task branch, commits, and pushes deterministically", async () => {
+  it("defers on a task branch, commits, pushes, and restores the default branch", async () => {
     const { project, g, bare } = await gitFixture();
     const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.git.branch).toBe("task/TEST-001");
     expect(result.json.git.pushed).toBe(true);
     expect(result.json.git.pull_request).toBe("unsupported-remote");
+    expect(result.json.git.restored_branch).toBe("master");
+    expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
     expect(g(["status", "--porcelain"]).stdout.trim()).toBe("");
     const remoteBranches = spawnSync("git", ["--git-dir", bare, "branch"], { encoding: "utf8" }).stdout;
     expect(remoteBranches).toContain("task/TEST-001");
   });
 
-  it("activates from the clean up-to-date default branch onto a new task branch", async () => {
+  it("activates into a task worktree and closes from it, releasing the worktree", async () => {
     const { project, g } = await gitFixture();
     const deferred = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
     expect(deferred.status, deferred.stderr).toBe(0);
-    g(["checkout", "master"]);
     g(["merge", "--ff-only", "task/TEST-001"]);
     g(["push", "origin", "master"]);
     g(["branch", "-D", "task/TEST-001"]);
     g(["push", "origin", "--delete", "task/TEST-001"]);
-    const result = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
-    expect(result.status, result.stderr).toBe(0);
-    expect(result.json.git.branch).toBe("task/TEST-001");
-    expect(result.json.git.pushed).toBe(false);
-    expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("task/TEST-001");
-    expect(await readFile(path.join(project, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
+    const activated = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
+    expect(activated.status, activated.stderr).toBe(0);
+    expect(activated.json.git.mode).toBe("worktree");
+    const worktree = activated.json.git.worktree as string;
+    expect(worktree).toContain("project-worktrees/TEST-001");
+    expect(activated.json.git.pushed).toBe(false);
+    expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
+    expect(await readFile(path.join(worktree, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
+    expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
+
+    const resultFile = path.join(project, "..", "worktree-close-result.md");
+    await writeFile(resultFile, "Completed inside the task worktree.\n");
+    const closed = run("task", worktree, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
+    expect(closed.status, closed.stderr).toBe(0);
+    expect(closed.json.git.mode).toBe("worktree-resident");
+    expect(closed.json.git.pushed).toBe(true);
+    expect(closed.json.git.worktree_state).toBe("removed");
+    expect(await lstat(worktree).catch(() => null)).toBeNull();
+    expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
   });
 
   it("migrates a declared 0.1 project to 0.2 through the archive", async () => {

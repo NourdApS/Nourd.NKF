@@ -146,12 +146,15 @@ conformance. It cannot judge whether prose, criteria, or confirmations are
 true. An unmet criterion or unanswered uncertainty means report, not
 transition.
 
-The transition also owns the surrounding Git mechanics deterministically.
-Activation requires a clean work tree on the up-to-date default branch and
-creates the Task's own `task/<task_id>` branch before any write. Deferral
-and closure commit the transition on that branch, push it, and open the
-merge request that carries the Completion Result. Merging into the default
-branch is the repository's human review act, never the command's.
+The transition also owns the surrounding Git transition mechanics
+deterministically. Activation requires a clean work tree on the up-to-date
+default branch and creates the Task's own `task/<task_id>` branch together
+with its own working tree at a deterministic sibling path, so the
+default-branch checkout never leaves the default branch. Deferral and
+closure commit the transition on the Task branch, push it, open the merge
+request that carries the Completion Result, and release the Task's working
+tree once the branch is pushed. Merging into the default branch is the
+repository's human review act, never the command's.
 
 ## Perform Governed Mechanics Deterministically
 

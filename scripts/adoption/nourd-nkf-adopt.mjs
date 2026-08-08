@@ -1774,7 +1774,15 @@ async function taskGit(projectRoot) {
   return { run, optional };
 }
 
-function gitTransitionPlan(git, transition, taskId) {
+function taskWorktreePath(projectRoot, taskId) {
+  return path.join(
+    path.dirname(projectRoot),
+    `${path.basename(projectRoot)}-worktrees`,
+    taskId,
+  );
+}
+
+async function gitTransitionPlan(git, projectRoot, transition, taskId) {
   if (git === null) return { state: "not-a-repository" };
   if (git.run("status", "--porcelain") !== "") {
     fail("The work tree must be clean before a task transition.");
@@ -1797,23 +1805,64 @@ function gitTransitionPlan(git, transition, taskId) {
     if (git.optional("rev-parse", "--verify", "--quiet", branch) !== null) {
       fail(`The task branch already exists: ${branch}`);
     }
-    return { state: "planned", branch, create: true, origin_url: originUrl };
+    const worktree = taskWorktreePath(projectRoot, taskId);
+    if ((await lstat(worktree).catch(() => null)) !== null) {
+      fail(`The task working tree already exists: ${worktree}`);
+    }
+    return {
+      state: "planned",
+      branch,
+      mode: "worktree",
+      worktree,
+      origin_url: originUrl,
+      default_branch: defaultBranch,
+    };
   }
-  if (currentBranch !== branch && git.optional("rev-parse", "--verify", "--quiet", branch) !== null) {
-    fail(`Switch to the existing task branch first: ${branch}`);
+  const isLinkedWorktree =
+    git.optional("rev-parse", "--git-dir") !== git.optional("rev-parse", "--git-common-dir");
+  if (currentBranch === branch) {
+    return {
+      state: "planned",
+      branch,
+      mode: isLinkedWorktree ? "worktree-resident" : "in-place",
+      create: false,
+      origin_url: originUrl,
+      default_branch: defaultBranch,
+    };
   }
-  return { state: "planned", branch, create: currentBranch !== branch, origin_url: originUrl };
+  if (git.optional("rev-parse", "--verify", "--quiet", branch) !== null) {
+    const registered = git
+      .run("worktree", "list", "--porcelain")
+      .includes(`branch refs/heads/${branch}`);
+    fail(
+      registered
+        ? `Run the transition from the task's working tree for ${branch}.`
+        : `Switch to the existing task branch first: ${branch}`,
+    );
+  }
+  return {
+    state: "planned",
+    branch,
+    mode: "in-place",
+    create: true,
+    origin_url: originUrl,
+    default_branch: defaultBranch,
+  };
 }
 
-function gitCompleteTransition(git, projectRoot, plan, transition, taskId, prBody) {
-  if (git === null || plan.state !== "planned") return { state: "not-a-repository" };
+function gitCompleteTransition(effectiveRoot, plan, transition, taskId, prBody) {
+  if (plan.state !== "planned") return { state: "not-a-repository" };
+  const run = (...argumentsValue) =>
+    execFileSync("git", ["-C", effectiveRoot, ...argumentsValue], { encoding: "utf8" }).trim();
   const action = { completed: "close", deferred: "defer", active: "activate" }[transition];
-  git.run("add", "-A");
-  git.run("commit", "-m", `task: ${action} ${taskId}`);
+  run("add", "-A");
+  run("commit", "-m", `task: ${action} ${taskId}`);
   const report = {
     state: "committed",
     branch: plan.branch,
-    commit: git.run("rev-parse", "HEAD"),
+    mode: plan.mode,
+    worktree: plan.mode === "worktree" ? plan.worktree : plan.mode === "worktree-resident" ? effectiveRoot : null,
+    commit: run("rev-parse", "HEAD"),
     pushed: false,
     pull_request: null,
   };
@@ -1822,21 +1871,34 @@ function gitCompleteTransition(git, projectRoot, plan, transition, taskId, prBod
     report.pull_request = "no-origin-remote";
     return report;
   }
-  git.run("push", "-u", "origin", plan.branch);
+  run("push", "-u", "origin", plan.branch);
   report.pushed = true;
-  if (!plan.origin_url.includes("github.com")) {
+  if (plan.origin_url.includes("github.com")) {
+    const created = spawnSync(
+      "gh",
+      ["pr", "create", "--title", `task: ${action} ${taskId}`, "--body", prBody, "--head", plan.branch],
+      { cwd: effectiveRoot, encoding: "utf8" },
+    );
+    report.pull_request =
+      created.status === 0
+        ? created.stdout.trim()
+        : `not-created: ${(created.stderr || created.stdout || "gh unavailable").split("\n")[0]}`;
+  } else {
     report.pull_request = "unsupported-remote";
-    return report;
   }
-  const created = spawnSync(
-    "gh",
-    ["pr", "create", "--title", `task: ${action} ${taskId}`, "--body", prBody, "--head", plan.branch],
-    { cwd: projectRoot, encoding: "utf8" },
-  );
-  report.pull_request =
-    created.status === 0
-      ? created.stdout.trim()
-      : `not-created: ${(created.stderr || created.stdout || "gh unavailable").split("\n")[0]}`;
+  if (plan.mode === "worktree-resident") {
+    try {
+      const commonDir = run("rev-parse", "--path-format=absolute", "--git-common-dir");
+      const mainRoot = path.dirname(commonDir);
+      execFileSync("git", ["-C", mainRoot, "worktree", "remove", effectiveRoot], { encoding: "utf8" });
+      report.worktree_state = "removed";
+    } catch {
+      report.worktree_state = "remove-pending";
+    }
+  } else if (plan.mode === "in-place" && plan.create === true) {
+    run("checkout", plan.default_branch);
+    report.restored_branch = plan.default_branch;
+  }
   return report;
 }
 
@@ -1860,7 +1922,7 @@ async function transitionTask(options) {
     }
   }
   const git = await taskGit(projectRoot);
-  const gitPlan = gitTransitionPlan(git, transition, options.task);
+  const gitPlan = await gitTransitionPlan(git, projectRoot, transition, options.task);
   const fileName = currentRelative.split("/").pop();
   const targetRelative = `tasks/${transition === "active" ? "active" : transition}/${fileName}`;
   let updated = rewriteOutboundLinks(
@@ -1929,20 +1991,30 @@ async function transitionTask(options) {
       ? externalCheckerVerifier(path.resolve(options.checker))
       : fail("task requires an installed release pin or an explicit --checker.");
   await validateCompleteCandidate(projectRoot, files, removedPaths, verifier);
-  if (git !== null && gitPlan.state === "planned" && gitPlan.create) {
-    git.run("checkout", "-b", gitPlan.branch);
+  let effectiveRoot = projectRoot;
+  if (git !== null && gitPlan.state === "planned") {
+    if (gitPlan.mode === "worktree") {
+      await mkdir(path.dirname(gitPlan.worktree), { recursive: true });
+      git.run("worktree", "add", "-b", gitPlan.branch, gitPlan.worktree);
+      effectiveRoot = gitPlan.worktree;
+    } else if (gitPlan.mode === "in-place" && gitPlan.create) {
+      git.run("checkout", "-b", gitPlan.branch);
+    }
   }
   await writeTransaction(
-    projectRoot,
+    effectiveRoot,
     files,
-    () => (verifier ?? (() => verifyInstalled(projectRoot, true)))(projectRoot),
+    () => (verifier ?? ((root) => verifyInstalled(root, true)))(effectiveRoot),
     removedPaths,
   );
   const prBody =
     transition === "completed" && updated.includes("## Completion Result")
       ? `Deterministic close of ${options.task}. The merge is the repository's human review act.\n\n${updated.split("\n## Completion Result\n")[1]?.split("\n## ")[0]?.trim() ?? ""}`
       : `Deterministic ${transition === "deferred" ? "deferral" : "transition"} of ${options.task}. The merge is the repository's human review act.`;
-  const gitReport = gitCompleteTransition(git, projectRoot, gitPlan, transition, options.task, prBody);
+  const gitReport =
+    git === null || gitPlan.state !== "planned"
+      ? { state: "not-a-repository" }
+      : gitCompleteTransition(effectiveRoot, gitPlan, transition, options.task, prBody);
   return {
     state: "transitioned",
     task: options.task,

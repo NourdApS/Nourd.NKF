@@ -66,10 +66,11 @@ and confirm every requirement and open uncertainty — the Human Product Owner
 confirms, or the agent confirms under an explicitly recorded delegation;
 before closing one, verify every acceptance criterion is done, tested, and
 confirmed the same way. Only then run the deterministic \`task\` transition,
-which enforces only the machine-checkable parts and performs the Git drill:
-activation branches \`task/<task_id>\` from the clean, up-to-date default
-branch; closure commits, pushes, and opens the merge request — merging
-stays the human review act.
+which enforces only the machine-checkable parts and performs the Git
+transition mechanics: activation creates the \`task/<task_id>\` branch and
+its own working tree from the clean, up-to-date default branch; closure
+commits, pushes, opens the merge request, and releases the working tree —
+merging stays the human review act.
 
 Perform governed mechanics through the deterministic adopter commands —
 \`task\`, \`repin\`, \`linkify\`, \`refs\`, \`set\`, and \`migrate\` — supplying only the

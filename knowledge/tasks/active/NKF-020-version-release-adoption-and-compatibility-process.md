@@ -54,6 +54,16 @@ transition flows in the guidance and the `task` command carry these
 mechanics; this round ships them and re-releases the set, and the branch
 flow governs transitions from that release onward.
 
+Still later on `2026-08-08`, the Human Product Owner directed two
+corrections to that shipment, approved as an explicit proposal: the
+informal phrase carried into the skills and release notes is replaced by
+the formal term Git transition mechanics, and activation creates the
+Task's own working tree at a deterministic sibling path in addition to the
+branch, so the default-branch checkout never leaves the default branch;
+closure runs in that working tree and releases it once the branch is
+pushed. The Human Product Owner also directed an independent audit of the
+completed work, recorded as findings in this Task.
+
 ## Scope Reduction
 
 On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
