@@ -1756,6 +1756,90 @@ function gateBlocksCompletion(text) {
   return blocked;
 }
 
+async function taskGit(projectRoot) {
+  const run = (...argumentsValue) =>
+    execFileSync("git", ["-C", projectRoot, ...argumentsValue], { encoding: "utf8" }).trim();
+  const optional = (...argumentsValue) => {
+    try {
+      return run(...argumentsValue);
+    } catch {
+      return null;
+    }
+  };
+  const toplevel = optional("rev-parse", "--show-toplevel");
+  if (toplevel === null) return null;
+  if (await realpath(toplevel) !== await realpath(projectRoot)) {
+    fail("The project root must be the Git repository root for a task transition.");
+  }
+  return { run, optional };
+}
+
+function gitTransitionPlan(git, transition, taskId) {
+  if (git === null) return { state: "not-a-repository" };
+  if (git.run("status", "--porcelain") !== "") {
+    fail("The work tree must be clean before a task transition.");
+  }
+  const branch = `task/${taskId}`;
+  const currentBranch = git.run("rev-parse", "--abbrev-ref", "HEAD");
+  const originUrl = git.optional("remote", "get-url", "origin");
+  const originHead = git.optional("symbolic-ref", "--short", "refs/remotes/origin/HEAD");
+  const defaultBranch = originHead === null ? currentBranch : originHead.replace(/^origin\//, "");
+  if (transition === "active") {
+    if (currentBranch !== defaultBranch) {
+      fail(`Activation starts from the default branch ${defaultBranch}, not ${currentBranch}.`);
+    }
+    if (originUrl !== null) {
+      git.run("fetch", "origin", defaultBranch);
+      if (git.run("rev-parse", "HEAD") !== git.run("rev-parse", `origin/${defaultBranch}`)) {
+        fail(`The local ${defaultBranch} is not up to date with origin/${defaultBranch}.`);
+      }
+    }
+    if (git.optional("rev-parse", "--verify", "--quiet", branch) !== null) {
+      fail(`The task branch already exists: ${branch}`);
+    }
+    return { state: "planned", branch, create: true, origin_url: originUrl };
+  }
+  if (currentBranch !== branch && git.optional("rev-parse", "--verify", "--quiet", branch) !== null) {
+    fail(`Switch to the existing task branch first: ${branch}`);
+  }
+  return { state: "planned", branch, create: currentBranch !== branch, origin_url: originUrl };
+}
+
+function gitCompleteTransition(git, projectRoot, plan, transition, taskId, prBody) {
+  if (git === null || plan.state !== "planned") return { state: "not-a-repository" };
+  const action = { completed: "close", deferred: "defer", active: "activate" }[transition];
+  git.run("add", "-A");
+  git.run("commit", "-m", `task: ${action} ${taskId}`);
+  const report = {
+    state: "committed",
+    branch: plan.branch,
+    commit: git.run("rev-parse", "HEAD"),
+    pushed: false,
+    pull_request: null,
+  };
+  if (transition === "active") return report;
+  if (plan.origin_url === null) {
+    report.pull_request = "no-origin-remote";
+    return report;
+  }
+  git.run("push", "-u", "origin", plan.branch);
+  report.pushed = true;
+  if (!plan.origin_url.includes("github.com")) {
+    report.pull_request = "unsupported-remote";
+    return report;
+  }
+  const created = spawnSync(
+    "gh",
+    ["pr", "create", "--title", `task: ${action} ${taskId}`, "--body", prBody, "--head", plan.branch],
+    { cwd: projectRoot, encoding: "utf8" },
+  );
+  report.pull_request =
+    created.status === 0
+      ? created.stdout.trim()
+      : `not-created: ${(created.stderr || created.stdout || "gh unavailable").split("\n")[0]}`;
+  return report;
+}
+
 async function transitionTask(options) {
   const projectRoot = await requireProjectRoot(options.project);
   const transition = { close: "completed", defer: "deferred", activate: "active" }[options.to ?? ""];
@@ -1775,6 +1859,8 @@ async function transitionTask(options) {
       fail(`The gate blocks completion: unexcepted findings for ${blockers.join(", ")}.`);
     }
   }
+  const git = await taskGit(projectRoot);
+  const gitPlan = gitTransitionPlan(git, transition, options.task);
   const fileName = currentRelative.split("/").pop();
   const targetRelative = `tasks/${transition === "active" ? "active" : transition}/${fileName}`;
   let updated = rewriteOutboundLinks(
@@ -1843,12 +1929,20 @@ async function transitionTask(options) {
       ? externalCheckerVerifier(path.resolve(options.checker))
       : fail("task requires an installed release pin or an explicit --checker.");
   await validateCompleteCandidate(projectRoot, files, removedPaths, verifier);
+  if (git !== null && gitPlan.state === "planned" && gitPlan.create) {
+    git.run("checkout", "-b", gitPlan.branch);
+  }
   await writeTransaction(
     projectRoot,
     files,
     () => (verifier ?? (() => verifyInstalled(projectRoot, true)))(projectRoot),
     removedPaths,
   );
+  const prBody =
+    transition === "completed" && updated.includes("## Completion Result")
+      ? `Deterministic close of ${options.task}. The merge is the repository's human review act.\n\n${updated.split("\n## Completion Result\n")[1]?.split("\n## ")[0]?.trim() ?? ""}`
+      : `Deterministic ${transition === "deferred" ? "deferral" : "transition"} of ${options.task}. The merge is the repository's human review act.`;
+  const gitReport = gitCompleteTransition(git, projectRoot, gitPlan, transition, options.task, prBody);
   return {
     state: "transitioned",
     task: options.task,
@@ -1856,6 +1950,7 @@ async function transitionTask(options) {
     to: targetRelative,
     task_status: transition,
     documents_rewritten: linksRewritten,
+    git: gitReport,
   };
 }
 

@@ -1,0 +1,29 @@
+contract: nkf.record
+id: adr-0101
+type: decision
+body_contract: nkf.decision
+title: "ADR 0101: Deterministic Git Mechanics In Task Transitions"
+source:
+  path: decisions/0101-deterministic-git-mechanics-in-task-transitions.md
+  digest:
+    algorithm: sha-256
+    value: 7258a3f1130e9ef601e6892c8bafda224ef32b735073f365947920fe566ab3f2
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: extends
+    target: adr-0098
+    source_section: decision

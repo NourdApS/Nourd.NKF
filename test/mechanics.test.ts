@@ -35,6 +35,22 @@ async function copyFixture(): Promise<string> {
   return project;
 }
 
+async function gitFixture() {
+  const project = await copyFixture();
+  const g = (args: string[]) => spawnSync("git", ["-C", project, ...args], { encoding: "utf8" });
+  g(["init", "-b", "master"]);
+  g(["config", "user.email", "fixture@example.com"]);
+  g(["config", "user.name", "Fixture"]);
+  g(["add", "-A"]);
+  g(["commit", "-m", "init"]);
+  const bare = path.join(project, "..", "origin.git");
+  spawnSync("git", ["init", "--bare", "-b", "master", bare], { encoding: "utf8" });
+  g(["remote", "add", "origin", bare]);
+  g(["push", "-u", "origin", "master"]);
+  g(["remote", "set-head", "origin", "master"]);
+  return { project, g, bare };
+}
+
 beforeAll(async () => {
   const entries = await readReleaseEntries(repositoryRoot);
   const manifest = constructReleaseManifest({
@@ -160,6 +176,43 @@ describe("deterministic governed mechanics", () => {
     expect(deferred.status, deferred.stderr).toBe(0);
     const activated = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
     expect(activated.status, activated.stderr).toBe(0);
+    expect(await readFile(path.join(project, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
+  });
+
+  it("refuses a git transition on a dirty work tree", async () => {
+    const { project } = await gitFixture();
+    await writeFile(path.join(project, "dirty.txt"), "x\n");
+    const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("work tree must be clean");
+  });
+
+  it("defers on a task branch, commits, and pushes deterministically", async () => {
+    const { project, g, bare } = await gitFixture();
+    const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json.git.branch).toBe("task/TEST-001");
+    expect(result.json.git.pushed).toBe(true);
+    expect(result.json.git.pull_request).toBe("unsupported-remote");
+    expect(g(["status", "--porcelain"]).stdout.trim()).toBe("");
+    const remoteBranches = spawnSync("git", ["--git-dir", bare, "branch"], { encoding: "utf8" }).stdout;
+    expect(remoteBranches).toContain("task/TEST-001");
+  });
+
+  it("activates from the clean up-to-date default branch onto a new task branch", async () => {
+    const { project, g } = await gitFixture();
+    const deferred = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    expect(deferred.status, deferred.stderr).toBe(0);
+    g(["checkout", "master"]);
+    g(["merge", "--ff-only", "task/TEST-001"]);
+    g(["push", "origin", "master"]);
+    g(["branch", "-D", "task/TEST-001"]);
+    g(["push", "origin", "--delete", "task/TEST-001"]);
+    const result = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json.git.branch).toBe("task/TEST-001");
+    expect(result.json.git.pushed).toBe(false);
+    expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("task/TEST-001");
     expect(await readFile(path.join(project, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
   });
 

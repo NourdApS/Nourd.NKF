@@ -44,6 +44,16 @@ corrected set under the continued exception with the revised pair
 re-accepted and the release checker re-bound. Timeless wording was chosen
 so that no future Task lifecycle transition can require a release.
 
+Later on `2026-08-08`, the Human Product Owner directed embedding the usual
+Git actions deterministically in the Task transitions: activation requires
+a clean work tree on the up-to-date default branch and creates the Task's
+own branch before starting; closing commits the transition on that branch,
+pushes it, and opens the merge request that carries the Completion Result,
+with the merge itself remaining the repository's human review act. The
+transition flows in the guidance and the `task` command carry these
+mechanics; this round ships them and re-releases the set, and the branch
+flow governs transitions from that release onward.
+
 ## Scope Reduction
 
 On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
