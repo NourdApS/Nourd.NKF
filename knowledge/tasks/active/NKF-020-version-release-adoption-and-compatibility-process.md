@@ -233,10 +233,33 @@ One governed process definition covering:
   the audit's reporting finding. The widened pre-cut review ran against
   the changed rule with no stale statement in any member; fixtures,
   examples, and 186 tests validate the complete set.
+- The corrected set was released as tag
+  `release-sha256-a1a12e4482d430a1555b0bb8dbda9ba716ca3acaadb845c0ef4dd9f632023482`
+  from commit `f39c7f9`, with the rebuilt checker bound through [ADR 0105](../../decisions/0105-bind-the-cancelled-state-release-checker.md)
+  and human-readable notes naming the four-state lifecycle and the
+  migration's new index.
+- The directed independent audit of the cancelled-state shipment was
+  performed with fresh verification: the re-downloaded archive matches by
+  digest and byte comparison and its extracted checker validates this
+  bundle with zero diagnostics; the shipped specification and executable
+  companion both carry the cancelled state; no informal transition
+  vocabulary survives in the shipped set; and a cancellation driven by the
+  distributed adopter against the archive's checker transitions the Task,
+  records its rationale, pushes the branch, and reports the conclusion as
+  proposed rather than done. The audit confirmed the confirmed model
+  behaving as intended rather than as a defect: after the conclusion the
+  default branch still rests in the pre-conclusion state, the concluded
+  Task lives on its branch awaiting the human merge, the pending view
+  reports both, and terminality is enforced where the cancelled state
+  rests. One new finding is open: the deterministic command surface ships
+  in the adopter, which is distributed through the public documentation
+  mirror and self-installs rather than being a member of the release
+  archive, so the set enumeration does not list it; either the adopter
+  joins the archive members or the versioned-set wording is corrected to
+  describe its actual distribution. The earlier cosmetic findings remain.
 - The remaining scope is breaking-change classification and signaling, the
   deterministic successor-pair scaffold, process refinements from further
-  release and adoption experience, and the audit's remaining cosmetic
-  findings.
+  release and adoption experience, and the audit's open findings.
 
 ## Acceptance Criteria
 
