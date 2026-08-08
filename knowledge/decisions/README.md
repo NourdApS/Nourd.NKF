@@ -117,6 +117,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0102: Task Worktrees And Formal Transition Vocabulary](0102-task-worktrees-and-formal-transition-vocabulary.md)
 - [ADR 0103: Branch-Carried Task Life And Cancelled State](0103-branch-carried-task-life-and-cancelled-state.md)
 - [ADR 0104: Accept The Cancelled-State Pair](0104-accept-the-cancelled-state-pair.md)
+- [ADR 0105: Bind The Cancelled-State Release Checker](0105-bind-the-cancelled-state-release-checker.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
