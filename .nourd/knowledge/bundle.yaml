@@ -1323,7 +1323,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: ff8605480bb7c3f3c7112bcb3a00711b7f171069eaefb66e1e0be62a1e471e48
+      value: ccfb91520add6eadb436bbbdcdba07e36aef55c04aa65123cbae4f1f9b7b5b93
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts

@@ -287,6 +287,15 @@ One governed process definition covering:
   pass. The repair changes checkout history availability only; it does not
   weaken the command, skip either test, change NKF meaning, or claim remote
   success before a new run is observed.
+- Successor run `31325531988` on exact head
+  `a30e108121db5beebc27ad39bf2d831a410e7da7` proved the full-history repair:
+  both previously missing predecessor commits were available and the
+  migration and adopter predecessor tests passed. It then exposed a separate
+  hosted-runner timing boundary: the complete two-profile empty-repository
+  onboarding test finished in `5.459` seconds and exceeded Vitest's default
+  five-second test timeout. The candidate gives only that existing end-to-end
+  test a `15`-second timeout, matching the file's other bounded integration
+  tests; its assertions and the global timeout remain unchanged.
 
 ## Acceptance Criteria
 
