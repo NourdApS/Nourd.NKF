@@ -338,6 +338,17 @@ One governed process definition covering:
   deterministic entry list and archive contain only the authority/contracts,
   checker, four protocols, and four portable skills. The correction implements
   existing accepted meaning; it does not widen that meaning.
+- The [NKF-020 Complete-Set Release Audit](../../evidence/audits/nkf-020-complete-set-release-audit.md) independently verified candidate commit
+  `3d6ea93c3b3c8ab50684b56bf66f5b0c117ab05a`: two separately packaged
+  archives were byte-identical at SHA-256
+  `423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5`;
+  system extraction found exactly 133 members; all 132 source members matched
+  byte-for-byte; the extracted checker passed this repository and both
+  fixtures with zero diagnostics; the extracted adopter enumerated all 132
+  pre-manifest members; and GitHub run `31329086006` passed on the exact
+  commit. [ADR 0106](../../decisions/0106-confirm-the-complete-set-release-correction.md) supplies the separate delegated technical confirmation and authorizes
+  corrected unconsumed-release publication without inventing a Product
+  decision.
 
 ## Acceptance Criteria
 
@@ -383,6 +394,7 @@ round follow it.
 | [`adr-0103`](../../decisions/0103-branch-carried-task-life-and-cancelled-state.md) | record | The current 0.2 implementation carries branch-resident Task life and the official terminal `cancelled` state. |
 | [`adr-0104`](../../decisions/0104-accept-the-cancelled-state-pair.md) | record | The cancelled-state pair is the exact accepted 0.2 authority pair for the corrected set. |
 | [`adr-0105`](../../decisions/0105-bind-the-cancelled-state-release-checker.md) | record | Release packaging must carry the checker built at the bound source commit and exact SHA-256. |
+| [`adr-0106`](../../decisions/0106-confirm-the-complete-set-release-correction.md) | record | The exact complete-set correction at commit `3d6ea93` is technically confirmed and authorized for corrected unconsumed-release publication; publication, recommendation, migration, breaking-change policy, and Task conclusion are not implied. |
 
 ### Mandatory Capabilities
 
@@ -391,9 +403,9 @@ round follow it.
 | Living-surface links resolve deterministically in the canonical command | proven | runtime-behaviour | none |
 | Task transitions fail closed before altering accepted pair bytes | proven | runtime-behaviour | none |
 | The exact-commit workflow supplies the pinned predecessor history required by the complete migration and adopter test suite | proven | runtime-behaviour | none |
-| The 0.2 release archive carries every member required by the accepted complete frozen-set rule | unknown | none | none |
-| The deterministic `set` output equals the archive's exact pre-manifest membership and digests | unknown | none | none |
-| A fresh post-action audit independently verifies the corrected archive, installed tools, fixtures, examples, guidance, and provenance | unknown | none | none |
+| The 0.2 release archive carries every member required by the accepted complete frozen-set rule | proven | data-validity | none |
+| The deterministic `set` output equals the archive's exact pre-manifest membership and digests | proven | runtime-behaviour | none |
+| A fresh post-action audit independently verifies the corrected archive, installed tools, fixtures, examples, guidance, and provenance | proven | runtime-behaviour | none |
 
 This gate was added when the Task was created before NKF 0.2 was adopted,
 was normalized during the self-migration, and was re-extracted on the

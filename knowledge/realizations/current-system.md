@@ -13,7 +13,8 @@ confirmation_decisions:
   - adr-0070
   - adr-0075
   - adr-0082
-unconfirmed_scope: The current NKF-020 successor account, including the complete-set release-package correction, is unconfirmed; the listed Decisions confirm exact predecessor revisions rather than this evolving record.
+  - adr-0106
+unconfirmed_scope: ADR 0106 confirms the complete-set release correction at exact commit 3d6ea93; later publication, recommendation, and other evolving current-system facts remain unconfirmed.
 ---
 
 # NKF Current System
@@ -131,7 +132,8 @@ release-tooling defect by making one 132-member pre-manifest enumeration feed
 the archive builder, verifier, public-doc verifier, and adopter `set` command.
 No corrected replacement publication is claimed until it is independently
 verified and observed remotely. This successor account remains deliberately
-unconfirmed pending that review.
+partially confirmed: [ADR 0106](../decisions/0106-confirm-the-complete-set-release-correction.md) confirms the exact audited complete-set correction, while
+publication and recommendation remain operational facts to observe later.
 
 ## Durable Mapping
 

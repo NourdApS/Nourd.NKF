@@ -30,7 +30,10 @@ records the final authority, coherence, completeness, enforcement, safety,
 compatibility, documentation, and recovery review of the exact successor. The
 NKF-019 Nourd Tiles decision applicability failure Evidence binds the
 read-only consumer observations that initiated the Decision Applicability
-Gate.
+Gate. The NKF-020 complete-set release audit independently verifies exact
+archive membership, source-byte equality, extracted checker and adopter
+behavior, separate-build reproducibility, and exact-commit GitHub validation
+for the corrected 0.2 release candidate.
 
 ## Decision Inputs
 

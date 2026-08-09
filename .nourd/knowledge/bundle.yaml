@@ -88,6 +88,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-019-onboarding-and-upgrade-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-020-complete-set-release-audit.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
