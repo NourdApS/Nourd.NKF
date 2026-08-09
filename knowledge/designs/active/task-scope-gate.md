@@ -19,7 +19,7 @@ implementation_evidence: None; this is a Design proposal.
 ## Design Kind Problem And Scope
 
 This is a Common contract, conformance, authoring-procedure, onboarding, and
-migration Design under [NKF-021](../../tasks/active/NKF-021-task-scope-gate.md).
+migration Design under [NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md).
 It addresses one failure class: work discovered during an active Task can be
 implemented there merely because it was discovered there, even when the work
 does not satisfy the Task's established acceptance criteria.
@@ -64,7 +64,7 @@ keeps prose truth and acceptance outside deterministic commands, and
 requires semantic review before those commands run.
 
 The one-time NKF 0.2 recovery and branch exceptions are recorded in
-[NKF-021](../../tasks/active/NKF-021-task-scope-gate.md). They do not become
+[NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md). They do not become
 general Task Scope Gate semantics or a precedent for later in-place version
 changes.
 
@@ -191,7 +191,7 @@ scope expansion occurred; it claims only that the gate did not exist and no
 historical classification is being fabricated.
 
 The NKF repository self-migration records known current findings rather than
-hiding them behind the retrospective sentence. In particular, [NKF-021](../../tasks/active/NKF-021-task-scope-gate.md) records
+hiding them behind the retrospective sentence. In particular, [NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md) records
 the activation-worktree defect as a `blocking-dependency` transferred to
 [NKF-020](../../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md). Existing concluded Tasks may use the retrospective sentence.
 

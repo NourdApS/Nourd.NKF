@@ -7,7 +7,7 @@ source:
   path: designs/active/task-scope-gate.md
   digest:
     algorithm: sha-256
-    value: cd209517a95732578eb0baa6675b7de4573e1cbf19531960fa57fab34ad1b5d7
+    value: 9367128fa8e6a5571dfa53a0c1fa500fb25f1f1b96703956c7d3dfccf2fe6928
 governance:
   lifecycle: living
   status: draft
