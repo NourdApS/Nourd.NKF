@@ -8,6 +8,10 @@ import { repositoryRoot } from "./helpers.js";
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
 const {
+  FIXTURE_FILES,
+  HOST_ADAPTER_FILES,
+  PUBLIC_DOCUMENTATION_FILES,
+  RELEASE_ENTRIES,
   constructReleaseManifest,
   createUstar,
   readReleaseEntries,
@@ -84,13 +88,31 @@ describe("deterministic governed mechanics", () => {
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("enumerated");
     expect(result.json.nkf_version).toBe("0.2");
-    expect(result.json.members).toHaveLength(15);
+    const expectedPaths = RELEASE_ENTRIES
+      .filter((entry: { path: string }) => entry.path !== "release-manifest.json")
+      .map((entry: { path: string }) => entry.path);
+    expect(result.json.members.map((member: { path: string }) => member.path)).toEqual(
+      expectedPaths,
+    );
+    expect(result.json.members).toHaveLength(132);
     for (const member of result.json.members) {
       expect(member.present, member.path).toBe(true);
       expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
     }
+    expect(expectedPaths).toContain("dist/nourd-nkf-adopt.mjs");
+    expect(
+      expectedPaths.filter((member: string) => HOST_ADAPTER_FILES.includes(member)),
+    ).toHaveLength(HOST_ADAPTER_FILES.length);
+    expect(
+      expectedPaths.filter((member: string) => FIXTURE_FILES.includes(member)),
+    ).toHaveLength(FIXTURE_FILES.length);
+    expect(
+      expectedPaths.filter((member: string) => member.startsWith("public-docs/")),
+    ).toHaveLength(PUBLIC_DOCUMENTATION_FILES.length);
     const guidance = result.json.members.filter(
-      (member: { path: string }) => member.path.startsWith("integrations/") || member.path.endsWith("SKILL.md"),
+      (member: { path: string }) =>
+        (member.path.startsWith("integrations/") && member.path.endsWith(".md")) ||
+        (!member.path.startsWith("public-docs/") && member.path.endsWith("SKILL.md")),
     );
     expect(guidance).toHaveLength(8);
     for (const member of guidance) {

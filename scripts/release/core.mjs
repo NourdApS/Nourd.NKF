@@ -12,6 +12,17 @@ import os from "node:os";
 import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
+import {
+  FIXTURE_FILES,
+  HOST_ADAPTER_FILES,
+  PUBLIC_DOCUMENTATION_FILES,
+} from "./set-files.mjs";
+
+export {
+  FIXTURE_FILES,
+  HOST_ADAPTER_FILES,
+  PUBLIC_DOCUMENTATION_FILES,
+} from "./set-files.mjs";
 
 export const REPOSITORY =
   "https://github.com/kaveh6202/Nourd.NKF.git";
@@ -55,6 +66,19 @@ export const RELEASE_ENTRIES = Object.freeze([
   { path: ".claude/skills/nkf-authoring/SKILL.md", mode: 0o644 },
   { path: ".agents/skills/nkf-onboarding/SKILL.md", mode: 0o644 },
   { path: ".claude/skills/nkf-onboarding/SKILL.md", mode: 0o644 },
+  { path: "dist/nourd-nkf-adopt.mjs", mode: 0o644 },
+  ...HOST_ADAPTER_FILES.map((artifactPath) => ({
+    path: artifactPath,
+    mode: 0o644,
+  })),
+  ...FIXTURE_FILES.map((artifactPath) => ({
+    path: artifactPath,
+    mode: 0o644,
+  })),
+  ...PUBLIC_DOCUMENTATION_FILES.map((artifactPath) => ({
+    path: `public-docs/${artifactPath}`,
+    mode: 0o644,
+  })),
   { path: "release-manifest.json", mode: 0o644 },
 ]);
 
@@ -488,7 +512,7 @@ export function inspectUstar(archiveBytes) {
   let index = 0;
   while (offset < dataEnd) {
     const expected = memberEntries[index];
-    if (!expected) fail("USTAR contains an unexpected ninth entry.");
+    if (!expected) fail("USTAR contains an unexpected extra entry.");
     const header = archive.subarray(offset, offset + 512);
     if (header.length !== 512 || header.every((byte) => byte === 0)) {
       fail("USTAR contains an early zero block.");

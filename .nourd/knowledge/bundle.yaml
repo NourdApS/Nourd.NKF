@@ -299,7 +299,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 9ca4a175057543f8347493ffabe3528fc6275b15a4b2ba27dd584695e8c0fd38
+      value: 97316a661c14d0fd56dfc47ee9b6e156f0db259d1e5b4f3009055ec7ccb714cd
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-2-nourd-knowledge-bundle-yaml
@@ -1003,7 +1003,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 9ca4a175057543f8347493ffabe3528fc6275b15a4b2ba27dd584695e8c0fd38
+      value: 97316a661c14d0fd56dfc47ee9b6e156f0db259d1e5b4f3009055ec7ccb714cd
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -1091,7 +1091,15 @@ governed_artifacts:
     path: scripts/release/core.mjs
     digest:
       algorithm: sha-256
-      value: 1b04b562877e018dd8682ad158b8978feac52e65c06d824012c92982054a3828
+      value: 0720d47bc18401d056a05f18148d29cf85679a87b575ae3180311e8061191251
+    record: nkf-0.1-native-realization
+    source_section: durable-mapping
+  - id: artifact-scripts-release-set-files-mjs
+    kind: build-tool
+    path: scripts/release/set-files.mjs
+    digest:
+      algorithm: sha-256
+      value: 6143fbe7b7adfbce954a2895e93cc510ccace4b7da2d6c23ece7c054ed392da4
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-stage-public-docs-mjs
@@ -1139,7 +1147,7 @@ governed_artifacts:
     path: scripts/verify-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: 327a449153e30b29cd1b7f99845ed59367043d7d8e00ea3135092ab2eb71017b
+      value: 756ebd2a7c9369f14308c9d0c89673995ff2b0fef30cf11acb3f107373ab6def
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-verify-recommended-release-mjs
@@ -1307,7 +1315,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: 28940d15993eed18930698e77efc04cd9f3c1f2bdac8bc088849b8d2b104d45c
+      value: 84d8f42f0923b2c209ae632fd4935429b7358a43d1596844896b238404e1b85f
     record: nkf-0.1-native-realization
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts
@@ -1427,7 +1435,7 @@ governed_artifacts:
     path: test/release-tooling.test.ts
     digest:
       algorithm: sha-256
-      value: 11d0b78ab05f2c0372eccabe9b23599bdd43b502e9c2ad504635db4dd5808abf
+      value: 15fd89bd0d0d926dbdc0271dd87c2953a460ed2aca0ce647385db87e8bf4c0b0
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-result-test-ts
