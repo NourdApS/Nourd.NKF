@@ -30,10 +30,12 @@ distribution, security, and technical lifecycle.
 
 NKF 0.2 is the current released version: one complete versioned set — the
 canonical Specification, its digest-bound executable companion, derived
-Schemas, the deterministic checker, four governed protocols, and four
-portable agent skills — published as a single content-addressed archive
-whose tag is its SHA-256. The
-[GitHub Releases page](https://github.com/kaveh6202/Nourd.NKF/releases)
+Schemas, deterministic checker and adopter, four governed protocols, four
+portable agent skills, host-adapter guidance, fixtures, examples, and public
+documentation projection — published as a single content-addressed archive
+whose tag is its SHA-256. The exact current release and recommendation are
+SHA-256 `423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5`.
+The [GitHub Releases page](https://github.com/kaveh6202/Nourd.NKF/releases)
 carries the current archive and its human-readable migration meaning.
 
 NKF 0.2 requires a Decision Applicability Gate on every Task, separates five
@@ -42,9 +44,9 @@ titles and machine-verified deep links, and ships deterministic governed
 mechanics in the adopter. Acceptance and the correction chain are recorded
 in [the Decisions](knowledge/decisions/README.md).
 
-This repository has adopted NKF 0.2 as its own first adopter. The
-recommended consumer catalog still pins the confirmed NKF 0.1 predecessor
-release; consumer migration to 0.2 is deliberate, separate work under the
+This repository has adopted NKF 0.2 as its own first adopter. The recommended
+consumer catalog now pins the independently verified NKF 0.2 release;
+consumer migration remains deliberate, separate work under the
 [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md). The
 published
 [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs)

@@ -54,7 +54,7 @@ for (const relative of PUBLIC_FILES) {
 }
 const publication = {
   contract: "nkf.public-documentation-publication",
-  nkf_version: "0.1",
+  nkf_version: recommended.nkf_version,
   status: "pre-stable",
   role: "explanatory-with-exact-normative-markdown-mirror",
   source_commit: sourceCommit,

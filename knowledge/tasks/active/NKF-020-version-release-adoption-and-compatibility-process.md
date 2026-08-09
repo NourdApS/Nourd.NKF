@@ -349,6 +349,19 @@ One governed process definition covering:
   commit. [ADR 0106](../../decisions/0106-confirm-the-complete-set-release-correction.md) supplies the separate delegated technical confirmation and authorizes
   corrected unconsumed-release publication without inventing a Product
   decision.
+- The corrected release was published as private prerelease
+  `release-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5`
+  from exact source commit `3d6ea93c3b3c8ab50684b56bf66f5b0c117ab05a` after confirmation-bearing
+  head `aa04105e5c62365553626e624d9ac7b2e4094180` passed GitHub run
+  `31329613099`. A fresh authenticated download was byte-identical to the
+  audited candidate, carried 133 members, and passed the strict verifier plus
+  extracted-checker invocation. The [publication Evidence](../../evidence/audits/nkf-020-release-publication.md) records the exact observations.
+  `release/recommended.json` now deliberately pins this 0.2 prerelease; no
+  consumer was migrated. Public-documentation staging now derives its NKF
+  version from that catalog instead of emitting the retired 0.1 coordinate
+  after a 0.2 promotion. The superseded incomplete hosted release and tag
+  remain present because their deletion is a separate destructive remote act
+  requiring explicit authorization.
 
 ## Acceptance Criteria
 

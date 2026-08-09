@@ -33,7 +33,9 @@ read-only consumer observations that initiated the Decision Applicability
 Gate. The NKF-020 complete-set release audit independently verifies exact
 archive membership, source-byte equality, extracted checker and adopter
 behavior, separate-build reproducibility, and exact-commit GitHub validation
-for the corrected 0.2 release candidate.
+for the corrected 0.2 release candidate. The NKF-020 release-publication
+Evidence records the later GitHub prerelease, independent re-download,
+remote-tag observation, and deliberate recommended-release promotion.
 
 ## Decision Inputs
 
