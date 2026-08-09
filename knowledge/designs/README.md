@@ -45,7 +45,7 @@ establishes it.
 
 [Active Design Index](active/README.md)
 
-No Design is currently classified as Active.
+- [NKF Task Scope Gate](active/task-scope-gate.md)
 
 ## Adopted
 

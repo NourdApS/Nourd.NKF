@@ -197,6 +197,19 @@ describe("agent guidance integrity verifier", () => {
     expect(result.stderr).toContain("exact reviewed Action");
   });
 
+  it("rejects a shallow workflow checkout even when its registry digest is updated", async () => {
+    const project = await copyProject();
+    const workflowPath = path.join(project, ".github/workflows/nkf-contracts.yml");
+    const originalWorkflow = await readFile(workflowPath, "utf8");
+    const changedWorkflow = originalWorkflow.replace("fetch-depth: 0", "fetch-depth: 1");
+    await writeWorkflowAndUpdateDigest(project, changedWorkflow);
+
+    const result = run(project);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("exact reviewed Action");
+  });
+
   it("rejects workflow control fields outside the reviewed shape", async () => {
     const project = await copyProject();
     const workflowPath = path.join(project, ".github/workflows/nkf-contracts.yml");

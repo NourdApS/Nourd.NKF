@@ -347,7 +347,8 @@ function validateWorkflow(workflow, registry) {
   if (
     steps[0].name !== "Check Out Exact Commit" ||
     steps[0].uses !== checkoutAction ||
-    JSON.stringify(steps[0].with) !== JSON.stringify({ "persist-credentials": false })
+    JSON.stringify(steps[0].with) !==
+      JSON.stringify({ "persist-credentials": false, "fetch-depth": 0 })
   ) {
     fail("The workflow checkout step must use the exact reviewed Action and settings.");
   }

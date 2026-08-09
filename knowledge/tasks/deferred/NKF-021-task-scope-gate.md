@@ -37,7 +37,7 @@ afterward to finish the release, adoption, compatibility, CI, and packaging
 work that it owns.
 
 For this recovery only, `task/NKF-021` is the single exceptional branch for
-the remaining NKF 0.2 work. [NKF-021](NKF-021-task-scope-gate.md) and
+the remaining NKF 0.2 work. NKF-021 and
 [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
 retain separate scope, plans, acceptance criteria, provenance, and commits.
 The exception changes only Git branch topology, ends after the final corrected
@@ -60,6 +60,16 @@ adoption is known; the exception creates no precedent and ends when the final
 corrected NKF 0.2 release is published and merged; every later
 contract-meaning change requires a new NKF version.
 
+Later on `2026-08-09`, before any Design adoption, Decision acceptance,
+Specification revision, executable-contract change, or scope-gate
+implementation, the Human Product Owner changed the release direction. This
+Task is to be deferred, its Draft Design preserved for a successor NKF version,
+and [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+resumed solely to complete and independently audit the already accepted NKF
+0.2 release obligations without adding new normative meaning. The earlier
+one-time 0.2 exception remains historical authorization; no normative change
+was made under it.
+
 ## Problem
 
 An active Task can currently absorb a newly discovered improvement, dependency,
@@ -78,10 +88,12 @@ current and future work.
 
 ## Desired Outcome
 
-NKF 0.2 requires one minimal Task Scope Gate in every Task non-record. The gate
-records each newly discovered unit of work, classifies its relationship to the
-Task, and records whether it remains, transfers to another confirmed Task, or
-is admitted by an explicit Human Product Owner scope amendment.
+A successor NKF version can require one minimal Task Scope Gate in every Task
+non-record after the Design direction and exact authority pair are separately
+reviewed and accepted. The gate records each newly discovered unit of work,
+classifies its relationship to the Task, and records whether it remains,
+transfers to another confirmed Task, or is admitted by an explicit Human
+Product Owner scope amendment.
 
 The existing Scope and Acceptance Criteria remain the semantic authority for
 the Task. The new gate is a provenance-bearing control around changes to that
@@ -98,16 +110,16 @@ meaning.
   scope amendment are represented;
 - define retrospective migration for existing Tasks without fabricating that
   the gate existed historically;
-- obtain Human Product Owner adoption and exact-revision acceptance for any
-  normative NKF 0.2 change;
+- obtain Human Product Owner adoption and exact-revision acceptance before any
+  successor-version normative change;
 - derive the executable companion, Schemas, checker behavior, diagnostics,
   fixtures, examples, onboarding, migration, authoring guidance, tests, and
   documentation from accepted meaning;
 - migrate this repository's Task set and keep every finding owned by either
   this Task or [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md);
 - validate the exact candidate with `npm run nkf:check`; and
-- perform the directed independent audit against the implementation and the
-  final distributable set before claiming completion.
+- perform the directed independent audit against any later implementation and
+  distributable set before claiming completion.
 
 ## Out Of Scope
 
@@ -124,42 +136,27 @@ meaning.
 
 ## Execution Plan
 
-1. Preserve the [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
-   expansion as evidence and inventory the current Task, checker, fixture,
-   onboarding, migration, guidance, distribution, and release surfaces.
-2. Resolve the one-time NKF 0.2 correction boundary against accepted version
-   sealing and self-adoption rules before activation.
-3. Draft one Design for a minimal finding ledger with closed classifications,
-   dispositions, receiving-Task links, explicit Human Product Owner scope
-   amendments, an empty form, and retrospective disclosure.
-4. Present each consequential normative boundary for Human Product Owner
-   confirmation, then record the adopted direction and accept only the exact
-   reviewed Specification and executable-companion revision.
-5. Derive the Schemas, checker, diagnostics, fixtures, examples, onboarding,
-   migration, authoring guidance, public documentation, and tests without
-   extending semantic scope through implementation.
-6. Migrate this repository's Tasks truthfully, retaining distinct ownership
-   between [NKF-021](NKF-021-task-scope-gate.md) and
-   [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md),
-   and record retrospective disclosure where required.
-7. Run exactly `npm run nkf:check` on the coherent candidate and keep
+1. Preserve the Draft Design and the [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+   expansion evidence without adopting or implementing the proposal.
+2. Remove the Draft Design's claim that the Task Scope Gate targets NKF 0.2;
+   express it as successor-version proposal knowledge instead.
+3. Run exactly `npm run nkf:check` on the coherent deferral candidate and keep
    acceptance, confirmation, local Git state, remote enforcement, release,
    and recommendation as separate facts.
-8. Commission an independent audit using fresh inspection, adversarial
-   fixtures, migration exercise, set enumeration, archive inspection, and
-   extracted-checker verification rather than relying only on the tests used
-   during implementation.
-9. Return to [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
-   on the same exceptional recovery branch for the final corrected NKF 0.2
-   release and its separate audit, then conclude Tasks through the explicitly
-   recorded transition mechanics.
+4. Defer this Task through the deterministic transition and preserve the merge
+   as the repository's Human Product Owner review act.
+5. Resume [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+   only after the deferred conclusion is incorporated, limiting that work to
+   existing NKF 0.2 release integrity and independent audit.
+6. Reactivate this Task only under later explicit Human Product Owner direction
+   for a successor NKF version.
 
 ## Acceptance Criteria
 
-- A Human Product Owner Decision adopts the exact Task Scope Gate boundary and
-  explicitly resolves the one-time NKF 0.2 version-sealing exception.
-- The accepted NKF 0.2 authority pair requires exactly one minimal Task Scope
-  Gate in every Task non-record without duplicating the Task's Scope or
+- A Human Product Owner Decision adopts the exact Task Scope Gate boundary for
+  a successor NKF version.
+- The accepted successor authority pair requires exactly one minimal Task
+  Scope Gate in every Task non-record without duplicating the Task's Scope or
   Acceptance Criteria.
 - Newly discovered work has a closed classification and disposition; remaining
   work is tied to an existing acceptance criterion, transferred work resolves
@@ -168,17 +165,17 @@ meaning.
 - The checker enforces structure, vocabulary, placement, references, and
   mechanically decidable combinations while making no claim that the
   classification is semantically true.
-- Existing Tasks and the 0.1-to-0.2 migration receive truthful retrospective
-  gates without fabricated historical decisions.
+- Existing Tasks and the predecessor-to-successor migration receive truthful
+  retrospective gates without fabricated historical decisions.
 - Schemas, fixtures, examples, onboarding, migration, portable guidance,
   public documentation, and tests agree with the accepted rule.
 - `npm run nkf:check` reports zero diagnostics for the exact candidate.
 - Independent audit Evidence records fresh verification of the implementation,
   migration, complete set, final archive, and extracted checker, including all
   findings rather than only passing results.
-- The final corrected NKF 0.2 release contains the accepted scope-gate set, and
+- The successor release contains the accepted scope-gate set, while
   [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
-  retains ownership of its remaining release and compatibility work.
+  retains ownership of existing NKF 0.2 release and compatibility work.
 
 ## Current Progress
 
@@ -195,6 +192,33 @@ meaning.
   criteria are understood and explicitly confirmed. Exact Design and
   authority-pair bytes remain later review and acceptance boundaries rather
   than activation uncertainties.
+- Deterministic activation exposed a pre-existing worktree defect: the command
+  validates the candidate successfully in the populated default checkout,
+  creates the clean Task worktree, and then fails the transaction because the
+  untracked generated `dist/nourd-nkf-adopt.mjs` governed artifact is absent
+  from that new worktree. The transition rolled back without changing Task
+  state. The defect is classified as a blocking dependency transferred to
+  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md),
+  which owns the remaining Task-transition process refinements; it is not
+  silently added to this Task's implementation scope.
+- Activation was recovered under the confirmed Git-topology exception: the
+  exact deterministic `task` transition ran against a Git-free copy of commit
+  `786b2ac`, using the exact built checker, and reported `active` with two
+  rewritten documents. Those transition results were applied on
+  `task/NKF-021`; invalid self-links created by preserving the old Task path
+  were removed rather than carried into the active document. Git commit,
+  push, and draft-request state remain separate operational steps.
+- The Active [NKF Task Scope Gate Design](../../designs/active/task-scope-gate.md)
+  now proposes the minimal finding ledger, four classifications, four
+  dispositions, deterministic combination and reference checks, the separate
+  Human Product Owner amendment boundary, and truthful retrospective migration.
+  It remains Draft proposal knowledge pending exact boundary confirmation.
+- Before any proposal adoption or implementation, the Human Product Owner
+  directed deferral to a successor NKF version and return to
+  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md) for
+  existing 0.2 release work only. The Draft Design is preserved, and no
+  normative, executable, checker, fixture, migration, or release change was
+  made under NKF-021.
 
 ## Decision Applicability
 

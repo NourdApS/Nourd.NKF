@@ -178,4 +178,4 @@ unknown_surface_policy:
 workflow:
   path: .github/workflows/nkf-contracts.yml
   required_job: Validate
-  sha256: 18be2706b3e05901b389692bb061fd2f05c8b62e9189ec3d8996f407e87ce725
+  sha256: 9ee7c20f80a59eabbc809ff6325ca3c2834800d412ba61ed65f843deec07d7ea

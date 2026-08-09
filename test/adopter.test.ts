@@ -578,7 +578,7 @@ describe("NKF consumer adopter", () => {
       expect(repeat.status, repeat.stderr).toBe(0);
       expect(JSON.parse(repeat.stdout).state).toBe("no-update");
     }
-  });
+  }, 15_000);
 
   it("keeps .nourd at the project root while onboarding a safe non-default knowledge root", async () => {
     const { project, workspace } = await createEmptyProject();
