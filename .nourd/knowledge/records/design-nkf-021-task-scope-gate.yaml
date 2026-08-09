@@ -1,0 +1,38 @@
+contract: nkf.record
+id: design-nkf-021-task-scope-gate
+type: design
+body_contract: nkf.design
+title: NKF Task Scope Gate
+source:
+  path: designs/active/task-scope-gate.md
+  digest:
+    algorithm: sha-256
+    value: f7159641a5a2f47404c836e35272f9baeeb08c03f87f295bfa2b11e2e15b30d2
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
+  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
+  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
+  - {id: gate-structure, heading_path: [Proposed Direction, Gate Structure], occurrence: 1, authority: proposal, role: boundary}
+  - {id: closed-classifications, heading_path: [Proposed Direction, Closed Classifications], occurrence: 1, authority: proposal, role: boundary}
+  - {id: closed-dispositions, heading_path: [Proposed Direction, Closed Dispositions], occurrence: 1, authority: proposal, role: boundary}
+  - {id: deterministic-enforcement, heading_path: [Proposed Direction, Deterministic Enforcement], occurrence: 1, authority: proposal, role: validation}
+  - {id: authoring-procedure, heading_path: [Proposed Direction, Authoring Procedure], occurrence: 1, authority: proposal, role: governing}
+  - {id: onboarding-and-migration, heading_path: [Proposed Direction, Onboarding And Migration], occurrence: 1, authority: proposal, role: boundary}
+  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
+  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
+  - {id: duplicate-scope-snapshot, heading_path: [Alternatives And Trade-Offs, Duplicate Scope Snapshot], occurrence: 1, authority: proposal, role: alternative}
+  - {id: task-frontmatter-fields, heading_path: [Alternatives And Trade-Offs, Task Frontmatter Fields], occurrence: 1, authority: proposal, role: alternative}
+  - {id: separate-scope-record, heading_path: [Alternatives And Trade-Offs, Separate Scope Record], occurrence: 1, authority: proposal, role: alternative}
+  - {id: automatic-semantic-classification, heading_path: [Alternatives And Trade-Offs, Automatic Semantic Classification], occurrence: 1, authority: proposal, role: alternative}
+  - {id: no-decline-disposition, heading_path: [Alternatives And Trade-Offs, No Decline Disposition], occurrence: 1, authority: proposal, role: alternative}
+  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
+  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
+  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+relationships: []

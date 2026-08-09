@@ -211,6 +211,11 @@ meaning.
   `task/NKF-021`; invalid self-links created by preserving the old Task path
   were removed rather than carried into the active document. Git commit,
   push, and draft-request state remain separate operational steps.
+- The Active [NKF Task Scope Gate Design](../../designs/active/task-scope-gate.md)
+  now proposes the minimal finding ledger, four classifications, four
+  dispositions, deterministic combination and reference checks, the separate
+  Human Product Owner amendment boundary, and truthful retrospective migration.
+  It remains Draft proposal knowledge pending exact boundary confirmation.
 
 ## Decision Applicability
 
