@@ -71,6 +71,15 @@ incomplete Git report and error field, never as a failed command, because
 the transition and its commit exist and the report must not contradict
 them.
 
+On `2026-08-09`, after the deferred [NKF-021](../deferred/NKF-021-task-scope-gate.md)
+pull request exposed a failing remote validation check, the Human Product
+Owner directed fixing the technical CI defect without another Product
+decision or approval round. The repair remains owned by NKF-020 because it is
+an exact-commit workflow and release-integrity refinement. It may land on the
+already authorized exceptional recovery branch because the failed check
+blocks incorporation of [NKF-021](../deferred/NKF-021-task-scope-gate.md)'s concluded state; it does not reopen [NKF-021](../deferred/NKF-021-task-scope-gate.md)
+or add Task Scope Gate meaning to NKF 0.2.
+
 ## Scope Reduction
 
 On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
@@ -155,6 +164,15 @@ One governed process definition covering:
    tooling, with fixtures and tests where deterministic.
 5. Validate with exactly `npm run nkf:check` and present the successor for
    separate audit and confirmation.
+6. Inspect the exact failing pull-request run and compare it with the local
+   full-history result and the confirmed predecessor workflow.
+7. Repair only the checkout-history precondition required by tests that
+   intentionally archive pinned predecessor commits; preserve the read-only
+   token, exact checked-out candidate, full-SHA Action pins, locked install,
+   canonical validation command, and deferred protection boundary.
+8. Re-pin the governed workflow artifact, update the unconfirmed current-system
+   account, run exactly `npm run nkf:check`, commit, push, and observe the new
+   remote check on its exact head before recommending merge.
 
 ## Current Progress
 
@@ -260,6 +278,15 @@ One governed process definition covering:
 - The remaining scope is breaking-change classification and signaling, the
   deterministic successor-pair scaffold, process refinements from further
   release and adoption experience, and the audit's open findings.
+- Pull-request run `31313283533` on exact head `c6a0aa3b6df4e0a75af234bf045d701ea7cc4888`
+  failed because the default `actions/checkout` depth supplied only the merge
+  commit. `test/adopter.test.ts` requires pinned predecessor commit
+  `53ae5217f68731d953f3bf616a578adeb033bb03`, and
+  `test/mechanics.test.ts` requires pinned predecessor commit `b748402`; both
+  are available in the local full-history repository, where all 186 tests
+  pass. The repair changes checkout history availability only; it does not
+  weaken the command, skip either test, change NKF meaning, or claim remote
+  success before a new run is observed.
 
 ## Acceptance Criteria
 
@@ -288,6 +315,10 @@ round follow it.
 
 | Reference | Kind | Carried Constraint |
 | --- | --- | --- |
+| [`adr-0060`](../../decisions/0060-layered-contract-enforcement.md) | record | Every candidate receives the same exact-commit command; enforcement-surface changes require human review and a successor Realization confirmation boundary. |
+| [`adr-0061`](../../decisions/0061-confirm-layered-contract-enforcement-realization.md) | record | The confirmed local workflow is immutable predecessor evidence; a later enforcement change requires comparison, proportional audit, a successor Realization, and later confirmation. |
+| [`adr-0062`](../../decisions/0062-confirm-remote-workflow-activation-boundary.md) | record | Remote workflow observations are time-bound Github state and do not establish branch protection. |
+| [`adr-0063`](../../decisions/0063-defer-protected-merge-gate.md) | record | Required-check protection, approval enforcement, bypass policy, and blocked-invalid-candidate proof remain deferred to [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md). |
 | [`adr-0076`](../../decisions/0076-versioned-contract-evolution.md) | record | Every contract-meaning change after first consumer adoption ships as a new immutable version. |
 | [`adr-0078`](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) | record | Release, adoption, and breaking-change process stay outside format meaning. |
 | [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Only breaking-change classification and signaling plus process refinements remain in this Task's scope. |
@@ -303,8 +334,8 @@ round follow it.
 | --- | --- | --- | --- |
 | Living-surface links resolve deterministically in the canonical command | proven | runtime-behaviour | none |
 | Task transitions fail closed before altering accepted pair bytes | proven | runtime-behaviour | none |
+| The exact-commit workflow supplies the pinned predecessor history required by the complete migration and adopter test suite | unknown | none | none |
 
 This gate was added when the Task was created before NKF 0.2 was adopted,
 was normalized during the self-migration, and was re-extracted on the
 `2026-08-08` activation.
-
