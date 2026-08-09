@@ -70,9 +70,10 @@ changes.
 
 ## Proposed Direction
 
-Every NKF 0.2 Task non-record carries exactly one Task Scope Gate. The gate
-records newly discovered work that could expand the established Task boundary,
-its classification, its disposition, and the basis for that disposition.
+Every Task non-record under a successor NKF version that adopts this Design
+carries exactly one Task Scope Gate. The gate records newly discovered work
+that could expand the established Task boundary, its classification, its
+disposition, and the basis for that disposition.
 
 The existing Task prose remains authoritative for scope and acceptance
 criteria. The gate is a control around newly discovered work, not another
@@ -183,20 +184,21 @@ Task transparently; validation cannot supply the correction's authority.
 New onboarding Tasks receive the canonical current sentence. A Task created
 after adoption receives the same form until a finding requires a row.
 
-Existing Tasks migrating from NKF 0.1 or an earlier NKF 0.2 candidate receive
-the canonical retrospective sentence unless the author has sufficient
-evidence to record specific findings truthfully. The retrospective form does
-not claim that no scope expansion occurred; it claims only that the gate did
-not exist and no historical classification is being fabricated.
+Existing Tasks migrating from the predecessor version receive the canonical
+retrospective sentence unless the author has sufficient evidence to record
+specific findings truthfully. The retrospective form does not claim that no
+scope expansion occurred; it claims only that the gate did not exist and no
+historical classification is being fabricated.
 
 The NKF repository self-migration records known current findings rather than
 hiding them behind the retrospective sentence. In particular, [NKF-021](../../tasks/active/NKF-021-task-scope-gate.md) records
 the activation-worktree defect as a `blocking-dependency` transferred to
 [NKF-020](../../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md). Existing concluded Tasks may use the retrospective sentence.
 
-Fixtures and public examples carry the current sentence. The 0.1-to-0.2
-migration adds the retrospective sentence to every preserved Task, re-pins
-affected declarations, and validates the complete result.
+Fixtures and public examples carry the current sentence. The
+predecessor-to-successor migration adds the retrospective sentence to every
+preserved Task, re-pins affected declarations, and validates the complete
+result.
 
 ## Responsibilities Interactions And Information Flows
 
@@ -276,7 +278,7 @@ An informed Decision requires:
 - positive and negative checker fixtures for every first-block form,
   vocabulary value, allowed and rejected combination, Task reference, and
   accepted-Decision reference;
-- onboarding and 0.1-to-0.2 migration exercises proving current and
+- onboarding and predecessor-to-successor migration exercises proving current and
   retrospective forms;
 - self-migration of every NKF Task with truthful retrospective disclosure or
   specific current findings;
