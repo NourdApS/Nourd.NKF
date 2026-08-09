@@ -3,7 +3,7 @@ title: "NKF-021: Establish The Task Scope Gate"
 summary: Prevent an active Task from silently absorbing discovered work that is not necessary to satisfy an existing acceptance criterion, while preserving explicit Human Product Owner scope amendments as the bounded exception.
 created_at: 2026-08-09T11:53:35Z
 task_id: NKF-021
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -16,7 +16,7 @@ related_tasks:
 ## Human Direction
 
 On `2026-08-09`, after reviewing the expansion of
-[NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md),
+[NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md),
 the Human Product Owner directed creating this separate Task and beginning
 work on a Task Scope Gate. The confirmed core rule is:
 
@@ -31,20 +31,20 @@ review. Deterministic validation may enforce structure and closed vocabulary;
 it must not pretend to determine whether work is genuinely necessary.
 
 The Human Product Owner also directed including the gate in the final NKF 0.2
-set, leaving [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
-open while this Task is developed, and returning to [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+set, leaving [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
+open while this Task is developed, and returning to [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
 afterward to finish the release, adoption, compatibility, CI, and packaging
 work that it owns.
 
 For this recovery only, `task/NKF-021` is the single exceptional branch for
-the remaining NKF 0.2 work. [NKF-021](NKF-021-task-scope-gate.md) and
-[NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+the remaining NKF 0.2 work. NKF-021 and
+[NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
 retain separate scope, plans, acceptance criteria, provenance, and commits.
 The exception changes only Git branch topology, ends after the final corrected
 NKF 0.2 release and merge, and does not weaken acceptance, confirmation,
 conformance, validation, audit, or review boundaries. The deterministic Task
 command may still require a later ordinary `task/NKF-020` branch solely to
-record [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)'s
+record [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)'s
 formal conclusion.
 
 The Human Product Owner explicitly required an independent audit after
@@ -54,7 +54,7 @@ contract, Realization, or release.
 
 On `2026-08-09`, after the accepted version-sealing conflict was presented
 separately, the Human Product Owner confirmed the exact one-time exception:
-NKF-021 and the remaining [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md) recovery work may make one final correction
+NKF-021 and the remaining [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md) recovery work may make one final correction
 of NKF 0.2 despite this repository's self-adoption; no external NKF 0.2
 adoption is known; the exception creates no precedent and ends when the final
 corrected NKF 0.2 release is published and merged; every later
@@ -69,7 +69,7 @@ but it does not protect the Task's own scope. The result can be an overgrown
 Task whose completion criteria, provenance, review boundary, and release
 responsibility no longer describe one coherent job.
 
-The history of [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+The history of [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
 is the immediate evidence: work on Git transition mechanics and the cancelled
 state was delivered there even though its original remaining scope was
 breaking-change classification, signaling, and release-process refinement.
@@ -104,7 +104,7 @@ meaning.
   fixtures, examples, onboarding, migration, authoring guidance, tests, and
   documentation from accepted meaning;
 - migrate this repository's Task set and keep every finding owned by either
-  this Task or [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md);
+  this Task or [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md);
 - validate the exact candidate with `npm run nkf:check`; and
 - perform the directed independent audit against the implementation and the
   final distributable set before claiming completion.
@@ -113,7 +113,7 @@ meaning.
 
 - completing the release, adoption, breaking-change classification, archive,
   recommendation, or CI work owned by
-  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md);
+  [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md);
 - changing the general one-Task-one-branch model beyond the recorded recovery
   exception;
 - making NKF, the checker, or an agent authoritative for Task meaning;
@@ -124,7 +124,7 @@ meaning.
 
 ## Execution Plan
 
-1. Preserve the [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+1. Preserve the [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
    expansion as evidence and inventory the current Task, checker, fixture,
    onboarding, migration, guidance, distribution, and release surfaces.
 2. Resolve the one-time NKF 0.2 correction boundary against accepted version
@@ -139,8 +139,8 @@ meaning.
    migration, authoring guidance, public documentation, and tests without
    extending semantic scope through implementation.
 6. Migrate this repository's Tasks truthfully, retaining distinct ownership
-   between [NKF-021](NKF-021-task-scope-gate.md) and
-   [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md),
+   between NKF-021 and
+   [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md),
    and record retrospective disclosure where required.
 7. Run exactly `npm run nkf:check` on the coherent candidate and keep
    acceptance, confirmation, local Git state, remote enforcement, release,
@@ -149,7 +149,7 @@ meaning.
    fixtures, migration exercise, set enumeration, archive inspection, and
    extracted-checker verification rather than relying only on the tests used
    during implementation.
-9. Return to [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+9. Return to [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
    on the same exceptional recovery branch for the final corrected NKF 0.2
    release and its separate audit, then conclude Tasks through the explicitly
    recorded transition mechanics.
@@ -177,7 +177,7 @@ meaning.
   migration, complete set, final archive, and extracted checker, including all
   findings rather than only passing results.
 - The final corrected NKF 0.2 release contains the accepted scope-gate set, and
-  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+  [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md)
   retains ownership of its remaining release and compatibility work.
 
 ## Current Progress
@@ -195,6 +195,22 @@ meaning.
   criteria are understood and explicitly confirmed. Exact Design and
   authority-pair bytes remain later review and acceptance boundaries rather
   than activation uncertainties.
+- Deterministic activation exposed a pre-existing worktree defect: the command
+  validates the candidate successfully in the populated default checkout,
+  creates the clean Task worktree, and then fails the transaction because the
+  untracked generated `dist/nourd-nkf-adopt.mjs` governed artifact is absent
+  from that new worktree. The transition rolled back without changing Task
+  state. The defect is classified as a blocking dependency transferred to
+  [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md),
+  which owns the remaining Task-transition process refinements; it is not
+  silently added to this Task's implementation scope.
+- Activation was recovered under the confirmed Git-topology exception: the
+  exact deterministic `task` transition ran against a Git-free copy of commit
+  `786b2ac`, using the exact built checker, and reported `active` with two
+  rewritten documents. Those transition results were applied on
+  `task/NKF-021`; invalid self-links created by preserving the old Task path
+  were removed rather than carried into the active document. Git commit,
+  push, and draft-request state remain separate operational steps.
 
 ## Decision Applicability
 
