@@ -7,7 +7,7 @@ source:
   path: decisions/0102-task-worktrees-and-formal-transition-vocabulary.md
   digest:
     algorithm: sha-256
-    value: 6066bc74727e2b9c0234bd53f3bbde8a08c211610e6026b34e733f80ec7a425c
+    value: ac378d78c2999608d3be545ae1595227f8ce87f7f6211c4033c78d7ea64900d8
 governance:
   lifecycle: immutable
   status: accepted

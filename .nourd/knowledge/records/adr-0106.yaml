@@ -7,7 +7,7 @@ source:
   path: decisions/0106-confirm-the-complete-set-release-correction.md
   digest:
     algorithm: sha-256
-    value: 356e1287e96e4c3b75c2256c7a903204b3b5b19fc73304971e612a7cd9c79916
+    value: 228d5ddb65b734adde97f5021f1ca177504b689f8cd6e6c93710d09169cf9fa3
 governance:
   lifecycle: immutable
   status: accepted

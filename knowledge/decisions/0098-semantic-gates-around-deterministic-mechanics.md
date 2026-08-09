@@ -17,7 +17,7 @@ decision_authority: Human Product Owner, Nourd ApS
 The published 0.2 release notes were an unreadable compressed summary, the
 repository front page still described the pre-0.2 state with dead links, no
 guidance instructed a semantic review around Task transitions, and the
-first activation attempt for [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) proved that a lifecycle transition
+first activation attempt for [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md) proved that a lifecycle transition
 would edit accepted pair bytes through the specification's Task-file links
 — and correctly failed closed.
 
@@ -45,7 +45,7 @@ On `2026-08-08`, the Human Product Owner directed, under the continued
    now states that a consumed version's pair is sealed, later meaning
    changes begin the next version's candidate pair, and Task lifecycle
    never determines versioning. A deterministic successor-pair scaffold
-   remains parked in [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md).
+   remains parked in [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md).
 5. The task command rebases a moved Task's own outbound links, correcting
    the defect the failed activation exposed, with a regression test.
 
@@ -74,5 +74,5 @@ the pair binding.
 
 ## Non-Claims
 
-This Decision does not close [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md), confirm the Realization, or migrate
+This Decision does not close [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md), confirm the Realization, or migrate
 any consumer.

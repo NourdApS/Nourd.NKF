@@ -186,7 +186,7 @@ non_records:
     kind: task
   - path: tasks/completed/NKF-019-decision-applicability-gate.md
     kind: task
-  - path: tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md
+  - path: tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md
     kind: task
   - path: tasks/deferred/NKF-021-task-scope-gate.md
     kind: task
