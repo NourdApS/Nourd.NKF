@@ -52,6 +52,14 @@ implementation. This direction authorizes creating and working on this Task;
 it does not accept a Design, Decision, Specification revision, executable
 contract, Realization, or release.
 
+On `2026-08-09`, after the accepted version-sealing conflict was presented
+separately, the Human Product Owner confirmed the exact one-time exception:
+NKF-021 and the remaining [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md) recovery work may make one final correction
+of NKF 0.2 despite this repository's self-adoption; no external NKF 0.2
+adoption is known; the exception creates no precedent and ends when the final
+corrected NKF 0.2 release is published and merged; every later
+contract-meaning change requires a new NKF version.
+
 ## Problem
 
 An active Task can currently absorb a newly discovered improvement, dependency,
@@ -176,13 +184,17 @@ meaning.
 
 - The Human Product Owner confirmed the separate Task approach, the core
   scope rule, the single recovery-branch exception, inclusion in the final
-  NKF 0.2 set, and the requirement for an independent audit.
+  NKF 0.2 set, the exact one-time version-sealing exception, and the
+  requirement for an independent audit.
 - Task creation is the only governed change performed so far. No Design,
   Decision, Specification, executable contract, checker, fixture, migration,
   Realization, or release bytes have been changed under this Task.
-- Activation remains blocked on the exact one-time NKF 0.2 version-sealing
-  boundary because accepted rules say a version is immutable after any
-  repository adopts it, while this repository has already self-adopted 0.2.
+- Activation requirements are semantically resolved: the core gate rule,
+  authority boundary, migration obligation, branch exception, version
+  exception, independent-audit requirement, execution plan, and acceptance
+  criteria are understood and explicitly confirmed. Exact Design and
+  authority-pair bytes remain later review and acceptance boundaries rather
+  than activation uncertainties.
 
 ## Decision Applicability
 
@@ -206,4 +218,3 @@ meaning.
 | A minimal scope gate prevents unclassified discovered work from remaining silently inside a Task | unknown | none | none |
 | Existing Task history can migrate without fabricating retrospective scope decisions | unknown | none | none |
 | The corrected complete NKF 0.2 set is internally consistent and independently verifiable | unknown | none | none |
-
