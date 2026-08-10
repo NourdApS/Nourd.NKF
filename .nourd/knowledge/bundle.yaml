@@ -98,6 +98,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-020-release-publication.md
     kind: evidence
+  - path: evidence/audits/nkf-022-self-adopt-preflight-failure.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md

@@ -122,6 +122,21 @@ installed canonical checker passes, and repeating Adopt returns `current`.
   and independent release audit before this Task was created.
 - No release installation or repository mutation has yet been performed under
   this Task.
+- Deterministic activation created `task/NKF-022`, its isolated worktree, and
+  draft PR 5. The published adopter bytes exactly matched the governed
+  recommendation before execution.
+- The real no-override Adopt operation failed closed before mutation because
+  `package.json` already carries the governed NKF producer repository's
+  stronger `nkf:check` command, while the released consumer integration
+  requires its exact pinned-adopter check command. Git remained clean and no
+  release pin was created. The
+  [preflight-failure Evidence](../../evidence/audits/nkf-022-self-adopt-preflight-failure.md)
+  records the exact output and compatibility analysis.
+- An npm lifecycle wrapper cannot preserve both paths: the accepted producer
+  verifier explicitly rejects `prenkf:check` and related wrappers. Replacing
+  the producer command would weaken the established one-command producer gate;
+  changing the released adopter would require a successor release decision.
+  Work is paused before either consequential boundary is changed.
 
 ## Decision Applicability
 
@@ -143,7 +158,7 @@ installed canonical checker passes, and repeating Adopt returns `current`.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Public Adopt pins the native unpinned NKF 0.2 repository to the exact governed recommendation | unknown | none | none |
+| Public Adopt pins the native unpinned NKF 0.2 repository to the exact governed recommendation | unsupported | none | none |
 | The installed integration preserves repository-specific policy and accepted authority bytes | unknown | none | none |
 | The installed canonical command validates the complete self-consumer repository with zero diagnostics | unknown | none | none |
 | Repeat public Adopt returns `current` only after verifying the complete installed state | unknown | none | none |
