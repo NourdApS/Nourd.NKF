@@ -69,7 +69,7 @@ meaning and must be removed from the candidate Specification; that a new
 Task be created and deferred to define the version release process, the
 consumer adoption process, and breaking-change classification and signaling;
 and that the correction be versioned NKF `0.2` because it carries breaking
-changes. [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) records that correction, and [`NKF-020`](../active/NKF-020-version-release-adoption-and-compatibility-process.md) holds the deferred
+changes. [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) records that correction, and [`NKF-020`](NKF-020-version-release-adoption-and-compatibility-process.md) holds the deferred
 process work.
 
 Still on `2026-08-06`, the Human Product Owner directed removing the
@@ -137,7 +137,7 @@ again, and then close this Task.
 - The predecessor [NKF-017](../completed/NKF-017-complete-portable-onboarding-topology.md) work was committed separately as `aca9bad`, and the
   NKF-019 groundwork as `d0afe31`, on local `master`; no push is claimed.
 - [ADR 0078](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) reallocated the correction to NKF `0.2`, removed the shipping
-  process from the candidate rulebook, and recorded the deferred [`NKF-020`](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+  process from the candidate rulebook, and recorded the deferred [`NKF-020`](NKF-020-version-release-adoption-and-compatibility-process.md)
   process Task; the removed release outline is preserved there as unaccepted
   draft input.
 - [ADR 0079](../../decisions/0079-dynamic-frontmatter-without-title.md) removed the frontmatter title from the 0.2 candidate, added the
@@ -148,7 +148,7 @@ again, and then close this Task.
 - The 0.2 candidate now defines the versioned set and the guidance version
   marker with `guidance.version.mismatch` enforcement. [ADR 0080](../../decisions/0080-release-and-adoption-process.md) accepts the
   separated release and adoption processes, documented as the versioned
-  release and adoption protocols under `integrations/`; [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md) keeps only
+  release and adoption protocols under `integrations/`; [NKF-020](NKF-020-version-release-adoption-and-compatibility-process.md) keeps only
   breaking-change classification and signaling plus refinements.
 - [ADR 0081](../../decisions/0081-accept-nkf-0-2-authority-pair.md) accepts the exact NKF 0.2 authority pair after per-change Human
   Product Owner confirmation: canonical Markdown SHA-256

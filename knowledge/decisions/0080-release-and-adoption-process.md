@@ -15,7 +15,7 @@ task: NKF-019
 
 [ADR 0076](0076-versioned-contract-evolution.md) established version-per-change governance and [ADR 0078](0078-version-gate-correction-as-nkf-0-2.md) kept
 release and adoption process outside format meaning, deferring definition to
-[NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md). Shipping NKF 0.2 needs the processes now, and the Human Product
+[NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md). Shipping NKF 0.2 needs the processes now, and the Human Product
 Owner directed proposing them with release and adoption separated, and with
 the NKF repository dogfooding each version: release first, then migrate the
 NKF repository to its own release as the first adopter.
@@ -54,7 +54,7 @@ their documentation homes:
 
 This Decision governs how NKF versions are released from this repository and
 how repositories, including this one, adopt them, beginning with NKF 0.2.
-It reduces deferred [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) to breaking-change classification and signaling
+It reduces deferred [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) to breaking-change classification and signaling
 and to process refinements from real release experience.
 
 ## Rationale
@@ -73,7 +73,7 @@ Migrating the NKF repository before releasing was rejected by direction:
 it would validate the new contract only against the publisher's own
 knowledge and leave the adoption path unproven at release time. Keeping the
 process inside the Specification was already rejected by [ADR 0078](0078-version-gate-correction-as-nkf-0-2.md). Leaving
-the process as [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) draft input until after NKF 0.2 was rejected because
+the process as [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) draft input until after NKF 0.2 was rejected because
 0.2 itself must ship through a defined process.
 
 ## Consequences And Trade-Offs
@@ -82,7 +82,7 @@ There is a bounded interval after each release in which the publishing
 repository still declares the predecessor version; step six keeps its
 validation truthful during that interval. Each release now carries two
 protocol artifacts whose drift is constrained by set membership and the
-guidance marker. [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) narrows rather than closes.
+guidance marker. [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) narrows rather than closes.
 
 ## Non-Claims
 
@@ -92,4 +92,4 @@ This Decision does not:
 - release NKF 0.2, migrate this repository, or migrate any consumer;
 - confirm any Realization or claim conformance for any snapshot; and
 - define breaking-change classification and signaling, which remain
-  deferred to [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md).
+  deferred to [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md).

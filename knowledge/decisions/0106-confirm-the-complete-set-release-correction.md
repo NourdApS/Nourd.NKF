@@ -79,6 +79,6 @@ This Decision does not:
 - publish the archive or update the recommended release catalog;
 - migrate any consumer or make recommendation a moving dependency;
 - accept a breaking-change classification or signaling policy;
-- conclude [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md);
+- conclude [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md);
 - verify historical acceptance bindings or make Governing Use ready; or
 - establish protected merge enforcement.

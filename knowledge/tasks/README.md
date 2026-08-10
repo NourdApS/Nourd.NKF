@@ -14,8 +14,6 @@ status; it does not establish that status.
 
 [Active Task Index](active/README.md)
 
-- [NKF-020: Define Version Release, Adoption, And Compatibility Process](active/NKF-020-version-release-adoption-and-compatibility-process.md)
-
 ## Deferred
 
 [Deferred Task Index](deferred/README.md)
@@ -42,6 +40,7 @@ status; it does not establish that status.
 - [NKF-015: Establish Agent-Led Initial Onboarding](completed/NKF-015-agent-led-initial-onboarding.md)
 - [NKF-017: Establish Complete Portable Onboarding Topology](completed/NKF-017-complete-portable-onboarding-topology.md)
 - [NKF-019: Establish The Decision Applicability Gate](completed/NKF-019-decision-applicability-gate.md)
+- [NKF-020: Define Version Release, Adoption, And Compatibility Process](completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 
 ## Cancelled
 

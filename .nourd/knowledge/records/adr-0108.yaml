@@ -7,7 +7,7 @@ source:
   path: decisions/0108-confirm-the-unified-adopt-realization.md
   digest:
     algorithm: sha-256
-    value: ff8bc0a29a321f9f77a1804c6b10cd2ed5588d410ce1456961d7b82cfa224473
+    value: e519979f77277c4f83ef3b29d4a9d5c7f8eb0281c3a4a7f8ec161d30774d06b3
 governance:
   lifecycle: immutable
   status: accepted

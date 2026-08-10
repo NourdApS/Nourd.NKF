@@ -127,7 +127,7 @@ every Task carries its gate, titles equal headings, references are deep links,
 the four Task states are enforced, and the retired 0.1 sources remain in Git
 history and immutable release archives. A later audit found that the 0.2
 archive from commit `f39c7f9` omitted already-required adopter, host-adapter,
-fixture, example, and documentation-projection members. [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) corrects that
+fixture, example, and documentation-projection members. [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) corrects that
 release-tooling defect by making one 132-member pre-manifest enumeration feed
 the archive builder, verifier, public-doc verifier, and adopter `set` command.
 [ADR 0106](../decisions/0106-confirm-the-complete-set-release-correction.md) confirms the exact independently audited correction at commit
@@ -377,7 +377,7 @@ Product Owner.
 
 [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) is complete for the confirmed 0.1 portable Product and Technology
 topology predecessor, continuing checker enforcement, initial onboarding, and
-deliberate [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor repair. Later [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) and [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md)
+deliberate [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor repair. Later [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) and [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 work supersedes its current-release and current-projection status without
 rewriting its confirmation evidence. Acceptance-binding and protected-merge
 work remain deferred to [NKF-016](../tasks/deferred/NKF-016-deliver-acceptance-binding-verification.md) and [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
@@ -423,7 +423,7 @@ self-host validation with zero diagnostics. The completion audit repaired the
 Markdown diagnostic-registry omission, the circular release-recommendation
 gate, and loose repair-receipt integrity checks before confirmation.
 
-The unconfirmed [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) Adopt successor adds focused proof for
+The unconfirmed [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) Adopt successor adds focused proof for
 subcommand-free Product and Technology initial adoption, non-breaking 0.2
 integration and repeat-current results, fail-closed missing plans, displayed
 and approved real 0.1 migration, predecessor-generated map conversion, and

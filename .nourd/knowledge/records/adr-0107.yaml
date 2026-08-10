@@ -7,7 +7,7 @@ source:
   path: decisions/0107-unified-adopt-operation-and-compatibility-signaling.md
   digest:
     algorithm: sha-256
-    value: d56342bf35e99dce511a1b823e5daf5d1dd727d9c21bb692e61164ef3518cfc9
+    value: 2abe66d5bf405e7baff14067adbea61b57432e0737b98746831f70ba96b7ddea
 governance:
   lifecycle: immutable
   status: accepted

@@ -3,7 +3,7 @@ title: "NKF-020: Define Version Release, Adoption, And Compatibility Process"
 summary: Define the governed process for releasing a new NKF version, the process by which an adopted repository adopts a new version, and how breaking changes are classified and signaled to consumers.
 created_at: 2026-08-06T23:30:03Z
 task_id: NKF-020
-task_status: active
+task_status: completed
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -16,7 +16,7 @@ related_tasks:
 
 ## Human Direction
 
-On `2026-08-06`, while reviewing the NKF 0.2 candidate under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md), the
+On `2026-08-06`, while reviewing the NKF 0.2 candidate under [`NKF-019`](NKF-019-decision-applicability-gate.md), the
 Human Product Owner directed that the shipping process be removed from the
 NKF rulebook and that this Task be created and deferred. The directed scope
 is to define how a new NKF version is released, how a repository adopts a
@@ -112,7 +112,7 @@ add another command.
 
 ## Scope Reduction
 
-On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
+On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](NKF-019-decision-applicability-gate.md) accepted the separated release and
 adoption processes and their followable protocols, consuming most of this
 Task's directed scope ahead of activation. The remaining deferred scope is
 breaking-change classification and signaling, plus process refinements from
@@ -502,6 +502,44 @@ process has been selected, accepted, implemented, or followed, and it does
 not authorize beginning the work. The recorded Human Direction of
 `2026-08-08` supersedes this deferred-state fact: activation and the first
 round follow it.
+
+## Completion Result
+
+The accepted release and adoption process is delivered as the current NKF
+0.2 experience. [ADR 0107](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md)
+records the Human Product Owner decisions: one public subcommand-free Adopt
+operation, exact governed recommendation resolution, predecessor-relative
+compatibility, and explicit repository-authority approval before breaking
+0.1 migration. [ADR 0108](../../decisions/0108-confirm-the-unified-adopt-realization.md)
+separately records delegated technical confirmation of exact implementation
+commit `7eefe7d` and release archive SHA-256 `015a922d...a51f`.
+
+That archive is published as a private prerelease, independently re-downloaded
+byte-identically, strictly verified, and deliberately pinned by
+`release/recommended.json`. The closed NKF 0.2 public documentation projection
+is published at exact public commit `8c61d76`; a second fresh clone matched all
+63 staged bytes and every manifest-bound digest. Both published example
+profiles passed the extracted release checker. The freshly published public
+adopter resolved the default recommendation from `master`, onboarded separate
+empty Product and Technology repositories, returned `current` on repeat, and
+passed the installed canonical check. The
+[release audit](../../evidence/audits/nkf-020-unified-adopt-release-audit.md),
+[release publication Evidence](../../evidence/audits/nkf-020-unified-adopt-publication.md),
+and [public-documentation Evidence](../../evidence/audits/nkf-020-unified-adopt-public-documentation.md)
+retain the independent observations and non-claims.
+
+The final canonical authoring gate passed 22 test files with 192 tests, 891
+living links, deterministic checker, adopter, and public-documentation builds,
+and full-bundle validation with zero diagnostics. The exact recommended
+release verifier also passed. Every mandatory capability in this Task's
+Decision Applicability Gate is proven.
+
+Release, recommendation, publication, acceptance, technical confirmation,
+consumer knowledge acceptance, conformance, Governing Use readiness, and
+remote protection remain separate facts. No external consumer was migrated,
+acceptance binding was not verified, Governing Use remains Not Ready or Not
+Evaluated according to record state, and protected merge enforcement remains
+deferred to [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md).
 
 ## Decision Applicability
 
