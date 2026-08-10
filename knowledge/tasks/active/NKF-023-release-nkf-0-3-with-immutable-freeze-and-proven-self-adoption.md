@@ -251,6 +251,15 @@ audited bytes may be published and recommended.
   Owner confirmed the remaining `0.2`-to-`0.3` breaking classification on
   `2026-08-10`, authorizing adoption of the exact Design revision through
   [ADR 0109](../../decisions/0109-publication-freeze-and-proven-self-adoption.md).
+- The unaccepted [NKF 0.3 Specification Draft](../../specifications/nkf-0.3.md)
+  and executable companion candidate now preserve the complete 0.2 Product
+  and Technology knowledge contract while representing the accepted
+  publication freeze, one exact `release-set.yaml` membership source, full
+  manifest file binding, exact-candidate and public self-adoption order,
+  verified host-superset integration, and confirmed predecessor compatibility.
+  The Draft conforms as proposal knowledge under the current 0.2 repository
+  contract but has no authority effect. Exact final-form pair acceptance is
+  the next Human Product Owner boundary; implementation has not begun.
 
 ## Decision Applicability
 
