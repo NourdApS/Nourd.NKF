@@ -59,5 +59,5 @@ existing task branches, and the unconsumed set is re-cut once more.
 
 ## Non-Claims
 
-This Decision does not close [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md), merge any branch, confirm the
+This Decision does not close [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md), merge any branch, confirm the
 Realization, or migrate any consumer.

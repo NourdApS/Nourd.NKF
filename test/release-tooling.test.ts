@@ -4,6 +4,9 @@ import { describe, expect, it } from "vitest";
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
 const {
+  FIXTURE_FILES,
+  HOST_ADAPTER_FILES,
+  PUBLIC_DOCUMENTATION_FILES,
   RELEASE_ENTRIES,
   constructReleaseManifest,
   createUstar,
@@ -49,6 +52,26 @@ async function releaseFixture() {
 }
 
 describe("NKF release tooling", () => {
+  it("defines the exact complete 0.2 archive membership", () => {
+    const paths = RELEASE_ENTRIES.map((entry: { path: string }) => entry.path);
+    expect(paths).toHaveLength(133);
+    expect(new Set(paths).size).toBe(paths.length);
+    expect(paths.at(-1)).toBe("release-manifest.json");
+    expect(paths).toContain("dist/nourd-nkf-adopt.mjs");
+    expect(paths.filter((entry: string) => HOST_ADAPTER_FILES.includes(entry))).toHaveLength(
+      HOST_ADAPTER_FILES.length,
+    );
+    expect(paths.filter((entry: string) => FIXTURE_FILES.includes(entry))).toHaveLength(
+      FIXTURE_FILES.length,
+    );
+    expect(paths.filter((entry: string) => entry.startsWith("public-docs/"))).toHaveLength(
+      PUBLIC_DOCUMENTATION_FILES.length,
+    );
+    for (const entry of paths) {
+      expect(Buffer.byteLength(`nourd-nkf/${entry}`, "ascii"), entry).toBeLessThanOrEqual(100);
+    }
+  });
+
   it("strictly parses JSON and rejects duplicate keys and non-JSON syntax", () => {
     expect(parseStrictJson(Buffer.from("{\"value\":1}"))).toEqual({ value: 1 });
     expect(() =>
@@ -72,6 +95,14 @@ describe("NKF release tooling", () => {
       `nourd-nkf-sha256-${archiveDigest}.tar`,
     );
     expect(verified.tag).toBe(`release-sha256-${archiveDigest}`);
+  });
+
+  it("fails closed when a complete-set member is unavailable", async () => {
+    const { entries } = await releaseFixture();
+    entries.delete("dist/nourd-nkf-adopt.mjs");
+    expect(() => createUstar(entries)).toThrow(
+      /Required release artifact is unavailable: dist\/nourd-nkf-adopt\.mjs/,
+    );
   });
 
   it("fails before manifest trust on an incorrect independent archive pin", async () => {

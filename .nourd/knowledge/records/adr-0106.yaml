@@ -1,17 +1,18 @@
 contract: nkf.record
-id: adr-0102
+id: adr-0106
 type: decision
 body_contract: nkf.decision
-title: "ADR 0102: Task Worktrees And Formal Transition Vocabulary"
+title: "ADR 0106: Confirm The Complete-Set Release Correction"
 source:
-  path: decisions/0102-task-worktrees-and-formal-transition-vocabulary.md
+  path: decisions/0106-confirm-the-complete-set-release-correction.md
   digest:
     algorithm: sha-256
-    value: ac378d78c2999608d3be545ae1595227f8ce87f7f6211c4033c78d7ea64900d8
+    value: 228d5ddb65b734adde97f5021f1ca177504b689f8cd6e6c93710d09169cf9fa3
 governance:
   lifecycle: immutable
   status: accepted
   authority:
+    - codex-technical-reviewer
     - human-product-owner
 scope:
   root: nkf
@@ -25,5 +26,5 @@ sections:
   - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
 relationships:
   - type: extends
-    target: adr-0101
+    target: adr-0082
     source_section: decision

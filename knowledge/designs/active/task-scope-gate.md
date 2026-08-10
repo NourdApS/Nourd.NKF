@@ -25,7 +25,7 @@ implemented there merely because it was discovered there, even when the work
 does not satisfy the Task's established acceptance criteria.
 
 The immediate evidence is
-[NKF-020](../../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md):
+[NKF-020](../../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md):
 its original remaining scope was release-process refinement and
 breaking-change classification, while later rounds added Git transition
 mechanics and new normative Task-state meaning. This Design preserves that
@@ -193,7 +193,7 @@ historical classification is being fabricated.
 The NKF repository self-migration records known current findings rather than
 hiding them behind the retrospective sentence. In particular, [NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md) records
 the activation-worktree defect as a `blocking-dependency` transferred to
-[NKF-020](../../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md). Existing concluded Tasks may use the retrospective sentence.
+[NKF-020](../../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md). Existing concluded Tasks may use the retrospective sentence.
 
 Fixtures and public examples carry the current sentence. The
 predecessor-to-successor migration adds the retrospective sentence to every

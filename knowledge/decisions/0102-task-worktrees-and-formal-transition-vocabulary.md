@@ -59,5 +59,5 @@ set is re-cut once more.
 
 ## Non-Claims
 
-This Decision does not merge branches, close [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md), confirm the
+This Decision does not merge branches, close [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md), confirm the
 Realization, or migrate any consumer.
