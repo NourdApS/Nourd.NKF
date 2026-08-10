@@ -3,7 +3,7 @@ title: "NKF-023: Release NKF 0.3 With Immutable Freeze And Proven Self-Adoption"
 summary: Preserve the published NKF 0.2 release as immutable history, withdraw its recommendation, and release NKF 0.3 only after its exact candidate proves producer-compatible self-adoption and independent audit.
 created_at: 2026-08-10T20:33:32Z
 task_id: NKF-023
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -108,7 +108,7 @@ audited bytes may be published and recommended.
 
 - changing, replacing, deleting, or republishing any NKF 0.2 frozen-set byte
   under the `0.2` coordinate;
-- implementing the deferred [NKF-021](NKF-021-task-scope-gate.md) Task Scope
+- implementing the deferred [NKF-021](../deferred/NKF-021-task-scope-gate.md) Task Scope
   Gate or absorbing any other deferred Task merely because 0.3 is open;
 - declaring NKF `1.0` stable or introducing a third version component;
 - extending initial onboarding to unsupported mature brownfield repositories;
