@@ -18,3 +18,4 @@ state without replacing Decisions, Realizations, or validation Evidence.
 - [NKF-015: Establish Agent-Led Initial Onboarding](NKF-015-agent-led-initial-onboarding.md)
 - [NKF-017: Establish Complete Portable Onboarding Topology](NKF-017-complete-portable-onboarding-topology.md)
 - [NKF-019: Establish The Decision Applicability Gate](NKF-019-decision-applicability-gate.md)
+- [NKF-020: Define Version Release, Adoption, And Compatibility Process](NKF-020-version-release-adoption-and-compatibility-process.md)

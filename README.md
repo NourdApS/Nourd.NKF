@@ -51,8 +51,8 @@ consumer migration remains deliberate, separate work under the
 current release exposes one public subcommand-free Adopt operation for initial
 adoption, migration, update, and current-state verification. The published
 [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs)
-still describes the predecessor experience until it is deliberately
-republished.
+now carries the independently verified NKF 0.2 projection and the exact
+public adopter.
 
 The `NKF Contracts` workflow validates every push and pull request with the
 canonical command. The protected merge gate remains deferred to

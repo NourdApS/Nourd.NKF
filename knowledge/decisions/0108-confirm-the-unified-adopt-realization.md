@@ -27,7 +27,7 @@ explicitly stated that they confirm only Product decisions and assigned the
 technical confirmation to the technical reviewer. The Human Product Owner
 then explicitly authorized recording that technical confirmation, publishing
 the exact candidate, promoting it as recommended NKF 0.2, and finishing
-[NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md).
+[NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md).
 This Decision exercises that technical authority without asking the
 Human Product Owner to attest to implementation facts.
 
@@ -98,4 +98,4 @@ This Decision does not:
 - make validation confirm a consumer Realization;
 - verify historical acceptance bindings or make Governing Use ready;
 - establish protected merge enforcement; or
-- merge or conclude [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) by itself.
+- merge or conclude [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) by itself.

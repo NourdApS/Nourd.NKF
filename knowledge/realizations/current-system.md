@@ -2,7 +2,7 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including its adopted NKF 0.2 implementation, complete-set release, and unified Adopt successor candidate.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including its adopted NKF 0.2 implementation, complete-set release, and published unified Adopt operation.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: draft
@@ -15,7 +15,7 @@ confirmation_decisions:
   - adr-0082
   - adr-0106
   - adr-0108
-unconfirmed_scope: ADR 0108 confirms the unified Adopt technical implementation and release archive at exact commit 7eefe7d; the release and recommendation are separately verified operational facts, while the remote public projection and later current-system changes remain unconfirmed until separately observed.
+unconfirmed_scope: ADR 0108 confirms the unified Adopt technical implementation and release archive at exact commit 7eefe7d; the release, recommendation, and remote public projection are separately verified operational facts, while later current-system revisions remain unconfirmed.
 ---
 
 # NKF Current System
@@ -127,7 +127,7 @@ every Task carries its gate, titles equal headings, references are deep links,
 the four Task states are enforced, and the retired 0.1 sources remain in Git
 history and immutable release archives. A later audit found that the 0.2
 archive from commit `f39c7f9` omitted already-required adopter, host-adapter,
-fixture, example, and documentation-projection members. [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) corrects that
+fixture, example, and documentation-projection members. [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) corrects that
 release-tooling defect by making one 132-member pre-manifest enumeration feed
 the archive builder, verifier, public-doc verifier, and adopter `set` command.
 [ADR 0106](../decisions/0106-confirm-the-complete-set-release-correction.md) confirms the exact independently audited correction at commit
@@ -152,7 +152,10 @@ independently re-downloaded byte-identically, strictly verified, and promoted
 as the governed recommendation at SHA-256 `015a922d...a51f`; the
 [publication Evidence](../evidence/audits/nkf-020-unified-adopt-publication.md)
 owns those time-bound facts. Public-documentation republication remains
-pending.
+separate from confirmation and was subsequently observed at exact public
+commit `8c61d76`; the
+[public-documentation Evidence](../evidence/audits/nkf-020-unified-adopt-public-documentation.md)
+owns the independent fresh-clone, example, and default Adopt observations.
 
 ## Durable Mapping
 
@@ -225,8 +228,8 @@ Complete Product Or Technology Topology
 | Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Read-only exact-candidate workflow with complete Git history for pinned predecessor tests; pull-request runs `31325760190` and `31329613099` passed on their exact heads, while required protection remains deferred to [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md) | Confirmed predecessor through ADRs 0061–0063; current run observations do not establish protection |
 | Consumer adopter | `dist/nourd-nkf-adopt.mjs` | One public subcommand-free Adopt state resolver over internal capture, seal, topology repair, installation, refresh, migration, rollback, governed mechanics, Task transitions, and exact 0.2 set enumeration | Public direction accepted through [ADR 0107](../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md); implementation confirmed by [ADR 0108](../decisions/0108-confirm-the-unified-adopt-realization.md) |
 | Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge assessment plus complete Common and selected-profile topology construction | [ADR 0075](../decisions/0075-confirm-complete-portable-onboarding-topology.md) over [ADR 0070](../decisions/0070-confirm-agent-led-initial-onboarding.md) |
-| Public documentation | `public-docs/` | Complete 62-file local 0.2 projection now presents only Adopt while preserving agent-internal capture and seal guidance and conformant Product and Technology examples | Technical bytes confirmed by [ADR 0108](../decisions/0108-confirm-the-unified-adopt-realization.md); remote publication remains separate |
-| Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Successor candidate drives initial Product and Technology plus existing 0.2, repeat-current, and tamper paths through public Adopt; predecessor run `30628889305` remains historical Evidence | Successor execution and remote observation pending |
+| Public documentation | `public-docs/` | Complete 62-file 0.2 projection presents only Adopt while preserving agent-internal capture and seal guidance and conformant Product and Technology examples; the generated 63-file publication is public at exact commit `8c61d76` | Technical bytes confirmed by [ADR 0108](../decisions/0108-confirm-the-unified-adopt-realization.md); remote bytes independently observed in the [public-documentation Evidence](../evidence/audits/nkf-020-unified-adopt-public-documentation.md) |
+| Consumer exercise | `.github/workflows/nkf-consumer-adoption.yml` | Local release exercises cover initial Product and Technology, 0.1 migration, 0.2 refresh/current, rollback, and tamper paths; fresh public-default exercises onboarded both profiles and rechecked Product current, while predecessor run `30628889305` remains historical Evidence | Local and public-default execution independently observed; successor Github workflow execution remains separate |
 | Latest result | `.nourd/validation-result.json` | Persists the latest full-bundle observation for its exact validated snapshot; the result may become stale immediately when a Governed Validation Input changes | Conformance observation only |
 | Release tooling | `scripts/package-release.mjs`, `scripts/release/` | One explicit 132-member pre-manifest allowlist drives set enumeration, packaging, and strict archive verification; the 133-member unified Adopt archive is published and recommended at `015a922d...a51f` | [ADR 0094](../decisions/0094-carry-the-set-and-audit-independently.md), [ADR 0097](../decisions/0097-full-set-guidance-review-and-enumeration.md), [ADR 0108](../decisions/0108-confirm-the-unified-adopt-realization.md), and the [publication Evidence](../evidence/audits/nkf-020-unified-adopt-publication.md) |
 
@@ -374,7 +377,7 @@ Product Owner.
 
 [NKF-017](../tasks/completed/NKF-017-complete-portable-onboarding-topology.md) is complete for the confirmed 0.1 portable Product and Technology
 topology predecessor, continuing checker enforcement, initial onboarding, and
-deliberate [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor repair. Later [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) and [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md)
+deliberate [NKF-013](../tasks/completed/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/completed/NKF-015-agent-led-initial-onboarding.md) predecessor repair. Later [NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md) and [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 work supersedes its current-release and current-projection status without
 rewriting its confirmation evidence. Acceptance-binding and protected-merge
 work remain deferred to [NKF-016](../tasks/deferred/NKF-016-deliver-acceptance-binding-verification.md) and [NKF-012](../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
@@ -420,7 +423,7 @@ self-host validation with zero diagnostics. The completion audit repaired the
 Markdown diagnostic-registry omission, the circular release-recommendation
 gate, and loose repair-receipt integrity checks before confirmation.
 
-The unconfirmed [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) Adopt successor adds focused proof for
+The unconfirmed [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md) Adopt successor adds focused proof for
 subcommand-free Product and Technology initial adoption, non-breaking 0.2
 integration and repeat-current results, fail-closed missing plans, displayed
 and approved real 0.1 migration, predecessor-generated map conversion, and

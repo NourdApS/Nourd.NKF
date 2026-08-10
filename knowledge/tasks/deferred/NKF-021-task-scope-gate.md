@@ -16,7 +16,7 @@ related_tasks:
 ## Human Direction
 
 On `2026-08-09`, after reviewing the expansion of
-[NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md),
+[NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md),
 the Human Product Owner directed creating this separate Task and beginning
 work on a Task Scope Gate. The confirmed core rule is:
 
@@ -31,20 +31,20 @@ review. Deterministic validation may enforce structure and closed vocabulary;
 it must not pretend to determine whether work is genuinely necessary.
 
 The Human Product Owner also directed including the gate in the final NKF 0.2
-set, leaving [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
-open while this Task is developed, and returning to [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+set, leaving [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
+open while this Task is developed, and returning to [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 afterward to finish the release, adoption, compatibility, CI, and packaging
 work that it owns.
 
 For this recovery only, `task/NKF-021` is the single exceptional branch for
 the remaining NKF 0.2 work. NKF-021 and
-[NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+[NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 retain separate scope, plans, acceptance criteria, provenance, and commits.
 The exception changes only Git branch topology, ends after the final corrected
 NKF 0.2 release and merge, and does not weaken acceptance, confirmation,
 conformance, validation, audit, or review boundaries. The deterministic Task
 command may still require a later ordinary `task/NKF-020` branch solely to
-record [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)'s
+record [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)'s
 formal conclusion.
 
 The Human Product Owner explicitly required an independent audit after
@@ -54,7 +54,7 @@ contract, Realization, or release.
 
 On `2026-08-09`, after the accepted version-sealing conflict was presented
 separately, the Human Product Owner confirmed the exact one-time exception:
-NKF-021 and the remaining [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md) recovery work may make one final correction
+NKF-021 and the remaining [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md) recovery work may make one final correction
 of NKF 0.2 despite this repository's self-adoption; no external NKF 0.2
 adoption is known; the exception creates no precedent and ends when the final
 corrected NKF 0.2 release is published and merged; every later
@@ -64,7 +64,7 @@ Later on `2026-08-09`, before any Design adoption, Decision acceptance,
 Specification revision, executable-contract change, or scope-gate
 implementation, the Human Product Owner changed the release direction. This
 Task is to be deferred, its Draft Design preserved for a successor NKF version,
-and [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+and [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 resumed solely to complete and independently audit the already accepted NKF
 0.2 release obligations without adding new normative meaning. The earlier
 one-time 0.2 exception remains historical authorization; no normative change
@@ -79,7 +79,7 @@ but it does not protect the Task's own scope. The result can be an overgrown
 Task whose completion criteria, provenance, review boundary, and release
 responsibility no longer describe one coherent job.
 
-The history of [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+The history of [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 is the immediate evidence: work on Git transition mechanics and the cancelled
 state was delivered there even though its original remaining scope was
 breaking-change classification, signaling, and release-process refinement.
@@ -116,7 +116,7 @@ meaning.
   fixtures, examples, onboarding, migration, authoring guidance, tests, and
   documentation from accepted meaning;
 - migrate this repository's Task set and keep every finding owned by either
-  this Task or [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md);
+  this Task or [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md);
 - validate the exact candidate with `npm run nkf:check`; and
 - perform the directed independent audit against any later implementation and
   distributable set before claiming completion.
@@ -125,7 +125,7 @@ meaning.
 
 - completing the release, adoption, breaking-change classification, archive,
   recommendation, or CI work owned by
-  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md);
+  [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md);
 - changing the general one-Task-one-branch model beyond the recorded recovery
   exception;
 - making NKF, the checker, or an agent authoritative for Task meaning;
@@ -136,7 +136,7 @@ meaning.
 
 ## Execution Plan
 
-1. Preserve the Draft Design and the [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+1. Preserve the Draft Design and the [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
    expansion evidence without adopting or implementing the proposal.
 2. Remove the Draft Design's claim that the Task Scope Gate targets NKF 0.2;
    express it as successor-version proposal knowledge instead.
@@ -145,7 +145,7 @@ meaning.
    and recommendation as separate facts.
 4. Defer this Task through the deterministic transition and preserve the merge
    as the repository's Human Product Owner review act.
-5. Resume [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+5. Resume [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
    only after the deferred conclusion is incorporated, limiting that work to
    existing NKF 0.2 release integrity and independent audit.
 6. Reactivate this Task only under later explicit Human Product Owner direction
@@ -174,7 +174,7 @@ meaning.
   migration, complete set, final archive, and extracted checker, including all
   findings rather than only passing results.
 - The successor release contains the accepted scope-gate set, while
-  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md)
+  [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
   retains ownership of existing NKF 0.2 release and compatibility work.
 
 ## Current Progress
@@ -198,7 +198,7 @@ meaning.
   untracked generated `dist/nourd-nkf-adopt.mjs` governed artifact is absent
   from that new worktree. The transition rolled back without changing Task
   state. The defect is classified as a blocking dependency transferred to
-  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md),
+  [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md),
   which owns the remaining Task-transition process refinements; it is not
   silently added to this Task's implementation scope.
 - Activation was recovered under the confirmed Git-topology exception: the
@@ -215,7 +215,7 @@ meaning.
   It remains Draft proposal knowledge pending exact boundary confirmation.
 - Before any proposal adoption or implementation, the Human Product Owner
   directed deferral to a successor NKF version and return to
-  [NKF-020](../active/NKF-020-version-release-adoption-and-compatibility-process.md) for
+  [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md) for
   existing 0.2 release work only. The Draft Design is preserved, and no
   normative, executable, checker, fixture, migration, or release change was
   made under NKF-021.

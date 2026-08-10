@@ -70,5 +70,5 @@ guidance all move in one cascade, and the unconsumed set is re-cut.
 
 ## Non-Claims
 
-This Decision does not merge branches, close [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md), confirm the
+This Decision does not merge branches, close [NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md), confirm the
 Realization, or migrate any consumer.

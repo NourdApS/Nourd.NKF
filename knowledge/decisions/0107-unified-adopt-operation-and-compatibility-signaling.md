@@ -19,7 +19,7 @@ consumer adoption, while [ADR 0076](0076-versioned-contract-evolution.md)
 requires deliberate migration between immutable NKF versions. The existing
 adopter exposed onboarding, installation, updating, and migration as separate
 public choices even though repository state determines the valid path.
-[NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md)
+[NKF-020](../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 also still lacked the accepted breaking-change classification and signaling
 boundary required to finish the 0.2 adoption experience.
 
