@@ -26,7 +26,7 @@ if (!/^[0-9a-f]{64}$/.test(expectedSha256 ?? "")) {
 
 const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-consumer-exercise-"));
 const project = path.join(parent, "consumer");
-await cp(path.join(repositoryRoot, "fixtures/valid/minimal"), project, {
+await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-2"), project, {
   recursive: true,
 });
 execFileSync("git", ["init", "-b", "master"], {
@@ -53,14 +53,32 @@ function runFor(projectRoot, command, extra = [], expected = 0) {
   );
 }
 
-const run = (command, extra = [], expected = 0) =>
-  runFor(project, command, extra, expected);
+function runAdoptFor(projectRoot, extra = [], expected = 0) {
+  const result = spawnSync(
+    process.execPath,
+    [
+      path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs"),
+      "--project",
+      projectRoot,
+      "--recommendation",
+      path.join(repositoryRoot, "release/recommended.json"),
+      ...extra,
+    ],
+    { encoding: "utf8" },
+  );
+  if (result.status === expected) return result;
+  if (expected !== 0 && result.status !== 0) return result;
+  throw new Error(
+    `Adopt returned ${result.status}.\n${result.stdout}\n${result.stderr}`,
+  );
+}
+
+const runAdopt = (extra = [], expected = 0) =>
+  runAdoptFor(project, extra, expected);
 
 const releaseArguments = [
   "--archive",
   archivePath,
-  "--sha256",
-  expectedSha256,
 ];
 
 async function exerciseInitialOnboarding(profile, withDocument) {
@@ -151,7 +169,7 @@ async function exerciseInitialOnboarding(profile, withDocument) {
     runFor(root, "seal", ["--plan", path.join(workspace, "plan.yaml")]).stdout,
   );
   const onboarded = JSON.parse(
-    runFor(root, "onboard", [
+    runAdoptFor(root, [
       "--plan",
       path.join(workspace, "plan.yaml"),
       ...releaseArguments,
@@ -165,31 +183,24 @@ async function exerciseInitialOnboarding(profile, withDocument) {
     cwd: root,
     stdio: "ignore",
   });
-  const checked = JSON.parse(runFor(root, "check").stdout);
-  const repeated = JSON.parse(
-    runFor(root, "onboard", [
-      "--plan",
-      path.join(workspace, "plan.yaml"),
-      ...releaseArguments,
-    ]).stdout,
-  );
+  const repeated = JSON.parse(runAdoptFor(root, releaseArguments).stdout);
   return {
     mechanically_ready: inspected.mechanically_ready,
     sealed: sealed.state,
     onboarded: onboarded.state,
-    conformance: onboarded.validation.conformance,
-    governing_use: onboarded.validation.governing_use,
+    conformance: onboarded.operation.validation.conformance,
+    governing_use: onboarded.operation.validation.governing_use,
     package_command: "passed",
-    checked: checked.state,
+    checked: repeated.state,
     repeated: repeated.state,
   };
 }
 
 const initialProduct = await exerciseInitialOnboarding("product", false);
 const initialTechnology = await exerciseInitialOnboarding("technology", true);
-const installed = JSON.parse(run("install", releaseArguments).stdout);
-const checked = JSON.parse(run("check").stdout);
-const noUpdate = JSON.parse(run("install", releaseArguments).stdout);
+const installed = JSON.parse(runAdopt(releaseArguments).stdout);
+const checked = JSON.parse(runAdopt(releaseArguments).stdout);
+const noUpdate = checked;
 
 const pinPath = path.join(project, ".nourd/nkf-release.json");
 const pinBytes = await readFile(pinPath);
@@ -202,12 +213,12 @@ const installedArchive = await readFile(installedArchivePath);
 const alteredArchive = Buffer.from(installedArchive);
 alteredArchive[700] = alteredArchive[700] ^ 1;
 await writeFile(installedArchivePath, alteredArchive);
-const archiveTamper = run("status", [], 1);
+const archiveTamper = runAdopt(releaseArguments, 1);
 await writeFile(installedArchivePath, installedArchive);
 
 pin.checker_sha256 = "0".repeat(64);
 await writeFile(pinPath, `${JSON.stringify(pin, null, 2)}\n`);
-const pinTamper = run("status", [], 1);
+const pinTamper = runAdopt(releaseArguments, 1);
 await writeFile(pinPath, pinBytes);
 
 const adapterPath = path.join(project, ".github/copilot-instructions.md");
@@ -219,13 +230,13 @@ if (alteredAdapter === adapter.toString("utf8")) {
   throw new Error("The installed adapter does not contain its expected text.");
 }
 await writeFile(adapterPath, alteredAdapter);
-const integrationTamper = run("status", [], 1);
+const integrationTamper = runAdopt(releaseArguments, 1);
 await writeFile(adapterPath, adapter);
 
 const knowledgePath = path.join(project, "knowledge/product.md");
 const knowledge = await readFile(knowledgePath);
 await appendFile(knowledgePath, "\nTampered.\n");
-const knowledgeTamper = run("check", [], 1);
+const knowledgeTamper = runAdopt(releaseArguments, 1);
 await writeFile(knowledgePath, knowledge);
 
 process.stdout.write(

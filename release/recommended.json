@@ -3,6 +3,20 @@
   "nkf_version": "0.2",
   "state": "recommended",
   "channel": "internal-private-github-prerelease",
+  "compatibility": [
+    {
+      "from_nkf_version": "0.1",
+      "classification": "breaking",
+      "migration_required": true,
+      "summary": "NKF 0.1 consumers require the governed 0.2 migration and explicit Human Product Owner approval before mutation."
+    },
+    {
+      "from_nkf_version": "0.2",
+      "classification": "non-breaking",
+      "migration_required": false,
+      "summary": "NKF 0.2 consumers can refresh their pinned release and host integration without semantic migration."
+    }
+  ],
   "archive": {
     "sha256": "423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5",
     "asset_name": "nourd-nkf-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5.tar",

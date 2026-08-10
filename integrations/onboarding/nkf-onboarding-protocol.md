@@ -24,7 +24,8 @@ Before starting, verify that the authoring surface can:
 3. inspect exact project-relative files without sampling the corpus;
 4. preserve exact bytes and edit only a candidate workspace before final
    application;
-5. run the mechanical capture, seal, and onboard commands; and
+5. run the internal mechanical capture and seal stages and the public Adopt
+   operation; and
 6. expose evidence and uncertainty without calling its recommendation
    deterministic, accepted, confirmed, or conformant.
 
@@ -253,8 +254,9 @@ same-bundle reference — resolve each finding as an explicit sealed candidate
 edit and re-seal; never weaken the plan, misclassify a document, or edit the
 project directly to pass.
 
-Run `onboard` with the sealed plan, exact adopter, and independently trusted
-release archive SHA-256. The onboarder repeats the source and candidate checks,
+Run the public subcommand-free Adopt operation with the sealed plan. Adopt
+resolves the governed recommendation and independently trusted release archive
+SHA-256, repeats the source and candidate checks,
 generates native knowledge and integration, creates the complete portable
 topology, validates an isolated full project candidate, and applies only a
 conformant candidate.
@@ -296,15 +298,15 @@ Realization, commit Git history, push a branch, or configure remote policy.
 After success, the installed NKF authoring protocol and `nkf-authoring` skill
 govern all later knowledge changes.
 
-Projects created by the trusted NKF-013 or NKF-015 predecessor use the
-separate `repair-topology` command documented by the update-and-recovery
-guide. Do not imitate that migration by manually deleting a competing map.
+For trusted NKF-013 or NKF-015 predecessors, Adopt selects the bounded topology
+repair mechanics internally when required. Do not invoke a separate public
+repair choice or imitate the migration by manually deleting a competing map.
 
 ## Independent Post-Onboarding Audit
 
-After `onboard` reports success, audit the result independently before
+After Adopt reports `onboarded`, audit the result independently before
 reporting it: with a fresh reading rather than this session's assumptions,
-rerun the installed checker through `check` to zero diagnostics, verify the
+rerun `npm run nkf:check` to zero diagnostics, verify the
 release pin and receipt digests, confirm the guidance files carry the
 release's NKF version marker, walk the generated topology against this
 protocol's promises, and confirm every preserved document survived with its

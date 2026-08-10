@@ -158,6 +158,11 @@ describe("deterministic governed mechanics", () => {
 
   it("closes a task through the verified transaction and rewrites links", async () => {
     const project = await copyFixture();
+    const parentIndexPath = path.join(project, "knowledge/tasks/README.md");
+    await writeFile(
+      parentIndexPath,
+      `${(await readFile(parentIndexPath, "utf8")).trimEnd()}\n\n## Active\n\n- [Fixture Task](active/task.md)\n\n## Deferred\n\n## Completed\n\n## Cancelled\n`,
+    );
     const resultFile = path.join(project, "..", "result.md");
     await writeFile(resultFile, "The fixture work completed with all criteria satisfied.\n");
     const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
@@ -170,6 +175,9 @@ describe("deterministic governed mechanics", () => {
     expect(activeIndex).not.toContain("task.md");
     const completedIndex = await readFile(path.join(project, "knowledge/tasks/completed/README.md"), "utf8");
     expect(completedIndex).toContain("(task.md)");
+    const parentIndex = await readFile(parentIndexPath, "utf8");
+    expect(parentIndex.split("## Active")[1]?.split("## Deferred")[0]).not.toContain("task.md");
+    expect(parentIndex.split("## Completed")[1]?.split("## Cancelled")[0]).toContain("(completed/task.md)");
     const check = spawnSync(process.execPath, [checker, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
     expect(JSON.parse(check.stdout).conformance).toBe("passed");
   });

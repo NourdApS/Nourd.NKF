@@ -1,120 +1,120 @@
 # Adopt And Validate
 
-This guide applies to the exact internal NKF 0.2 release recorded in
-`../reference/publication.json`. NKF 0.2 is pre-stable. The checker is private;
-the documentation and adopter are public.
+NKF has one public operation: **Adopt**. The same invocation brings a supported
+repository to the current governed recommended release whether it is new to
+NKF, already on NKF 0.1, missing integration, behind within NKF 0.2, or already
+current.
 
-## Already Structured Projects Only
+NKF 0.2 is pre-stable. The checker and release archive are private to
+authorized Nourd projects; this public adopter contains no checker or private
+credential.
 
-This guide installs the pinned NKF integration around an already complete
-native NKF 0.2 bundle. For an Empty Repository or a Tiny Knowledge, No Source
-Or Configuration repository, begin with
-[Initial Onboarding](initial-onboarding.md). Do not manually create native YAML
-merely to satisfy this install prerequisite.
+## Before You Run Adopt
 
-## Before Installation
+Use Node.js 22 or later. For the default authenticated path, install `gh` and
+log in to an account authorized for `kaveh6202/Nourd.NKF`. Download
+`tools/nourd-nkf-adopt.mjs` and verify its SHA-256 against
+`reference/publication.json`.
 
-The project must already contain:
+The repository's authority approves adoption. The command cannot accept
+project meaning or confirm a Realization.
 
-- a project-root `.nourd` directory;
-- `.nourd/knowledge/bundle.yaml`;
-- a project-contained `knowledge_root`;
-- exactly one root record; and
-- either `nkf.profile.product` or `nkf.profile.technology`.
-
-The owning project authority must approve adoption. Installation does not
-accept or migrate project knowledge by implication.
-
-Node.js 22 or later is required. For authenticated download, install `gh` and
-log in to an account authorized for the private NKF repository.
-
-## Install From The Private Release
-
-Read the exact `release.archive_sha256` and `adopter.sha256` values from
-`../reference/publication.json`. Verify the downloaded public adopter against
-the latter, then run:
+## Run The One Operation
 
 ```sh
-node nourd-nkf-adopt.mjs install \
-  --project /absolute/path/to/project \
-  --github-repository kaveh6202/Nourd.NKF \
-  --sha256 0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727
+node nourd-nkf-adopt.mjs --project /absolute/path/to/project
 ```
 
-For an approved offline archive:
+The adopter obtains the reviewed `release/recommended.json` from NKF's default
+branch, shows the exact target, verifies the full content-addressed archive,
+and selects the valid internal path from repository state. It never follows a
+Github `latest` label.
+
+For an approved offline release:
 
 ```sh
-node nourd-nkf-adopt.mjs install \
+node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
-  --archive /absolute/path/to/nourd-nkf-sha256-0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727.tar \
-  --sha256 0b03c3087e4c02e001930993a4b4435645a34802e006411654c564c819e69727
+  --recommendation /absolute/path/to/recommended.json \
+  --archive /absolute/path/to/nourd-nkf-sha256-<digest>.tar
 ```
 
-The full digest is the trust anchor. The derived tag and asset name are only
-locators.
+The recommendation must name that exact archive digest. A mismatch stops
+before archive use.
 
-## What Installation Adds
+## What The Result Means
 
-The adopter preflights all targets and then installs:
+| State | Meaning |
+| --- | --- |
+| `onboarded` | A reviewed sealed initial-adoption plan became a complete NKF 0.2 project |
+| `migrated` | A supported predecessor was deliberately migrated to NKF 0.2 |
+| `updated` | Existing NKF 0.2 knowledge received the recommended exact release and integration |
+| `current` | The exact recommended release and integration already validate |
 
-- the content-addressed release archive;
-- `.nourd/nkf-release.json`;
-- the self-contained adopter;
-- the AI-neutral authoring protocol;
-- byte-identical `.agents` and `.claude` skills;
-- thin `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and Copilot adapters;
-- an integration registry and verifier;
+Every result names the target archive, source commit, checker, adopter, and
+applicable compatibility signal. The consumer pin under
+`.nourd/nkf-release.json` makes the exact successful release permanent; a
+later recommendation change does not alter the repository automatically.
+
+## Initial Repositories
+
+An unadopted repository first needs a complete agent review and sealed plan.
+Follow [Initial Onboarding](initial-onboarding.md), then run the same Adopt
+operation with the plan:
+
+```sh
+node nourd-nkf-adopt.mjs \
+  --project /absolute/path/to/project \
+  --plan /absolute/path/to/onboarding-workspace/plan.yaml
+```
+
+Missing, stale, incomplete, or unsupported plans stop without mutation.
+
+## Breaking NKF 0.1 Migration
+
+NKF 0.2 is declared breaking from NKF 0.1. Adopt first reports the exact
+target and migration requirement, then stops before changing the repository.
+After the repository's Human Product Owner approves that displayed migration,
+rerun:
+
+```sh
+node nourd-nkf-adopt.mjs \
+  --project /absolute/path/to/project \
+  --accept-breaking human-product-owner
+```
+
+The approval argument is valid only for a declared breaking path. Tooling does
+not manufacture the human approval or infer compatibility.
+
+## What Adopt Installs
+
+After complete isolated validation, the transaction installs or refreshes:
+
+- the exact content-addressed release archive and consumer pin;
+- the pinned self-contained adopter;
+- the neutral authoring protocol and portable skills;
+- bounded host instruction adapters;
+- the integration registry and verifier;
 - `npm run nkf:check`; and
 - an exact-commit Github workflow.
 
-Existing unrelated instruction content is preserved. An incompatible command,
-owned workflow path, malformed adapter marker, symbolic link, or path escape
-fails closed instead of being overwritten.
+Conflicting owned paths, symbolic links, digest drift, invalid knowledge, or a
+handled write failure fail closed or roll back. Existing unrelated instruction
+content is preserved.
 
-## Normal Authoring
+## Validate Normal Work
 
-An AI or human author should:
-
-1. begin from the knowledge map and consolidated current Realization;
-2. resolve the owning Task and record the execution plan;
-3. change only the affected lifecycle and authority boundaries;
-4. synchronize Markdown, frontmatter, declarations, relationships, indexes,
-   and applicable artifact digests;
-5. keep Designs as proposals and Decisions as disposition provenance;
-6. run focused checks while editing; and
-7. run exactly `npm run nkf:check` before handoff.
-
-Agent instruction discovery differs by host. The installed neutral protocol is
-the one complete workflow. Thin host files and portable skills only make that
-same workflow discoverable. Every candidate output receives the same
-mechanical check regardless of which human, model, agent, or tool produced it.
-
-## Local And Continuous Integration Checks
-
-Run:
+Run exactly:
 
 ```sh
 npm run nkf:check
 ```
 
-The installed adopter verifies its own digest, integration files, release pin,
-cached archive, and embedded release manifest before invoking the verified
-checker at `full-bundle`.
+The installed adopter verifies its pin, integration, archive, and embedded
+manifest before invoking the pinned full-bundle checker. A pass establishes
+conformance for one snapshot. It is not acceptance, Realization confirmation,
+publication, or protected-merge proof.
 
-The Github workflow runs the same project command against the exact candidate
-commit. Workflow presence and a passing run are not branch protection. The
-current NKF 0.2 adoption path does not claim a protected merge gate.
-
-## Read The Result
-
-`.nourd/validation-result.json` is replaced by the latest full-bundle run. It
-reports:
-
-- selected profile and contract bindings;
-- checker identity and digest;
-- validated snapshot digest and entry count;
-- phase states;
-- deterministic diagnostics; and
-- conformance and governing-use results.
-
-A pass is not an acceptance or Realization-confirmation act.
+The installed Github workflow provides continuous integration by running the
+same command against the exact candidate commit. Workflow presence and a green
+run do not by themselves prove branch protection.

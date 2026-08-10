@@ -191,6 +191,9 @@ status, or role is ambiguous.
 
 ## Seal Candidate Digests
 
+Capture and sealing are internal agent mechanics used to prepare the one
+public Adopt operation; they are not alternative user adoption commands.
+
 Run:
 
 ```sh
@@ -204,25 +207,28 @@ complete mechanical snapshot, requires every Markdown representation, and
 refreshes exact candidate digests. It does not change the project, prove the
 semantic category, or establish conformance.
 
-## Apply The Complete Candidate
+## Apply The Complete Candidate With Adopt
 
-With an approved offline release archive:
+For authenticated access to the governed recommendation and private release:
 
 ```sh
-node nourd-nkf-adopt.mjs onboard \
+node nourd-nkf-adopt.mjs \
+  --project /absolute/path/to/project \
+  --plan /absolute/path/to/onboarding-workspace/plan.yaml
+```
+
+For an approved offline recommendation and archive:
+
+```sh
+node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
   --plan /absolute/path/to/onboarding-workspace/plan.yaml \
-  --archive /absolute/path/to/nourd-nkf-sha256-<release-sha256>.tar \
-  --sha256 <release-sha256>
+  --recommendation /absolute/path/to/recommended.json \
+  --archive /absolute/path/to/nourd-nkf-sha256-<release-sha256>.tar
 ```
 
-For authenticated private download, replace `--archive` with:
-
-```text
---github-repository kaveh6202/Nourd.NKF
-```
-
-The onboarder repeats source and candidate checks, verifies the release,
+Adopt repeats source and candidate checks, verifies the recommendation and
+release,
 generates the bundle and declarations, installs authoring integration,
 validates a complete isolated project at `full-bundle`, and only then replaces
 project bytes. A handled failure restores predecessor bytes and removes
@@ -237,7 +243,8 @@ Every successful initial onboarding creates the complete portable topology:
 │   ├── README.md
 │   ├── active/README.md
 │   ├── deferred/README.md
-│   └── completed/README.md
+│   ├── completed/README.md
+│   └── cancelled/README.md
 ├── designs/
 │   ├── README.md
 │   ├── active/README.md
@@ -291,7 +298,7 @@ a Draft Specification. Existing project-owned bytes are preserved unless the
 sealed candidate names an exact change or the managed navigation/index
 reconciliation is required by NKF.
 
-Repeating the exact sealed plan verifies the installed candidate and returns
-`no-update`. Successful onboarding does not accept the Draft root, accept a
+After success, rerunning Adopt without `--plan` verifies the installed
+candidate and returns `current`. Successful onboarding does not accept the Draft root, accept a
 Specification, adopt a Design, confirm the Realization, commit Git history,
 push a branch, or activate remote merge protection.

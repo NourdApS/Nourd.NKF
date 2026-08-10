@@ -32,3 +32,4 @@ normative authority remains in Specifications.
 - [Semantic Topology And Bindings](semantic-topology-and-bindings.md)
 - [Single-Version Artifact Authority](single-version-artifact-authority.md)
 - [Technology Root Profile](technology-root-profile.md)
+- [Unified Adopt Operation](unified-adopt-operation.md)

@@ -171,7 +171,8 @@ function requireDisjointReceiptPaths(groups, label) {
 }
 
 function parseArguments(values) {
-  const result = { command: values[0], options: {} };
+  const publicAdopt = values.length === 0 || values[0]?.startsWith("--");
+  const result = { command: publicAdopt ? "adopt" : values[0], options: {} };
   if (![
     "inspect",
     "seal",
@@ -188,12 +189,13 @@ function parseArguments(values) {
     "linkify",
     "set",
     "migrate",
+    "adopt",
   ].includes(result.command)) {
     fail(
-      "Usage: nourd-nkf-adopt.mjs <inspect|seal|onboard|repair-topology|install|update|check|status|integration-check|task|repin|refs|linkify|set|migrate> [options]",
+      "Usage: nourd-nkf-adopt.mjs --project <path> [--plan <sealed-plan>] [--recommendation <catalog>] [--archive <archive>|--github-repository kaveh6202/Nourd.NKF] [--accept-breaking <authority>]",
     );
   }
-  for (let index = 1; index < values.length; index += 2) {
+  for (let index = publicAdopt ? 0 : 1; index < values.length; index += 2) {
     const key = values[index];
     const value = values[index + 1];
     if (!key?.startsWith("--") || value === undefined) {
@@ -206,7 +208,17 @@ function parseArguments(values) {
     result.options[name] = value;
   }
   let allowed;
-  if (result.command === "inspect") {
+  if (result.command === "adopt") {
+    allowed = new Set([
+      "accept-breaking",
+      "archive",
+      "github-repository",
+      "plan",
+      "project",
+      "recommendation",
+      "sha256",
+    ]);
+  } else if (result.command === "inspect") {
     allowed = new Set([
       "authority",
       "created-at",
@@ -239,6 +251,141 @@ function parseArguments(values) {
     if (!allowed.has(name)) fail(`Unknown argument: --${name}`);
   }
   return result;
+}
+
+function requireRecommendedRelease(value) {
+  requireExactKeys(
+    value,
+    [
+      "adopter_sha256",
+      "archive",
+      "authority",
+      "channel",
+      "compatibility",
+      "contract",
+      "nkf_version",
+      "release",
+      "source_commit",
+      "state",
+      "supported_root_profiles",
+      "checker_sha256",
+    ],
+    "Recommended release",
+  );
+  requireExactKeys(
+    value.archive,
+    ["asset_name", "sha256", "size", "tag", "url"],
+    "Recommended archive",
+  );
+  requireExactKeys(
+    value.authority,
+    ["executable_sha256", "markdown_sha256"],
+    "Recommended authority",
+  );
+  requireExactKeys(
+    value.release,
+    ["prerelease", "published_at", "url", "visibility"],
+    "Recommended publication",
+  );
+  if (!Array.isArray(value.compatibility) || value.compatibility.length === 0) {
+    fail("Recommended release compatibility must be a non-empty array.");
+  }
+  const compatibility = new Map();
+  for (const [index, entry] of value.compatibility.entries()) {
+    requireExactKeys(
+      entry,
+      ["classification", "from_nkf_version", "migration_required", "summary"],
+      `Recommended compatibility[${index}]`,
+    );
+    if (
+      !["0.1", "0.2"].includes(entry.from_nkf_version) ||
+      !["breaking", "non-breaking"].includes(entry.classification) ||
+      typeof entry.migration_required !== "boolean" ||
+      typeof entry.summary !== "string" ||
+      entry.summary.trim() !== entry.summary ||
+      entry.summary === "" ||
+      compatibility.has(entry.from_nkf_version)
+    ) {
+      fail("Recommended release compatibility is invalid or ambiguous.");
+    }
+    if (
+      (entry.classification === "breaking") !== entry.migration_required
+    ) {
+      fail("Recommended release compatibility classification and migration requirement differ.");
+    }
+    compatibility.set(entry.from_nkf_version, entry);
+  }
+  const archiveSha256 = value.archive.sha256;
+  const { assetName, tag } = releaseIdentity(archiveSha256);
+  if (
+    value.contract !== "nkf.recommended-release" ||
+    value.nkf_version !== "0.2" ||
+    value.state !== "recommended" ||
+    value.channel !== "internal-private-github-prerelease" ||
+    !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
+    value.archive.asset_name !== assetName ||
+    value.archive.tag !== tag ||
+    !Number.isSafeInteger(value.archive.size) ||
+    value.archive.size <= 0 ||
+    value.archive.url !==
+      `https://github.com/kaveh6202/Nourd.NKF/releases/download/${tag}/${assetName}` ||
+    !/^[0-9a-f]{40}$/.test(value.source_commit ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.checker_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.adopter_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.authority.markdown_sha256 ?? "") ||
+    !/^[0-9a-f]{64}$/.test(value.authority.executable_sha256 ?? "") ||
+    value.release.url !==
+      `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}` ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(
+      value.release.published_at ?? "",
+    ) ||
+    value.release.prerelease !== true ||
+    value.release.visibility !== "private" ||
+    JSON.stringify(value.supported_root_profiles) !==
+      JSON.stringify(["nkf.profile.product", "nkf.profile.technology"]) ||
+    compatibility.get("0.1")?.classification !== "breaking" ||
+    compatibility.get("0.2")?.classification !== "non-breaking"
+  ) {
+    fail("The recommended release catalog is invalid or inconsistent.");
+  }
+  return { catalog: value, compatibility };
+}
+
+async function resolveRecommendedRelease(options) {
+  let bytes;
+  if (options.recommendation !== undefined) {
+    const recommendationPath = path.resolve(options.recommendation);
+    const stat = await lstat(recommendationPath).catch(() => null);
+    if (stat === null || !stat.isFile() || stat.isSymbolicLink()) {
+      fail("--recommendation must identify a regular recommended-release catalog.");
+    }
+    bytes = await readFile(recommendationPath);
+  } else {
+    let encoded;
+    try {
+      encoded = execFileSync(
+        "gh",
+        [
+          "api",
+          "repos/kaveh6202/Nourd.NKF/contents/release/recommended.json",
+          "--method",
+          "GET",
+          "-f",
+          "ref=master",
+          "--jq",
+          ".content",
+        ],
+        { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+      );
+    } catch (error) {
+      const detail = error?.stderr?.toString().trim();
+      fail(
+        `Unable to resolve the governed recommended release from kaveh6202/Nourd.NKF${detail ? `: ${detail}` : "."}`,
+      );
+    }
+    bytes = Buffer.from(encoded.replace(/\s/g, ""), "base64");
+  }
+  return requireRecommendedRelease(parseStrictJson(bytes));
 }
 
 async function requireProjectRoot(value) {
@@ -547,6 +694,13 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
   const files = new Map();
   const branch = defaultBranch(projectRoot);
   const adopterBytes = await currentExecutableBytes();
+  const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
+  if (
+    verification.manifest.nkf_version === "0.2" &&
+    (!Buffer.isBuffer(archivedAdopter) || !archivedAdopter.equals(adopterBytes))
+  ) {
+    fail("The executing adopter differs from the adopter carried by the target release archive.");
+  }
   const { assetName, tag } = releaseIdentity(verification.archive_sha256);
   const archivePath = `${RELEASE_DIRECTORY}/${assetName}`;
 
@@ -864,6 +1018,44 @@ async function verifyInstalled(projectRoot, runChecker) {
   return { pin, verification, report };
 }
 
+async function verifyPredecessorInstallation(projectRoot, priorBytes) {
+  const pin = requirePinShape(parseStrictJson(priorBytes));
+  const archiveBytes = await readRegularInside(
+    projectRoot,
+    pin.archive.project_path,
+  );
+  const verification = verifyReleaseArchive(archiveBytes, pin.archive.sha256);
+  if (
+    verification.manifest.nkf_version !== pin.nkf_version ||
+    verification.release_commit !== pin.source_commit ||
+    verification.checker_sha256 !== pin.checker_sha256
+  ) {
+    fail("The predecessor release archive differs from its installed pin.");
+  }
+  const adopterBytes = await readRegularInside(projectRoot, pin.adopter.path);
+  if (digest(adopterBytes) !== pin.adopter.sha256) {
+    fail("The predecessor adopter differs from its installed pin.");
+  }
+  const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
+  if (
+    verification.manifest.nkf_version === "0.2" &&
+    (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
+  ) {
+    fail("The predecessor adopter is not bound by its release archive.");
+  }
+  const result = spawnSync(
+    process.execPath,
+    [path.join(projectRoot, ...pin.adopter.path.split("/")), "integration-check", "--project", projectRoot],
+    { encoding: "utf8" },
+  );
+  if (result.status !== 0) {
+    fail(
+      `The predecessor installation did not validate with its pinned adopter: ${result.stderr || result.stdout}`,
+    );
+  }
+  return { pin, verification };
+}
+
 async function validateCompleteCandidate(projectRoot, files, removedPaths = [], verifier = null) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-candidate-"));
   const candidate = path.join(temporary, "project");
@@ -913,7 +1105,7 @@ async function installOrUpdate(command, options) {
     fail("Update requires an existing NKF consumer release pin.");
   }
   if (priorBytes !== null) {
-    await verifyInstalled(projectRoot, false);
+    await verifyPredecessorInstallation(projectRoot, priorBytes);
   }
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
@@ -1756,6 +1948,32 @@ function gateBlocksCompletion(text) {
   return blocked;
 }
 
+function moveTaskInParentIndex(text, fileName, h1, targetState) {
+  const stateHeading = {
+    active: "Active",
+    deferred: "Deferred",
+    completed: "Completed",
+    cancelled: "Cancelled",
+  }[targetState];
+  const escapedFile = fileName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const taskLine = new RegExp(
+    `^- \\[[^\\]]+\\]\\((?:active|deferred|completed|cancelled)/${escapedFile}\\)$`,
+  );
+  const lines = text.split("\n").filter((line) => !taskLine.test(line));
+  const headingIndex = lines.findIndex((line) => line === `## ${stateHeading}`);
+  if (headingIndex === -1) return lines.join("\n");
+  let insertion = lines.findIndex(
+    (line, index) => index > headingIndex && line.startsWith("## "),
+  );
+  if (insertion === -1) insertion = lines.length;
+  while (insertion > headingIndex + 1 && lines[insertion - 1] === "") {
+    lines.splice(insertion - 1, 1);
+    insertion -= 1;
+  }
+  lines.splice(insertion, 0, `- [${h1}](${targetState}/${fileName})`, "");
+  return lines.join("\n").replace(/\n{3,}/g, "\n\n");
+}
+
 async function taskGit(projectRoot) {
   const run = (...argumentsValue) =>
     execFileSync("git", ["-C", projectRoot, ...argumentsValue], { encoding: "utf8" }).trim();
@@ -2092,6 +2310,9 @@ async function transitionTask(options) {
       const newLink = relativeLink(relative, targetRelative);
       text = text.split(`](${oldLink})`).join(`](${newLink})`);
     }
+    if (relative === "tasks/README.md") {
+      text = moveTaskInParentIndex(text, fileName, h1, transition);
+    }
     if (isTargetIndex && !text.includes(`](${fileName})`)) {
       text = `${text.trimEnd()}\n- [${h1}](${fileName})\n`;
     }
@@ -2165,15 +2386,69 @@ async function migrateToCurrent(options) {
   const projectRoot = await requireProjectRoot(options.project);
   const { bundle, knowledgeRoot } = await requireBundle(projectRoot);
   if (bundle.nkf_version !== "0.1") fail("migrate requires a project that declares NKF 0.1.");
+  const predecessorPinBytes = await readRegularInside(
+    projectRoot,
+    PIN_PATH,
+    false,
+  );
+  if (predecessorPinBytes !== null) {
+    await verifyPredecessorInstallation(projectRoot, predecessorPinBytes);
+  }
   const expectedSha256 = requireSha256(options.sha256);
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
   if (verification.manifest.nkf_version !== "0.2") fail("migrate requires an NKF 0.2 release archive.");
 
   const files = new Map();
+  let removedPaths = [];
+  const topologyPaths = [
+    "tasks/README.md",
+    "tasks/active/README.md",
+    "tasks/deferred/README.md",
+    "tasks/completed/README.md",
+    "designs/README.md",
+    "designs/active/README.md",
+    "designs/adopted/README.md",
+    "designs/rejected/README.md",
+    "designs/superseded/README.md",
+    "designs/withdrawn/README.md",
+    "decisions/README.md",
+    "specifications/README.md",
+    "realizations/README.md",
+    "realizations/current/README.md",
+    "evidence/README.md",
+  ];
+  const topologyIncomplete = (
+    await Promise.all(
+      topologyPaths.map((relative) =>
+        readRegularInside(projectRoot, `${knowledgeRoot}/${relative}`, false)),
+    )
+  ).some((bytes) => bytes === null);
+  if (topologyIncomplete) {
+    const receipt = requirePredecessorOnboardingReceipt(
+      parseStrictJson(
+        await readRegularInside(projectRoot, ONBOARDING_RECEIPT_PATH),
+      ),
+    );
+    const topology = await buildPortableTopologyRepair(projectRoot, receipt);
+    for (const [relative, bytes] of topology.files) files.set(relative, bytes);
+    removedPaths = [...topology.removals];
+  }
   const bundlePath = ".nourd/knowledge/bundle.yaml";
-  const bundleText = await readFile(path.join(projectRoot, bundlePath), "utf8");
-  files.set(bundlePath, Buffer.from(bundleText.replace('nkf_version: "0.1"', 'nkf_version: "0.2"'), "utf8"));
+  const bundleValue = YAML.parse(
+    files.get(bundlePath)?.toString("utf8") ??
+      (await readFile(path.join(projectRoot, bundlePath), "utf8")),
+  );
+  bundleValue.nkf_version = "0.2";
+  if (!Array.isArray(bundleValue.non_records)) bundleValue.non_records = [];
+  if (!bundleValue.non_records.some((item) => item?.path === "tasks/cancelled/README.md")) {
+    bundleValue.non_records.push({
+      path: "tasks/cancelled/README.md",
+      kind: "navigation",
+    });
+    bundleValue.non_records.sort((left, right) => left.path.localeCompare(right.path));
+  }
+  files.set(bundlePath, serializeYaml(bundleValue));
 
   const retroGate = [
     "",
@@ -2202,7 +2477,10 @@ async function migrateToCurrent(options) {
     }
   }
   const cancelledIndexRelative = "tasks/cancelled/README.md";
-  if ((await lstat(path.join(projectRoot, knowledgeRoot, "tasks", "cancelled", "README.md")).catch(() => null)) === null) {
+  if (
+    files.get(`${knowledgeRoot}/${cancelledIndexRelative}`) === undefined &&
+    (await lstat(path.join(projectRoot, knowledgeRoot, "tasks", "cancelled", "README.md")).catch(() => null)) === null
+  ) {
     const stamp = `${new Date().toISOString().slice(0, 19)}Z`;
     files.set(
       `${knowledgeRoot}/${cancelledIndexRelative}`,
@@ -2211,20 +2489,10 @@ async function migrateToCurrent(options) {
         "utf8",
       ),
     );
-    const stagedBundle = files.get(bundlePath).toString("utf8");
-    const deferredEntry = "  - path: tasks/deferred/README.md\n    kind: navigation\n";
-    if (!stagedBundle.includes(deferredEntry)) {
-      fail("migrate cannot register the cancelled index deterministically in this bundle.");
-    }
-    files.set(
-      bundlePath,
-      Buffer.from(
-        stagedBundle.replace(deferredEntry, `${deferredEntry}  - path: tasks/cancelled/README.md\n    kind: navigation\n`),
-        "utf8",
-      ),
-    );
     const tasksIndexAbsolute = path.join(projectRoot, knowledgeRoot, "tasks", "README.md");
-    const tasksIndex = await readFile(tasksIndexAbsolute, "utf8");
+    const tasksIndex =
+      files.get(`${knowledgeRoot}/tasks/README.md`)?.toString("utf8") ??
+      (await readFile(tasksIndexAbsolute, "utf8"));
     const completedLine = "- [Completed Tasks](completed/README.md)\n";
     const updatedTasksIndex = tasksIndex.includes(completedLine)
       ? tasksIndex.replace(completedLine, `${completedLine}- [Cancelled Tasks](cancelled/README.md)\n`)
@@ -2251,8 +2519,13 @@ async function migrateToCurrent(options) {
   }
   const integration = await targetFiles(projectRoot, archiveBytes, verification, bundle.root?.profile ?? "nkf.profile.product");
   for (const [relative, bytes] of integration) files.set(relative, bytes);
-  await validateCompleteCandidate(projectRoot, files, []);
-  const installed = await writeTransaction(projectRoot, files, () => verifyInstalled(projectRoot, true), []);
+  await validateCompleteCandidate(projectRoot, files, removedPaths);
+  const installed = await writeTransaction(
+    projectRoot,
+    files,
+    () => verifyInstalled(projectRoot, true),
+    removedPaths,
+  );
   return {
     state: "migrated",
     nkf_version: "0.2",
@@ -2264,8 +2537,147 @@ async function migrateToCurrent(options) {
   };
 }
 
+function adoptResult(state, projectRoot, catalog, compatibility, operation) {
+  return {
+    contract: "nkf.adopt-result",
+    nkf_version: "0.2",
+    state,
+    project: projectRoot,
+    target: {
+      nkf_version: catalog.nkf_version,
+      archive_sha256: catalog.archive.sha256,
+      source_commit: catalog.source_commit,
+      checker_sha256: catalog.checker_sha256,
+      adopter_sha256: catalog.adopter_sha256,
+    },
+    compatibility,
+    operation,
+  };
+}
+
+async function adopt(options) {
+  if (options.project === undefined) fail("adopt requires --project.");
+  const projectRoot = await requireProjectRoot(options.project);
+  const { catalog, compatibility } = await resolveRecommendedRelease(options);
+  const executableSha256 = digest(await currentExecutableBytes());
+  if (executableSha256 !== catalog.adopter_sha256) {
+    fail(
+      "The executing adopter differs from the governed recommendation; obtain and verify the recommended adopter before continuing.",
+    );
+  }
+  if (
+    options.sha256 !== undefined &&
+    requireSha256(options.sha256) !== catalog.archive.sha256
+  ) {
+    fail("--sha256 differs from the governed recommended release.");
+  }
+  const releaseOptions = {
+    ...options,
+    sha256: catalog.archive.sha256,
+  };
+  delete releaseOptions.recommendation;
+  delete releaseOptions["accept-breaking"];
+  if (
+    releaseOptions.archive === undefined &&
+    releaseOptions["github-repository"] === undefined
+  ) {
+    releaseOptions["github-repository"] = "kaveh6202/Nourd.NKF";
+  }
+
+  const nourdPath = path.join(projectRoot, ".nourd");
+  const nourdStat = await lstat(nourdPath).catch(() => null);
+  if (nourdStat === null) {
+    if (options["accept-breaking"] !== undefined) {
+      fail("--accept-breaking does not apply to initial adoption.");
+    }
+    if (options.plan === undefined) {
+      throw new OnboardingError(
+        "NKF-ADOPT-PLAN-REQUIRED",
+        "Initial adoption requires a reviewed and sealed onboarding plan before mutation.",
+        {
+          target_nkf_version: catalog.nkf_version,
+          target_archive_sha256: catalog.archive.sha256,
+          next_action: "prepare-and-seal-onboarding-plan",
+        },
+      );
+    }
+    const result = await onboard(releaseOptions);
+    return adoptResult(
+      result.state === "no-update" ? "current" : "onboarded",
+      projectRoot,
+      catalog,
+      null,
+      result,
+    );
+  }
+  if (!nourdStat.isDirectory() || nourdStat.isSymbolicLink()) {
+    fail(".nourd must be a non-symbolic-link directory.");
+  }
+  if (options.plan !== undefined) {
+    fail("--plan applies only to initial adoption.");
+  }
+
+  const { bundle } = await requireBundle(projectRoot);
+  const rule = compatibility.get(bundle.nkf_version);
+  if (rule === undefined) {
+    throw new OnboardingError(
+      "NKF-ADOPT-UNSUPPORTED-PREDECESSOR",
+      `The recommended release does not declare compatibility from NKF ${bundle.nkf_version}.`,
+      {
+        from_nkf_version: bundle.nkf_version,
+        target_nkf_version: catalog.nkf_version,
+        target_archive_sha256: catalog.archive.sha256,
+      },
+    );
+  }
+  const compatibilityResult = {
+    from_nkf_version: rule.from_nkf_version,
+    classification: rule.classification,
+    migration_required: rule.migration_required,
+    summary: rule.summary,
+  };
+  if (rule.classification === "breaking") {
+    if (options["accept-breaking"] !== "human-product-owner") {
+      throw new OnboardingError(
+        "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
+        `Adopting NKF ${catalog.nkf_version} from ${bundle.nkf_version} is breaking and requires explicit Human Product Owner approval before mutation.`,
+        {
+          ...compatibilityResult,
+          target_nkf_version: catalog.nkf_version,
+          target_archive_sha256: catalog.archive.sha256,
+          required_argument: "--accept-breaking human-product-owner",
+        },
+      );
+    }
+    const result = await migrateToCurrent(releaseOptions);
+    return adoptResult(
+      "migrated",
+      projectRoot,
+      catalog,
+      { ...compatibilityResult, approved_by: "human-product-owner" },
+      result,
+    );
+  }
+  if (options["accept-breaking"] !== undefined) {
+    fail("--accept-breaking is invalid for a non-breaking adoption.");
+  }
+  const pinPresent = (await readRegularInside(projectRoot, PIN_PATH, false)) !== null;
+  const result = await installOrUpdate(
+    pinPresent ? "update" : "install",
+    releaseOptions,
+  );
+  return adoptResult(
+    result.state === "no-update" ? "current" : "updated",
+    projectRoot,
+    catalog,
+    compatibilityResult,
+    result,
+  );
+}
+
 async function main() {
   const { command, options } = parseArguments(process.argv.slice(2));
+  if (command === "adopt") return adopt(options);
   if (command === "inspect") return inspectForOnboarding(options);
   if (command === "seal") {
     if (options.project === undefined || options.plan === undefined) {

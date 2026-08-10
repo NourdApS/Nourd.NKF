@@ -2,67 +2,113 @@
 
 NKF Version: 0.2
 
-This is the governed procedure by which a repository adopts a released NKF
-version. It is process accepted through ADR 0080, not format meaning. It is
-part of the versioned set of the version it serves.
+This is the governed procedure by which a repository adopts the current
+recommended NKF release. It is process accepted through [ADR 0107](../../knowledge/decisions/0107-unified-adopt-operation-and-compatibility-signaling.md),
+not NKF 0.2 format meaning. It is part of the complete versioned set it serves.
 
-Adoption is separate from release. A released version obligates no
-repository; each repository migrates deliberately, and prior versions remain
-immutable and validatable for repositories that stay on them.
+Adoption is separate from release. A release obligates no repository. Each
+repository remains authoritative for its own meaning and breaking-migration
+approval.
 
-The Nourd Knowledge Format repository is itself the first adopter of every
-version it releases: immediately after a release completes, this procedure
-runs against the NKF repository before any other repository is asked to
-follow it.
+## One Public Operation
 
-## Procedure
+The public operation is **Adopt**, invoked without a subcommand:
 
-1. The repository's owning authority explicitly decides to migrate to the
-   released version. Nothing migrates by default, by tooling, or by
-   implication.
-2. Install the exact released set: a consumer repository through the pinned,
-   digest-verified adopter and release artifacts; the NKF repository by
-   carrying the released set in its own tree. Installed guidance is the
-   version-stamped set from that release.
-3. Migrate the knowledge to the version's contract, following the release's
-   published migration meaning; for a declared NKF 0.1 consumer the
-   deterministic `migrate` adopter command performs these mechanics through
-   staged validation with rollback. For NKF 0.2 this means: the bundle declares
-   `nkf_version: "0.2"`; every Task non-record carries its Decision
-   Applicability section, with pre-existing completed Tasks gated
-   retrospectively and saying so; every frontmatter `title` exactly equals
-   its H1; repeated identity bullet blocks leave document bodies, with
-   orientation moving into the Task, record, and Design frontmatter keys;
-   every same-bundle document reference becomes a deep link to the
-   referenced document's exact source path, including gate table cells;
-   the Task state vocabulary includes `cancelled`, whose
-   `tasks/cancelled/` index the deterministic migration creates and
-   registers; and record source digests are re-pinned for every edited
-   document.
-4. Remove superseded own-version artifacts from the working tree where the
-   repository carries them; they remain retrievable from version-control
-   history and release archives.
-5. Validate the complete bundle with the released version's checker to zero
-   diagnostics.
-6. Independently audit the completed migration before human review: with a
-   fresh reading rather than the migrating session's assumptions, rerun the
-   version's checker to zero diagnostics, verify the installed pin, receipt,
-   and archive digests, compare the migrated topology and a sample of
-   migrated documents against this protocol's promises, and record findings
-   as findings in the owning Task instead of declaring success.
-7. Record the migration and the audit outcome in the repository's own
-   knowledge and close it through the repository's human review. Validation
-   is conformance for the observed snapshot; it is not acceptance,
-   Realization confirmation, or review.
+```text
+node nourd-nkf-adopt.mjs --project <project-root>
+```
+
+The adopter resolves `release/recommended.json` from the governed NKF default
+branch, validates its closed shape, and exposes the exact target version,
+archive SHA-256, source commit, checker digest, adopter digest, and applicable
+compatibility signal. The mutable reviewed recommendation is only a selection
+channel. The verified full archive digest and the installed consumer pin are
+the immutable trust anchors.
+
+For an approved offline release, supply both the exact reviewed recommendation
+and its archive:
+
+```text
+node nourd-nkf-adopt.mjs --project <project-root> \
+  --recommendation <recommended.json> \
+  --archive <content-addressed-release.tar>
+```
+
+## State Resolution
+
+Adopt observes the repository and selects one internal path:
+
+| Repository state | Required input | Result |
+| --- | --- | --- |
+| Supported unadopted Empty or Tiny Knowledge repository | Reviewed sealed onboarding plan | `onboarded` |
+| Adopted NKF 0.1 repository | Explicit approval after breaking preflight | `migrated` |
+| NKF 0.2 repository without the recommended release or integration | None beyond release access | `updated` |
+| NKF 0.2 repository already on the exact recommendation | None | `current` |
+
+Internal capture, seal, topology-repair, installation, refresh, and migration
+mechanics are not public choices. The public outcome remains Adopt.
+
+## Initial Adoption
+
+Initial semantic assessment remains agent-led under the
+[Pre-Adoption Onboarding Protocol](../onboarding/nkf-onboarding-protocol.md).
+After complete review and candidate sealing, pass the sealed plan:
+
+```text
+node nourd-nkf-adopt.mjs --project <project-root> --plan <sealed-plan.yaml>
+```
+
+An unadopted repository without a sealed plan fails before mutation. Mature or
+uncertain unadopted repositories remain unsupported under deferred NKF-014.
+Later category support must extend Adopt rather than add a public command.
+
+## Breaking Migration
+
+The recommendation declares compatibility relative to each supported
+predecessor as `breaking` or `non-breaking`, with a consistent
+`migration_required` value and summary. The Human Product Owner makes that
+semantic judgement; tooling checks the declaration but does not infer it.
+
+NKF 0.2 is breaking from NKF 0.1. The first Adopt invocation reports the exact
+target and stops before mutation. After the repository's Human Product Owner
+approves that displayed migration, rerun:
+
+```text
+node nourd-nkf-adopt.mjs --project <project-root> \
+  --accept-breaking human-product-owner
+```
+
+The migration updates the bundle declaration, completes known portable
+topology gaps, adds the cancelled Task index, adds the Decision Applicability
+gate retrospectively where required, linkifies same-bundle references, repins
+changed record sources, refreshes the integration, and validates the complete
+candidate before applying it.
+
+## Transaction And Verification
+
+Every mutating route:
+
+1. verifies the recommendation and content-addressed archive;
+2. validates the predecessor with its own pinned adopter and checker where
+   applicable;
+3. stages the complete target outside live paths;
+4. runs the target full-bundle checker;
+5. applies one rollback-capable transaction;
+6. verifies the installed pin, integration, archive, and bundle; and
+7. reports `onboarded`, `migrated`, `updated`, or `current` with the exact
+   target and compatibility context.
+
+After success, independently audit the pin, receipt where applicable, archive
+digest, migrated topology, representative documents, and a fresh checker run.
+Record findings in the owning Task and conclude through the repository's human
+review.
 
 ## Boundaries
 
-- Adoption does not rewrite accepted immutable records; retrospective gate
-  sections and envelope migration change document orientation and Task
-  bodies under the migrating repository's own authority, with provenance.
-- A repository that cannot satisfy the new contract does not misdeclare its
-  version; it stays on its current version until it can migrate truthfully.
-- Mixed states fail closed: a bundle declaring the new version validates
-  only against that version's checker and complete contract.
-- Adoption confers no acceptance, confirmation, release recommendation, or
-  operational claims beyond the validated snapshot.
+- A repository that cannot satisfy the target contract remains on its prior
+  version; it never misdeclares a mixed state.
+- Adopt does not rewrite accepted immutable meaning by implication. Consumer
+  authority owns every semantic migration decision.
+- A successful result proves the observed operational application and
+  conformance only. It does not accept knowledge, confirm a Realization,
+  publish a release, or prove remote enforcement.

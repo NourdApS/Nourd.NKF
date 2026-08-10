@@ -1,106 +1,63 @@
 # Update And Recover
 
-NKF consumers never follow a moving branch or mutable latest release. Every
-installation remains pinned until the consumer deliberately changes its full
-archive SHA-256.
-
-## Check Current State
+There is no separate public update, migrate, install, or status command. Run
+**Adopt** whenever you want a supported repository to reach the current
+governed recommendation:
 
 ```sh
-node .nourd/tools/nkf/nourd-nkf-adopt.mjs status --project .
+node nourd-nkf-adopt.mjs --project /absolute/path/to/project
 ```
 
-Status verifies the installed adopter, integration, pin, archive, manifest,
-source commit, and checker digest without changing knowledge.
+An exact-current repository returns `current` only after its installed pin,
+adopter, integration, archive, manifest, knowledge, and checker result pass.
+A behind NKF 0.2 repository receives the non-breaking integration refresh and
+returns `updated`.
 
-## Confirm No Update
+## Review A Breaking Migration
 
-Re-running installation with the same adopter and exact release digest:
+For NKF 0.1, the first run shows the exact 0.2 target, declares the path
+breaking and migration-required, and exits without mutation. Review that
+target and the consumer repository's migration implications. After explicit
+Human Product Owner approval, rerun with:
+
+```text
+--accept-breaking human-product-owner
+```
+
+Adopt performs the known topology repair and version migration inside one
+validated rollback-capable transaction. Do not edit generated repair paths or
+change the bundle version manually.
+
+## Offline And Exact Recovery
+
+The reviewed recommendation selects the intended archive; the archive digest
+is the trust anchor. To use an exact offline target:
 
 ```sh
-node nourd-nkf-adopt.mjs install \
+node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
-  --archive /absolute/path/to/the-pinned-release.tar \
-  --sha256 <CURRENT_FULL_RELEASE_SHA256>
+  --recommendation /absolute/path/to/recommended.json \
+  --archive /absolute/path/to/content-addressed-release.tar
 ```
 
-returns `no-update` only after the current installation and project check
-pass. It does not resolve a mutable recommendation.
-
-## Deliberate Update
-
-Before updating:
-
-1. review the new recommendation and compatibility statement;
-2. classify any change as a Specification or contract change, checker or
-   distribution fix, migration, or consumer nonconformance;
-3. approve the migration in the consumer's own authority;
-4. obtain the exact new archive and full SHA-256; and
-5. preserve or commit the current consumer state so recovery is possible.
-
-Then run:
-
-```sh
-node nourd-nkf-adopt.mjs update \
-  --project /absolute/path/to/project \
-  --archive /absolute/path/to/new-release.tar \
-  --sha256 <NEW_FULL_RELEASE_SHA256>
-```
-
-The adopter verifies the existing installation before change, stages all new
-bytes, preserves predecessor bytes needed for interruption recovery, keeps
-the prior content-addressed archive, installs the new pin, and runs the new
-checker.
-
-## Repair NKF-013 Or NKF-015 Topology
-
-A repository created by the trusted NKF-013 or NKF-015 onboarder may lack the
-complete portable topology or may contain a generated `README-2.md`. Use the
-successor adopter's bounded repair workflow instead of editing those paths by
-hand:
-
-```sh
-node nourd-nkf-adopt.mjs repair-topology \
-  --project /absolute/path/to/project \
-  --archive /absolute/path/to/new-release.tar \
-  --sha256 <NEW_FULL_RELEASE_SHA256>
-```
-
-Repair requires the installed predecessor release pin and onboarding receipt,
-revalidates the predecessor with its pinned checker, and reconstructs the
-known predecessor map bytes. It removes a competing map only when the receipt
-identifies that exact generated path and its current bytes match the known
-generator output. Drift or consumer-authored content fails for human
-resolution.
-
-The workflow builds and seals a candidate outside the project, stages the new
-topology and release integration, runs the successor full-bundle checker, and
-applies one rollback-capable transaction. Its receipt records predecessor and
-successor releases and created, changed, removed, and preserved paths.
-Repeating the exact successful repair returns `no-update`. Any other adopted
-repository needs a governed migration plan.
-
-## Roll Back
-
-Rollback is another explicit update using a retained prior archive and its
-full prior digest. There is no moving rollback label.
-
-If the new installation cannot validate the project, correct a genuine
-consumer nonconformance or deliberately restore the prior pin. Do not weaken a
-Specification, Schema, checker, adapter, or workflow simply to obtain a pass.
+Automatic transaction rollback restores predecessor bytes after a handled
+failure. A deliberate return to a retained earlier release requires its exact
+reviewed recommendation and archive and remains subject to that release's
+compatibility and migration rules; there is no moving rollback label.
 
 ## Diagnose Failures
 
 | Failure | First Check |
 | --- | --- |
-| Archive digest mismatch | Confirm the exact expected SHA-256 and archive bytes |
-| Private release unavailable | Confirm `gh auth status` and repository authorization |
-| Pin or adopter mismatch | Restore the reviewed installed bytes or reinstall deliberately |
+| Recommendation unavailable | Confirm `gh auth status` and private repository authorization |
+| Recommendation or archive mismatch | Confirm the reviewed catalog and exact content-addressed bytes |
+| Breaking approval required | Review the displayed target and obtain real repository-authority approval |
+| Initial plan required | Complete agent assessment and seal the exact candidate |
+| Predecessor pin or adopter mismatch | Restore reviewed installed bytes before migration |
 | Adapter conflict | Reconcile project-owned instructions without deleting unrelated policy |
-| Governed Markdown digest mismatch | Review the source change and declaration together |
-| Unsupported Root Profile | Select Product or Technology through governed migration |
-| Topology repair drift | Preserve the conflicting map and resolve its authority before migration |
-| CI differs from local | Compare the exact commit, Node.js version, pin, and workflow bytes |
+| Governed Markdown digest mismatch | Review source and declaration together |
+| Unsupported repository or Root Profile | Stop; do not force a supported category or version |
+| CI differs from local | Compare exact commit, Node.js version, pin, workflow, and archive bytes |
 
-Keep release publication, public documentation, consumer installation,
-validation, and remote CI observations as separate facts during diagnosis.
+Keep recommendation, publication, consumer application, validation, and
+remote enforcement as separate facts throughout recovery.

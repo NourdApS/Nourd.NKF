@@ -417,6 +417,34 @@ One governed process definition covering:
   absent from Git, appears byte-identically in the activated working tree, and
   survives full candidate validation; all fourteen mechanics tests and the
   canonical 186-test command pass.
+- [ADR 0107](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md) records the Human Product Owner's confirmed public boundary:
+  one subcommand-free Adopt operation, a reviewed recommendation that selects
+  an immutable content-addressed target, predecessor-relative `breaking` or
+  `non-breaking` signaling, and explicit Human Product Owner approval before
+  the breaking 0.1-to-0.2 migration. The adopted
+  [Design](../../designs/adopted/unified-adopt-operation.md) keeps initial
+  semantic assessment agent-led and mature unadopted repositories deferred to
+  [NKF-014](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
+- The current implementation candidate resolves and validates the governed
+  recommendation, binds the running adopter to both catalog and archive,
+  routes supported repository state to internal initial adoption, migration,
+  integration refresh, or current verification, and returns only
+  `onboarded`, `migrated`, `updated`, or `current`. A breaking preflight names
+  the exact target and leaves the tree byte-identical until approval.
+- Real predecessor testing exposed and repaired two migration assumptions:
+  early agent-onboarded 0.1 repositories may require the already governed
+  complete-topology repair inside migration, including exact conversion of a
+  predecessor-generated canonical map; older valid 0.1 bundles may predate
+  release pins and onboarding receipts, so each is used when present without
+  making it an invented prerequisite. Candidate validation and transactional
+  rollback remain mandatory in every case.
+- The public 62-file documentation source now presents only Adopt. Mechanical
+  inspect and seal stages and other named commands remain explicitly internal
+  agent mechanics. The consumer exercise now uses the public operation for
+  initial Product and Technology repositories, a native 0.2 repository,
+  repeat-current verification, and archive, pin, adapter, and knowledge
+  tamper rejection. The adopter and mechanics suites pass 38 tests, including
+  the new breaking migration and parent Task-index relocation regressions.
 
 ## Acceptance Criteria
 
