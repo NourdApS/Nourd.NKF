@@ -241,14 +241,15 @@ set do not independently allocate a format version.
 
 An NKF version identifies one complete frozen set: the normative
 Specification revision, its digest-bound executable companion, the derived
-Schemas, the checker, the authoring and onboarding protocols, the portable
-skills and host-adapter instruction content, and the fixtures, examples, and
-documentation projection. Every artifact in the set declares the version it
-serves, the version's release archive carries the exact set, and nothing in
-a released set changes afterward: a guidance or checker correction is a new
-version exactly like a specification correction. Superseded versions are not
-kept in the working tree; they remain retrievable from version-control
-history and their immutable release archives.
+Schemas, release-set contract, release manifest, checker, adopter, authoring,
+onboarding, release, and adoption protocols, portable skills and host-adapter
+instruction content, fixtures, examples, and documentation projection. Every
+artifact in the set declares the version it serves, the version's release
+archive carries the exact set, and nothing in a released set changes
+afterward: a guidance or checker correction is a new version exactly like a
+specification correction. Superseded versions are not kept in the working
+tree; they remain retrievable from version-control history and their immutable
+release archives.
 
 Installed portable guidance MUST declare the NKF version it serves through
 the exact marker defined by the executable companion. When a governed
@@ -264,6 +265,9 @@ therefore freeze at publication. This Specification defines only the
 format-visible predecessor compatibility: migration from NKF 0.1 or NKF 0.2
 to NKF 0.3 is `breaking` and requires repository-owner approval before
 mutation, even though migration is designed to preserve existing knowledge.
+An exact NKF 0.3-to-0.3 refresh is `non-breaking`, requires no migration, and
+requires no repository-owner approval because the governing format version
+does not change.
 
 NKF has one version namespace: the NKF format version. A bundle MUST declare
 `nkf_version`. NKF 0.3 uses the unversioned canonical identities `nkf.bundle`,
@@ -2679,8 +2683,9 @@ bytes. This avoids both a digest cycle and a post-audit confirmation cycle.
 class, and mode enumeration for the NKF 0.3 complete set. It is a closed YAML
 object with exactly `contract`, `nkf_version`, `coverage`, and `members`.
 
-`coverage` is a non-empty ordered array of closed selectors containing exactly
-`class`, `selection`, and `path`. `selection` is `exact-file`,
+`coverage` is a non-empty array of closed selectors containing exactly
+`class`, `selection`, and `path`, ordered first by the exact closed class order
+stated below and then by exact ASCII `path` within each class. `selection` is `exact-file`,
 `recursive-regular-files`, or `generated-release-manifest`. Selector paths are
 unique, safe relative paths and MUST NOT overlap. An `exact-file` selects one
 existing regular file from the clean built source. A

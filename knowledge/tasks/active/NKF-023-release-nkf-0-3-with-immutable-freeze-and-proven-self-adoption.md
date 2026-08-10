@@ -264,9 +264,14 @@ audited bytes may be published and recommended.
   The earlier acceptance request was withdrawn. The technical correction now
   separates external post-audit confirmation from immutable archive metadata,
   makes class coverage and modes deterministic, and leaves operational order
-  to the versioned release and adoption protocols. The corrected exact pair
-  must pass a fresh independent re-audit before returning to the Human Product
-  Owner. The Draft has no authority effect and implementation has not begun.
+  to the versioned release and adoption protocols. The first correction
+  re-audit cleared those four findings and independently proved the release
+  cycle, mode rule, coverage model, process allocation, and digest topology,
+  but blocked exact acceptance on three pair-symmetry defects: same-version
+  refresh and selector ordering were executable-only, and an earlier complete-
+  set summary omitted later-required classes. Those technical discrepancies
+  are being corrected before another exact-byte re-audit. The Draft has no
+  authority effect and implementation has not begun.
 
 ## Decision Applicability
 
