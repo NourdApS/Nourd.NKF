@@ -46,6 +46,7 @@ establishes it.
 [Active Design Index](active/README.md)
 
 - [NKF Task Scope Gate](active/task-scope-gate.md)
+- [NKF 0.3 Immutable Freeze And Proven Self-Adoption](active/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 
 ## Adopted
 

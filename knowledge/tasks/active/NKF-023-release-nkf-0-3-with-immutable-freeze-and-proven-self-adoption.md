@@ -43,6 +43,15 @@ arise. This direction does not itself accept an NKF 0.3 authority pair,
 confirm a Realization, publish a release, migrate a consumer, or establish
 conformance.
 
+Later on `2026-08-10`, after exact verification showed that the frozen 0.2
+public Adopt executable cannot consume a historical target-0.1 recommendation,
+the Human Product Owner confirmed the interim correction: retain the existing
+private 0.2 recommendation unchanged, onboard no repository to it, and replace
+it atomically only with the verified 0.3 recommendation. This supersedes the
+earlier planned temporary restoration of the 0.1 recommendation; the healthy
+0.1 release remains supported predecessor authority, not the interim current
+recommendation.
+
 ## Problem
 
 NKF 0.2 was published and recommended before the exact release package proved
@@ -75,8 +84,9 @@ audited bytes may be published and recommended.
 
 - withdraw NKF 0.2 from the governed recommendation while preserving its
   published archive, tag, manifest, source, Decisions, and audit history;
-- restore the last independently verifiable NKF 0.1 recommendation until NKF
-  0.3 is published, without migrating or mutating an existing consumer;
+- retain the existing private NKF 0.2 recommendation unchanged during 0.3
+  development, onboard no repository to it, and replace it atomically only
+  with the exact verified 0.3 release;
 - propose and obtain Human Product Owner adoption of the exact
   release-triggered freeze boundary and its treatment of withdrawn releases,
   candidate changes, operational records, and the former unconsumed-release
@@ -121,9 +131,9 @@ audited bytes may be published and recommended.
 
 1. Establish this Task on clean merged `master`, validate it, commit it on the
    default branch, and activate it through the deterministic Task transition.
-2. Independently verify the historical 0.1 recommendation and replace the
-   governed 0.2 recommendation with that exact predecessor while preserving
-   all 0.2 publication evidence and immutable release objects.
+2. Independently verify the historical 0.1 release, retain it as supported
+   predecessor evidence, and leave the private 0.2 recommendation unchanged
+   until atomic verified 0.3 promotion.
 3. Author the minimal successor Design for release-triggered freezing and
    candidate self-adoption, compare it against the accepted 0.2 exception and
    release/adoption order, and obtain Human Product Owner confirmation of each
@@ -153,8 +163,9 @@ audited bytes may be published and recommended.
 
 - NKF 0.2 is no longer recommended, while its exact published release remains
   retrievable and unchanged as historical evidence.
-- The temporary governed recommendation identifies the exact independently
-  verified NKF 0.1 release until 0.3 publication.
+- During private 0.3 development, the existing 0.2 recommendation remains
+  byte-unchanged, no repository is onboarded to it, and promotion changes the
+  channel atomically to the exact verified 0.3 release.
 - A successor Decision explicitly supersedes the consumer-triggered freeze
   condition and the unconsumed-release replacement exception: publication of
   the exact archive freezes the complete set regardless of adoption count.
@@ -225,6 +236,17 @@ audited bytes may be published and recommended.
   the confirmed freeze. No recommendation changed; work pauses at the Product
   choice between temporarily retaining the existing 0.2 recommendation until
   atomic 0.3 promotion or deliberately pausing public Adopt until 0.3.
+- The Human Product Owner selected temporary retention: the 0.2 recommendation
+  remains byte-unchanged, no repository is to adopt it, and verified 0.3
+  replaces it atomically. The Decision Applicability Gate was re-extracted;
+  consumability of a temporary 0.1 recommendation is no longer a mandatory
+  capability.
+- The active
+  [NKF 0.3 Design](../../designs/active/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
+  now proposes the confirmed freeze and interim boundaries together with
+  exact-candidate self-adoption, a general verified host-superset integration,
+  release/adoption order, and predecessor compatibility. It remains Draft
+  proposal knowledge and changes no accepted authority.
 
 ## Decision Applicability
 
@@ -253,7 +275,6 @@ audited bytes may be published and recommended.
 | --- | --- | --- | --- |
 | Published NKF versions remain immutable after release even when no repository adopts them | unknown | none | none |
 | The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
-| A temporary 0.1 recommendation remains consumable through the currently distributed public Adopt operation | unsupported | none | none |
 | One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | unknown | none | none |
 | The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | unknown | none | none |
 | Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | unknown | none | none |
