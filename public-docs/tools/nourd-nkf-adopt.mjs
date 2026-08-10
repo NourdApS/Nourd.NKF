@@ -21935,6 +21935,23 @@ function taskWorktreePath(projectRoot, taskId) {
     taskId
   );
 }
+async function materializeMissingWorktreeArtifacts(sourceRoot, worktreeRoot, bundle) {
+  const copied = [];
+  for (const artifact of bundle?.governed_artifacts ?? []) {
+    if (typeof artifact?.path !== "string") continue;
+    const relative = safeRelative2(artifact.path, "Governed artifact path");
+    const target = path3.join(worktreeRoot, ...relative.split("/"));
+    if (await lstat2(target).catch(() => null) !== null) continue;
+    const bytes = await readRegularInside(sourceRoot, relative);
+    if (artifact?.digest?.algorithm !== "sha-256" || artifact?.digest?.value !== digest(bytes)) {
+      fail3(`The governed artifact cannot be materialized with its declared digest: ${relative}`);
+    }
+    await mkdir3(path3.dirname(target), { recursive: true });
+    await writeFile3(target, bytes, { flag: "wx" });
+    copied.push(relative);
+  }
+  return copied;
+}
 async function gitTransitionPlan(git, projectRoot, transition, taskId) {
   if (git === null) return { state: "not-a-repository" };
   if (git.run("status", "--porcelain") !== "") {
@@ -22228,11 +22245,17 @@ ${result}
   const verifier = pinPresent ? null : typeof options.checker === "string" ? externalCheckerVerifier(path3.resolve(options.checker)) : fail3("task requires an installed release pin or an explicit --checker.");
   await validateCompleteCandidate(projectRoot, files, removedPaths, verifier);
   let effectiveRoot = projectRoot;
+  let materializedArtifacts = [];
   if (git !== null && gitPlan.state === "planned") {
     if (gitPlan.mode === "worktree") {
       await mkdir3(path3.dirname(gitPlan.worktree), { recursive: true });
       git.run("worktree", "add", "-b", gitPlan.branch, gitPlan.worktree);
       effectiveRoot = gitPlan.worktree;
+      materializedArtifacts = await materializeMissingWorktreeArtifacts(
+        projectRoot,
+        effectiveRoot,
+        context.bundle
+      );
     } else if (gitPlan.mode === "in-place" && gitPlan.create) {
       git.run("checkout", "-b", gitPlan.branch);
     }
@@ -22249,6 +22272,9 @@ ${updated.split(`
 ${resultHeading}
 `)[1]?.split("\n## ")[0]?.trim() ?? ""}` : `Deterministic deferral of ${options.task}. The merge is the repository's human review act.`;
   const gitReport = git === null || gitPlan.state !== "planned" ? { state: "not-a-repository" } : gitCompleteTransition(effectiveRoot, gitPlan, transition, options.task, prBody);
+  if (materializedArtifacts.length > 0) {
+    gitReport.materialized_artifacts = materializedArtifacts;
+  }
   return {
     state: "transitioned",
     task: options.task,

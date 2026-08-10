@@ -408,6 +408,15 @@ One governed process definition covering:
   after a 0.2 promotion. The superseded incomplete hosted release and tag
   remain present because their deletion is a separate destructive remote act
   requiring explicit authorization.
+- The `2026-08-10` reactivation attempt failed closed before changing governed
+  knowledge because its clean linked working tree did not contain the
+  Git-ignored, governed `dist/nourd-nkf-adopt.mjs` artifact. The transition now
+  materializes only missing governed artifacts from the already validated
+  default checkout, requires their declared SHA-256 before writing, and reports
+  their paths. A Technology-fixture regression proves the ignored artifact is
+  absent from Git, appears byte-identically in the activated working tree, and
+  survives full candidate validation; all fourteen mechanics tests and the
+  canonical 186-test command pass.
 
 ## Acceptance Criteria
 

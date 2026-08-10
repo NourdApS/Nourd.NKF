@@ -1,4 +1,4 @@
-import { cp, lstat, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, lstat, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
@@ -40,8 +40,21 @@ async function copyFixture(): Promise<string> {
 }
 
 async function gitFixture() {
-  const project = await copyFixture();
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
+  const project = path.join(parent, "project");
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-2"), project, { recursive: true });
+  const taskId = "TEST-TECH-001";
   const g = (args: string[]) => spawnSync("git", ["-C", project, ...args], { encoding: "utf8" });
+  const generatedPath = path.join(project, "dist/generated-adopter.mjs");
+  const generatedBytes = Buffer.from("export const generated = true;\n", "utf8");
+  await mkdir(path.dirname(generatedPath), { recursive: true });
+  await writeFile(generatedPath, generatedBytes);
+  await writeFile(path.join(project, ".gitignore"), "dist/\n");
+  const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+  await writeFile(
+    bundlePath,
+    `${await readFile(bundlePath, "utf8")}  - id: generated-adopter\n    kind: build-tool\n    path: dist/generated-adopter.mjs\n    digest:\n      algorithm: sha-256\n      value: ${sha256(generatedBytes)}\n    record: realization\n    source_section: durable-mapping\n`,
+  );
   g(["init", "-b", "master"]);
   g(["config", "user.email", "fixture@example.com"]);
   g(["config", "user.name", "Fixture"]);
@@ -52,7 +65,7 @@ async function gitFixture() {
   g(["remote", "add", "origin", bare]);
   g(["push", "-u", "origin", "master"]);
   g(["remote", "set-head", "origin", "master"]);
-  return { project, g, bare };
+  return { project, taskId, g, bare };
 }
 
 beforeAll(async () => {
@@ -225,50 +238,54 @@ describe("deterministic governed mechanics", () => {
   });
 
   it("refuses a git transition on a dirty work tree", async () => {
-    const { project } = await gitFixture();
+    const { project, taskId } = await gitFixture();
     await writeFile(path.join(project, "dirty.txt"), "x\n");
-    const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    const result = run("task", project, ["--task", taskId, "--to", "defer", "--checker", checker]);
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("work tree must be clean");
   });
 
   it("defers on a task branch, commits, pushes, and restores the default branch", async () => {
-    const { project, g, bare } = await gitFixture();
-    const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    const { project, taskId, g, bare } = await gitFixture();
+    const result = run("task", project, ["--task", taskId, "--to", "defer", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
-    expect(result.json.git.branch).toBe("task/TEST-001");
+    expect(result.json.git.branch).toBe(`task/${taskId}`);
     expect(result.json.git.pushed).toBe(true);
     expect(result.json.git.pull_request).toBe("unsupported-remote");
     expect(result.json.git.restored_branch).toBe("master");
     expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
     expect(g(["status", "--porcelain"]).stdout.trim()).toBe("");
     const remoteBranches = spawnSync("git", ["--git-dir", bare, "branch"], { encoding: "utf8" }).stdout;
-    expect(remoteBranches).toContain("task/TEST-001");
+    expect(remoteBranches).toContain(`task/${taskId}`);
   });
 
   it("activates into a task worktree and closes from it, releasing the worktree", async () => {
-    const { project, g } = await gitFixture();
-    const deferred = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    const { project, taskId, g } = await gitFixture();
+    const deferred = run("task", project, ["--task", taskId, "--to", "defer", "--checker", checker]);
     expect(deferred.status, deferred.stderr).toBe(0);
-    g(["merge", "--ff-only", "task/TEST-001"]);
+    g(["merge", "--ff-only", `task/${taskId}`]);
     g(["push", "origin", "master"]);
-    g(["branch", "-D", "task/TEST-001"]);
-    g(["push", "origin", "--delete", "task/TEST-001"]);
-    const activated = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
+    g(["branch", "-D", `task/${taskId}`]);
+    g(["push", "origin", "--delete", `task/${taskId}`]);
+    const activated = run("task", project, ["--task", taskId, "--to", "activate", "--checker", checker]);
     expect(activated.status, activated.stderr).toBe(0);
     expect(activated.json.git.mode).toBe("worktree");
     const worktree = activated.json.git.worktree as string;
-    expect(worktree).toContain("project-worktrees/TEST-001");
+    expect(worktree).toContain(`project-worktrees/${taskId}`);
     expect(activated.json.git.state).toBe("draft-opened");
     expect(activated.json.git.pushed).toBe(true);
     expect(activated.json.git.pull_request).toBe("unsupported-remote");
+    expect(activated.json.git.materialized_artifacts).toEqual(["dist/generated-adopter.mjs"]);
     expect(g(["rev-parse", "--abbrev-ref", "HEAD"]).stdout.trim()).toBe("master");
+    expect(await readFile(path.join(worktree, "dist/generated-adopter.mjs"), "utf8")).toBe(
+      "export const generated = true;\n",
+    );
     expect(await readFile(path.join(worktree, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
     expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
 
     const resultFile = path.join(project, "..", "worktree-close-result.md");
     await writeFile(resultFile, "Completed inside the task worktree.\n");
-    const closed = run("task", worktree, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
+    const closed = run("task", worktree, ["--task", taskId, "--to", "close", "--result-file", resultFile, "--checker", checker]);
     expect(closed.status, closed.stderr).toBe(0);
     expect(closed.json.git.mode).toBe("worktree-resident");
     expect(closed.json.git.state).toBe("conclusion-proposed");
@@ -279,9 +296,9 @@ describe("deterministic governed mechanics", () => {
   });
 
   it("reports an incomplete git step on a successful transition instead of failing", async () => {
-    const { project, g } = await gitFixture();
+    const { project, taskId, g } = await gitFixture();
     g(["remote", "set-url", "origin", path.join(project, "..", "missing-origin.git")]);
-    const result = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
+    const result = run("task", project, ["--task", taskId, "--to", "defer", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("transitioned");
     expect(result.json.git.state).toBe("incomplete");
