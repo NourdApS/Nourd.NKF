@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.3/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 4696144ee1a0df704333904596ca3baff7e41ae1a7e0e3366b427a24bf5cfca5
+    value: aacf35eec6bca70a8ef103be61d47ec6364119170cff40b0e20d5939071eb5b0
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.2.md
     markdown_digest:
@@ -80,7 +80,8 @@ versioning:
   stable_reserved: "1.0"
   candidate:
     mutable_until: authenticated-publication
-    change_invalidates: [candidate-digests, self-adoption-evidence, independent-audit, technical-confirmation]
+    byte_changes_before_publication: permitted
+    prior_exact_byte_claims_after_change: not-applicable
   freeze:
     trigger: authenticated-publication-of-exact-content-addressed-archive-and-manifest-under-release-tag
     applies_to: every-complete-set-member
@@ -2373,33 +2374,23 @@ release_distribution:
       - publication-time
       - latest-status
       - mutable-github-state
+      - audit-evidence
+      - technical-confirmation
+      - publication-authorization
+    post_audit_governance_binding:
+      location: outside-release-archive-and-manifest
+      may_bind: [release-commit, archive-digest, checker-digest]
+      may_change_archive_bytes: false
   source:
     closed: true
-    required_fields: [repository, release_commit, checker_confirmation]
+    required_fields: [repository, release_commit]
     fields:
       repository:
         const: "https://github.com/kaveh6202/Nourd.NKF.git"
       release_commit:
         type: string
         pattern: '^[0-9a-f]{40}$'
-      checker_confirmation:
-        ref: release_distribution.checker_confirmation
-  checker_confirmation:
-    closed: true
-    required_fields: [decision, path, digest, checker_source_commit]
-    fields:
-      decision:
-        type: string
-        pattern: '^ADR-[0-9]{4}$'
-      path:
-        type: string
-        pattern: '^knowledge/decisions/[0-9]{4}-[a-z0-9]+(?:-[a-z0-9]+)*\.md$'
-      digest:
-        ref: common.digest
-      checker_source_commit:
-        type: string
-        pattern: '^[0-9a-f]{40}$'
-    decision_id_matches_path_prefix: packager-and-verifier
+    checker_build_source: release_commit
   checker:
     closed: true
     required_fields: [identity, path, digest, runtime]
@@ -2481,7 +2472,9 @@ release_distribution:
       path:
         ref: release_distribution.release_path
       mode:
-        enum: ["0644", "0755"]
+        value_by_path:
+          dist/nourd-nkf-checker.mjs: "0755"
+          otherwise: "0644"
       digest:
         ref: common.digest
   files:
@@ -2505,22 +2498,73 @@ release_distribution:
     path: contracts/nkf/0.3/release-set.yaml
     identity: nkf.release-set
     closed: true
-    required_fields: [contract, nkf_version, members]
+    required_fields: [contract, nkf_version, coverage, members]
     fields:
       contract:
         const: nkf.release-set
       nkf_version:
         const: "0.3"
+      coverage:
+        ref: release_distribution.release_set.coverage
       members:
         ref: release_distribution.release_set.members
+    class:
+      enum:
+        - normative-specification
+        - executable-companion
+        - release-set-contract
+        - release-manifest
+        - derived-schema
+        - checker
+        - adopter
+        - authoring-protocol
+        - onboarding-protocol
+        - release-protocol
+        - adoption-protocol
+        - portable-skill
+        - host-adapter-instruction
+        - product-fixture
+        - technology-fixture
+        - product-public-example
+        - technology-public-example
+        - public-documentation
+    selector:
+      closed: true
+      required_fields: [class, selection, path]
+      fields:
+        class:
+          ref: release_distribution.release_set.class
+        selection:
+          enum: [exact-file, recursive-regular-files, generated-release-manifest]
+        path:
+          ref: release_distribution.release_path
+    coverage:
+      type: array
+      min_items: 1
+      items:
+        ref: release_distribution.release_set.selector
+      order: exact-class-then-ascii-path
+      unique_paths: true
+      selector_paths_disjoint: true
+      required_classes: exact-release_distribution.release_set.class-enum
+      class_minimum_matches: 1
+      selection_rules:
+        exact-file: existing-regular-file-in-clean-built-source
+        recursive-regular-files: every-recursive-regular-file-beneath-existing-non-empty-source-directory
+        generated-release-manifest: exact-release-manifest.json-only
+      links_devices_unsafe_paths_empty_recursive_and_multiple_matches: forbidden
     member:
       closed: true
-      required_fields: [path, mode]
+      required_fields: [path, class, mode]
       fields:
         path:
           ref: release_distribution.release_path
+        class:
+          ref: release_distribution.release_set.class
         mode:
-          enum: ["0644", "0755"]
+          value_by_path:
+            dist/nourd-nkf-checker.mjs: "0755"
+            otherwise: "0644"
     members:
       type: array
       min_items: 1
@@ -2528,21 +2572,13 @@ release_distribution:
         ref: release_distribution.release_set.member
       order: exact-ascii-path
       unique_paths: true
+      exact_union_of_coverage_after_deterministic_builds: true
+      member_class_matches_selector: required
       includes_self: true
       includes_release_manifest: true
-      required_member_classes:
-        - normative-specification
-        - executable-companion
-        - release-set-contract
-        - derived-schemas
-        - checker
-        - adopter
-        - authoring-onboarding-release-and-adoption-protocols
-        - portable-skills
-        - registered-host-adapter-instruction-content
-        - complete-valid-product-and-technology-fixtures
-        - complete-public-product-and-technology-examples
-        - public-documentation-projection
+      required_member_classes: exact-release_distribution.release_set.class-enum
+      source_provenance_verification: reproduce-exact-coverage-union-from-clean-release-commit
+      extraction_only_verification: verify-content-addressed-enumeration-class-presence-modes-membership-and-manifest-bindings
     sole_consumers:
       - archive-construction
       - manifest-construction
@@ -2602,17 +2638,12 @@ release_distribution:
     steps:
       - complete-accepted-development-check
       - build-checker-twice
-      - verify-confirmed-checker-digest
-      - verify-checker-confirmation-decision-path-digest-and-source-binding
+      - require-byte-identical-checker-builds-from-release-commit
       - verify-authority-and-schema-digests
-      - verify-sole-release-set-enumeration-and-required-member-classes
+      - reproduce-release-set-coverage-and-verify-sole-membership-enumeration
       - construct-and-schema-validate-manifest
       - assemble-archive-twice
       - require-reproducible-checker-and-archive-digests
-      - exact-candidate-adopt-into-fresh-isolated-source-clone
-      - preserve-and-pass-complete-producer-gate
-      - repeat-exact-candidate-adopt-and-require-current
-      - independently-audit-exact-candidate
     failure_behavior: no-release-artifact
   consumer_pin:
     storage: consumer-dependency-or-tooling-configuration
@@ -2629,9 +2660,10 @@ release_distribution:
       - verify-release-manifest-schema-digest
       - compile-schema-and-validate-release-manifest
       - verify-release-set-and-required-member-classes
+      - verify-release-set-coverage-and-member-class-bindings
       - verify-manifest-files-match-release-set-excluding-manifest
       - verify-all-pre-manifest-paths-modes-and-digests
-      - verify-checker-confirmation-provenance-when-evaluated
+      - verify-release-commit-and-reproducible-checker-when-source-provenance-is-evaluated
       - reject-missing-or-unexpected-file
       - invoke-checker
     failure:
@@ -2655,12 +2687,7 @@ release_distribution:
       status: optional
       substitutes_for_archive_digest: false
 
-adoption_process:
-  public_operation:
-    name: Adopt
-    subcommand: none
-    target: governed-recommended-release
-    successful_states: [onboarded, migrated, updated, current]
+compatibility:
   supported_predecessors:
     - from_nkf_version: "0.1"
       to_nkf_version: "0.3"
@@ -2677,42 +2704,7 @@ adoption_process:
       classification: non-breaking
       migration_required: false
       repository_owner_approval_before_mutation: not-required
-  internal_candidate_binding:
-    public_operation: forbidden
-    mutable_recommendation: forbidden
-    archive_identity: exact-candidate-sha256
-    source: fresh-isolated-clone-of-exact-candidate-commit
-    steps:
-      - verify-exact-archive-manifest-release-set-source-checker-adopter-and-authority
-      - install-candidate-pin-and-integration-atomically
-      - run-candidate-checker-against-complete-resulting-repository
-      - run-complete-producer-gate
-      - repeat-identical-candidate-adopt-and-require-current
-      - independent-audit
-  integration:
-    canonical_command: npm-run-nkf-check
-    modes: [installed-release, verified-host-superset]
-    installed_release:
-      exact_pinned_release_check: required
-      installation_verification: required
-    verified_host_superset:
-      identity_based_bypass: forbidden
-      arbitrary-existing-successful-script: insufficient
-      exact_pinned_release_check_in_same_fail_closed_chain: required
-      host_additional_checks_preserved: required
-      pin_records_mode_and_exact-script-state: required
-      repeat_adopt_verifies_chain_before_current: required
-      missing_reordered_bypassed_or_conflicting_state: fail-closed
-  release_order:
-    - accept-exact-authority-pair
-    - derive-complete-candidate
-    - exact-candidate-self-adopt-and-independent-audit
-    - technical-confirmation-of-exact-candidate
-    - publish-exact-candidate-once-and-freeze
-    - atomically-promote-recommendation-from-0.2-to-0.3
-    - ordinary-no-override-public-self-adopt
-    - repeat-public-adopt-and-require-current
-    - independent-post-action-audit
+  operation_and_release_order_authority: versioned-release-and-adoption-protocols
 
 security:
   prohibited:

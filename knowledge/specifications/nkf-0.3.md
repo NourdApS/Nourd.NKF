@@ -229,11 +229,11 @@ NKF format versions use `<major>.<minor>`.
   meaning; nothing migrates by implication.
 
 Before publication, exact candidate bytes MAY change coherently under their
-governed Task and each change invalidates prior candidate digests,
-self-adoption evidence, audit, and technical confirmation. After publication,
-a change never edits, replaces, deletes, or rebinds the frozen version in
-place: it begins the next version's candidate set, derived and accepted
-separately, while every published version remains retrievable and validatable.
+governed Task. Any exact-byte claim about an earlier candidate ceases to apply
+when those bytes change. After publication, a change never edits, replaces,
+deletes, or rebinds the frozen version in place: it begins the next version's
+candidate set, derived and accepted separately, while every published version
+remains retrievable and validatable.
 A defective release MAY stop being recommended or be marked withdrawn or
 superseded operationally without changing its frozen bytes. Task lifecycle,
 audit Evidence, recommendation state, and other records outside the complete
@@ -260,12 +260,10 @@ conformance failure.
 How the NKF repository exercises a candidate and how an adopted repository
 Adopts a published version are governed process, not consumer knowledge-format
 meaning. Their protocols remain members of the complete versioned set and
-therefore freeze at publication. [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md)
-requires exact-candidate self-adoption before publication and ordinary public
-self-adoption afterward as separate proofs. Predecessor-relative compatibility
-is explicit: migration from NKF 0.1 or NKF 0.2 to NKF 0.3 is `breaking` and
-requires repository-owner approval before mutation, even though migration is
-designed to preserve existing knowledge.
+therefore freeze at publication. This Specification defines only the
+format-visible predecessor compatibility: migration from NKF 0.1 or NKF 0.2
+to NKF 0.3 is `breaking` and requires repository-owner approval before
+mutation, even though migration is designed to preserve existing knowledge.
 
 NKF has one version namespace: the NKF format version. A bundle MUST declare
 `nkf_version`. NKF 0.3 uses the unversioned canonical identities `nkf.bundle`,
@@ -2633,12 +2631,9 @@ fields in this logical shape:
 contract, nkf_version, source, checker, authority, schemas, files
 ```
 
-`source` contains the exact NKF repository, the 40-lowercase-hexadecimal Git
-commit from whose clean checkout the release is built, and the accepted
-checker-confirmation Decision with its exact repository path and SHA-256 in
-that release commit, plus the exact 40-lowercase-hexadecimal checker source
-checkpoint the Decision confirms. The Decision ID and four-digit path prefix
-must match.
+`source` contains exactly the NKF repository and the
+40-lowercase-hexadecimal Git commit from whose clean checkout the release is
+built. The checker is built reproducibly from that same commit.
 
 `checker` contains identity `nourd-nkf-checker`, exact relative path
 `dist/nourd-nkf-checker.mjs`, its SHA-256 digest, and runtime name `node` with
@@ -2670,36 +2665,61 @@ does not change its logical meaning but is fixed for reproducible release
 bytes.
 
 The manifest omits its own digest, the containing archive digest, asset name,
-tag, release URL, publication time, latest status, and mutable Github state.
-The archive digest binds the manifest; the manifest binds every other
-distributed file, including the exact release-set enumeration. This avoids a
-digest cycle.
+tag, release URL, publication time, latest status, mutable Github state, audit
+Evidence, technical confirmation, and publication authorization. The archive
+digest binds the manifest; the manifest binds every other distributed file,
+including the exact release-set enumeration. Governance records created after
+an exact candidate is audited MAY bind its release commit, archive digest, and
+checker digest, but they remain outside the archive and cannot change its
+bytes. This avoids both a digest cycle and a post-audit confirmation cycle.
 
 ### Release Set
 
-`contracts/nkf/0.3/release-set.yaml` is the sole exact membership and mode
-enumeration for the NKF 0.3 complete set. It is a closed YAML object with
-exactly `contract`, `nkf_version`, and `members`. `members` is a non-empty
-array of unique, safe, exact relative paths and their string modes, including
-`release-set.yaml` itself and `release-manifest.json`. It is ordered by exact
-ASCII path and contains no directory, link, device, traversal, absolute,
-duplicate, or case-colliding entry.
+`contracts/nkf/0.3/release-set.yaml` is the sole exact coverage, membership,
+class, and mode enumeration for the NKF 0.3 complete set. It is a closed YAML
+object with exactly `contract`, `nkf_version`, `coverage`, and `members`.
 
-The required member classes are the accepted Specification, executable
-companion, release-set contract, derived Schemas, checker, adopter, authoring,
-onboarding, release, and adoption protocols, portable skills, registered host
-adapter instruction content, complete valid Product and Technology fixtures,
-complete public Product and Technology examples, and the public documentation
-projection. A release omitting a required class is invalid even if the
-remaining archive is internally consistent.
+`coverage` is a non-empty ordered array of closed selectors containing exactly
+`class`, `selection`, and `path`. `selection` is `exact-file`,
+`recursive-regular-files`, or `generated-release-manifest`. Selector paths are
+unique, safe relative paths and MUST NOT overlap. An `exact-file` selects one
+existing regular file from the clean built source. A
+`recursive-regular-files` selector selects every regular file recursively
+beneath one existing non-empty source directory, without selecting the
+directory itself. The sole generated selector is fixed to
+`release-manifest.json`. Links, devices, unsafe paths, empty recursive
+selections, and a file matched by multiple selectors are forbidden.
+
+The closed class vocabulary requires exactly: normative Specification,
+executable companion, release-set contract, release manifest, derived Schemas,
+checker, adopter, authoring protocol, onboarding protocol, release protocol,
+adoption protocol, portable skills, registered host-adapter instruction
+content, valid Product fixtures, valid Technology fixtures, public Product
+examples, public Technology examples, and public documentation projection.
+Every required class has at least one selector and one resulting member.
+
+`members` is a non-empty array containing exactly the union produced by
+`coverage` after deterministic builds. Each closed entry contains exactly its
+`path`, `class`, and string `mode`. Entries are ordered by exact ASCII path and
+have unique, safe relative paths, including `release-set.yaml` itself and
+`release-manifest.json`. Mode is `0755` only for
+`dist/nourd-nkf-checker.mjs`; every other member is `0644`. Construction and
+source-provenance verification MUST reproduce the exact coverage union from
+the clean release commit. Extraction-only verification treats the
+content-addressed `release-set.yaml` as the exact membership authority and
+still verifies class presence, modes, archive membership, and manifest
+bindings. A release omitting a required class or a source-selected member is
+invalid even when the remaining archive is internally consistent.
 
 Archive construction, manifest construction, release verification, the
 internal exact-candidate Adopt path, public Adopt, the deterministic `set`
 operation, and public-documentation verification MUST all consume the same
-exact `release-set.yaml` enumeration. None may carry a second hand-maintained
-member list. The manifest `files` entries provide exact digest bindings for
-every pre-manifest member; `release-manifest.json` is the sole member omitted
-from its own `files` array.
+exact `release-set.yaml`. Its coverage selectors are deterministic discovery
+rules, not a second membership list; `members` is the sole exact member
+enumeration. No consumer may carry another hand-maintained membership list.
+The manifest `files` entries provide exact digest bindings for every
+pre-manifest member; `release-manifest.json` is the sole member omitted from
+its own `files` array.
 
 ### Release Manifest Schema
 
@@ -2753,12 +2773,11 @@ padding. The archive ends immediately after two final zero blocks. Base-256
 numbers, PAX extensions, and trailing bytes are forbidden. The archive is not
 compressed, avoiding compressor-version variance in its content address.
 
-The packager operates only from the manifest's clean `release_commit`. It
-runs the complete accepted development checks, builds the checker twice,
-verifies the checker-confirmation Decision and every accepted artifact digest,
-constructs and validates the manifest, assembles the archive twice, and
-requires identical checker and archive SHA-256 results. Any mismatch or
-unexpected entry fails packaging.
+An archive is valid only when it is constructed from the manifest's clean
+`release_commit`, every accepted artifact digest matches, the checker built
+twice from that commit is byte-identical, the manifest is valid, and two
+independent archive assemblies have identical SHA-256 digests. Any mismatch or
+unexpected entry invalidates the archive.
 
 ### Consumer Pin And Verification
 
@@ -2781,9 +2800,9 @@ Before invoking the checker, consumer tooling:
 5. compiles that schema and validates the closed release manifest;
 6. verifies `release-set.yaml`, exact archive membership and modes, and every
    manifest `files` path and digest;
-7. verifies the checker-confirmation Decision path and digest in
-   `release_commit` and its binding to `checker_source_commit` when source
-   provenance is evaluated;
+7. verifies that `release_commit` exists in the declared repository and
+   reproducibly yields the manifest-bound checker when source provenance is
+   evaluated;
 8. rejects any missing or unexpected archive file; and
 9. invokes the checker only from the verified distribution root.
 

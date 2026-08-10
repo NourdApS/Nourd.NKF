@@ -139,8 +139,10 @@ audited bytes may be published and recommended.
    candidate self-adoption, compare it against the accepted 0.2 exception and
    release/adoption order, and obtain Human Product Owner confirmation of each
    Product boundary before acceptance.
-4. Record successor Decisions, allocate 0.3, and accept the exact 0.3
-   Specification and executable companion before deriving implementation.
+4. Record successor Decisions, allocate 0.3, draft the exact 0.3 Specification
+   and executable companion, independently audit that pair, repair every
+   material finding, re-audit the corrected pair, and obtain exact Human
+   Product Owner acceptance before deriving implementation.
 5. Derive Schemas, checker dispatch, diagnostics, complete-set enumeration,
    producer-compatible Adopt integration, migration meaning, protocols,
    portable guidance, fixtures, examples, public documentation, and tests.
@@ -252,14 +254,19 @@ audited bytes may be published and recommended.
   `2026-08-10`, authorizing adoption of the exact Design revision through
   [ADR 0109](../../decisions/0109-publication-freeze-and-proven-self-adoption.md).
 - The unaccepted [NKF 0.3 Specification Draft](../../specifications/nkf-0.3.md)
-  and executable companion candidate now preserve the complete 0.2 Product
-  and Technology knowledge contract while representing the accepted
-  publication freeze, one exact `release-set.yaml` membership source, full
-  manifest file binding, exact-candidate and public self-adoption order,
-  verified host-superset integration, and confirmed predecessor compatibility.
-  The Draft conforms as proposal knowledge under the current 0.2 repository
-  contract but has no authority effect. Exact final-form pair acceptance is
-  the next Human Product Owner boundary; implementation has not begun.
+  and executable companion candidate preserve the complete 0.2 Product and
+  Technology knowledge contract while proposing the accepted successor
+  boundaries. The first fresh independent authority-pair audit verified its
+  supplied digests, predecessor bindings, YAML safety, and links, but blocked
+  acceptance on four material findings: a confirmation-to-manifest byte cycle,
+  weaker executable file-mode rules, non-derivable release-set class
+  completeness, and operational-process detail placed inside the format pair.
+  The earlier acceptance request was withdrawn. The technical correction now
+  separates external post-audit confirmation from immutable archive metadata,
+  makes class coverage and modes deterministic, and leaves operational order
+  to the versioned release and adoption protocols. The corrected exact pair
+  must pass a fresh independent re-audit before returning to the Human Product
+  Owner. The Draft has no authority effect and implementation has not begun.
 
 ## Decision Applicability
 
