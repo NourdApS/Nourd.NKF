@@ -471,6 +471,16 @@ One governed process definition covering:
   [publication Evidence](../../evidence/audits/nkf-020-unified-adopt-publication.md)
   records the exact hosted observations. The governed recommendation now pins
   that release; public-documentation republication remains before conclusion.
+- After the recommendation-bearing checkpoint merged to `master`, the closed
+  63-file public projection was published at exact public commit `8c61d76`.
+  A second fresh clone matched every staged byte and all 62 manifest-bound
+  digests; both published example profiles passed the extracted release
+  checker. The freshly published default command then onboarded separate empty
+  Product and Technology repositories from the governed recommendation,
+  returned `current` on the repeated Product path, and passed the installed
+  canonical check in both projects. The
+  [public-documentation Evidence](../../evidence/audits/nkf-020-unified-adopt-public-documentation.md)
+  records the exact observations and non-claims.
 
 ## Acceptance Criteria
 
@@ -532,9 +542,9 @@ round follow it.
 | A fresh post-action audit independently verifies the corrected archive, installed tools, fixtures, examples, guidance, and provenance | proven | runtime-behaviour | none |
 | One public Adopt operation converges every currently supported predecessor state to the exact recommended release without exposing internal path selection | proven | runtime-behaviour | none |
 | Compatibility classification and the exact target digest are visible before mutation, with breaking migration subject to repository-authority approval | proven | runtime-behaviour | none |
-| Product and Technology initial adoption, NKF 0.1 migration, integration refresh, and current-state no-op pass through the published Adopt path | unknown | none | none |
+| Product and Technology initial adoption, NKF 0.1 migration, integration refresh, and current-state no-op pass through the published Adopt path | proven | runtime-behaviour | none |
 | Unsupported mature unadopted repositories fail closed without inferred knowledge meaning | proven | runtime-behaviour | none |
-| The public documentation and recommended release expose one internally consistent NKF 0.2 adoption path | unknown | none | none |
+| The public documentation and recommended release expose one internally consistent NKF 0.2 adoption path | proven | runtime-behaviour | none |
 
 This gate was added when the Task was created before NKF 0.2 was adopted,
 was normalized during the self-migration, and was re-extracted on the
