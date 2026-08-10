@@ -87,6 +87,29 @@ that fails to realize already accepted NKF 0.2 release meaning; it does not
 delegate a new breaking-change policy, accept new format meaning, or migrate a
 consumer by implication.
 
+On `2026-08-10`, the Human Product Owner explicitly directed finishing
+`NKF-020` so that NKF 0.2 is releasable and onboardable by other repositories.
+After reviewing the concrete initial-adoption and version-upgrade paths, the
+Human Product Owner confirmed one public operation named **Adopt**. Invoking the
+public adopter without a subcommand brings a supported repository to the
+current recommended release: it resolves and exposes the exact recommendation,
+inspects the repository, selects the required internal initial-adoption,
+migration, integration-refresh, or current-state path, stages and validates the
+complete candidate, applies atomically or rolls back, and reports the observed
+result state. The internal paths are not separate public commands.
+
+The confirmed boundary classifies compatibility relative to each supported
+predecessor as `breaking` or `non-breaking`. The Human Product Owner owns that
+judgement; tooling enforces presence and consistency but does not infer it. A
+breaking migration is visible and requires explicit repository-authority
+approval before governed knowledge changes. NKF 0.2 is `breaking` from NKF 0.1
+and requires migration. The operation follows the governed recommended channel
+and permanently pins the exact archive SHA-256, never a mutable Github latest
+label. Unsupported unadopted mature repositories fail closed and remain owned
+by [NKF-014](NKF-014-expand-brownfield-and-advanced-onboarding.md); extending
+their coverage later must preserve the same public Adopt operation rather than
+add another command.
+
 ## Scope Reduction
 
 On `2026-08-07`, [ADR 0080](../../decisions/0080-release-and-adoption-process.md) under [`NKF-019`](../completed/NKF-019-decision-applicability-gate.md) accepted the separated release and
@@ -201,6 +224,29 @@ One governed process definition covering:
 14. Conclude this Task only for criteria actually satisfied; do not manufacture
     acceptance of the separately unresolved breaking-change classification and
     signaling boundary.
+15. Record the confirmed single-operation Adopt and compatibility boundary in
+    a governed Design and immutable Human Product Owner Decision without
+    changing NKF 0.2 format meaning.
+16. Replace the four public `onboard`, `install`, `update`, and `migrate`
+    choices with one subcommand-free Adopt operation while retaining their
+    distinct staged mechanics as internal state-dependent paths.
+17. Make Adopt resolve the governed recommended release, expose the exact
+    target digest and compatibility classification before mutation, require
+    explicit authority approval for a breaking migration, and pin the resolved
+    immutable archive after success.
+18. Preserve the current Empty Repository and Tiny Knowledge coverage, Product
+    and Technology profiles, deterministic sealed-plan boundary, rollback,
+    installed authoring integration, and unsupported mature-repository stop.
+19. Publish one accurate 0.2 public path and remove stale 0.1 coordinates and
+    command-selection guidance from every living onboarding surface.
+20. Exercise the public Adopt operation from an unadopted Product repository,
+    an unadopted Technology repository, an adopted 0.1 repository, an already
+    current repository, and representative rejection and rollback cases.
+21. Run exactly `npm run nkf:check`, then independently audit the release,
+    public adopter and documentation bytes, exact recommendation, all routing
+    paths, receipts, pins, conformance results, and authority non-claims.
+22. Publish and independently re-download the corrected unconsumed NKF 0.2 set
+    only after the audit is clean, then conclude this Task through human review.
 
 ## Current Progress
 
@@ -419,7 +465,12 @@ round follow it.
 | The 0.2 release archive carries every member required by the accepted complete frozen-set rule | proven | data-validity | none |
 | The deterministic `set` output equals the archive's exact pre-manifest membership and digests | proven | runtime-behaviour | none |
 | A fresh post-action audit independently verifies the corrected archive, installed tools, fixtures, examples, guidance, and provenance | proven | runtime-behaviour | none |
+| One public Adopt operation converges every currently supported predecessor state to the exact recommended release without exposing internal path selection | unknown | none | none |
+| Compatibility classification and the exact target digest are visible before mutation, with breaking migration subject to repository-authority approval | unknown | none | none |
+| Product and Technology initial adoption, NKF 0.1 migration, integration refresh, and current-state no-op pass through the published Adopt path | unknown | none | none |
+| Unsupported mature unadopted repositories fail closed without inferred knowledge meaning | unknown | none | none |
+| The public documentation and recommended release expose one internally consistent NKF 0.2 adoption path | unknown | none | none |
 
 This gate was added when the Task was created before NKF 0.2 was adopted,
 was normalized during the self-migration, and was re-extracted on the
-`2026-08-08` activation.
+`2026-08-10` reactivation.
