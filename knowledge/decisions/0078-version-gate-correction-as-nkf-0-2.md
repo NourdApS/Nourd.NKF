@@ -33,7 +33,7 @@ that the correction be versioned NKF `0.2` because it has breaking changes.
    pre-stable breaking minors with explicit migration meaning, one current
    namespace, fail-closed unsupported versions, and deliberate migration.
 3. Defining the release process, the adoption process, and breaking-change
-   classification and signaling is deferred to [`NKF-020`](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md), created by explicit
+   classification and signaling is deferred to [`NKF-020`](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md), created by explicit
    direction and deferred without authorizing work.
 
 ## Scope And Applicability
@@ -64,7 +64,7 @@ change; the questions get their own deferred Task.
 
 All candidate artifacts, identities, and paths move from `0.11` to `0.2`
 before acceptance; [ADR 0076](0076-versioned-contract-evolution.md) and [ADR 0077](0077-decision-applicability-gate.md) remain immutable with their
-historical `0.11` references, corrected by this Decision. Until [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md) is
+historical `0.11` references, corrected by this Decision. Until [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) is
 activated and completed, release and adoption follow the accepted governance
 rules of [ADR 0076](0076-versioned-contract-evolution.md) plus recorded per-release migration meaning, without a
 finished step-by-step process contract.
@@ -75,6 +75,6 @@ This Decision does not:
 
 - accept the NKF 0.2 Specification or executable companion;
 - define, accept, or implement the release, adoption, or breaking-change
-  processes deferred to [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md);
-- authorize beginning [NKF-020](../tasks/deferred/NKF-020-version-release-adoption-and-compatibility-process.md) work; and
+  processes deferred to [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md);
+- authorize beginning [NKF-020](../tasks/active/NKF-020-version-release-adoption-and-compatibility-process.md) work; and
 - implement, validate, confirm, release, or migrate anything.

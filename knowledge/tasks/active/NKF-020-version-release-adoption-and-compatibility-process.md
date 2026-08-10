@@ -3,7 +3,7 @@ title: "NKF-020: Define Version Release, Adoption, And Compatibility Process"
 summary: Define the governed process for releasing a new NKF version, the process by which an adopted repository adopts a new version, and how breaking changes are classified and signaled to consumers.
 created_at: 2026-08-06T23:30:03Z
 task_id: NKF-020
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -71,13 +71,13 @@ incomplete Git report and error field, never as a failed command, because
 the transition and its commit exist and the report must not contradict
 them.
 
-On `2026-08-09`, after the deferred [NKF-021](NKF-021-task-scope-gate.md)
+On `2026-08-09`, after the deferred [NKF-021](../deferred/NKF-021-task-scope-gate.md)
 pull request exposed a failing remote validation check, the Human Product
 Owner directed fixing the technical CI defect without another Product
 decision or approval round. The repair remains owned by NKF-020 because it is
 an exact-commit workflow and release-integrity refinement. It may land on the
 already authorized exceptional recovery branch because the failed check
-blocks incorporation of [NKF-021](NKF-021-task-scope-gate.md)'s concluded state; it does not reopen [NKF-021](NKF-021-task-scope-gate.md)
+blocks incorporation of [NKF-021](../deferred/NKF-021-task-scope-gate.md)'s concluded state; it does not reopen [NKF-021](../deferred/NKF-021-task-scope-gate.md)
 or add Task Scope Gate meaning to NKF 0.2.
 
 After that pull request merged, the Human Product Owner directed continuing
@@ -106,7 +106,7 @@ approval before governed knowledge changes. NKF 0.2 is `breaking` from NKF 0.1
 and requires migration. The operation follows the governed recommended channel
 and permanently pins the exact archive SHA-256, never a mutable Github latest
 label. Unsupported unadopted mature repositories fail closed and remain owned
-by [NKF-014](NKF-014-expand-brownfield-and-advanced-onboarding.md); extending
+by [NKF-014](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md); extending
 their coverage later must preserve the same public Adopt operation rather than
 add another command.
 
@@ -180,7 +180,7 @@ One governed process definition covering:
 - implementing release or adoption tooling changes;
 - publishing a release or migrating any consumer;
 - changing NKF 0.1 or NKF 0.2 meaning; and
-- defining acceptance-binding verification, which remains [`NKF-016`](NKF-016-deliver-acceptance-binding-verification.md).
+- defining acceptance-binding verification, which remains [`NKF-016`](../deferred/NKF-016-deliver-acceptance-binding-verification.md).
 
 ## Future Execution Plan
 
@@ -370,7 +370,7 @@ One governed process definition covering:
   five-second test timeout. The candidate gives only that existing end-to-end
   test a `15`-second timeout, matching the file's other bounded integration
   tests; its assertions and the global timeout remain unchanged.
-- Pull request `1` merged the concluded [NKF-021](NKF-021-task-scope-gate.md) state and the technical CI repair to `master` as commit
+- Pull request `1` merged the concluded [NKF-021](../deferred/NKF-021-task-scope-gate.md) state and the technical CI repair to `master` as commit
   `1af636cdaf28f991f8f8a0507bcd8a7cac344be9`. Its final `NKF Contracts`
   run `31325760190` passed on exact head
   `4ab4b87c41a4c60a2dcb195e58136317ab9c5376`; the pull request was reported
@@ -448,7 +448,7 @@ round follow it.
 | [`adr-0060`](../../decisions/0060-layered-contract-enforcement.md) | record | Every candidate receives the same exact-commit command; enforcement-surface changes require human review and a successor Realization confirmation boundary. |
 | [`adr-0061`](../../decisions/0061-confirm-layered-contract-enforcement-realization.md) | record | The confirmed local workflow is immutable predecessor evidence; a later enforcement change requires comparison, proportional audit, a successor Realization, and later confirmation. |
 | [`adr-0062`](../../decisions/0062-confirm-remote-workflow-activation-boundary.md) | record | Remote workflow observations are time-bound Github state and do not establish branch protection. |
-| [`adr-0063`](../../decisions/0063-defer-protected-merge-gate.md) | record | Required-check protection, approval enforcement, bypass policy, and blocked-invalid-candidate proof remain deferred to [NKF-012](NKF-012-activate-protected-merge-gate.md). |
+| [`adr-0063`](../../decisions/0063-defer-protected-merge-gate.md) | record | Required-check protection, approval enforcement, bypass policy, and blocked-invalid-candidate proof remain deferred to [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md). |
 | [`adr-0076`](../../decisions/0076-versioned-contract-evolution.md) | record | Every contract-meaning change after first consumer adoption ships as a new immutable version. |
 | [`adr-0078`](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) | record | Release, adoption, and breaking-change process stay outside format meaning. |
 | [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Only breaking-change classification and signaling plus process refinements remain in this Task's scope. |

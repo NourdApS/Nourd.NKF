@@ -7,7 +7,7 @@ source:
   path: decisions/0101-deterministic-git-mechanics-in-task-transitions.md
   digest:
     algorithm: sha-256
-    value: 21df382db8344292bf0ffb917d51b25c2f18ef0502bb3ab04161f650c0c73558
+    value: 7258a3f1130e9ef601e6892c8bafda224ef32b735073f365947920fe566ab3f2
 governance:
   lifecycle: immutable
   status: accepted

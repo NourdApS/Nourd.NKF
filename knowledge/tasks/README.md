@@ -14,7 +14,7 @@ status; it does not establish that status.
 
 [Active Task Index](active/README.md)
 
-- [NKF-020: Define Version Release, Adoption, And Compatibility Process](deferred/NKF-020-version-release-adoption-and-compatibility-process.md)
+- [NKF-020: Define Version Release, Adoption, And Compatibility Process](active/NKF-020-version-release-adoption-and-compatibility-process.md)
 
 ## Deferred
 
