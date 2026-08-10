@@ -209,6 +209,22 @@ audited bytes may be published and recommended.
   confirmation, and independent audit are understood and confirmed. Exact
   Design and authority-pair bytes remain later Product review and acceptance
   boundaries rather than activation uncertainties.
+- Deterministic activation created `task/NKF-023`, its isolated worktree, and
+  draft PR 6. The activation transition validated, committed, and pushed the
+  exact active Task state.
+- The exact historical NKF 0.1 release was authenticated, downloaded,
+  byte-verified, source-bound, rebuilt from its locked source, and exercised
+  with its extracted checker. The
+  [interim recommendation assessment](../../evidence/audits/nkf-023-interim-recommendation-assessment.md)
+  records the full result, including the raw-checkout missing-build-artifact
+  failure before the deterministic historical build.
+- Directly restoring that healthy 0.1 catalog is unsupported by the currently
+  distributed frozen 0.2 Adopt executable, which only accepts a recommendation
+  targeting 0.2 with the accepted two-predecessor compatibility shape.
+  Restoring the old adopter or changing the released 0.2 adopter would violate
+  the confirmed freeze. No recommendation changed; work pauses at the Product
+  choice between temporarily retaining the existing 0.2 recommendation until
+  atomic 0.3 promotion or deliberately pausing public Adopt until 0.3.
 
 ## Decision Applicability
 
@@ -237,6 +253,7 @@ audited bytes may be published and recommended.
 | --- | --- | --- | --- |
 | Published NKF versions remain immutable after release even when no repository adopts them | unknown | none | none |
 | The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
+| A temporary 0.1 recommendation remains consumable through the currently distributed public Adopt operation | unsupported | none | none |
 | One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | unknown | none | none |
 | The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | unknown | none | none |
 | Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | unknown | none | none |
