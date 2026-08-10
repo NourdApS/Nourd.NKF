@@ -3,7 +3,7 @@ title: "NKF-022: Pin The NKF Repository To Released NKF 0.2"
 summary: Use the published unified Adopt operation to pin the already native NKF 0.2 repository to its exact recommended release, verify the installed integration, and audit the resulting self-consumer state.
 created_at: 2026-08-10T17:33:24Z
 task_id: NKF-022
-task_status: active
+task_status: cancelled
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -137,6 +137,27 @@ installed canonical checker passes, and repeating Adopt returns `current`.
   the producer command would weaken the established one-command producer gate;
   changing the released adopter would require a successor release decision.
   Work is paused before either consequential boundary is changed.
+
+## Cancellation Result
+
+On `2026-08-10`, the Human Product Owner confirmed the decision not to
+deliver this Task's exact outcome. The released NKF 0.2 public Adopt operation
+cannot self-pin the NKF producer repository without replacing or relocating
+its governed stronger `nkf:check` gate. No release pin or consumer integration
+was installed, and repeat Adopt never reached `current`.
+
+NKF 0.2 is already published and frozen. Although no external repository
+adopted it, the confirmed successor rule removes the former unconsumed-release
+replacement exception: published version bytes remain immutable, and any
+change to the complete frozen set belongs to a new NKF version. The 0.2
+release therefore remains historical evidence, is to stop being recommended,
+and is not corrected in place.
+
+The preflight-failure Evidence and validated Task checkpoint record why the
+attempt stopped; they do not constitute adoption or partial delivery. Work on
+producer-compatible Adopt behavior, the release-triggered freeze rule, and a
+pre-publication self-adoption gate will proceed only under a separately
+created and activated NKF 0.3 Task.
 
 ## Decision Applicability
 

@@ -13,7 +13,6 @@ status; it does not establish that status.
 ## Active
 
 [Active Task Index](active/README.md)
-- [NKF-022: Pin The NKF Repository To Released NKF 0.2](active/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md)
 
 ## Deferred
 
@@ -46,3 +45,4 @@ status; it does not establish that status.
 ## Cancelled
 
 [Cancelled Task Index](cancelled/README.md)
+- [NKF-022: Pin The NKF Repository To Released NKF 0.2](cancelled/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md)
