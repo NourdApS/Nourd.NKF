@@ -26,6 +26,7 @@ status; it does not establish that status.
 - [NKF-014: Expand Brownfield And Advanced Onboarding](deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md)
 - [NKF-016: Deliver Acceptance-Binding Verification](deferred/NKF-016-deliver-acceptance-binding-verification.md)
 - [NKF-018: Stabilize Volatile Onboarding Inputs](deferred/NKF-018-stabilize-volatile-onboarding-inputs.md)
+- [NKF-022: Pin The NKF Repository To Released NKF 0.2](deferred/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md)
 
 ## Completed
 
