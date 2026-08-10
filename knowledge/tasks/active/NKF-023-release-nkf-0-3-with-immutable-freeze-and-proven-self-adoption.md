@@ -269,9 +269,17 @@ audited bytes may be published and recommended.
   cycle, mode rule, coverage model, process allocation, and digest topology,
   but blocked exact acceptance on three pair-symmetry defects: same-version
   refresh and selector ordering were executable-only, and an earlier complete-
-  set summary omitted later-required classes. Those technical discrepancies
-  are being corrected before another exact-byte re-audit. The Draft has no
-  authority effect and implementation has not begun.
+  set summary omitted later-required classes. After correction, the second
+  exact-byte re-audit returned `CLEAN` with no remaining material finding. It
+  verified final-form Markdown SHA-256
+  `0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e`
+  and executable SHA-256
+  `e988a596e741d48611a5f77a9236e9d539f9a7475a76f07768bc273a8bf4d27f`,
+  together with predecessor bindings, strict parsing, links, semantic
+  symmetry, release-set self-reference, and every earlier regression. The
+  current 0.2 authoring gate also passed after correction with 22 test files
+  and 192 tests. The Draft has no authority effect; exact Human Product Owner
+  acceptance remains pending and implementation has not begun.
 
 ## Decision Applicability
 
