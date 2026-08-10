@@ -456,6 +456,13 @@ One governed process definition covering:
   predecessor through an unchanged breaking preflight and approved migration.
   No material finding remains. Separate Realization confirmation is the only
   release-protocol gate still required before publication.
+- The Human Product Owner explicitly retained Product-decision authority and
+  assigned the audited technical confirmation to the technical reviewer, then
+  authorized recording and publishing it. [ADR 0108](../../decisions/0108-confirm-the-unified-adopt-realization.md)
+  records that separation and confirms exact implementation commit `7eefe7d`
+  and candidate archive `015a922d...a51f`. Publication is authorized but
+  remains an unobserved operational fact until the exact hosted bytes are
+  independently re-downloaded.
 
 ## Acceptance Criteria
 
@@ -502,6 +509,8 @@ round follow it.
 | [`adr-0104`](../../decisions/0104-accept-the-cancelled-state-pair.md) | record | The cancelled-state pair is the exact accepted 0.2 authority pair for the corrected set. |
 | [`adr-0105`](../../decisions/0105-bind-the-cancelled-state-release-checker.md) | record | Release packaging must carry the checker built at the bound source commit and exact SHA-256. |
 | [`adr-0106`](../../decisions/0106-confirm-the-complete-set-release-correction.md) | record | The exact complete-set correction at commit `3d6ea93` is technically confirmed and authorized for corrected unconsumed-release publication; publication, recommendation, migration, breaking-change policy, and Task conclusion are not implied. |
+| [`adr-0107`](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md) | record | One public Adopt operation, predecessor-relative compatibility, and the breaking 0.1-to-0.2 classification are Human Product Owner-accepted direction. |
+| [`adr-0108`](../../decisions/0108-confirm-the-unified-adopt-realization.md) | record | Exact implementation commit `7eefe7d` and candidate archive `015a922d...a51f` are independently audited, technically confirmed, and authorized for publication. |
 
 ### Mandatory Capabilities
 
