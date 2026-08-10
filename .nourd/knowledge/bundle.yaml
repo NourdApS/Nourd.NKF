@@ -196,7 +196,7 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-021-task-scope-gate.md
     kind: task
-  - path: tasks/deferred/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md
+  - path: tasks/active/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md
     kind: task
 canonical_terms:
   - ADR

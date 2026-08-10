@@ -3,7 +3,7 @@ title: "NKF-022: Pin The NKF Repository To Released NKF 0.2"
 summary: Use the published unified Adopt operation to pin the already native NKF 0.2 repository to its exact recommended release, verify the installed integration, and audit the resulting self-consumer state.
 created_at: 2026-08-10T17:33:24Z
 task_id: NKF-022
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
