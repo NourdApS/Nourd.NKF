@@ -445,6 +445,17 @@ One governed process definition covering:
   repeat-current verification, and archive, pin, adapter, and knowledge
   tamper rejection. The adopter and mechanics suites pass 38 tests, including
   the new breaking migration and parent Task-index relocation regressions.
+- The [Unified Adopt Release Audit](../../evidence/audits/nkf-020-unified-adopt-release-audit.md)
+  independently reviewed exact implementation commit `7eefe7d624fa8412e307c44a779c2e5e0afa497a`
+  and candidate archive SHA-256
+  `015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f`.
+  Two clean builds were byte-identical; all 133 extracted members matched the
+  independent complete set; the extracted checker passed this repository and
+  both profiles; the public operation onboarded Product and Technology,
+  refreshed and rechecked 0.2, rejected tampering, and drove a real 0.1
+  predecessor through an unchanged breaking preflight and approved migration.
+  No material finding remains. Separate Realization confirmation is the only
+  release-protocol gate still required before publication.
 
 ## Acceptance Criteria
 
@@ -502,10 +513,10 @@ round follow it.
 | The 0.2 release archive carries every member required by the accepted complete frozen-set rule | proven | data-validity | none |
 | The deterministic `set` output equals the archive's exact pre-manifest membership and digests | proven | runtime-behaviour | none |
 | A fresh post-action audit independently verifies the corrected archive, installed tools, fixtures, examples, guidance, and provenance | proven | runtime-behaviour | none |
-| One public Adopt operation converges every currently supported predecessor state to the exact recommended release without exposing internal path selection | unknown | none | none |
-| Compatibility classification and the exact target digest are visible before mutation, with breaking migration subject to repository-authority approval | unknown | none | none |
+| One public Adopt operation converges every currently supported predecessor state to the exact recommended release without exposing internal path selection | proven | runtime-behaviour | none |
+| Compatibility classification and the exact target digest are visible before mutation, with breaking migration subject to repository-authority approval | proven | runtime-behaviour | none |
 | Product and Technology initial adoption, NKF 0.1 migration, integration refresh, and current-state no-op pass through the published Adopt path | unknown | none | none |
-| Unsupported mature unadopted repositories fail closed without inferred knowledge meaning | unknown | none | none |
+| Unsupported mature unadopted repositories fail closed without inferred knowledge meaning | proven | runtime-behaviour | none |
 | The public documentation and recommended release expose one internally consistent NKF 0.2 adoption path | unknown | none | none |
 
 This gate was added when the Task was created before NKF 0.2 was adopted,
