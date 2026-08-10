@@ -7,7 +7,7 @@ authority:
   executable_path: contracts/nkf/0.3/nkf.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 6c6ab140427e6f40c25266979090c1b0cbc198debfbed3cde26f229e458683e0
+    value: 0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.2.md
     markdown_digest:

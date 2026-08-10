@@ -253,10 +253,10 @@ audited bytes may be published and recommended.
   Owner confirmed the remaining `0.2`-to-`0.3` breaking classification on
   `2026-08-10`, authorizing adoption of the exact Design revision through
   [ADR 0109](../../decisions/0109-publication-freeze-and-proven-self-adoption.md).
-- The unaccepted [NKF 0.3 Specification Draft](../../specifications/nkf-0.3.md)
-  and executable companion candidate preserve the complete 0.2 Product and
-  Technology knowledge contract while proposing the accepted successor
-  boundaries. The first fresh independent authority-pair audit verified its
+- The [NKF 0.3 Specification](../../specifications/nkf-0.3.md) and executable
+  companion preserve the complete 0.2 Product and Technology knowledge
+  contract while representing the accepted successor boundaries. The first
+  fresh independent authority-pair audit verified its
   supplied digests, predecessor bindings, YAML safety, and links, but blocked
   acceptance on four material findings: a confirmation-to-manifest byte cycle,
   weaker executable file-mode rules, non-derivable release-set class
@@ -278,8 +278,12 @@ audited bytes may be published and recommended.
   together with predecessor bindings, strict parsing, links, semantic
   symmetry, release-set self-reference, and every earlier regression. The
   current 0.2 authoring gate also passed after correction with 22 test files
-  and 192 tests. The Draft has no authority effect; exact Human Product Owner
-  acceptance remains pending and implementation has not begun.
+  and 192 tests. On `2026-08-11`, the Human Product Owner accepted those exact
+  independently audited bytes through
+  [ADR 0110](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md).
+  Implementation derivation is now authorized but has not begun; technical
+  confirmation, publication, recommendation, and repository adoption remain
+  later boundaries.
 
 ## Decision Applicability
 
@@ -302,6 +306,7 @@ audited bytes may be published and recommended.
 | [`adr-0107`](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md) | record | NKF exposes one public subcommand-free Adopt operation, pins an immutable recommendation, declares compatibility for every supported predecessor, and requires explicit authority approval before breaking migration. |
 | [`adr-0108`](../../decisions/0108-confirm-the-unified-adopt-realization.md) | record | The exact 0.2 Adopt implementation is technically confirmed only for its audited source and candidate archive; successor implementation requires its own independent audit and confirmation. |
 | [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Publication freezes every complete-set member permanently, candidate and public self-adoption remain separate gates, the producer gate must be preserved through a general verified integration, and 0.1-to-0.3 plus 0.2-to-0.3 migrations require explicit approval as breaking changes. |
+| [`adr-0110`](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md) | record | The exact audited NKF 0.3 Markdown and executable bytes are accepted authority; derived implementation must preserve their digest binding and cannot redefine their meaning. |
 
 ### Mandatory Capabilities
 

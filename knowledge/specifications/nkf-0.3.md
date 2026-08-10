@@ -4,8 +4,8 @@ title: NKF 0.3 — Product And Technology Knowledge Format
 type: specification
 summary: NKF 0.3 preserves the Product and Technology knowledge contracts while making publication the immutable version boundary and binding every released complete-set member through one exact release-set enumeration.
 created_at: 2026-08-10T21:40:00Z
-record_lifecycle: living
-record_status: draft
+record_lifecycle: immutable
+record_status: accepted
 task: NKF-023
 decision_authority: Human Product Owner, Nourd ApS
 ---
@@ -24,9 +24,10 @@ decision_authority: Human Product Owner, Nourd ApS
   prospectively by [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md)
 - **Interoperability baseline:** Open Knowledge Format 0.2
 
-> This Draft becomes the canonical NKF 0.3 specification only after the Human
-> Product Owner accepts its exact final-form bytes together with the
-> digest-bound executable companion. It has no authority effect while Draft.
+> This exact revision is the canonical NKF 0.3 specification, accepted by the
+> Human Product Owner together with its digest-bound executable companion. It
+> governs repositories that deliberately declare NKF 0.3 and does not alter
+> the immutable authority of NKF 0.1 or NKF 0.2.
 
 ## Purpose
 
@@ -120,8 +121,8 @@ to the new root declaration.
 [ADR 0076](../decisions/0076-versioned-contract-evolution.md) established
 versioned contract evolution after first consumer adoption. NKF 0.2 realized
 the Decision Applicability Gate and later accepted corrections. This NKF 0.3
-Draft preserves that complete predecessor meaning and proposes changing only
-the version-freeze and release-package boundaries identified by
+revision preserves that complete predecessor meaning and changes only the
+version-freeze and release-package boundaries identified by
 [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md).
 NKF 0.1 and NKF 0.2 remain immutable authority for repositories that declare
 them, and consumers migrate deliberately.
