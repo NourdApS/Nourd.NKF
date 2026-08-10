@@ -34,7 +34,7 @@ Schemas, deterministic checker and adopter, four governed protocols, four
 portable agent skills, host-adapter guidance, fixtures, examples, and public
 documentation projection — published as a single content-addressed archive
 whose tag is its SHA-256. The exact current release and recommendation are
-SHA-256 `423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5`.
+SHA-256 `015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f`.
 The [GitHub Releases page](https://github.com/kaveh6202/Nourd.NKF/releases)
 carries the current archive and its human-readable migration meaning.
 
@@ -48,7 +48,8 @@ This repository has adopted NKF 0.2 as its own first adopter. The recommended
 consumer catalog now pins the independently verified NKF 0.2 release;
 consumer migration remains deliberate, separate work under the
 [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md). The
-published
+current release exposes one public subcommand-free Adopt operation for initial
+adoption, migration, update, and current-state verification. The published
 [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs)
 still describes the predecessor experience until it is deliberately
 republished.

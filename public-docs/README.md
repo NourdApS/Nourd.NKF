@@ -117,23 +117,28 @@ so. A passing checker never accepts knowledge.
 
 ## Use NKF
 
-1. Decide whether the project knowledge root represents a Product or a
-   Technology.
-2. For an Empty Repository or a Tiny Knowledge, No Source Or Configuration
-   repository, follow [Initial Onboarding](guides/initial-onboarding.md). The
-   portable skill guides complete agent assessment and required human
-   confirmation; deterministic tooling captures exact bytes, seals the plan,
-   generates native declarations, and applies only a complete conformant
-   candidate.
-3. For a project whose native NKF bundle is already complete, follow
-   [Adopt And Validate](guides/adopt-and-validate.md) to install the pinned
-   integration without reconstructing the bundle.
-4. Obtain the public adopter and the exact recommended release SHA-256 from
+1. Obtain `tools/nourd-nkf-adopt.mjs` and verify its SHA-256 against
    `reference/publication.json`.
+2. Run the one public operation:
+
+   ```text
+   node nourd-nkf-adopt.mjs --project /absolute/path/to/project
+   ```
+
+3. For an unadopted Empty or Tiny Knowledge repository, first follow
+   [Initial Onboarding](guides/initial-onboarding.md) for complete agent
+   assessment and candidate sealing, then pass the sealed plan to the same
+   Adopt operation.
+4. If Adopt displays a breaking migration, review its exact target and obtain
+   real repository-authority approval before rerunning with the reported
+   approval argument.
 5. Author through the installed AI-neutral protocol and run
    `npm run nkf:check` before handoff.
-6. Review release updates deliberately; never follow a moving branch or
-   `latest`.
+
+Adopt resolves the reviewed recommendation and permanently pins the exact
+content-addressed archive. It never follows a Github `latest` label. The
+onboard, install, update, migrate, repair, and current paths are internal state
+resolution, not public command choices.
 
 The onboarder does not invent project meaning or acceptance decisions. When
 the agent cannot recommend either supported initial category, it reports the
@@ -147,11 +152,10 @@ evidence and stops without guessing a later brownfield category.
   Markdown, executable contracts, Schemas, checking, and claim boundaries.
 - [Initial Onboarding](guides/initial-onboarding.md) covers agent-led Empty and
   Tiny Knowledge Product and Technology repositories.
-- [Adopt And Validate](guides/adopt-and-validate.md) covers installation,
-  AI-assisted authoring, local checks, and continuous integration.
-- [Update And Recover](guides/update-and-recover.md) covers no-update, explicit
-  updates, trusted predecessor topology repair, rollback, diagnosis, and
-  failure recovery.
+- [Adopt And Validate](guides/adopt-and-validate.md) covers the single Adopt
+  operation, its results, AI-assisted authoring, and validation.
+- [Update And Recover](guides/update-and-recover.md) covers breaking approval,
+  exact recovery, diagnosis, and failure safety through the same operation.
 - [Product Example](examples/product/README.md) is a complete small Product
   bundle.
 - [Technology Example](examples/technology/README.md) is a complete small

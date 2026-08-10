@@ -1711,9 +1711,31 @@ export async function buildPortableTopologyRepair(projectRootInput, receipt) {
     const bytes = await readRegularNoLinks(projectRoot, `${knowledgeRoot}/${sourcePath}`, false);
     if (bytes !== null) knowledgeBytes.set(sourcePath, bytes);
   }
-  const canonicalMap = knowledgeBytes.get("README.md");
+  let canonicalMap = knowledgeBytes.get("README.md");
   if (canonicalMap === undefined) {
     fail("NKF-TOPOLOGY-REPAIR-AMBIGUOUS", "The predecessor does not provide a safe canonical README.md to reconcile.");
+  }
+  if (
+    predecessorMapPath === "README.md" &&
+    created.has(`${knowledgeRoot}/README.md`)
+  ) {
+    const expected = predecessorMapScaffold(pseudoPlan, predecessorDocuments);
+    if (!canonicalMap.equals(expected)) {
+      fail(
+        "NKF-TOPOLOGY-REPAIR-DRIFT",
+        "The predecessor-generated canonical map has drifted or contains consumer-authored content.",
+      );
+    }
+    const preserved = predecessorDocuments.length === 0
+      ? ""
+      : `\n## Preserved Knowledge\n\n${predecessorDocuments
+          .map((target) => topologyLink("README.md", target, `Preserved ${target}`))
+          .join("\n")}\n`;
+    canonicalMap = Buffer.concat([
+      mapScaffold(pseudoPlan),
+      Buffer.from(preserved, "utf8"),
+    ]);
+    knowledgeBytes.set("README.md", canonicalMap);
   }
   const files = new Map();
   const reconciledMap = reconcileNavigationMap(canonicalMap, navigationBlock({ scaffold: { ...pseudoPlan.scaffold, knowledge_map: "README.md" } }));

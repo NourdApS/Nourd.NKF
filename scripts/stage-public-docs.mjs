@@ -64,6 +64,7 @@ const publication = {
     archive_sha256: recommended.archive.sha256,
     source_commit: recommended.source_commit,
     checker_sha256: recommended.checker_sha256,
+    compatibility: recommended.compatibility,
   },
   adopter: {
     availability: "public",

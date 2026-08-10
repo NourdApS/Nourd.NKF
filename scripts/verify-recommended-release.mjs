@@ -43,6 +43,7 @@ exactKeys(
     "archive",
     "authority",
     "channel",
+    "compatibility",
     "checker_sha256",
     "contract",
     "nkf_version",
@@ -68,6 +69,16 @@ exactKeys(
   ["prerelease", "published_at", "url", "visibility"],
   "Recommended publication",
 );
+if (!Array.isArray(catalog.compatibility) || catalog.compatibility.length !== 2) {
+  fail("Recommended compatibility must declare exactly the supported 0.1 and 0.2 predecessors.");
+}
+for (const [index, entry] of catalog.compatibility.entries()) {
+  exactKeys(
+    entry,
+    ["classification", "from_nkf_version", "migration_required", "summary"],
+    `Recommended compatibility[${index}]`,
+  );
+}
 
 const archiveSha256 = catalog.archive.sha256;
 const assetName = `nourd-nkf-sha256-${archiveSha256}.tar`;
@@ -77,6 +88,23 @@ if (
   catalog.nkf_version !== "0.2" ||
   catalog.state !== "recommended" ||
   catalog.channel !== "internal-private-github-prerelease" ||
+  JSON.stringify(catalog.compatibility) !==
+    JSON.stringify([
+      {
+        from_nkf_version: "0.1",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.1 consumers require the governed 0.2 migration and explicit Human Product Owner approval before mutation.",
+      },
+      {
+        from_nkf_version: "0.2",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.2 consumers can refresh their pinned release and host integration without semantic migration.",
+      },
+    ]) ||
   !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
   catalog.archive.asset_name !== assetName ||
   catalog.archive.tag !== tag ||

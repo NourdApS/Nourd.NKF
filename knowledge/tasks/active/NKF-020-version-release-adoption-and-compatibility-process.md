@@ -3,7 +3,7 @@ title: "NKF-020: Define Version Release, Adoption, And Compatibility Process"
 summary: Define the governed process for releasing a new NKF version, the process by which an adopted repository adopts a new version, and how breaking changes are classified and signaled to consumers.
 created_at: 2026-08-06T23:30:03Z
 task_id: NKF-020
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -71,13 +71,13 @@ incomplete Git report and error field, never as a failed command, because
 the transition and its commit exist and the report must not contradict
 them.
 
-On `2026-08-09`, after the deferred [NKF-021](NKF-021-task-scope-gate.md)
+On `2026-08-09`, after the deferred [NKF-021](../deferred/NKF-021-task-scope-gate.md)
 pull request exposed a failing remote validation check, the Human Product
 Owner directed fixing the technical CI defect without another Product
 decision or approval round. The repair remains owned by NKF-020 because it is
 an exact-commit workflow and release-integrity refinement. It may land on the
 already authorized exceptional recovery branch because the failed check
-blocks incorporation of [NKF-021](NKF-021-task-scope-gate.md)'s concluded state; it does not reopen [NKF-021](NKF-021-task-scope-gate.md)
+blocks incorporation of [NKF-021](../deferred/NKF-021-task-scope-gate.md)'s concluded state; it does not reopen [NKF-021](../deferred/NKF-021-task-scope-gate.md)
 or add Task Scope Gate meaning to NKF 0.2.
 
 After that pull request merged, the Human Product Owner directed continuing
@@ -106,7 +106,7 @@ approval before governed knowledge changes. NKF 0.2 is `breaking` from NKF 0.1
 and requires migration. The operation follows the governed recommended channel
 and permanently pins the exact archive SHA-256, never a mutable Github latest
 label. Unsupported unadopted mature repositories fail closed and remain owned
-by [NKF-014](NKF-014-expand-brownfield-and-advanced-onboarding.md); extending
+by [NKF-014](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md); extending
 their coverage later must preserve the same public Adopt operation rather than
 add another command.
 
@@ -180,7 +180,7 @@ One governed process definition covering:
 - implementing release or adoption tooling changes;
 - publishing a release or migrating any consumer;
 - changing NKF 0.1 or NKF 0.2 meaning; and
-- defining acceptance-binding verification, which remains [`NKF-016`](NKF-016-deliver-acceptance-binding-verification.md).
+- defining acceptance-binding verification, which remains [`NKF-016`](../deferred/NKF-016-deliver-acceptance-binding-verification.md).
 
 ## Future Execution Plan
 
@@ -370,7 +370,7 @@ One governed process definition covering:
   five-second test timeout. The candidate gives only that existing end-to-end
   test a `15`-second timeout, matching the file's other bounded integration
   tests; its assertions and the global timeout remain unchanged.
-- Pull request `1` merged the concluded [NKF-021](NKF-021-task-scope-gate.md) state and the technical CI repair to `master` as commit
+- Pull request `1` merged the concluded [NKF-021](../deferred/NKF-021-task-scope-gate.md) state and the technical CI repair to `master` as commit
   `1af636cdaf28f991f8f8a0507bcd8a7cac344be9`. Its final `NKF Contracts`
   run `31325760190` passed on exact head
   `4ab4b87c41a4c60a2dcb195e58136317ab9c5376`; the pull request was reported
@@ -417,6 +417,60 @@ One governed process definition covering:
   absent from Git, appears byte-identically in the activated working tree, and
   survives full candidate validation; all fourteen mechanics tests and the
   canonical 186-test command pass.
+- [ADR 0107](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md) records the Human Product Owner's confirmed public boundary:
+  one subcommand-free Adopt operation, a reviewed recommendation that selects
+  an immutable content-addressed target, predecessor-relative `breaking` or
+  `non-breaking` signaling, and explicit Human Product Owner approval before
+  the breaking 0.1-to-0.2 migration. The adopted
+  [Design](../../designs/adopted/unified-adopt-operation.md) keeps initial
+  semantic assessment agent-led and mature unadopted repositories deferred to
+  [NKF-014](../deferred/NKF-014-expand-brownfield-and-advanced-onboarding.md).
+- The current implementation candidate resolves and validates the governed
+  recommendation, binds the running adopter to both catalog and archive,
+  routes supported repository state to internal initial adoption, migration,
+  integration refresh, or current verification, and returns only
+  `onboarded`, `migrated`, `updated`, or `current`. A breaking preflight names
+  the exact target and leaves the tree byte-identical until approval.
+- Real predecessor testing exposed and repaired two migration assumptions:
+  early agent-onboarded 0.1 repositories may require the already governed
+  complete-topology repair inside migration, including exact conversion of a
+  predecessor-generated canonical map; older valid 0.1 bundles may predate
+  release pins and onboarding receipts, so each is used when present without
+  making it an invented prerequisite. Candidate validation and transactional
+  rollback remain mandatory in every case.
+- The public 62-file documentation source now presents only Adopt. Mechanical
+  inspect and seal stages and other named commands remain explicitly internal
+  agent mechanics. The consumer exercise now uses the public operation for
+  initial Product and Technology repositories, a native 0.2 repository,
+  repeat-current verification, and archive, pin, adapter, and knowledge
+  tamper rejection. The adopter and mechanics suites pass 38 tests, including
+  the new breaking migration and parent Task-index relocation regressions.
+- The [Unified Adopt Release Audit](../../evidence/audits/nkf-020-unified-adopt-release-audit.md)
+  independently reviewed exact implementation commit `7eefe7d624fa8412e307c44a779c2e5e0afa497a`
+  and candidate archive SHA-256
+  `015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f`.
+  Two clean builds were byte-identical; all 133 extracted members matched the
+  independent complete set; the extracted checker passed this repository and
+  both profiles; the public operation onboarded Product and Technology,
+  refreshed and rechecked 0.2, rejected tampering, and drove a real 0.1
+  predecessor through an unchanged breaking preflight and approved migration.
+  No material finding remains. Separate Realization confirmation is the only
+  release-protocol gate still required before publication.
+- The Human Product Owner explicitly retained Product-decision authority and
+  assigned the audited technical confirmation to the technical reviewer, then
+  authorized recording and publishing it. [ADR 0108](../../decisions/0108-confirm-the-unified-adopt-realization.md)
+  records that separation and confirms exact implementation commit `7eefe7d`
+  and candidate archive `015a922d...a51f`. Publication is authorized but
+  remains an unobserved operational fact until the exact hosted bytes are
+  independently re-downloaded.
+- The technically confirmed candidate was published as private prerelease
+  `release-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f`
+  from exact source commit `7eefe7d`. A fresh authenticated download reproduced
+  the audited SHA-256, was byte-identical under system `cmp`, and passed the
+  strict archive, provenance, and extracted-checker verifier. The
+  [publication Evidence](../../evidence/audits/nkf-020-unified-adopt-publication.md)
+  records the exact hosted observations. The governed recommendation now pins
+  that release; public-documentation republication remains before conclusion.
 
 ## Acceptance Criteria
 
@@ -448,7 +502,7 @@ round follow it.
 | [`adr-0060`](../../decisions/0060-layered-contract-enforcement.md) | record | Every candidate receives the same exact-commit command; enforcement-surface changes require human review and a successor Realization confirmation boundary. |
 | [`adr-0061`](../../decisions/0061-confirm-layered-contract-enforcement-realization.md) | record | The confirmed local workflow is immutable predecessor evidence; a later enforcement change requires comparison, proportional audit, a successor Realization, and later confirmation. |
 | [`adr-0062`](../../decisions/0062-confirm-remote-workflow-activation-boundary.md) | record | Remote workflow observations are time-bound Github state and do not establish branch protection. |
-| [`adr-0063`](../../decisions/0063-defer-protected-merge-gate.md) | record | Required-check protection, approval enforcement, bypass policy, and blocked-invalid-candidate proof remain deferred to [NKF-012](NKF-012-activate-protected-merge-gate.md). |
+| [`adr-0063`](../../decisions/0063-defer-protected-merge-gate.md) | record | Required-check protection, approval enforcement, bypass policy, and blocked-invalid-candidate proof remain deferred to [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md). |
 | [`adr-0076`](../../decisions/0076-versioned-contract-evolution.md) | record | Every contract-meaning change after first consumer adoption ships as a new immutable version. |
 | [`adr-0078`](../../decisions/0078-version-gate-correction-as-nkf-0-2.md) | record | Release, adoption, and breaking-change process stay outside format meaning. |
 | [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Only breaking-change classification and signaling plus process refinements remain in this Task's scope. |
@@ -463,6 +517,8 @@ round follow it.
 | [`adr-0104`](../../decisions/0104-accept-the-cancelled-state-pair.md) | record | The cancelled-state pair is the exact accepted 0.2 authority pair for the corrected set. |
 | [`adr-0105`](../../decisions/0105-bind-the-cancelled-state-release-checker.md) | record | Release packaging must carry the checker built at the bound source commit and exact SHA-256. |
 | [`adr-0106`](../../decisions/0106-confirm-the-complete-set-release-correction.md) | record | The exact complete-set correction at commit `3d6ea93` is technically confirmed and authorized for corrected unconsumed-release publication; publication, recommendation, migration, breaking-change policy, and Task conclusion are not implied. |
+| [`adr-0107`](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md) | record | One public Adopt operation, predecessor-relative compatibility, and the breaking 0.1-to-0.2 classification are Human Product Owner-accepted direction. |
+| [`adr-0108`](../../decisions/0108-confirm-the-unified-adopt-realization.md) | record | Exact implementation commit `7eefe7d` and candidate archive `015a922d...a51f` are independently audited, technically confirmed, and authorized for publication. |
 
 ### Mandatory Capabilities
 
@@ -474,10 +530,10 @@ round follow it.
 | The 0.2 release archive carries every member required by the accepted complete frozen-set rule | proven | data-validity | none |
 | The deterministic `set` output equals the archive's exact pre-manifest membership and digests | proven | runtime-behaviour | none |
 | A fresh post-action audit independently verifies the corrected archive, installed tools, fixtures, examples, guidance, and provenance | proven | runtime-behaviour | none |
-| One public Adopt operation converges every currently supported predecessor state to the exact recommended release without exposing internal path selection | unknown | none | none |
-| Compatibility classification and the exact target digest are visible before mutation, with breaking migration subject to repository-authority approval | unknown | none | none |
+| One public Adopt operation converges every currently supported predecessor state to the exact recommended release without exposing internal path selection | proven | runtime-behaviour | none |
+| Compatibility classification and the exact target digest are visible before mutation, with breaking migration subject to repository-authority approval | proven | runtime-behaviour | none |
 | Product and Technology initial adoption, NKF 0.1 migration, integration refresh, and current-state no-op pass through the published Adopt path | unknown | none | none |
-| Unsupported mature unadopted repositories fail closed without inferred knowledge meaning | unknown | none | none |
+| Unsupported mature unadopted repositories fail closed without inferred knowledge meaning | proven | runtime-behaviour | none |
 | The public documentation and recommended release expose one internally consistent NKF 0.2 adoption path | unknown | none | none |
 
 This gate was added when the Task was created before NKF 0.2 was adopted,

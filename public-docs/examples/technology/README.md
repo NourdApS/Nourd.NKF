@@ -49,8 +49,8 @@ The equivalent Product bundle cannot add `governed_artifacts` by implication.
 That distinction keeps Common rules shared while preserving the concrete
 profile boundary.
 
-From this example page, copy `project/` to a writable directory, install the
-same exact pinned NKF release, and run:
+From this example page, copy `project/` to a writable directory, run Adopt to
+install the same exact governed recommendation, and then run:
 
 ```sh
 npm run nkf:check

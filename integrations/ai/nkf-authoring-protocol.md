@@ -178,14 +178,15 @@ deterministic mechanical act: the author judges meaning, truth, readiness,
 and authority; commands perform mechanics and validate results. Neither
 substitutes for the other.
 
-Use the deterministic adopter commands for governed mechanics instead of
+Use the internal deterministic adopter commands for governed mechanics instead of
 hand-editing: `task` transitions a Task between active, deferred, and
 completed states with its file-move, index, inbound-link, result-insertion,
 and digest consequences; `repin` recomputes record and governed-artifact
 digests after edits; `linkify` rewrites plain same-bundle references into
 verified deep links; `refs` exports the identifier-to-path reference map;
 `set` enumerates the versioned-set members with digests and version stamps;
-and `migrate` performs a declared prior-version migration. Every command
+and `migrate` performs a declared prior-version migration beneath the one
+public Adopt operation. Every command
 validates its staged result and rolls back on failure. Prose, gate
 truthfulness, classification, and acceptance stay with the author: a command
 supplies no meaning and accepts nothing.

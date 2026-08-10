@@ -36,8 +36,8 @@ uses `body_contract: nkf.product`, and maps every required section by exact
 Title Case heading path. The bundle selects
 `nkf.profile.product`.
 
-From this example page, copy `project/` to a writable directory, install the
-exact pinned release, and run:
+From this example page, copy `project/` to a writable directory, run Adopt to
+install the exact governed recommendation, and then run:
 
 ```sh
 npm run nkf:check

@@ -7,7 +7,7 @@ source:
   path: decisions/0103-branch-carried-task-life-and-cancelled-state.md
   digest:
     algorithm: sha-256
-    value: 2a654b05e9c91ed15c20e4f5d12807640ec13f44ab992a5a4201b634b144e2c8
+    value: 00d580099ea0c4d7fa573774f5eff74749c1566b80c723b9e808c1dc3d3783f2
 governance:
   lifecycle: immutable
   status: accepted

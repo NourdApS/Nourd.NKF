@@ -34,6 +34,7 @@ import {
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 let archivePath: string;
 let archiveSha256: string;
+let recommendationPath: string;
 let predecessorAdopter: string;
 let predecessorArchivePath: string;
 let predecessorArchiveSha256: string;
@@ -61,6 +62,18 @@ function run(
   env: NodeJS.ProcessEnv = {},
 ) {
   return runWith(adopter, command, project, extra, env);
+}
+
+function runAdopt(
+  project: string,
+  extra: string[] = [],
+  env: NodeJS.ProcessEnv = {},
+) {
+  return spawnSync(
+    process.execPath,
+    [adopter, "--project", project, "--recommendation", recommendationPath, ...extra],
+    { encoding: "utf8", env: { ...process.env, ...env } },
+  );
 }
 
 function runWith(
@@ -405,6 +418,30 @@ beforeAll(async () => {
     `nourd-nkf-sha256-${archiveSha256}.tar`,
   );
   await writeFile(archivePath, archive);
+  const recommendation = JSON.parse(
+    await readFile(path.join(repositoryRoot, "release/recommended.json"), "utf8"),
+  );
+  const { assetName, tag } = {
+    assetName: `nourd-nkf-sha256-${archiveSha256}.tar`,
+    tag: `release-sha256-${archiveSha256}`,
+  };
+  recommendation.archive = {
+    sha256: archiveSha256,
+    asset_name: assetName,
+    tag,
+    size: archive.length,
+    url: `https://github.com/kaveh6202/Nourd.NKF/releases/download/${tag}/${assetName}`,
+  };
+  recommendation.source_commit = manifest.source.release_commit;
+  recommendation.checker_sha256 = manifest.checker.digest.value;
+  recommendation.authority = {
+    markdown_sha256: manifest.authority.markdown.digest.value,
+    executable_sha256: manifest.authority.executable.digest.value,
+  };
+  recommendation.adopter_sha256 = sha256(entries.get("dist/nourd-nkf-adopt.mjs")!);
+  recommendation.release.url = `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}`;
+  recommendationPath = path.join(directory, "recommended.json");
+  await writeFile(recommendationPath, `${JSON.stringify(recommendation, null, 2)}\n`);
 
   const predecessorCommit = "53ae5217f68731d953f3bf616a578adeb033bb03";
   const predecessorRoot = await mkdtemp(path.join(os.tmpdir(), "nkf-predecessor-source-"));
@@ -528,6 +565,114 @@ beforeAll(async () => {
 }, 60_000);
 
 describe("NKF consumer adopter", () => {
+  it("exposes one no-subcommand Adopt operation for initial and current 0.2 repositories", async () => {
+    for (const profile of ["product", "technology"] as const) {
+      const { project, workspace } = await createEmptyProject();
+      expect(inspect(project, workspace, profile).status).toBe(0);
+      await resolveEmptyAssessment(workspace);
+      expect(seal(project, workspace).status).toBe(0);
+      const adopted = runAdopt(project, [
+        "--plan",
+        path.join(workspace, "plan.yaml"),
+        "--archive",
+        archivePath,
+      ]);
+      expect(adopted.status, adopted.stderr).toBe(0);
+      expect(JSON.parse(adopted.stdout)).toMatchObject({
+        contract: "nkf.adopt-result",
+        state: "onboarded",
+        target: { archive_sha256: archiveSha256 },
+        compatibility: null,
+      });
+    }
+
+    const native = await createProject();
+    const integrated = runAdopt(native, ["--archive", archivePath]);
+    expect(integrated.status, integrated.stderr).toBe(0);
+    expect(JSON.parse(integrated.stdout)).toMatchObject({
+      contract: "nkf.adopt-result",
+      state: "updated",
+      compatibility: {
+        from_nkf_version: "0.2",
+        classification: "non-breaking",
+        migration_required: false,
+      },
+    });
+    const current = runAdopt(native, ["--archive", archivePath]);
+    expect(current.status, current.stderr).toBe(0);
+    expect(JSON.parse(current.stdout).state).toBe("current");
+  }, 20_000);
+
+  it("fails closed before mutation when initial planning is absent", async () => {
+    const { project } = await createEmptyProject();
+    const before = await snapshotTree(project);
+    const result = runAdopt(project, ["--archive", archivePath]);
+    expect(result.status).toBe(1);
+    expect(JSON.parse(result.stderr)).toMatchObject({
+      diagnostics: [{
+        code: "NKF-ADOPT-PLAN-REQUIRED",
+        target_archive_sha256: archiveSha256,
+        next_action: "prepare-and-seal-onboarding-plan",
+      }],
+    });
+    expectTreeEqual(await snapshotTree(project), before);
+  });
+
+  it("shows and requires approval for the breaking 0.1 to 0.2 migration", async () => {
+    const { project, workspace } = await createEmptyProject();
+    const inspected = runWith(predecessorAdopter, "inspect", project, [
+      "--output", workspace,
+      "--profile", "product",
+      "--root-id", "example-product",
+      "--root-title", "Example Product",
+      "--task-id", "EXAMPLE-001",
+      "--created-at", "2026-07-31T11:00:00Z",
+      "--knowledge-root", "knowledge",
+    ]);
+    expect(inspected.status, inspected.stderr).toBe(0);
+    await resolveEmptyAssessment(workspace);
+    expect(runWith(predecessorAdopter, "seal", project, [
+      "--plan", path.join(workspace, "plan.yaml"),
+    ]).status).toBe(0);
+    const predecessor = runWith(predecessorAdopter, "onboard", project, [
+      "--plan", path.join(workspace, "plan.yaml"),
+      "--archive", predecessorArchivePath,
+      "--sha256", predecessorArchiveSha256,
+    ]);
+    expect(predecessor.status, predecessor.stderr).toBe(0);
+
+    const before = await snapshotTree(project);
+    const blocked = runAdopt(project, ["--archive", archivePath]);
+    expect(blocked.status).toBe(1);
+    expect(JSON.parse(blocked.stderr)).toMatchObject({
+      diagnostics: [{
+        code: "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
+        from_nkf_version: "0.1",
+        classification: "breaking",
+        migration_required: true,
+        target_archive_sha256: archiveSha256,
+        required_argument: "--accept-breaking human-product-owner",
+      }],
+    });
+    expectTreeEqual(await snapshotTree(project), before);
+
+    const migrated = runAdopt(project, [
+      "--archive", archivePath,
+      "--accept-breaking", "human-product-owner",
+    ]);
+    expect(migrated.status, migrated.stderr).toBe(0);
+    expect(JSON.parse(migrated.stdout)).toMatchObject({
+      contract: "nkf.adopt-result",
+      state: "migrated",
+      compatibility: {
+        from_nkf_version: "0.1",
+        classification: "breaking",
+        migration_required: true,
+        approved_by: "human-product-owner",
+      },
+    });
+  }, 20_000);
+
   it("onboards empty Product and Technology repositories without native assembly", async () => {
     for (const profile of ["product", "technology"] as const) {
       const { project, workspace } = await createEmptyProject();

@@ -18,7 +18,7 @@ counts, byte limits, filenames, or frontmatter heuristics.
 
 Work only in the emitted candidate workspace until final onboarding. Record
 the assessment in the plan, resolve every Markdown representation, preserve
-authority uncertainty, and let deterministic sealing and onboarding verify
+authority uncertainty, and let deterministic sealing and Adopt verify
 complete coverage, exact bytes, safety, native generation, and conformance.
 When complete review establishes that an existing document is already the safe
 Draft root or initial Technology Specification, deliberately select its path
@@ -34,12 +34,12 @@ recommended and no explicit Category 2 human override is supplied. Onboarding
 creates a Draft candidate; it cannot accept meaning, prove its category, or
 confirm a Realization.
 
-After a successful onboard, independently audit the action before reporting
+After Adopt reports `onboarded`, independently audit the action before reporting
 it: rerun the installed checker, verify the pin, receipt, and guidance
 version markers, walk the generated topology against the protocol, and
 record the audit with any findings in the onboarding Task.
 
 For an already adopted NKF-013 or NKF-015 predecessor, do not run initial
-onboarding or improvise a folder migration. Follow the documented trusted
-`repair-topology` workflow and require its receipt, drift, staged validation,
-rollback, and idempotence checks.
+onboarding or improvise a folder migration. Adopt selects the documented
+trusted topology repair internally and requires its receipt, drift, staged
+validation, rollback, and idempotence checks.

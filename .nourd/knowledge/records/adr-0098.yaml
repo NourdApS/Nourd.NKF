@@ -7,7 +7,7 @@ source:
   path: decisions/0098-semantic-gates-around-deterministic-mechanics.md
   digest:
     algorithm: sha-256
-    value: 335fa0afbb824e9be712a6cc13a5b20f8d55ece1abec08e7912b1a0ebc6b36e7
+    value: 4a31d4ea006ba42a577392235c73054b14fab03a247ab10c53d598390c34a6e2
 governance:
   lifecycle: immutable
   status: accepted

@@ -74,9 +74,10 @@ opens the draft merge request; conclusion — close, defer, or cancel —
 commits, pushes, marks the request ready, and releases the working tree. A
 Task branch merges only concluded, and merging stays the human review act.
 
-Perform governed mechanics through the deterministic adopter commands —
+Perform governed mechanics through the internal deterministic adopter commands —
 \`task\`, \`repin\`, \`linkify\`, \`refs\`, \`set\`, and \`migrate\` — supplying only the
-prose; never hand-edit what a command performs.
+prose; never hand-edit what a command performs. Public consumer adoption uses
+the subcommand-free Adopt operation.
 
 Run \`npm run nkf:check\` after one coherent governed change and before handoff.
 Treat the protocol as derived procedure and accepted NKF Specifications as the
