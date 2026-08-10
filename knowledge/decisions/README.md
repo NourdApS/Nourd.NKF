@@ -121,6 +121,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0106: Confirm The Complete-Set Release Correction](0106-confirm-the-complete-set-release-correction.md)
 - [ADR 0107: Unified Adopt Operation And Compatibility Signaling](0107-unified-adopt-operation-and-compatibility-signaling.md)
 - [ADR 0108: Confirm The Unified Adopt Realization](0108-confirm-the-unified-adopt-realization.md)
+- [ADR 0109: Publication Freeze And Proven Self-Adoption](0109-publication-freeze-and-proven-self-adoption.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)

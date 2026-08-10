@@ -2,14 +2,16 @@
 id: design-nkf-023-immutable-freeze-and-proven-self-adoption
 type: design
 title: NKF 0.3 Immutable Freeze And Proven Self-Adoption
-summary: This Design proposes release-triggered immutability, exact-candidate self-adoption before publication, and a verified host-superset integration that preserves one public Adopt operation and the NKF producer gate.
+summary: This Design defines release-triggered immutability, exact-candidate self-adoption before publication, and a verified host-superset integration that preserves one public Adopt operation and the NKF producer gate.
 created_at: 2026-08-10T21:22:44Z
-record_lifecycle: living
-record_status: draft
+record_lifecycle: immutable
+record_status: accepted
 task: NKF-023
-design_disposition: active
+design_disposition: adopted
+design_decisions:
+  - adr-0109
 decision_authority: Human Product Owner, Nourd ApS
-proposal_authority_effect: None until a Decision adopts the direction and the exact NKF 0.3 authority-pair revision is separately accepted.
+proposal_authority_effect: Adopted by ADR 0109 as process and Product direction; the exact NKF 0.3 authority-pair revision still requires separate acceptance.
 proposal_evidence: NKF-022 self-adopt failure, NKF-023 recommendation assessment, and confirmed Human Product Owner direction.
 implementation_evidence: None; this is a Design proposal.
 ---
@@ -268,16 +270,22 @@ verify, the real producer self-adoption fails before mutation, the 0.1 release
 remains reproducible after its deterministic build, and direct 0.1
 recommendation rollback is incompatible with the frozen 0.2 adopter.
 
-Adopting this Design requires Human Product Owner confirmation of the exact
-Product boundaries, especially the proposed 0.2-to-0.3 compatibility
-classification. Later authority-pair acceptance must bind exact Markdown and
-executable bytes separately. Passing tests, candidate self-adoption, audit,
-technical confirmation, publication, recommendation, and repository adoption
-remain distinct evidence and authority events.
+On `2026-08-10`, the Human Product Owner confirmed the remaining Product
+boundary: migration from NKF 0.2 to NKF 0.3 is classified `breaking`, so Adopt
+must disclose it and obtain explicit repository-owner approval before
+mutation even though the migration is designed to preserve existing
+knowledge. Together with the previously confirmed freeze, interim
+recommendation, single-operation, and self-adoption boundaries, this supplied
+the Product authority for [ADR 0109](../../decisions/0109-publication-freeze-and-proven-self-adoption.md)
+to adopt the exact Design revision. Later authority-pair acceptance must bind
+exact Markdown and executable bytes separately. Passing tests, candidate
+self-adoption, audit, technical confirmation, publication, recommendation,
+and repository adoption remain distinct evidence and authority events.
 
 ## Unresolved Matters
 
-The Human Product Owner must confirm or change the proposed `breaking`
-classification for migration from NKF 0.2 to NKF 0.3. No other Product
-boundary is unresolved in this Draft; exact technical fields and algorithms
-remain derived implementation work subject to independent review.
+No Product boundary remains unresolved in this adopted Design. Exact technical
+fields and algorithms remain derived implementation work subject to
+independent review, and the deferred
+[NKF-021 scope gate](../../tasks/deferred/NKF-021-task-scope-gate.md) remains
+outside this Task.

@@ -1,6 +1,6 @@
 ---
 title: "NKF-023: Release NKF 0.3 With Immutable Freeze And Proven Self-Adoption"
-summary: Preserve the published NKF 0.2 release as immutable history, withdraw its recommendation, and release NKF 0.3 only after its exact candidate proves producer-compatible self-adoption and independent audit.
+summary: Preserve the published NKF 0.2 release as immutable history and replace its private recommendation atomically with NKF 0.3 only after exact candidate self-adoption and independent audit.
 created_at: 2026-08-10T20:33:32Z
 task_id: NKF-023
 task_status: active
@@ -82,8 +82,9 @@ audited bytes may be published and recommended.
 
 ## Scope
 
-- withdraw NKF 0.2 from the governed recommendation while preserving its
-  published archive, tag, manifest, source, Decisions, and audit history;
+- replace the private NKF 0.2 recommendation only after exact 0.3 verification
+  while preserving its published archive, tag, manifest, source, Decisions,
+  and audit history;
 - retain the existing private NKF 0.2 recommendation unchanged during 0.3
   development, onboard no repository to it, and replace it atomically only
   with the exact verified 0.3 release;
@@ -161,8 +162,9 @@ audited bytes may be published and recommended.
 
 ## Acceptance Criteria
 
-- NKF 0.2 is no longer recommended, while its exact published release remains
-  retrievable and unchanged as historical evidence.
+- NKF 0.2 stops being recommended only through atomic verified 0.3 promotion,
+  while its exact published release remains retrievable and unchanged as
+  historical evidence.
 - During private 0.3 development, the existing 0.2 recommendation remains
   byte-unchanged, no repository is onboarded to it, and promotion changes the
   channel atomically to the exact verified 0.3 release.
@@ -242,11 +244,13 @@ audited bytes may be published and recommended.
   consumability of a temporary 0.1 recommendation is no longer a mandatory
   capability.
 - The active
-  [NKF 0.3 Design](../../designs/active/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
-  now proposes the confirmed freeze and interim boundaries together with
+  [NKF 0.3 Design](../../designs/adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
+  records the confirmed freeze and interim boundaries together with
   exact-candidate self-adoption, a general verified host-superset integration,
-  release/adoption order, and predecessor compatibility. It remains Draft
-  proposal knowledge and changes no accepted authority.
+  release/adoption order, and predecessor compatibility. The Human Product
+  Owner confirmed the remaining `0.2`-to-`0.3` breaking classification on
+  `2026-08-10`, authorizing adoption of the exact Design revision through
+  [ADR 0109](../../decisions/0109-publication-freeze-and-proven-self-adoption.md).
 
 ## Decision Applicability
 
@@ -268,6 +272,7 @@ audited bytes may be published and recommended.
 | [`adr-0106`](../../decisions/0106-confirm-the-complete-set-release-correction.md) | record | One 132-member pre-manifest enumeration currently feeds archive, verifier, public documentation, and Adopt; 0.3 must preserve one complete-set source rather than reintroduce split membership. |
 | [`adr-0107`](../../decisions/0107-unified-adopt-operation-and-compatibility-signaling.md) | record | NKF exposes one public subcommand-free Adopt operation, pins an immutable recommendation, declares compatibility for every supported predecessor, and requires explicit authority approval before breaking migration. |
 | [`adr-0108`](../../decisions/0108-confirm-the-unified-adopt-realization.md) | record | The exact 0.2 Adopt implementation is technically confirmed only for its audited source and candidate archive; successor implementation requires its own independent audit and confirmation. |
+| [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Publication freezes every complete-set member permanently, candidate and public self-adoption remain separate gates, the producer gate must be preserved through a general verified integration, and 0.1-to-0.3 plus 0.2-to-0.3 migrations require explicit approval as breaking changes. |
 
 ### Mandatory Capabilities
 
