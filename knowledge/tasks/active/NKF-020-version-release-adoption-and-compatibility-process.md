@@ -463,6 +463,14 @@ One governed process definition covering:
   and candidate archive `015a922d...a51f`. Publication is authorized but
   remains an unobserved operational fact until the exact hosted bytes are
   independently re-downloaded.
+- The technically confirmed candidate was published as private prerelease
+  `release-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f`
+  from exact source commit `7eefe7d`. A fresh authenticated download reproduced
+  the audited SHA-256, was byte-identical under system `cmp`, and passed the
+  strict archive, provenance, and extracted-checker verifier. The
+  [publication Evidence](../../evidence/audits/nkf-020-unified-adopt-publication.md)
+  records the exact hosted observations. The governed recommendation now pins
+  that release; public-documentation republication remains before conclusion.
 
 ## Acceptance Criteria
 

@@ -18,22 +18,22 @@
     }
   ],
   "archive": {
-    "sha256": "423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5",
-    "asset_name": "nourd-nkf-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5.tar",
-    "tag": "release-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5",
-    "size": 3683328,
-    "url": "https://github.com/kaveh6202/Nourd.NKF/releases/download/release-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5/nourd-nkf-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5.tar"
+    "sha256": "015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f",
+    "asset_name": "nourd-nkf-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f.tar",
+    "tag": "release-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f",
+    "size": 3714560,
+    "url": "https://github.com/kaveh6202/Nourd.NKF/releases/download/release-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f/nourd-nkf-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f.tar"
   },
-  "source_commit": "3d6ea93c3b3c8ab50684b56bf66f5b0c117ab05a",
+  "source_commit": "7eefe7d624fa8412e307c44a779c2e5e0afa497a",
   "checker_sha256": "f96d8b818bc2bcac64fe65cfc46a4ff9bfdd0c31a6783b72cec05484f10403c6",
   "authority": {
     "markdown_sha256": "336876774b4f2ee02a0a74b29616bdaf35df412edd8046ae3cd1cb18fc1b2a02",
     "executable_sha256": "df4e62f9f8e98bee2018cecdc205f92cdc191a8788e6a0ee8e2bb2378b86be07"
   },
-  "adopter_sha256": "97316a661c14d0fd56dfc47ee9b6e156f0db259d1e5b4f3009055ec7ccb714cd",
+  "adopter_sha256": "e109fbeaf99d7576b56e0fdf1411092b235379a6eba7a58b99db719391c344d0",
   "release": {
-    "url": "https://github.com/kaveh6202/Nourd.NKF/releases/tag/release-sha256-423b56fdb2199f196b65c2cf11f1016fdf81580caca8f76532b52882d48198d5",
-    "published_at": "2026-08-09T18:43:29Z",
+    "url": "https://github.com/kaveh6202/Nourd.NKF/releases/tag/release-sha256-015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f",
+    "published_at": "2026-08-10T11:48:45Z",
     "prerelease": true,
     "visibility": "private"
   },
