@@ -484,6 +484,17 @@ adopted Design.
   checker `804c082c...`, and adopter `9e20219d...`. Publication,
   recommendation, and real producer adoption remain separate and have not
   occurred.
+- The exact confirmed archive was uploaded as the sole asset of a draft
+  private prerelease, independently downloaded, byte-compared, source-
+  reproduced, and checker-exercised before publication. The unchanged draft
+  was published at `2026-08-11T10:57:27Z` under content-addressed tag
+  `release-sha256-34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4`.
+  A second fresh published-asset download reproduced all 134 source members
+  and passed the 0.3 Technology fixture. The remote observations are retained
+  in [publication Evidence](../../evidence/audits/nkf-023-nkf-0-3-publication.md).
+  The task branch now carries the single verified recommendation promotion to
+  that exact release; `master` still serves 0.2 until human merge, so public
+  recommendation and ordinary producer Adopt are not yet claimed.
 
 ## Decision Applicability
 
@@ -513,7 +524,7 @@ adopted Design.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Published NKF versions remain immutable after release even when no repository adopts them | unknown | none | none |
+| Published NKF versions remain immutable after release even when no repository adopts them | proven | data-validity | none |
 | The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
 | One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | proven | data-validity | none |
 | The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | proven | adapter-compatibility | none |

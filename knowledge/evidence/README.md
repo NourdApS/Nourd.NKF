@@ -39,7 +39,10 @@ remote-tag observation, and deliberate recommended-release promotion. The
 NKF-023 NKF 0.3 exact-candidate audit independently reproduces the corrected
 complete archive, verifies every supported predecessor and current Adopt
 path, proves rollback and tamper rejection, and records the clean
-pre-confirmation and prepublication state.
+pre-confirmation and prepublication state. The NKF-023 NKF 0.3 publication
+Evidence records the exact draft upload, authenticated re-download,
+byte-for-byte verification, immutable prerelease publication, and the later
+recommendation boundary.
 
 ## Decision Inputs
 
