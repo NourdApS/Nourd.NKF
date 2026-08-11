@@ -49,6 +49,34 @@ bootstrap failure, the exact tracked-adopter correction, and the complete
 clean re-audit of recommendation, publication, installed pin, host-superset
 integration, canonical validation, repeat `current`, and tamper rejection.
 
+The NKF-024 dependency-security baseline records the exact affected
+`fast-uri` and `nanoid` lock entries, advisory ranges, dependency paths,
+bounded shipped-runtime reachability assessment, and green pre-change NKF 0.3
+producer gate that initiate the non-breaking 0.4 maintenance release.
+
+The NKF-024 NKF 0.4 authority-pair audit compares the complete exact
+successor pair to frozen 0.3, records and corrects an accidental CommonMark
+version substitution, and returns a clean verdict for the final coordinate,
+predecessor-binding, compatibility, and security-maintenance-only delta.
+
+The NKF-024 NKF 0.4 exact-candidate audit independently parses and reproduces
+the 136-member archive from a fresh exact remote clone, verifies the patched
+dependency closure and all release bindings, exercises the complete supported
+compatibility and adversarial suite, and proves exact-candidate producer
+self-adoption with preserved knowledge and host-superset integration before
+technical confirmation or publication.
+
+The NKF-024 NKF 0.4 publication Evidence records the content-addressed tag,
+single private-prerelease asset, authenticated draft and published downloads,
+byte-for-byte identity with the audited candidate, and a separate fresh
+reverification of the immutable published NKF 0.3 predecessor.
+
+The NKF-024 NKF 0.4 producer-adoption audit independently verifies the exact
+published recommendation and installed pin from a pristine remote clone,
+repeats ordinary Adopt to `current` without tracked mutation, preserves the
+knowledge tree and frozen 0.3 surfaces, and rejects pin, archive, and
+integration tampering.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

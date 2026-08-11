@@ -25,6 +25,11 @@ async function copyProjection() {
     { recursive: true },
   );
   await cp(
+    path.join(repositoryRoot, "knowledge/specifications/nkf-0.4.md"),
+    path.join(root, "knowledge/specifications/nkf-0.4.md"),
+    { recursive: true },
+  );
+  await cp(
     path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs"),
     path.join(root, "dist/nourd-nkf-adopt.mjs"),
     { recursive: true },
@@ -35,13 +40,13 @@ async function copyProjection() {
     { recursive: true },
   );
   await cp(
-    path.join(repositoryRoot, "contracts/nkf/0.3"),
-    path.join(root, "contracts/nkf/0.3"),
+    path.join(repositoryRoot, "contracts/nkf/0.4"),
+    path.join(root, "contracts/nkf/0.4"),
     { recursive: true },
   );
   await cp(
-    path.join(repositoryRoot, "distribution/nkf/0.3"),
-    path.join(root, "distribution/nkf/0.3"),
+    path.join(repositoryRoot, "distribution/nkf/0.4"),
+    path.join(root, "distribution/nkf/0.4"),
     { recursive: true },
   );
   return root;
@@ -53,7 +58,7 @@ describe("NKF public documentation", () => {
     expect(result).toMatchObject({
       contract: "nkf.public-documentation-verification",
       status: "passed",
-      files: 63,
+      files: 64,
       examples: 2,
     });
     expect(result.mermaid_diagrams).toBeGreaterThanOrEqual(5);
@@ -62,7 +67,7 @@ describe("NKF public documentation", () => {
   it("rejects mirror drift, unexpected files, and private local paths", async () => {
     const mirrorDrift = await copyProjection();
     await writeFile(
-      path.join(mirrorDrift, "public-docs/reference/nkf-0.3.md"),
+      path.join(mirrorDrift, "public-docs/reference/nkf-0.4.md"),
       "# Changed\n",
     );
     await expect(verifyPublicDocs(mirrorDrift)).rejects.toThrow(

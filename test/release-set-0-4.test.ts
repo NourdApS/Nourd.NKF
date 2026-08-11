@@ -26,12 +26,12 @@ const {
 
 async function releaseFixture() {
   const releaseSet = await readReleaseSet(repositoryRoot);
-  const memberEntries = releaseEntriesForVersion("0.3", releaseSet);
+  const memberEntries = releaseEntriesForVersion("0.4", releaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
     entries,
-    nkfVersion: "0.3",
+    nkfVersion: "0.4",
     releaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
@@ -39,7 +39,7 @@ async function releaseFixture() {
   return { archive, entries, manifest, memberEntries, releaseSet };
 }
 
-describe("NKF 0.3 sole release-set realization", () => {
+describe("NKF 0.4 sole release-set realization", () => {
   it("reproduces every required class and the exact complete membership", async () => {
     const releaseSet = await readReleaseSet(repositoryRoot);
     await expect(reproduceReleaseMembers(repositoryRoot, releaseSet)).resolves.toEqual(
@@ -51,7 +51,7 @@ describe("NKF 0.3 sole release-set realization", () => {
     expect(new Set(releaseSet.members.map((member: any) => member.class))).toEqual(
       new Set(RELEASE_CLASSES),
     );
-    expect(releaseSet.members).toHaveLength(135);
+    expect(releaseSet.members).toHaveLength(136);
     expect(releaseSet.members).toContainEqual({
       path: "release-manifest.json",
       class: "release-manifest",
@@ -85,7 +85,7 @@ describe("NKF 0.3 sole release-set realization", () => {
 
   it("rejects release-set, manifest-file, archive-mode, and source-coverage drift", async () => {
     const fixture = await releaseFixture();
-    const releaseSetBytes = fixture.entries.get("contracts/nkf/0.3/release-set.yaml")!;
+    const releaseSetBytes = fixture.entries.get("contracts/nkf/0.4/release-set.yaml")!;
     const releaseSetText = releaseSetBytes.toString("utf8");
     expect(() =>
       parseReleaseSet(

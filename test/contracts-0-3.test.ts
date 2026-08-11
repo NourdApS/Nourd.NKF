@@ -31,7 +31,7 @@ describe("accepted NKF 0.3 authority and derived checker realization", () => {
     expect(decision).toContain(VERSION_BINDINGS["0.3"].executable.sha256);
   });
 
-  it("dispatches both complete 0.3 Root Profile fixtures and fails closed for 0.4", async () => {
+  it("dispatches both complete 0.3 Root Profile fixtures and fails closed for 0.5", async () => {
     for (const fixture of ["minimal-0-3", "technology-0-3"]) {
       const result = await validateProject(
         options(path.join(repositoryRoot, "fixtures/valid", fixture)),
@@ -42,13 +42,13 @@ describe("accepted NKF 0.3 authority and derived checker realization", () => {
     }
 
     const unsupported = await loadContracts(
-      path.join(repositoryRoot, "contracts/nkf/0.4"),
+      path.join(repositoryRoot, "contracts/nkf/0.5"),
       {
-        specification: { path: "knowledge/specifications/nkf-0.4.md", sha256: "0".repeat(64) },
-        executable: { path: "contracts/nkf/0.4/nkf.yaml", sha256: "0".repeat(64) },
+        specification: { path: "knowledge/specifications/nkf-0.5.md", sha256: "0".repeat(64) },
+        executable: { path: "contracts/nkf/0.5/nkf.yaml", sha256: "0".repeat(64) },
         schemas: [],
       },
-      "0.4",
+      "0.5",
     );
     expect(unsupported.diagnostics.map((diagnostic) => diagnostic.rule_id)).toContain(
       "contract-set.unavailable",

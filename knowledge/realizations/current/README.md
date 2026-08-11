@@ -14,6 +14,7 @@ frontmatter records confirmation status; this index does not confirm them.
 - [Contracts And Schemas](contracts-and-schemas.md)
 - [Initial Greenfield Onboarding](initial-greenfield-onboarding.md)
 - [Layered Contract Enforcement](layered-contract-enforcement.md)
+- [NKF 0.4 Security Maintenance](nkf-0.4-security-maintenance.md)
 - [Portable Knowledge Topology](portable-knowledge-topology.md)
 - [Release Documentation And Adoption](release-documentation-and-adoption.md)
 - [Release Package](release-package.md)

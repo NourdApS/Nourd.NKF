@@ -14,7 +14,6 @@ import os from "node:os";
 import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import YAML from "yaml";
-import { build } from "esbuild";
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
 const {
@@ -46,10 +45,10 @@ let repairAdopter: string;
 let repairArchivePath: string;
 let repairArchiveSha256: string;
 
-const validFixture0_3 = path.join(repositoryRoot, "fixtures/valid/minimal-0-3");
-const validTechnologyFixture0_3 = path.join(repositoryRoot, "fixtures/valid/technology-0-3");
+const validFixture0_4 = path.join(repositoryRoot, "fixtures/valid/minimal-0-4");
+const validTechnologyFixture0_4 = path.join(repositoryRoot, "fixtures/valid/technology-0-4");
 
-async function createProject(fixture = validFixture0_3) {
+async function createProject(fixture = validFixture0_4) {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-adopter-test-"));
   const project = path.join(parent, "project");
   await cp(fixture, project, { recursive: true });
@@ -280,6 +279,26 @@ function expectTreeEqual(actual: Map<string, Buffer>, expected: Map<string, Buff
   for (const [key, bytes] of expected) expect(actual.get(key)).toEqual(bytes);
 }
 
+function buildHistoricalDistribution(predecessorRoot: string) {
+  const install = spawnSync(
+    "npm",
+    ["ci", "--ignore-scripts", "--prefer-offline", "--no-audit"],
+    { cwd: predecessorRoot, encoding: "utf8" },
+  );
+  if (install.status !== 0) {
+    throw new Error(install.stderr || install.stdout || "Cannot install predecessor dependencies.");
+  }
+  for (const script of ["scripts/build.mjs", "scripts/build-adopter.mjs"]) {
+    const built = spawnSync(process.execPath, [script], {
+      cwd: predecessorRoot,
+      encoding: "utf8",
+    });
+    if (built.status !== 0) {
+      throw new Error(built.stderr || built.stdout || `Cannot run predecessor ${script}.`);
+    }
+  }
+}
+
 async function buildPredecessorRelease(
   predecessorCommit: string,
   expectedAdopterSha256: string | null,
@@ -301,67 +320,7 @@ async function buildPredecessorRelease(
   if (extracted.status !== 0) throw new Error(extracted.stderr?.toString() || "Cannot extract predecessor source.");
 
   const adopterPath = path.join(predecessorRoot, "dist/nourd-nkf-adopt.mjs");
-  const predecessorChecker = path.join(predecessorRoot, "dist/nourd-nkf-checker.mjs");
-  const predecessorModules = path.join(predecessorRoot, "node_modules");
-  await mkdir(predecessorModules);
-  for (const dependency of [
-    "ajv-formats",
-    "ajv",
-    "commonmark",
-    "yaml",
-    "fast-deep-equal",
-    "fast-uri",
-    "json-schema-traverse",
-    "require-from-string",
-    "entities",
-    "mdurl",
-    "minimist",
-  ]) {
-    await cp(
-      path.join(repositoryRoot, "node_modules", dependency),
-      path.join(predecessorModules, dependency),
-      { recursive: true },
-    );
-  }
-  await mkdir(path.join(predecessorModules, "@unicode"));
-  await cp(
-    path.join(repositoryRoot, "node_modules/@unicode/unicode-17.0.0"),
-    path.join(predecessorModules, "@unicode/unicode-17.0.0"),
-    { recursive: true },
-  );
-  await build({
-    absWorkingDir: predecessorRoot,
-    entryPoints: [path.join(predecessorRoot, "scripts/adoption/nourd-nkf-adopt.mjs")],
-    outfile: adopterPath,
-    bundle: true,
-    platform: "node",
-    target: "node22",
-    format: "esm",
-    legalComments: "none",
-    charset: "utf8",
-    sourcemap: false,
-    minify: false,
-    loader: { ".md": "text" },
-    banner: {
-      js: '#!/usr/bin/env node\nimport { createRequire as __createRequire } from "node:module";\nconst require = __createRequire(import.meta.url);',
-    },
-  });
-  await build({
-    absWorkingDir: predecessorRoot,
-    entryPoints: [path.join(predecessorRoot, "src/cli.ts")],
-    outfile: predecessorChecker,
-    bundle: true,
-    platform: "node",
-    target: "node22",
-    format: "esm",
-    legalComments: "none",
-    sourcemap: false,
-    minify: false,
-    packages: "bundle",
-    banner: {
-      js: '#!/usr/bin/env node\nimport { createRequire as __nkfCreateRequire } from "node:module";\nconst require = __nkfCreateRequire(import.meta.url);',
-    },
-  });
+  buildHistoricalDistribution(predecessorRoot);
   if (expectedAdopterSha256 !== null) {
     expect(sha256(await readFile(adopterPath))).toBe(expectedAdopterSha256);
   }
@@ -393,12 +352,12 @@ async function buildPredecessorRelease(
 
 beforeAll(async () => {
   const releaseSet = await readReleaseSet(repositoryRoot);
-  const memberEntries = releaseEntriesForVersion("0.3", releaseSet);
+  const memberEntries = releaseEntriesForVersion("0.4", releaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
     entries,
-    nkfVersion: "0.3",
+    nkfVersion: "0.4",
     releaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
@@ -413,25 +372,31 @@ beforeAll(async () => {
   const recommendation = JSON.parse(
     await readFile(path.join(repositoryRoot, "release/recommended.json"), "utf8"),
   );
-  recommendation.nkf_version = "0.3";
+  recommendation.nkf_version = "0.4";
   recommendation.compatibility = [
     {
       from_nkf_version: "0.1",
       classification: "breaking",
       migration_required: true,
-      summary: "NKF 0.1 requires explicit approved migration to NKF 0.3.",
+      summary: "NKF 0.1 requires explicit approved migration to NKF 0.4.",
     },
     {
       from_nkf_version: "0.2",
       classification: "breaking",
       migration_required: true,
-      summary: "NKF 0.2 requires explicit approved migration to NKF 0.3.",
+      summary: "NKF 0.2 requires explicit approved migration to NKF 0.4.",
     },
     {
       from_nkf_version: "0.3",
       classification: "non-breaking",
       migration_required: false,
-      summary: "NKF 0.3 refreshes the exact release and integration.",
+      summary: "NKF 0.3 advances non-breakingly to NKF 0.4 without knowledge migration.",
+    },
+    {
+      from_nkf_version: "0.4",
+      classification: "non-breaking",
+      migration_required: false,
+      summary: "NKF 0.4 refreshes the exact release and integration.",
     },
   ];
   const { assetName, tag } = {
@@ -473,67 +438,7 @@ beforeAll(async () => {
   });
   if (extracted.status !== 0) throw new Error(extracted.stderr?.toString() || "Cannot extract predecessor source.");
   predecessorAdopter = path.join(predecessorRoot, "dist/nourd-nkf-adopt.mjs");
-  const predecessorChecker = path.join(predecessorRoot, "dist/nourd-nkf-checker.mjs");
-  const predecessorModules = path.join(predecessorRoot, "node_modules");
-  await mkdir(predecessorModules);
-  for (const dependency of [
-    "ajv-formats",
-    "ajv",
-    "commonmark",
-    "yaml",
-    "fast-deep-equal",
-    "fast-uri",
-    "json-schema-traverse",
-    "require-from-string",
-    "entities",
-    "mdurl",
-    "minimist",
-  ]) {
-    await cp(
-      path.join(repositoryRoot, "node_modules", dependency),
-      path.join(predecessorModules, dependency),
-      { recursive: true },
-    );
-  }
-  await mkdir(path.join(predecessorModules, "@unicode"));
-  await cp(
-    path.join(repositoryRoot, "node_modules/@unicode/unicode-17.0.0"),
-    path.join(predecessorModules, "@unicode/unicode-17.0.0"),
-    { recursive: true },
-  );
-  await build({
-    absWorkingDir: predecessorRoot,
-    entryPoints: [path.join(predecessorRoot, "scripts/adoption/nourd-nkf-adopt.mjs")],
-    outfile: predecessorAdopter,
-    bundle: true,
-    platform: "node",
-    target: "node22",
-    format: "esm",
-    legalComments: "none",
-    charset: "utf8",
-    sourcemap: false,
-    minify: false,
-    loader: { ".md": "text" },
-    banner: {
-      js: '#!/usr/bin/env node\nimport { createRequire as __createRequire } from "node:module";\nconst require = __createRequire(import.meta.url);',
-    },
-  });
-  await build({
-    absWorkingDir: predecessorRoot,
-    entryPoints: [path.join(predecessorRoot, "src/cli.ts")],
-    outfile: predecessorChecker,
-    bundle: true,
-    platform: "node",
-    target: "node22",
-    format: "esm",
-    legalComments: "none",
-    sourcemap: false,
-    minify: false,
-    packages: "bundle",
-    banner: {
-      js: '#!/usr/bin/env node\nimport { createRequire as __nkfCreateRequire } from "node:module";\nconst require = __nkfCreateRequire(import.meta.url);',
-    },
-  });
+  buildHistoricalDistribution(predecessorRoot);
   expect(sha256(await readFile(predecessorAdopter))).toBe(
     "c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387",
   );
@@ -575,10 +480,10 @@ beforeAll(async () => {
   repairAdopter = lastZeroOne.adopterPath;
   repairArchivePath = lastZeroOne.archivePath;
   repairArchiveSha256 = lastZeroOne.archiveSha256;
-}, 60_000);
+}, 180_000);
 
 describe("NKF consumer adopter", () => {
-  it("exposes one no-subcommand Adopt operation for initial and current 0.3 repositories", async () => {
+  it("exposes one no-subcommand Adopt operation for initial and current 0.4 repositories", async () => {
     for (const profile of ["product", "technology"] as const) {
       const { project, workspace } = await createEmptyProject();
       expect(inspect(project, workspace, profile).status).toBe(0);
@@ -606,7 +511,7 @@ describe("NKF consumer adopter", () => {
       contract: "nkf.adopt-result",
       state: "updated",
       compatibility: {
-        from_nkf_version: "0.3",
+        from_nkf_version: "0.4",
         classification: "non-breaking",
         migration_required: false,
       },
@@ -615,6 +520,71 @@ describe("NKF consumer adopter", () => {
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
   }, 20_000);
+
+  it("advances NKF 0.3 to 0.4 non-breakingly without changing knowledge", async () => {
+    const project = await createProject(
+      path.join(repositoryRoot, "fixtures/valid/minimal-0-3"),
+    );
+    const beforeKnowledge = await snapshotTree(path.join(project, "knowledge"));
+    const result = runAdopt(project, ["--archive", archivePath]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(JSON.parse(result.stdout)).toMatchObject({
+      contract: "nkf.adopt-result",
+      nkf_version: "0.4",
+      state: "updated",
+      compatibility: {
+        from_nkf_version: "0.3",
+        classification: "non-breaking",
+        migration_required: false,
+      },
+    });
+    expect(
+      YAML.parse(
+        await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+      ).nkf_version,
+    ).toBe("0.4");
+    expectTreeEqual(
+      await snapshotTree(path.join(project, "knowledge")),
+      beforeKnowledge,
+    );
+    const current = runAdopt(project, ["--archive", archivePath]);
+    expect(current.status, current.stderr).toBe(0);
+    expect(JSON.parse(current.stdout).state).toBe("current");
+  }, 20_000);
+
+  it("rebinds an exact producer host registry during non-breaking 0.3 adoption", async () => {
+    const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
+    const project = path.join(parent, "project");
+    await cp(repositoryRoot, project, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(repositoryRoot, source);
+        if (relative === "") return true;
+        return ![".git", "node_modules"].includes(relative.split(path.sep)[0] ?? "");
+      },
+    });
+
+    const result = runAdopt(project, ["--archive", archivePath]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(JSON.parse(result.stdout).state).toBe("updated");
+
+    const registry = YAML.parse(
+      await readFile(path.join(project, "integrations/ai/agent-hosts.yaml"), "utf8"),
+    );
+    expect(registry.neutral_protocol.sha256).toBe(
+      sha256(await readFile(path.join(project, registry.neutral_protocol.path))),
+    );
+    for (const adapter of registry.adapters) {
+      expect(adapter.sha256).toBe(
+        sha256(await readFile(path.join(project, adapter.path))),
+      );
+    }
+    for (const relative of registry.skills.representations) {
+      expect(registry.skills.sha256).toBe(
+        sha256(await readFile(path.join(project, relative))),
+      );
+    }
+  }, 30_000);
 
   it("fails closed before mutation when initial planning is absent", async () => {
     const { project } = await createEmptyProject();
@@ -631,7 +601,7 @@ describe("NKF consumer adopter", () => {
     expectTreeEqual(await snapshotTree(project), before);
   });
 
-  it("shows and requires approval for the breaking 0.1 to 0.3 migration", async () => {
+  it("shows and requires approval for the breaking 0.1 to 0.4 migration", async () => {
     const { project, workspace } = await createEmptyProject();
     const inspected = runWith(predecessorAdopter, "inspect", project, [
       "--output", workspace,
@@ -1939,7 +1909,7 @@ describe("NKF consumer adopter", () => {
       await readFile(path.join(project, ".nourd/nkf-release.json"), "utf8"),
     );
     expect(pin).toMatchObject({
-      nkf_version: "0.3",
+      nkf_version: "0.4",
       integration_revision: 2,
       integration: {
         mode: "host-superset",
@@ -1953,7 +1923,7 @@ describe("NKF consumer adopter", () => {
       YAML.parse(
         await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
       ).nkf_version,
-    ).toBe("0.3");
+    ).toBe("0.4");
 
     const current = runAdopt(project, ["--archive", archivePath]);
     expect(current.status, current.stderr).toBe(0);
@@ -2007,7 +1977,7 @@ describe("NKF consumer adopter", () => {
   });
 
   it("installs the same pinned experience for a Technology repository", async () => {
-    const project = await createProject(validTechnologyFixture0_3);
+    const project = await createProject(validTechnologyFixture0_4);
     const result = run("install", project, [
       "--archive",
       archivePath,

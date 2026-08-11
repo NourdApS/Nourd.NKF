@@ -34,7 +34,7 @@ Profile. Nourd Knowledge Engine may consume NKF but does not define it.
 
 ## Capabilities And Contracts
 
-NKF 0.3 supplies Common contracts plus Product and Technology Root Profiles,
+NKF 0.4 supplies Common contracts plus Product and Technology Root Profiles,
 bundle and record declarations, exact source and artifact bindings, body and
 vocabulary contracts, deterministic diagnostics, validation results,
 extensions, release and compatibility meaning, and a native checker contract.
@@ -50,7 +50,7 @@ future Nourd Knowledge Protocol runtime.
 
 ## Technology Map
 
-The canonical NKF 0.3 Specification defines current normative behavior.
+The canonical NKF 0.4 Specification defines current normative behavior.
 Decisions preserve accepted choices; Designs preserve proposals and rationale;
 Realizations bind the specification to schemas, checker source, tests,
 fixtures, build tooling, and project configuration; Evidence preserves
@@ -58,13 +58,16 @@ reviewed sources and observations.
 
 ## Versioning Compatibility And Migration
 
-Each native bundle declares one exact `nkf_version`; `0.3` is current while
-`0.1` and `0.2` remain supported immutable predecessors. NKF remains pre-stable
-and open to evidence-driven change. Publication freezes every member of a
-version's complete set. Any later frozen-member change requires a new NKF
-version, together with governed evidence, compatibility analysis, explicit
-acceptance, coordinated authority and realization updates, a versioned
-release, and deliberate consumer migration.
+Each native bundle declares one exact `nkf_version`; `0.4` is current accepted
+format authority while `0.1`, `0.2`, and `0.3` remain supported immutable
+predecessors. Until the separately governed 0.4 publication, recommendation,
+and adoption steps complete, 0.3 remains the released, recommended, and
+producer-adopted operational version. NKF remains pre-stable and open to
+evidence-driven change. Publication freezes every member of a version's
+complete set. Any later frozen-member change requires a new NKF version,
+together with governed evidence, compatibility analysis, explicit acceptance,
+coordinated authority and realization updates, a versioned release, and
+deliberate consumer migration.
 
 ## Distribution Support And Security
 

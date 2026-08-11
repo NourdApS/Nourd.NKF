@@ -1,10 +1,10 @@
 # NKF Pre-Adoption Onboarding Protocol
 
-NKF Version: 0.3
+NKF Version: 0.4
 
 This is the complete vendor-neutral procedure for preparing an Empty
 Repository or a Tiny Knowledge, No Source Or Configuration repository for
-initial NKF 0.3 adoption. It applies before the project has a project-root
+initial NKF 0.4 adoption. It applies before the project has a project-root
 `.nourd` directory.
 
 The participating agent owns complete repository review, semantic assessment,

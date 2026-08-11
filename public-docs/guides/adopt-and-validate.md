@@ -2,10 +2,10 @@
 
 NKF has one public operation: **Adopt**. The same invocation brings a supported
 repository to the current governed recommended release whether it is new to
-NKF, already on NKF 0.1 or 0.2, missing integration, behind within NKF 0.3,
-or already current.
+NKF, already on NKF 0.1, 0.2, or 0.3, missing integration, behind within NKF
+0.4, or already current.
 
-NKF 0.3 is pre-stable. The checker and release archive are private to
+NKF 0.4 is pre-stable. The checker and release archive are private to
 authorized Nourd projects; this public adopter contains no checker or private
 credential.
 
@@ -46,9 +46,9 @@ before archive use.
 
 | State | Meaning |
 | --- | --- |
-| `onboarded` | A reviewed sealed initial-adoption plan became a complete NKF 0.3 project |
-| `migrated` | A supported predecessor was deliberately migrated to NKF 0.3 |
-| `updated` | Existing NKF 0.3 knowledge received the recommended exact release and integration |
+| `onboarded` | A reviewed sealed initial-adoption plan became a complete NKF 0.4 project |
+| `migrated` | A supported breaking predecessor was deliberately migrated to NKF 0.4 |
+| `updated` | NKF 0.3 advanced non-breakingly to 0.4, or existing 0.4 received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
 
 Every result names the target archive, source commit, checker, adopter, and
@@ -72,7 +72,8 @@ Missing, stale, incomplete, or unsupported plans stop without mutation.
 
 ## Breaking NKF 0.1 And 0.2 Migrations
 
-NKF 0.3 is declared breaking from both NKF 0.1 and NKF 0.2. Adopt first
+NKF 0.4 is declared breaking from NKF 0.1 and NKF 0.2, and non-breaking from
+NKF 0.3. For a breaking predecessor, Adopt first
 reports the exact predecessor-relative target and migration requirement, then
 stops before changing the repository. After the repository owner approves that
 displayed migration, rerun:

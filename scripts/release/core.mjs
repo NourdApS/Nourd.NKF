@@ -14,7 +14,7 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import {
   parseReleaseSet,
-  RELEASE_SET_PATH,
+  releaseSetPathForVersion,
 } from "./release-set.mjs";
 import {
   FIXTURE_FILES,
@@ -109,6 +109,10 @@ function fail(message) {
   throw new Error(message);
 }
 
+function usesReleaseSet(nkfVersion) {
+  return ["0.3", "0.4"].includes(nkfVersion);
+}
+
 export function sha256(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
 }
@@ -183,8 +187,10 @@ export function constructReleaseManifest({
       digest: digest(checkerConfirmation.bytes),
       checker_source_commit: checkerConfirmation.checkerSourceCommit,
     };
-  } else if (nkfVersion === "0.3") {
-    if (releaseSet === undefined) fail("NKF 0.3 manifest construction requires the release set.");
+  } else if (usesReleaseSet(nkfVersion)) {
+    if (releaseSet === undefined) {
+      fail(`NKF ${nkfVersion} manifest construction requires the release set.`);
+    }
     manifest.files = releaseSet.members
       .filter((member) => member.path !== "release-manifest.json")
       .map((member) => ({
@@ -507,7 +513,7 @@ function safeArchivePath(name) {
 export function releaseEntriesForVersion(nkfVersion = "0.2", releaseSet = undefined) {
   if (nkfVersion === "0.2") return RELEASE_ENTRIES;
   if (nkfVersion === "0.1") return LEGACY_0_1_ENTRIES;
-  if (nkfVersion === "0.3" && releaseSet !== undefined) {
+  if (usesReleaseSet(nkfVersion) && releaseSet !== undefined) {
     return releaseSet.members.map((member) => ({
       path: member.path,
       mode: Number.parseInt(member.mode, 8),
@@ -528,7 +534,9 @@ export function inspectUstar(archiveBytes) {
     fail("USTAR archive length is invalid.");
   }
   const nkfVersion = sniffArchiveVersion(archive);
-  const memberEntries = nkfVersion === "0.3" ? null : releaseEntriesForVersion(nkfVersion);
+  const memberEntries = usesReleaseSet(nkfVersion)
+    ? null
+    : releaseEntriesForVersion(nkfVersion);
   const dataEnd = archive.length - 1024;
   requireZero(archive.subarray(dataEnd), "USTAR final blocks");
   const entries = new Map();
@@ -639,9 +647,11 @@ export function inspectUstar(archiveBytes) {
   if (offset !== dataEnd || (memberEntries !== null && index !== memberEntries.length)) {
     fail("USTAR archive is missing one or more required files.");
   }
-  if (nkfVersion === "0.3") {
-    const releaseSet = parseReleaseSet(requireBuffer(entries, RELEASE_SET_PATH));
-    const expectedEntries = releaseEntriesForVersion("0.3", releaseSet);
+  if (usesReleaseSet(nkfVersion)) {
+    const releaseSet = parseReleaseSet(
+      requireBuffer(entries, releaseSetPathForVersion(nkfVersion)),
+    );
+    const expectedEntries = releaseEntriesForVersion(nkfVersion, releaseSet);
     if (JSON.stringify(observedMembers) !== JSON.stringify(expectedEntries)) {
       fail("USTAR membership, order, or modes differ from the embedded release set.");
     }
@@ -669,7 +679,7 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   if (["0.1", "0.2"].includes(nkfVersion)) {
     requireDecisionPathBinding(manifest.source?.checker_confirmation);
   } else if (
-    nkfVersion !== "0.3" ||
+    !usesReleaseSet(nkfVersion) ||
     manifest.source?.checker_confirmation !== undefined
   ) {
     fail("Release manifest source bootstrap fields are invalid for this version.");
@@ -709,7 +719,7 @@ export function verifySourceProvenance(sourceRoot, manifest) {
   if (releaseCommit !== manifest.source.release_commit) {
     fail("Release commit is unavailable from the source repository.");
   }
-  if (manifest.nkf_version === "0.3") return;
+  if (usesReleaseSet(manifest.nkf_version)) return;
   const confirmation = manifest.source.checker_confirmation;
   requireDecisionPathBinding(confirmation);
   const decisionBytes = Buffer.from(
@@ -738,7 +748,9 @@ export function verifySourceProvenance(sourceRoot, manifest) {
 }
 
 function verifyManifestFiles(entries, manifest, releaseSet) {
-  if (!Array.isArray(manifest.files)) fail("NKF 0.3 manifest files must be an array.");
+  if (!Array.isArray(manifest.files)) {
+    fail(`NKF ${manifest.nkf_version} manifest files must be an array.`);
+  }
   const expected = releaseSet.members.filter(
     (member) => member.path !== "release-manifest.json",
   );
@@ -785,8 +797,10 @@ export function verifyReleaseArchive(
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
 
-  const releaseSet = archiveVersion === "0.3"
-    ? parseReleaseSet(requireBuffer(entries, RELEASE_SET_PATH))
+  const releaseSet = usesReleaseSet(archiveVersion)
+    ? parseReleaseSet(
+        requireBuffer(entries, releaseSetPathForVersion(archiveVersion)),
+      )
     : undefined;
   if (releaseSet !== undefined) verifyManifestFiles(entries, manifest, releaseSet);
 
@@ -809,7 +823,7 @@ export function verifyReleaseArchive(
     entries,
     release_entries: releaseSet === undefined
       ? releaseEntriesForVersion(archiveVersion)
-      : releaseEntriesForVersion("0.3", releaseSet),
+      : releaseEntriesForVersion(archiveVersion, releaseSet),
   };
 }
 

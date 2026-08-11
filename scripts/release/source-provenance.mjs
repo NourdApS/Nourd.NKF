@@ -29,8 +29,8 @@ function run(command, argumentsValue, options = {}) {
 }
 
 export async function evaluateReleaseSourceProvenance(sourceRoot, verification) {
-  if (verification.manifest.nkf_version !== "0.3") {
-    fail("Exact source-provenance reproduction is implemented for NKF 0.3 only.");
+  if (!["0.3", "0.4"].includes(verification.manifest.nkf_version)) {
+    fail("Exact source-provenance reproduction requires a complete release-set version.");
   }
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-release-source-"));
   try {
@@ -54,9 +54,15 @@ export async function evaluateReleaseSourceProvenance(sourceRoot, verification) 
       fail("The release commit does not reproducibly yield the manifest-bound checker.");
     }
 
-    const releaseSet = await readReleaseSet(checkout);
+    const releaseSet = await readReleaseSet(
+      checkout,
+      verification.manifest.nkf_version,
+    );
     await reproduceReleaseMembers(checkout, releaseSet);
-    const sourceMembers = releaseEntriesForVersion("0.3", releaseSet);
+    const sourceMembers = releaseEntriesForVersion(
+      verification.manifest.nkf_version,
+      releaseSet,
+    );
     if (JSON.stringify(sourceMembers) !== JSON.stringify(verification.release_entries)) {
       fail("The release commit does not reproduce the archived release-set enumeration.");
     }

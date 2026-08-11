@@ -36,7 +36,7 @@ describe("NKF 0.2 version dispatch", () => {
   it("fails closed for an unsupported declared version", async () => {
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.2"', 'nkf_version: "0.4"'),
+      text.replace('nkf_version: "0.2"', 'nkf_version: "0.5"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
