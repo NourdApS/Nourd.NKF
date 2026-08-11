@@ -24,7 +24,7 @@ protects immutable published authority.
 
 [ADR 0080](0080-release-and-adoption-process.md) also placed producer
 self-adoption after publication. That order discovered a producer-integration
-failure only after the release bytes already existed. [NKF-023](../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
+failure only after the release bytes already existed. [NKF-023](../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 requires a successor boundary that preserves one public Adopt operation and
 the stronger producer gate while proving the exact candidate before it can be
 published.

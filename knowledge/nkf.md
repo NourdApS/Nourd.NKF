@@ -34,11 +34,11 @@ Profile. Nourd Knowledge Engine may consume NKF but does not define it.
 
 ## Capabilities And Contracts
 
-NKF 0.1 supplies a Common Specification plus Product and Technology Root
-Profiles, bundle and record declarations, exact source bindings, body and
+NKF 0.3 supplies Common contracts plus Product and Technology Root Profiles,
+bundle and record declarations, exact source and artifact bindings, body and
 vocabulary contracts, deterministic diagnostics, validation results,
-extensions, and a native checker contract. The canonical Specification owns
-the exact requirements.
+extensions, release and compatibility meaning, and a native checker contract.
+The canonical Specification owns the exact requirements.
 
 ## Scope Authority And Boundaries
 
@@ -50,19 +50,21 @@ future Nourd Knowledge Protocol runtime.
 
 ## Technology Map
 
-The canonical NKF 0.1 Specification defines normative behavior. Decisions
-preserve accepted choices; Designs preserve proposals and rationale;
+The canonical NKF 0.3 Specification defines current normative behavior.
+Decisions preserve accepted choices; Designs preserve proposals and rationale;
 Realizations bind the specification to schemas, checker source, tests,
 fixtures, build tooling, and project configuration; Evidence preserves
 reviewed sources and observations.
 
 ## Versioning Compatibility And Migration
 
-`nkf_version: "0.1"` is the sole NKF version coordinate. NKF remains
-pre-stable and open to evidence-driven change. Consequential changes require
-governed evidence, compatibility analysis, explicit acceptance, coordinated
-authority and realization updates, a versioned release, and deliberate
-consumer migration.
+Each native bundle declares one exact `nkf_version`; `0.3` is current while
+`0.1` and `0.2` remain supported immutable predecessors. NKF remains pre-stable
+and open to evidence-driven change. Publication freezes every member of a
+version's complete set. Any later frozen-member change requires a new NKF
+version, together with governed evidence, compatibility analysis, explicit
+acceptance, coordinated authority and realization updates, a versioned
+release, and deliberate consumer migration.
 
 ## Distribution Support And Security
 

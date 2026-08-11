@@ -1,4 +1,4 @@
-nkf_version: "0.2"
+nkf_version: "0.3"
 contract: nkf.bundle
 id: nourd-knowledge-format
 root:
@@ -106,6 +106,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-023-nkf-0-3-publication.md
     kind: evidence
+  - path: evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
@@ -206,7 +208,7 @@ non_records:
     kind: task
   - path: tasks/cancelled/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md
     kind: task
-  - path: tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md
+  - path: tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md
     kind: task
 canonical_terms:
   - ADR
@@ -241,7 +243,7 @@ governed_artifacts:
     path: .agents/skills/nkf-authoring/SKILL.md
     digest:
       algorithm: sha-256
-      value: c6a2bc01436dce3d2d4a62781eb611e035153dfa51c54d094fe613395b7def9c
+      value: b40d7c582015d4c497f1329403fdcb5c536a349878fd2f9d8038ad4f1fc97125
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-agents-skills-nkf-onboarding-skill-md
@@ -249,7 +251,7 @@ governed_artifacts:
     path: .agents/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: 4bea2f01bfc15c31f68bbb47ecd6bc68ab9b128d0fa06d2b0ef5ab7a6d2bebad
+      value: 40f5c1a0528afd058b9236c23848d5a558f651d60d4585fe9a6d7cf597c43f50
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-claude-skills-nkf-authoring-skill-md
@@ -257,7 +259,7 @@ governed_artifacts:
     path: .claude/skills/nkf-authoring/SKILL.md
     digest:
       algorithm: sha-256
-      value: c6a2bc01436dce3d2d4a62781eb611e035153dfa51c54d094fe613395b7def9c
+      value: b40d7c582015d4c497f1329403fdcb5c536a349878fd2f9d8038ad4f1fc97125
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-claude-skills-nkf-onboarding-skill-md
@@ -265,7 +267,7 @@ governed_artifacts:
     path: .claude/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: 4bea2f01bfc15c31f68bbb47ecd6bc68ab9b128d0fa06d2b0ef5ab7a6d2bebad
+      value: 40f5c1a0528afd058b9236c23848d5a558f651d60d4585fe9a6d7cf597c43f50
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-github-copilot-instructions-md
@@ -297,7 +299,7 @@ governed_artifacts:
     path: .gitignore
     digest:
       algorithm: sha-256
-      value: 22fc1343b254b797aff83a967b83cf40c3438bdd7b49dadfd92090f4ab796831
+      value: 59d993da343e3e56b4d2105263d04274c7ecd369daddbd50a5434e9d09712439
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-agents-md
@@ -513,7 +515,7 @@ governed_artifacts:
     path: integrations/ai/agent-hosts.yaml
     digest:
       algorithm: sha-256
-      value: 77bf06457f98e1a3e74dd3bb68b67ba7ac0e38feebd48c7f6bb8f8ed499883a6
+      value: 0486eb49ceafcda63804e99b6f513e305eab37f5d5b829e02c65955b6da93f01
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-integrations-ai-nkf-authoring-protocol-md
@@ -521,7 +523,7 @@ governed_artifacts:
     path: integrations/ai/nkf-authoring-protocol.md
     digest:
       algorithm: sha-256
-      value: 71a433e02c4a5b2e36c3eb9deb8d35bc8fc060df9d265cbad5eff96026bc3025
+      value: b88afd637abca73f6f2fc2b026944aedeaa437498a869dec0364d37a09070025
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-integrations-onboarding-nkf-onboarding-protocol-md
@@ -529,7 +531,7 @@ governed_artifacts:
     path: integrations/onboarding/nkf-onboarding-protocol.md
     digest:
       algorithm: sha-256
-      value: 6ae83c591ea37f5096228f5bd0870549f858171216a087426f8046d034b3645e
+      value: 5f922426fcd59b37874e9588c68362b5f45ec44bb808afe91cab9e5420de2fe8
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-package-lock-json
@@ -545,7 +547,7 @@ governed_artifacts:
     path: package.json
     digest:
       algorithm: sha-256
-      value: bb1571ee952447935e5c19ce221e6e44cd6a6ca682932f2717b37b58f10e047c
+      value: 347f0c7c56f312fa62dbb075270086e837c1d260f432d6c6c7b06f75551ba8e1
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-public-docs-agents-skills-nkf-onboarding-skill-md
@@ -1033,7 +1035,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: 94023522cdebc3b10da4f69ae553479b9e968667fec14fd196f05966c0bc2e83
+      value: 13724f3a29c4f979b518c61d230051604a673d46351e1aafa91c7203f2b522db
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-release-recommended-json

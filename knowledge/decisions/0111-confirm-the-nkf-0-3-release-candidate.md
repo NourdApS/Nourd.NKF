@@ -23,7 +23,7 @@ fresh independent audit before separate delegated technical confirmation.
 The [exact-candidate audit](../evidence/audits/nkf-023-nkf-0-3-exact-candidate-audit.md)
 returned `CLEAN` after independently reproducing the complete candidate from
 fresh source, exercising all supported repository states, and rejecting the
-adversarial cases. [NKF-023](../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
+adversarial cases. [NKF-023](../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 records the Human Product Owner's boundary that Product decisions stay with
 the Human Product Owner while implementation review and technical
 confirmation are delegated to the technical reviewer.

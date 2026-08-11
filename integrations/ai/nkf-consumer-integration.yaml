@@ -1,0 +1,46 @@
+contract: nkf.consumer-integration
+version: 2
+canonical_command: npm run nkf:check
+mode: host-superset
+scripts:
+  canonical: npm run nkf:check:pinned && npm run nkf:check:host
+  pinned: node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .
+  host: npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self
+protocol:
+  path: integrations/ai/nkf-authoring-protocol.md
+  sha256: b88afd637abca73f6f2fc2b026944aedeaa437498a869dec0364d37a09070025
+skills:
+  - path: .agents/skills/nkf-authoring/SKILL.md
+    sha256: b40d7c582015d4c497f1329403fdcb5c536a349878fd2f9d8038ad4f1fc97125
+  - path: .claude/skills/nkf-authoring/SKILL.md
+    sha256: b40d7c582015d4c497f1329403fdcb5c536a349878fd2f9d8038ad4f1fc97125
+onboarding_protocol:
+  path: integrations/onboarding/nkf-onboarding-protocol.md
+  sha256: 5f922426fcd59b37874e9588c68362b5f45ec44bb808afe91cab9e5420de2fe8
+onboarding_skills:
+  - path: .agents/skills/nkf-onboarding/SKILL.md
+    sha256: 40f5c1a0528afd058b9236c23848d5a558f651d60d4585fe9a6d7cf597c43f50
+  - path: .claude/skills/nkf-onboarding/SKILL.md
+    sha256: 40f5c1a0528afd058b9236c23848d5a558f651d60d4585fe9a6d7cf597c43f50
+adapters:
+  - path: AGENTS.md
+    mode: bounded-block
+    block_sha256: 09beb7b0efdc809aaf85354702a33f26ad2ad7fd89e33f7067b6645eecf35f22
+  - path: CLAUDE.md
+    mode: exact-import
+    target: AGENTS.md
+    sha256: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
+  - path: GEMINI.md
+    mode: exact-import
+    target: AGENTS.md
+    sha256: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
+  - path: .github/copilot-instructions.md
+    mode: exact-bootstrap
+    sha256: c26b38ac7b1fe0e6745370c4ee28f819c183f1f4541d0bf714869a9a168404a0
+verifier:
+  path: scripts/verify-nkf-integration.mjs
+  sha256: 9b22d2641b5b271edef658dca919719f0b521d1a74af2c2c22ef0dc5831117b9
+workflow:
+  path: .github/workflows/nkf-contracts.yml
+  sha256: 9ee7c20f80a59eabbc809ff6325ca3c2834800d412ba61ed65f843deec07d7ea
+  branch: task/NKF-023

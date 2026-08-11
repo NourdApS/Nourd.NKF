@@ -17,7 +17,7 @@ decision_authority: Human Product Owner, Nourd ApS
 [ADR 0109](0109-publication-freeze-and-proven-self-adoption.md) adopts the
 publication-triggered freeze, exact-candidate self-adoption, producer-compatible
 integration, and predecessor compatibility direction for NKF 0.3, but does not
-accept an exact normative authority pair. [NKF-023](../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
+accept an exact normative authority pair. [NKF-023](../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 requires that pair to be accepted before any Schema, checker, release-set,
 adopter, protocol, fixture, example, documentation, or migration implementation
 is derived.
@@ -48,7 +48,7 @@ and predecessor-relative compatibility meaning adopted through
 ## Scope And Applicability
 
 This Decision accepts NKF 0.3 format meaning and its executable representation.
-It authorizes derived implementation under [NKF-023](../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
+It authorizes derived implementation under [NKF-023](../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
 NKF 0.3 governs a repository only when that repository deliberately declares
 `nkf_version` `0.3`. NKF 0.1 and NKF 0.2 remain immutable governing authority
 for repositories that declare those versions.

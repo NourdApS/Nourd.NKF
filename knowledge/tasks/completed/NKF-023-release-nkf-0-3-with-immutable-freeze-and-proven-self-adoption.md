@@ -3,7 +3,7 @@ title: "NKF-023: Release NKF 0.3 With Immutable Freeze And Proven Self-Adoption"
 summary: Preserve the published NKF 0.2 release as immutable history and replace its private recommendation atomically with NKF 0.3 only after exact candidate self-adoption and independent audit.
 created_at: 2026-08-10T20:33:32Z
 task_id: NKF-023
-task_status: active
+task_status: completed
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -355,9 +355,10 @@ adopted Design.
   972 living links, and self-hosted full-bundle validation with zero
   diagnostics. Authority-binding was not requested and Governing Use remains
   not ready.
-- The private `release/recommended.json` remains byte-unchanged at NKF 0.2,
-  this producer bundle still declares NKF 0.2, and no 0.3 archive,
-  confirmation, publication, recommendation, or adoption is yet claimed.
+- At that implementation checkpoint, private `release/recommended.json`
+  remained byte-unchanged at NKF 0.2, this producer bundle still declared NKF
+  0.2, and no 0.3 archive, confirmation, publication, recommendation, or
+  adoption was claimed.
 - The first private archive candidate, SHA-256
   `de3ceea143e55d895e5d2eb14818173bb2a077d13d0181940467204ab5d85472`
   from source commit `191d2486ed77965800278138834e7933c2c56bd1`, passed
@@ -460,8 +461,9 @@ adopted Design.
   diagnostic and guide wording were corrected from accepted authority, with
   explicit 0.1 and 0.2 regression assertions. The rebuilt distribution was
   re-pinned and `npm run nkf:check -- --no-persist` passed all 202 tests, 972
-  links, deterministic build verification, and self-validation. A new exact
-  candidate and complete independent re-audit remain required.
+  links, deterministic build verification, and self-validation. At that audit
+  checkpoint, a new exact candidate and complete independent re-audit remained
+  required.
 - The corrected replacement candidate was constructed from release commit
   `8a06564e1c91069db19581ca5bfa22770ac95fb5` as
   `nourd-nkf-sha256-34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4.tar`.
@@ -493,8 +495,97 @@ adopted Design.
   and passed the 0.3 Technology fixture. The remote observations are retained
   in [publication Evidence](../../evidence/audits/nkf-023-nkf-0-3-publication.md).
   The task branch now carries the single verified recommendation promotion to
-  that exact release; `master` still serves 0.2 until human merge, so public
-  recommendation and ordinary producer Adopt are not yet claimed.
+  that exact release. The Human Product Owner merged that promotion through
+  pull request 6 at `master` commit `60a0a96`, making the exact 0.3 catalog the
+  public recommendation while leaving every published 0.2 byte and historical
+  release intact.
+- Ordinary public Adopt then migrated this producer repository from 0.2 to the
+  exact published 0.3 archive, installed its immutable pin and verified
+  `host-superset` integration, passed the existing built worktree's complete
+  producer gate, and returned `current` on immediate repeat. The deterministic
+  transaction was isolated in commit `b93f23a4` before post-action audit.
+- The fresh independent post-adoption audit returned `NOT CLEAN` on that exact
+  commit with one blocking producer defect. A pristine checkout lacked ignored
+  generated artifact `dist/nourd-nkf-adopt.mjs`, yet the adopted Technology
+  bundle correctly required that exact build-tool binding and the frozen 0.3
+  integration invokes its pinned check before the host build. The prior built
+  worktree had hidden the bootstrap failure. All other reviewed groups passed,
+  including recommendation, remote archive, pin, release-set and manifest
+  bindings, host-superset preservation, post-build conformance, repeat
+  `current`, tamper rejection, and repository-owner approval wording.
+- The bounded producer correction tracks the exact already-confirmed generated
+  adopter mirror at SHA-256 `9e20219d8b92a0b38086da48311f2d2bfd14f8676fa8256e9efcefaaa938afc5`.
+  It does not alter a frozen 0.3 member byte, the published archive, the
+  recommendation, integration order, accepted meaning, or release-candidate
+  confirmation. The preserved host gate still rebuilds and byte-verifies the
+  same artifact. At that correction checkpoint, fresh-checkout validation and
+  a complete independent re-audit remained required before producer adoption
+  could be considered proven.
+- Corrected remote commit `6805d6bca50504f93bbf3b6f99f7dcfff858365f`
+  passed the formerly failing path from a pristine checkout after only
+  `npm ci`: pinned release verification ran first, the preserved producer gate
+  passed 25 test files and 202 tests, 976 links, deterministic checker,
+  adopter, and public-documentation builds, and self-validation with zero
+  diagnostics. The host build reproduced the tracked adopter byte-identically,
+  Git remained clean, and two ordinary public Adopt runs returned `current`.
+- The complete independent re-audit of that exact corrected commit returned
+  `CLEAN` with no material finding. It freshly matched the hosted and installed
+  archive, reverified all 135 members, 134 manifest bindings, 18 classes,
+  authority, Schemas, checker, adopter, recommendation, integration and host
+  surfaces, repeated tamper rejection, and confirmed that the producer-only
+  correction changes no frozen 0.3 member and therefore requires no new NKF
+  version. The result is retained as
+  [producer-adoption audit Evidence](../../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md).
+
+## Completion Result
+
+NKF 0.3 is the accepted, technically confirmed, published, and recommended
+release. The exact immutable archive has SHA-256
+`34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4`
+and release commit `8a06564e1c91069db19581ca5bfa22770ac95fb5`.
+
+The delivered release establishes publication-time freeze for every complete-set
+member, a single enumerated 135-member release set, one public Adopt operation,
+explicit breaking migration approval for supported 0.1 and 0.2 predecessors,
+and preserved producer-specific host validation. The recommendation moved
+atomically to the exact 0.3 release while the published 0.2 release and its
+history remained unchanged.
+
+The NKF producer repository adopted the ordinary published recommendation,
+installed the exact 0.3 pin and host-superset integration, and returns `current`
+on repeat Adopt. A fresh-checkout defect in the producer's ignored generated
+adopter mirror was found by the post-adoption audit and corrected by tracking
+the exact already-confirmed adopter byte. The correction changes no frozen
+0.3 member, release archive, recommendation, or accepted meaning.
+
+Independent audit of the exact release candidate was CLEAN before delegated
+technical confirmation. Independent post-adoption re-audit of corrected commit
+`6805d6bca50504f93bbf3b6f99f7dcfff858365f` was also CLEAN with no material
+finding: it reverified the hosted and installed archive, all members and
+manifest bindings, supported migrations, producer integration, idempotence,
+rollback, and tamper rejection. Audit and publication Evidence are retained in
+the governed knowledge base.
+
+Every acceptance criterion and mandatory capability is satisfied and proven.
+The final exact source snapshot passed `npm run nkf:check`: 25 test files and
+202 tests, 969 checked living links, deterministic checker, adopter, and
+63-file public projection builds, and full-bundle conformance with zero
+diagnostics.
+
+State remains deliberately separated:
+[ADR 0110](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md) records
+Human Product Owner acceptance of the exact NKF 0.3 authority pair;
+[ADR 0111](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) records delegated
+technical confirmation of the exact candidate; the authenticated remote
+release and recommendation are published; this producer is pinned and audited;
+and the concluded Task branch still requires the Human Product Owner's final
+merge. Authority binding was not requested by the validation run and Governing
+Use remains not-ready. No current successful remote workflow run or protected
+default-branch enforcement is claimed, and separate publication of the public
+documentation mirror as 0.3 is not claimed.
+
+Deferred work, including the Task-scope gate and remote enforcement subjects,
+remains deferred and is not implied delivered by this Task.
 
 ## Decision Applicability
 
@@ -525,10 +616,10 @@ adopted Design.
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
 | Published NKF versions remain immutable after release even when no repository adopts them | proven | data-validity | none |
-| The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
+| The governed recommendation can leave 0.2 without deleting or altering its published release history | proven | data-validity | none |
 | One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | proven | data-validity | none |
 | The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | proven | adapter-compatibility | none |
 | Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | proven | runtime-behaviour | none |
 | Exact candidate self-adoption and repeat `current` succeed before publication in a fresh isolated repository | proven | runtime-behaviour | none |
 | Independent audit reproduces and verifies the complete candidate before delegated technical confirmation | proven | runtime-behaviour | none |
-| Ordinary published Adopt self-pins this repository and independently verifies `current` after publication | unknown | none | none |
+| Ordinary published Adopt self-pins this repository and independently verifies `current` after publication | proven | runtime-behaviour | none |

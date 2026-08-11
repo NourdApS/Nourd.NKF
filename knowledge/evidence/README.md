@@ -44,6 +44,11 @@ Evidence records the exact draft upload, authenticated re-download,
 byte-for-byte verification, immutable prerelease publication, and the later
 recommendation boundary.
 
+The NKF-023 NKF 0.3 producer-adoption audit records the first pristine-clone
+bootstrap failure, the exact tracked-adopter correction, and the complete
+clean re-audit of recommendation, publication, installed pin, host-superset
+integration, canonical validation, repeat `current`, and tamper rejection.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

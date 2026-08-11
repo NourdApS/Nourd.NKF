@@ -15,7 +15,7 @@
   "scripts": {
     "build": "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
     "check": "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
-    "nkf:check": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self",
+    "nkf:check": "npm run nkf:check:pinned && npm run nkf:check:host",
     "package:release": "node scripts/package-release.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
@@ -28,7 +28,9 @@
     "verify:onboarding-guidance": "node scripts/verify-onboarding-guidance.mjs --project .",
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
-    "verify:release": "node scripts/verify-release.mjs"
+    "verify:release": "node scripts/verify-release.mjs",
+    "nkf:check:pinned": "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .",
+    "nkf:check:host": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self"
   },
   "dependencies": {
     "ajv": "8.20.0",
