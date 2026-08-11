@@ -462,6 +462,15 @@ adopted Design.
   re-pinned and `npm run nkf:check -- --no-persist` passed all 202 tests, 972
   links, deterministic build verification, and self-validation. A new exact
   candidate and complete independent re-audit remain required.
+- The corrected replacement candidate was constructed from release commit
+  `8a06564e1c91069db19581ca5bfa22770ac95fb5` as
+  `nourd-nkf-sha256-34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4.tar`.
+  Its filename digest independently matches its exact bytes. The clean-clone
+  release-candidate exercise passed with all 134 source-derived members
+  reproduced, first Adopt `migrated`, second Adopt `current`, preserved
+  `host-superset` integration, and the producer gate passing. The archive
+  remains private and unpublished pending a complete fresh independent audit
+  and delegated technical confirmation.
 
 ## Decision Applicability
 
