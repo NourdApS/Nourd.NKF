@@ -1,6 +1,6 @@
 # NKF Authoring Protocol
 
-NKF Version: 0.3
+NKF Version: 0.4
 
 This is the complete vendor-neutral procedure for creating, changing,
 classifying, migrating, auditing, or validating NKF-governed knowledge in an
@@ -110,7 +110,7 @@ work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under NKF 0.3 frontmatter, every governed document declares a `title` that
+Under NKF 0.4 frontmatter, every governed document declares a `title` that
 exactly equals its single H1. Task non-records may declare `owner`,
 `decision_authority`, and `related_tasks` orientation keys; any record may
 declare `decision_authority`; and Design documents may declare
