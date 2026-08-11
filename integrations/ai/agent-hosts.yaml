@@ -3,7 +3,7 @@ version: 1
 canonical_command: npm run nkf:check
 neutral_protocol:
   path: integrations/ai/nkf-authoring-protocol.md
-  sha256: 71a433e02c4a5b2e36c3eb9deb8d35bc8fc060df9d265cbad5eff96026bc3025
+  sha256: b88afd637abca73f6f2fc2b026944aedeaa437498a869dec0364d37a09070025
 adapters:
   - id: root-agents
     path: AGENTS.md
@@ -13,12 +13,14 @@ adapters:
   - id: claude-code
     path: CLAUDE.md
     mode: exact-import
-    imports: [root-agents]
+    imports:
+      - root-agents
     sha256: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
   - id: gemini-cli
     path: GEMINI.md
     mode: exact-import
-    imports: [root-agents]
+    imports:
+      - root-agents
     sha256: 336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49
   - id: github-copilot
     path: .github/copilot-instructions.md
@@ -30,14 +32,15 @@ skills:
   representations:
     - .agents/skills/nkf-authoring/SKILL.md
     - .claude/skills/nkf-authoring/SKILL.md
-  sha256: c6a2bc01436dce3d2d4a62781eb611e035153dfa51c54d094fe613395b7def9c
+  sha256: b40d7c582015d4c497f1329403fdcb5c536a349878fd2f9d8038ad4f1fc97125
 surfaces:
   - id: openai-codex-cli
     provider: OpenAI
     product: Codex
     surface: CLI
     coverage: verified-adapter
-    adapters: [root-agents]
+    adapters:
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -49,7 +52,8 @@ surfaces:
     product: Codex
     surface: IDE Extension
     coverage: verified-adapter
-    adapters: [root-agents]
+    adapters:
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -61,7 +65,8 @@ surfaces:
     product: Codex
     surface: Desktop
     coverage: verified-adapter
-    adapters: [root-agents]
+    adapters:
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -73,7 +78,9 @@ surfaces:
     product: Claude Code
     surface: CLI
     coverage: verified-adapter
-    adapters: [claude-code, root-agents]
+    adapters:
+      - claude-code
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -85,7 +92,9 @@ surfaces:
     product: Claude Code
     surface: Cloud Session
     coverage: verified-adapter
-    adapters: [claude-code, root-agents]
+    adapters:
+      - claude-code
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -97,7 +106,9 @@ surfaces:
     product: Gemini CLI
     surface: CLI
     coverage: verified-adapter
-    adapters: [gemini-cli, root-agents]
+    adapters:
+      - gemini-cli
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -109,7 +120,9 @@ surfaces:
     product: Copilot
     surface: CLI
     coverage: verified-adapter
-    adapters: [github-copilot, root-agents]
+    adapters:
+      - github-copilot
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -121,7 +134,9 @@ surfaces:
     product: Copilot
     surface: Coding Agent
     coverage: verified-adapter
-    adapters: [github-copilot, root-agents]
+    adapters:
+      - github-copilot
+      - root-agents
     skill: nkf-authoring
     evidence:
       urls:
@@ -132,7 +147,9 @@ surfaces:
     product: Copilot
     surface: Code Review
     coverage: not-verified
-    adapters: [github-copilot, root-agents]
+    adapters:
+      - github-copilot
+      - root-agents
     skill: null
     evidence:
       urls:
@@ -143,7 +160,8 @@ surfaces:
     product: Cursor
     surface: Editor Agent
     coverage: verified-adapter
-    adapters: [root-agents]
+    adapters:
+      - root-agents
     skill: null
     evidence:
       urls:
@@ -154,7 +172,8 @@ surfaces:
     product: Cursor
     surface: CLI
     coverage: verified-adapter
-    adapters: [root-agents]
+    adapters:
+      - root-agents
     skill: null
     evidence:
       urls:
@@ -165,7 +184,8 @@ surfaces:
     product: Cascade
     surface: Editor Agent
     coverage: verified-adapter
-    adapters: [root-agents]
+    adapters:
+      - root-agents
     skill: null
     evidence:
       urls:
