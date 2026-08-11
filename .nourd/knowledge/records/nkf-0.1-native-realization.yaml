@@ -7,7 +7,7 @@ source:
   path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: af3adf258dd94ca31faceed4d63ad1f8e77d7545f99781efef3bf82251355830
+    value: 7891251d596ac7837947094f99767c1059056f72e3b9c271806926b3a35d1485
 governance:
   lifecycle: immutable
   status: draft
