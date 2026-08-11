@@ -572,10 +572,13 @@ export async function verifyAgentGuidance(projectRootInput) {
 
   const packageBytes = await readRegularProjectFile(projectRoot, "package.json", "package manifest");
   const packageManifest = JSON.parse(packageBytes.toString("utf8"));
+  const producerCheck = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self";
+  const installedHostChain = "npm run nkf:check:pinned && npm run nkf:check:host";
+  const hostSupersetInstalled = packageManifest.scripts?.["nkf:check"] === installedHostChain;
   const expectedScripts = {
     build: "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
     check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
-    "nkf:check": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self",
+    "nkf:check": hostSupersetInstalled ? installedHostChain : producerCheck,
     test: "vitest run",
     typecheck: "tsc --noEmit",
     "validate:self": "node dist/nourd-nkf-checker.mjs --project . --level full-bundle",
@@ -587,6 +590,17 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
   };
+  if (hostSupersetInstalled) {
+    expectedScripts["nkf:check:pinned"] =
+      "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
+    expectedScripts["nkf:check:host"] = producerCheck;
+    if (
+      packageManifest?.nkf?.integration?.mode !== "host-superset" ||
+      packageManifest.nkf.integration.host_script !== producerCheck
+    ) {
+      fail("package.json host-superset declaration does not preserve the accepted producer check.");
+    }
+  }
   for (const [name, command] of Object.entries(expectedScripts)) {
     if (packageManifest.scripts?.[name] !== command) {
       fail(`package.json script ${name} does not match the accepted command.`);

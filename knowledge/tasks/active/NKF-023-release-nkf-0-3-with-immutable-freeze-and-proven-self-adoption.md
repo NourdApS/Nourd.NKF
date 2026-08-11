@@ -397,6 +397,20 @@ adopted Design.
   adopter suite and complete gate both pass: 25 test files, 200 tests,
   deterministic builds, 972 living links, and zero self-host diagnostics. A
   fourth private candidate remains pending.
+- The fourth private candidate, SHA-256
+  `670248777d48fafa8ea9951605fdcdaf269642169d59debcc283e2f2f08cd9df`
+  from source commit `d35c7a3fdbe8784a58e65cfd4e699d060f819ed0`, passed
+  deterministic packaging and source reproduction, then reached the producer
+  gate after candidate Adopt. The producer guidance verifier failed because it
+  required the former check body to remain specifically at `nkf:check`, while
+  host-superset integration correctly moves that exact body to
+  `nkf:check:host` and makes `nkf:check` the pinned-plus-host chain. This
+  candidate is invalid and unpublished. The producer verifier now recognizes
+  only the exact declared host-superset chain, exact pinned command, and exact
+  former producer body; ordinary producer state keeps its former requirement.
+  The focused verifier suite passes all 21 tests and the complete gate passes
+  25 test files and 202 tests with deterministic builds, 972 living links, and
+  zero self-host diagnostics. A fifth private candidate remains pending.
 
 ## Decision Applicability
 

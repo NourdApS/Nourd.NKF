@@ -240,6 +240,52 @@ describe("agent guidance integrity verifier", () => {
     expect(result.stderr).toContain("script check does not match");
   });
 
+  it("accepts the exact installed host-superset chain", async () => {
+    const project = await copyProject();
+    const packagePath = path.join(project, "package.json");
+    const manifest = JSON.parse(await readFile(packagePath, "utf8"));
+    const producerCheck = manifest.scripts["nkf:check"];
+    manifest.nkf = {
+      integration: {
+        mode: "host-superset",
+        host_script: producerCheck,
+      },
+    };
+    manifest.scripts["nkf:check"] =
+      "npm run nkf:check:pinned && npm run nkf:check:host";
+    manifest.scripts["nkf:check:pinned"] =
+      "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
+    manifest.scripts["nkf:check:host"] = producerCheck;
+    await writeFile(packagePath, `${JSON.stringify(manifest, null, 2)}\n`);
+
+    const result = run(project);
+
+    expect(result.status, result.stderr).toBe(0);
+  });
+
+  it("rejects host-superset drift from the accepted producer check", async () => {
+    const project = await copyProject();
+    const packagePath = path.join(project, "package.json");
+    const manifest = JSON.parse(await readFile(packagePath, "utf8"));
+    manifest.nkf = {
+      integration: {
+        mode: "host-superset",
+        host_script: "npm run check",
+      },
+    };
+    manifest.scripts["nkf:check"] =
+      "npm run nkf:check:pinned && npm run nkf:check:host";
+    manifest.scripts["nkf:check:pinned"] =
+      "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
+    manifest.scripts["nkf:check:host"] = "npm run check";
+    await writeFile(packagePath, `${JSON.stringify(manifest, null, 2)}\n`);
+
+    const result = run(project);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("does not preserve the accepted producer check");
+  });
+
   it("rejects lifecycle scripts around the validation path", async () => {
     const project = await copyProject();
     const packagePath = path.join(project, "package.json");
