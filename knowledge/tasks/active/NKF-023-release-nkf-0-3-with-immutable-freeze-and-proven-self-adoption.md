@@ -436,6 +436,16 @@ adopted Design.
   assertions. The focused mechanics suite and complete 202-test gate pass with
   deterministic builds, 972 living links, and zero self-host diagnostics. A
   seventh private candidate remains pending.
+- The seventh private candidate, SHA-256
+  `ac88e0bcb528c5501a846ad4622697f951081aed432f91c25b442f350f53d0ee`
+  from source commit `ea2693e0fabb670de76301e215bf17a6a7f1d333`, is
+  the first candidate to pass the exact release-candidate exercise. Fresh
+  source reproduction matched all 134 pre-manifest members, first candidate
+  Adopt returned `migrated`, the full preserved producer gate passed, repeat
+  Adopt returned `current`, and the installed pin declared the verified
+  `host-superset` mode. This archive remains private and unpublished;
+  independent audit and delegated technical confirmation are still pending,
+  and neither recommendation nor the real producer repository has changed.
 
 ## Decision Applicability
 
