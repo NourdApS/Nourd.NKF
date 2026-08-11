@@ -162,6 +162,44 @@ audited bytes may be published and recommended.
     current-system Realization without overstating confirmation, and close the
     Task through the deterministic transition for human merge.
 
+## Derived Technical Implementation Plan
+
+The accepted release order creates one deliberate dual-version source state:
+the release commit still declares this producer repository as an NKF 0.2
+consumer, while the same commit must build the complete NKF 0.3 candidate. The
+implementation therefore keeps the installed 0.2 authoring and onboarding
+guidance at their canonical repository paths until public self-adoption, and
+stores the candidate's 0.3 guidance and host-adapter source under a distinct
+versioned distribution root. The 0.3 adopter installs those exact candidate
+bytes into a consumer's canonical paths. This prevents a candidate build from
+silently changing the producer's currently installed contract.
+
+Derived implementation proceeds in coherent gates:
+
+1. derive the four 0.3 Schemas, multi-version checker binding and dispatch,
+   0.3 Product and Technology fixtures, and public examples without changing
+   the producer bundle from 0.2;
+2. derive versioned 0.3 protocols, portable skills, host-adapter content, and
+   public documentation, and build the 0.3 adopter from those exact inputs;
+3. replace second-hand release membership arrays with strict parsing and
+   deterministic reproduction of the accepted 0.3 `release-set.yaml`, then
+   make manifest construction, archive construction, archive verification,
+   Adopt, the `set` operation, and public-documentation verification consume
+   that single enumeration;
+4. implement a general declared host-superset integration that preserves the
+   exact pre-adoption `nkf:check` body behind a recursion-safe pinned-check plus
+   host-check chain, records the exact mode and script state in the consumer
+   pin, and verifies the whole chain before `current`;
+5. derive 0.1-to-0.3 and 0.2-to-0.3 migration routing with explicit breaking
+   approval, transactional rollback, and same-version 0.3 refresh; and
+6. add the internal exact-candidate exercise and regression suite before
+   building the one candidate archive from a clean release commit.
+
+This is derived technical design under the already delegated implementation
+boundary. It adds no public operation, Product vocabulary, compatibility
+classification, or authority meaning beyond the exact accepted pair and
+adopted Design.
+
 ## Acceptance Criteria
 
 - NKF 0.2 stops being recommended only through atomic verified 0.3 promotion,
@@ -281,9 +319,45 @@ audited bytes may be published and recommended.
   and 192 tests. On `2026-08-11`, the Human Product Owner accepted those exact
   independently audited bytes through
   [ADR 0110](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md).
-  Implementation derivation is now authorized but has not begun; technical
-  confirmation, publication, recommendation, and repository adoption remain
-  later boundaries.
+  Implementation derivation is authorized; technical confirmation,
+  publication, recommendation, and repository adoption remain later
+  boundaries.
+- The derived NKF 0.3 implementation now includes four closed Schemas, exact
+  0.2 and 0.3 checker dispatch, conformant Product and Technology fixtures,
+  versioned protocols and portable skills, host adapters, generated public
+  examples and documentation, breaking 0.1-to-0.3 and 0.2-to-0.3 migration,
+  and same-version 0.3 refresh.
+- One strict `contracts/nkf/0.3/release-set.yaml` currently enumerates 135
+  members across all 18 required classes. Archive construction, manifest
+  construction, archive verification, deterministic set output, internal
+  candidate Adopt, public Adopt, and public-documentation verification derive
+  from that sole enumeration. The 134 pre-manifest members are individually
+  bound by path, mode, and digest in the generated manifest.
+- The derived release-manifest Schema and executable verifiers require mode
+  `0755` only for `dist/nourd-nkf-checker.mjs` and `0644` for every other
+  member. Source-aware release verification checks the exact Git commit,
+  rebuilds the checker twice, reproduces release-set coverage, and compares
+  every source-derived archived member byte.
+- Adopt now supports a declared general `host-superset` integration. It
+  preserves the exact former producer check as `nkf:check:host`, chains it
+  after the pinned archive check, binds the scripts and workflow in the exact
+  consumer pin, rejects recursion and drift, and transactionally updates only
+  verified NKF-managed registry and governed-artifact digest bindings during
+  breaking migration.
+- Focused verification passes for the accepted authority bindings and both
+  0.3 fixtures, release-set reproduction and tamper rejection,
+  release-manifest mode restrictions, the 63-file public projection, and the
+  0.2 host-superset migration. The first complete gate found only a missing
+  bundle dependency in the isolated agent-guidance test fixture; that fixture
+  was corrected and all 19 guidance cases then passed. The corrected complete
+  gate then passed unchanged: 25 test files and 200 tests, deterministic
+  checker and adopter builds, the 63-file public projection with two examples,
+  972 living links, and self-hosted full-bundle validation with zero
+  diagnostics. Authority-binding was not requested and Governing Use remains
+  not ready.
+- The private `release/recommended.json` remains byte-unchanged at NKF 0.2,
+  this producer bundle still declares NKF 0.2, and no 0.3 archive,
+  confirmation, publication, recommendation, or adoption is yet claimed.
 
 ## Decision Applicability
 
@@ -315,7 +389,7 @@ audited bytes may be published and recommended.
 | Published NKF versions remain immutable after release even when no repository adopts them | unknown | none | none |
 | The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
 | One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | unknown | none | none |
-| The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | unknown | none | none |
+| The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | proven | adapter-compatibility | none |
 | Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | unknown | none | none |
 | Exact candidate self-adoption and repeat `current` succeed before publication in a fresh isolated repository | unknown | none | none |
 | Independent audit reproduces and verifies the complete candidate before delegated technical confirmation | unknown | none | none |

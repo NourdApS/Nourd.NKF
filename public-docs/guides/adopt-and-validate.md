@@ -2,10 +2,10 @@
 
 NKF has one public operation: **Adopt**. The same invocation brings a supported
 repository to the current governed recommended release whether it is new to
-NKF, already on NKF 0.1, missing integration, behind within NKF 0.2, or already
-current.
+NKF, already on NKF 0.1 or 0.2, missing integration, behind within NKF 0.3,
+or already current.
 
-NKF 0.2 is pre-stable. The checker and release archive are private to
+NKF 0.3 is pre-stable. The checker and release archive are private to
 authorized Nourd projects; this public adopter contains no checker or private
 credential.
 
@@ -46,9 +46,9 @@ before archive use.
 
 | State | Meaning |
 | --- | --- |
-| `onboarded` | A reviewed sealed initial-adoption plan became a complete NKF 0.2 project |
-| `migrated` | A supported predecessor was deliberately migrated to NKF 0.2 |
-| `updated` | Existing NKF 0.2 knowledge received the recommended exact release and integration |
+| `onboarded` | A reviewed sealed initial-adoption plan became a complete NKF 0.3 project |
+| `migrated` | A supported predecessor was deliberately migrated to NKF 0.3 |
+| `updated` | Existing NKF 0.3 knowledge received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
 
 Every result names the target archive, source commit, checker, adopter, and
@@ -70,17 +70,17 @@ node nourd-nkf-adopt.mjs \
 
 Missing, stale, incomplete, or unsupported plans stop without mutation.
 
-## Breaking NKF 0.1 Migration
+## Breaking NKF 0.1 And 0.2 Migrations
 
-NKF 0.2 is declared breaking from NKF 0.1. Adopt first reports the exact
-target and migration requirement, then stops before changing the repository.
-After the repository's Human Product Owner approves that displayed migration,
-rerun:
+NKF 0.3 is declared breaking from both NKF 0.1 and NKF 0.2. Adopt first
+reports the exact predecessor-relative target and migration requirement, then
+stops before changing the repository. After the repository's Human Product
+Owner approves that displayed migration, rerun:
 
 ```sh
 node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
-  --accept-breaking human-product-owner
+  --accept-breaking repository-owner
 ```
 
 The approval argument is valid only for a declared breaking path. Tooling does
@@ -114,6 +114,11 @@ The installed adopter verifies its pin, integration, archive, and embedded
 manifest before invoking the pinned full-bundle checker. A pass establishes
 conformance for one snapshot. It is not acceptance, Realization confirmation,
 publication, or protected-merge proof.
+
+Repositories with an explicitly declared stronger gate retain its exact prior
+command as the host step in a verified pinned-check plus host-check chain.
+Adopt records and verifies that chain before it can return `current`; repository
+identity never bypasses the check.
 
 The installed Github workflow provides continuous integration by running the
 same command against the exact candidate commit. Workflow presence and a green

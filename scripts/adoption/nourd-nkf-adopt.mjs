@@ -19,8 +19,13 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
-import neutralProtocol from "../../integrations/ai/nkf-authoring-protocol.md";
-import portableSkill from "../../.agents/skills/nkf-authoring/SKILL.md";
+import neutralProtocol from "../../distribution/nkf/0.3/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill from "../../distribution/nkf/0.3/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol from "../../distribution/nkf/0.3/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill from "../../distribution/nkf/0.3/.agents/skills/nkf-onboarding/SKILL.md";
+import rootAdapter from "../../distribution/nkf/0.3/host-adapters/AGENTS.adapter.md";
+import importAdapter from "../../distribution/nkf/0.3/host-adapters/CLAUDE.adapter.md";
+import copilotAdapter from "../../distribution/nkf/0.3/host-adapters/copilot-instructions.adapter.md";
 import {
   buildOnboardingKnowledge,
   buildPortableTopologyRepair,
@@ -37,13 +42,14 @@ import {
   verifyReleaseArchive,
 } from "../release/core.mjs";
 
-const INTEGRATION_REVISION = 1;
+const INTEGRATION_REVISION = 2;
 const PIN_PATH = ".nourd/nkf-release.json";
 const ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
 const RELEASE_DIRECTORY = ".nourd/tools/nkf/releases";
 const ONBOARDING_RECEIPT_PATH = ".nourd/onboarding-receipt.json";
 const TOPOLOGY_REPAIR_RECEIPT_PATH = ".nourd/topology-repair-receipt.json";
 const PROTOCOL_PATH = "integrations/ai/nkf-authoring-protocol.md";
+const ONBOARDING_PROTOCOL_PATH = "integrations/onboarding/nkf-onboarding-protocol.md";
 const REGISTRY_PATH = "integrations/ai/nkf-consumer-integration.yaml";
 const VERIFIER_PATH = "scripts/verify-nkf-integration.mjs";
 const WORKFLOW_PATH = ".github/workflows/nkf-contracts.yml";
@@ -51,6 +57,10 @@ const LOCK_PATH = "package-lock.json";
 const SKILL_PATHS = [
   ".agents/skills/nkf-authoring/SKILL.md",
   ".claude/skills/nkf-authoring/SKILL.md",
+];
+const ONBOARDING_SKILL_PATHS = [
+  ".agents/skills/nkf-onboarding/SKILL.md",
+  ".claude/skills/nkf-onboarding/SKILL.md",
 ];
 const ROOT_PROFILES = new Set([
   "nkf.profile.product",
@@ -62,30 +72,14 @@ const ELIGIBLE_TOPOLOGY_PREDECESSORS = new Map([
 ]);
 const CHECK_COMMAND =
   "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
+const PINNED_SCRIPT_NAME = "nkf:check:pinned";
+const HOST_SCRIPT_NAME = "nkf:check:host";
+const HOST_CHAIN = `npm run ${PINNED_SCRIPT_NAME} && npm run ${HOST_SCRIPT_NAME}`;
 const BLOCK_START = "<!-- nkf-authoring-adapter:start -->";
 const BLOCK_END = "<!-- nkf-authoring-adapter:end -->";
-const ROOT_BLOCK = `${BLOCK_START}
-# NKF Authoring Adapter
-
-For every NKF-governed knowledge operation, read and follow
-[\`integrations/ai/nkf-authoring-protocol.md\`](integrations/ai/nkf-authoring-protocol.md)
-before editing governed files.
-
-Use \`npm run nkf:check\` as the only supported authoring-handoff validation
-command. Report acceptance, Realization confirmation, conformance, local Git
-state, and remote enforcement state as separate facts.
-${BLOCK_END}`;
-const IMPORT_BLOCK = `${BLOCK_START}
-@AGENTS.md
-${BLOCK_END}`;
-const COPILOT_BLOCK = `${BLOCK_START}
-# NKF Authoring Adapter
-
-For NKF-governed knowledge work, read and follow
-\`integrations/ai/nkf-authoring-protocol.md\`. Use \`npm run nkf:check\`
-before handoff and keep acceptance, confirmation, conformance, Git state, and
-remote enforcement state separate.
-${BLOCK_END}`;
+const ROOT_BLOCK = rootAdapter.trimEnd();
+const IMPORT_BLOCK = importAdapter.trimEnd();
+const COPILOT_BLOCK = copilotAdapter.trimEnd();
 const VERIFIER_SOURCE = `import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -212,6 +206,7 @@ function parseArguments(values) {
     allowed = new Set([
       "accept-breaking",
       "archive",
+      "candidate-binding",
       "github-repository",
       "plan",
       "project",
@@ -253,7 +248,7 @@ function parseArguments(values) {
   return result;
 }
 
-function requireRecommendedRelease(value) {
+function requireRecommendedRelease(value, candidateBinding = undefined) {
   requireExactKeys(
     value,
     [
@@ -298,7 +293,7 @@ function requireRecommendedRelease(value) {
       `Recommended compatibility[${index}]`,
     );
     if (
-      !["0.1", "0.2"].includes(entry.from_nkf_version) ||
+      !["0.1", "0.2", "0.3"].includes(entry.from_nkf_version) ||
       !["breaking", "non-breaking"].includes(entry.classification) ||
       typeof entry.migration_required !== "boolean" ||
       typeof entry.summary !== "string" ||
@@ -317,34 +312,51 @@ function requireRecommendedRelease(value) {
   }
   const archiveSha256 = value.archive.sha256;
   const { assetName, tag } = releaseIdentity(archiveSha256);
+  const candidate = candidateBinding !== undefined;
+  if (candidate && candidateBinding !== archiveSha256) {
+    fail("The internal candidate binding differs from the selected archive digest.");
+  }
+  const releaseStateValid = candidate
+    ? value.contract === "nkf.release-candidate-binding" &&
+      value.state === "candidate" &&
+      value.channel === "internal-exact-candidate" &&
+      value.release.prerelease === true &&
+      value.release.published_at === null &&
+      value.release.url === null &&
+      value.release.visibility === "unpublished"
+    : value.contract === "nkf.recommended-release" &&
+      value.state === "recommended" &&
+      value.channel === "internal-private-github-prerelease" &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value.release.published_at ?? "") &&
+      value.release.prerelease === true &&
+      value.release.visibility === "private" &&
+      value.release.url ===
+        `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}`;
   if (
-    value.contract !== "nkf.recommended-release" ||
-    value.nkf_version !== "0.2" ||
-    value.state !== "recommended" ||
-    value.channel !== "internal-private-github-prerelease" ||
+    !releaseStateValid ||
+    value.nkf_version !== "0.3" ||
     !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
     value.archive.asset_name !== assetName ||
     value.archive.tag !== tag ||
     !Number.isSafeInteger(value.archive.size) ||
     value.archive.size <= 0 ||
-    value.archive.url !==
-      `https://github.com/kaveh6202/Nourd.NKF/releases/download/${tag}/${assetName}` ||
+    (candidate
+      ? value.archive.url !== null
+      : value.archive.url !==
+        `https://github.com/kaveh6202/Nourd.NKF/releases/download/${tag}/${assetName}`) ||
     !/^[0-9a-f]{40}$/.test(value.source_commit ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.checker_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.adopter_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.authority.markdown_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.authority.executable_sha256 ?? "") ||
-    value.release.url !==
-      `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}` ||
-    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(
-      value.release.published_at ?? "",
-    ) ||
-    value.release.prerelease !== true ||
-    value.release.visibility !== "private" ||
     JSON.stringify(value.supported_root_profiles) !==
       JSON.stringify(["nkf.profile.product", "nkf.profile.technology"]) ||
     compatibility.get("0.1")?.classification !== "breaking" ||
-    compatibility.get("0.2")?.classification !== "non-breaking"
+    compatibility.get("0.1")?.migration_required !== true ||
+    compatibility.get("0.2")?.classification !== "breaking" ||
+    compatibility.get("0.2")?.migration_required !== true ||
+    compatibility.get("0.3")?.classification !== "non-breaking" ||
+    compatibility.get("0.3")?.migration_required !== false
   ) {
     fail("The recommended release catalog is invalid or inconsistent.");
   }
@@ -352,6 +364,17 @@ function requireRecommendedRelease(value) {
 }
 
 async function resolveRecommendedRelease(options) {
+  if (
+    options["candidate-binding"] !== undefined &&
+    (!/^[0-9a-f]{64}$/.test(options["candidate-binding"]) ||
+      options.recommendation === undefined ||
+      options.archive === undefined ||
+      options["github-repository"] !== undefined)
+  ) {
+    fail(
+      "Internal candidate binding requires one full digest, local candidate catalog, and local archive.",
+    );
+  }
   let bytes;
   if (options.recommendation !== undefined) {
     const recommendationPath = path.resolve(options.recommendation);
@@ -385,7 +408,10 @@ async function resolveRecommendedRelease(options) {
     }
     bytes = Buffer.from(encoded.replace(/\s/g, ""), "base64");
   }
-  return requireRecommendedRelease(parseStrictJson(bytes));
+  return requireRecommendedRelease(
+    parseStrictJson(bytes),
+    options["candidate-binding"],
+  );
 }
 
 async function requireProjectRoot(value) {
@@ -434,7 +460,7 @@ async function requireBundle(projectRoot) {
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (!["0.1", "0.2"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+  if (!["0.1", "0.2", "0.3"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
     fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
@@ -586,6 +612,24 @@ jobs:
 `;
 }
 
+function requireHostWorkflow(bytes) {
+  let value;
+  try {
+    value = YAML.parse(bytes.toString("utf8"));
+  } catch (error) {
+    fail(`The declared host workflow is invalid YAML: ${error.message}`);
+  }
+  const jobs = value?.jobs;
+  if (jobs === null || typeof jobs !== "object" || Array.isArray(jobs)) {
+    fail("The declared host workflow has no jobs mapping.");
+  }
+  const steps = Object.values(jobs).flatMap((job) =>
+    Array.isArray(job?.steps) ? job.steps : []);
+  if (!steps.some((step) => step?.run === "npm run nkf:check")) {
+    fail("The declared host workflow does not invoke the canonical NKF command exactly.");
+  }
+}
+
 function defaultBranch(projectRoot) {
   try {
     const value = execFileSync(
@@ -600,7 +644,7 @@ function defaultBranch(projectRoot) {
   return "master";
 }
 
-function integrationRegistry(files, branch) {
+function integrationRegistry(files, branch, integration) {
   const exact = (relative) => ({
     path: relative,
     sha256: digest(files.get(relative)),
@@ -609,8 +653,12 @@ function integrationRegistry(files, branch) {
     contract: "nkf.consumer-integration",
     version: INTEGRATION_REVISION,
     canonical_command: "npm run nkf:check",
+    mode: integration.mode,
+    scripts: integration.scripts,
     protocol: exact(PROTOCOL_PATH),
     skills: SKILL_PATHS.map(exact),
+    onboarding_protocol: exact(ONBOARDING_PROTOCOL_PATH),
+    onboarding_skills: ONBOARDING_SKILL_PATHS.map(exact),
     adapters: [
       { path: "AGENTS.md", block_sha256: digest(Buffer.from(ROOT_BLOCK)) },
       { path: "CLAUDE.md", block_sha256: digest(Buffer.from(IMPORT_BLOCK)) },
@@ -633,13 +681,123 @@ function serializeJson(value) {
   return Buffer.from(`${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
+async function stageVerifiedHostRegistryMigration(projectRoot, files) {
+  const registryPath = "integrations/ai/agent-hosts.yaml";
+  const registryBytes = await readRegularInside(projectRoot, registryPath, false);
+  if (registryBytes === null) return;
+
+  let registry;
+  try {
+    registry = YAML.parse(registryBytes.toString("utf8"));
+  } catch (error) {
+    fail(`The existing agent-guidance registry is invalid YAML: ${error.message}`);
+  }
+  if (registry?.contract !== "nkf.agent-guidance-registry" || registry?.version !== 1) {
+    return;
+  }
+
+  let changed = false;
+  const updateExact = async (binding, label) => {
+    if (binding === null || typeof binding !== "object" || Array.isArray(binding)) {
+      fail(`${label} must be an exact path and digest binding.`);
+    }
+    const relative = safeRelative(binding.path, `${label} path`);
+    const staged = files.get(relative);
+    if (staged === undefined) return;
+    if (!/^[0-9a-f]{64}$/.test(binding.sha256 ?? "")) {
+      fail(`${label} has an invalid SHA-256 binding.`);
+    }
+    const current = await readRegularInside(projectRoot, relative);
+    if (digest(current) !== binding.sha256) {
+      fail(`${label} has drifted from its pre-migration digest binding.`);
+    }
+    binding.sha256 = digest(staged);
+    changed = true;
+  };
+
+  await updateExact(registry.neutral_protocol, "Neutral authoring protocol");
+  if (!Array.isArray(registry.adapters)) {
+    fail("The agent-guidance registry adapters must be an array.");
+  }
+  for (const [index, adapter] of registry.adapters.entries()) {
+    await updateExact(adapter, `Agent adapter ${index}`);
+  }
+
+  if (
+    registry.skills === null ||
+    typeof registry.skills !== "object" ||
+    Array.isArray(registry.skills) ||
+    !Array.isArray(registry.skills.representations) ||
+    !/^[0-9a-f]{64}$/.test(registry.skills.sha256 ?? "")
+  ) {
+    fail("The agent-guidance registry skill binding is invalid.");
+  }
+  const stagedSkillDigests = new Set();
+  let stagedSkill = false;
+  for (const [index, value] of registry.skills.representations.entries()) {
+    const relative = safeRelative(value, `Skill representation ${index}`);
+    const current = await readRegularInside(projectRoot, relative);
+    if (digest(current) !== registry.skills.sha256) {
+      fail(`Skill representation ${relative} has drifted from its pre-migration digest binding.`);
+    }
+    const staged = files.get(relative);
+    if (staged !== undefined) {
+      stagedSkill = true;
+      stagedSkillDigests.add(digest(staged));
+    }
+  }
+  if (stagedSkill) {
+    if (stagedSkillDigests.size !== 1) {
+      fail("The staged portable authoring skill representations are not byte-identical.");
+    }
+    registry.skills.sha256 = [...stagedSkillDigests][0];
+    changed = true;
+  }
+
+  if (changed) files.set(registryPath, serializeYaml(registry));
+}
+
+async function updateVerifiedStagedArtifactBindings(
+  projectRoot,
+  originalBundleBytes,
+  stagedBundleBytes,
+  files,
+) {
+  const original = YAML.parse(originalBundleBytes.toString("utf8"));
+  const staged = YAML.parse(stagedBundleBytes.toString("utf8"));
+  const originalArtifacts = new Map(
+    (original.governed_artifacts ?? []).map((artifact) => [artifact?.path, artifact]),
+  );
+  if (!Array.isArray(staged.governed_artifacts)) return stagedBundleBytes;
+
+  for (const artifact of staged.governed_artifacts) {
+    if (typeof artifact?.path !== "string" || !files.has(artifact.path)) continue;
+    const relative = safeRelative(artifact.path, "Governed artifact path");
+    const predecessor = originalArtifacts.get(relative);
+    if (
+      predecessor?.digest?.algorithm !== "sha-256" ||
+      !/^[0-9a-f]{64}$/.test(predecessor?.digest?.value ?? "") ||
+      artifact?.digest?.algorithm !== "sha-256" ||
+      artifact?.digest?.value !== predecessor.digest.value
+    ) {
+      fail(`The governed artifact binding changed before migration: ${relative}`);
+    }
+    const current = await readRegularInside(projectRoot, relative);
+    if (digest(current) !== predecessor.digest.value) {
+      fail(`The governed artifact has drifted before migration: ${relative}`);
+    }
+    artifact.digest.value = digest(files.get(relative));
+  }
+  return serializeYaml(staged);
+}
+
 function packageBytes(existingBytes, projectRoot) {
   let manifest;
   if (existingBytes === null) {
     manifest = {
       name: path.basename(projectRoot).toLowerCase().replace(/[^a-z0-9-]+/g, "-") || "nkf-project",
       private: true,
-      scripts: { "nkf:check": CHECK_COMMAND },
+      scripts: {},
     };
   } else {
     manifest = parseStrictJson(existingBytes);
@@ -654,13 +812,70 @@ function packageBytes(existingBytes, projectRoot) {
     ) {
       fail("package.json scripts must be an object.");
     }
-    const current = manifest.scripts?.["nkf:check"];
-    if (current !== undefined && current !== CHECK_COMMAND) {
-      fail("package.json already defines an incompatible nkf:check command.");
-    }
-    manifest.scripts = { ...(manifest.scripts ?? {}), "nkf:check": CHECK_COMMAND };
   }
-  return serializeJson(manifest);
+  const scripts = { ...(manifest.scripts ?? {}) };
+  const declaration = manifest.nkf?.integration;
+  let integration;
+  if (declaration === undefined) {
+    const current = scripts["nkf:check"];
+    if (current !== undefined && current !== CHECK_COMMAND) {
+      fail(
+        "package.json already defines nkf:check; declare an exact NKF host-superset integration before adoption.",
+      );
+    }
+    scripts["nkf:check"] = CHECK_COMMAND;
+    integration = {
+      mode: "default",
+      scripts: {
+        canonical: CHECK_COMMAND,
+        pinned: null,
+        host: null,
+      },
+    };
+  } else {
+    requireExactKeys(declaration, ["host_script", "mode"], "NKF integration declaration");
+    const hostScript = declaration.host_script;
+    if (
+      declaration.mode !== "host-superset" ||
+      typeof hostScript !== "string" ||
+      hostScript.trim() !== hostScript ||
+      hostScript === "" ||
+      hostScript === CHECK_COMMAND ||
+      hostScript === HOST_CHAIN ||
+      hostScript.includes(PINNED_SCRIPT_NAME) ||
+      hostScript.includes(HOST_SCRIPT_NAME)
+    ) {
+      fail("The NKF host-superset declaration is invalid or recursive.");
+    }
+    if (![hostScript, HOST_CHAIN].includes(scripts["nkf:check"])) {
+      fail("The declared host script does not match the exact pre-adoption nkf:check command.");
+    }
+    if (
+      scripts[PINNED_SCRIPT_NAME] !== undefined &&
+      scripts[PINNED_SCRIPT_NAME] !== CHECK_COMMAND
+    ) {
+      fail("The existing pinned NKF check script conflicts with the declared integration.");
+    }
+    if (
+      scripts[HOST_SCRIPT_NAME] !== undefined &&
+      scripts[HOST_SCRIPT_NAME] !== hostScript
+    ) {
+      fail("The existing host NKF check script conflicts with the declared integration.");
+    }
+    scripts["nkf:check"] = HOST_CHAIN;
+    scripts[PINNED_SCRIPT_NAME] = CHECK_COMMAND;
+    scripts[HOST_SCRIPT_NAME] = hostScript;
+    integration = {
+      mode: "host-superset",
+      scripts: {
+        canonical: HOST_CHAIN,
+        pinned: CHECK_COMMAND,
+        host: hostScript,
+      },
+    };
+  }
+  manifest.scripts = scripts;
+  return { bytes: serializeJson(manifest), integration };
 }
 
 function packageLockBytes(packageManifestBytes) {
@@ -695,14 +910,15 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
   const branch = defaultBranch(projectRoot);
   const adopterBytes = await currentExecutableBytes();
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
-  if (
-    verification.manifest.nkf_version === "0.2" &&
-    (!Buffer.isBuffer(archivedAdopter) || !archivedAdopter.equals(adopterBytes))
-  ) {
+  if (!Buffer.isBuffer(archivedAdopter) || !archivedAdopter.equals(adopterBytes)) {
     fail("The executing adopter differs from the adopter carried by the target release archive.");
   }
   const { assetName, tag } = releaseIdentity(verification.archive_sha256);
   const archivePath = `${RELEASE_DIRECTORY}/${assetName}`;
+  const packageResult = packageBytes(
+    await readRegularInside(projectRoot, "package.json", false),
+    projectRoot,
+  );
 
   files.set(archivePath, Buffer.from(archiveBytes));
   files.set(ADOPTER_PATH, adopterBytes);
@@ -710,8 +926,22 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
   for (const skillPath of SKILL_PATHS) {
     files.set(skillPath, Buffer.from(portableSkill, "utf8"));
   }
+  files.set(ONBOARDING_PROTOCOL_PATH, Buffer.from(onboardingProtocol, "utf8"));
+  for (const skillPath of ONBOARDING_SKILL_PATHS) {
+    files.set(skillPath, Buffer.from(onboardingSkill, "utf8"));
+  }
   files.set(VERIFIER_PATH, Buffer.from(VERIFIER_SOURCE, "utf8"));
-  files.set(WORKFLOW_PATH, Buffer.from(workflow(branch), "utf8"));
+  if (packageResult.integration.mode === "host-superset") {
+    const hostWorkflow = await readRegularInside(projectRoot, WORKFLOW_PATH, false);
+    if (hostWorkflow === null) {
+      files.set(WORKFLOW_PATH, Buffer.from(workflow(branch), "utf8"));
+    } else {
+      requireHostWorkflow(hostWorkflow);
+      files.set(WORKFLOW_PATH, hostWorkflow);
+    }
+  } else {
+    files.set(WORKFLOW_PATH, Buffer.from(workflow(branch), "utf8"));
+  }
 
   for (const [relative, block] of [
     ["AGENTS.md", ROOT_BLOCK],
@@ -725,21 +955,18 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
     );
   }
 
-  const manifestBytes = packageBytes(
-    await readRegularInside(projectRoot, "package.json", false),
-    projectRoot,
-  );
+  const manifestBytes = packageResult.bytes;
   files.set("package.json", manifestBytes);
   if ((await readRegularInside(projectRoot, LOCK_PATH, false)) === null) {
     files.set(LOCK_PATH, packageLockBytes(manifestBytes));
   }
-  const registry = integrationRegistry(files, branch);
+  const registry = integrationRegistry(files, branch, packageResult.integration);
   files.set(REGISTRY_PATH, serializeYaml(registry));
   files.set(
     PIN_PATH,
     serializeJson({
       contract: "nkf.consumer-release-pin",
-      nkf_version: "0.2",
+      nkf_version: verification.manifest.nkf_version,
       repository: "kaveh6202/Nourd.NKF",
       archive: {
         sha256: verification.archive_sha256,
@@ -754,6 +981,7 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
         sha256: digest(adopterBytes),
       },
       integration_revision: INTEGRATION_REVISION,
+      integration: packageResult.integration,
       root_profile: rootProfile,
     }),
   );
@@ -862,13 +1090,25 @@ function requirePinShape(pin) {
       fail(`${label} contains unsupported fields.`);
     }
   };
+  const legacy = pin?.integration_revision === 1 && pin?.integration === undefined;
   exactKeys(
     pin,
-    [
+    legacy ? [
       "adopter",
       "archive",
       "checker_sha256",
       "contract",
+      "integration_revision",
+      "nkf_version",
+      "repository",
+      "root_profile",
+      "source_commit",
+    ] : [
+      "adopter",
+      "archive",
+      "checker_sha256",
+      "contract",
+      "integration",
       "integration_revision",
       "nkf_version",
       "repository",
@@ -879,9 +1119,50 @@ function requirePinShape(pin) {
   );
   exactKeys(pin.archive, ["asset_name", "project_path", "sha256", "tag"], "Pinned archive");
   exactKeys(pin.adopter, ["path", "sha256"], "Pinned adopter");
+  if (legacy) {
+    if (
+      pin?.contract !== "nkf.consumer-release-pin" ||
+      !["0.1", "0.2"].includes(pin?.nkf_version) ||
+      pin?.repository !== "kaveh6202/Nourd.NKF" ||
+      !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
+      pin?.archive?.asset_name !== `nourd-nkf-sha256-${pin?.archive?.sha256}.tar` ||
+      pin?.archive?.tag !== `release-sha256-${pin?.archive?.sha256}` ||
+      !/^[0-9a-f]{40}$/.test(pin?.source_commit ?? "") ||
+      !/^[0-9a-f]{64}$/.test(pin?.checker_sha256 ?? "") ||
+      !/^[0-9a-f]{64}$/.test(pin?.adopter?.sha256 ?? "") ||
+      pin?.adopter?.path !== ADOPTER_PATH ||
+      !ROOT_PROFILES.has(pin?.root_profile)
+    ) {
+      fail("The installed legacy NKF release pin is invalid or unsupported.");
+    }
+    const legacyArchivePath = safeRelative(pin.archive.project_path, "Pinned archive path");
+    if (legacyArchivePath !== `${RELEASE_DIRECTORY}/${pin.archive.asset_name}`) {
+      fail("The pinned archive path does not match its content identity.");
+    }
+    return pin;
+  }
+  exactKeys(pin.integration, ["mode", "scripts"], "Pinned integration");
+  exactKeys(
+    pin.integration.scripts,
+    ["canonical", "host", "pinned"],
+    "Pinned integration scripts",
+  );
+  const defaultIntegration =
+    pin.integration.mode === "default" &&
+    pin.integration.scripts.canonical === CHECK_COMMAND &&
+    pin.integration.scripts.pinned === null &&
+    pin.integration.scripts.host === null;
+  const hostIntegration =
+    pin.integration.mode === "host-superset" &&
+    pin.integration.scripts.canonical === HOST_CHAIN &&
+    pin.integration.scripts.pinned === CHECK_COMMAND &&
+    typeof pin.integration.scripts.host === "string" &&
+    pin.integration.scripts.host !== "" &&
+    !pin.integration.scripts.host.includes(PINNED_SCRIPT_NAME) &&
+    !pin.integration.scripts.host.includes(HOST_SCRIPT_NAME);
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    !["0.1", "0.2"].includes(pin?.nkf_version) ||
+    !["0.1", "0.2", "0.3"].includes(pin?.nkf_version) ||
     pin?.repository !== "kaveh6202/Nourd.NKF" ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
     pin?.archive?.asset_name !==
@@ -892,6 +1173,7 @@ function requirePinShape(pin) {
     !/^[0-9a-f]{64}$/.test(pin?.adopter?.sha256 ?? "") ||
     pin?.adopter?.path !== ADOPTER_PATH ||
     pin?.integration_revision !== INTEGRATION_REVISION ||
+    (!defaultIntegration && !hostIntegration) ||
     !ROOT_PROFILES.has(pin?.root_profile)
   ) {
     fail("The installed NKF release pin is invalid or unsupported.");
@@ -921,6 +1203,19 @@ async function verifyIntegration(projectRoot, pin) {
       fail(`The installed portable skill differs: ${skillPath}`);
     }
   }
+  const installedOnboardingProtocol = await readRegularInside(
+    projectRoot,
+    ONBOARDING_PROTOCOL_PATH,
+  );
+  if (installedOnboardingProtocol.toString("utf8") !== onboardingProtocol) {
+    fail("The installed onboarding protocol differs.");
+  }
+  for (const skillPath of ONBOARDING_SKILL_PATHS) {
+    const skill = await readRegularInside(projectRoot, skillPath);
+    if (skill.toString("utf8") !== onboardingSkill) {
+      fail(`The installed onboarding skill differs: ${skillPath}`);
+    }
+  }
   verifyBlock(await readRegularInside(projectRoot, "AGENTS.md"), ROOT_BLOCK, "AGENTS.md");
   verifyBlock(await readRegularInside(projectRoot, "CLAUDE.md"), IMPORT_BLOCK, "CLAUDE.md");
   verifyBlock(await readRegularInside(projectRoot, "GEMINI.md"), IMPORT_BLOCK, "GEMINI.md");
@@ -938,27 +1233,38 @@ async function verifyIntegration(projectRoot, pin) {
   if (
     registry?.contract !== "nkf.consumer-integration" ||
     registry?.version !== INTEGRATION_REVISION ||
-    registry?.canonical_command !== "npm run nkf:check"
+    registry?.canonical_command !== "npm run nkf:check" ||
+    registry?.mode !== pin.integration.mode ||
+    JSON.stringify(registry?.scripts) !== JSON.stringify(pin.integration.scripts)
   ) {
     fail("The installed integration registry is invalid.");
   }
   const workflowBytes = await readRegularInside(projectRoot, WORKFLOW_PATH);
   if (
     typeof registry.workflow?.branch !== "string" ||
-    workflowBytes.toString("utf8") !== workflow(registry.workflow.branch) ||
     digest(workflowBytes) !== registry.workflow.sha256
   ) {
     fail("The installed NKF workflow differs from the registry.");
+  }
+  if (pin.integration.mode === "default") {
+    if (workflowBytes.toString("utf8") !== workflow(registry.workflow.branch)) {
+      fail("The installed default NKF workflow differs from its canonical form.");
+    }
+  } else {
+    requireHostWorkflow(workflowBytes);
   }
   const exactFiles = new Map([
     [PROTOCOL_PATH, protocol],
     [SKILL_PATHS[0], Buffer.from(portableSkill, "utf8")],
     [SKILL_PATHS[1], Buffer.from(portableSkill, "utf8")],
+    [ONBOARDING_PROTOCOL_PATH, installedOnboardingProtocol],
+    [ONBOARDING_SKILL_PATHS[0], Buffer.from(onboardingSkill, "utf8")],
+    [ONBOARDING_SKILL_PATHS[1], Buffer.from(onboardingSkill, "utf8")],
     [VERIFIER_PATH, verifier],
     [WORKFLOW_PATH, workflowBytes],
   ]);
   const expectedRegistry = serializeYaml(
-    integrationRegistry(exactFiles, registry.workflow.branch),
+    integrationRegistry(exactFiles, registry.workflow.branch, pin.integration),
   );
   if (!registryBytes.equals(expectedRegistry)) {
     fail("The installed integration registry differs from its canonical form.");
@@ -966,8 +1272,18 @@ async function verifyIntegration(projectRoot, pin) {
   const packageManifest = parseStrictJson(
     await readRegularInside(projectRoot, "package.json"),
   );
-  if (packageManifest?.scripts?.["nkf:check"] !== CHECK_COMMAND) {
-    fail("The project nkf:check command differs from the installed contract.");
+  if (
+    packageManifest?.scripts?.["nkf:check"] !== pin.integration.scripts.canonical ||
+    (pin.integration.mode === "default" &&
+      (packageManifest.scripts[PINNED_SCRIPT_NAME] !== undefined ||
+        packageManifest.scripts[HOST_SCRIPT_NAME] !== undefined)) ||
+    (pin.integration.mode === "host-superset" &&
+      (packageManifest.scripts[PINNED_SCRIPT_NAME] !== pin.integration.scripts.pinned ||
+        packageManifest.scripts[HOST_SCRIPT_NAME] !== pin.integration.scripts.host ||
+        packageManifest?.nkf?.integration?.mode !== "host-superset" ||
+        packageManifest?.nkf?.integration?.host_script !== pin.integration.scripts.host))
+  ) {
+    fail("The project NKF script chain differs from the exact installed integration.");
   }
   const packageLock = parseStrictJson(
     await readRegularInside(projectRoot, LOCK_PATH),
@@ -988,6 +1304,9 @@ async function verifyInstalled(projectRoot, runChecker) {
   const pin = requirePinShape(
     parseStrictJson(await readRegularInside(projectRoot, PIN_PATH)),
   );
+  if (pin.nkf_version !== bundle.nkf_version) {
+    fail("The installed release pin NKF version differs from the current bundle.");
+  }
   if (pin.root_profile !== bundle.root.profile) {
     fail("The installed Root Profile pin differs from the current bundle.");
   }
@@ -998,6 +1317,7 @@ async function verifyInstalled(projectRoot, runChecker) {
   );
   const verification = verifyReleaseArchive(archiveBytes, pin.archive.sha256);
   if (
+    verification.manifest.nkf_version !== pin.nkf_version ||
     verification.release_commit !== pin.source_commit ||
     verification.checker_sha256 !== pin.checker_sha256
   ) {
@@ -1038,7 +1358,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
   if (
-    verification.manifest.nkf_version === "0.2" &&
+    ["0.2", "0.3"].includes(verification.manifest.nkf_version) &&
     (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
   ) {
     fail("The predecessor adopter is not bound by its release archive.");
@@ -1109,6 +1429,9 @@ async function installOrUpdate(command, options) {
   }
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
+  if (verification.manifest.nkf_version !== bundle.nkf_version) {
+    fail("Install or update requires a same-version release; use Adopt for migration.");
+  }
   const files = await targetFiles(
     projectRoot,
     archiveBytes,
@@ -1120,6 +1443,8 @@ async function installOrUpdate(command, options) {
       ADOPTER_PATH,
       PROTOCOL_PATH,
       ...SKILL_PATHS,
+      ONBOARDING_PROTOCOL_PATH,
+      ...ONBOARDING_SKILL_PATHS,
       REGISTRY_PATH,
       VERIFIER_PATH,
       WORKFLOW_PATH,
@@ -1180,7 +1505,7 @@ async function inspectForOnboarding(options) {
   });
   return {
     contract: "nkf.onboarding-inspect-result",
-    nkf_version: "0.2",
+    nkf_version: "0.3",
     state: result.inspection.mechanically_ready ? "workspace-created" : "blocked",
     mechanically_ready: result.inspection.mechanically_ready,
     workspace: result.workspace,
@@ -1216,7 +1541,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    !["0.1", "0.2"].includes(value?.nkf_version) ||
+    !["0.1", "0.2", "0.3"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -1298,7 +1623,7 @@ function requirePredecessorOnboardingReceipt(value) {
 function onboardingResult(state, projectRoot, receipt, installed, knowledge = null) {
   return {
     contract: "nkf.onboarding-result",
-    nkf_version: "0.2",
+    nkf_version: "0.3",
     state,
     project: projectRoot,
     profile: receipt.profile,
@@ -1393,6 +1718,8 @@ async function onboard(options) {
     ADOPTER_PATH,
     PROTOCOL_PATH,
     ...SKILL_PATHS,
+    ONBOARDING_PROTOCOL_PATH,
+    ...ONBOARDING_SKILL_PATHS,
     REGISTRY_PATH,
     VERIFIER_PATH,
     WORKFLOW_PATH,
@@ -1414,7 +1741,7 @@ async function onboard(options) {
   changedPaths.sort();
   const receipt = {
     contract: "nkf.onboarding-receipt",
-    nkf_version: "0.2",
+    nkf_version: "0.3",
     plan_sha256: knowledge.plan_sha256,
     inspection_sha256: knowledge.inspection.snapshot_sha256,
     profile: knowledge.plan.project.profile,
@@ -2385,7 +2712,10 @@ async function transitionTask(options) {
 async function migrateToCurrent(options) {
   const projectRoot = await requireProjectRoot(options.project);
   const { bundle, knowledgeRoot } = await requireBundle(projectRoot);
-  if (bundle.nkf_version !== "0.1") fail("migrate requires a project that declares NKF 0.1.");
+  if (!["0.1", "0.2"].includes(bundle.nkf_version)) {
+    fail("migrate requires a project that declares NKF 0.1 or NKF 0.2.");
+  }
+  const predecessorVersion = bundle.nkf_version;
   const predecessorPinBytes = await readRegularInside(
     projectRoot,
     PIN_PATH,
@@ -2397,7 +2727,9 @@ async function migrateToCurrent(options) {
   const expectedSha256 = requireSha256(options.sha256);
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
-  if (verification.manifest.nkf_version !== "0.2") fail("migrate requires an NKF 0.2 release archive.");
+  if (verification.manifest.nkf_version !== "0.3") {
+    fail("migrate requires an NKF 0.3 release archive.");
+  }
 
   const files = new Map();
   let removedPaths = [];
@@ -2439,7 +2771,7 @@ async function migrateToCurrent(options) {
     files.get(bundlePath)?.toString("utf8") ??
       (await readFile(path.join(projectRoot, bundlePath), "utf8")),
   );
-  bundleValue.nkf_version = "0.2";
+  bundleValue.nkf_version = "0.3";
   if (!Array.isArray(bundleValue.non_records)) bundleValue.non_records = [];
   if (!bundleValue.non_records.some((item) => item?.path === "tasks/cancelled/README.md")) {
     bundleValue.non_records.push({
@@ -2462,7 +2794,7 @@ async function migrateToCurrent(options) {
     "",
     "No mandatory capability is implicated by this Task.",
     "",
-    "This gate was added retrospectively during the NKF 0.2 migration; no",
+    `This gate was added retrospectively during the NKF ${predecessorVersion}-to-0.3 migration; no`,
     "historical extraction is implied.",
     "",
   ].join("\n");
@@ -2519,6 +2851,17 @@ async function migrateToCurrent(options) {
   }
   const integration = await targetFiles(projectRoot, archiveBytes, verification, bundle.root?.profile ?? "nkf.profile.product");
   for (const [relative, bytes] of integration) files.set(relative, bytes);
+  await stageVerifiedHostRegistryMigration(projectRoot, files);
+  const originalBundleBytes = await readRegularInside(projectRoot, bundlePath);
+  files.set(
+    bundlePath,
+    await updateVerifiedStagedArtifactBindings(
+      projectRoot,
+      originalBundleBytes,
+      files.get(bundlePath),
+      files,
+    ),
+  );
   await validateCompleteCandidate(projectRoot, files, removedPaths);
   const installed = await writeTransaction(
     projectRoot,
@@ -2528,7 +2871,7 @@ async function migrateToCurrent(options) {
   );
   return {
     state: "migrated",
-    nkf_version: "0.2",
+    nkf_version: "0.3",
     tasks_gated: gated,
     documents_linkified: linkified,
     validation: {
@@ -2540,7 +2883,7 @@ async function migrateToCurrent(options) {
 function adoptResult(state, projectRoot, catalog, compatibility, operation) {
   return {
     contract: "nkf.adopt-result",
-    nkf_version: "0.2",
+    nkf_version: "0.3",
     state,
     project: projectRoot,
     target: {
@@ -2562,14 +2905,14 @@ async function adopt(options) {
   const executableSha256 = digest(await currentExecutableBytes());
   if (executableSha256 !== catalog.adopter_sha256) {
     fail(
-      "The executing adopter differs from the governed recommendation; obtain and verify the recommended adopter before continuing.",
+      "The executing adopter differs from the exact selected release binding.",
     );
   }
   if (
     options.sha256 !== undefined &&
     requireSha256(options.sha256) !== catalog.archive.sha256
   ) {
-    fail("--sha256 differs from the governed recommended release.");
+    fail("--sha256 differs from the exact selected release binding.");
   }
   const releaseOptions = {
     ...options,
@@ -2637,7 +2980,7 @@ async function adopt(options) {
     summary: rule.summary,
   };
   if (rule.classification === "breaking") {
-    if (options["accept-breaking"] !== "human-product-owner") {
+    if (options["accept-breaking"] !== "repository-owner") {
       throw new OnboardingError(
         "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
         `Adopting NKF ${catalog.nkf_version} from ${bundle.nkf_version} is breaking and requires explicit Human Product Owner approval before mutation.`,
@@ -2645,7 +2988,7 @@ async function adopt(options) {
           ...compatibilityResult,
           target_nkf_version: catalog.nkf_version,
           target_archive_sha256: catalog.archive.sha256,
-          required_argument: "--accept-breaking human-product-owner",
+          required_argument: "--accept-breaking repository-owner",
         },
       );
     }
@@ -2654,7 +2997,7 @@ async function adopt(options) {
       "migrated",
       projectRoot,
       catalog,
-      { ...compatibilityResult, approved_by: "human-product-owner" },
+      { ...compatibilityResult, approved_by: "repository-owner" },
       result,
     );
   }
@@ -2713,7 +3056,7 @@ try {
 } catch (error) {
   const structured = {
     contract: "nkf.adopter-error",
-    nkf_version: "0.2",
+    nkf_version: "0.3",
     state: "failed",
     diagnostics: [
       {

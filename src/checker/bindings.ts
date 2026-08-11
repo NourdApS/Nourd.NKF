@@ -63,6 +63,33 @@ export const VERSION_BINDINGS = {
       },
     ],
   },
+  "0.3": {
+    specification: {
+      path: "knowledge/specifications/nkf-0.3.md",
+      sha256: "0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e",
+    },
+    executable: {
+      path: "contracts/nkf/0.3/nkf.yaml",
+      sha256: "e988a596e741d48611a5f77a9236e9d539f9a7475a76f07768bc273a8bf4d27f",
+    },
+    schemas: [
+      {
+        identity: "urn:nkf:0.3:schema:bundle",
+        file: "bundle.schema.json",
+        sha256: "df475558146d6a8fe70ef9d159f10cd6fc29f97f32b87e2990d579ad927bf9f2",
+      },
+      {
+        identity: "urn:nkf:0.3:schema:record",
+        file: "record.schema.json",
+        sha256: "c0be79ede0765487ccfdca77c086e51c1263b0b814afa1249df8ee2ffa6cf0bb",
+      },
+      {
+        identity: "urn:nkf:0.3:schema:validation-result",
+        file: "validation-result.schema.json",
+        sha256: "15e56ee6542865f97b48087078c28b285bc40b3385e8ff74d608711e2ddbc9b1",
+      },
+    ],
+  },
 } as const satisfies Record<string, CoreBindings>;
 
 export type SupportedNkfVersion = keyof typeof VERSION_BINDINGS;

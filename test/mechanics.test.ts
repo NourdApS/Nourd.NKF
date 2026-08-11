@@ -17,7 +17,11 @@ const {
   readReleaseEntries,
   serializeReleaseManifest,
   sha256,
+  releaseEntriesForVersion,
 } = release;
+// @ts-expect-error Repository release-set tooling is directly executable ESM.
+const releaseSetTooling = await import("../scripts/release/release-set.mjs");
+const { readReleaseSet } = releaseSetTooling;
 
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 const checker = path.join(repositoryRoot, "dist/nourd-nkf-checker.mjs");
@@ -69,19 +73,17 @@ async function gitFixture() {
 }
 
 beforeAll(async () => {
-  const entries = await readReleaseEntries(repositoryRoot);
+  const releaseSet = await readReleaseSet(repositoryRoot);
+  const memberEntries = releaseEntriesForVersion("0.3", releaseSet);
+  const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
-    checkerConfirmation: {
-      decision: "ADR-0093",
-      path: "knowledge/decisions/0093-bind-the-adopted-0-2-release-checker.md",
-      bytes: Buffer.from("# ADR 0093\n", "utf8"),
-      checkerSourceCommit: "b".repeat(40),
-    },
     entries,
+    nkfVersion: "0.3",
+    releaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
-  const archive = createUstar(entries);
+  const archive = createUstar(entries, memberEntries);
   archiveSha256 = sha256(archive);
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-release-"));
   archivePath = path.join(parent, `nourd-nkf-sha256-${archiveSha256}.tar`);
@@ -316,7 +318,7 @@ describe("deterministic governed mechanics", () => {
     expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
   });
 
-  it("migrates a declared 0.1 project to 0.2 through the archive", async () => {
+  it("migrates a declared 0.1 project to 0.3 through the archive", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-migrate-"));
     const project = path.join(parent, "project");
     const archived = spawnSync("git", ["archive", "b748402", "fixtures/valid/minimal"], { cwd: repositoryRoot, encoding: null, maxBuffer: 64 * 1024 * 1024 });
@@ -330,7 +332,7 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.tasks_gated).toBe(1);
     expect(result.json.validation.conformance).toBe("passed");
     const bundle = await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8");
-    expect(bundle).toContain('nkf_version: "0.2"');
+    expect(bundle).toContain('nkf_version: "0.3"');
     expect(bundle).toContain("tasks/cancelled/README.md");
     expect(await readFile(path.join(project, "knowledge/tasks/cancelled/README.md"), "utf8")).toContain("# Cancelled Tasks");
     expect(await readFile(path.join(project, "knowledge/tasks/README.md"), "utf8")).toContain("(cancelled/README.md)");

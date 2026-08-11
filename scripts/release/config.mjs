@@ -20,3 +20,18 @@ export const ACCEPTED_ARTIFACT_DIGESTS = Object.freeze({
   "contracts/nkf/0.2/schemas/validation-result.schema.json":
     "a593c5bbbd36ab6849fc88ade1c1abcc801e1a6e566f1ef77f8c62f21e60d011",
 });
+
+export const ACCEPTED_0_3_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.3.md":
+    "0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e",
+  "contracts/nkf/0.3/nkf.yaml":
+    "e988a596e741d48611a5f77a9236e9d539f9a7475a76f07768bc273a8bf4d27f",
+  "contracts/nkf/0.3/schemas/bundle.schema.json":
+    "df475558146d6a8fe70ef9d159f10cd6fc29f97f32b87e2990d579ad927bf9f2",
+  "contracts/nkf/0.3/schemas/record.schema.json":
+    "c0be79ede0765487ccfdca77c086e51c1263b0b814afa1249df8ee2ffa6cf0bb",
+  "contracts/nkf/0.3/schemas/release-manifest.schema.json":
+    "5a381799e552f6e8f4b7e8e57da89fe63fd663f2981f832081380a03bec2d6d1",
+  "contracts/nkf/0.3/schemas/validation-result.schema.json":
+    "15e56ee6542865f97b48087078c28b285bc40b3385e8ff74d608711e2ddbc9b1",
+});

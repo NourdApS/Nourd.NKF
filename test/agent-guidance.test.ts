@@ -19,6 +19,7 @@ const repositoryRoot = path.resolve(import.meta.dirname, "..");
 const verifier = path.join(repositoryRoot, "scripts/verify-agent-guidance.mjs");
 const created: string[] = [];
 const projectFiles = [
+  ".nourd/knowledge/bundle.yaml",
   ".agents/skills/nkf-authoring/SKILL.md",
   ".claude/skills/nkf-authoring/SKILL.md",
   ".github/copilot-instructions.md",

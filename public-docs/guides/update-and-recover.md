@@ -10,18 +10,18 @@ node nourd-nkf-adopt.mjs --project /absolute/path/to/project
 
 An exact-current repository returns `current` only after its installed pin,
 adopter, integration, archive, manifest, knowledge, and checker result pass.
-A behind NKF 0.2 repository receives the non-breaking integration refresh and
+A behind NKF 0.3 repository receives the non-breaking integration refresh and
 returns `updated`.
 
 ## Review A Breaking Migration
 
-For NKF 0.1, the first run shows the exact 0.2 target, declares the path
-breaking and migration-required, and exits without mutation. Review that
-target and the consumer repository's migration implications. After explicit
-Human Product Owner approval, rerun with:
+For NKF 0.1 or NKF 0.2, the first run shows the exact 0.3 target, declares the
+predecessor-relative path breaking and migration-required, and exits without
+mutation. Review that target and the consumer repository's migration
+implications. After explicit Human Product Owner approval, rerun with:
 
 ```text
---accept-breaking human-product-owner
+--accept-breaking repository-owner
 ```
 
 Adopt performs the known topology repair and version migration inside one

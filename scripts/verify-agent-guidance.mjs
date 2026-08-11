@@ -38,7 +38,7 @@ Use \`npm run nkf:check\` as the only supported authoring-handoff validation
 command. Keep acceptance, Realization confirmation, conformance, local Git
 state, and remote enforcement state separate.
 `;
-const expectedSkill = `---
+const expectedSkill0_2 = `---
 name: nkf-authoring
 description: Author, change, classify, migrate, audit, or validate NKF-governed knowledge in an adopted repository. Use for any operation affecting a knowledge root, .nourd declarations, NKF lifecycle records, governed artifacts, contract bindings, or NKF validation.
 ---
@@ -372,6 +372,16 @@ function validateWorkflow(workflow, registry) {
 
 export async function verifyAgentGuidance(projectRootInput) {
   const projectRoot = await realpath(path.resolve(projectRootInput));
+  const bundle = YAML.parse(
+    await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
+  );
+  if (!["0.2", "0.3"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 or 0.3 bundle.");
+  }
+  const expectedSkill = expectedSkill0_2.replace(
+    "NKF Version: 0.2",
+    `NKF Version: ${bundle.nkf_version}`,
+  );
   const registryBytes = await readRegularProjectFile(projectRoot, registryPath, "registry path");
   const registry = YAML.parse(registryBytes.toString("utf8"));
   exactKeys(registry, rootKeys, "registry");

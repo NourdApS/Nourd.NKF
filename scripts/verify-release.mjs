@@ -4,6 +4,7 @@ import {
   invokeVerifiedChecker,
   verifyReleaseArchive,
 } from "./release/core.mjs";
+import { evaluateReleaseSourceProvenance } from "./release/source-provenance.mjs";
 
 function usage() {
   return [
@@ -43,6 +44,9 @@ const verification = verifyReleaseArchive(
   expectedSha256,
   sourceRoot === undefined ? {} : { sourceRoot },
 );
+const source = sourceRoot === undefined
+  ? undefined
+  : await evaluateReleaseSourceProvenance(sourceRoot, verification);
 let checker;
 if (project !== undefined) {
   checker = await invokeVerifiedChecker(verification, [
@@ -63,6 +67,8 @@ process.stdout.write(
       tag: verification.tag,
       release_commit: verification.release_commit,
       checker_sha256: verification.checker_sha256,
+      source_reproduced: source !== undefined,
+      source_members_reproduced: source?.members_reproduced ?? 0,
       checker_invoked: checker !== undefined,
     },
     null,
