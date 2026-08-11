@@ -3,7 +3,7 @@ title: "NKF-023: Release NKF 0.3 With Immutable Freeze And Proven Self-Adoption"
 summary: Preserve the published NKF 0.2 release as immutable history and replace its private recommendation atomically with NKF 0.3 only after exact candidate self-adoption and independent audit.
 created_at: 2026-08-10T20:33:32Z
 task_id: NKF-023
-task_status: active
+task_status: completed
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -536,6 +536,56 @@ adopted Design.
   correction changes no frozen 0.3 member and therefore requires no new NKF
   version. The result is retained as
   [producer-adoption audit Evidence](../../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md).
+
+## Completion Result
+
+NKF 0.3 is the accepted, technically confirmed, published, and recommended
+release. The exact immutable archive has SHA-256
+`34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4`
+and release commit `8a06564e1c91069db19581ca5bfa22770ac95fb5`.
+
+The delivered release establishes publication-time freeze for every complete-set
+member, a single enumerated 135-member release set, one public Adopt operation,
+explicit breaking migration approval for supported 0.1 and 0.2 predecessors,
+and preserved producer-specific host validation. The recommendation moved
+atomically to the exact 0.3 release while the published 0.2 release and its
+history remained unchanged.
+
+The NKF producer repository adopted the ordinary published recommendation,
+installed the exact 0.3 pin and host-superset integration, and returns `current`
+on repeat Adopt. A fresh-checkout defect in the producer's ignored generated
+adopter mirror was found by the post-adoption audit and corrected by tracking
+the exact already-confirmed adopter byte. The correction changes no frozen
+0.3 member, release archive, recommendation, or accepted meaning.
+
+Independent audit of the exact release candidate was CLEAN before delegated
+technical confirmation. Independent post-adoption re-audit of corrected commit
+`6805d6bca50504f93bbf3b6f99f7dcfff858365f` was also CLEAN with no material
+finding: it reverified the hosted and installed archive, all members and
+manifest bindings, supported migrations, producer integration, idempotence,
+rollback, and tamper rejection. Audit and publication Evidence are retained in
+the governed knowledge base.
+
+Every acceptance criterion and mandatory capability is satisfied and proven.
+The final exact source snapshot passed `npm run nkf:check`: 25 test files and
+202 tests, 967 checked living links, deterministic checker, adopter, and
+63-file public projection builds, and full-bundle conformance with zero
+diagnostics.
+
+State remains deliberately separated:
+[ADR 0110](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md) records
+Human Product Owner acceptance of the exact NKF 0.3 authority pair;
+[ADR 0111](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) records delegated
+technical confirmation of the exact candidate; the authenticated remote
+release and recommendation are published; this producer is pinned and audited;
+and the concluded Task branch still requires the Human Product Owner's final
+merge. Authority binding was not requested by the validation run and Governing
+Use remains not-ready. No current successful remote workflow run or protected
+default-branch enforcement is claimed, and separate publication of the public
+documentation mirror as 0.3 is not claimed.
+
+Deferred work, including the Task-scope gate and remote enforcement subjects,
+remains deferred and is not implied delivered by this Task.
 
 ## Decision Applicability
 

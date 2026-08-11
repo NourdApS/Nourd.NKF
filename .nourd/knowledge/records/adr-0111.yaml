@@ -7,7 +7,7 @@ source:
   path: decisions/0111-confirm-the-nkf-0-3-release-candidate.md
   digest:
     algorithm: sha-256
-    value: 8f1bde43e4af960a9d980bb9e03c5619d0ffca468d84d1b2c9c3ec2bf58e85a2
+    value: 29bf63e8509d0644672df74e0bab5ef4dbb2702761c4e5d31229e14c9d99f7b0
 governance:
   lifecycle: immutable
   status: accepted

@@ -22,7 +22,7 @@ implementation_evidence: None; this is a Design proposal.
 
 This is an NKF versioning, release, adoption, compatibility, and integration
 Design under
-[NKF-023](../../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
+[NKF-023](../../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
 It addresses two connected failures exposed after NKF 0.2 publication:
 
 1. accepted authority allowed an unconsumed published release to be replaced

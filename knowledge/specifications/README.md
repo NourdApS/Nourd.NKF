@@ -19,7 +19,7 @@ sources live in Git history and the 0.1 release archives rather than in
 this working tree.
 
 [NKF 0.3](nkf-0.3.md) is the accepted successor Specification under
-[NKF-023](../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
+[NKF-023](../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
 [ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md) accepts its
 exact normative Markdown and digest-bound executable companion. It establishes
 publication-triggered freeze, one deterministic complete release-set contract,
