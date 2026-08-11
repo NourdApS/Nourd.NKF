@@ -28,31 +28,37 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.2 is the current released version: one complete versioned set — the
-canonical Specification, its digest-bound executable companion, derived
-Schemas, deterministic checker and adopter, four governed protocols, four
-portable agent skills, host-adapter guidance, fixtures, examples, and public
-documentation projection — published as a single content-addressed archive
-whose tag is its SHA-256. The exact current release and recommendation are
-SHA-256 `015a922d17a6c29895af1df199485bde209f1ca165bc2bcbfe39f7a9b0b4a51f`.
-The [GitHub Releases page](https://github.com/kaveh6202/Nourd.NKF/releases)
-carries the current archive and its human-readable migration meaning.
+NKF 0.3 is the current accepted, released, and recommended version. Its one
+complete 135-member versioned set carries the canonical Specification,
+digest-bound executable companion, four Schemas, deterministic checker and
+adopter, four governed protocols, portable agent skills, host-adapter
+guidance, fixtures, examples, and the 63-file public-documentation projection.
+The content-addressed archive and release tag are identified by SHA-256
+`34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4`.
+The [GitHub release](https://github.com/kaveh6202/Nourd.NKF/releases/tag/release-sha256-34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4)
+is an immutable private prerelease.
 
-NKF 0.2 requires a Decision Applicability Gate on every Task, separates five
-validation levels with direct-outcome evidence rules, requires heading-equal
-titles and machine-verified deep links, and ships deterministic governed
-mechanics in the adopter. Acceptance and the correction chain are recorded
-in [the Decisions](knowledge/decisions/README.md).
+NKF 0.3 freezes every complete-set byte at publication even when no repository
+has adopted it. It preserves the Decision Applicability Gate, five validation
+levels, heading-equal titles, machine-verified deep links, four-state Task
+vocabulary, and deterministic governed mechanics. Migration from 0.1 or 0.2
+is breaking and requires explicit repository-owner approval; same-version 0.3
+refresh is non-breaking. NKF 0.1 and 0.2 remain immutable supported
+predecessors rather than current recommendations.
 
-This repository has adopted NKF 0.2 as its own first adopter. The recommended
-consumer catalog now pins the independently verified NKF 0.2 release;
-consumer migration remains deliberate, separate work under the
-[NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md). The
-current release exposes one public subcommand-free Adopt operation for initial
-adoption, migration, update, and current-state verification. The published
-[NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs)
-now carries the independently verified NKF 0.2 projection and the exact
-public adopter.
+This producer repository has migrated through the same public subcommand-free
+Adopt operation offered to consumers. It pins the exact 0.3 archive and uses a
+verified host-superset integration: the pinned release check runs first, then
+the preserved stronger producer gate. A pristine-clone independent audit
+verified the full chain, 202 tests, deterministic builds, zero diagnostics,
+repeat `current`, and fail-closed tamper handling. The evidence is recorded in
+the [NKF-023 producer-adoption audit](knowledge/evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md).
+
+The 0.3 archive carries its complete public-documentation projection and exact
+public adopter. Publication of those bytes to the separate
+[NKF Public Documentation repository](https://github.com/kaveh6202/Nourd.NKF.Docs)
+is a separate remote operation; this repository does not claim that mirror has
+yet moved from its last independently observed 0.2 state.
 
 The `NKF Contracts` workflow validates every push and pull request with the
 canonical command. The protected merge gate remains deferred to
@@ -72,9 +78,9 @@ a consumer.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.2 Specification](knowledge/specifications/nkf-0.2.md) |
-| Inspect the executable companion | [NKF 0.2 YAML Contract](contracts/nkf/0.2/nkf.yaml) |
-| Inspect the closed structural contracts | [NKF 0.2 Schemas](contracts/nkf/0.2/schemas/) |
+| Read the normative format | [NKF 0.3 Specification](knowledge/specifications/nkf-0.3.md) |
+| Inspect the executable companion | [NKF 0.3 YAML Contract](contracts/nkf/0.3/nkf.yaml) |
+| Inspect the closed structural contracts | [NKF 0.3 Schemas](contracts/nkf/0.3/schemas/) |
 | Adopt a released version | [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |

@@ -355,9 +355,10 @@ adopted Design.
   972 living links, and self-hosted full-bundle validation with zero
   diagnostics. Authority-binding was not requested and Governing Use remains
   not ready.
-- The private `release/recommended.json` remains byte-unchanged at NKF 0.2,
-  this producer bundle still declares NKF 0.2, and no 0.3 archive,
-  confirmation, publication, recommendation, or adoption is yet claimed.
+- At that implementation checkpoint, private `release/recommended.json`
+  remained byte-unchanged at NKF 0.2, this producer bundle still declared NKF
+  0.2, and no 0.3 archive, confirmation, publication, recommendation, or
+  adoption was claimed.
 - The first private archive candidate, SHA-256
   `de3ceea143e55d895e5d2eb14818173bb2a077d13d0181940467204ab5d85472`
   from source commit `191d2486ed77965800278138834e7933c2c56bd1`, passed
@@ -460,8 +461,9 @@ adopted Design.
   diagnostic and guide wording were corrected from accepted authority, with
   explicit 0.1 and 0.2 regression assertions. The rebuilt distribution was
   re-pinned and `npm run nkf:check -- --no-persist` passed all 202 tests, 972
-  links, deterministic build verification, and self-validation. A new exact
-  candidate and complete independent re-audit remain required.
+  links, deterministic build verification, and self-validation. At that audit
+  checkpoint, a new exact candidate and complete independent re-audit remained
+  required.
 - The corrected replacement candidate was constructed from release commit
   `8a06564e1c91069db19581ca5bfa22770ac95fb5` as
   `nourd-nkf-sha256-34bd74631ddaf027a88ef1ee3fb50b23409fa803d08da0de246fe6f8c4ca47a4.tar`.
@@ -516,8 +518,24 @@ adopted Design.
   It does not alter a frozen 0.3 member byte, the published archive, the
   recommendation, integration order, accepted meaning, or release-candidate
   confirmation. The preserved host gate still rebuilds and byte-verifies the
-  same artifact. Fresh-checkout validation and a complete independent re-audit
-  remain required before producer adoption can be considered proven.
+  same artifact. At that correction checkpoint, fresh-checkout validation and
+  a complete independent re-audit remained required before producer adoption
+  could be considered proven.
+- Corrected remote commit `6805d6bca50504f93bbf3b6f99f7dcfff858365f`
+  passed the formerly failing path from a pristine checkout after only
+  `npm ci`: pinned release verification ran first, the preserved producer gate
+  passed 25 test files and 202 tests, 976 links, deterministic checker,
+  adopter, and public-documentation builds, and self-validation with zero
+  diagnostics. The host build reproduced the tracked adopter byte-identically,
+  Git remained clean, and two ordinary public Adopt runs returned `current`.
+- The complete independent re-audit of that exact corrected commit returned
+  `CLEAN` with no material finding. It freshly matched the hosted and installed
+  archive, reverified all 135 members, 134 manifest bindings, 18 classes,
+  authority, Schemas, checker, adopter, recommendation, integration and host
+  surfaces, repeated tamper rejection, and confirmed that the producer-only
+  correction changes no frozen 0.3 member and therefore requires no new NKF
+  version. The result is retained as
+  [producer-adoption audit Evidence](../../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md).
 
 ## Decision Applicability
 
@@ -548,10 +566,10 @@ adopted Design.
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
 | Published NKF versions remain immutable after release even when no repository adopts them | proven | data-validity | none |
-| The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
+| The governed recommendation can leave 0.2 without deleting or altering its published release history | proven | data-validity | none |
 | One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | proven | data-validity | none |
 | The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | proven | adapter-compatibility | none |
 | Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | proven | runtime-behaviour | none |
 | Exact candidate self-adoption and repeat `current` succeed before publication in a fresh isolated repository | proven | runtime-behaviour | none |
 | Independent audit reproduces and verifies the complete candidate before delegated technical confirmation | proven | runtime-behaviour | none |
-| Ordinary published Adopt self-pins this repository and independently verifies `current` after publication | unknown | none | none |
+| Ordinary published Adopt self-pins this repository and independently verifies `current` after publication | proven | runtime-behaviour | none |

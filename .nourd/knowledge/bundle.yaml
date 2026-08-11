@@ -106,6 +106,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-023-nkf-0-3-publication.md
     kind: evidence
+  - path: evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
@@ -1033,7 +1035,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: 94023522cdebc3b10da4f69ae553479b9e968667fec14fd196f05966c0bc2e83
+      value: 13724f3a29c4f979b518c61d230051604a673d46351e1aafa91c7203f2b522db
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-release-recommended-json
