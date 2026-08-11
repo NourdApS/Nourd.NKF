@@ -162,6 +162,8 @@ non_records:
     kind: navigation
   - path: tasks/active/README.md
     kind: navigation
+  - path: tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md
+    kind: task
   - path: tasks/completed/README.md
     kind: navigation
   - path: tasks/deferred/README.md

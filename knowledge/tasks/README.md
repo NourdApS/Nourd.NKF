@@ -14,6 +14,8 @@ status; it does not establish that status.
 
 [Active Task Index](active/README.md)
 
+- [NKF-024: Release NKF 0.4 Dependency Security Maintenance](active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
+
 ## Deferred
 
 [Deferred Task Index](deferred/README.md)
