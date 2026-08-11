@@ -196,6 +196,21 @@ post-adoption audit before this Task concludes.
 - The sole pull request carries this Task's first active commit through its
   completed result; `master` receives no intermediate lifecycle state.
 
+## Current Progress
+
+- The first direct active branch snapshot was committed as `1b1cd51` and
+  opened the sole draft pull request 8. Its installed NKF 0.3 producer gate
+  passed 25 test files, 202 tests, 988 living links, deterministic builds, and
+  full-bundle validation with zero diagnostics.
+- The exact merged 0.3 lock and code-path baseline is retained in
+  [dependency-security Evidence](../../evidence/audits/nkf-024-dependency-security-baseline.md).
+  It reproduces two npm advisories while distinguishing their general package
+  severity from the exact shipped NKF reachability boundary.
+- [ADR 0112](../../decisions/0112-allocate-nkf-0-4-security-maintenance.md)
+  records the confirmed 0.4 coordinate, non-breaking 0.3 compatibility,
+  immutable 0.3 predecessor boundary, delegated technical maintenance scope,
+  and single-branch lifecycle exception.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -215,6 +230,7 @@ post-adoption audit before this Task concludes.
 | [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Publication permanently freezes the complete set; candidate and ordinary public self-adoption are separate proofs; the producer gate remains a verified host superset; any changed 0.3 member requires 0.4. |
 | [`adr-0110`](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md) | record | The exact 0.3 pair is immutable governing predecessor authority and cannot be edited; the 0.4 maintenance pair must be a separately derived successor. |
 | [`adr-0111`](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) | record | Technical confirmation binds only the exact audited 0.3 candidate; 0.4 requires its own clean audit and separate delegated confirmation. |
+| [`adr-0112`](../../decisions/0112-allocate-nkf-0-4-security-maintenance.md) | record | NKF 0.4 is the non-breaking dependency-security successor; 0.3 stays frozen, no new normative behavior is authorized, technical execution is delegated inside the fixed boundary, and this Task uses one branch and one final pull request. |
 
 ### Mandatory Capabilities
 

@@ -49,6 +49,11 @@ bootstrap failure, the exact tracked-adopter correction, and the complete
 clean re-audit of recommendation, publication, installed pin, host-superset
 integration, canonical validation, repeat `current`, and tamper rejection.
 
+The NKF-024 dependency-security baseline records the exact affected
+`fast-uri` and `nanoid` lock entries, advisory ranges, dependency paths,
+bounded shipped-runtime reachability assessment, and green pre-change NKF 0.3
+producer gate that initiate the non-breaking 0.4 maintenance release.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

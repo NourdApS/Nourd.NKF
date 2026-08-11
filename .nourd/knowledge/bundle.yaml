@@ -108,6 +108,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-024-dependency-security-baseline.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
