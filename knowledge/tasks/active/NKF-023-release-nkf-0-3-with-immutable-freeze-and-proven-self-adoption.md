@@ -471,6 +471,19 @@ adopted Design.
   `host-superset` integration, and the producer gate passing. The archive
   remains private and unpublished pending a complete fresh independent audit
   and delegated technical confirmation.
+- The complete fresh independent audit of corrected candidate `34bd7463...`
+  returned `CLEAN` with no material finding. It independently passed raw
+  archive safety, complete-set and manifest bindings, exact-commit builds and
+  byte reproduction, all supported onboarding, migration, update, and current
+  paths, host-superset preservation, idempotence, rollback, tamper rejection,
+  and private unpublished-state verification. The result is retained as
+  [exact-candidate audit Evidence](../../evidence/audits/nkf-023-nkf-0-3-exact-candidate-audit.md).
+  Under the already recorded delegation of technical confirmation,
+  [ADR 0111](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md)
+  now confirms exact release commit `8a06564e...`, archive `34bd7463...`,
+  checker `804c082c...`, and adopter `9e20219d...`. Publication,
+  recommendation, and real producer adoption remain separate and have not
+  occurred.
 
 ## Decision Applicability
 
@@ -494,6 +507,7 @@ adopted Design.
 | [`adr-0108`](../../decisions/0108-confirm-the-unified-adopt-realization.md) | record | The exact 0.2 Adopt implementation is technically confirmed only for its audited source and candidate archive; successor implementation requires its own independent audit and confirmation. |
 | [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Publication freezes every complete-set member permanently, candidate and public self-adoption remain separate gates, the producer gate must be preserved through a general verified integration, and 0.1-to-0.3 plus 0.2-to-0.3 migrations require explicit approval as breaking changes. |
 | [`adr-0110`](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md) | record | The exact audited NKF 0.3 Markdown and executable bytes are accepted authority; derived implementation must preserve their digest binding and cannot redefine their meaning. |
+| [`adr-0111`](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) | record | The exact independently audited 0.3 implementation and private candidate are technically confirmed for byte-identical publication; recommendation and producer Adopt remain separate later operations. |
 
 ### Mandatory Capabilities
 
@@ -501,9 +515,9 @@ adopted Design.
 | --- | --- | --- | --- |
 | Published NKF versions remain immutable after release even when no repository adopts them | unknown | none | none |
 | The governed recommendation can leave 0.2 without deleting or altering its published release history | unknown | none | none |
-| One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | unknown | none | none |
+| One complete-set enumeration carries every exact NKF 0.3 frozen member across all distribution surfaces | proven | data-validity | none |
 | The single public Adopt operation routes every supported unadopted and predecessor state safely to recommended 0.3 | proven | adapter-compatibility | none |
-| Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | unknown | none | none |
-| Exact candidate self-adoption and repeat `current` succeed before publication in a fresh isolated repository | unknown | none | none |
-| Independent audit reproduces and verifies the complete candidate before delegated technical confirmation | unknown | none | none |
+| Exact candidate Adopt preserves the NKF producer repository's stronger canonical validation gate | proven | runtime-behaviour | none |
+| Exact candidate self-adoption and repeat `current` succeed before publication in a fresh isolated repository | proven | runtime-behaviour | none |
+| Independent audit reproduces and verifies the complete candidate before delegated technical confirmation | proven | runtime-behaviour | none |
 | Ordinary published Adopt self-pins this repository and independently verifies `current` after publication | unknown | none | none |

@@ -102,6 +102,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-023-interim-recommendation-assessment.md
     kind: evidence
+  - path: evidence/audits/nkf-023-nkf-0-3-exact-candidate-audit.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md

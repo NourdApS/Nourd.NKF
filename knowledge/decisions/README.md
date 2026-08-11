@@ -123,6 +123,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0108: Confirm The Unified Adopt Realization](0108-confirm-the-unified-adopt-realization.md)
 - [ADR 0109: Publication Freeze And Proven Self-Adoption](0109-publication-freeze-and-proven-self-adoption.md)
 - [ADR 0110: Accept The NKF 0.3 Authority Pair](0110-accept-the-nkf-0-3-authority-pair.md)
+- [ADR 0111: Confirm The NKF 0.3 Release Candidate](0111-confirm-the-nkf-0-3-release-candidate.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
