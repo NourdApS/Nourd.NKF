@@ -657,7 +657,8 @@ describe("NKF consumer adopter", () => {
     const before = await snapshotTree(project);
     const blocked = runAdopt(project, ["--archive", archivePath]);
     expect(blocked.status).toBe(1);
-    expect(JSON.parse(blocked.stderr)).toMatchObject({
+    const blockedResult = JSON.parse(blocked.stderr);
+    expect(blockedResult).toMatchObject({
       diagnostics: [{
         code: "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
         from_nkf_version: "0.1",
@@ -667,6 +668,12 @@ describe("NKF consumer adopter", () => {
         required_argument: "--accept-breaking repository-owner",
       }],
     });
+    expect(blockedResult.diagnostics[0].message).toContain(
+      "explicit repository-owner approval",
+    );
+    expect(blockedResult.diagnostics[0].message).not.toContain(
+      "Human Product Owner",
+    );
     expectTreeEqual(await snapshotTree(project), before);
 
     const migrated = runAdopt(project, [
@@ -1865,12 +1872,19 @@ describe("NKF consumer adopter", () => {
 
     const blocked = runAdopt(project, ["--archive", archivePath]);
     expect(blocked.status).toBe(1);
-    expect(JSON.parse(blocked.stderr).diagnostics[0]).toMatchObject({
+    const blockedResult = JSON.parse(blocked.stderr);
+    expect(blockedResult.diagnostics[0]).toMatchObject({
       code: "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
       from_nkf_version: "0.2",
       classification: "breaking",
       migration_required: true,
     });
+    expect(blockedResult.diagnostics[0].message).toContain(
+      "explicit repository-owner approval",
+    );
+    expect(blockedResult.diagnostics[0].message).not.toContain(
+      "Human Product Owner",
+    );
 
     const migrated = runAdopt(project, [
       "--archive",

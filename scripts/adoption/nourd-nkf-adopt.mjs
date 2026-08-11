@@ -3059,7 +3059,7 @@ async function adopt(options) {
     if (options["accept-breaking"] !== "repository-owner") {
       throw new OnboardingError(
         "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
-        `Adopting NKF ${catalog.nkf_version} from ${bundle.nkf_version} is breaking and requires explicit Human Product Owner approval before mutation.`,
+        `Adopting NKF ${catalog.nkf_version} from ${bundle.nkf_version} is breaking and requires explicit repository-owner approval before mutation.`,
         {
           ...compatibilityResult,
           target_nkf_version: catalog.nkf_version,

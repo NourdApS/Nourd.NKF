@@ -74,8 +74,8 @@ Missing, stale, incomplete, or unsupported plans stop without mutation.
 
 NKF 0.3 is declared breaking from both NKF 0.1 and NKF 0.2. Adopt first
 reports the exact predecessor-relative target and migration requirement, then
-stops before changing the repository. After the repository's Human Product
-Owner approves that displayed migration, rerun:
+stops before changing the repository. After the repository owner approves that
+displayed migration, rerun:
 
 ```sh
 node nourd-nkf-adopt.mjs \

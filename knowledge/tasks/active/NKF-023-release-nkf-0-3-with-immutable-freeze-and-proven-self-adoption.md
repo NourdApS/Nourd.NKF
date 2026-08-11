@@ -446,6 +446,22 @@ adopted Design.
   `host-superset` mode. This archive remains private and unpublished;
   independent audit and delegated technical confirmation are still pending,
   and neither recommendation nor the real producer repository has changed.
+- The fresh independent read-only audit returned `NOT CLEAN` with one
+  release-blocking authority defect. The accepted Specification, executable
+  contract, protocol, and CLI token require `repository-owner` approval for a
+  breaking migration, but the candidate adopter diagnostic and two public
+  guides still instructed users to obtain Human Product Owner approval. The
+  auditor independently reproduced the contradiction on both 0.1-to-0.3 and
+  0.2-to-0.3 paths. All other audited groups passed, including raw USTAR
+  safety, 135-member and 18-class coverage, exact source and archive
+  reproduction, all supported migration and current paths, host-superset
+  preservation, tamper rejection, and private unpublished state. Candidate
+  `ac88e0bc...` is invalid and will not be confirmed or published. The stale
+  diagnostic and guide wording were corrected from accepted authority, with
+  explicit 0.1 and 0.2 regression assertions. The rebuilt distribution was
+  re-pinned and `npm run nkf:check -- --no-persist` passed all 202 tests, 972
+  links, deterministic build verification, and self-validation. A new exact
+  candidate and complete independent re-audit remain required.
 
 ## Decision Applicability
 

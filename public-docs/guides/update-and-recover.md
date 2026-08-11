@@ -18,7 +18,7 @@ returns `updated`.
 For NKF 0.1 or NKF 0.2, the first run shows the exact 0.3 target, declares the
 predecessor-relative path breaking and migration-required, and exits without
 mutation. Review that target and the consumer repository's migration
-implications. After explicit Human Product Owner approval, rerun with:
+implications. After explicit repository-owner approval, rerun with:
 
 ```text
 --accept-breaking repository-owner
