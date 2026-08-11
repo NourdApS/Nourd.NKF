@@ -493,8 +493,31 @@ adopted Design.
   and passed the 0.3 Technology fixture. The remote observations are retained
   in [publication Evidence](../../evidence/audits/nkf-023-nkf-0-3-publication.md).
   The task branch now carries the single verified recommendation promotion to
-  that exact release; `master` still serves 0.2 until human merge, so public
-  recommendation and ordinary producer Adopt are not yet claimed.
+  that exact release. The Human Product Owner merged that promotion through
+  pull request 6 at `master` commit `60a0a96`, making the exact 0.3 catalog the
+  public recommendation while leaving every published 0.2 byte and historical
+  release intact.
+- Ordinary public Adopt then migrated this producer repository from 0.2 to the
+  exact published 0.3 archive, installed its immutable pin and verified
+  `host-superset` integration, passed the existing built worktree's complete
+  producer gate, and returned `current` on immediate repeat. The deterministic
+  transaction was isolated in commit `b93f23a4` before post-action audit.
+- The fresh independent post-adoption audit returned `NOT CLEAN` on that exact
+  commit with one blocking producer defect. A pristine checkout lacked ignored
+  generated artifact `dist/nourd-nkf-adopt.mjs`, yet the adopted Technology
+  bundle correctly required that exact build-tool binding and the frozen 0.3
+  integration invokes its pinned check before the host build. The prior built
+  worktree had hidden the bootstrap failure. All other reviewed groups passed,
+  including recommendation, remote archive, pin, release-set and manifest
+  bindings, host-superset preservation, post-build conformance, repeat
+  `current`, tamper rejection, and repository-owner approval wording.
+- The bounded producer correction tracks the exact already-confirmed generated
+  adopter mirror at SHA-256 `9e20219d8b92a0b38086da48311f2d2bfd14f8676fa8256e9efcefaaa938afc5`.
+  It does not alter a frozen 0.3 member byte, the published archive, the
+  recommendation, integration order, accepted meaning, or release-candidate
+  confirmation. The preserved host gate still rebuilds and byte-verifies the
+  same artifact. Fresh-checkout validation and a complete independent re-audit
+  remain required before producer adoption can be considered proven.
 
 ## Decision Applicability
 

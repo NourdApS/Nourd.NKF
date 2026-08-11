@@ -297,7 +297,7 @@ governed_artifacts:
     path: .gitignore
     digest:
       algorithm: sha-256
-      value: 22fc1343b254b797aff83a967b83cf40c3438bdd7b49dadfd92090f4ab796831
+      value: 59d993da343e3e56b4d2105263d04274c7ecd369daddbd50a5434e9d09712439
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-agents-md
