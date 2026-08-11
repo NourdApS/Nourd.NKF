@@ -81,6 +81,15 @@ const ROOT_BLOCK = rootAdapter.trimEnd();
 const IMPORT_BLOCK = importAdapter.trimEnd();
 const COPILOT_BLOCK = copilotAdapter.trimEnd();
 const EXACT_ROOT_IMPORT = Buffer.from("@AGENTS.md\n", "utf8");
+const EXACT_COPILOT_BOOTSTRAP = Buffer.from(`# NKF Authoring Adapter
+
+For every NKF-governed knowledge operation, read and follow
+\`integrations/ai/nkf-authoring-protocol.md\` before editing governed files.
+
+Use \`npm run nkf:check\` as the only supported authoring-handoff validation
+command. Keep acceptance, Realization confirmation, conformance, local Git
+state, and remote enforcement state separate.
+`, "utf8");
 const VERIFIER_SOURCE = `import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -645,24 +654,34 @@ function defaultBranch(projectRoot) {
   return "master";
 }
 
-function integrationRegistry(files, branch, integration, exactImportPaths = new Set()) {
+function integrationRegistry(files, branch, integration, exactAdapterModes = new Map()) {
   const exact = (relative) => ({
     path: relative,
     sha256: digest(files.get(relative)),
   });
-  const adapter = (relative, block) =>
-    exactImportPaths.has(relative)
-      ? {
+  const adapter = (relative, block) => {
+    const exactMode = exactAdapterModes.get(relative);
+    if (exactMode === "exact-import") {
+      return {
           path: relative,
           mode: "exact-import",
           target: "AGENTS.md",
           sha256: digest(EXACT_ROOT_IMPORT),
-        }
-      : {
-          path: relative,
-          mode: "bounded-block",
-          block_sha256: digest(Buffer.from(block)),
-        };
+      };
+    }
+    if (exactMode === "exact-bootstrap") {
+      return {
+        path: relative,
+        mode: "exact-bootstrap",
+        sha256: digest(EXACT_COPILOT_BOOTSTRAP),
+      };
+    }
+    return {
+      path: relative,
+      mode: "bounded-block",
+      block_sha256: digest(Buffer.from(block)),
+    };
+  };
   return {
     contract: "nkf.consumer-integration",
     version: INTEGRATION_REVISION,
@@ -954,7 +973,7 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
     files.set(WORKFLOW_PATH, Buffer.from(workflow(branch), "utf8"));
   }
 
-  const exactImportPaths = new Set();
+  const exactAdapterModes = new Map();
   for (const [relative, block] of [
     ["AGENTS.md", ROOT_BLOCK],
     ["CLAUDE.md", IMPORT_BLOCK],
@@ -967,7 +986,13 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
       existing?.equals(EXACT_ROOT_IMPORT)
     ) {
       files.set(relative, existing);
-      exactImportPaths.add(relative);
+      exactAdapterModes.set(relative, "exact-import");
+    } else if (
+      relative === ".github/copilot-instructions.md" &&
+      existing?.equals(EXACT_COPILOT_BOOTSTRAP)
+    ) {
+      files.set(relative, existing);
+      exactAdapterModes.set(relative, "exact-bootstrap");
     } else {
       files.set(relative, mergeBlock(existing, block, relative));
     }
@@ -982,7 +1007,7 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
     files,
     branch,
     packageResult.integration,
-    exactImportPaths,
+    exactAdapterModes,
   );
   files.set(REGISTRY_PATH, serializeYaml(registry));
   files.set(
@@ -1254,7 +1279,7 @@ async function verifyIntegration(projectRoot, pin) {
   ) {
     fail("The installed integration registry is invalid.");
   }
-  const exactImportPaths = new Set();
+  const exactAdapterModes = new Map();
   const adapterByPath = new Map(
     Array.isArray(registry.adapters)
       ? registry.adapters.map((adapter) => [adapter?.path, adapter])
@@ -1268,16 +1293,21 @@ async function verifyIntegration(projectRoot, pin) {
       if (!bytes.equals(EXACT_ROOT_IMPORT)) {
         fail(`The installed exact root import differs in ${relative}.`);
       }
-      exactImportPaths.add(relative);
+      exactAdapterModes.set(relative, "exact-import");
     } else {
       verifyBlock(bytes, IMPORT_BLOCK, relative);
     }
   }
-  verifyBlock(
-    await readRegularInside(projectRoot, ".github/copilot-instructions.md"),
-    COPILOT_BLOCK,
-    ".github/copilot-instructions.md",
-  );
+  const copilotPath = ".github/copilot-instructions.md";
+  const copilotBytes = await readRegularInside(projectRoot, copilotPath);
+  if (adapterByPath.get(copilotPath)?.mode === "exact-bootstrap") {
+    if (!copilotBytes.equals(EXACT_COPILOT_BOOTSTRAP)) {
+      fail("The installed exact Copilot bootstrap differs.");
+    }
+    exactAdapterModes.set(copilotPath, "exact-bootstrap");
+  } else {
+    verifyBlock(copilotBytes, COPILOT_BLOCK, copilotPath);
+  }
   const workflowBytes = await readRegularInside(projectRoot, WORKFLOW_PATH);
   if (
     typeof registry.workflow?.branch !== "string" ||
@@ -1307,7 +1337,7 @@ async function verifyIntegration(projectRoot, pin) {
       exactFiles,
       registry.workflow.branch,
       pin.integration,
-      exactImportPaths,
+      exactAdapterModes,
     ),
   );
   if (!registryBytes.equals(expectedRegistry)) {

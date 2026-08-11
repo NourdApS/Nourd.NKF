@@ -385,6 +385,18 @@ adopted Design.
   corrected complete gate also passes all 25 test files and 200 tests with
   deterministic builds and zero self-host diagnostics; the next replacement
   candidate remains pending.
+- The third private candidate, SHA-256
+  `bc77ceb51ef4bb1f58daeca986e29dcd200896617cde2201b1db3c1747b92dca`
+  from source commit `cd412623ea65109b977426d91b20f91fd1ca020a`, passed
+  deterministic packaging and source reproduction but the preserved producer
+  gate found the corresponding collision in its registered exact Copilot
+  bootstrap after candidate Adopt. That candidate is also invalid and
+  unpublished. Exact adapter preservation now covers both exact root imports
+  and the exact Copilot bootstrap, while bounded blocks remain the installation
+  mode for repositories without those exact representations. The focused
+  adopter suite and complete gate both pass: 25 test files, 200 tests,
+  deterministic builds, 972 living links, and zero self-host diagnostics. A
+  fourth private candidate remains pending.
 
 ## Decision Applicability
 

@@ -1854,6 +1854,14 @@ describe("NKF consumer adopter", () => {
     );
     await writeFile(path.join(project, "CLAUDE.md"), "@AGENTS.md\n");
     await writeFile(path.join(project, "GEMINI.md"), "@AGENTS.md\n");
+    const copilotBootstrap = await readFile(
+      path.join(repositoryRoot, ".github/copilot-instructions.md"),
+    );
+    await mkdir(path.join(project, ".github"), { recursive: true });
+    await writeFile(
+      path.join(project, ".github/copilot-instructions.md"),
+      copilotBootstrap,
+    );
 
     const blocked = runAdopt(project, ["--archive", archivePath]);
     expect(blocked.status).toBe(1);
@@ -1894,6 +1902,9 @@ describe("NKF consumer adopter", () => {
     expect(await readFile(path.join(project, "GEMINI.md"), "utf8")).toBe(
       "@AGENTS.md\n",
     );
+    expect(
+      await readFile(path.join(project, ".github/copilot-instructions.md")),
+    ).toEqual(copilotBootstrap);
     const integrationRegistry = YAML.parse(
       await readFile(
         path.join(project, "integrations/ai/nkf-consumer-integration.yaml"),
@@ -1904,6 +1915,10 @@ describe("NKF consumer adopter", () => {
       expect.arrayContaining([
         expect.objectContaining({ path: "CLAUDE.md", mode: "exact-import" }),
         expect.objectContaining({ path: "GEMINI.md", mode: "exact-import" }),
+        expect.objectContaining({
+          path: ".github/copilot-instructions.md",
+          mode: "exact-bootstrap",
+        }),
       ]),
     );
     const pin = JSON.parse(
