@@ -194,7 +194,7 @@ the complete fresh re-audit retained as
 [producer-adoption Evidence](../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md).
 That producer-only correction changes no frozen 0.3 byte.
 
-Under [NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md),
+Under [NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md),
 the 0.4 release derives a 136-member, 18-class complete set from the accepted
 maintenance pair, locks patched `fast-uri` and `nanoid` versions, retains the
 single public Adopt operation, and adds an atomic non-breaking 0.3-to-0.4
@@ -383,7 +383,7 @@ process, deployment, account, permission, health, or execution state.
 The workflow exists in the repository and on remote `master`. The 0.3
 recommendation was human-merged through pull request 6 at `master` commit
 `60a0a96`. The current 0.4 recommendation and producer adoption remain on the
-single [NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md) Task branch pending final human merge. Exact producer commit
+single [NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md) Task branch pending final human merge. Exact producer commit
 `c5ed385...` passed local and independent fresh-clone validation, but no Github
 Actions run for that exact head was established. Github, rather than this
 Realization, remains authoritative for time-bound workflow state.

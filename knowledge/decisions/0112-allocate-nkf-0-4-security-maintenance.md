@@ -22,7 +22,7 @@ dependency audit reports affected `fast-uri` and `nanoid` resolutions with
 patched compatible versions available. Updating the bundled dependency closure
 changes complete-set bytes and therefore cannot alter or republish NKF 0.3.
 
-[NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
+[NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
 needs an exact Product boundary before technical derivation: the new version,
 compatibility with 0.3, allowed meaning delta, release scope, approval
 delegation, and the explicitly directed single-branch lifecycle exception.
@@ -50,7 +50,7 @@ On `2026-08-11`, the Human Product Owner decides:
    recommendation, and producer adoption within this fixed boundary to the
    technical reviewer, returning only an actual normative or compatibility
    change for further Human Product Owner decision; and
-7. carry [NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md) from its first active commit through completion in one branch
+7. carry [NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md) from its first active commit through completion in one branch
    and one pull request, without an intermediate lifecycle or recommendation
    merge to `master`. Direct branch activation is the bounded process exception;
    completed-before-ready and human final merge remain required.

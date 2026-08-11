@@ -30,7 +30,7 @@ immutable.
 
 [NKF 0.4](nkf-0.4.md) is the accepted non-breaking dependency-security
 successor under
-[NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md).
+[NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md).
 [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md) accepts its
 exact normative Markdown and digest-bound executable companion under the
 maintenance delegation in

@@ -17,7 +17,7 @@ decision_authority: Codex technical reviewer under the Human Product Owner's exp
 [ADR 0112](0112-allocate-nkf-0-4-security-maintenance.md) allocates NKF 0.4 as
 a non-breaking dependency-security successor, fixes the allowed meaning delta,
 preserves NKF 0.3 immutably, and explicitly delegates exact maintenance-pair
-acceptance to the technical reviewer. [NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
+acceptance to the technical reviewer. [NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
 requires an exact accepted pair before the 0.4 Schemas, checker, adopter,
 release set, fixtures, documentation, and package can claim derived authority.
 
@@ -49,7 +49,7 @@ non-breaking.
 
 This Decision accepts exact NKF 0.4 format meaning and its executable
 representation. It authorizes derived implementation under
-[NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md).
+[NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md).
 NKF 0.4 governs a repository only when it deliberately declares
 `nkf_version` `0.4`. NKF 0.1, NKF 0.2, and NKF 0.3 remain immutable governing
 authority for repositories that declare those versions.

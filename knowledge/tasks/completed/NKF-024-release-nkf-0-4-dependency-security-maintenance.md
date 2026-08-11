@@ -3,7 +3,7 @@ title: "NKF-024: Release NKF 0.4 Dependency Security Maintenance"
 summary: Ship a narrowly scoped non-breaking NKF 0.4 release that replaces the vulnerable fast-uri and nanoid dependency versions without changing NKF 0.3 meaning or any frozen 0.3 byte.
 created_at: 2026-08-11T13:52:19Z
 task_id: NKF-024
-task_status: active
+task_status: completed
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -15,7 +15,7 @@ related_tasks:
 
 ## Human Direction
 
-On `2026-08-11`, after [NKF-023](../completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
+On `2026-08-11`, after [NKF-023](NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 completed and its sole final pull request merged, the Human Product Owner
 directed creating and beginning this Task to release NKF `0.4` and fix the two
 current dependency advisories reported for `fast-uri` and `nanoid`.
@@ -264,6 +264,60 @@ post-adoption audit before this Task concludes.
   authenticated release re-download, exact recommendation/pin agreement,
   frozen 0.3 and knowledge preservation, repeat `current` with no tracked-byte
   change, and fail-closed pin, archive, and integration tampering.
+
+## Completion Result
+
+NKF 0.4 is the accepted, technically confirmed, published, recommended, and
+producer-adopted non-breaking dependency-security successor to immutable NKF
+0.3. The exact release source is
+`29880a398c26fbc126b13cdaaebe9cf5b7fe7734`; the published archive has SHA-256
+`a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd`,
+checker SHA-256 `425286d3...d123`, and adopter SHA-256
+`416b26e7...cd65`.
+
+The locked graph advances only the affected dependency resolutions to
+`fast-uri` `3.1.5` and development-only `nanoid` `3.3.18`. `npm audit` reports
+zero known vulnerabilities, focused tests cover both advisory boundaries, and
+every frozen NKF 0.3 release and source surface remains unchanged.
+
+The delivered release carries one exact 136-member, 18-class set with the
+accepted 0.4 authority pair, four Schemas, deterministic checker and adopter,
+protocols, portable guidance, host adapters, fixtures, examples, and 64-file
+public projection. The 0.3-to-0.4 route is non-breaking and requires no
+knowledge migration or breaking approval; 0.1 and 0.2 remain explicitly
+approval-gated.
+
+Ordinary public Adopt updated the producer from 0.3, preserved the complete
+knowledge tree and pinned-first host-superset validation chain, and returned
+`current` on immediate repeat. The recommendation and installed pin resolve
+the same exact published archive.
+
+Both required independent audits are `CLEAN`. The exact-candidate audit
+preceded [ADR 0114](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md)
+technical confirmation and reproduced the source, archive, release bindings,
+dependency closure, supported compatibility routes, idempotence, rollback,
+and tamper rejection. The post-publication audit started
+from fresh remote producer commit `c5ed385...`, passed pristine installation
+and the canonical gate, re-downloaded the authenticated release byte-for-byte,
+returned `current` without tracked mutation, preserved project knowledge and
+frozen 0.3 paths, and rejected pin, archive, and integration tampering.
+
+Every acceptance criterion and mandatory capability is satisfied and proven.
+The final reconciled source snapshot passed `npm run nkf:check`: 28 test files
+and 210 tests, 1,038 verified links, deterministic checker, adopter, and
+64-file public-projection builds, and full-bundle conformance with zero
+diagnostics.
+
+State remains deliberately separate.
+[ADR 0113](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md) accepts
+the exact 0.4 authority pair;
+[ADR 0114](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md)
+records delegated technical confirmation of the exact audited candidate;
+Github owns the observed release; this branch owns the current recommendation
+and audited producer adoption until merge; authority binding was not
+evaluated; and Governing Use remains not-ready. No successful remote workflow
+run or protected-default-branch enforcement is claimed. The sole pull request
+still requires the Human Product Owner's final merge.
 
 ## Decision Applicability
 

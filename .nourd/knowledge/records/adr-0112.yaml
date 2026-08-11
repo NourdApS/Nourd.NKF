@@ -7,7 +7,7 @@ source:
   path: decisions/0112-allocate-nkf-0-4-security-maintenance.md
   digest:
     algorithm: sha-256
-    value: 507e435904be3d8d3ff19ceafe5994391dfb056d3205e3cba838121abcca966f
+    value: 9d4bb497d3b65478b6a4cb957e7e2c9fdb4cfdf6df1383975d17880fee3a7f85
 governance:
   lifecycle: immutable
   status: accepted
