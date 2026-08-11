@@ -1,0 +1,38 @@
+contract: nkf.record
+id: adr-0109
+type: decision
+body_contract: nkf.decision
+title: "ADR 0109: Publication Freeze And Proven Self-Adoption"
+source:
+  path: decisions/0109-publication-freeze-and-proven-self-adoption.md
+  digest:
+    algorithm: sha-256
+    value: 6cf650764d7a4ef4145ef20bcf5f0720085b0e202d3baebdb4d76629c77a609c
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: extends
+    target: adr-0076
+    source_section: decision
+  - type: extends
+    target: adr-0080
+    source_section: decision
+  - type: supersedes
+    target: adr-0084
+    source_section: decision
+  - type: rationale-for
+    target: design-nkf-023-immutable-freeze-and-proven-self-adoption
+    source_section: decision

@@ -35,7 +35,14 @@ archive membership, source-byte equality, extracted checker and adopter
 behavior, separate-build reproducibility, and exact-commit GitHub validation
 for the corrected 0.2 release candidate. The NKF-020 release-publication
 Evidence records the later GitHub prerelease, independent re-download,
-remote-tag observation, and deliberate recommended-release promotion.
+remote-tag observation, and deliberate recommended-release promotion. The
+NKF-023 NKF 0.3 exact-candidate audit independently reproduces the corrected
+complete archive, verifies every supported predecessor and current Adopt
+path, proves rollback and tamper rejection, and records the clean
+pre-confirmation and prepublication state. The NKF-023 NKF 0.3 publication
+Evidence records the exact draft upload, authenticated re-download,
+byte-for-byte verification, immutable prerelease publication, and the later
+recommendation boundary.
 
 ## Decision Inputs
 

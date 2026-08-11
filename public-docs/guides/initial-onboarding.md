@@ -1,7 +1,7 @@
 # Initial Onboarding
 
 Initial onboarding takes an unadopted Empty Repository or Tiny Knowledge, No
-Source Or Configuration repository to a complete checked NKF 0.2 candidate
+Source Or Configuration repository to a complete checked NKF 0.3 candidate
 without requiring manual native YAML or integration assembly.
 
 It supports Product and Technology roots. Common rules apply to both but are

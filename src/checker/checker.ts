@@ -172,7 +172,7 @@ function securityScan(
 const COMMON_FRONTMATTER_KEYS = ["title", "summary", "created_at"] as const;
 const TASK_ORIENTATION_KEYS_0_2 = ["owner", "decision_authority", "related_tasks"] as const;
 const DESIGN_ORIENTATION_KEYS_0_2 = ["proposal_authority_effect", "proposal_evidence", "implementation_evidence"] as const;
-function commonFrontMatterKeysFor(_nkfVersion: "0.1" | "0.2"): readonly string[] {
+function commonFrontMatterKeysFor(_nkfVersion: "0.1" | "0.2" | "0.3"): readonly string[] {
   return COMMON_FRONTMATTER_KEYS;
 }
 const RECORD_FRONTMATTER_KEYS = ["id", "type", "record_lifecycle", "record_status"] as const;
@@ -318,7 +318,7 @@ function commonFrontMatterChecks(
   artifact: string,
   emitter: RuleEmitter,
   recordId?: string,
-  nkfVersion: "0.1" | "0.2" = "0.1",
+  nkfVersion: "0.1" | "0.2" | "0.3" = "0.1",
 ): Record<string, unknown> | null {
   if (!model.frontMatterPresent || model.frontMatter === null) {
     emitter.emit(
@@ -371,7 +371,7 @@ function recordFrontMatterChecks(
   record: ParsedRecord,
   model: MarkdownModel,
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" = "0.1",
+  nkfVersion: "0.1" | "0.2" | "0.3" = "0.1",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -394,7 +394,7 @@ function recordFrontMatterChecks(
   }
 
   const allowed = new Set<string>([...commonFrontMatterKeysFor(nkfVersion), ...RECORD_FRONTMATTER_KEYS]);
-  if (nkfVersion === "0.2") {
+  if (nkfVersion !== "0.1") {
     allowed.add("decision_authority");
     const orientationKeys = ["decision_authority", ...(type === "design" ? DESIGN_ORIENTATION_KEYS_0_2 : [])];
     if (type === "design") DESIGN_ORIENTATION_KEYS_0_2.forEach((key) => allowed.add(key));
@@ -561,7 +561,7 @@ function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" = "0.1",
+  nkfVersion: "0.1" | "0.2" | "0.3" = "0.1",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -678,7 +678,7 @@ function sourceChecks(
 function nonRecordSourceChecks(
   nonRecord: ParsedNonRecord,
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" = "0.1",
+  nkfVersion: "0.1" | "0.2" | "0.3" = "0.1",
   acceptedDecisionIds: ReadonlySet<string> = new Set(),
   referenceMaps: ReferenceMaps | null = null,
   acceptedDecisionPaths: ReadonlyMap<string, string> = new Map(),
@@ -709,14 +709,14 @@ function nonRecordSourceChecks(
 
   const frontMatter = commonFrontMatterChecks(model, artifact, emitter, undefined, nkfVersion);
   if (frontMatter === null) return;
-  if (nkfVersion === "0.2") {
+  if (nkfVersion !== "0.1") {
     identityBulletChecks(model, artifact, emitter);
     deepLinkChecks(model, artifact, referenceMaps, emitter);
   }
   const allowed = new Set<string>(commonFrontMatterKeysFor(nkfVersion));
   if (nonRecord.declaration.kind === "task") {
     TASK_FRONTMATTER_KEYS.forEach((key) => allowed.add(key));
-    if (nkfVersion === "0.2") {
+    if (nkfVersion !== "0.1") {
       TASK_ORIENTATION_KEYS_0_2.forEach((key) => allowed.add(key));
       for (const key of ["owner", "decision_authority"] as const) {
         if (hasOwn(frontMatter, key) && !orientationString(frontMatter[key])) {
@@ -764,7 +764,7 @@ function nonRecordSourceChecks(
         frontMatterContext(artifact, undefined, "task_status"),
       );
     }
-    if (nkfVersion === "0.2") {
+    if (nkfVersion !== "0.1") {
       validateDecisionApplicabilityGate({
         artifact,
         model,
@@ -827,7 +827,7 @@ function frontMatterReferenceChecks(
   records: ParsedRecord[],
   nonRecords: ParsedNonRecord[],
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" = "0.1",
+  nkfVersion: "0.1" | "0.2" | "0.3" = "0.1",
 ): void {
   const taskGroups = new Map<string, ParsedNonRecord[]>();
   for (const nonRecord of nonRecords) {
@@ -849,7 +849,7 @@ function frontMatterReferenceChecks(
     }
   }
 
-  if (nkfVersion === "0.2") {
+  if (nkfVersion !== "0.1") {
     for (const nonRecord of nonRecords) {
       if (nonRecord.declaration.kind !== "task") continue;
       const frontMatter = nonRecord.markdown?.frontMatter;
@@ -996,8 +996,10 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     bindingsForVersion(nkfVersion) ?? unsupportedVersionBindings(nkfVersion),
     nkfVersion,
   );
-  const resultVersion: "0.1" | "0.2" =
-    bindingsForVersion(nkfVersion) === undefined ? "0.1" : (nkfVersion as "0.1" | "0.2");
+  const resultVersion: "0.1" | "0.2" | "0.3" =
+    bindingsForVersion(nkfVersion) === undefined
+      ? "0.1"
+      : (nkfVersion as "0.1" | "0.2" | "0.3");
   const emitter = new RuleEmitter(loaded.executable);
   const diagnostics: Diagnostic[] = [...loaded.diagnostics];
   const evaluated = new Set<Phase>(["contracts"]);
@@ -1398,7 +1400,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         knowledgeRoot: String(bundle.knowledge_root),
         emitter,
       });
-      if (resultVersion === "0.2") {
+      if (resultVersion !== "0.1") {
         await guidanceVersionChecks(loaded.executable, resultVersion, collector, emitter);
       }
     }
@@ -1463,7 +1465,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         projectTerms,
         emitter,
         resultVersion,
-        resultVersion === "0.2" && typeof record.value.source?.path === "string"
+        resultVersion !== "0.1" && typeof record.value.source?.path === "string"
           ? referenceMapsFor(String(record.value.source.path))
           : null,
       );
@@ -1478,7 +1480,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           emitter,
           resultVersion,
           acceptedDecisionIds,
-          resultVersion === "0.2" ? referenceMapsFor(String(nonRecord.declaration.path)) : null,
+          resultVersion !== "0.1" ? referenceMapsFor(String(nonRecord.declaration.path)) : null,
           acceptedDecisionPaths,
         );
       }

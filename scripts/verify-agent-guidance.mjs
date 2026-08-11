@@ -38,7 +38,7 @@ Use \`npm run nkf:check\` as the only supported authoring-handoff validation
 command. Keep acceptance, Realization confirmation, conformance, local Git
 state, and remote enforcement state separate.
 `;
-const expectedSkill = `---
+const expectedSkill0_2 = `---
 name: nkf-authoring
 description: Author, change, classify, migrate, audit, or validate NKF-governed knowledge in an adopted repository. Use for any operation affecting a knowledge root, .nourd declarations, NKF lifecycle records, governed artifacts, contract bindings, or NKF validation.
 ---
@@ -372,6 +372,16 @@ function validateWorkflow(workflow, registry) {
 
 export async function verifyAgentGuidance(projectRootInput) {
   const projectRoot = await realpath(path.resolve(projectRootInput));
+  const bundle = YAML.parse(
+    await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
+  );
+  if (!["0.2", "0.3"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 or 0.3 bundle.");
+  }
+  const expectedSkill = expectedSkill0_2.replace(
+    "NKF Version: 0.2",
+    `NKF Version: ${bundle.nkf_version}`,
+  );
   const registryBytes = await readRegularProjectFile(projectRoot, registryPath, "registry path");
   const registry = YAML.parse(registryBytes.toString("utf8"));
   exactKeys(registry, rootKeys, "registry");
@@ -562,10 +572,13 @@ export async function verifyAgentGuidance(projectRootInput) {
 
   const packageBytes = await readRegularProjectFile(projectRoot, "package.json", "package manifest");
   const packageManifest = JSON.parse(packageBytes.toString("utf8"));
+  const producerCheck = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self";
+  const installedHostChain = "npm run nkf:check:pinned && npm run nkf:check:host";
+  const hostSupersetInstalled = packageManifest.scripts?.["nkf:check"] === installedHostChain;
   const expectedScripts = {
     build: "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
     check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
-    "nkf:check": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self",
+    "nkf:check": hostSupersetInstalled ? installedHostChain : producerCheck,
     test: "vitest run",
     typecheck: "tsc --noEmit",
     "validate:self": "node dist/nourd-nkf-checker.mjs --project . --level full-bundle",
@@ -577,6 +590,17 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
   };
+  if (hostSupersetInstalled) {
+    expectedScripts["nkf:check:pinned"] =
+      "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
+    expectedScripts["nkf:check:host"] = producerCheck;
+    if (
+      packageManifest?.nkf?.integration?.mode !== "host-superset" ||
+      packageManifest.nkf.integration.host_script !== producerCheck
+    ) {
+      fail("package.json host-superset declaration does not preserve the accepted producer check.");
+    }
+  }
   for (const [name, command] of Object.entries(expectedScripts)) {
     if (packageManifest.scripts?.[name] !== command) {
       fail(`package.json script ${name} does not match the accepted command.`);

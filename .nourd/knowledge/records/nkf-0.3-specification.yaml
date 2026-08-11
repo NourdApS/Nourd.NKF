@@ -1,0 +1,371 @@
+contract: nkf.record
+id: nkf-0.3-specification
+type: specification
+body_contract: nkf.specification
+title: NKF 0.3 — Product And Technology Knowledge Format
+source:
+  path: specifications/nkf-0.3.md
+  digest:
+    algorithm: sha-256
+    value: 0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: purpose
+    heading_path:
+      - Purpose
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - specification-definition
+      - requirements-constraints-and-interfaces
+  - id: normative-status
+    heading_path:
+      - Normative Status
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - authority-and-normative-status
+  - id: source-drafting-provenance
+    heading_path:
+      - Source Drafting Provenance
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: scope
+    heading_path:
+      - Scope
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+    responsibilities:
+      - scope-and-applicability
+  - id: core-model
+    heading_path:
+      - Core Model
+    occurrence: 1
+    authority: accepted-meaning
+    role: definition
+    responsibilities:
+      - model-vocabulary-and-semantics
+  - id: versioning
+    heading_path:
+      - Versioning
+    occurrence: 1
+    authority: accepted-meaning
+    role: evolution
+    responsibilities:
+      - versioning-compatibility-and-migration
+  - id: bundle-contract
+    heading_path:
+      - Bundle Contract
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: bundle-contract-portable-knowledge-topology
+    heading_path:
+      - Bundle Contract
+      - Portable Knowledge Topology
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: bundle-contract-portable-topology-onboarding-and-migration
+    heading_path:
+      - Bundle Contract
+      - Portable Topology Onboarding And Migration
+    occurrence: 1
+    authority: accepted-meaning
+    role: evolution
+  - id: record-contract
+    heading_path:
+      - Record Contract
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: record-contract-deterministic-markdown-structure
+    heading_path:
+      - Record Contract
+      - Deterministic Markdown Structure
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: record-contract-native-record-serialization
+    heading_path:
+      - Record Contract
+      - Native Record Serialization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: identity
+    heading_path:
+      - Identity
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: root-profiles
+    heading_path:
+      - Root Profiles
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: section-authority
+    heading_path:
+      - Section Authority
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+    responsibilities:
+      - security-authority-and-operational-boundaries
+  - id: section-authority-section-role-vocabulary
+    heading_path:
+      - Section Authority
+      - Section-Role Vocabulary
+    occurrence: 1
+    authority: accepted-meaning
+    role: definition
+  - id: relationships
+    heading_path:
+      - Relationships
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: provenance-and-roles
+    heading_path:
+      - Provenance And Roles
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: provenance-and-roles-acceptance-provenance
+    heading_path:
+      - Provenance And Roles
+      - Acceptance Provenance
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: semantic-entities-and-bindings
+    heading_path:
+      - Semantic Entities And Bindings
+    occurrence: 1
+    authority: accepted-meaning
+    role: definition
+  - id: body-contracts
+    heading_path:
+      - Body Contracts
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: decision-applicability-gate
+    heading_path:
+      - Decision Applicability Gate
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: gate-structure
+    heading_path:
+      - Decision Applicability Gate
+      - Gate Structure
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: gate-vocabularies
+    heading_path:
+      - Decision Applicability Gate
+      - Gate Vocabularies
+    occurrence: 1
+    authority: accepted-meaning
+    role: definition
+  - id: gate-presence-and-completion
+    heading_path:
+      - Decision Applicability Gate
+      - Gate Presence And Completion
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: gate-claim-rules
+    heading_path:
+      - Decision Applicability Gate
+      - Gate Claim Rules
+    occurrence: 1
+    authority: accepted-meaning
+    role: obligation
+  - id: gate-conformance-boundary
+    heading_path:
+      - Decision Applicability Gate
+      - Gate Conformance Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: validation
+  - id: extension-contract
+    heading_path:
+      - Extension Contract
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: native-project-organization
+    heading_path:
+      - Native Project Organization
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: okf-0-2-interoperability
+    heading_path:
+      - Okf 0.2 Interoperability
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: conformance
+    heading_path:
+      - Conformance
+    occurrence: 1
+    authority: accepted-meaning
+    role: validation
+    responsibilities:
+      - validation-and-conformance
+  - id: conformance-yaml-parse-boundary
+    heading_path:
+      - Conformance
+      - Yaml Parse Boundary
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+  - id: conformance-enforcement-layers
+    heading_path:
+      - Conformance
+      - Enforcement Layers
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: conformance-validation-phases
+    heading_path:
+      - Conformance
+      - Validation Phases
+    occurrence: 1
+    authority: accepted-meaning
+    role: validation
+  - id: conformance-conformance-levels
+    heading_path:
+      - Conformance
+      - Conformance Levels
+    occurrence: 1
+    authority: accepted-meaning
+    role: validation
+  - id: conformance-diagnostic-contract
+    heading_path:
+      - Conformance
+      - Diagnostic Contract
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: conformance-stable-native-rule-registry
+    heading_path:
+      - Conformance
+      - Stable Native Rule Registry
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: conformance-validation-result
+    heading_path:
+      - Conformance
+      - Validation Result
+    occurrence: 1
+    authority: accepted-meaning
+    role: validation
+  - id: release-distribution
+    heading_path:
+      - Release Distribution
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: release-distribution-release-manifest
+    heading_path:
+      - Release Distribution
+      - Release Manifest
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: release-distribution-release-set
+    heading_path:
+      - Release Distribution
+      - Release Set
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: release-distribution-release-manifest-schema
+    heading_path:
+      - Release Distribution
+      - Release Manifest Schema
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: release-distribution-deterministic-archive
+    heading_path:
+      - Release Distribution
+      - Deterministic Archive
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: release-distribution-consumer-pin-and-verification
+    heading_path:
+      - Release Distribution
+      - Consumer Pin And Verification
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: release-distribution-github-release
+    heading_path:
+      - Release Distribution
+      - Github Release
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: security-and-privacy
+    heading_path:
+      - Security And Privacy
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+  - id: security-and-privacy-native-secret-pattern-registry
+    heading_path:
+      - Security And Privacy
+      - Native Secret Pattern Registry
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-and-deferred-matters
+  - id: minimal-example
+    heading_path:
+      - Minimal Example
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: pre-mortem
+    heading_path:
+      - Pre-Mortem
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+  - id: markdown-source-envelope
+    heading_path:
+      - Record Contract
+      - Markdown Source Envelope
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+relationships:
+  - type: governs
+    target: nkf
+    source_section: scope

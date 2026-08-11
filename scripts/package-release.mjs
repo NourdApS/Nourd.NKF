@@ -7,15 +7,19 @@ import {
   createUstar,
   invokeVerifiedChecker,
   readReleaseEntries,
+  releaseEntriesForVersion,
   serializeReleaseManifest,
   sha256,
   validateReleaseManifest,
   verifyReleaseArchive,
 } from "./release/core.mjs";
 import {
-  ACCEPTED_ARTIFACT_DIGESTS,
-  CHECKER_CONFIRMATION,
+  ACCEPTED_0_3_ARTIFACT_DIGESTS,
 } from "./release/config.mjs";
+import {
+  readReleaseSet,
+  reproduceReleaseMembers,
+} from "./release/release-set.mjs";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -68,34 +72,19 @@ const checkerSecond = await readFile(
 if (!checkerFirst.equals(checkerSecond)) {
   throw new Error("Two checker builds did not produce identical bytes.");
 }
-if (sha256(checkerSecond) !== CHECKER_CONFIRMATION.checkerSha256) {
-  throw new Error(
-    `Built checker does not match ${CHECKER_CONFIRMATION.decision}.`,
-  );
-}
-
-const entries = await readReleaseEntries(repositoryRoot);
+const releaseSet = await readReleaseSet(repositoryRoot);
+await reproduceReleaseMembers(repositoryRoot, releaseSet);
+const memberEntries = releaseEntriesForVersion("0.3", releaseSet);
+const entries = await readReleaseEntries(repositoryRoot, memberEntries);
 entries.set("dist/nourd-nkf-checker.mjs", checkerSecond);
 for (const [artifactPath, expected] of Object.entries(
-  ACCEPTED_ARTIFACT_DIGESTS,
+  ACCEPTED_0_3_ARTIFACT_DIGESTS,
 )) {
   if (sha256(entries.get(artifactPath)) !== expected) {
     throw new Error(`Accepted release artifact digest mismatch: ${artifactPath}`);
   }
 }
 
-const decisionBytes = await readFile(
-  path.join(repositoryRoot, CHECKER_CONFIRMATION.path),
-);
-const decisionText = decisionBytes.toString("utf8");
-if (
-  !decisionText.includes(CHECKER_CONFIRMATION.checkerSourceCommit) ||
-  !decisionText.includes(CHECKER_CONFIRMATION.checkerSha256)
-) {
-  throw new Error(
-    `${CHECKER_CONFIRMATION.decision} does not bind the configured checker realization.`,
-  );
-}
 if (
   git("rev-parse", "HEAD") !== releaseCommit ||
   git("status", "--porcelain") !== ""
@@ -104,23 +93,21 @@ if (
 }
 const manifest = constructReleaseManifest({
   releaseCommit,
-  checkerConfirmation: {
-    ...CHECKER_CONFIRMATION,
-    bytes: decisionBytes,
-  },
   entries,
+  nkfVersion: "0.3",
+  releaseSet,
 });
 const manifestBytes = serializeReleaseManifest(manifest);
 validateReleaseManifest(
   manifest,
   entries.get(
-    "contracts/nkf/0.2/schemas/release-manifest.schema.json",
+    "contracts/nkf/0.3/schemas/release-manifest.schema.json",
   ),
 );
 entries.set("release-manifest.json", manifestBytes);
 
-const archiveFirst = createUstar(entries);
-const archiveSecond = createUstar(entries);
+const archiveFirst = createUstar(entries, memberEntries);
+const archiveSecond = createUstar(entries, memberEntries);
 if (!archiveFirst.equals(archiveSecond)) {
   throw new Error("Two release archives did not produce identical bytes.");
 }
@@ -130,7 +117,7 @@ const verification = verifyReleaseArchive(archiveSecond, archiveSha256, {
 });
 await invokeVerifiedChecker(verification, [
   "--project",
-  path.join(repositoryRoot, "fixtures/valid/minimal-0-2"),
+  path.join(repositoryRoot, "fixtures/valid/minimal-0-3"),
   "--level",
   "full-bundle",
   "--runner",

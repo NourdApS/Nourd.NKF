@@ -1,0 +1,39 @@
+contract: nkf.record
+id: design-nkf-023-immutable-freeze-and-proven-self-adoption
+type: design
+body_contract: nkf.design
+title: NKF 0.3 Immutable Freeze And Proven Self-Adoption
+source:
+  path: designs/adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md
+  digest:
+    algorithm: sha-256
+    value: 1b8f1153890d20524092aebe651502ac8989aaf6c979713c00c5a076e3aa8dde
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
+  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
+  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
+  - {id: publication-triggered-freeze, heading_path: [Proposed Direction, Publication-Triggered Freeze], occurrence: 1, authority: proposal, role: governing}
+  - {id: exact-candidate-self-adoption-gate, heading_path: [Proposed Direction, Exact-Candidate Self-Adoption Gate], occurrence: 1, authority: proposal, role: validation}
+  - {id: verified-host-superset-integration, heading_path: [Proposed Direction, Verified Host-Superset Integration], occurrence: 1, authority: proposal, role: interface}
+  - {id: release-adoption-and-recommendation-order, heading_path: [Proposed Direction, Release Adoption And Recommendation Order], occurrence: 1, authority: proposal, role: governing}
+  - {id: migration-and-compatibility, heading_path: [Proposed Direction, Migration And Compatibility], occurrence: 1, authority: proposal, role: boundary}
+  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
+  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
+  - {id: keep-the-consumer-triggered-freeze, heading_path: [Alternatives And Trade-Offs, Keep The Consumer-Triggered Freeze], occurrence: 1, authority: proposal, role: alternative}
+  - {id: delete-and-reissue-an-unconsumed-release, heading_path: [Alternatives And Trade-Offs, Delete And Reissue An Unconsumed Release], occurrence: 1, authority: proposal, role: alternative}
+  - {id: restore-nkf-0-1-during-development, heading_path: [Alternatives And Trade-Offs, Restore NKF 0.1 During Development], occurrence: 1, authority: proposal, role: alternative}
+  - {id: pause-public-adopt-during-development, heading_path: [Alternatives And Trade-Offs, Pause Public Adopt During Development], occurrence: 1, authority: proposal, role: alternative}
+  - {id: weaken-or-relocate-the-producer-gate, heading_path: [Alternatives And Trade-Offs, Weaken Or Relocate The Producer Gate], occurrence: 1, authority: proposal, role: alternative}
+  - {id: special-case-the-nkf-repository, heading_path: [Alternatives And Trade-Offs, Special-Case The NKF Repository], occurrence: 1, authority: proposal, role: alternative}
+  - {id: dogfood-only-after-publication, heading_path: [Alternatives And Trade-Offs, Dogfood Only After Publication], occurrence: 1, authority: proposal, role: alternative}
+  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
+  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
+  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+relationships: []

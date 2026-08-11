@@ -18,6 +18,17 @@ remains immutable authority for repositories that declare it; its accepted
 sources live in Git history and the 0.1 release archives rather than in
 this working tree.
 
+[NKF 0.3](nkf-0.3.md) is the accepted successor Specification under
+[NKF-023](../tasks/active/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
+[ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md) accepts its
+exact normative Markdown and digest-bound executable companion. It establishes
+publication-triggered freeze, one deterministic complete release-set contract,
+and explicit predecessor compatibility while preserving the 0.2 Product and
+Technology knowledge contracts. Derived implementation, technical
+confirmation, publication, recommendation, and repository adoption remain
+separate later boundaries. This repository continues to declare NKF 0.2 until
+it deliberately adopts the published 0.3 release.
+
 
 The Specification contains the automatically applicable non-selectable Common
 Specification and the Product and Technology Root Profiles. A bundle must

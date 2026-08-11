@@ -13,6 +13,10 @@ import path from "node:path";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import {
+  parseReleaseSet,
+  RELEASE_SET_PATH,
+} from "./release-set.mjs";
+import {
   FIXTURE_FILES,
   HOST_ADAPTER_FILES,
   PUBLIC_DOCUMENTATION_FILES,
@@ -129,6 +133,7 @@ export function constructReleaseManifest({
   checkerConfirmation,
   entries,
   nkfVersion = "0.2",
+  releaseSet,
 }) {
   if (!/^[0-9a-f]{40}$/.test(releaseCommit)) {
     fail("Release commit must be 40 lowercase hexadecimal characters.");
@@ -138,18 +143,12 @@ export function constructReleaseManifest({
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
   const markdown = requireBuffer(entries, specificationPath);
   const executable = requireBuffer(entries, `${contractsPrefix}nkf.yaml`);
-  return {
+  const manifest = {
     contract: "nkf.release-manifest",
     nkf_version: nkfVersion,
     source: {
       repository: REPOSITORY,
       release_commit: releaseCommit,
-      checker_confirmation: {
-        decision: checkerConfirmation.decision,
-        path: checkerConfirmation.path,
-        digest: digest(checkerConfirmation.bytes),
-        checker_source_commit: checkerConfirmation.checkerSourceCommit,
-      },
     },
     checker: {
       identity: "nourd-nkf-checker",
@@ -177,6 +176,26 @@ export function constructReleaseManifest({
       digest: digest(requireBuffer(entries, schema.path.replace("contracts/nkf/0.2/", contractsPrefix))),
     })),
   };
+  if (["0.1", "0.2"].includes(nkfVersion)) {
+    manifest.source.checker_confirmation = {
+      decision: checkerConfirmation.decision,
+      path: checkerConfirmation.path,
+      digest: digest(checkerConfirmation.bytes),
+      checker_source_commit: checkerConfirmation.checkerSourceCommit,
+    };
+  } else if (nkfVersion === "0.3") {
+    if (releaseSet === undefined) fail("NKF 0.3 manifest construction requires the release set.");
+    manifest.files = releaseSet.members
+      .filter((member) => member.path !== "release-manifest.json")
+      .map((member) => ({
+        path: member.path,
+        mode: member.mode,
+        digest: digest(requireBuffer(entries, member.path)),
+      }));
+  } else {
+    fail("Unsupported manifest version.");
+  }
+  return manifest;
 }
 
 export function serializeReleaseManifest(manifest) {
@@ -485,9 +504,15 @@ function safeArchivePath(name) {
   }
 }
 
-export function releaseEntriesForVersion(nkfVersion = "0.2") {
+export function releaseEntriesForVersion(nkfVersion = "0.2", releaseSet = undefined) {
   if (nkfVersion === "0.2") return RELEASE_ENTRIES;
   if (nkfVersion === "0.1") return LEGACY_0_1_ENTRIES;
+  if (nkfVersion === "0.3" && releaseSet !== undefined) {
+    return releaseSet.members.map((member) => ({
+      path: member.path,
+      mode: Number.parseInt(member.mode, 8),
+    }));
+  }
   fail("Unsupported release entry version.");
 }
 
@@ -503,16 +528,17 @@ export function inspectUstar(archiveBytes) {
     fail("USTAR archive length is invalid.");
   }
   const nkfVersion = sniffArchiveVersion(archive);
-  const memberEntries = releaseEntriesForVersion(nkfVersion);
+  const memberEntries = nkfVersion === "0.3" ? null : releaseEntriesForVersion(nkfVersion);
   const dataEnd = archive.length - 1024;
   requireZero(archive.subarray(dataEnd), "USTAR final blocks");
   const entries = new Map();
   const seenFolded = new Set();
   let offset = 0;
   let index = 0;
+  const observedMembers = [];
   while (offset < dataEnd) {
-    const expected = memberEntries[index];
-    if (!expected) fail("USTAR contains an unexpected extra entry.");
+    const expected = memberEntries?.[index];
+    if (memberEntries !== null && !expected) fail("USTAR contains an unexpected extra entry.");
     const header = archive.subarray(offset, offset + 512);
     if (header.length !== 512 || header.every((byte) => byte === 0)) {
       fail("USTAR contains an early zero block.");
@@ -539,17 +565,27 @@ export function inspectUstar(archiveBytes) {
 
     const name = readName(header.subarray(0, 100));
     safeArchivePath(name);
-    const expectedName = `${ARCHIVE_ROOT}/${expected.path}`;
-    if (name !== expectedName) {
+    const expectedName = expected === undefined ? null : `${ARCHIVE_ROOT}/${expected.path}`;
+    if (expectedName !== null && name !== expectedName) {
       fail(`Unexpected or out-of-order archive path: ${name}`);
     }
-    if (entries.has(expected.path)) fail(`Duplicate archive path: ${name}`);
+    const relativeName = name.startsWith(`${ARCHIVE_ROOT}/`)
+      ? name.slice(ARCHIVE_ROOT.length + 1)
+      : "";
+    safeArchivePath(relativeName);
+    if (entries.has(relativeName)) fail(`Duplicate archive path: ${name}`);
     const folded = name.toLowerCase();
     if (seenFolded.has(folded)) fail(`Case-colliding archive path: ${name}`);
     seenFolded.add(folded);
 
     const mode = parseCanonicalOctal(header.subarray(100, 108), "USTAR mode");
-    if (mode !== expected.mode) fail(`Incorrect archive mode for ${name}.`);
+    if (expected !== undefined && mode !== expected.mode) fail(`Incorrect archive mode for ${name}.`);
+    if (
+      expected === undefined &&
+      mode !== (relativeName === "dist/nourd-nkf-checker.mjs" ? 0o755 : 0o644)
+    ) {
+      fail(`Incorrect archive mode for ${name}.`);
+    }
     if (parseCanonicalOctal(header.subarray(108, 116), "USTAR uid") !== 0) {
       fail("USTAR uid must be zero.");
     }
@@ -595,12 +631,20 @@ export function inspectUstar(archiveBytes) {
       archive.subarray(contentEnd, nextOffset),
       `USTAR content padding for ${name}`,
     );
-    entries.set(expected.path, Buffer.from(archive.subarray(contentStart, contentEnd)));
+    entries.set(relativeName, Buffer.from(archive.subarray(contentStart, contentEnd)));
+    observedMembers.push({ path: relativeName, mode });
     offset = nextOffset;
     index += 1;
   }
-  if (offset !== dataEnd || index !== memberEntries.length) {
+  if (offset !== dataEnd || (memberEntries !== null && index !== memberEntries.length)) {
     fail("USTAR archive is missing one or more required files.");
+  }
+  if (nkfVersion === "0.3") {
+    const releaseSet = parseReleaseSet(requireBuffer(entries, RELEASE_SET_PATH));
+    const expectedEntries = releaseEntriesForVersion("0.3", releaseSet);
+    if (JSON.stringify(observedMembers) !== JSON.stringify(expectedEntries)) {
+      fail("USTAR membership, order, or modes differ from the embedded release set.");
+    }
   }
   return entries;
 }
@@ -622,7 +666,14 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   ) {
     fail("Release manifest bootstrap schema entry is invalid.");
   }
-  requireDecisionPathBinding(manifest.source?.checker_confirmation);
+  if (["0.1", "0.2"].includes(nkfVersion)) {
+    requireDecisionPathBinding(manifest.source?.checker_confirmation);
+  } else if (
+    nkfVersion !== "0.3" ||
+    manifest.source?.checker_confirmation !== undefined
+  ) {
+    fail("Release manifest source bootstrap fields are invalid for this version.");
+  }
 }
 
 function requireDecisionPathBinding(confirmation) {
@@ -658,6 +709,7 @@ export function verifySourceProvenance(sourceRoot, manifest) {
   if (releaseCommit !== manifest.source.release_commit) {
     fail("Release commit is unavailable from the source repository.");
   }
+  if (manifest.nkf_version === "0.3") return;
   const confirmation = manifest.source.checker_confirmation;
   requireDecisionPathBinding(confirmation);
   const decisionBytes = Buffer.from(
@@ -685,6 +737,30 @@ export function verifySourceProvenance(sourceRoot, manifest) {
   }
 }
 
+function verifyManifestFiles(entries, manifest, releaseSet) {
+  if (!Array.isArray(manifest.files)) fail("NKF 0.3 manifest files must be an array.");
+  const expected = releaseSet.members.filter(
+    (member) => member.path !== "release-manifest.json",
+  );
+  if (manifest.files.length !== expected.length) {
+    fail("Release manifest files differ from release-set membership.");
+  }
+  for (const [index, expectedMember] of expected.entries()) {
+    const artifact = manifest.files[index];
+    if (
+      artifact === null ||
+      typeof artifact !== "object" ||
+      Array.isArray(artifact) ||
+      JSON.stringify(Object.keys(artifact)) !== JSON.stringify(["path", "mode", "digest"]) ||
+      artifact.path !== expectedMember.path ||
+      artifact.mode !== expectedMember.mode
+    ) {
+      fail(`Release manifest file binding differs at index ${index}.`);
+    }
+    verifyArtifact(entries, artifact);
+  }
+}
+
 export function verifyReleaseArchive(
   archiveBytes,
   expectedArchiveSha256,
@@ -709,6 +785,11 @@ export function verifyReleaseArchive(
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
 
+  const releaseSet = archiveVersion === "0.3"
+    ? parseReleaseSet(requireBuffer(entries, RELEASE_SET_PATH))
+    : undefined;
+  if (releaseSet !== undefined) verifyManifestFiles(entries, manifest, releaseSet);
+
   const artifacts = [
     manifest.checker,
     manifest.authority.markdown,
@@ -726,6 +807,9 @@ export function verifyReleaseArchive(
     checker_sha256: manifest.checker.digest.value,
     manifest,
     entries,
+    release_entries: releaseSet === undefined
+      ? releaseEntriesForVersion(archiveVersion)
+      : releaseEntriesForVersion("0.3", releaseSet),
   };
 }
 
@@ -746,7 +830,7 @@ export async function invokeVerifiedChecker(
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nourd-nkf-release-"));
   try {
     const root = path.join(temporary, ARCHIVE_ROOT);
-    const memberEntries = releaseEntriesForVersion(verification.manifest.nkf_version);
+    const memberEntries = verification.release_entries;
     for (const expected of memberEntries) {
       const target = path.join(root, expected.path);
       await mkdir(path.dirname(target), { recursive: true });
@@ -772,9 +856,9 @@ export async function invokeVerifiedChecker(
   }
 }
 
-export async function readReleaseEntries(repositoryRoot) {
+export async function readReleaseEntries(repositoryRoot, memberEntries = RELEASE_ENTRIES) {
   const entries = new Map();
-  for (const expected of RELEASE_ENTRIES) {
+  for (const expected of memberEntries) {
     if (expected.path === "release-manifest.json") continue;
     entries.set(
       expected.path,

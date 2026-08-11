@@ -65,6 +65,7 @@ establishes it.
 - [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
 - [Native Bundle Serialization](adopted/native-bundle-serialization.md)
 - [Native Record Serialization](adopted/native-record-serialization.md)
+- [NKF 0.3 Immutable Freeze And Proven Self-Adoption](adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](adopted/presentation-guidance.md)
 - [Product Responsibility Identifiers](adopted/product-responsibility-identifiers.md)
 - [Product Technology Common Allocation](adopted/product-technology-common-allocation.md)

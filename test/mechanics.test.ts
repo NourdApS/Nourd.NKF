@@ -17,7 +17,11 @@ const {
   readReleaseEntries,
   serializeReleaseManifest,
   sha256,
+  releaseEntriesForVersion,
 } = release;
+// @ts-expect-error Repository release-set tooling is directly executable ESM.
+const releaseSetTooling = await import("../scripts/release/release-set.mjs");
+const { readReleaseSet } = releaseSetTooling;
 
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 const checker = path.join(repositoryRoot, "dist/nourd-nkf-checker.mjs");
@@ -69,19 +73,17 @@ async function gitFixture() {
 }
 
 beforeAll(async () => {
-  const entries = await readReleaseEntries(repositoryRoot);
+  const releaseSet = await readReleaseSet(repositoryRoot);
+  const memberEntries = releaseEntriesForVersion("0.3", releaseSet);
+  const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
-    checkerConfirmation: {
-      decision: "ADR-0093",
-      path: "knowledge/decisions/0093-bind-the-adopted-0-2-release-checker.md",
-      bytes: Buffer.from("# ADR 0093\n", "utf8"),
-      checkerSourceCommit: "b".repeat(40),
-    },
     entries,
+    nkfVersion: "0.3",
+    releaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
-  const archive = createUstar(entries);
+  const archive = createUstar(entries, memberEntries);
   archiveSha256 = sha256(archive);
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-release-"));
   archivePath = path.join(parent, `nourd-nkf-sha256-${archiveSha256}.tar`);
@@ -98,38 +100,78 @@ describe("deterministic governed mechanics", () => {
 
   it("enumerates the versioned set with digests and stamps", async () => {
     const result = run("set", repositoryRoot);
+    const bundle = await readFile(
+      path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"),
+      "utf8",
+    );
+    const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.2";
+    const releaseSet = declared === "0.3" ? await readReleaseSet(repositoryRoot) : undefined;
+    const expectedEntries =
+      declared === "0.3"
+        ? releaseEntriesForVersion(declared, releaseSet)
+        : RELEASE_ENTRIES;
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("enumerated");
-    expect(result.json.nkf_version).toBe("0.2");
-    const expectedPaths = RELEASE_ENTRIES
+    expect(result.json.nkf_version).toBe(declared);
+    const expectedPaths = expectedEntries
       .filter((entry: { path: string }) => entry.path !== "release-manifest.json")
       .map((entry: { path: string }) => entry.path);
     expect(result.json.members.map((member: { path: string }) => member.path)).toEqual(
       expectedPaths,
     );
-    expect(result.json.members).toHaveLength(132);
+    expect(result.json.members).toHaveLength(expectedPaths.length);
     for (const member of result.json.members) {
       expect(member.present, member.path).toBe(true);
       expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
     }
+    const classPaths = (classes: string[]) =>
+      declared === "0.3"
+        ? releaseSet.members
+            .filter((member: { class: string }) => classes.includes(member.class))
+            .map((member: { path: string }) => member.path)
+        : [];
+    const expectedHostAdapters =
+      declared === "0.3"
+        ? classPaths(["host-adapter-instruction"])
+        : HOST_ADAPTER_FILES;
+    const expectedFixtures =
+      declared === "0.3"
+        ? classPaths(["product-fixture", "technology-fixture"])
+        : FIXTURE_FILES;
+    const expectedPublicDocumentation =
+      declared === "0.3"
+        ? classPaths(["public-documentation"])
+        : PUBLIC_DOCUMENTATION_FILES.map((member: string) => `public-docs/${member}`);
     expect(expectedPaths).toContain("dist/nourd-nkf-adopt.mjs");
     expect(
-      expectedPaths.filter((member: string) => HOST_ADAPTER_FILES.includes(member)),
-    ).toHaveLength(HOST_ADAPTER_FILES.length);
+      expectedPaths.filter((member: string) => expectedHostAdapters.includes(member)),
+    ).toHaveLength(expectedHostAdapters.length);
     expect(
-      expectedPaths.filter((member: string) => FIXTURE_FILES.includes(member)),
-    ).toHaveLength(FIXTURE_FILES.length);
+      expectedPaths.filter((member: string) => expectedFixtures.includes(member)),
+    ).toHaveLength(expectedFixtures.length);
     expect(
-      expectedPaths.filter((member: string) => member.startsWith("public-docs/")),
-    ).toHaveLength(PUBLIC_DOCUMENTATION_FILES.length);
-    const guidance = result.json.members.filter(
-      (member: { path: string }) =>
-        (member.path.startsWith("integrations/") && member.path.endsWith(".md")) ||
-        (!member.path.startsWith("public-docs/") && member.path.endsWith("SKILL.md")),
+      expectedPaths.filter((member: string) => expectedPublicDocumentation.includes(member)),
+    ).toHaveLength(expectedPublicDocumentation.length);
+    const guidancePaths =
+      declared === "0.3"
+        ? classPaths([
+            "authoring-protocol",
+            "onboarding-protocol",
+            "release-protocol",
+            "adoption-protocol",
+            "portable-skill",
+          ])
+        : expectedPaths.filter(
+            (member: string) =>
+              (member.startsWith("integrations/") && member.endsWith(".md")) ||
+              (!member.startsWith("public-docs/") && member.endsWith("SKILL.md")),
+          );
+    const guidance = result.json.members.filter((member: { path: string }) =>
+      guidancePaths.includes(member.path),
     );
-    expect(guidance).toHaveLength(8);
+    expect(guidance).toHaveLength(guidancePaths.length);
     for (const member of guidance) {
-      expect(member.nkf_version_stamp, member.path).toBe("0.2");
+      expect(member.nkf_version_stamp, member.path).toBe(declared);
     }
   });
 
@@ -316,7 +358,7 @@ describe("deterministic governed mechanics", () => {
     expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
   });
 
-  it("migrates a declared 0.1 project to 0.2 through the archive", async () => {
+  it("migrates a declared 0.1 project to 0.3 through the archive", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-migrate-"));
     const project = path.join(parent, "project");
     const archived = spawnSync("git", ["archive", "b748402", "fixtures/valid/minimal"], { cwd: repositoryRoot, encoding: null, maxBuffer: 64 * 1024 * 1024 });
@@ -330,7 +372,7 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.tasks_gated).toBe(1);
     expect(result.json.validation.conformance).toBe("passed");
     const bundle = await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8");
-    expect(bundle).toContain('nkf_version: "0.2"');
+    expect(bundle).toContain('nkf_version: "0.3"');
     expect(bundle).toContain("tasks/cancelled/README.md");
     expect(await readFile(path.join(project, "knowledge/tasks/cancelled/README.md"), "utf8")).toContain("# Cancelled Tasks");
     expect(await readFile(path.join(project, "knowledge/tasks/README.md"), "utf8")).toContain("(cancelled/README.md)");

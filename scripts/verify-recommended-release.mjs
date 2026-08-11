@@ -3,10 +3,12 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseStrictJson } from "./release/core.mjs";
-import {
-  ACCEPTED_ARTIFACT_DIGESTS,
-  CHECKER_CONFIRMATION,
-} from "./release/config.mjs";
+import { ACCEPTED_0_3_ARTIFACT_DIGESTS } from "./release/config.mjs";
+
+const EXPECTED_CHECKER_SHA256 =
+  "804c082c3f1c8beebc24d044f23581cdafcf2fbac40aecbfff1ae0c75fbe807d";
+const EXPECTED_ADOPTER_SHA256 =
+  "9e20219d8b92a0b38086da48311f2d2bfd14f8676fa8256e9efcefaaa938afc5";
 
 const repositoryRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -69,8 +71,8 @@ exactKeys(
   ["prerelease", "published_at", "url", "visibility"],
   "Recommended publication",
 );
-if (!Array.isArray(catalog.compatibility) || catalog.compatibility.length !== 2) {
-  fail("Recommended compatibility must declare exactly the supported 0.1 and 0.2 predecessors.");
+if (!Array.isArray(catalog.compatibility) || catalog.compatibility.length !== 3) {
+  fail("Recommended compatibility must declare exactly the supported 0.1, 0.2, and 0.3 states.");
 }
 for (const [index, entry] of catalog.compatibility.entries()) {
   exactKeys(
@@ -85,7 +87,7 @@ const assetName = `nourd-nkf-sha256-${archiveSha256}.tar`;
 const tag = `release-sha256-${archiveSha256}`;
 if (
   catalog.contract !== "nkf.recommended-release" ||
-  catalog.nkf_version !== "0.2" ||
+  catalog.nkf_version !== "0.3" ||
   catalog.state !== "recommended" ||
   catalog.channel !== "internal-private-github-prerelease" ||
   JSON.stringify(catalog.compatibility) !==
@@ -95,14 +97,21 @@ if (
         classification: "breaking",
         migration_required: true,
         summary:
-          "NKF 0.1 consumers require the governed 0.2 migration and explicit Human Product Owner approval before mutation.",
+          "NKF 0.1 requires explicit repository-owner approval for the governed breaking migration to NKF 0.3.",
       },
       {
         from_nkf_version: "0.2",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.2 requires explicit repository-owner approval for the governed breaking migration to NKF 0.3.",
+      },
+      {
+        from_nkf_version: "0.3",
         classification: "non-breaking",
         migration_required: false,
         summary:
-          "NKF 0.2 consumers can refresh their pinned release and host integration without semantic migration.",
+          "NKF 0.3 refreshes the exact recommended release and integration without semantic migration.",
       },
     ]) ||
   !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
@@ -113,11 +122,11 @@ if (
   catalog.archive.url !==
     `https://github.com/kaveh6202/Nourd.NKF/releases/download/${tag}/${assetName}` ||
   !/^[0-9a-f]{40}$/.test(catalog.source_commit ?? "") ||
-  catalog.checker_sha256 !== CHECKER_CONFIRMATION.checkerSha256 ||
+  catalog.checker_sha256 !== EXPECTED_CHECKER_SHA256 ||
   catalog.authority.markdown_sha256 !==
-    ACCEPTED_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.2.md"] ||
+    ACCEPTED_0_3_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.3.md"] ||
   catalog.authority.executable_sha256 !==
-    ACCEPTED_ARTIFACT_DIGESTS["contracts/nkf/0.2/nkf.yaml"] ||
+    ACCEPTED_0_3_ARTIFACT_DIGESTS["contracts/nkf/0.3/nkf.yaml"] ||
   catalog.release.url !==
     `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}` ||
   !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(
@@ -133,7 +142,10 @@ if (
 const adopterSha256 = sha256(
   await readFile(path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs")),
 );
-if (catalog.adopter_sha256 !== adopterSha256) {
+if (
+  catalog.adopter_sha256 !== EXPECTED_ADOPTER_SHA256 ||
+  catalog.adopter_sha256 !== adopterSha256
+) {
   fail("The recommended release binds a different adopter build.");
 }
 process.stdout.write(
