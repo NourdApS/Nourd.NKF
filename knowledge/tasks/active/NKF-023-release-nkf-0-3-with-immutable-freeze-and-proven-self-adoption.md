@@ -424,6 +424,18 @@ adopted Design.
   when the bundle declares 0.3. The 35 focused tests and the complete 202-test
   gate pass with deterministic builds, 972 living links, and zero self-host
   diagnostics. A sixth private candidate remains pending.
+- The sixth private candidate, SHA-256
+  `5423e7fadf736f1aeac7575e2def400fc9216d23b14e292055a73b2ee5ea3a9e`
+  from source commit `3d5fc256ffc80072188d69087ae9d0a0d3b7e9a0`, passed
+  deterministic packaging, source reproduction, candidate Adopt, and the
+  corrected runtime enumeration. Its only producer-gate failure was the same
+  mechanics test's remaining comparison of 0.3 members against legacy 0.2
+  adapter, fixture, public-documentation, and guidance arrays. This candidate
+  is invalid and unpublished. The test now derives every 0.3 class subset and
+  version stamp from the sole release set while retaining the historical 0.2
+  assertions. The focused mechanics suite and complete 202-test gate pass with
+  deterministic builds, 972 living links, and zero self-host diagnostics. A
+  seventh private candidate remains pending.
 
 ## Decision Applicability
 

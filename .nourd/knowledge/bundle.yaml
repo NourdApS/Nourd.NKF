@@ -1333,7 +1333,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: 2ea2642e75191c518bfd2457bdc42168a6e12204aa5286c0cd3a04f41595d5ba
+      value: 088add95174fa626d072b21fa746970b4c640c766b2cd4c7aeaf3c2fdaa06502
     record: nkf-0.1-native-realization
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts

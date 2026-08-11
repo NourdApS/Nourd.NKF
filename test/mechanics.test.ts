@@ -124,24 +124,54 @@ describe("deterministic governed mechanics", () => {
       expect(member.present, member.path).toBe(true);
       expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
     }
+    const classPaths = (classes: string[]) =>
+      declared === "0.3"
+        ? releaseSet.members
+            .filter((member: { class: string }) => classes.includes(member.class))
+            .map((member: { path: string }) => member.path)
+        : [];
+    const expectedHostAdapters =
+      declared === "0.3"
+        ? classPaths(["host-adapter-instruction"])
+        : HOST_ADAPTER_FILES;
+    const expectedFixtures =
+      declared === "0.3"
+        ? classPaths(["product-fixture", "technology-fixture"])
+        : FIXTURE_FILES;
+    const expectedPublicDocumentation =
+      declared === "0.3"
+        ? classPaths(["public-documentation"])
+        : PUBLIC_DOCUMENTATION_FILES.map((member: string) => `public-docs/${member}`);
     expect(expectedPaths).toContain("dist/nourd-nkf-adopt.mjs");
     expect(
-      expectedPaths.filter((member: string) => HOST_ADAPTER_FILES.includes(member)),
-    ).toHaveLength(HOST_ADAPTER_FILES.length);
+      expectedPaths.filter((member: string) => expectedHostAdapters.includes(member)),
+    ).toHaveLength(expectedHostAdapters.length);
     expect(
-      expectedPaths.filter((member: string) => FIXTURE_FILES.includes(member)),
-    ).toHaveLength(FIXTURE_FILES.length);
+      expectedPaths.filter((member: string) => expectedFixtures.includes(member)),
+    ).toHaveLength(expectedFixtures.length);
     expect(
-      expectedPaths.filter((member: string) => member.startsWith("public-docs/")),
-    ).toHaveLength(PUBLIC_DOCUMENTATION_FILES.length);
-    const guidance = result.json.members.filter(
-      (member: { path: string }) =>
-        (member.path.startsWith("integrations/") && member.path.endsWith(".md")) ||
-        (!member.path.startsWith("public-docs/") && member.path.endsWith("SKILL.md")),
+      expectedPaths.filter((member: string) => expectedPublicDocumentation.includes(member)),
+    ).toHaveLength(expectedPublicDocumentation.length);
+    const guidancePaths =
+      declared === "0.3"
+        ? classPaths([
+            "authoring-protocol",
+            "onboarding-protocol",
+            "release-protocol",
+            "adoption-protocol",
+            "portable-skill",
+          ])
+        : expectedPaths.filter(
+            (member: string) =>
+              (member.startsWith("integrations/") && member.endsWith(".md")) ||
+              (!member.startsWith("public-docs/") && member.endsWith("SKILL.md")),
+          );
+    const guidance = result.json.members.filter((member: { path: string }) =>
+      guidancePaths.includes(member.path),
     );
-    expect(guidance).toHaveLength(8);
+    expect(guidance).toHaveLength(guidancePaths.length);
     for (const member of guidance) {
-      expect(member.nkf_version_stamp, member.path).toBe("0.2");
+      expect(member.nkf_version_stamp, member.path).toBe(declared);
     }
   });
 
