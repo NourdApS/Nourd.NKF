@@ -49,14 +49,15 @@ is non-breaking without knowledge migration or breaking approval; same-version
 0.4 refresh is non-breaking. NKF 0.1, 0.2, and 0.3 remain immutable supported
 predecessors rather than current recommendations.
 
-At this publication checkpoint, this producer repository still pins the exact
-0.3 archive and uses a
-verified host-superset integration: the pinned release check runs first, then
-the preserved stronger producer gate. The recommendation now selects 0.4, but
-recommendation alone does not migrate this repository; ordinary public Adopt
-and its separate post-adoption audit remain the next steps on this Task branch.
-The exact candidate already updated a pristine producer clone to 0.4 without
-changing knowledge and returned `current` on repeat.
+This producer repository has now adopted the same exact published 0.4
+recommendation through the public subcommand-free Adopt operation. It pins the
+content-addressed 0.4 archive and retains the verified host-superset
+integration: the pinned release check runs first, then the preserved stronger
+producer gate. Immediate repeat and a separate pristine-clone audit returned
+`current` without tracked mutation, preserved the complete knowledge tree,
+passed 28 test files and 210 tests, and rejected pin, archive, and integration
+tampering. The evidence is recorded in the
+[NKF-024 producer-adoption audit](knowledge/evidence/audits/nkf-024-nkf-0-4-producer-adoption-audit.md).
 
 The 0.3 archive carries its complete public-documentation projection and exact
 public adopter. Publication of those bytes to the separate

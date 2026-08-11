@@ -225,8 +225,8 @@ post-adoption audit before this Task concludes.
   returns `current` on repeat; 0.1 and 0.2 remain approval-gated and preserving.
 - The successor
   [NKF 0.4 Security Maintenance Realization](../../realizations/current/nkf-0.4-security-maintenance.md)
-  records the implementation mapping and remains explicitly unconfirmed until
-  the exact candidate audit and later delegated confirmation Decision.
+  records the implementation mapping and is exactly confirmed by the later
+  delegated confirmation Decision after clean candidate audit.
 - The first private archive was superseded before publication after its
   exercise exposed a stale 0.3 compatibility expectation and then a missing
   producer host-registry rebind. Both defects were corrected in source and
@@ -253,9 +253,17 @@ post-adoption audit before this Task concludes.
   [publication Evidence](../../evidence/audits/nkf-024-nkf-0-4-publication.md)
   also independently re-downloaded the frozen 0.3 predecessor at its original
   tag, source commit, size, and SHA-256.
-- The branch recommendation now selects that exact published 0.4 release and
-  declares four supported predecessor/current states. Recommendation does not
-  yet claim ordinary producer adoption.
+- The branch recommendation selects that exact published 0.4 release and
+  declares four supported predecessor/current states. Ordinary public Adopt
+  then updated this producer from 0.3 without migration, approval, integration
+  weakening, or knowledge change; immediate repeat returned `current`.
+- The fresh
+  [producer-adoption audit](../../evidence/audits/nkf-024-nkf-0-4-producer-adoption-audit.md)
+  returned `CLEAN` for exact producer commit `c5ed385`: pristine `npm ci`, zero
+  advisories, the pinned-first canonical gate with 28 test files and 210 tests,
+  authenticated release re-download, exact recommendation/pin agreement,
+  frozen 0.3 and knowledge preservation, repeat `current` with no tracked-byte
+  change, and fail-closed pin, archive, and integration tampering.
 
 ## Decision Applicability
 
@@ -292,5 +300,5 @@ post-adoption audit before this Task concludes.
 | Ordinary 0.3-to-0.4 Adopt is non-breaking, migration-free, approval-free, preserving, and idempotent | proven | runtime-behaviour | none |
 | Supported 0.1 and 0.2 predecessor migrations remain approval-gated and preserving | proven | runtime-behaviour | none |
 | Exact-candidate producer self-adoption preserves the stronger host gate and returns `current` | proven | runtime-behaviour | none |
-| Independent candidate and post-publication audits return clean before their dependent actions | unknown | none | none |
-| The published recommendation and producer pin resolve the same immutable 0.4 archive | unknown | none | none |
+| Independent candidate and post-publication audits return clean before their dependent actions | proven | runtime-behaviour | none |
+| The published recommendation and producer pin resolve the same immutable 0.4 archive | proven | data-validity | none |

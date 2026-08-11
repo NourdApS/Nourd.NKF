@@ -71,6 +71,12 @@ single private-prerelease asset, authenticated draft and published downloads,
 byte-for-byte identity with the audited candidate, and a separate fresh
 reverification of the immutable published NKF 0.3 predecessor.
 
+The NKF-024 NKF 0.4 producer-adoption audit independently verifies the exact
+published recommendation and installed pin from a pristine remote clone,
+repeats ordinary Adopt to `current` without tracked mutation, preserves the
+knowledge tree and frozen 0.3 surfaces, and rejects pin, archive, and
+integration tampering.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification
