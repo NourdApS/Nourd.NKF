@@ -66,6 +66,11 @@ compatibility and adversarial suite, and proves exact-candidate producer
 self-adoption with preserved knowledge and host-superset integration before
 technical confirmation or publication.
 
+The NKF-024 NKF 0.4 publication Evidence records the content-addressed tag,
+single private-prerelease asset, authenticated draft and published downloads,
+byte-for-byte identity with the audited candidate, and a separate fresh
+reverification of the immutable published NKF 0.3 predecessor.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

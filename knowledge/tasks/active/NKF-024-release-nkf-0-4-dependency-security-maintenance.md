@@ -246,6 +246,16 @@ post-adoption audit before this Task concludes.
   `a7912b92...79ecd`, checker `425286d3...d123`, adopter `416b26e7...cd65`,
   and dependency lock `c2490fc3...71fe`. Publication, recommendation, and
   ordinary producer adoption remain separate pending facts.
+- The exact confirmed tag now resolves remotely to release commit `29880a3`.
+  Github prerelease `368669248` publishes exactly one 4,164,608-byte asset at
+  SHA-256 `a7912b92...79ecd`; authenticated draft and published downloads were
+  byte-identical. The
+  [publication Evidence](../../evidence/audits/nkf-024-nkf-0-4-publication.md)
+  also independently re-downloaded the frozen 0.3 predecessor at its original
+  tag, source commit, size, and SHA-256.
+- The branch recommendation now selects that exact published 0.4 release and
+  declares four supported predecessor/current states. Recommendation does not
+  yet claim ordinary producer adoption.
 
 ## Decision Applicability
 
@@ -274,7 +284,7 @@ post-adoption audit before this Task concludes.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Published NKF 0.3 remains exact immutable predecessor evidence | unknown | none | none |
+| Published NKF 0.3 remains exact immutable predecessor evidence | proven | data-validity | none |
 | The locked 0.4 dependency graph contains patched `fast-uri` and `nanoid` versions and no known npm advisory | proven | data-validity | none |
 | The two advisory application paths are absent or fail closed at NKF's exact shipped boundaries | proven | runtime-behaviour | none |
 | The 0.4 authority pair is a semantically bounded maintenance successor to accepted 0.3 | proven | data-validity | none |

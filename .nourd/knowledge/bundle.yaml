@@ -114,6 +114,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-024-nkf-0-4-exact-candidate-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-024-nkf-0-4-publication.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
@@ -1043,7 +1045,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: 13724f3a29c4f979b518c61d230051604a673d46351e1aafa91c7203f2b522db
+      value: d1c29fe245f743e0bb378a51c930f6834c9a104ca0bc8925ffae35feb5589139
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -1051,7 +1053,7 @@ governed_artifacts:
     path: release/recommended.json
     digest:
       algorithm: sha-256
-      value: 888663f42bea0923c0797bc2bc28ec75af7abcdcca7d8e8b6568fbbaf4df82f9
+      value: 189ca31cb7ccb361d44ba9f0a0fe80b31f513f047564c8d1e9701d19af312fa2
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-adoption-nourd-nkf-adopt-mjs
@@ -1187,7 +1189,7 @@ governed_artifacts:
     path: scripts/verify-recommended-release.mjs
     digest:
       algorithm: sha-256
-      value: f9c8b3dd84ba066070d00d9032859d3d54c76d1ca952da28dbb29af1ba080b93
+      value: cddf227e1f114e084bdd7b4e4ee53fdecf21870f05875d101da1b01deeb0bcdf
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-release-mjs
