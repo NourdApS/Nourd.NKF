@@ -317,7 +317,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 4b083e53d7d5c2683441697afdc5695045c8adeb3e952a4468e67f14fbdff863
+      value: a34b073e0efd47d15252b2f6c4058b461ab9372a1569f5db2c8576e957821cf1
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-2-nourd-knowledge-bundle-yaml
@@ -1021,7 +1021,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 4b083e53d7d5c2683441697afdc5695045c8adeb3e952a4468e67f14fbdff863
+      value: a34b073e0efd47d15252b2f6c4058b461ab9372a1569f5db2c8576e957821cf1
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -1045,7 +1045,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: f689338a7fe4801b9760bc90e5b75f7156995c7fe59730e4ca1777bf8fb390a7
+      value: 3dc10412786d62a2433baca9a04c45b8f12ca06b6476d28f909156d4c077774e
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
@@ -1333,7 +1333,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: 91dfc3cddc32e89b822523468ab0f52b6237b2f00868d2b320975108a1f74793
+      value: 2ea2642e75191c518bfd2457bdc42168a6e12204aa5286c0cd3a04f41595d5ba
     record: nkf-0.1-native-realization
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts
@@ -1357,7 +1357,7 @@ governed_artifacts:
     path: test/agent-guidance.test.ts
     digest:
       algorithm: sha-256
-      value: 094c7b36a7f8ec225abeac55e38afff1f74b0e0e6c7076c56b8072efe0235cdd
+      value: f94d17154f694a65515a6103abfd3b6421e250fed7e3b16369f596c63221c021
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-test-authority-test-ts

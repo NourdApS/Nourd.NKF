@@ -100,16 +100,26 @@ describe("deterministic governed mechanics", () => {
 
   it("enumerates the versioned set with digests and stamps", async () => {
     const result = run("set", repositoryRoot);
+    const bundle = await readFile(
+      path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"),
+      "utf8",
+    );
+    const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.2";
+    const releaseSet = declared === "0.3" ? await readReleaseSet(repositoryRoot) : undefined;
+    const expectedEntries =
+      declared === "0.3"
+        ? releaseEntriesForVersion(declared, releaseSet)
+        : RELEASE_ENTRIES;
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("enumerated");
-    expect(result.json.nkf_version).toBe("0.2");
-    const expectedPaths = RELEASE_ENTRIES
+    expect(result.json.nkf_version).toBe(declared);
+    const expectedPaths = expectedEntries
       .filter((entry: { path: string }) => entry.path !== "release-manifest.json")
       .map((entry: { path: string }) => entry.path);
     expect(result.json.members.map((member: { path: string }) => member.path)).toEqual(
       expectedPaths,
     );
-    expect(result.json.members).toHaveLength(132);
+    expect(result.json.members).toHaveLength(expectedPaths.length);
     for (const member of result.json.members) {
       expect(member.present, member.path).toBe(true);
       expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);

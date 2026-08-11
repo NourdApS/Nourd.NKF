@@ -411,6 +411,19 @@ adopted Design.
   The focused verifier suite passes all 21 tests and the complete gate passes
   25 test files and 202 tests with deterministic builds, 972 living links, and
   zero self-host diagnostics. A fifth private candidate remains pending.
+- The fifth private candidate, SHA-256
+  `c1b5a00a1a1e07bf8fa5b79d21c92bc5fab4ac293f7f5e79632c5fa8ac0bb077`
+  from source commit `d4ed6926e3bf746e14c0be7678cb49d61cc78221`, passed
+  deterministic packaging, source reproduction, candidate Adopt, adapter
+  verification, and the start of the full producer test suite. Two tests then
+  exposed pre-adoption assumptions: a guidance test read the installed chain
+  instead of the preserved host body, and the internal `set` command could
+  enumerate only the 0.2 hard-coded set after the bundle migrated to 0.3. The
+  candidate is invalid and unpublished. The test now resolves the preserved
+  host body in either state, and `set` loads the sole 0.3 release-set contract
+  when the bundle declares 0.3. The 35 focused tests and the complete 202-test
+  gate pass with deterministic builds, 972 living links, and zero self-host
+  diagnostics. A sixth private candidate remains pending.
 
 ## Decision Applicability
 

@@ -114,17 +114,17 @@ var require_visit = __commonJS({
     visit.BREAK = BREAK;
     visit.SKIP = SKIP;
     visit.REMOVE = REMOVE;
-    function visit_(key, node, visitor, path4) {
-      const ctrl = callVisitor(key, node, visitor, path4);
+    function visit_(key, node, visitor, path5) {
+      const ctrl = callVisitor(key, node, visitor, path5);
       if (identity.isNode(ctrl) || identity.isPair(ctrl)) {
-        replaceNode(key, path4, ctrl);
-        return visit_(key, ctrl, visitor, path4);
+        replaceNode(key, path5, ctrl);
+        return visit_(key, ctrl, visitor, path5);
       }
       if (typeof ctrl !== "symbol") {
         if (identity.isCollection(node)) {
-          path4 = Object.freeze(path4.concat(node));
+          path5 = Object.freeze(path5.concat(node));
           for (let i = 0; i < node.items.length; ++i) {
-            const ci = visit_(i, node.items[i], visitor, path4);
+            const ci = visit_(i, node.items[i], visitor, path5);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -135,13 +135,13 @@ var require_visit = __commonJS({
             }
           }
         } else if (identity.isPair(node)) {
-          path4 = Object.freeze(path4.concat(node));
-          const ck = visit_("key", node.key, visitor, path4);
+          path5 = Object.freeze(path5.concat(node));
+          const ck = visit_("key", node.key, visitor, path5);
           if (ck === BREAK)
             return BREAK;
           else if (ck === REMOVE)
             node.key = null;
-          const cv = visit_("value", node.value, visitor, path4);
+          const cv = visit_("value", node.value, visitor, path5);
           if (cv === BREAK)
             return BREAK;
           else if (cv === REMOVE)
@@ -162,17 +162,17 @@ var require_visit = __commonJS({
     visitAsync.BREAK = BREAK;
     visitAsync.SKIP = SKIP;
     visitAsync.REMOVE = REMOVE;
-    async function visitAsync_(key, node, visitor, path4) {
-      const ctrl = await callVisitor(key, node, visitor, path4);
+    async function visitAsync_(key, node, visitor, path5) {
+      const ctrl = await callVisitor(key, node, visitor, path5);
       if (identity.isNode(ctrl) || identity.isPair(ctrl)) {
-        replaceNode(key, path4, ctrl);
-        return visitAsync_(key, ctrl, visitor, path4);
+        replaceNode(key, path5, ctrl);
+        return visitAsync_(key, ctrl, visitor, path5);
       }
       if (typeof ctrl !== "symbol") {
         if (identity.isCollection(node)) {
-          path4 = Object.freeze(path4.concat(node));
+          path5 = Object.freeze(path5.concat(node));
           for (let i = 0; i < node.items.length; ++i) {
-            const ci = await visitAsync_(i, node.items[i], visitor, path4);
+            const ci = await visitAsync_(i, node.items[i], visitor, path5);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -183,13 +183,13 @@ var require_visit = __commonJS({
             }
           }
         } else if (identity.isPair(node)) {
-          path4 = Object.freeze(path4.concat(node));
-          const ck = await visitAsync_("key", node.key, visitor, path4);
+          path5 = Object.freeze(path5.concat(node));
+          const ck = await visitAsync_("key", node.key, visitor, path5);
           if (ck === BREAK)
             return BREAK;
           else if (ck === REMOVE)
             node.key = null;
-          const cv = await visitAsync_("value", node.value, visitor, path4);
+          const cv = await visitAsync_("value", node.value, visitor, path5);
           if (cv === BREAK)
             return BREAK;
           else if (cv === REMOVE)
@@ -216,23 +216,23 @@ var require_visit = __commonJS({
       }
       return visitor;
     }
-    function callVisitor(key, node, visitor, path4) {
+    function callVisitor(key, node, visitor, path5) {
       if (typeof visitor === "function")
-        return visitor(key, node, path4);
+        return visitor(key, node, path5);
       if (identity.isMap(node))
-        return visitor.Map?.(key, node, path4);
+        return visitor.Map?.(key, node, path5);
       if (identity.isSeq(node))
-        return visitor.Seq?.(key, node, path4);
+        return visitor.Seq?.(key, node, path5);
       if (identity.isPair(node))
-        return visitor.Pair?.(key, node, path4);
+        return visitor.Pair?.(key, node, path5);
       if (identity.isScalar(node))
-        return visitor.Scalar?.(key, node, path4);
+        return visitor.Scalar?.(key, node, path5);
       if (identity.isAlias(node))
-        return visitor.Alias?.(key, node, path4);
+        return visitor.Alias?.(key, node, path5);
       return void 0;
     }
-    function replaceNode(key, path4, node) {
-      const parent = path4[path4.length - 1];
+    function replaceNode(key, path5, node) {
+      const parent = path5[path5.length - 1];
       if (identity.isCollection(parent)) {
         parent.items[key] = node;
       } else if (identity.isPair(parent)) {
@@ -842,10 +842,10 @@ var require_Collection = __commonJS({
     var createNode = require_createNode();
     var identity = require_identity();
     var Node2 = require_Node();
-    function collectionFromPath(schema, path4, value) {
+    function collectionFromPath(schema, path5, value) {
       let v = value;
-      for (let i = path4.length - 1; i >= 0; --i) {
-        const k = path4[i];
+      for (let i = path5.length - 1; i >= 0; --i) {
+        const k = path5[i];
         if (typeof k === "number" && Number.isInteger(k) && k >= 0) {
           const a = [];
           a[k] = v;
@@ -864,7 +864,7 @@ var require_Collection = __commonJS({
         sourceObjects: /* @__PURE__ */ new Map()
       });
     }
-    var isEmptyPath = (path4) => path4 == null || typeof path4 === "object" && !!path4[Symbol.iterator]().next().done;
+    var isEmptyPath = (path5) => path5 == null || typeof path5 === "object" && !!path5[Symbol.iterator]().next().done;
     var Collection = class extends Node2.NodeBase {
       constructor(type, schema) {
         super(type);
@@ -894,11 +894,11 @@ var require_Collection = __commonJS({
        * be a Pair instance or a `{ key, value }` object, which may not have a key
        * that already exists in the map.
        */
-      addIn(path4, value) {
-        if (isEmptyPath(path4))
+      addIn(path5, value) {
+        if (isEmptyPath(path5))
           this.add(value);
         else {
-          const [key, ...rest] = path4;
+          const [key, ...rest] = path5;
           const node = this.get(key, true);
           if (identity.isCollection(node))
             node.addIn(rest, value);
@@ -912,8 +912,8 @@ var require_Collection = __commonJS({
        * Removes a value from the collection.
        * @returns `true` if the item was found and removed.
        */
-      deleteIn(path4) {
-        const [key, ...rest] = path4;
+      deleteIn(path5) {
+        const [key, ...rest] = path5;
         if (rest.length === 0)
           return this.delete(key);
         const node = this.get(key, true);
@@ -927,8 +927,8 @@ var require_Collection = __commonJS({
        * scalar values from their surrounding node; to disable set `keepScalar` to
        * `true` (collections are always returned intact).
        */
-      getIn(path4, keepScalar) {
-        const [key, ...rest] = path4;
+      getIn(path5, keepScalar) {
+        const [key, ...rest] = path5;
         const node = this.get(key, true);
         if (rest.length === 0)
           return !keepScalar && identity.isScalar(node) ? node.value : node;
@@ -946,8 +946,8 @@ var require_Collection = __commonJS({
       /**
        * Checks if the collection includes a value with the key `key`.
        */
-      hasIn(path4) {
-        const [key, ...rest] = path4;
+      hasIn(path5) {
+        const [key, ...rest] = path5;
         if (rest.length === 0)
           return this.has(key);
         const node = this.get(key, true);
@@ -957,8 +957,8 @@ var require_Collection = __commonJS({
        * Sets a value in this collection. For `!!set`, `value` needs to be a
        * boolean to add/remove the item from the set.
        */
-      setIn(path4, value) {
-        const [key, ...rest] = path4;
+      setIn(path5, value) {
+        const [key, ...rest] = path5;
         if (rest.length === 0) {
           this.set(key, value);
         } else {
@@ -3473,9 +3473,9 @@ var require_Document = __commonJS({
           this.contents.add(value);
       }
       /** Adds a value to the document. */
-      addIn(path4, value) {
+      addIn(path5, value) {
         if (assertCollection(this.contents))
-          this.contents.addIn(path4, value);
+          this.contents.addIn(path5, value);
       }
       /**
        * Create a new `Alias` node, ensuring that the target `node` has the required anchor.
@@ -3550,14 +3550,14 @@ var require_Document = __commonJS({
        * Removes a value from the document.
        * @returns `true` if the item was found and removed.
        */
-      deleteIn(path4) {
-        if (Collection.isEmptyPath(path4)) {
+      deleteIn(path5) {
+        if (Collection.isEmptyPath(path5)) {
           if (this.contents == null)
             return false;
           this.contents = null;
           return true;
         }
-        return assertCollection(this.contents) ? this.contents.deleteIn(path4) : false;
+        return assertCollection(this.contents) ? this.contents.deleteIn(path5) : false;
       }
       /**
        * Returns item at `key`, or `undefined` if not found. By default unwraps
@@ -3572,10 +3572,10 @@ var require_Document = __commonJS({
        * scalar values from their surrounding node; to disable set `keepScalar` to
        * `true` (collections are always returned intact).
        */
-      getIn(path4, keepScalar) {
-        if (Collection.isEmptyPath(path4))
+      getIn(path5, keepScalar) {
+        if (Collection.isEmptyPath(path5))
           return !keepScalar && identity.isScalar(this.contents) ? this.contents.value : this.contents;
-        return identity.isCollection(this.contents) ? this.contents.getIn(path4, keepScalar) : void 0;
+        return identity.isCollection(this.contents) ? this.contents.getIn(path5, keepScalar) : void 0;
       }
       /**
        * Checks if the document includes a value with the key `key`.
@@ -3586,10 +3586,10 @@ var require_Document = __commonJS({
       /**
        * Checks if the document includes a value at `path`.
        */
-      hasIn(path4) {
-        if (Collection.isEmptyPath(path4))
+      hasIn(path5) {
+        if (Collection.isEmptyPath(path5))
           return this.contents !== void 0;
-        return identity.isCollection(this.contents) ? this.contents.hasIn(path4) : false;
+        return identity.isCollection(this.contents) ? this.contents.hasIn(path5) : false;
       }
       /**
        * Sets a value in this document. For `!!set`, `value` needs to be a
@@ -3606,13 +3606,13 @@ var require_Document = __commonJS({
        * Sets a value in this document. For `!!set`, `value` needs to be a
        * boolean to add/remove the item from the set.
        */
-      setIn(path4, value) {
-        if (Collection.isEmptyPath(path4)) {
+      setIn(path5, value) {
+        if (Collection.isEmptyPath(path5)) {
           this.contents = value;
         } else if (this.contents == null) {
-          this.contents = Collection.collectionFromPath(this.schema, Array.from(path4), value);
+          this.contents = Collection.collectionFromPath(this.schema, Array.from(path5), value);
         } else if (assertCollection(this.contents)) {
-          this.contents.setIn(path4, value);
+          this.contents.setIn(path5, value);
         }
       }
       /**
@@ -5572,9 +5572,9 @@ var require_cst_visit = __commonJS({
     visit.BREAK = BREAK;
     visit.SKIP = SKIP;
     visit.REMOVE = REMOVE;
-    visit.itemAtPath = (cst, path4) => {
+    visit.itemAtPath = (cst, path5) => {
       let item2 = cst;
-      for (const [field, index] of path4) {
+      for (const [field, index] of path5) {
         const tok = item2?.[field];
         if (tok && "items" in tok) {
           item2 = tok.items[index];
@@ -5583,23 +5583,23 @@ var require_cst_visit = __commonJS({
       }
       return item2;
     };
-    visit.parentCollection = (cst, path4) => {
-      const parent = visit.itemAtPath(cst, path4.slice(0, -1));
-      const field = path4[path4.length - 1][0];
+    visit.parentCollection = (cst, path5) => {
+      const parent = visit.itemAtPath(cst, path5.slice(0, -1));
+      const field = path5[path5.length - 1][0];
       const coll = parent?.[field];
       if (coll && "items" in coll)
         return coll;
       throw new Error("Parent collection not found");
     };
-    function _visit(path4, item2, visitor) {
-      let ctrl = visitor(item2, path4);
+    function _visit(path5, item2, visitor) {
+      let ctrl = visitor(item2, path5);
       if (typeof ctrl === "symbol")
         return ctrl;
       for (const field of ["key", "value"]) {
         const token = item2[field];
         if (token && "items" in token) {
           for (let i = 0; i < token.items.length; ++i) {
-            const ci = _visit(Object.freeze(path4.concat([[field, i]])), token.items[i], visitor);
+            const ci = _visit(Object.freeze(path5.concat([[field, i]])), token.items[i], visitor);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -5610,10 +5610,10 @@ var require_cst_visit = __commonJS({
             }
           }
           if (typeof ctrl === "function" && field === "key")
-            ctrl = ctrl(item2, path4);
+            ctrl = ctrl(item2, path5);
         }
       }
-      return typeof ctrl === "function" ? ctrl(item2, path4) : ctrl;
+      return typeof ctrl === "function" ? ctrl(item2, path5) : ctrl;
     }
     exports.visit = visit;
   }
@@ -11131,8 +11131,8 @@ var require_utils = __commonJS({
       }
       return ind;
     }
-    function removeDotSegments(path4) {
-      let input = path4;
+    function removeDotSegments(path5) {
+      let input = path5;
       const output = [];
       let nextSlash = -1;
       let len = 0;
@@ -11384,8 +11384,8 @@ var require_schemes = __commonJS({
         wsComponent.secure = void 0;
       }
       if (wsComponent.resourceName) {
-        const [path4, query] = wsComponent.resourceName.split("?");
-        wsComponent.path = path4 && path4 !== "/" ? path4 : void 0;
+        const [path5, query] = wsComponent.resourceName.split("?");
+        wsComponent.path = path5 && path5 !== "/" ? path5 : void 0;
         wsComponent.query = query;
         wsComponent.resourceName = void 0;
       }
@@ -15627,20 +15627,20 @@ import { createHash as createHash3 } from "node:crypto";
 import { execFileSync as execFileSync3, spawnSync as spawnSync2 } from "node:child_process";
 import {
   cp,
-  lstat as lstat2,
+  lstat as lstat3,
   mkdir as mkdir3,
   mkdtemp as mkdtemp2,
-  readFile as readFile3,
-  readdir as readdir2,
+  readFile as readFile4,
+  readdir as readdir3,
   realpath as realpath2,
   rename,
   rm as rm2,
   rmdir,
   unlink,
-  writeFile as writeFile3
+  writeFile as writeFile4
 } from "node:fs/promises";
 import os2 from "node:os";
-import path3 from "node:path";
+import path4 from "node:path";
 import process2 from "node:process";
 import { fileURLToPath } from "node:url";
 
@@ -19722,15 +19722,17 @@ import {
   chmod,
   mkdir as mkdir2,
   mkdtemp,
-  readFile as readFile2,
+  readFile as readFile3,
   rm,
-  writeFile as writeFile2
+  writeFile as writeFile3
 } from "node:fs/promises";
 import os from "node:os";
-import path2 from "node:path";
+import path3 from "node:path";
 
 // scripts/release/release-set.mjs
 var import_yaml2 = __toESM(require_dist(), 1);
+import { lstat as lstat2, readFile as readFile2, readdir as readdir2, writeFile as writeFile2 } from "node:fs/promises";
+import path2 from "node:path";
 var RELEASE_SET_PATH = "contracts/nkf/0.3/release-set.yaml";
 var RELEASE_CLASSES = Object.freeze([
   "normative-specification",
@@ -19884,6 +19886,9 @@ function validateReleaseSet(value) {
 }
 function parseReleaseSet(bytes) {
   return validateReleaseSet(parseYaml2(bytes));
+}
+async function readReleaseSet(repositoryRoot) {
+  return parseReleaseSet(await readFile2(path2.join(repositoryRoot, RELEASE_SET_PATH)));
 }
 
 // scripts/release/set-files.mjs
@@ -20586,17 +20591,17 @@ async function invokeVerifiedChecker(verification, checkerArguments = ["--help"]
   if (verification.manifest.checker.runtime.name !== "node" || currentNodeMajor < verification.manifest.checker.runtime.minimum_major) {
     fail3("The verified checker runtime requirement is not satisfied.");
   }
-  const temporary = await mkdtemp(path2.join(os.tmpdir(), "nourd-nkf-release-"));
+  const temporary = await mkdtemp(path3.join(os.tmpdir(), "nourd-nkf-release-"));
   try {
-    const root = path2.join(temporary, ARCHIVE_ROOT);
+    const root = path3.join(temporary, ARCHIVE_ROOT);
     const memberEntries = verification.release_entries;
     for (const expected of memberEntries) {
-      const target = path2.join(root, expected.path);
-      await mkdir2(path2.dirname(target), { recursive: true });
-      await writeFile2(target, requireBuffer(verification.entries, expected.path));
+      const target = path3.join(root, expected.path);
+      await mkdir2(path3.dirname(target), { recursive: true });
+      await writeFile3(target, requireBuffer(verification.entries, expected.path));
       await chmod(target, expected.mode);
     }
-    const checker = path2.join(root, "dist/nourd-nkf-checker.mjs");
+    const checker = path3.join(root, "dist/nourd-nkf-checker.mjs");
     const result = spawnSync(process.execPath, [checker, ...checkerArguments], {
       encoding: "utf8"
     });
@@ -20686,11 +20691,11 @@ function digest(bytes) {
   return createHash3("sha256").update(bytes).digest("hex");
 }
 function inside2(root, candidate) {
-  const relative = path3.relative(root, candidate);
-  return relative === "" || !relative.startsWith("..") && !path3.isAbsolute(relative);
+  const relative = path4.relative(root, candidate);
+  return relative === "" || !relative.startsWith("..") && !path4.isAbsolute(relative);
 }
 function safeRelative2(value, label) {
-  if (typeof value !== "string" || value === "" || value.trim() !== value || path3.isAbsolute(value) || value.includes("\\") || value.split("/").some((part) => part === "" || part === "." || part === "..")) {
+  if (typeof value !== "string" || value === "" || value.trim() !== value || path4.isAbsolute(value) || value.includes("\\") || value.split("/").some((part) => part === "" || part === "." || part === "..")) {
     fail4(`${label} must be a safe project-relative path.`);
   }
   return value;
@@ -20878,12 +20883,12 @@ async function resolveRecommendedRelease(options) {
   }
   let bytes;
   if (options.recommendation !== void 0) {
-    const recommendationPath = path3.resolve(options.recommendation);
-    const stat = await lstat2(recommendationPath).catch(() => null);
+    const recommendationPath = path4.resolve(options.recommendation);
+    const stat = await lstat3(recommendationPath).catch(() => null);
     if (stat === null || !stat.isFile() || stat.isSymbolicLink()) {
       fail4("--recommendation must identify a regular recommended-release catalog.");
     }
-    bytes = await readFile3(recommendationPath);
+    bytes = await readFile4(recommendationPath);
   } else {
     let encoded;
     try {
@@ -20915,8 +20920,8 @@ async function resolveRecommendedRelease(options) {
   );
 }
 async function requireProjectRoot(value) {
-  const root = path3.resolve(value ?? ".");
-  const rootStat = await lstat2(root).catch(() => null);
+  const root = path4.resolve(value ?? ".");
+  const rootStat = await lstat3(root).catch(() => null);
   if (rootStat === null || !rootStat.isDirectory() || rootStat.isSymbolicLink()) {
     fail4("The project root must be an existing non-symbolic-link directory.");
   }
@@ -20925,13 +20930,13 @@ async function requireProjectRoot(value) {
 }
 async function readRegularInside(root, relative, required = true) {
   const normalized = safeRelative2(relative, "Path");
-  const absolute = path3.resolve(root, ...normalized.split("/"));
+  const absolute = path4.resolve(root, ...normalized.split("/"));
   if (!inside2(root, absolute)) fail4(`Path escapes the project: ${relative}`);
   const parts = normalized.split("/");
   let current = root;
   for (const [index, part] of parts.entries()) {
-    current = path3.join(current, part);
-    const stat2 = await lstat2(current).catch(() => null);
+    current = path4.join(current, part);
+    const stat2 = await lstat3(current).catch(() => null);
     if (stat2 === null) {
       if (required) fail4(`Required file is missing: ${relative}`);
       return null;
@@ -20943,9 +20948,9 @@ async function readRegularInside(root, relative, required = true) {
       fail4(`A path component is not a directory: ${relative}`);
     }
   }
-  const stat = await lstat2(absolute);
+  const stat = await lstat3(absolute);
   if (!stat.isFile()) fail4(`Path is not a regular file: ${relative}`);
-  return readFile3(absolute);
+  return readFile4(absolute);
 }
 async function requireBundle(projectRoot) {
   const bundleBytes = await readRegularInside(
@@ -20968,14 +20973,14 @@ async function requireBundle(projectRoot) {
     bundle.knowledge_root,
     "bundle knowledge_root"
   );
-  const knowledgeAbsolute = path3.resolve(
+  const knowledgeAbsolute = path4.resolve(
     projectRoot,
     ...knowledgeRoot.split("/")
   );
   if (!inside2(projectRoot, knowledgeAbsolute)) {
     fail4("The configured knowledge root escapes the project.");
   }
-  const knowledgeStat = await lstat2(knowledgeAbsolute).catch(() => null);
+  const knowledgeStat = await lstat3(knowledgeAbsolute).catch(() => null);
   if (knowledgeStat === null || !knowledgeStat.isDirectory() || knowledgeStat.isSymbolicLink()) {
     fail4("The configured knowledge root must be a project-contained directory.");
   }
@@ -21000,14 +21005,14 @@ async function acquireArchive(options, expectedSha256) {
     fail4("Supply exactly one of --archive or --github-repository.");
   }
   if (hasArchive) {
-    return readFile3(path3.resolve(options.archive));
+    return readFile4(path4.resolve(options.archive));
   }
   const repository = options["github-repository"];
   if (repository !== "kaveh6202/Nourd.NKF") {
     fail4("--github-repository must be kaveh6202/Nourd.NKF.");
   }
   const { assetName, tag: tag3 } = releaseIdentity(expectedSha256);
-  const temporary = await mkdtemp2(path3.join(os2.tmpdir(), "nkf-download-"));
+  const temporary = await mkdtemp2(path4.join(os2.tmpdir(), "nkf-download-"));
   try {
     execFileSync3(
       "gh",
@@ -21024,7 +21029,7 @@ async function acquireArchive(options, expectedSha256) {
       ],
       { stdio: "inherit" }
     );
-    return readFile3(path3.join(temporary, assetName));
+    return readFile4(path4.join(temporary, assetName));
   } finally {
     await rm2(temporary, { recursive: true, force: true });
   }
@@ -21270,7 +21275,7 @@ function packageBytes(existingBytes, projectRoot) {
   let manifest;
   if (existingBytes === null) {
     manifest = {
-      name: path3.basename(projectRoot).toLowerCase().replace(/[^a-z0-9-]+/g, "-") || "nkf-project",
+      name: path4.basename(projectRoot).toLowerCase().replace(/[^a-z0-9-]+/g, "-") || "nkf-project",
       private: true,
       scripts: {}
     };
@@ -21354,8 +21359,8 @@ function packageLockBytes(packageManifestBytes) {
   });
 }
 async function currentExecutableBytes() {
-  const candidate = path3.resolve(fileURLToPath(import.meta.url));
-  return readFile3(candidate);
+  const candidate = path4.resolve(fileURLToPath(import.meta.url));
+  return readFile4(candidate);
 }
 async function targetFiles(projectRoot, archiveBytes, verification, rootProfile) {
   const files = /* @__PURE__ */ new Map();
@@ -21453,8 +21458,8 @@ async function ensureWritableParents(projectRoot, relativePaths) {
     const parts = relative.split("/").slice(0, -1);
     let current = projectRoot;
     for (const part of parts) {
-      current = path3.join(current, part);
-      const stat = await lstat2(current).catch(() => null);
+      current = path4.join(current, part);
+      const stat = await lstat3(current).catch(() => null);
       if (stat?.isSymbolicLink()) {
         fail4(`A target directory is a symbolic link: ${relative}`);
       }
@@ -21470,7 +21475,7 @@ async function writeTransaction(projectRoot, files, verifyAfterWrite, removedPat
     if (files.has(relative)) fail4(`A transaction path cannot be written and removed: ${relative}`);
   }
   const staging = await mkdtemp2(
-    path3.join(projectRoot, ".nkf-transaction-")
+    path4.join(projectRoot, ".nkf-transaction-")
   );
   const originals = /* @__PURE__ */ new Map();
   const replaced = [];
@@ -21479,19 +21484,19 @@ async function writeTransaction(projectRoot, files, verifyAfterWrite, removedPat
     const missing = [];
     let cursor = directory;
     while (inside2(projectRoot, cursor) && cursor !== projectRoot) {
-      const stat = await lstat2(cursor).catch(() => null);
+      const stat = await lstat3(cursor).catch(() => null);
       if (stat !== null) break;
       missing.push(cursor);
-      cursor = path3.dirname(cursor);
+      cursor = path4.dirname(cursor);
     }
     await mkdir3(directory, { recursive: true });
     for (const item2 of missing) createdDirectories.add(item2);
   };
   try {
     for (const [relative, bytes] of files) {
-      const staged = path3.join(staging, ...relative.split("/"));
-      await mkdir3(path3.dirname(staged), { recursive: true });
-      await writeFile3(staged, bytes, { flag: "wx" });
+      const staged = path4.join(staging, ...relative.split("/"));
+      await mkdir3(path4.dirname(staged), { recursive: true });
+      await writeFile4(staged, bytes, { flag: "wx" });
       originals.set(relative, await readRegularInside(projectRoot, relative, false));
     }
     for (const relative of removedPaths) {
@@ -21499,10 +21504,10 @@ async function writeTransaction(projectRoot, files, verifyAfterWrite, removedPat
       originals.set(relative, original);
     }
     for (const [relative] of files) {
-      const target = path3.join(projectRoot, ...relative.split("/"));
-      const staged = path3.join(staging, ...relative.split("/"));
-      await ensureTargetDirectory(path3.dirname(target));
-      const current = await lstat2(target).catch(() => null);
+      const target = path4.join(projectRoot, ...relative.split("/"));
+      const staged = path4.join(staging, ...relative.split("/"));
+      await ensureTargetDirectory(path4.dirname(target));
+      const current = await lstat3(target).catch(() => null);
       if (current?.isSymbolicLink() || current !== null && !current.isFile()) {
         fail4(`Adoption target is not a regular file: ${relative}`);
       }
@@ -21511,23 +21516,23 @@ async function writeTransaction(projectRoot, files, verifyAfterWrite, removedPat
       await rename(staged, target);
     }
     for (const relative of removedPaths) {
-      const target = path3.join(projectRoot, ...relative.split("/"));
+      const target = path4.join(projectRoot, ...relative.split("/"));
       replaced.push(relative);
       await unlink(target);
     }
     return await verifyAfterWrite();
   } catch (error) {
     for (const relative of replaced.reverse()) {
-      const target = path3.join(projectRoot, ...relative.split("/"));
+      const target = path4.join(projectRoot, ...relative.split("/"));
       const original = originals.get(relative);
       await rm2(target, { force: true });
       if (original !== null) {
-        await mkdir3(path3.dirname(target), { recursive: true });
-        await writeFile3(target, original);
+        await mkdir3(path4.dirname(target), { recursive: true });
+        await writeFile4(target, original);
       }
     }
     for (const directory of [...createdDirectories].sort(
-      (left, right) => right.split(path3.sep).length - left.split(path3.sep).length
+      (left, right) => right.split(path4.sep).length - left.split(path4.sep).length
     )) {
       await rmdir(directory).catch(() => void 0);
     }
@@ -21768,7 +21773,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const result = spawnSync2(
     process2.execPath,
-    [path3.join(projectRoot, ...pin.adopter.path.split("/")), "integration-check", "--project", projectRoot],
+    [path4.join(projectRoot, ...pin.adopter.path.split("/")), "integration-check", "--project", projectRoot],
     { encoding: "utf8" }
   );
   if (result.status !== 0) {
@@ -21779,35 +21784,35 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   return { pin, verification };
 }
 async function validateCompleteCandidate(projectRoot, files, removedPaths = [], verifier = null) {
-  const temporary = await mkdtemp2(path3.join(os2.tmpdir(), "nkf-candidate-"));
-  const candidate = path3.join(temporary, "project");
+  const temporary = await mkdtemp2(path4.join(os2.tmpdir(), "nkf-candidate-"));
+  const candidate = path4.join(temporary, "project");
   try {
     await cp(projectRoot, candidate, {
       recursive: true,
       filter(source) {
-        const relative = path3.relative(projectRoot, source);
+        const relative = path4.relative(projectRoot, source);
         if (relative === "") return true;
-        const first = relative.split(path3.sep)[0];
+        const first = relative.split(path4.sep)[0];
         return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
       }
     });
     await ensureWritableParents(candidate, files.keys());
     for (const relative of removedPaths) {
-      const target = path3.join(candidate, ...safeRelative2(relative, "Removed candidate path").split("/"));
-      const current = await lstat2(target).catch(() => null);
+      const target = path4.join(candidate, ...safeRelative2(relative, "Removed candidate path").split("/"));
+      const current = await lstat3(target).catch(() => null);
       if (current === null || !current.isFile() || current.isSymbolicLink()) {
         fail4(`Removed candidate path is not a regular file: ${relative}`);
       }
       await unlink(target);
     }
     for (const [relative, bytes] of files) {
-      const target = path3.join(candidate, ...relative.split("/"));
-      const current = await lstat2(target).catch(() => null);
+      const target = path4.join(candidate, ...relative.split("/"));
+      const current = await lstat3(target).catch(() => null);
       if (current?.isSymbolicLink() || current !== null && !current.isFile()) {
         fail4(`Candidate target is not a regular file: ${relative}`);
       }
-      await mkdir3(path3.dirname(target), { recursive: true });
-      await writeFile3(target, bytes);
+      await mkdir3(path4.dirname(target), { recursive: true });
+      await writeFile4(target, bytes);
     }
     return await (verifier ?? ((root) => verifyInstalled(root, true)))(candidate);
   } finally {
@@ -22042,12 +22047,12 @@ async function onboard(options) {
     if (options[required] === void 0) fail4(`onboard requires --${required}.`);
   }
   const projectRoot = await requireProjectRoot(options.project);
-  const planPath = path3.resolve(options.plan);
-  const planStat = await lstat2(planPath).catch(() => null);
+  const planPath = path4.resolve(options.plan);
+  const planStat = await lstat3(planPath).catch(() => null);
   if (planStat === null || !planStat.isFile() || planStat.isSymbolicLink()) {
     fail4("--plan must identify a regular onboarding plan file.");
   }
-  const planBytes = await readFile3(planPath);
+  const planBytes = await readFile4(planPath);
   const planSha256 = digest(planBytes);
   const priorReceiptBytes = await readRegularInside(
     projectRoot,
@@ -22064,7 +22069,7 @@ async function onboard(options) {
     const installed2 = await verifyInstalled(projectRoot, true);
     return onboardingResult("no-update", projectRoot, receipt2, installed2);
   }
-  const existingNourd = await lstat2(path3.join(projectRoot, ".nourd")).catch(() => null);
+  const existingNourd = await lstat3(path4.join(projectRoot, ".nourd")).catch(() => null);
   if (existingNourd !== null) {
     fail4("Initial onboarding requires a project without .nourd.");
   }
@@ -22325,13 +22330,13 @@ async function repairTopology(options) {
 var IDENTITY_GATE_HEADER = "| Capability | Finding | Verification | Exception |";
 async function loadGovernedContext(projectRoot) {
   const { bundle, knowledgeRoot } = await requireBundle(projectRoot);
-  const recordsDir = path3.join(projectRoot, ".nourd/knowledge/records");
+  const recordsDir = path4.join(projectRoot, ".nourd/knowledge/records");
   const records = /* @__PURE__ */ new Map();
   const decisionsByNumber = /* @__PURE__ */ new Map();
-  for (const entry of (await readdir2(recordsDir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const entry of (await readdir3(recordsDir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
     if (!entry.name.endsWith(".yaml")) continue;
-    const declarationPath = path3.join(recordsDir, entry.name);
-    const value = import_yaml3.default.parse(await readFile3(declarationPath, "utf8"));
+    const declarationPath = path4.join(recordsDir, entry.name);
+    const value = import_yaml3.default.parse(await readFile4(declarationPath, "utf8"));
     if (typeof value?.id !== "string" || typeof value?.source?.path !== "string") continue;
     records.set(value.id, {
       sourcePath: value.source.path,
@@ -22346,10 +22351,10 @@ async function loadGovernedContext(projectRoot) {
   const taskEntries = [];
   for (const item2 of bundle.non_records ?? []) {
     if (item2?.kind !== "task" || typeof item2?.path !== "string") continue;
-    const absolute = path3.join(projectRoot, knowledgeRoot, ...item2.path.split("/"));
+    const absolute = path4.join(projectRoot, knowledgeRoot, ...item2.path.split("/"));
     let text3;
     try {
-      text3 = await readFile3(absolute, "utf8");
+      text3 = await readFile4(absolute, "utf8");
     } catch {
       continue;
     }
@@ -22424,8 +22429,8 @@ async function knowledgeMarkdownFiles(projectRoot, knowledgeRoot, bundle) {
   );
   const results = [];
   async function walk(relative) {
-    const absolute = path3.join(projectRoot, knowledgeRoot, ...relative.split("/").filter(Boolean));
-    for (const entry of await readdir2(absolute, { withFileTypes: true })) {
+    const absolute = path4.join(projectRoot, knowledgeRoot, ...relative.split("/").filter(Boolean));
+    for (const entry of await readdir3(absolute, { withFileTypes: true })) {
       const childRelative = relative === "" ? entry.name : `${relative}/${entry.name}`;
       if (entry.isDirectory()) {
         if (childRelative === "evidence" || childRelative.startsWith("evidence/")) continue;
@@ -22442,31 +22447,31 @@ async function repinGoverned(projectRoot) {
   const context = await loadGovernedContext(projectRoot);
   let repinnedRecords = 0;
   for (const [, record] of context.records) {
-    const declarationAbsolute = path3.join(projectRoot, ...record.declarationFile.split("/"));
-    const sourceAbsolute = path3.join(projectRoot, context.knowledgeRoot, ...record.sourcePath.split("/"));
+    const declarationAbsolute = path4.join(projectRoot, ...record.declarationFile.split("/"));
+    const sourceAbsolute = path4.join(projectRoot, context.knowledgeRoot, ...record.sourcePath.split("/"));
     let sourceBytes;
     try {
-      sourceBytes = await readFile3(sourceAbsolute);
+      sourceBytes = await readFile4(sourceAbsolute);
     } catch {
       continue;
     }
     const observed = digest(sourceBytes);
-    const declarationText = await readFile3(declarationAbsolute, "utf8");
+    const declarationText = await readFile4(declarationAbsolute, "utf8");
     const updated = declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${observed}`);
     if (updated !== declarationText) {
-      await writeFile3(declarationAbsolute, updated);
+      await writeFile4(declarationAbsolute, updated);
       repinnedRecords += 1;
     }
   }
-  const bundlePath = path3.join(projectRoot, ".nourd/knowledge/bundle.yaml");
-  let bundleText = await readFile3(bundlePath, "utf8");
+  const bundlePath = path4.join(projectRoot, ".nourd/knowledge/bundle.yaml");
+  let bundleText = await readFile4(bundlePath, "utf8");
   let repinnedArtifacts = 0;
   const artifactPattern = /(    path: ([^\n]+)\n    digest:\n      algorithm: sha-256\n      value: )([0-9a-f]{64})/g;
   const replacements = [];
   for (const match2 of bundleText.matchAll(artifactPattern)) {
     let bytes;
     try {
-      bytes = await readFile3(path3.join(projectRoot, ...match2[2].split("/")));
+      bytes = await readFile4(path4.join(projectRoot, ...match2[2].split("/")));
     } catch {
       continue;
     }
@@ -22477,7 +22482,7 @@ async function repinGoverned(projectRoot) {
     bundleText = bundleText.replace(from, to);
     repinnedArtifacts += 1;
   }
-  if (repinnedArtifacts > 0) await writeFile3(bundlePath, bundleText);
+  if (repinnedArtifacts > 0) await writeFile4(bundlePath, bundleText);
   return { state: "repinned", records: repinnedRecords, artifacts: repinnedArtifacts };
 }
 async function exportReferences(projectRoot) {
@@ -22494,12 +22499,13 @@ async function exportVersionedSet(projectRoot) {
   const bundleBytes = await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml", false);
   const versionMatch = bundleBytes === null ? null : /^nkf_version: "([^"]+)"$/m.exec(bundleBytes.toString("utf8"));
   const declared = versionMatch?.[1] ?? "0.2";
+  const releaseSet = declared === "0.3" ? await readReleaseSet(projectRoot) : void 0;
   const members = [];
-  for (const entry of releaseEntriesForVersion(declared)) {
+  for (const entry of releaseEntriesForVersion(declared, releaseSet)) {
     if (entry.path === "release-manifest.json") continue;
     let bytes = null;
     try {
-      bytes = await readFile3(path3.join(projectRoot, ...entry.path.split("/")));
+      bytes = await readFile4(path4.join(projectRoot, ...entry.path.split("/")));
     } catch {
       bytes = null;
     }
@@ -22518,11 +22524,11 @@ async function linkifyProject(projectRoot) {
   const files = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
   let changed = 0;
   for (const relative of files) {
-    const absolute = path3.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
-    const original = await readFile3(absolute, "utf8");
+    const absolute = path4.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
+    const original = await readFile4(absolute, "utf8");
     const result = linkifyText(original, context, relative);
     if (result.changed) {
-      await writeFile3(absolute, result.text);
+      await writeFile4(absolute, result.text);
       changed += 1;
     }
   }
@@ -22626,9 +22632,9 @@ async function taskGit(projectRoot) {
   return { run, optional };
 }
 function taskWorktreePath(projectRoot, taskId) {
-  return path3.join(
-    path3.dirname(projectRoot),
-    `${path3.basename(projectRoot)}-worktrees`,
+  return path4.join(
+    path4.dirname(projectRoot),
+    `${path4.basename(projectRoot)}-worktrees`,
     taskId
   );
 }
@@ -22637,14 +22643,14 @@ async function materializeMissingWorktreeArtifacts(sourceRoot, worktreeRoot, bun
   for (const artifact of bundle?.governed_artifacts ?? []) {
     if (typeof artifact?.path !== "string") continue;
     const relative = safeRelative2(artifact.path, "Governed artifact path");
-    const target = path3.join(worktreeRoot, ...relative.split("/"));
-    if (await lstat2(target).catch(() => null) !== null) continue;
+    const target = path4.join(worktreeRoot, ...relative.split("/"));
+    if (await lstat3(target).catch(() => null) !== null) continue;
     const bytes = await readRegularInside(sourceRoot, relative);
     if (artifact?.digest?.algorithm !== "sha-256" || artifact?.digest?.value !== digest(bytes)) {
       fail4(`The governed artifact cannot be materialized with its declared digest: ${relative}`);
     }
-    await mkdir3(path3.dirname(target), { recursive: true });
-    await writeFile3(target, bytes, { flag: "wx" });
+    await mkdir3(path4.dirname(target), { recursive: true });
+    await writeFile4(target, bytes, { flag: "wx" });
     copied.push(relative);
   }
   return copied;
@@ -22673,7 +22679,7 @@ async function gitTransitionPlan(git, projectRoot, transition, taskId) {
       fail4(`The task branch already exists: ${branch}`);
     }
     const worktree = taskWorktreePath(projectRoot, taskId);
-    if (await lstat2(worktree).catch(() => null) !== null) {
+    if (await lstat3(worktree).catch(() => null) !== null) {
       fail4(`The task working tree already exists: ${worktree}`);
     }
     return {
@@ -22779,7 +22785,7 @@ function gitCompleteTransition(effectiveRoot, plan, transition, taskId, prBody) 
     if (plan.mode === "worktree-resident") {
       try {
         const commonDir = run("rev-parse", "--path-format=absolute", "--git-common-dir");
-        const mainRoot = path3.dirname(commonDir);
+        const mainRoot = path4.dirname(commonDir);
         execFileSync3("git", ["-C", mainRoot, "worktree", "remove", effectiveRoot], { encoding: "utf8" });
         report.worktree_state = "removed";
       } catch {
@@ -22802,8 +22808,8 @@ async function taskPendingView(options) {
   const git = await taskGit(projectRoot);
   const tasks = [];
   for (const [taskId, relative] of [...context.tasks].sort((a, b) => a[0] < b[0] ? -1 : 1)) {
-    const text3 = await readFile3(
-      path3.join(projectRoot, context.knowledgeRoot, ...relative.split("/")),
+    const text3 = await readFile4(
+      path4.join(projectRoot, context.knowledgeRoot, ...relative.split("/")),
       "utf8"
     );
     const entry = {
@@ -22852,8 +22858,8 @@ async function transitionTask(options) {
   const context = await loadGovernedContext(projectRoot);
   const currentRelative = context.tasks.get(options.task);
   if (currentRelative === void 0) fail4(`Unknown task_id: ${options.task}`);
-  const currentAbsolute = path3.join(projectRoot, context.knowledgeRoot, ...currentRelative.split("/"));
-  const original = await readFile3(currentAbsolute, "utf8");
+  const currentAbsolute = path4.join(projectRoot, context.knowledgeRoot, ...currentRelative.split("/"));
+  const original = await readFile4(currentAbsolute, "utf8");
   const statusMatch = original.match(/^task_status: (\w+)$/m);
   if (statusMatch === null) fail4("The task has no task_status line.");
   if (statusMatch[1] === transition) fail4(`The task already has task_status ${transition}.`);
@@ -22883,7 +22889,7 @@ async function transitionTask(options) {
   );
   const resultHeading = transition === "completed" ? "## Completion Result" : transition === "cancelled" ? "## Cancellation Result" : null;
   if (resultHeading !== null && typeof options["result-file"] === "string") {
-    const result = (await readFile3(options["result-file"], "utf8")).trim();
+    const result = (await readFile4(options["result-file"], "utf8")).trim();
     if (!updated.includes(resultHeading)) {
       updated = updated.replace("\n## Decision Applicability\n", `
 ${resultHeading}
@@ -22898,7 +22904,7 @@ ${result}
   const removedPaths = [`${context.knowledgeRoot}/${currentRelative}`];
   files.set(`${context.knowledgeRoot}/${targetRelative}`, Buffer.from(updated, "utf8"));
   const bundlePath = ".nourd/knowledge/bundle.yaml";
-  const bundleText = await readFile3(path3.join(projectRoot, bundlePath), "utf8");
+  const bundleText = await readFile4(path4.join(projectRoot, bundlePath), "utf8");
   files.set(bundlePath, Buffer.from(bundleText.replace(`path: ${currentRelative}`, `path: ${targetRelative}`), "utf8"));
   const h1 = updated.split("\n").find((line) => line.startsWith("# "))?.slice(2).trim() ?? options.task;
   const markdown = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
@@ -22907,8 +22913,8 @@ ${result}
   const targetDirectory = targetRelative.split("/").slice(0, -1).join("/");
   for (const relative of markdown) {
     if (relative === currentRelative) continue;
-    const absolute = path3.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
-    let text3 = await readFile3(absolute, "utf8");
+    const absolute = path4.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
+    let text3 = await readFile4(absolute, "utf8");
     const before = text3;
     const directory = relative.split("/").slice(0, -1).join("/");
     const isSourceIndex = directory === sourceDirectory && relative.endsWith("README.md");
@@ -22937,18 +22943,18 @@ ${result}
     const changedPath = `${context.knowledgeRoot}/${record.sourcePath}`;
     const staged = files.get(changedPath);
     if (staged === void 0) continue;
-    const declarationText = await readFile3(path3.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
+    const declarationText = await readFile4(path4.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
     const repinned = declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${digest(staged)}`);
     files.set(record.declarationFile, Buffer.from(repinned, "utf8"));
   }
   const pinPresent = await readRegularInside(projectRoot, PIN_PATH, false) !== null;
-  const verifier = pinPresent ? null : typeof options.checker === "string" ? externalCheckerVerifier(path3.resolve(options.checker)) : fail4("task requires an installed release pin or an explicit --checker.");
+  const verifier = pinPresent ? null : typeof options.checker === "string" ? externalCheckerVerifier(path4.resolve(options.checker)) : fail4("task requires an installed release pin or an explicit --checker.");
   await validateCompleteCandidate(projectRoot, files, removedPaths, verifier);
   let effectiveRoot = projectRoot;
   let materializedArtifacts = [];
   if (git !== null && gitPlan.state === "planned") {
     if (gitPlan.mode === "worktree") {
-      await mkdir3(path3.dirname(gitPlan.worktree), { recursive: true });
+      await mkdir3(path4.dirname(gitPlan.worktree), { recursive: true });
       git.run("worktree", "add", "-b", gitPlan.branch, gitPlan.worktree);
       effectiveRoot = gitPlan.worktree;
       materializedArtifacts = await materializeMissingWorktreeArtifacts(
@@ -23040,7 +23046,7 @@ async function migrateToCurrent(options) {
   }
   const bundlePath = ".nourd/knowledge/bundle.yaml";
   const bundleValue = import_yaml3.default.parse(
-    files.get(bundlePath)?.toString("utf8") ?? await readFile3(path3.join(projectRoot, bundlePath), "utf8")
+    files.get(bundlePath)?.toString("utf8") ?? await readFile4(path4.join(projectRoot, bundlePath), "utf8")
   );
   bundleValue.nkf_version = "0.3";
   if (!Array.isArray(bundleValue.non_records)) bundleValue.non_records = [];
@@ -23071,8 +23077,8 @@ async function migrateToCurrent(options) {
   const context = await loadGovernedContext(projectRoot);
   let gated = 0;
   for (const { path: taskRelative } of context.taskEntries) {
-    const absolute = path3.join(projectRoot, knowledgeRoot, ...taskRelative.split("/"));
-    const text3 = await readFile3(absolute, "utf8");
+    const absolute = path4.join(projectRoot, knowledgeRoot, ...taskRelative.split("/"));
+    const text3 = await readFile4(absolute, "utf8");
     if (!text3.includes("## Decision Applicability")) {
       files.set(`${knowledgeRoot}/${taskRelative}`, Buffer.from(`${text3.trimEnd()}
 ${retroGate}`, "utf8"));
@@ -23080,7 +23086,7 @@ ${retroGate}`, "utf8"));
     }
   }
   const cancelledIndexRelative = "tasks/cancelled/README.md";
-  if (files.get(`${knowledgeRoot}/${cancelledIndexRelative}`) === void 0 && await lstat2(path3.join(projectRoot, knowledgeRoot, "tasks", "cancelled", "README.md")).catch(() => null) === null) {
+  if (files.get(`${knowledgeRoot}/${cancelledIndexRelative}`) === void 0 && await lstat3(path4.join(projectRoot, knowledgeRoot, "tasks", "cancelled", "README.md")).catch(() => null) === null) {
     const stamp = `${(/* @__PURE__ */ new Date()).toISOString().slice(0, 19)}Z`;
     files.set(
       `${knowledgeRoot}/${cancelledIndexRelative}`,
@@ -23096,8 +23102,8 @@ created_at: ${stamp}
         "utf8"
       )
     );
-    const tasksIndexAbsolute = path3.join(projectRoot, knowledgeRoot, "tasks", "README.md");
-    const tasksIndex = files.get(`${knowledgeRoot}/tasks/README.md`)?.toString("utf8") ?? await readFile3(tasksIndexAbsolute, "utf8");
+    const tasksIndexAbsolute = path4.join(projectRoot, knowledgeRoot, "tasks", "README.md");
+    const tasksIndex = files.get(`${knowledgeRoot}/tasks/README.md`)?.toString("utf8") ?? await readFile4(tasksIndexAbsolute, "utf8");
     const completedLine = "- [Completed Tasks](completed/README.md)\n";
     const updatedTasksIndex = tasksIndex.includes(completedLine) ? tasksIndex.replace(completedLine, `${completedLine}- [Cancelled Tasks](cancelled/README.md)
 `) : `${tasksIndex.trimEnd()}
@@ -23109,7 +23115,7 @@ created_at: ${stamp}
   let linkified = 0;
   for (const relative of markdown) {
     const key = `${knowledgeRoot}/${relative}`;
-    const current = files.get(key)?.toString("utf8") ?? await readFile3(path3.join(projectRoot, knowledgeRoot, ...relative.split("/")), "utf8");
+    const current = files.get(key)?.toString("utf8") ?? await readFile4(path4.join(projectRoot, knowledgeRoot, ...relative.split("/")), "utf8");
     const result = linkifyText(current, context, relative);
     if (result.changed || files.has(key)) {
       files.set(key, Buffer.from(result.text, "utf8"));
@@ -23120,7 +23126,7 @@ created_at: ${stamp}
     const key = `${knowledgeRoot}/${record.sourcePath}`;
     const staged = files.get(key);
     if (staged === void 0) continue;
-    const declarationText = await readFile3(path3.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
+    const declarationText = await readFile4(path4.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
     files.set(record.declarationFile, Buffer.from(declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${digest(staged)}`), "utf8"));
   }
   const integration = await targetFiles(projectRoot, archiveBytes, verification, bundle.root?.profile ?? "nkf.profile.product");
@@ -23192,8 +23198,8 @@ async function adopt(options) {
   if (releaseOptions.archive === void 0 && releaseOptions["github-repository"] === void 0) {
     releaseOptions["github-repository"] = "kaveh6202/Nourd.NKF";
   }
-  const nourdPath = path3.join(projectRoot, ".nourd");
-  const nourdStat = await lstat2(nourdPath).catch(() => null);
+  const nourdPath = path4.join(projectRoot, ".nourd");
+  const nourdStat = await lstat3(nourdPath).catch(() => null);
   if (nourdStat === null) {
     if (options["accept-breaking"] !== void 0) {
       fail4("--accept-breaking does not apply to initial adoption.");

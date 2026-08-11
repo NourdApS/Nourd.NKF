@@ -41,6 +41,7 @@ import {
   sha256,
   verifyReleaseArchive,
 } from "../release/core.mjs";
+import { readReleaseSet } from "../release/release-set.mjs";
 
 const INTEGRATION_REVISION = 2;
 const PIN_PATH = ".nourd/nkf-release.json";
@@ -2251,8 +2252,9 @@ async function exportVersionedSet(projectRoot) {
     ? null
     : /^nkf_version: "([^"]+)"$/m.exec(bundleBytes.toString("utf8"));
   const declared = versionMatch?.[1] ?? "0.2";
+  const releaseSet = declared === "0.3" ? await readReleaseSet(projectRoot) : undefined;
   const members = [];
-  for (const entry of releaseEntriesForVersion(declared)) {
+  for (const entry of releaseEntriesForVersion(declared, releaseSet)) {
     if (entry.path === "release-manifest.json") continue;
     let bytes = null;
     try {

@@ -244,7 +244,8 @@ describe("agent guidance integrity verifier", () => {
     const project = await copyProject();
     const packagePath = path.join(project, "package.json");
     const manifest = JSON.parse(await readFile(packagePath, "utf8"));
-    const producerCheck = manifest.scripts["nkf:check"];
+    const producerCheck =
+      manifest.scripts["nkf:check:host"] ?? manifest.scripts["nkf:check"];
     manifest.nkf = {
       integration: {
         mode: "host-superset",
