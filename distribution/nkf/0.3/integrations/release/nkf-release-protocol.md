@@ -36,9 +36,12 @@ results, audit Evidence, and technical confirmation.
 
 ## Prove Exact-Candidate Self-Adoption
 
-Create a fresh isolated clone of the exact release commit. Use the adopter
-carried by the candidate archive with an internal local recommendation binding
-to that exact archive digest. This is not public recommendation or adoption.
+Create a fresh isolated clone of the exact release commit. Install its locked
+dependencies and run the deterministic build to materialize its declared
+governed build artifacts, requiring the rebuilt checker to equal the
+manifest-bound checker. Then use the adopter carried by the candidate archive
+with an internal local recommendation binding to that exact archive digest.
+This is not public recommendation or adoption.
 
 Require the transaction to:
 

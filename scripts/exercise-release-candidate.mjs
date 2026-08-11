@@ -57,6 +57,13 @@ try {
     fail("The fresh candidate clone is not clean.");
   }
   run("npm", ["ci", "--ignore-scripts"], { cwd: project });
+  run("npm", ["run", "build"], { cwd: project });
+  const preAdoptChecker = await readFile(
+    path.join(project, verification.manifest.checker.path),
+  );
+  if (sha256(preAdoptChecker) !== verification.checker_sha256) {
+    fail("The fresh exercise clone did not materialize the manifest-bound checker.");
+  }
 
   const localArchive = path.join(temporary, verification.asset_name);
   await writeFile(localArchive, archiveBytes, { flag: "wx" });

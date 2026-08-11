@@ -358,6 +358,19 @@ adopted Design.
 - The private `release/recommended.json` remains byte-unchanged at NKF 0.2,
   this producer bundle still declares NKF 0.2, and no 0.3 archive,
   confirmation, publication, recommendation, or adoption is yet claimed.
+- The first private archive candidate, SHA-256
+  `de3ceea143e55d895e5d2eb14818173bb2a077d13d0181940467204ab5d85472`
+  from source commit `191d2486ed77965800278138834e7933c2c56bd1`, passed
+  deterministic packaging and fresh-source reproduction but failed the exact
+  candidate exercise before mutation. The fresh exercise clone had installed
+  locked dependencies but had not materialized the governed `dist` adopter,
+  so its pre-adoption full-bundle check correctly failed closed. That candidate
+  is invalid and will not be audited, confirmed, published, or recommended.
+  The versioned release protocol and exercise now require the deterministic
+  build in the same fresh clone and equality of its rebuilt checker to the
+  manifest-bound checker before candidate Adopt. The corrected complete gate
+  passes 25 test files and 200 tests; a replacement release commit and archive
+  remain pending.
 
 ## Decision Applicability
 
