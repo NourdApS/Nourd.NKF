@@ -552,6 +552,40 @@ describe("NKF consumer adopter", () => {
     expect(JSON.parse(current.stdout).state).toBe("current");
   }, 20_000);
 
+  it("rebinds an exact producer host registry during non-breaking 0.3 adoption", async () => {
+    const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
+    const project = path.join(parent, "project");
+    await cp(repositoryRoot, project, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(repositoryRoot, source);
+        if (relative === "") return true;
+        return ![".git", "node_modules"].includes(relative.split(path.sep)[0] ?? "");
+      },
+    });
+
+    const result = runAdopt(project, ["--archive", archivePath]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(JSON.parse(result.stdout).state).toBe("updated");
+
+    const registry = YAML.parse(
+      await readFile(path.join(project, "integrations/ai/agent-hosts.yaml"), "utf8"),
+    );
+    expect(registry.neutral_protocol.sha256).toBe(
+      sha256(await readFile(path.join(project, registry.neutral_protocol.path))),
+    );
+    for (const adapter of registry.adapters) {
+      expect(adapter.sha256).toBe(
+        sha256(await readFile(path.join(project, adapter.path))),
+      );
+    }
+    for (const relative of registry.skills.representations) {
+      expect(registry.skills.sha256).toBe(
+        sha256(await readFile(path.join(project, relative))),
+      );
+    }
+  }, 30_000);
+
   it("fails closed before mutation when initial planning is absent", async () => {
     const { project } = await createEmptyProject();
     const before = await snapshotTree(project);

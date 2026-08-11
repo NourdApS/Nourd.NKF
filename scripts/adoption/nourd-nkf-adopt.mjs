@@ -1520,6 +1520,9 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
     bundle.root.profile,
   );
   if (versionUpgrade) {
+    await stageVerifiedHostRegistryMigration(projectRoot, files);
+  }
+  if (versionUpgrade) {
     const bundlePath = ".nourd/knowledge/bundle.yaml";
     const originalBundleBytes = await readRegularInside(projectRoot, bundlePath);
     const nextBundle = YAML.parse(originalBundleBytes.toString("utf8"));

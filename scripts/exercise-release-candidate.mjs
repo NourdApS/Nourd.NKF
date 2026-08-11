@@ -145,13 +145,18 @@ try {
     "--candidate-binding",
     verification.archive_sha256,
   ];
-  const first = run(
-    process.execPath,
-    [...baseArguments, "--accept-breaking", "repository-owner"],
-  );
+  const first = run(process.execPath, baseArguments);
   const firstResult = parseStrictJson(Buffer.from(first.stdout, "utf8"));
-  if (firstResult.state !== "migrated") {
-    fail(`First candidate Adopt returned ${firstResult.state}, not migrated.`);
+  if (firstResult.state !== "updated") {
+    fail(`First candidate Adopt returned ${firstResult.state}, not updated.`);
+  }
+  if (
+    execFileSync("git", ["status", "--porcelain", "--", "knowledge"], {
+      cwd: project,
+      encoding: "utf8",
+    }) !== ""
+  ) {
+    fail("Non-breaking candidate self-adoption changed producer knowledge bytes.");
   }
 
   const producerGate = run("npm", ["run", "nkf:check"], { cwd: project });
