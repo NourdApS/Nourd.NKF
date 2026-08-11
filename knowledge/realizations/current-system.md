@@ -457,7 +457,7 @@ self-host validation with zero diagnostics. The completion audit repaired the
 Markdown diagnostic-registry omission, the circular release-recommendation
 gate, and loose repair-receipt integrity checks before confirmation.
 
-The current NKF 0.3 gate passes 25 test files and 202 tests, 967 living links,
+The current NKF 0.3 gate passes 25 test files and 202 tests, 969 living links,
 deterministic checker and adopter reproduction, the complete 63-file public
 projection, and full-bundle self-validation with zero diagnostics. Candidate
 audit reproduced every archive member and supported state path before

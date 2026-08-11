@@ -568,7 +568,7 @@ the governed knowledge base.
 
 Every acceptance criterion and mandatory capability is satisfied and proven.
 The final exact source snapshot passed `npm run nkf:check`: 25 test files and
-202 tests, 967 checked living links, deterministic checker, adopter, and
+202 tests, 969 checked living links, deterministic checker, adopter, and
 63-file public projection builds, and full-bundle conformance with zero
 diagnostics.
 
