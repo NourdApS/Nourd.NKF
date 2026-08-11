@@ -59,6 +59,13 @@ successor pair to frozen 0.3, records and corrects an accidental CommonMark
 version substitution, and returns a clean verdict for the final coordinate,
 predecessor-binding, compatibility, and security-maintenance-only delta.
 
+The NKF-024 NKF 0.4 exact-candidate audit independently parses and reproduces
+the 136-member archive from a fresh exact remote clone, verifies the patched
+dependency closure and all release bindings, exercises the complete supported
+compatibility and adversarial suite, and proves exact-candidate producer
+self-adoption with preserved knowledge and host-superset integration before
+technical confirmation or publication.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

@@ -112,6 +112,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-024-nkf-0-4-authority-pair-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-024-nkf-0-4-exact-candidate-audit.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md

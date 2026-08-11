@@ -227,6 +227,19 @@ post-adoption audit before this Task concludes.
   [NKF 0.4 Security Maintenance Realization](../../realizations/current/nkf-0.4-security-maintenance.md)
   records the implementation mapping and remains explicitly unconfirmed until
   the exact candidate audit and later delegated confirmation Decision.
+- The first private archive was superseded before publication after its
+  exercise exposed a stale 0.3 compatibility expectation and then a missing
+  producer host-registry rebind. Both defects were corrected in source and
+  regression coverage. The replacement release commit is `29880a3`, with
+  checker SHA-256 `425286d3...d123`, adopter SHA-256 `416b26e7...cd65`, and
+  archive SHA-256 `a7912b92...79ecd`.
+- The fresh
+  [exact-candidate audit](../../evidence/audits/nkf-024-nkf-0-4-exact-candidate-audit.md)
+  returned `CLEAN`: 136 bound archive members across 18 closed classes, zero
+  npm advisories, two byte-identical builds, exact archive reproduction, 28
+  test files and 210 tests, extracted-checker conformance, frozen 0.3 source
+  preservation, and pristine-producer Adopt returning `updated` then
+  `current` with its stronger host gate preserved.
 
 ## Decision Applicability
 
@@ -261,6 +274,6 @@ post-adoption audit before this Task concludes.
 | Every complete-set surface consumes one exact 0.4 release enumeration | proven | data-validity | none |
 | Ordinary 0.3-to-0.4 Adopt is non-breaking, migration-free, approval-free, preserving, and idempotent | proven | runtime-behaviour | none |
 | Supported 0.1 and 0.2 predecessor migrations remain approval-gated and preserving | proven | runtime-behaviour | none |
-| Exact-candidate producer self-adoption preserves the stronger host gate and returns `current` | unknown | none | none |
+| Exact-candidate producer self-adoption preserves the stronger host gate and returns `current` | proven | runtime-behaviour | none |
 | Independent candidate and post-publication audits return clean before their dependent actions | unknown | none | none |
 | The published recommendation and producer pin resolve the same immutable 0.4 archive | unknown | none | none |
