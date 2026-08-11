@@ -74,12 +74,12 @@ async function gitFixture() {
 
 beforeAll(async () => {
   const releaseSet = await readReleaseSet(repositoryRoot);
-  const memberEntries = releaseEntriesForVersion("0.3", releaseSet);
+  const memberEntries = releaseEntriesForVersion("0.4", releaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
     entries,
-    nkfVersion: "0.3",
+    nkfVersion: "0.4",
     releaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
@@ -105,9 +105,12 @@ describe("deterministic governed mechanics", () => {
       "utf8",
     );
     const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.2";
-    const releaseSet = declared === "0.3" ? await readReleaseSet(repositoryRoot) : undefined;
+    const usesReleaseSet = ["0.3", "0.4"].includes(declared);
+    const releaseSet = usesReleaseSet
+      ? await readReleaseSet(repositoryRoot, declared)
+      : undefined;
     const expectedEntries =
-      declared === "0.3"
+      usesReleaseSet
         ? releaseEntriesForVersion(declared, releaseSet)
         : RELEASE_ENTRIES;
     expect(result.status, result.stderr).toBe(0);
@@ -125,21 +128,21 @@ describe("deterministic governed mechanics", () => {
       expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
     }
     const classPaths = (classes: string[]) =>
-      declared === "0.3"
+      usesReleaseSet
         ? releaseSet.members
             .filter((member: { class: string }) => classes.includes(member.class))
             .map((member: { path: string }) => member.path)
         : [];
     const expectedHostAdapters =
-      declared === "0.3"
+      usesReleaseSet
         ? classPaths(["host-adapter-instruction"])
         : HOST_ADAPTER_FILES;
     const expectedFixtures =
-      declared === "0.3"
+      usesReleaseSet
         ? classPaths(["product-fixture", "technology-fixture"])
         : FIXTURE_FILES;
     const expectedPublicDocumentation =
-      declared === "0.3"
+      usesReleaseSet
         ? classPaths(["public-documentation"])
         : PUBLIC_DOCUMENTATION_FILES.map((member: string) => `public-docs/${member}`);
     expect(expectedPaths).toContain("dist/nourd-nkf-adopt.mjs");
@@ -153,7 +156,7 @@ describe("deterministic governed mechanics", () => {
       expectedPaths.filter((member: string) => expectedPublicDocumentation.includes(member)),
     ).toHaveLength(expectedPublicDocumentation.length);
     const guidancePaths =
-      declared === "0.3"
+      usesReleaseSet
         ? classPaths([
             "authoring-protocol",
             "onboarding-protocol",
@@ -358,7 +361,7 @@ describe("deterministic governed mechanics", () => {
     expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
   });
 
-  it("migrates a declared 0.1 project to 0.3 through the archive", async () => {
+  it("migrates a declared 0.1 project to 0.4 through the archive", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-migrate-"));
     const project = path.join(parent, "project");
     const archived = spawnSync("git", ["archive", "b748402", "fixtures/valid/minimal"], { cwd: repositoryRoot, encoding: null, maxBuffer: 64 * 1024 * 1024 });
@@ -372,7 +375,7 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.tasks_gated).toBe(1);
     expect(result.json.validation.conformance).toBe("passed");
     const bundle = await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8");
-    expect(bundle).toContain('nkf_version: "0.3"');
+    expect(bundle).toContain('nkf_version: "0.4"');
     expect(bundle).toContain("tasks/cancelled/README.md");
     expect(await readFile(path.join(project, "knowledge/tasks/cancelled/README.md"), "utf8")).toContain("# Cancelled Tasks");
     expect(await readFile(path.join(project, "knowledge/tasks/README.md"), "utf8")).toContain("(cancelled/README.md)");

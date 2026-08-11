@@ -2,7 +2,14 @@ import { lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import YAML from "yaml";
 
-export const RELEASE_SET_PATH = "contracts/nkf/0.3/release-set.yaml";
+export const CURRENT_RELEASE_VERSION = "0.4";
+export function releaseSetPathForVersion(nkfVersion) {
+  if (!["0.3", "0.4"].includes(nkfVersion)) {
+    fail(`NKF ${nkfVersion} does not use the complete release-set contract.`);
+  }
+  return `contracts/nkf/${nkfVersion}/release-set.yaml`;
+}
+export const RELEASE_SET_PATH = releaseSetPathForVersion(CURRENT_RELEASE_VERSION);
 export const RELEASE_CLASSES = Object.freeze([
   "normative-specification",
   "executable-companion",
@@ -106,7 +113,7 @@ export function validateReleaseSet(value) {
   exactKeys(value, ["contract", "nkf_version", "coverage", "members"], "Release set");
   if (
     value.contract !== "nkf.release-set" ||
-    value.nkf_version !== "0.3" ||
+    !["0.3", "0.4"].includes(value.nkf_version) ||
     !Array.isArray(value.coverage) ||
     value.coverage.length === 0 ||
     !Array.isArray(value.members) ||
@@ -189,7 +196,10 @@ export function validateReleaseSet(value) {
   for (const className of RELEASE_CLASSES) {
     if ((classCounts.get(className) ?? 0) < 1) fail(`Members omit required class: ${className}.`);
   }
-  if (!seen.has(RELEASE_SET_PATH) || !seen.has("release-manifest.json")) {
+  if (
+    !seen.has(releaseSetPathForVersion(value.nkf_version)) ||
+    !seen.has("release-manifest.json")
+  ) {
     fail("Release members must include the release set and release manifest.");
   }
   return value;
@@ -262,16 +272,21 @@ export async function reproduceReleaseMembers(repositoryRoot, releaseSet) {
   return discovered;
 }
 
-export async function readReleaseSet(repositoryRoot) {
-  return parseReleaseSet(await readFile(path.join(repositoryRoot, RELEASE_SET_PATH)));
+export async function readReleaseSet(repositoryRoot, nkfVersion = CURRENT_RELEASE_VERSION) {
+  return parseReleaseSet(
+    await readFile(path.join(repositoryRoot, releaseSetPathForVersion(nkfVersion))),
+  );
 }
 
-export async function regenerateReleaseMembers(repositoryRoot) {
-  const target = path.join(repositoryRoot, RELEASE_SET_PATH);
+export async function regenerateReleaseMembers(
+  repositoryRoot,
+  nkfVersion = CURRENT_RELEASE_VERSION,
+) {
+  const releaseSetPath = releaseSetPathForVersion(nkfVersion);
+  const target = path.join(repositoryRoot, releaseSetPath);
   const value = parseYaml(await readFile(target));
   exactKeys(value, ["contract", "nkf_version", "coverage", "members"], "Release set");
   value.members = [];
-  const provisional = { ...value, members: [{ path: RELEASE_SET_PATH, class: "release-set-contract", mode: "0644" }] };
   const selectors = value.coverage;
   const discovered = [];
   for (const selector of selectors) {

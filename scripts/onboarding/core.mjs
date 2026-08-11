@@ -501,7 +501,7 @@ export async function inspectOnboardingProject(projectRootInput, knowledgeRootIn
   );
   return {
     contract: "nkf.onboarding-inspection",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     mechanically_ready: diagnostics.length === 0,
     knowledge_root: knowledgeRoot,
     observed: {
@@ -612,7 +612,7 @@ export async function createOnboardingWorkspace(options) {
   }
   const plan = {
     contract: "nkf.onboarding-plan",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     inspection: {
       knowledge_root: inspection.knowledge_root,
       snapshot_sha256: inspection.snapshot_sha256,
@@ -669,8 +669,8 @@ function validatePlanEnvelope(plan) {
     ["contract", "nkf_version", "inspection", "assessment", "project", "scaffold", "documents"],
     "plan",
   );
-  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.3") {
-    fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.1 onboarding plan.");
+  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.4") {
+    fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.4 onboarding plan.");
   }
   requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
   safeRelative(plan.inspection.knowledge_root, "inspection.knowledge_root");
@@ -852,7 +852,7 @@ export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   await writeFile(loaded.planPath, sealed);
   return {
     contract: "nkf.onboarding-plan-seal-result",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     state: "sealed",
     plan_sha256: sha256(sealed),
     documents: loaded.plan.documents.length,
@@ -1580,7 +1580,7 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
     );
   }
   const bundle = {
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     contract: "nkf.bundle",
     id: plan.project.root.id,
     root: { record: plan.project.root.id, profile: plan.project.profile },

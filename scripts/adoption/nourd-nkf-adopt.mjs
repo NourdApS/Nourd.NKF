@@ -19,13 +19,13 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
-import neutralProtocol from "../../distribution/nkf/0.3/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill from "../../distribution/nkf/0.3/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol from "../../distribution/nkf/0.3/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill from "../../distribution/nkf/0.3/.agents/skills/nkf-onboarding/SKILL.md";
-import rootAdapter from "../../distribution/nkf/0.3/host-adapters/AGENTS.adapter.md";
-import importAdapter from "../../distribution/nkf/0.3/host-adapters/CLAUDE.adapter.md";
-import copilotAdapter from "../../distribution/nkf/0.3/host-adapters/copilot-instructions.adapter.md";
+import neutralProtocol from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill from "../../distribution/nkf/0.4/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol from "../../distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill from "../../distribution/nkf/0.4/.agents/skills/nkf-onboarding/SKILL.md";
+import rootAdapter from "../../distribution/nkf/0.4/host-adapters/AGENTS.adapter.md";
+import importAdapter from "../../distribution/nkf/0.4/host-adapters/CLAUDE.adapter.md";
+import copilotAdapter from "../../distribution/nkf/0.4/host-adapters/copilot-instructions.adapter.md";
 import {
   buildOnboardingKnowledge,
   buildPortableTopologyRepair,
@@ -304,7 +304,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
       `Recommended compatibility[${index}]`,
     );
     if (
-      !["0.1", "0.2", "0.3"].includes(entry.from_nkf_version) ||
+      !["0.1", "0.2", "0.3", "0.4"].includes(entry.from_nkf_version) ||
       !["breaking", "non-breaking"].includes(entry.classification) ||
       typeof entry.migration_required !== "boolean" ||
       typeof entry.summary !== "string" ||
@@ -345,7 +345,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
         `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}`;
   if (
     !releaseStateValid ||
-    value.nkf_version !== "0.3" ||
+    value.nkf_version !== "0.4" ||
     !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
     value.archive.asset_name !== assetName ||
     value.archive.tag !== tag ||
@@ -367,7 +367,9 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     compatibility.get("0.2")?.classification !== "breaking" ||
     compatibility.get("0.2")?.migration_required !== true ||
     compatibility.get("0.3")?.classification !== "non-breaking" ||
-    compatibility.get("0.3")?.migration_required !== false
+    compatibility.get("0.3")?.migration_required !== false ||
+    compatibility.get("0.4")?.classification !== "non-breaking" ||
+    compatibility.get("0.4")?.migration_required !== false
   ) {
     fail("The recommended release catalog is invalid or inconsistent.");
   }
@@ -471,7 +473,7 @@ async function requireBundle(projectRoot) {
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (!["0.1", "0.2", "0.3"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+  if (!["0.1", "0.2", "0.3", "0.4"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
     fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
@@ -1211,7 +1213,7 @@ function requirePinShape(pin) {
     !pin.integration.scripts.host.includes(HOST_SCRIPT_NAME);
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    !["0.1", "0.2", "0.3"].includes(pin?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4"].includes(pin?.nkf_version) ||
     pin?.repository !== "kaveh6202/Nourd.NKF" ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
     pin?.archive?.asset_name !==
@@ -1433,7 +1435,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
   if (
-    ["0.2", "0.3"].includes(verification.manifest.nkf_version) &&
+    ["0.2", "0.3", "0.4"].includes(verification.manifest.nkf_version) &&
     (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
   ) {
     fail("The predecessor adopter is not bound by its release archive.");
@@ -1488,7 +1490,7 @@ async function validateCompleteCandidate(projectRoot, files, removedPaths = [], 
   }
 }
 
-async function installOrUpdate(command, options) {
+async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade = false) {
   if (Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10) < 22) {
     fail("NKF adoption requires Node.js 22 or later.");
   }
@@ -1504,7 +1506,11 @@ async function installOrUpdate(command, options) {
   }
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
-  if (verification.manifest.nkf_version !== bundle.nkf_version) {
+  const versionUpgrade =
+    allowNonBreakingVersionUpgrade &&
+    bundle.nkf_version === "0.3" &&
+    verification.manifest.nkf_version === "0.4";
+  if (verification.manifest.nkf_version !== bundle.nkf_version && !versionUpgrade) {
     fail("Install or update requires a same-version release; use Adopt for migration.");
   }
   const files = await targetFiles(
@@ -1513,6 +1519,22 @@ async function installOrUpdate(command, options) {
     verification,
     bundle.root.profile,
   );
+  if (versionUpgrade) {
+    const bundlePath = ".nourd/knowledge/bundle.yaml";
+    const originalBundleBytes = await readRegularInside(projectRoot, bundlePath);
+    const nextBundle = YAML.parse(originalBundleBytes.toString("utf8"));
+    nextBundle.nkf_version = verification.manifest.nkf_version;
+    files.set(bundlePath, serializeYaml(nextBundle));
+    files.set(
+      bundlePath,
+      await updateVerifiedStagedArtifactBindings(
+        projectRoot,
+        originalBundleBytes,
+        files.get(bundlePath),
+        files,
+      ),
+    );
+  }
   if (priorBytes === null) {
     for (const relative of [
       ADOPTER_PATH,
@@ -1536,7 +1558,8 @@ async function installOrUpdate(command, options) {
     if (
       prior.archive.sha256 === nextPin.archive.sha256 &&
       prior.adopter.sha256 === nextPin.adopter.sha256 &&
-      prior.integration_revision === nextPin.integration_revision
+      prior.integration_revision === nextPin.integration_revision &&
+      !versionUpgrade
     ) {
       await verifyInstalled(projectRoot, true);
       return { state: "no-update", project: projectRoot, pin: prior };
@@ -1580,7 +1603,7 @@ async function inspectForOnboarding(options) {
   });
   return {
     contract: "nkf.onboarding-inspect-result",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     state: result.inspection.mechanically_ready ? "workspace-created" : "blocked",
     mechanically_ready: result.inspection.mechanically_ready,
     workspace: result.workspace,
@@ -1616,7 +1639,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    !["0.1", "0.2", "0.3"].includes(value?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -1698,7 +1721,7 @@ function requirePredecessorOnboardingReceipt(value) {
 function onboardingResult(state, projectRoot, receipt, installed, knowledge = null) {
   return {
     contract: "nkf.onboarding-result",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     state,
     project: projectRoot,
     profile: receipt.profile,
@@ -1816,7 +1839,7 @@ async function onboard(options) {
   changedPaths.sort();
   const receipt = {
     contract: "nkf.onboarding-receipt",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     plan_sha256: knowledge.plan_sha256,
     inspection_sha256: knowledge.inspection.snapshot_sha256,
     profile: knowledge.plan.project.profile,
@@ -2252,7 +2275,9 @@ async function exportVersionedSet(projectRoot) {
     ? null
     : /^nkf_version: "([^"]+)"$/m.exec(bundleBytes.toString("utf8"));
   const declared = versionMatch?.[1] ?? "0.2";
-  const releaseSet = declared === "0.3" ? await readReleaseSet(projectRoot) : undefined;
+  const releaseSet = ["0.3", "0.4"].includes(declared)
+    ? await readReleaseSet(projectRoot, declared)
+    : undefined;
   const members = [];
   for (const entry of releaseEntriesForVersion(declared, releaseSet)) {
     if (entry.path === "release-manifest.json") continue;
@@ -2803,8 +2828,8 @@ async function migrateToCurrent(options) {
   const expectedSha256 = requireSha256(options.sha256);
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
-  if (verification.manifest.nkf_version !== "0.3") {
-    fail("migrate requires an NKF 0.3 release archive.");
+  if (verification.manifest.nkf_version !== "0.4") {
+    fail("migrate requires an NKF 0.4 release archive.");
   }
 
   const files = new Map();
@@ -2847,7 +2872,7 @@ async function migrateToCurrent(options) {
     files.get(bundlePath)?.toString("utf8") ??
       (await readFile(path.join(projectRoot, bundlePath), "utf8")),
   );
-  bundleValue.nkf_version = "0.3";
+  bundleValue.nkf_version = "0.4";
   if (!Array.isArray(bundleValue.non_records)) bundleValue.non_records = [];
   if (!bundleValue.non_records.some((item) => item?.path === "tasks/cancelled/README.md")) {
     bundleValue.non_records.push({
@@ -2870,7 +2895,7 @@ async function migrateToCurrent(options) {
     "",
     "No mandatory capability is implicated by this Task.",
     "",
-    `This gate was added retrospectively during the NKF ${predecessorVersion}-to-0.3 migration; no`,
+    `This gate was added retrospectively during the NKF ${predecessorVersion}-to-0.4 migration; no`,
     "historical extraction is implied.",
     "",
   ].join("\n");
@@ -2947,7 +2972,7 @@ async function migrateToCurrent(options) {
   );
   return {
     state: "migrated",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     tasks_gated: gated,
     documents_linkified: linkified,
     validation: {
@@ -2959,7 +2984,7 @@ async function migrateToCurrent(options) {
 function adoptResult(state, projectRoot, catalog, compatibility, operation) {
   return {
     contract: "nkf.adopt-result",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     state,
     project: projectRoot,
     target: {
@@ -3084,6 +3109,7 @@ async function adopt(options) {
   const result = await installOrUpdate(
     pinPresent ? "update" : "install",
     releaseOptions,
+    bundle.nkf_version !== catalog.nkf_version,
   );
   return adoptResult(
     result.state === "no-update" ? "current" : "updated",
@@ -3132,7 +3158,7 @@ try {
 } catch (error) {
   const structured = {
     contract: "nkf.adopter-error",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     state: "failed",
     diagnostics: [
       {

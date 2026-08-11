@@ -35,3 +35,18 @@ export const ACCEPTED_0_3_ARTIFACT_DIGESTS = Object.freeze({
   "contracts/nkf/0.3/schemas/validation-result.schema.json":
     "15e56ee6542865f97b48087078c28b285bc40b3385e8ff74d608711e2ddbc9b1",
 });
+
+export const ACCEPTED_0_4_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.4.md":
+    "7298d1a55dcd74d4cc96368648aadbd6a70b5cf4c62d2a1c7f528e7c9181bab1",
+  "contracts/nkf/0.4/nkf.yaml":
+    "a84fcc1e99567b6716e3281efedbbc87c978ffa465cd4cb5d8cac1d46ad0d217",
+  "contracts/nkf/0.4/schemas/bundle.schema.json":
+    "79fabd552bcc8233894ee8d3e096a52ea9b3e82e263ec59d3320d8bfed8076f4",
+  "contracts/nkf/0.4/schemas/record.schema.json":
+    "2478e1b3f528cce5daf342ed240e8efd51f05c10f5374fc553a755f863196b0c",
+  "contracts/nkf/0.4/schemas/release-manifest.schema.json":
+    "f99426d77adcbb642f0bff15ca6597dcba127da9d833e6c5c5ddb5bc299c96cb",
+  "contracts/nkf/0.4/schemas/validation-result.schema.json":
+    "6ed75b295b9ac9dff758c9d654cc76bd22b0385fb9bc9ea01353cb7b6add5fda",
+});

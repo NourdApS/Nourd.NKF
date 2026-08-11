@@ -11,6 +11,11 @@ import { repositoryRoot } from "./build-public-docs.mjs";
 import { readReleaseSet } from "./release/release-set.mjs";
 
 const releaseSet = await readReleaseSet(repositoryRoot);
+const REFERENCE_FILES = [
+  "reference/nkf-0.2.md",
+  "reference/nkf-0.3.md",
+  "reference/nkf-0.4.md",
+];
 export const PUBLIC_FILES = releaseSet.members
   .filter((member) => [
     "product-public-example",
@@ -85,7 +90,7 @@ function requireSubjects(combined) {
 function verifyRelativeLinks(files, publishedPaths) {
   const fileSet = new Set(publishedPaths);
   for (const [relative, text] of files) {
-    if (["reference/nkf-0.2.md", "reference/nkf-0.3.md"].includes(relative)) {
+    if (REFERENCE_FILES.includes(relative)) {
       continue;
     }
     for (const match of text.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
@@ -145,21 +150,18 @@ export async function verifyPublicDocs(root = repositoryRoot) {
       `Public documentation files differ from the allowlist: ${actual.join(", ")}`,
     );
   }
-  const specification = await readFile(
-    path.join(root, "knowledge/specifications/nkf-0.3.md"),
-  );
-  const mirror = await readFile(path.join(docsRoot, "reference/nkf-0.3.md"));
-  if (!mirror.equals(specification)) {
-    throw new Error("The public normative Markdown mirror differs from authority.");
-  }
-  const predecessorSpecification = await readFile(
-    path.join(root, "knowledge/specifications/nkf-0.2.md"),
-  );
-  const predecessorMirror = await readFile(
-    path.join(docsRoot, "reference/nkf-0.2.md"),
-  );
-  if (!predecessorMirror.equals(predecessorSpecification)) {
-    throw new Error("The public predecessor Markdown mirror differs from authority.");
+  let specification;
+  for (const version of ["0.2", "0.3", "0.4"]) {
+    const authority = await readFile(
+      path.join(root, `knowledge/specifications/nkf-${version}.md`),
+    );
+    const mirror = await readFile(
+      path.join(docsRoot, `reference/nkf-${version}.md`),
+    );
+    if (!mirror.equals(authority)) {
+      throw new Error(`The public NKF ${version} Markdown mirror differs from authority.`);
+    }
+    if (version === "0.4") specification = authority;
   }
   const adopter = await readFile(path.join(root, "dist/nourd-nkf-adopt.mjs"));
   const publicAdopter = await readFile(
@@ -169,7 +171,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     throw new Error("The public adopter differs from the deterministic build.");
   }
   const onboardingProtocol = await readFile(
-    path.join(root, "distribution/nkf/0.3/integrations/onboarding/nkf-onboarding-protocol.md"),
+    path.join(root, "distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md"),
   );
   const publicOnboardingProtocol = await readFile(
     path.join(docsRoot, "tools/nkf-onboarding-protocol.md"),
@@ -178,7 +180,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     throw new Error("The public onboarding protocol differs from its governed source.");
   }
   const onboardingSkill = await readFile(
-    path.join(root, "distribution/nkf/0.3/.agents/skills/nkf-onboarding/SKILL.md"),
+    path.join(root, "distribution/nkf/0.4/.agents/skills/nkf-onboarding/SKILL.md"),
   );
   for (const directory of [".agents", ".claude"]) {
     const publishedSkill = await readFile(
@@ -197,7 +199,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
   }
   const combined = [...markdown.values()].join("\n");
   const explanatoryCombined = [...markdown]
-    .filter(([relative]) => !["reference/nkf-0.2.md", "reference/nkf-0.3.md"].includes(relative))
+    .filter(([relative]) => !REFERENCE_FILES.includes(relative))
     .map(([, text]) => text)
     .join("\n");
   requireSubjects(explanatoryCombined);
@@ -205,7 +207,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
   const publicSafeCombined = (
     await Promise.all(
       actual
-        .filter((relative) => !["reference/nkf-0.2.md", "reference/nkf-0.3.md"].includes(relative))
+        .filter((relative) => !REFERENCE_FILES.includes(relative))
         .map((relative) =>
           readFile(path.join(docsRoot, ...relative.split("/")), "utf8"),
         ),

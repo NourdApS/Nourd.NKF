@@ -38,12 +38,12 @@ const archiveBytes = await readFile(archivePath);
 const verification = verifyReleaseArchive(archiveBytes, expectedSha256, {
   sourceRoot,
 });
-if (verification.manifest.nkf_version !== "0.3") {
-  fail("The exact-candidate exercise requires an NKF 0.3 archive.");
+if (verification.manifest.nkf_version !== "0.4") {
+  fail("The exact-candidate exercise requires an NKF 0.4 archive.");
 }
 const source = await evaluateReleaseSourceProvenance(sourceRoot, verification);
 
-const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-3-candidate-exercise-"));
+const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-4-candidate-exercise-"));
 try {
   const project = path.join(temporary, "project");
   run("git", ["clone", "--no-hardlinks", "--local", sourceRoot, project]);
@@ -76,7 +76,7 @@ try {
   const manifest = verification.manifest;
   const catalog = {
     contract: "nkf.release-candidate-binding",
-    nkf_version: "0.3",
+    nkf_version: "0.4",
     state: "candidate",
     channel: "internal-exact-candidate",
     archive: {
@@ -102,19 +102,25 @@ try {
         from_nkf_version: "0.1",
         classification: "breaking",
         migration_required: true,
-        summary: "NKF 0.1 requires explicit approved migration to NKF 0.3.",
+        summary: "NKF 0.1 requires explicit approved migration to NKF 0.4.",
       },
       {
         from_nkf_version: "0.2",
         classification: "breaking",
         migration_required: true,
-        summary: "NKF 0.2 requires explicit approved migration to NKF 0.3.",
+        summary: "NKF 0.2 requires explicit approved migration to NKF 0.4.",
       },
       {
         from_nkf_version: "0.3",
         classification: "non-breaking",
         migration_required: false,
-        summary: "NKF 0.3 refreshes the exact release and integration.",
+        summary: "NKF 0.3 advances non-breakingly to NKF 0.4 without knowledge migration.",
+      },
+      {
+        from_nkf_version: "0.4",
+        classification: "non-breaking",
+        migration_required: false,
+        summary: "NKF 0.4 refreshes the exact release and integration.",
       },
     ],
     release: {
@@ -173,7 +179,7 @@ try {
   process.stdout.write(
     `${JSON.stringify({
       contract: "nkf.release-candidate-exercise",
-      nkf_version: "0.3",
+      nkf_version: "0.4",
       state: "passed",
       archive_sha256: verification.archive_sha256,
       release_commit: verification.release_commit,

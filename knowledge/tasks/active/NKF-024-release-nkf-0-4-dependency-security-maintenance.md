@@ -210,6 +210,23 @@ post-adoption audit before this Task concludes.
   records the confirmed 0.4 coordinate, non-breaking 0.3 compatibility,
   immutable 0.3 predecessor boundary, delegated technical maintenance scope,
   and single-branch lifecycle exception.
+- The fresh [0.4 authority-pair audit](../../evidence/audits/nkf-024-nkf-0-4-authority-pair-audit.md)
+  found and corrected an accidental CommonMark substring replacement, then
+  returned `CLEAN` for the exact maintenance-only pair accepted by
+  [ADR 0113](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md).
+- The lock now resolves `fast-uri` `3.1.5` and development-only `nanoid`
+  `3.3.18` with no unrelated dependency movement, and `npm audit` reports zero
+  known vulnerabilities. Focused regression tests reject literal-backslash
+  URI authorities through the shipped Ajv format boundary and verify that
+  `nanoid` is absent from both distributed runtimes.
+- The derived 136-member release set, multi-version checker, and one public
+  Adopt implementation pass focused contract, release, security, and runtime
+  tests. Ordinary 0.3-to-0.4 Adopt preserves the complete knowledge tree and
+  returns `current` on repeat; 0.1 and 0.2 remain approval-gated and preserving.
+- The successor
+  [NKF 0.4 Security Maintenance Realization](../../realizations/current/nkf-0.4-security-maintenance.md)
+  records the implementation mapping and remains explicitly unconfirmed until
+  the exact candidate audit and later delegated confirmation Decision.
 
 ## Decision Applicability
 
@@ -231,18 +248,19 @@ post-adoption audit before this Task concludes.
 | [`adr-0110`](../../decisions/0110-accept-the-nkf-0-3-authority-pair.md) | record | The exact 0.3 pair is immutable governing predecessor authority and cannot be edited; the 0.4 maintenance pair must be a separately derived successor. |
 | [`adr-0111`](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) | record | Technical confirmation binds only the exact audited 0.3 candidate; 0.4 requires its own clean audit and separate delegated confirmation. |
 | [`adr-0112`](../../decisions/0112-allocate-nkf-0-4-security-maintenance.md) | record | NKF 0.4 is the non-breaking dependency-security successor; 0.3 stays frozen, no new normative behavior is authorized, technical execution is delegated inside the fixed boundary, and this Task uses one branch and one final pull request. |
+| [`adr-0113`](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md) | record | The exact 0.4 Markdown and executable companion are accepted together as the maintenance-only successor; every derived surface must bind those bytes and preserve 0.3 behavior. |
 
 ### Mandatory Capabilities
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
 | Published NKF 0.3 remains exact immutable predecessor evidence | unknown | none | none |
-| The locked 0.4 dependency graph contains patched `fast-uri` and `nanoid` versions and no known npm advisory | unknown | none | none |
-| The two advisory application paths are absent or fail closed at NKF's exact shipped boundaries | unknown | none | none |
-| The 0.4 authority pair is a semantically bounded maintenance successor to accepted 0.3 | unknown | none | none |
-| Every complete-set surface consumes one exact 0.4 release enumeration | unknown | none | none |
-| Ordinary 0.3-to-0.4 Adopt is non-breaking, migration-free, approval-free, preserving, and idempotent | unknown | none | none |
-| Supported 0.1 and 0.2 predecessor migrations remain approval-gated and preserving | unknown | none | none |
+| The locked 0.4 dependency graph contains patched `fast-uri` and `nanoid` versions and no known npm advisory | proven | data-validity | none |
+| The two advisory application paths are absent or fail closed at NKF's exact shipped boundaries | proven | runtime-behaviour | none |
+| The 0.4 authority pair is a semantically bounded maintenance successor to accepted 0.3 | proven | data-validity | none |
+| Every complete-set surface consumes one exact 0.4 release enumeration | proven | data-validity | none |
+| Ordinary 0.3-to-0.4 Adopt is non-breaking, migration-free, approval-free, preserving, and idempotent | proven | runtime-behaviour | none |
+| Supported 0.1 and 0.2 predecessor migrations remain approval-gated and preserving | proven | runtime-behaviour | none |
 | Exact-candidate producer self-adoption preserves the stronger host gate and returns `current` | unknown | none | none |
 | Independent candidate and post-publication audits return clean before their dependent actions | unknown | none | none |
 | The published recommendation and producer pin resolve the same immutable 0.4 archive | unknown | none | none |

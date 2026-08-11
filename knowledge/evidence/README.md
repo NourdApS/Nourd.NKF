@@ -54,6 +54,11 @@ The NKF-024 dependency-security baseline records the exact affected
 bounded shipped-runtime reachability assessment, and green pre-change NKF 0.3
 producer gate that initiate the non-breaking 0.4 maintenance release.
 
+The NKF-024 NKF 0.4 authority-pair audit compares the complete exact
+successor pair to frozen 0.3, records and corrects an accidental CommonMark
+version substitution, and returns a clean verdict for the final coordinate,
+predecessor-binding, compatibility, and security-maintenance-only delta.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

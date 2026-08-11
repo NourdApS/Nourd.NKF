@@ -2,11 +2,11 @@
 id: nkf-0.1-native-realization
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including current published, recommended, and producer-adopted NKF 0.3 plus its immutable predecessors.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, including accepted NKF 0.4 maintenance authority and implementation work plus published, recommended, and producer-adopted NKF 0.3 and its immutable predecessors.
 created_at: 2026-07-30T15:59:54Z
 record_lifecycle: immutable
 record_status: draft
-task: NKF-023
+task: NKF-024
 confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0068
@@ -16,7 +16,7 @@ confirmation_decisions:
   - adr-0106
   - adr-0108
   - adr-0111
-unconfirmed_scope: ADR 0111 confirms the exact NKF 0.3 release-candidate implementation and archive. Publication, recommendation, producer adoption, and pristine-clone conformance are independently audited operational facts, not additional confirmation acts. This later consolidated account and the producer-only tracked-mirror correction are not themselves confirmed by a successor Decision.
+unconfirmed_scope: ADR 0111 confirms the exact NKF 0.3 release-candidate implementation and archive. ADR 0113 accepts the exact NKF 0.4 authority pair but confirms no derived implementation. The 0.4 implementation, archive, publication, recommendation, producer adoption, and this successor account remain unconfirmed until the exact candidate audit and a later delegated technical confirmation Decision. Publication and runtime observations remain separate operational facts.
 ---
 
 # NKF Current System
@@ -37,22 +37,27 @@ The stable record identity remains `nkf-0.1-native-realization`.
 
 ## Governed Meaning Realized
 
-The version-dispatching implementation supports current accepted NKF 0.3 and
-the immutable NKF 0.2 predecessor for the same Product and Technology Root
-Profiles. This producer repository declares 0.3 and pins the exact published
-0.3 archive through the public Adopt integration. Markdown remains normative
-human authority and each executable YAML remains its version-specific digest-
-bound companion.
+The version-dispatching implementation supports current accepted NKF 0.4 and
+the immutable NKF 0.2 and 0.3 predecessors for the same Product and Technology
+Root Profiles. During candidate construction this producer repository still
+declares 0.3 and pins the exact published 0.3 archive through the public Adopt
+integration; it does not claim 0.4 adoption before publication. Markdown
+remains normative human authority and each executable YAML remains its
+version-specific digest-bound companion.
 
 The current exact authority pair is accepted through
-[ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md), and the exact
-release-candidate implementation, checker, adopter, and archive are confirmed
-through [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md).
-The 0.3 pair preserves the complete portable topology, heading-equal titles,
-same-bundle deep links, Decision Applicability Gate, five validation levels,
-and four-state Task vocabulary while adding publication-triggered freeze,
-complete-set distribution, host-superset integration, and predecessor-
-relative compatibility. [ADR 0104](../decisions/0104-accept-the-cancelled-state-pair.md)
+[ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md) under the
+bounded maintenance allocation in
+[ADR 0112](../decisions/0112-allocate-nkf-0-4-security-maintenance.md). It
+preserves the complete accepted 0.3 meaning while allocating separately frozen
+0.4 bytes and classifying 0.3-to-0.4 adoption as non-breaking without knowledge
+migration or breaking approval. The exact 0.4 implementation is not yet
+confirmed. Its 0.3 predecessor pair remains accepted through
+[ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md), and that
+release-candidate implementation, checker, adopter, and archive remain
+confirmed through
+[ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md).
+[ADR 0104](../decisions/0104-accept-the-cancelled-state-pair.md)
 and [ADR 0105](../decisions/0105-bind-the-cancelled-state-release-checker.md)
 remain accepted and confirmed 0.2 predecessor provenance; ADRs 0054 through
 0075 remain 0.1 predecessor provenance rather than current format authority.
@@ -187,6 +192,15 @@ the complete fresh re-audit retained as
 [producer-adoption Evidence](../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md).
 That producer-only correction changes no frozen 0.3 byte.
 
+Under [NKF-024](../tasks/active/NKF-024-release-nkf-0-4-dependency-security-maintenance.md),
+the 0.4 candidate derives a 136-member, 18-class complete set from the accepted
+maintenance pair, locks patched `fast-uri` and `nanoid` versions, retains the
+single public Adopt operation, and adds an atomic non-breaking 0.3-to-0.4
+version update that preserves the consumer knowledge tree and stronger host
+integration. The source, tests, deterministic builds, and focused runtime
+exercises are implementation evidence only. No 0.4 archive is claimed
+confirmed, published, recommended, or producer-adopted at this checkpoint.
+
 ## Durable Mapping
 
 The current repository topology is:
@@ -243,8 +257,9 @@ Complete Product Or Technology Topology
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| NKF 0.3 Specification and executable companion | `knowledge/specifications/nkf-0.3.md`, `contracts/nkf/0.3/nkf.yaml` | Current exact authority pair with publication freeze, complete-set release meaning, host-superset adoption, and predecessor-relative compatibility | Accepted by [ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md); exact implementation confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) |
-| NKF 0.3 distribution | `contracts/nkf/0.3/`, `distribution/nkf/0.3/`, `fixtures/valid/*-0-3/`, `public-docs/`, `scripts/release/`, `scripts/adoption/` | Published and recommended 135-member archive with one 18-class release set, checker, adopter, guidance, migration, fixtures, examples, and public projection | Exact candidate confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md); publication and recommendation observed in [publication Evidence](../evidence/audits/nkf-023-nkf-0-3-publication.md) |
+| NKF 0.4 Specification and executable companion | `knowledge/specifications/nkf-0.4.md`, `contracts/nkf/0.4/nkf.yaml` | Current exact non-breaking maintenance authority pair | Accepted by [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md); derived implementation not yet confirmed |
+| NKF 0.4 candidate distribution | `contracts/nkf/0.4/`, `distribution/nkf/0.4/`, `fixtures/valid/*-0-4/`, `public-docs/`, `scripts/release/`, `scripts/adoption/` | Unreleased 136-member candidate source with one 18-class release set, patched dependency closure, checker, adopter, guidance, fixtures, examples, and public projection | Implementation evidence only pending exact candidate construction and independent audit |
+| NKF 0.3 authority and distribution | `knowledge/specifications/nkf-0.3.md`, `contracts/nkf/0.3/`, `distribution/nkf/0.3/`, `fixtures/valid/*-0-3/` | Published, recommended, and producer-adopted immutable predecessor with its 135-member archive | Accepted by [ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md); exact implementation confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md); publication observed in [publication Evidence](../evidence/audits/nkf-023-nkf-0-3-publication.md) |
 | NKF 0.2 authority pair | `knowledge/specifications/nkf-0.2.md`, `contracts/nkf/0.2/nkf.yaml` | Supported immutable predecessor with the 159-rule registry | Accepted by [ADR 0104](../decisions/0104-accept-the-cancelled-state-pair.md) and checker-bound by [ADR 0105](../decisions/0105-bind-the-cancelled-state-release-checker.md) |
 | Retired NKF 0.1 authority | Git history and immutable 0.1 release archives | Supported immutable predecessor, absent from the current working authority tree | [ADR 0073](../decisions/0073-correct-portable-topology-diagnostic-registry.md) and [ADR 0075](../decisions/0075-confirm-complete-portable-onboarding-topology.md) |
 | Version release and adoption protocols | `integrations/release/`, `integrations/adoption/`, `distribution/nkf/0.3/integrations/` | Installed 0.3 protocols for candidate proof, publication, one public Adopt operation, compatibility preflight, approval, rollback, recommendation, and post-action audit | Direction adopted by [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md); exact candidate bytes confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) |
@@ -268,6 +283,7 @@ Supporting current Realizations provide the detailed mappings:
 - [Contracts And Schemas](current/contracts-and-schemas.md)
 - [Checker And Validation](current/checker-and-validation.md)
 - [Layered Contract Enforcement](current/layered-contract-enforcement.md)
+- [NKF 0.4 Security Maintenance](current/nkf-0.4-security-maintenance.md)
 - [Agent-Led Initial Onboarding](current/agent-led-initial-onboarding.md)
 - [Portable Knowledge Topology](current/portable-knowledge-topology.md)
 - [Release Documentation And Adoption](current/release-documentation-and-adoption.md)
@@ -313,11 +329,12 @@ project-contained relative `knowledge_root`.
 Record declarations resolve from `.nourd/knowledge/records/*.yaml` to exact
 Markdown sources under `knowledge_root`. Technology bundles may additionally
 bind project-contained governed artifacts. The checker dispatches trusted
-exact contract sets from `contracts/nkf/0.2/` and `contracts/nkf/0.3/` and uses
-Node.js with pinned package dependencies. The producer's own bundle selects
-0.3 and its installed pin selects one immutable archive. Immutable 0.1 and 0.2
-support remains available through predecessor releases and migration tooling
-rather than by changing the current contract coordinate.
+exact contract sets from `contracts/nkf/0.2/`, `contracts/nkf/0.3/`, and
+`contracts/nkf/0.4/` and uses Node.js with pinned package dependencies. During
+candidate construction the producer's own bundle still selects 0.3 and its
+installed pin selects that immutable published archive. Immutable predecessor
+support remains available through frozen authority, releases, and migration
+tooling rather than by changing an earlier contract coordinate.
 
 AI-assisted authoring begins from the neutral protocol. Registered host
 surfaces resolve it through exact adapters or portable skills. Every handoff
@@ -336,8 +353,9 @@ catalog, checks that the executing adopter and exact archive agree with it,
 and observes the bundle and installed pin. An NKF 0.1 or NKF 0.2 predecessor
 stops with the exact breaking signal until repository-owner approval is
 supplied. Each installed predecessor is verified through its own pinned
-adopter before migration. Same-version 0.3 refresh is non-breaking. The
-recommendation may move only through reviewed NKF
+adopter before migration. NKF 0.3 advances to 0.4 non-breakingly without
+knowledge migration or breaking approval; same-version 0.4 refresh is also
+non-breaking. The recommendation may move only through reviewed NKF
 repository state; the consumer's content-addressed pin never moves by
 implication.
 

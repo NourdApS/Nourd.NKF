@@ -1,8 +1,8 @@
 # Nourd Knowledge Format
 
-> NKF 0.3 is pre-stable. The current checker release is internal to authorized
+> NKF 0.4 is pre-stable. The current checker release is internal to authorized
 > Nourd projects. This public documentation is explanatory; the exact
-> digest-bound [NKF 0.3 Specification](reference/nkf-0.3.md) is normative.
+> digest-bound [NKF 0.4 Specification](reference/nkf-0.4.md) is normative.
 
 Nourd Knowledge Format, or NKF, is a governed way to keep important project
 knowledge understandable to people and mechanically coherent for tools and AI
@@ -160,12 +160,12 @@ evidence and stops without guessing a later brownfield category.
   bundle.
 - [Technology Example](examples/technology/README.md) is a complete small
   Technology bundle with governed artifacts.
-- [NKF 0.3 Specification](reference/nkf-0.3.md) is the exact normative
+- [NKF 0.4 Specification](reference/nkf-0.4.md) is the exact normative
   Markdown mirror.
 
 ## Current Boundaries
 
-- NKF 0.3 is pre-stable and may change through the governed change process.
+- NKF 0.4 is pre-stable and may change through the governed change process.
 - The current checker release is private and available only to authorized
   users of `kaveh6202/Nourd.NKF`.
 - The exact Specification mirror preserves source-relative provenance links
