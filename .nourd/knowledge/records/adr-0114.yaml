@@ -1,0 +1,29 @@
+contract: nkf.record
+id: adr-0114
+type: decision
+body_contract: nkf.decision
+title: "ADR 0114: Confirm The NKF 0.4 Release Candidate"
+source:
+  path: decisions/0114-confirm-the-nkf-0-4-release-candidate.md
+  digest:
+    algorithm: sha-256
+    value: 60777f93cd8fbb7f9512366d741cb321f9631c4d48b3b716da966382e5dfdfb8
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
+  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
+  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
+  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
+  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
+  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
+  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+relationships:
+  - type: extends
+    target: adr-0113
+    source_section: decision

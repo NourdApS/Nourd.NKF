@@ -240,6 +240,12 @@ post-adoption audit before this Task concludes.
   test files and 210 tests, extracted-checker conformance, frozen 0.3 source
   preservation, and pristine-producer Adopt returning `updated` then
   `current` with its stronger host gate preserved.
+- [ADR 0114](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md)
+  exercises the delegated technical-confirmation authority only after that
+  clean audit and binds exact release commit `29880a3`, archive
+  `a7912b92...79ecd`, checker `425286d3...d123`, adopter `416b26e7...cd65`,
+  and dependency lock `c2490fc3...71fe`. Publication, recommendation, and
+  ordinary producer adoption remain separate pending facts.
 
 ## Decision Applicability
 
@@ -262,6 +268,7 @@ post-adoption audit before this Task concludes.
 | [`adr-0111`](../../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) | record | Technical confirmation binds only the exact audited 0.3 candidate; 0.4 requires its own clean audit and separate delegated confirmation. |
 | [`adr-0112`](../../decisions/0112-allocate-nkf-0-4-security-maintenance.md) | record | NKF 0.4 is the non-breaking dependency-security successor; 0.3 stays frozen, no new normative behavior is authorized, technical execution is delegated inside the fixed boundary, and this Task uses one branch and one final pull request. |
 | [`adr-0113`](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md) | record | The exact 0.4 Markdown and executable companion are accepted together as the maintenance-only successor; every derived surface must bind those bytes and preserve 0.3 behavior. |
+| [`adr-0114`](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) | record | The exact audited 0.4 release commit, archive, checker, adopter, and lock are technically confirmed; only those unchanged bytes may be published. |
 
 ### Mandatory Capabilities
 

@@ -16,7 +16,8 @@ confirmation_decisions:
   - adr-0106
   - adr-0108
   - adr-0111
-unconfirmed_scope: ADR 0111 confirms the exact NKF 0.3 release-candidate implementation and archive. ADR 0113 accepts the exact NKF 0.4 authority pair but confirms no derived implementation. The 0.4 implementation, archive, publication, recommendation, producer adoption, and this successor account remain unconfirmed until the exact candidate audit and a later delegated technical confirmation Decision. Publication and runtime observations remain separate operational facts.
+  - adr-0114
+unconfirmed_scope: ADR 0114 confirms the exact NKF 0.4 maintenance implementation and private candidate archive. Publication, recommendation, ordinary producer adoption, their later audits, and this consolidated successor account remain separate operational or later-confirmation facts. ADR 0111 retains exact NKF 0.3 predecessor confirmation.
 ---
 
 # NKF Current System
@@ -51,8 +52,9 @@ bounded maintenance allocation in
 [ADR 0112](../decisions/0112-allocate-nkf-0-4-security-maintenance.md). It
 preserves the complete accepted 0.3 meaning while allocating separately frozen
 0.4 bytes and classifying 0.3-to-0.4 adoption as non-breaking without knowledge
-migration or breaking approval. The exact 0.4 implementation is not yet
-confirmed. Its 0.3 predecessor pair remains accepted through
+migration or breaking approval. The exact 0.4 implementation, checker, adopter,
+lock, and private archive are confirmed through
+[ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md). Its 0.3 predecessor pair remains accepted through
 [ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md), and that
 release-candidate implementation, checker, adopter, and archive remain
 confirmed through
@@ -197,9 +199,11 @@ the 0.4 candidate derives a 136-member, 18-class complete set from the accepted
 maintenance pair, locks patched `fast-uri` and `nanoid` versions, retains the
 single public Adopt operation, and adds an atomic non-breaking 0.3-to-0.4
 version update that preserves the consumer knowledge tree and stronger host
-integration. The source, tests, deterministic builds, and focused runtime
-exercises are implementation evidence only. No 0.4 archive is claimed
-confirmed, published, recommended, or producer-adopted at this checkpoint.
+integration. Independent fresh audit reproduced and exercised the exact
+release-commit implementation and private archive, which
+[ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) now
+confirms. No 0.4 archive is claimed published, recommended, or ordinarily
+producer-adopted at this checkpoint.
 
 ## Durable Mapping
 
@@ -257,15 +261,15 @@ Complete Product Or Technology Topology
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| NKF 0.4 Specification and executable companion | `knowledge/specifications/nkf-0.4.md`, `contracts/nkf/0.4/nkf.yaml` | Current exact non-breaking maintenance authority pair | Accepted by [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md); derived implementation not yet confirmed |
-| NKF 0.4 candidate distribution | `contracts/nkf/0.4/`, `distribution/nkf/0.4/`, `fixtures/valid/*-0-4/`, `public-docs/`, `scripts/release/`, `scripts/adoption/` | Unreleased 136-member candidate source with one 18-class release set, patched dependency closure, checker, adopter, guidance, fixtures, examples, and public projection | Implementation evidence only pending exact candidate construction and independent audit |
+| NKF 0.4 Specification and executable companion | `knowledge/specifications/nkf-0.4.md`, `contracts/nkf/0.4/nkf.yaml` | Current exact non-breaking maintenance authority pair | Accepted by [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md); exact derived candidate confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) |
+| NKF 0.4 candidate distribution | `contracts/nkf/0.4/`, `distribution/nkf/0.4/`, `fixtures/valid/*-0-4/`, `public-docs/`, `scripts/release/`, `scripts/adoption/` | Unreleased exact 136-member candidate with one 18-class release set, patched dependency closure, checker, adopter, guidance, fixtures, examples, and public projection | Exact release commit and archive independently audited and confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md); publication remains separate |
 | NKF 0.3 authority and distribution | `knowledge/specifications/nkf-0.3.md`, `contracts/nkf/0.3/`, `distribution/nkf/0.3/`, `fixtures/valid/*-0-3/` | Published, recommended, and producer-adopted immutable predecessor with its 135-member archive | Accepted by [ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md); exact implementation confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md); publication observed in [publication Evidence](../evidence/audits/nkf-023-nkf-0-3-publication.md) |
 | NKF 0.2 authority pair | `knowledge/specifications/nkf-0.2.md`, `contracts/nkf/0.2/nkf.yaml` | Supported immutable predecessor with the 159-rule registry | Accepted by [ADR 0104](../decisions/0104-accept-the-cancelled-state-pair.md) and checker-bound by [ADR 0105](../decisions/0105-bind-the-cancelled-state-release-checker.md) |
 | Retired NKF 0.1 authority | Git history and immutable 0.1 release archives | Supported immutable predecessor, absent from the current working authority tree | [ADR 0073](../decisions/0073-correct-portable-topology-diagnostic-registry.md) and [ADR 0075](../decisions/0075-confirm-complete-portable-onboarding-topology.md) |
 | Version release and adoption protocols | `integrations/release/`, `integrations/adoption/`, `distribution/nkf/0.3/integrations/` | Installed 0.3 protocols for candidate proof, publication, one public Adopt operation, compatibility preflight, approval, rollback, recommendation, and post-action audit | Direction adopted by [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md); exact candidate bytes confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) |
 | Core JSON Schemas | `contracts/nkf/0.2/schemas/`, `contracts/nkf/0.3/schemas/` | Source-bound predecessor Schemas and four closed 0.3 Schemas | 0.3 exact digests confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) |
 | Checker library and CLI | `src/checker/`, `src/cli.ts`, `dist/nourd-nkf-checker.mjs` | Version-dispatching checker with exact 0.2 and 0.3 bindings; release checker SHA-256 `804c082c...` | 0.3 exact build confirmed by [ADR 0111](../decisions/0111-confirm-the-nkf-0-3-release-candidate.md) |
-| Fixtures and tests | `fixtures/`, `test/` | Product and Technology topology, lifecycle, onboarding, migration, release membership, recovery, and tamper coverage; current gate passes 25 files and 202 tests | Candidate audit and [producer-adoption Evidence](../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md); passing tests are conformance evidence only |
+| Fixtures and tests | `fixtures/`, `test/` | Product and Technology topology, lifecycle, onboarding, migration, release membership, security, recovery, and tamper coverage; current gate passes 28 files and 210 tests | 0.4 [candidate audit](../evidence/audits/nkf-024-nkf-0-4-exact-candidate-audit.md) and 0.3 [producer-adoption Evidence](../evidence/audits/nkf-023-nkf-0-3-producer-adoption-audit.md); passing tests are conformance evidence only |
 | Self-host declaration and release pin | `.nourd/knowledge/`, `.nourd/nkf-release.json`, `.nourd/tools/nkf/` | Adopted 0.3 Technology bundle pinned to archive `34bd7463...` with exact installed archive and adopter | Producer adoption independently verified; this later account remains partially confirmed |
 | Neutral authoring and onboarding procedures | `integrations/ai/`, `integrations/onboarding/`, portable skills | Installed 0.3 vendor-neutral protocols and portable skills | Bytes carried by the confirmed archive; repository installation independently audited |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Twelve explicit host surfaces plus the producer-only Task-authorization policy; exact registered bindings verified | Producer installation independently audited; acceptance and confirmation remain separate |

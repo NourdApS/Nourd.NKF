@@ -5,9 +5,11 @@ title: NKF 0.4 Security Maintenance
 summary: This Realization maps the accepted NKF 0.4 maintenance pair to its patched dependency closure, derived contracts, release set, checker, adopter, compatibility behavior, and verification surface.
 created_at: 2026-08-11T14:46:00Z
 record_lifecycle: immutable
-record_status: draft
+record_status: accepted
 task: NKF-024
-confirmation_status: unconfirmed
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0114
 ---
 
 # NKF 0.4 Security Maintenance
@@ -75,8 +77,10 @@ stronger pinned-first host-superset validation chain.
 
 Git owns commits and history; Github owns tags, Releases, assets, pull-request
 state, and workflow observations; the npm advisory service owns time-bound
-advisory reports. Candidate construction, publication, recommendation, and
-producer adoption remain separate facts and are not claimed by this draft.
+advisory reports. [ADR 0114](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md)
+confirms the exact release commit, checker, adopter, lock, and candidate archive
+after the independent audit. Publication, recommendation, and ordinary
+producer adoption remain separate facts and are not claimed by confirmation.
 
 ## Compatibility Verification And Recovery
 
@@ -86,7 +90,7 @@ release-set and manifest binding, Product and Technology fixtures, non-breaking
 0.3 adoption with byte-identical knowledge, approval-gated preserving 0.1 and
 0.2 migrations, rollback, tamper rejection, and repeat `current` behavior.
 
-The candidate must then be reconstructed and exercised from fresh isolated
+The confirmed candidate was reconstructed and exercised from fresh isolated
 source before technical confirmation. Publication must use exactly those
 audited bytes, and ordinary producer adoption requires a second fresh audit.
 Recovery restores an immutable known-good pin or performs a later governed NKF

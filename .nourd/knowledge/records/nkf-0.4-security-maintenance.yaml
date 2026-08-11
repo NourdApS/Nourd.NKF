@@ -7,10 +7,10 @@ source:
   path: realizations/current/nkf-0.4-security-maintenance.md
   digest:
     algorithm: sha-256
-    value: 5e049661212446cf317398b8878ba2d0ea2db264347505cd98382287b287037e
+    value: e6a9931cc0a6b4865ecde0acb6ffc5fcf4bf969738627a07d3201a99ce934181
 governance:
   lifecycle: immutable
-  status: draft
+  status: accepted
   authority:
     - codex-technical-reviewer
 scope:
