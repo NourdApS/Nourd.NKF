@@ -20653,6 +20653,7 @@ var BLOCK_END = "<!-- nkf-authoring-adapter:end -->";
 var ROOT_BLOCK = AGENTS_adapter_default.trimEnd();
 var IMPORT_BLOCK = CLAUDE_adapter_default.trimEnd();
 var COPILOT_BLOCK = copilot_instructions_adapter_default.trimEnd();
+var EXACT_ROOT_IMPORT = Buffer.from("@AGENTS.md\n", "utf8");
 var VERIFIER_SOURCE = `import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -21115,11 +21116,21 @@ function defaultBranch(projectRoot) {
   }
   return "master";
 }
-function integrationRegistry(files, branch, integration) {
+function integrationRegistry(files, branch, integration, exactImportPaths = /* @__PURE__ */ new Set()) {
   const exact = (relative) => ({
     path: relative,
     sha256: digest(files.get(relative))
   });
+  const adapter = (relative, block) => exactImportPaths.has(relative) ? {
+    path: relative,
+    mode: "exact-import",
+    target: "AGENTS.md",
+    sha256: digest(EXACT_ROOT_IMPORT)
+  } : {
+    path: relative,
+    mode: "bounded-block",
+    block_sha256: digest(Buffer.from(block))
+  };
   return {
     contract: "nkf.consumer-integration",
     version: INTEGRATION_REVISION,
@@ -21131,13 +21142,10 @@ function integrationRegistry(files, branch, integration) {
     onboarding_protocol: exact(ONBOARDING_PROTOCOL_PATH),
     onboarding_skills: ONBOARDING_SKILL_PATHS.map(exact),
     adapters: [
-      { path: "AGENTS.md", block_sha256: digest(Buffer.from(ROOT_BLOCK)) },
-      { path: "CLAUDE.md", block_sha256: digest(Buffer.from(IMPORT_BLOCK)) },
-      { path: "GEMINI.md", block_sha256: digest(Buffer.from(IMPORT_BLOCK)) },
-      {
-        path: ".github/copilot-instructions.md",
-        block_sha256: digest(Buffer.from(COPILOT_BLOCK))
-      }
+      adapter("AGENTS.md", ROOT_BLOCK),
+      adapter("CLAUDE.md", IMPORT_BLOCK),
+      adapter("GEMINI.md", IMPORT_BLOCK),
+      adapter(".github/copilot-instructions.md", COPILOT_BLOCK)
     ],
     verifier: exact(VERIFIER_PATH),
     workflow: { ...exact(WORKFLOW_PATH), branch }
@@ -21363,23 +21371,32 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
   } else {
     files.set(WORKFLOW_PATH, Buffer.from(workflow(branch), "utf8"));
   }
+  const exactImportPaths = /* @__PURE__ */ new Set();
   for (const [relative, block] of [
     ["AGENTS.md", ROOT_BLOCK],
     ["CLAUDE.md", IMPORT_BLOCK],
     ["GEMINI.md", IMPORT_BLOCK],
     [".github/copilot-instructions.md", COPILOT_BLOCK]
   ]) {
-    files.set(
-      relative,
-      mergeBlock(await readRegularInside(projectRoot, relative, false), block, relative)
-    );
+    const existing = await readRegularInside(projectRoot, relative, false);
+    if ((relative === "CLAUDE.md" || relative === "GEMINI.md") && existing?.equals(EXACT_ROOT_IMPORT)) {
+      files.set(relative, existing);
+      exactImportPaths.add(relative);
+    } else {
+      files.set(relative, mergeBlock(existing, block, relative));
+    }
   }
   const manifestBytes = packageResult.bytes;
   files.set("package.json", manifestBytes);
   if (await readRegularInside(projectRoot, LOCK_PATH, false) === null) {
     files.set(LOCK_PATH, packageLockBytes(manifestBytes));
   }
-  const registry = integrationRegistry(files, branch, packageResult.integration);
+  const registry = integrationRegistry(
+    files,
+    branch,
+    packageResult.integration,
+    exactImportPaths
+  );
   files.set(REGISTRY_PATH, serializeYaml2(registry));
   files.set(
     PIN_PATH,
@@ -21590,14 +21607,6 @@ async function verifyIntegration(projectRoot, pin) {
       fail4(`The installed onboarding skill differs: ${skillPath}`);
     }
   }
-  verifyBlock(await readRegularInside(projectRoot, "AGENTS.md"), ROOT_BLOCK, "AGENTS.md");
-  verifyBlock(await readRegularInside(projectRoot, "CLAUDE.md"), IMPORT_BLOCK, "CLAUDE.md");
-  verifyBlock(await readRegularInside(projectRoot, "GEMINI.md"), IMPORT_BLOCK, "GEMINI.md");
-  verifyBlock(
-    await readRegularInside(projectRoot, ".github/copilot-instructions.md"),
-    COPILOT_BLOCK,
-    ".github/copilot-instructions.md"
-  );
   const verifier = await readRegularInside(projectRoot, VERIFIER_PATH);
   if (verifier.toString("utf8") !== VERIFIER_SOURCE) {
     fail4("The installed integration verifier differs.");
@@ -21607,6 +21616,28 @@ async function verifyIntegration(projectRoot, pin) {
   if (registry?.contract !== "nkf.consumer-integration" || registry?.version !== INTEGRATION_REVISION || registry?.canonical_command !== "npm run nkf:check" || registry?.mode !== pin.integration.mode || JSON.stringify(registry?.scripts) !== JSON.stringify(pin.integration.scripts)) {
     fail4("The installed integration registry is invalid.");
   }
+  const exactImportPaths = /* @__PURE__ */ new Set();
+  const adapterByPath = new Map(
+    Array.isArray(registry.adapters) ? registry.adapters.map((adapter) => [adapter?.path, adapter]) : []
+  );
+  verifyBlock(await readRegularInside(projectRoot, "AGENTS.md"), ROOT_BLOCK, "AGENTS.md");
+  for (const relative of ["CLAUDE.md", "GEMINI.md"]) {
+    const adapter = adapterByPath.get(relative);
+    const bytes = await readRegularInside(projectRoot, relative);
+    if (adapter?.mode === "exact-import") {
+      if (!bytes.equals(EXACT_ROOT_IMPORT)) {
+        fail4(`The installed exact root import differs in ${relative}.`);
+      }
+      exactImportPaths.add(relative);
+    } else {
+      verifyBlock(bytes, IMPORT_BLOCK, relative);
+    }
+  }
+  verifyBlock(
+    await readRegularInside(projectRoot, ".github/copilot-instructions.md"),
+    COPILOT_BLOCK,
+    ".github/copilot-instructions.md"
+  );
   const workflowBytes = await readRegularInside(projectRoot, WORKFLOW_PATH);
   if (typeof registry.workflow?.branch !== "string" || digest(workflowBytes) !== registry.workflow.sha256) {
     fail4("The installed NKF workflow differs from the registry.");
@@ -21629,7 +21660,12 @@ async function verifyIntegration(projectRoot, pin) {
     [WORKFLOW_PATH, workflowBytes]
   ]);
   const expectedRegistry = serializeYaml2(
-    integrationRegistry(exactFiles, registry.workflow.branch, pin.integration)
+    integrationRegistry(
+      exactFiles,
+      registry.workflow.branch,
+      pin.integration,
+      exactImportPaths
+    )
   );
   if (!registryBytes.equals(expectedRegistry)) {
     fail4("The installed integration registry differs from its canonical form.");

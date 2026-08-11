@@ -371,6 +371,20 @@ adopted Design.
   manifest-bound checker before candidate Adopt. The corrected complete gate
   passes 25 test files and 200 tests; a replacement release commit and archive
   remain pending.
+- The replacement private candidate, SHA-256
+  `e5e707cedded1d2b7e33393b45932964480af6d76f2b59da518eb3f6b323259f`
+  from source commit `20417604623462403b9bdc4b0df739222e532014`, passed
+  deterministic packaging and source reproduction but failed after candidate
+  Adopt when the preserved producer gate found duplicated Claude guidance.
+  Adopt had appended the bounded 0.3 import block beside the producer's
+  already-registered exact `@AGENTS.md` import. This second candidate is also
+  invalid and unpublished. The adopter now preserves exact root imports where
+  already present, records their installation mode separately from bounded
+  adapter blocks, and verifies either form exactly. The focused adopter suite
+  passes all 25 tests including preserved Claude and Gemini imports. The
+  corrected complete gate also passes all 25 test files and 200 tests with
+  deterministic builds and zero self-host diagnostics; the next replacement
+  candidate remains pending.
 
 ## Decision Applicability
 

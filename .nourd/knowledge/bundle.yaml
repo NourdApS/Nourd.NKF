@@ -317,7 +317,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 397c8971719a86ec22b600d65d323c7c8f7cfbcdc544934b5f1655e7732d6894
+      value: 2b489adcf544b2e336c3a0659c1f70366f171bd5a06174dc17295079a6a58903
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-2-nourd-knowledge-bundle-yaml
@@ -1021,7 +1021,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 397c8971719a86ec22b600d65d323c7c8f7cfbcdc544934b5f1655e7732d6894
+      value: 2b489adcf544b2e336c3a0659c1f70366f171bd5a06174dc17295079a6a58903
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -1045,7 +1045,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 2665071c811ade7c29f4647c55c0e305d9ceefa6cec667a95a2156de73763f37
+      value: 57ae2fabc17dcd76c669a503698bef8d306e03c6ab83033dad31e57bcc671945
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
@@ -1349,7 +1349,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: 80ef28b18839868f95fa41a8e0d7a1e62b6f119658fb6257a7f4bdbd4c77f666
+      value: be91e5e38f6174483230b5a8273283d3c410361d9a8692a33b1c7d1ca49e5a2a
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts

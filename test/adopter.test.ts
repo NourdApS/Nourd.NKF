@@ -1852,6 +1852,8 @@ describe("NKF consumer adopter", () => {
         },
       }, null, 2)}\n`,
     );
+    await writeFile(path.join(project, "CLAUDE.md"), "@AGENTS.md\n");
+    await writeFile(path.join(project, "GEMINI.md"), "@AGENTS.md\n");
 
     const blocked = runAdopt(project, ["--archive", archivePath]);
     expect(blocked.status).toBe(1);
@@ -1886,6 +1888,24 @@ describe("NKF consumer adopter", () => {
       "nkf:check:host": hostScript,
       "host:existing": "node --version",
     });
+    expect(await readFile(path.join(project, "CLAUDE.md"), "utf8")).toBe(
+      "@AGENTS.md\n",
+    );
+    expect(await readFile(path.join(project, "GEMINI.md"), "utf8")).toBe(
+      "@AGENTS.md\n",
+    );
+    const integrationRegistry = YAML.parse(
+      await readFile(
+        path.join(project, "integrations/ai/nkf-consumer-integration.yaml"),
+        "utf8",
+      ),
+    );
+    expect(integrationRegistry.adapters).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: "CLAUDE.md", mode: "exact-import" }),
+        expect.objectContaining({ path: "GEMINI.md", mode: "exact-import" }),
+      ]),
+    );
     const pin = JSON.parse(
       await readFile(path.join(project, ".nourd/nkf-release.json"), "utf8"),
     );
