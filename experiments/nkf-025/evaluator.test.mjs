@@ -129,8 +129,10 @@ test("an applicable Decision conflict blocks readiness without pretending confor
     reviews: reviewAll(product, context.purpose),
   });
   const decision = nodeResult(receipt, "decision-access");
-  assert.equal(decision.freshness, "invalidated");
+  assert.equal(decision.freshness, "current");
+  assert.equal(decision.decision_classification, "conflicts");
   assert.equal(decision.conformance, "passed");
+  assert.ok(receipt.blockers.some((blocker) => blocker.code === "applicable-decision-conflict"));
   assert.equal(receipt.readiness, "blocked");
 });
 
@@ -310,6 +312,7 @@ test("receipts reproduce deterministically and change when a bound input changes
   const second = evaluate({ baseline: product, candidate: product, policy, context, reviews });
   assert.equal(canonicalize(first), canonicalize(second));
   assert.equal(first.evaluation_id, second.evaluation_id);
+  assert.match(first.evaluator.sha256, /^[a-f0-9]{64}$/);
   const changed = evaluate({
     baseline: product,
     candidate: product,
@@ -318,6 +321,15 @@ test("receipts reproduce deterministically and change when a bound input changes
     reviews,
   });
   assert.notEqual(changed.evaluation_id, first.evaluation_id);
+  const observed = evaluate({
+    baseline: product,
+    candidate: product,
+    policy,
+    context,
+    reviews,
+    observations: { events: ["unused-but-bound-observation"] },
+  });
+  assert.notEqual(observed.evaluation_id, first.evaluation_id);
 });
 
 test("permuting set-like graph sequences does not change the deterministic receipt", () => {

@@ -24,7 +24,7 @@ The exercise uses these versioned experimental contracts:
 | --- | --- | --- |
 | Graph | `nkf.graph-experiment/0` | Stable nodes, revisions, candidate universe, typed edges, governed-artifact observations, and completeness assertion |
 | Evaluation policy | `nkf.graph-evaluation-policy-experiment/0` | Relationship endpoint kinds, impact class, propagation direction, and cycle rule |
-| Receipt | `nkf.graph-evaluation-receipt-experiment/0` | Bound projections, closure, reason paths, axis results, review provenance, blockers, and deterministic identity |
+| Receipt | `nkf.graph-evaluation-receipt-experiment/0` | Bound evaluator source, policy, context, observations, review inputs, projections, closure, reason paths, axis results, blockers, and deterministic identity |
 | Semantic oracle | `nkf.graph-semantic-oracle-experiment/0` | Whole-root reviewer expectation used only to detect false positives and false negatives |
 | Measurements | `nkf.graph-experiment-measurements/0` | Reproducible comparison and cost report emitted by the measurement script |
 
@@ -51,7 +51,7 @@ cases:
 | Product Decision revision | The mandatory closure was the changed Decision, extending Design, and realizing Realization; exact reason paths were emitted and a revision-bound review made the set current |
 | Technology Specification revision | The closure was the Specification and its Realization; a contextual Technology reference did not expand mandatory review |
 | Whole-root readiness | Every applicable node required a current revision-bound review, and every applicable accepted Decision required an explicit classification |
-| Decision conflict | The Decision became invalidated for consequential use, readiness blocked, and conformance remained a separate passed axis |
+| Decision conflict | The classification remained separate from freshness and conformance, emitted a Decision blocker, and blocked consequential readiness |
 | Missing required relationship | The affected Realization became unknown and readiness blocked |
 | Forbidden impact cycle | Evaluation terminated, listed both cycle members, marked them unknown, and blocked readiness |
 | Invalid endpoint and duplicate fact | Both produced stable blocking findings rather than an inferred relationship |

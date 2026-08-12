@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import YAML from "yaml";
 
@@ -39,6 +41,8 @@ export function sha256(value) {
 export function digestObject(value) {
   return sha256(canonicalize(value));
 }
+
+const EVALUATOR_SOURCE_SHA256 = sha256(readFileSync(fileURLToPath(import.meta.url)));
 
 function fail(message) {
   throw new Error(message);
@@ -218,6 +222,7 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   );
   const unknownReasons = new Map();
   const structuralBlockers = [];
+  const decisionBlockers = [];
 
   const declaredUniverse = sortedUnique(candidate.candidate_universe.node_ids);
   const actualUniverse = sortedUnique(candidateNodes.keys());
@@ -447,8 +452,8 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
       } else if (classification) {
         decisionClassification = classification.classification;
         if (classification.classification === "conflicts") {
-          statuses.add("invalidated");
           reasons.push({ code: "applicable-decision-conflict", basis: classification.basis });
+          decisionBlockers.push({ code: "applicable-decision-conflict", node: nodeId, basis: classification.basis });
         }
       }
     }
@@ -477,7 +482,7 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   const noncurrent = nodeResults.filter((result) => result.freshness !== "current");
   const output = {
     contract: RECEIPT_CONTRACT,
-    evaluator: { id: "nkf-025-disposable-evaluator", version: "0" },
+    evaluator: { id: "nkf-025-disposable-evaluator", version: "0", sha256: EVALUATOR_SOURCE_SHA256 },
     policy: { id: policy.id, version: policy.version, sha256: policyDigest },
     context: {
       bundle_id: candidate.bundle_id,
@@ -487,6 +492,15 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
       baseline_revision: digestObject(normalizedGraphForDigest(baseline)),
       candidate_revision: digestObject(normalizedGraphForDigest(candidate)),
       candidate_universe_sha256: digestObject(declaredUniverse),
+      evaluation_context_sha256: digestObject({
+        ...context,
+        decision_classifications: [...(context.decision_classifications ?? [])].sort((left, right) =>
+          canonicalize(left).localeCompare(canonicalize(right))),
+      }),
+      observations_sha256: digestObject(observations),
+      semantic_reviews_sha256: digestObject(
+        [...reviews].sort((left, right) => canonicalize(left).localeCompare(canonicalize(right))),
+      ),
     },
     projections: { full: sortedUnique(candidateNodes.keys()), applicable: sortedUnique(applicable), current: sortedUnique(current) },
     changes: {
@@ -502,8 +516,11 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
     },
     nodes: nodeResults,
     cycles,
-    blockers: structuralBlockers.sort((left, right) => canonicalize(left).localeCompare(canonicalize(right))),
-    readiness: noncurrent.length === 0 && structuralBlockers.length === 0 ? "ready" : "blocked",
+    blockers: [...structuralBlockers, ...decisionBlockers].sort((left, right) =>
+      canonicalize(left).localeCompare(canonicalize(right))),
+    readiness: noncurrent.length === 0 && structuralBlockers.length === 0 && decisionBlockers.length === 0
+      ? "ready"
+      : "blocked",
   };
   return { ...output, evaluation_id: digestObject(output) };
 }
