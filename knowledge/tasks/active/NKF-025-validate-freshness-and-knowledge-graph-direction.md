@@ -168,10 +168,15 @@ silently redefine it.
     Until then, uncertain non-context and non-historical relationships default
     to review, and AI-assessed importance cannot create a hard blocker.
 23. On `2026-08-12`, the Human Product Owner clarified that NKF itself must
-    adopt every new NKF version. Before publication, candidate self-consumer
-    behavior may be exercised in a separate worktree, but that exercise is not
-    adoption. The implementation and release Task must later self-adopt the
-    immutable published version before its branch merges.
+    adopt every new NKF version. The implementation and release Task must prove
+    two separate stages. Before publication, the exact candidate archive must
+    run the candidate-bound Adopt operation in a fresh isolated clone, return
+    `current` on repeat, pass the complete producer gate, and receive a fresh
+    independent audit. This is an Adopt exercise of exact candidate bytes, not
+    completed ordinary repository adoption of a published version. After
+    immutable publication, the producer branch must perform ordinary public
+    self-adoption of that exact release, return `current` on repeat, receive a
+    post-adoption independent audit, and merge only afterward.
 
 ## Provisional And Unresolved Boundaries
 

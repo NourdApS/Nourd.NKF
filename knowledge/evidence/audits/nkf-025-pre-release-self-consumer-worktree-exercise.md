@@ -12,10 +12,12 @@ Technology repository at exact commit
 
 The exercise used a separate temporary detached Git worktree. It did not
 create or accept an NKF 0.5 authority pair, change the frozen NKF 0.4 set,
-publish a release, run the public Adopt operation for 0.5, confirm a
-Realization, or make the Draft Design adopted. It tests the disposable
-NKF-025 evaluator as a pre-release candidate only. Actual NKF 0.5 adoption is
-possible only after an immutable 0.5 release exists.
+publish a release, run a candidate-bound or public Adopt operation for 0.5,
+confirm a Realization, or make the Draft Design adopted. It tests the
+disposable NKF-025 evaluator as pre-release baseline evidence only. The later
+release Task must separately prove an exact-candidate Adopt exercise before
+publication and ordinary public self-adoption after an immutable 0.5 release
+exists.
 
 ## Exact Procedure
 
@@ -70,10 +72,16 @@ declared boundary:
    self-consumer. Combined with the controlled Product profile, it proves the
    Product and Technology behavior required by this validation Task without
    pretending that an unpublished version was adopted.
-3. A later NKF 0.5 implementation and release Task must still audit and
-   publish the immutable candidate, self-adopt that published release in its
-   branch, and merge only after the adopted producer state passes its gate.
-   Real Product-repository adoption is later evidence, not a prerequisite that
+3. A later NKF 0.5 implementation and release Task must prove two distinct
+   stages. Before publication, the exact candidate archive must run the
+   candidate-bound Adopt operation in a fresh isolated clone, return `current`
+   on repeat, pass the complete producer gate, and receive a fresh independent
+   audit. After immutable publication, the producer branch must perform
+   ordinary public self-adoption of that exact release, return `current` on
+   repeat, receive a post-adoption independent audit, and merge only afterward.
+   The first stage exercises exact candidate bytes but is not completed
+   ordinary repository adoption of a published version. Real
+   Product-repository adoption remains later evidence, not a prerequisite that
    can be fabricated before publication.
 
 The known semantic limit remains: a human or agent can incorrectly confirm an

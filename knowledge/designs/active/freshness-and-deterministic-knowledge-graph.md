@@ -544,7 +544,11 @@ whole-root oracle exposed the missing Task-to-Design relationship, and the
 reviewed two-subject closure matched with zero false positives or false
 negatives. Repeated measurements were byte-identical, the complete producer
 gate passed, and the detached worktree remained clean. This is pre-release
-evidence, not adoption of a nonexistent NKF 0.5 release.
+baseline evidence, not an NKF 0.5 candidate-bound Adopt run or completed
+ordinary adoption of a published NKF 0.5 release. Later release work must run
+the exact-candidate Adopt proof before publication and ordinary public
+self-adoption after publication as the two separate stages required by
+[ADR 0109](../../decisions/0109-publication-freeze-and-proven-self-adoption.md).
 
 ## Unresolved Matters
 
