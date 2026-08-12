@@ -286,8 +286,16 @@ format meaning.
 
 - Human direction and the confirmed product boundaries are now allocated to
   this Task.
-- Task creation is the only governed repository change so far. No Design,
-  Evidence, prototype, Specification, executable companion, production
+- The normal deterministic Task transition created `task/NKF-025`, moved this
+  Task to active, validated and committed the transition, pushed the branch,
+  and opened draft pull request 9 while `master` remained concluded.
+- The initial
+  [NKF 0.4 freshness and graph-gap inventory](../../evidence/audits/nkf-025-nkf-0-4-freshness-and-graph-gap-inventory.md)
+  reviews the current authority and repository declarations. It finds strong
+  exact-byte and structural controls but no deterministic semantic-freshness,
+  impact-policy, relationship-completeness, external-observability, or
+  targeted-review contract.
+- No Design, prototype, Specification, executable companion, production
   tooling, Realization, or release has yet changed under this Task.
 
 ## Decision Applicability

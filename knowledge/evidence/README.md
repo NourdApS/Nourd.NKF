@@ -77,6 +77,13 @@ repeats ordinary Adopt to `current` without tracked mutation, preserves the
 knowledge tree and frozen 0.3 surfaces, and rejects pin, archive, and
 integration tampering.
 
+The NKF-025 NKF 0.4 freshness and graph-gap inventory reviews the complete
+current Common, Product, and Technology contract surfaces against the
+repository's declarations. It separates byte-current conformance from
+semantic freshness, catalogs the ways each knowledge kind may become
+noncurrent, measures the existing declared graph, and identifies the exact
+observability and completeness boundaries a later prototype must test.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification
