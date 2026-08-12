@@ -161,12 +161,19 @@ silently redefine it.
     result and its reasons. A renderer may choose a primary label or display
     order, but presentation cannot discard, replace, or alter the underlying
     result set.
+22. On `2026-08-12`, the Human Product Owner confirmed that an exact revision
+    or governed-artifact binding mismatch is a deterministic hard blocker.
+    NKF must not standardize a broader `hard` versus `review` distinction until
+    real consumer evidence demonstrates useful, different, and safe behavior.
+    Until then, uncertain non-context and non-historical relationships default
+    to review, and AI-assessed importance cannot create a hard blocker.
 
 ## Provisional And Unresolved Boundaries
 
-- The useful distinction between a hard dependency and a review dependency is
-  provisional. For the prototype, only an exact revision binding may qualify
-  as hard; uncertain non-context relationships default to review.
+- Exact policy serialization and the evidence threshold for any future,
+  versioned expansion beyond exact-binding hard blockers remain technical
+  derivation. The confirmed conservative default may not be weakened by those
+  mechanics.
 - Semantic relationship meaning and endpoint constraints are global format
   vocabulary, while exact impact traversal is expected to be a separately
   versioned evaluation policy. The exercise must test whether this separation
@@ -331,8 +338,9 @@ format meaning.
   Task-to-Design edge corrects that exact closure without whole-root expansion.
 - Stable document nodes are the only tested non-record strategy that preserves
   independent freshness without changing record authority. Exact
-  serialization, full baseline policy, hard/review value, broad relationship
-  mapping, receipt operations, and consumer evidence remain unresolved.
+  serialization, full baseline policy, broad hard/review value, relationship
+  mapping, receipt operations, and consumer evidence remain unresolved; the
+  confirmed default limits hard blocking to exact-binding mismatches meanwhile.
 - The
   [fresh independent audit](../../evidence/audits/nkf-025-controlled-graph-prototype-independent-audit.md)
   rejected two earlier targets with material fail-closed defects. From a new
@@ -375,12 +383,12 @@ The evidence supports these Product recommendations, confirmed one at a time:
    evaluation can claim readiness, while preserving whole-root review as the
    recovery path when completeness is absent or disputed.
 
-The Human Product Owner confirmed recommendations 1, 3, and 4 on `2026-08-12`.
-The Draft Design remains active because the remaining Product boundary and the
-two unknown mandatory capabilities are unresolved. Exact Schema, policy
-mapping, baseline-confirmation and receipt operations, migration, and
-implementation mechanics remain later technical derivation, not Product
-decisions silently delegated to this investigation.
+The Human Product Owner confirmed recommendations 1 through 4 on `2026-08-12`.
+No Product recommendation from this investigation remains unconfirmed. The
+Draft Design remains active because the two unknown mandatory capabilities are
+unresolved. Exact Schema, policy mapping, baseline-confirmation and receipt
+operations, migration, and implementation mechanics remain later technical
+derivation, not Product decisions silently delegated to this investigation.
 
 ## Decision Applicability
 
@@ -411,6 +419,7 @@ decisions silently delegated to this investigation.
 | Declared local graph inputs derive a deterministic conservative affected-document closure with reproducible reason paths | proven | runtime-behaviour | none |
 | Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | proven | runtime-behaviour | none |
 | Simultaneous applicable noncurrent results and their reasons remain complete independently of display precedence | proven | runtime-behaviour | none |
+| Exact revision and governed-artifact binding mismatches block deterministically without treating AI-assessed importance as hard | proven | runtime-behaviour | none |
 | Missing or ambiguous material relationships fail closed without making every document universally mandatory | unknown | none | none |
 | Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | proven | runtime-behaviour | none |
 | Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | proven | runtime-behaviour | none |

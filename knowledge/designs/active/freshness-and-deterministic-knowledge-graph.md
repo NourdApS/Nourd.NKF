@@ -156,11 +156,14 @@ context to one of the experimental impact classes `hard`, `review`, `context`,
 or `historical`. Per-repository overrides and implementation heuristics may
 not silently redefine that mapping.
 
-The prototype begins with current NKF 0.4 relationship meaning and treats any
-uncertain non-context, non-historical relationship as `review`. Only an exact
-revision or artifact binding may qualify as `hard`; AI-assessed importance is
-never hard. This hard/review distinction is experimental and must be retained
-only if exercises show that it changes useful behavior without hiding impact.
+On `2026-08-12`, the Human Product Owner confirmed that an exact revision or
+governed-artifact binding mismatch is a deterministic hard blocker. NKF must
+not standardize a broader `hard` versus `review` distinction until real
+consumer evidence demonstrates useful, different, and safe behavior. Until
+then, uncertain non-context and non-historical relationships default to
+`review`, and AI-assessed importance cannot create a hard blocker. Any later
+expansion requires governed, versioned evidence rather than a repository
+override or implementation heuristic.
 
 ### Evaluation Context And Purpose
 
@@ -537,9 +540,9 @@ incomplete baseline can still hide an undeclared relationship.
 
 - The exact YAML serialization for freshness policies, invalidation triggers,
   external observations, node revisions, evaluation policies, and receipts.
-- Whether the `hard` versus `review` distinction creates useful safe behavior
-  beyond exact binding failure or should collapse into one mandatory-review
-  class.
+- The real consumer evidence and later versioned decision required before any
+  hard-blocking class may expand beyond exact revision or governed-artifact
+  binding mismatch.
 - The exact policy mapping for current relationship types, especially
   `extends`, `supersedes`, `realizes`, `evidences`, Product `part-of`, and
   profile-specific relationships.
