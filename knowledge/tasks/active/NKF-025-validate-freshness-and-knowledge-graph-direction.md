@@ -377,6 +377,18 @@ format meaning.
 - No Specification, executable companion, production checker, adopter,
   migration, Realization, release, or consumer repository has changed under
   this Task.
+- A deterministic close attempt at `9cfa55e` exposed a frozen NKF 0.4
+  transition contradiction. The close rewrote lifecycle-sensitive Task links
+  inside the already accepted immutable ADR and Design, changing their exact
+  accepted bytes; restoring those bytes then caused the 0.4 checker to reject
+  their historical active-path links because the Task had moved to completed.
+  The move also made two focused evaluator cases address a nonexistent active
+  Task. The close was therefore independently rejected and withdrawn through
+  non-destructive revert commit `bf11090`; this Task remains active. A later
+  versioned implementation must reconcile stable lifecycle addressing,
+  immutable accepted bytes, deep-link validation, and experiment fixtures.
+  This is a technical finding, not new Product meaning, and beginning its fix
+  still requires a separately human-directed Task.
 
 ## Investigation Conclusion
 
