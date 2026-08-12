@@ -7,7 +7,7 @@ source:
   path: designs/adopted/freshness-and-deterministic-knowledge-graph.md
   digest:
     algorithm: sha-256
-    value: 95915c56eb6c1df810c7a956359db1fff2a480289c9be71a47f7f1a97919fe2e
+    value: b1f47ce3e3ffbfb74c453696989358e3020269a7f6ee22b5caf55fd01fa00d8a
 governance:
   lifecycle: immutable
   status: accepted

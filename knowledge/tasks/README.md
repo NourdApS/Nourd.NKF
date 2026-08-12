@@ -13,6 +13,7 @@ status; it does not establish that status.
 ## Active
 
 [Active Task Index](active/README.md)
+- [NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction](active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 
 ## Deferred
 
@@ -43,7 +44,6 @@ status; it does not establish that status.
 - [NKF-020: Define Version Release, Adoption, And Compatibility Process](completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 - [NKF-023: Release NKF 0.3 With Immutable Freeze And Proven Self-Adoption](completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 - [NKF-024: Release NKF 0.4 Dependency Security Maintenance](completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
-- [NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction](completed/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 
 ## Cancelled
 
