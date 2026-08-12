@@ -218,6 +218,8 @@ non_records:
     kind: task
   - path: tasks/deferred/NKF-021-task-scope-gate.md
     kind: task
+  - path: tasks/deferred/NKF-025-validate-freshness-and-knowledge-graph-direction.md
+    kind: task
   - path: tasks/cancelled/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md
     kind: task
   - path: tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md
