@@ -326,6 +326,44 @@ format meaning.
   migration, Realization, release, or consumer repository has changed under
   this Task.
 
+## Investigation Conclusion
+
+The tested direction is technically sound enough to continue, but it is not
+yet safe to turn into normative NKF 0.5 meaning. The evidence proves that a
+declared local graph can calculate small reproducible review closures, preserve
+separate lifecycle/applicability/role/authority/freshness/conformance axes,
+bind receipts to exact revisions, and block unconfirmed completeness. It also
+proves that stable document nodes cover Task and Evidence non-records without
+promoting them to governing records.
+
+The experiment does not prove that software can discover every omitted
+semantic relationship. A one-time semantic baseline review remains necessary,
+and an incorrectly confirmed incomplete baseline can still hide impact. The
+safe contract is therefore: unconfirmed completeness is `unknown` and blocks;
+confirmation is a revision-bound human or agent semantic act whose authority
+and evidence must be explicit, not a checker inference.
+
+The evidence supports these recommendations for the remaining Product
+decisions, to be confirmed one at a time:
+
+1. adopt a Common stable `document` node for independently freshness-evaluable
+   governed non-records, explicitly carrying no record or governing authority;
+2. keep exact revision and artifact mismatches as deterministic hard blockers,
+   but do not standardize a broader `hard` versus `review` distinction until a
+   real consumer exercise demonstrates useful different behavior;
+3. make the normative result a set of simultaneous noncurrent reasons rather
+   than the prototype's single display precedence; a renderer may choose a
+   presentation order without changing contract meaning; and
+4. require a revision-bound reviewed baseline before incremental impact
+   evaluation can claim readiness, while preserving whole-root review as the
+   recovery path when completeness is absent or disputed.
+
+The first unresolved Product boundary is recommendation 1. Until it is
+confirmed or rejected, the Draft Design remains active and this Task cannot
+truthfully conclude. Exact Schema, policy mapping, receipt operations,
+migration, and implementation mechanics remain later technical derivation,
+not Product decisions silently delegated to this investigation.
+
 ## Decision Applicability
 
 ### Applicable Decisions
