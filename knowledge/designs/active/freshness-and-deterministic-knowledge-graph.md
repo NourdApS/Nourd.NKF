@@ -10,7 +10,7 @@ task: NKF-025
 design_disposition: active
 decision_authority: Human Product Owner, Nourd ApS
 proposal_authority_effect: None; the direction remains a Draft Design until a later Decision adopts an exact revision, and normative NKF 0.5 meaning requires separate exact authority-pair acceptance.
-proposal_evidence: NKF-025 NKF 0.4 freshness and graph-gap inventory plus the controlled prototype and whole-root comparison still to be produced.
+proposal_evidence: NKF-025 NKF 0.4 freshness and graph-gap inventory, controlled prototype and whole-root comparison, and fresh independent audit.
 implementation_evidence: None; the planned evaluator is disposable Task evidence and cannot establish production Realization.
 ---
 
@@ -509,6 +509,13 @@ An informed later Decision requires:
 
 No prototype pass accepts this Design, and no accepted Design would itself
 accept NKF 0.5 authority or confirm a production Realization.
+
+The
+[fresh independent audit](../../evidence/audits/nkf-025-controlled-graph-prototype-independent-audit.md)
+rejected two earlier targets with material fail-closed defects, then returned
+a clean evidence-bounded verdict for exact checkpoint `a68254c`. It also
+reproduced the declared limit that an incorrectly confirmed but semantically
+incomplete baseline can still hide an undeclared relationship.
 
 ## Unresolved Matters
 

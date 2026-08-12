@@ -315,6 +315,13 @@ format meaning.
   independent freshness without changing record authority. Exact
   serialization, full baseline policy, hard/review value, broad relationship
   mapping, receipt operations, and consumer evidence remain unresolved.
+- The
+  [fresh independent audit](../../evidence/audits/nkf-025-controlled-graph-prototype-independent-audit.md)
+  rejected two earlier targets with material fail-closed defects. From a new
+  remote clone of corrected exact checkpoint `a68254c`, it reproduced the
+  complete gate, all 25 focused cases, byte-identical measurements, 23
+  independent adversarial assertions, clean scope isolation, and the known
+  incomplete-baseline limitation without finding a further material defect.
 - No Specification, executable companion, production checker, adopter,
   migration, Realization, release, or consumer repository has changed under
   this Task.
@@ -353,7 +360,7 @@ format meaning.
 | Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | proven | runtime-behaviour | none |
 | Existing Product and Technology repositories can establish a truthful incremental graph baseline | unknown | none | none |
 | Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | proven | runtime-behaviour | none |
-| Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | unknown | none | none |
+| Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | proven | runtime-behaviour | none |
 
 The proven findings are limited to the 25 controlled experimental cases and
 their versioned semantic oracles. Production behavior, broad consumer

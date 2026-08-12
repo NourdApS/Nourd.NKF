@@ -90,6 +90,13 @@ whole-root semantic oracle comparisons, the blocked sparse-graph false
 negative, the corrected reviewed-baseline simulation, non-record strategy
 results, receipt reproduction, and measured review-cost reduction.
 
+The NKF-025 controlled graph prototype independent audit records two rejected
+audit targets, then independently reproduces the final exact remote checkpoint
+from a new clone. It verifies the canonical gate, focused cases, deterministic
+measurements, source-bound receipts, adversarial fail-closed behavior, clean
+scope isolation, and the known limit that a falsely confirmed incomplete
+semantic baseline can still hide an undeclared relationship.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification
