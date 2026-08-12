@@ -217,10 +217,11 @@ The candidate result vocabulary is:
 | `unknown` | Required declaration, baseline completeness, observability, resolution, or semantic review is missing or ambiguous. |
 
 Every noncurrent result blocks the corresponding readiness or consequential-use
-claim. The evaluator records every reason even if it also emits one display
-result. Exact precedence when several results apply is experimental; the
-prototype will test `invalidated`, then `expired`, then `stale`, then `unknown`
-as a deterministic display order without discarding any coexisting reason.
+claim. On `2026-08-12`, the Human Product Owner confirmed that the normative
+freshness result preserves every simultaneously applicable noncurrent result
+and its reasons. A renderer may choose a primary label or display order, but
+presentation cannot discard, replace, or alter the underlying result set.
+`current` applies only when no noncurrent result applies.
 
 No document declares itself `current`. A declared expiry or invalidation
 policy describes how to evaluate; it does not store the evaluation result.
@@ -389,14 +390,16 @@ The future Specification would own node kinds, durable relationship meaning,
 freshness results, purpose vocabulary, axis separation, completeness limits,
 claim rules, and human-review boundaries. The executable companion would
 represent those exact semantics mechanically. Schemas would validate closed
-shapes. A separately bound evaluation policy would own exact traversal mapping
-and deterministic precedence.
+shapes. A separately bound evaluation policy would own exact traversal mapping;
+display precedence would remain a presentation concern outside normative
+freshness meaning.
 
 The checker would validate declarations, revisions, graph resolution, policy
 binding, closure reproduction, receipt binding, generated-view agreement, and
 whole-root mechanical readiness. It would not infer missing world knowledge,
 judge prose truth, classify Decision compatibility authoritatively, perform
-acceptance, confirm a Realization, or make AI review true.
+acceptance, confirm a Realization, make AI review true, or turn a presentation
+precedence into the normative freshness result.
 
 Authors declare meaning once in Markdown and machine-evaluable relationships
 once in YAML. Reviewers inspect the calculated impact set and record semantic
@@ -540,8 +543,6 @@ incomplete baseline can still hide an undeclared relationship.
 - The exact policy mapping for current relationship types, especially
   `extends`, `supersedes`, `realizes`, `evidences`, Product `part-of`, and
   profile-specific relationships.
-- Whether one display-result precedence is helpful or the contract should
-  expose a set of simultaneous noncurrent reasons only.
 - The exact YAML and receipt mechanics for identifying the baseline reviewer,
   binding the reviewed graph revision, preserving review evidence, and
   invalidating or disputing the confirmation without weakening the confirmed

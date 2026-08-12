@@ -156,6 +156,11 @@ silently redefine it.
     reports `unknown`, blocks readiness, and requires whole-root semantic
     review as the recovery path. A checker cannot infer semantic completeness
     from the absence of detected omissions.
+21. On `2026-08-12`, the Human Product Owner confirmed that the normative
+    freshness result preserves every simultaneously applicable noncurrent
+    result and its reasons. A renderer may choose a primary label or display
+    order, but presentation cannot discard, replace, or alter the underlying
+    result set.
 
 ## Provisional And Unresolved Boundaries
 
@@ -356,8 +361,7 @@ safe contract is therefore: unconfirmed completeness is `unknown` and blocks;
 confirmation is a revision-bound human or agent semantic act whose authority
 and evidence must be explicit, not a checker inference.
 
-The evidence supports these recommendations for the remaining Product
-decisions, to be confirmed one at a time:
+The evidence supports these Product recommendations, confirmed one at a time:
 
 1. adopt a Common stable `document` node for independently freshness-evaluable
    governed non-records, explicitly carrying no record or governing authority;
@@ -371,12 +375,12 @@ decisions, to be confirmed one at a time:
    evaluation can claim readiness, while preserving whole-root review as the
    recovery path when completeness is absent or disputed.
 
-The Human Product Owner confirmed recommendations 1 and 4 on `2026-08-12`.
-The Draft Design remains active because other Product boundaries and the two
-unknown mandatory capabilities are unresolved. Exact Schema, policy mapping,
-baseline-confirmation and receipt operations, migration, and implementation
-mechanics remain later technical derivation, not Product decisions silently
-delegated to this investigation.
+The Human Product Owner confirmed recommendations 1, 3, and 4 on `2026-08-12`.
+The Draft Design remains active because the remaining Product boundary and the
+two unknown mandatory capabilities are unresolved. Exact Schema, policy
+mapping, baseline-confirmation and receipt operations, migration, and
+implementation mechanics remain later technical derivation, not Product
+decisions silently delegated to this investigation.
 
 ## Decision Applicability
 
@@ -406,6 +410,7 @@ delegated to this investigation.
 | --- | --- | --- | --- |
 | Declared local graph inputs derive a deterministic conservative affected-document closure with reproducible reason paths | proven | runtime-behaviour | none |
 | Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | proven | runtime-behaviour | none |
+| Simultaneous applicable noncurrent results and their reasons remain complete independently of display precedence | proven | runtime-behaviour | none |
 | Missing or ambiguous material relationships fail closed without making every document universally mandatory | unknown | none | none |
 | Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | proven | runtime-behaviour | none |
 | Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | proven | runtime-behaviour | none |
