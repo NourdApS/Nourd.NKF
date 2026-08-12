@@ -366,6 +366,17 @@ frontmatter, Tasks, and links, but an agent or human must review semantic edges
 and completeness. Historical documents are not backfilled with fabricated
 past freshness. Until baseline coverage is confirmed, readiness is `unknown`.
 
+On `2026-08-12`, the Human Product Owner confirmed the governing safety
+boundary: incremental freshness evaluation may claim readiness only after a
+named human or agent has semantically reviewed and confirmed the exact graph
+baseline. The confirmation identifies its reviewer and binds the exact graph
+revision. When it is absent, outdated, or disputed, NKF reports `unknown`,
+blocks readiness, and requires whole-root semantic review as the recovery
+path. A checker may validate the confirmation's mechanical binding, but it
+cannot infer semantic completeness from the absence of detected omissions.
+The exact declaration, evidence, invalidation, and receipt mechanics remain
+technical derivation.
+
 The controlled NKF comparison proves why: the enumerated 0.4 graph omitted the
 active Task from a Draft Design change closure. Unconfirmed completeness
 blocked that sparse result; a reviewed source-bound Task-to-Design dependency
@@ -531,8 +542,10 @@ incomplete baseline can still hide an undeclared relationship.
   profile-specific relationships.
 - Whether one display-result precedence is helpful or the contract should
   expose a set of simultaneous noncurrent reasons only.
-- The minimum enforceable baseline-completeness declaration that detects
-  omission without making every document mandatory for every change.
+- The exact YAML and receipt mechanics for identifying the baseline reviewer,
+  binding the reviewed graph revision, preserving review evidence, and
+  invalidating or disputing the confirmation without weakening the confirmed
+  fail-closed behavior.
 - The operational receipt path, retention, privacy, signing, and optional
   promotion into governed Evidence.
 - The migration boundary from path-carried 0.4 Task and Design navigation to

@@ -148,6 +148,14 @@ silently redefine it.
     an individual freshness result receives a stable Common `document` node.
     This identity enables independent tracking only: the document remains a
     non-record and gains no record or governing authority by implication.
+20. On `2026-08-12`, the Human Product Owner confirmed that incremental
+    freshness evaluation may claim readiness only after a named human or agent
+    has semantically reviewed and confirmed the exact graph baseline. The
+    confirmation is bound to the exact graph revision and identifies its
+    reviewer. When that confirmation is absent, outdated, or disputed, NKF
+    reports `unknown`, blocks readiness, and requires whole-root semantic
+    review as the recovery path. A checker cannot infer semantic completeness
+    from the absence of detected omissions.
 
 ## Provisional And Unresolved Boundaries
 
@@ -164,10 +172,10 @@ silently redefine it.
 - The first implementation is local-root only. Cross-repository traversal,
   polling, public registries, and live external authority resolution remain
   deferred until the local model is proven.
-- Existing repositories require a truthful one-time graph baseline. The
-  exercise must measure whether that baseline can be incremental without
-  fabricating historical edges or silently treating absent declarations as
-  current.
+- The exact declaration, evidence, invalidation, and receipt mechanics for a
+  named reviewer's revision-bound baseline confirmation remain technical
+  derivation. The confirmed Product behavior is fail-closed and may not be
+  weakened by those mechanics.
 - The precise conservative policy is expected to produce false positives.
   Evidence must quantify them, identify any false negative, and propose later
   refinement rather than optimizing prematurely.
@@ -363,11 +371,12 @@ decisions, to be confirmed one at a time:
    evaluation can claim readiness, while preserving whole-root review as the
    recovery path when completeness is absent or disputed.
 
-The Human Product Owner confirmed recommendation 1 on `2026-08-12`. The Draft
-Design remains active because other Product boundaries and the two unknown
-mandatory capabilities are unresolved. Exact Schema, policy mapping, receipt
-operations, migration, and implementation mechanics remain later technical
-derivation, not Product decisions silently delegated to this investigation.
+The Human Product Owner confirmed recommendations 1 and 4 on `2026-08-12`.
+The Draft Design remains active because other Product boundaries and the two
+unknown mandatory capabilities are unresolved. Exact Schema, policy mapping,
+baseline-confirmation and receipt operations, migration, and implementation
+mechanics remain later technical derivation, not Product decisions silently
+delegated to this investigation.
 
 ## Decision Applicability
 
@@ -411,5 +420,7 @@ their versioned semantic oracles. Production behavior, broad consumer
 topologies, migration, receipt operations, and an actually complete Product
 or Technology baseline are not thereby proven. The missing-edge finding stays
 unknown because an incorrectly confirmed but incomplete semantic baseline can
-still hide an undeclared relationship. The Decision classifications are
-inputs supplied by semantic review, not truths established by the evaluator.
+still hide an undeclared relationship. Confirming the fail-closed baseline
+boundary does not change either unknown capability into proof. The Decision
+classifications are inputs supplied by semantic review, not truths established
+by the evaluator.
