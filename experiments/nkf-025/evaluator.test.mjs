@@ -173,7 +173,7 @@ test("a missing required edge yields unknown and never shrinks silently", () => 
     context,
     reviews: reviewAll(candidate, context.purpose),
   });
-  assert.equal(nodeResult(receipt, "realization-current").freshness, "unknown");
+  assert.equal(nodeResult(receipt, "realization-current").freshness, "stale");
   assert.ok(
     nodeResult(receipt, "realization-current").reasons.some((reason) => reason.code === "required-relationship-missing"),
   );
@@ -200,7 +200,12 @@ test("a forbidden impact cycle is explicit, cycle safe, and blocking", () => {
     reviews: reviewAll(candidate, context.purpose),
   });
   assert.deepEqual(receipt.cycles, ["decision-portability", "realization-current"]);
-  assert.equal(nodeResult(receipt, "decision-portability").freshness, "unknown");
+  assert.notEqual(nodeResult(receipt, "decision-portability").freshness, "current");
+  assert.ok(
+    nodeResult(receipt, "decision-portability").reasons.some(
+      (reason) => reason.code === "forbidden-impact-cycle",
+    ),
+  );
 });
 
 test("relationship endpoint constraints and duplicate authored facts fail closed", () => {
@@ -249,6 +254,24 @@ test("malformed policy and missing revision inputs cannot silently shrink propag
     () => evaluate({ baseline: product, candidate: orphanedArtifact, policy, context: contextFor(product) }),
     /refers to unknown owner/,
   );
+  const malformedRole = clone(product);
+  malformedRole.nodes[0].role = "govenrs";
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: malformedRole, policy, context: contextFor(product) }),
+    /role is unsupported/,
+  );
+  const malformedApplicability = clone(product);
+  malformedApplicability.nodes[0].applicability.purposes = ["whole-root-rediness"];
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: malformedApplicability, policy, context: contextFor(product) }),
+    /unsupported purpose/,
+  );
+  const impossibleBidirectionalPolicy = clone(policy);
+  impossibleBidirectionalPolicy.relationships.binds.cycles = "forbid";
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: product, policy: impossibleBidirectionalPolicy, context: contextFor(product) }),
+    /every bidirectional propagation a forbidden cycle/,
+  );
 });
 
 test("broken exact artifact binding changes its owning Realization and blocks", () => {
@@ -282,6 +305,29 @@ test("removed or reassigned governed artifacts cannot disappear from review", ()
   const reassignedReceipt = evaluate({ baseline: product, candidate: reassigned, policy, context: contextFor(reassigned) });
   assert.deepEqual(reassignedReceipt.changes.artifacts, ["product-runtime"]);
   assert.deepEqual(reassignedReceipt.changes.initial_nodes, ["product", "realization-current"]);
+});
+
+test("relationship topology changes enter the initial change set even when supplied node revisions are inconsistent", () => {
+  const added = clone(product);
+  added.edges.push({
+    source: "product",
+    target: "decision-access",
+    type: "depends-on",
+    source_section: "product-map",
+  });
+  const addedReceipt = evaluate({baseline: product, candidate: added, policy, context: contextFor(added)});
+  assert.ok(addedReceipt.changes.initial_nodes.includes("product"));
+  assert.deepEqual(addedReceipt.changes.relationships, [
+    {change: "added", source: "product", target: "decision-access", type: "depends-on"},
+  ]);
+
+  const removed = clone(product);
+  removed.edges = removed.edges.filter((edge) => edge.type !== "extends");
+  const removedReceipt = evaluate({baseline: product, candidate: removed, policy, context: contextFor(removed)});
+  assert.ok(removedReceipt.changes.initial_nodes.includes("design-access"));
+  assert.deepEqual(removedReceipt.changes.relationships, [
+    {change: "removed", source: "design-access", target: "decision-access", type: "extends"},
+  ]);
 });
 
 test("unobserved external state is unknown; mismatched observed state is stale", () => {

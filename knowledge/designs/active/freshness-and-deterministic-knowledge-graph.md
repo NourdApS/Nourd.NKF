@@ -473,7 +473,7 @@ supports a governed refinement.
 
 The
 [controlled prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
-provides 24 passing Product, Technology, NKF-baseline, adversarial,
+provides 25 passing Product, Technology, NKF-baseline, adversarial,
 reproduction, permutation, lifecycle, and non-record cases. Its controlled
 Product and Technology closures have zero false positives and zero false
 negatives against their semantic oracles. Its direct NKF comparison exposes

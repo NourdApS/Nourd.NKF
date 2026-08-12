@@ -302,7 +302,7 @@ format meaning.
   baseline completeness, and receipt storage as experimental questions.
 - The
   [controlled graph prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
-  implements a disposable versioned evaluator and passes 24 Product,
+  implements a disposable versioned evaluator and passes 25 Product,
   Technology, direct-NKF, adversarial, receipt, lifecycle, and non-record
   cases. Controlled Product and Technology closures match whole-root semantic
   oracles with no miss.
@@ -355,7 +355,7 @@ format meaning.
 | Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | proven | runtime-behaviour | none |
 | Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | unknown | none | none |
 
-The proven findings are limited to the 24 controlled experimental cases and
+The proven findings are limited to the 25 controlled experimental cases and
 their versioned semantic oracles. Production behavior, broad consumer
 topologies, migration, receipt operations, and an actually complete Product
 or Technology baseline are not thereby proven. The missing-edge finding stays

@@ -22,6 +22,8 @@ const DECISION_CLASSIFICATIONS = new Set([
   "conflicts",
   "not-applicable",
 ]);
+const PARTICIPATION_ROLES = new Set(["context", "evidences", "execution", "governs", "proposes", "realizes"]);
+const CONFORMANCE_RESULTS = new Set(["failed", "not-evaluated", "passed"]);
 const DISPLAY_PRECEDENCE = ["invalidated", "expired", "stale", "unknown"];
 
 export function canonicalize(value) {
@@ -131,7 +133,19 @@ function validateGraph(graph, label) {
   for (const node of nodes.values()) {
     assertString(node.kind, `${label}.nodes.${node.id}.kind`);
     assertString(node.revision, `${label}.nodes.${node.id}.revision`);
-    if (node.role !== undefined) assertString(node.role, `${label}.nodes.${node.id}.role`);
+    if (node.role !== undefined && !PARTICIPATION_ROLES.has(node.role)) {
+      fail(`${label}.nodes.${node.id}.role is unsupported`);
+    }
+    if (node.conformance !== undefined && !CONFORMANCE_RESULTS.has(node.conformance)) {
+      fail(`${label}.nodes.${node.id}.conformance is unsupported`);
+    }
+    if (node.authority !== undefined) {
+      assertObject(node.authority, `${label}.nodes.${node.id}.authority`);
+      if (typeof node.authority.eligible !== "boolean") {
+        fail(`${label}.nodes.${node.id}.authority.eligible must be boolean`);
+      }
+      assertString(node.authority.binding, `${label}.nodes.${node.id}.authority.binding`);
+    }
     if (node.governance !== undefined) {
       assertObject(node.governance, `${label}.nodes.${node.id}.governance`);
       assertString(node.governance.status, `${label}.nodes.${node.id}.governance.status`);
@@ -140,6 +154,18 @@ function validateGraph(graph, label) {
       assertObject(node.applicability, `${label}.nodes.${node.id}.applicability`);
       assertStringArray(node.applicability.profiles ?? ["*"], `${label}.nodes.${node.id}.applicability.profiles`);
       assertStringArray(node.applicability.purposes ?? ["*"], `${label}.nodes.${node.id}.applicability.purposes`);
+      if ((node.applicability.profiles ?? ["*"]).some((profile) => profile !== "*" && profile !== graph.profile)) {
+        fail(`${label}.nodes.${node.id}.applicability.profiles contains an unsupported profile`);
+      }
+      if ((node.applicability.purposes ?? ["*"]).some((purpose) => purpose !== "*" && !PURPOSES.has(purpose))) {
+        fail(`${label}.nodes.${node.id}.applicability.purposes contains an unsupported purpose`);
+      }
+      if (
+        node.applicability.include_historical !== undefined &&
+        typeof node.applicability.include_historical !== "boolean"
+      ) {
+        fail(`${label}.nodes.${node.id}.applicability.include_historical must be boolean`);
+      }
     }
     for (const [index, expectation] of (node.relationship_expectations ?? []).entries()) {
       assertObject(expectation, `${label}.nodes.${node.id}.relationship_expectations[${index}]`);
@@ -164,6 +190,12 @@ function validateGraph(graph, label) {
         node.freshness.invalidated_by_events ?? [],
         `${label}.nodes.${node.id}.freshness.invalidated_by_events`,
       );
+    }
+  }
+  for (const [index, edge] of graph.edges.entries()) {
+    assertObject(edge, `${label}.edges[${index}]`);
+    for (const field of ["source", "target", "type", "source_section"]) {
+      assertString(edge[field], `${label}.edges[${index}].${field}`);
     }
   }
   for (const artifact of artifacts.values()) {
@@ -198,6 +230,9 @@ function validatePolicy(policy) {
     }
     if (new Set(["context", "historical"]).has(behavior.impact) && behavior.propagation !== "none") {
       fail(`policy relationship ${relationship} propagates a non-mandatory impact class`);
+    }
+    if (behavior.propagation === "both" && behavior.cycles === "forbid") {
+      fail(`policy relationship ${relationship} makes every bidirectional propagation a forbidden cycle`);
     }
     assertStringArray(behavior.allowed_source_kinds, `policy.relationships.${relationship}.allowed_source_kinds`);
     assertStringArray(behavior.allowed_target_kinds, `policy.relationships.${relationship}.allowed_target_kinds`);
@@ -293,6 +328,9 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   validatePolicy(policy);
   assertObject(context, "context");
   if (!PURPOSES.has(context.purpose)) fail(`unsupported purpose ${String(context.purpose)}`);
+  if (context.decision_coverage !== undefined && context.decision_coverage !== "all-applicable") {
+    fail(`unsupported Decision coverage ${String(context.decision_coverage)}`);
+  }
   if (context.profile !== candidate.profile || baseline.profile !== candidate.profile) {
     fail("context, baseline, and candidate profile must match");
   }
@@ -423,6 +461,20 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   }
   for (const nodeId of baselineIndex.nodes.keys()) {
     if (!candidateNodes.has(nodeId)) structuralBlockers.push({ code: "baseline-node-removed", node: nodeId });
+  }
+
+  const relationshipChanges = [];
+  const baselineEdges = new Map(baseline.edges.map((edge) => [canonicalize(edge), edge]));
+  const candidateEdges = new Map(candidate.edges.map((edge) => [canonicalize(edge), edge]));
+  for (const [identity, edge] of candidateEdges) {
+    if (baselineEdges.has(identity)) continue;
+    relationshipChanges.push({ change: "added", source: edge.source, target: edge.target, type: edge.type });
+    if (candidateNodes.has(edge.source)) initialChanges.add(edge.source);
+  }
+  for (const [identity, edge] of baselineEdges) {
+    if (candidateEdges.has(identity)) continue;
+    relationshipChanges.push({ change: "removed", source: edge.source, target: edge.target, type: edge.type });
+    if (candidateNodes.has(edge.source)) initialChanges.add(edge.source);
   }
 
   const artifactChanges = [];
@@ -654,6 +706,7 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
     changes: {
       initial_nodes: sortedUnique(initialChanges),
       artifacts: sortedUnique(artifactChanges),
+      relationships: relationshipChanges.sort((left, right) => canonicalize(left).localeCompare(canonicalize(right))),
       mandatory_closure: closure,
       reason_paths: Object.fromEntries(
         [...reasonPaths.entries()]

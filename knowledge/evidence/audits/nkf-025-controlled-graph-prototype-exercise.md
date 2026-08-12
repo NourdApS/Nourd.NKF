@@ -43,7 +43,7 @@ set-like node, edge, artifact, universe, and review sequences.
 
 ## Controlled Exercise Results
 
-The command `node --test experiments/nkf-025/evaluator.test.mjs` passed all 24
+The command `node --test experiments/nkf-025/evaluator.test.mjs` passed all 25
 cases:
 
 | Case | Result |
@@ -53,12 +53,13 @@ cases:
 | Technology Specification revision | The closure was the Specification and its Realization; a contextual Technology reference did not expand mandatory review |
 | Whole-root readiness | Every applicable node required a current revision-bound review, and every applicable accepted Decision required an explicit classification |
 | Decision conflict | The classification remained separate from freshness and conformance, emitted a Decision blocker, and blocked consequential readiness |
-| Missing required relationship | The affected Realization became unknown and readiness blocked |
-| Forbidden impact cycle | Evaluation terminated, listed both cycle members, marked them unknown, and blocked readiness |
+| Missing required relationship | The affected Realization carried the missing-relationship unknown reason; the concurrent topology change made its display result stale and readiness blocked |
+| Forbidden impact cycle | Evaluation terminated, listed both cycle members, attached the cycle unknown reason, and blocked readiness even where a stale display result had higher precedence |
 | Invalid endpoint and duplicate fact | Both produced stable blocking findings rather than an inferred relationship |
-| Malformed policy and missing revision | An unsupported impact class, missing node revision, and duplicate universe entry failed before evaluation instead of shrinking propagation |
+| Malformed policy and graph inputs | Unsupported impact, participation-role, applicability-purpose, node-revision, duplicate-universe, and impossible bidirectional-cycle combinations failed before evaluation instead of shrinking or contradicting propagation |
 | Exact artifact-binding mismatch | The owning Realization entered the changed set, carried an exact-binding reason, and was noncurrent |
 | Artifact removal or reassignment | Removal blocked and attached an unknown-removal reason to the stale prior owner; reassignment entered both the prior and new owners in the changed set |
+| Relationship-topology revision | Added and removed edges entered their declaring source nodes in the initial change set even when a producer supplied unchanged node revisions |
 | Missing external observation | The dependent Evidence became unknown; a mismatched observed revision made it stale |
 | Expiry and invalidation | Explicit time and event inputs produced both reasons; the experimental display precedence selected invalidated without discarding expiry |
 | Invalid expiry input | An invalid explicit evaluation time or expiry boundary became unknown instead of current |
@@ -218,7 +219,7 @@ node experiments/nkf-025/measure.mjs
 npm run nkf:check
 ```
 
-The first command must report 24 passing tests. The second must report the
+The first command must report 25 passing tests. The second must report the
 policy digest, zero controlled-fixture misses, the blocked current sparse NKF
 comparison, the single named pre-baseline false negative, and the corrected
 two-subject closure. Repository counts and whole-root byte cost naturally grow
