@@ -18,4 +18,3 @@ state without authorizing work.
 - [NKF-016: Deliver Acceptance-Binding Verification](NKF-016-deliver-acceptance-binding-verification.md)
 - [NKF-018: Stabilize Volatile Onboarding Inputs](NKF-018-stabilize-volatile-onboarding-inputs.md)
 - [NKF-021: Establish The Task Scope Gate](NKF-021-task-scope-gate.md)
-- [NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction](NKF-025-validate-freshness-and-knowledge-graph-direction.md)

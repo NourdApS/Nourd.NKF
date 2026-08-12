@@ -3,7 +3,7 @@ title: "NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction"
 summary: Test the confirmed NKF 0.5 freshness and knowledge-graph direction against controlled Product and Technology evidence before accepting or implementing normative format meaning.
 created_at: 2026-08-12T16:49:56Z
 task_id: NKF-025
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -174,7 +174,7 @@ format meaning.
 ## Scope
 
 - reconcile the confirmed direction with current accepted NKF Decisions,
-  deferred [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md),
+  deferred [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md),
   current 0.4 authority, and the consolidated Realization;
 - inventory every NKF knowledge and declaration surface that can currently
   become stale, invalidated, contradictory, superseded, or unverifiable;
@@ -206,9 +206,9 @@ format meaning.
 - treating AI semantic review as deterministic proof or letting validation
   accept knowledge;
 - implementing deferred
-  [NKF-021](NKF-021-task-scope-gate.md) or absorbing its scope into this Task;
+  [NKF-021](../deferred/NKF-021-task-scope-gate.md) or absorbing its scope into this Task;
 - replacing the authority-freshness investigation owned by
-  [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md); and
+  [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md); and
 - automatic cross-repository discovery, external polling, or a public graph
   registry.
 

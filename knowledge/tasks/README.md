@@ -13,6 +13,7 @@ status; it does not establish that status.
 ## Active
 
 [Active Task Index](active/README.md)
+- [NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction](active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 
 ## Deferred
 
