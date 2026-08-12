@@ -97,6 +97,13 @@ measurements, source-bound receipts, adversarial fail-closed behavior, clean
 scope isolation, and the known limit that a falsely confirmed incomplete
 semantic baseline can still hide an undeclared relationship.
 
+The NKF-025 pre-release NKF self-consumer worktree exercise runs the disposable
+prototype from a clean detached copy of the actual NKF Technology repository.
+It reproduces the blocked sparse baseline, the reviewed two-subject closure,
+whole-root comparison, deterministic measurements, complete producer gate,
+and clean post-exercise state while preserving the distinction between a
+pre-release exercise and adoption of an immutable published version.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

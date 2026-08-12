@@ -167,6 +167,11 @@ silently redefine it.
     real consumer evidence demonstrates useful, different, and safe behavior.
     Until then, uncertain non-context and non-historical relationships default
     to review, and AI-assessed importance cannot create a hard blocker.
+23. On `2026-08-12`, the Human Product Owner clarified that NKF itself must
+    adopt every new NKF version. Before publication, candidate self-consumer
+    behavior may be exercised in a separate worktree, but that exercise is not
+    adoption. The implementation and release Task must later self-adopt the
+    immutable published version before its branch merges.
 
 ## Provisional And Unresolved Boundaries
 
@@ -348,6 +353,14 @@ format meaning.
   complete gate, all 25 focused cases, byte-identical measurements, 23
   independent adversarial assertions, clean scope isolation, and the known
   incomplete-baseline limitation without finding a further material defect.
+- The
+  [pre-release NKF self-consumer worktree exercise](../../evidence/audits/nkf-025-pre-release-self-consumer-worktree-exercise.md)
+  ran exact checkpoint `1628e2c` in a separate detached worktree. The sparse
+  actual NKF projection blocked, whole-root review exposed the missing
+  Task-to-Design relationship, and the reviewed two-subject closure matched
+  the oracle with zero false positives or false negatives. All 25 focused
+  tests and the 28-file, 210-test canonical producer gate passed, repeated
+  measurements were byte-identical, and the detached worktree stayed clean.
 - No Specification, executable companion, production checker, adopter,
   migration, Realization, release, or consumer repository has changed under
   this Task.
@@ -383,12 +396,14 @@ The evidence supports these Product recommendations, confirmed one at a time:
    evaluation can claim readiness, while preserving whole-root review as the
    recovery path when completeness is absent or disputed.
 
-The Human Product Owner confirmed recommendations 1 through 4 on `2026-08-12`.
-No Product recommendation from this investigation remains unconfirmed. The
-Draft Design remains active because the two unknown mandatory capabilities are
-unresolved. Exact Schema, policy mapping, baseline-confirmation and receipt
-operations, migration, and implementation mechanics remain later technical
-derivation, not Product decisions silently delegated to this investigation.
+The Human Product Owner confirmed recommendations 1 through 4 on `2026-08-12`
+and clarified the required producer self-adoption boundary. No Product
+recommendation from this investigation remains unconfirmed. The Draft Design
+remains active because only a later Human Product Owner Decision may adopt its
+exact revision. Exact Schema, policy mapping, baseline-confirmation and receipt
+operations, migration, implementation, publication, and actual self-adoption
+remain later work, not Product decisions silently delegated to this
+investigation.
 
 ## Decision Applicability
 
@@ -420,21 +435,21 @@ derivation, not Product decisions silently delegated to this investigation.
 | Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | proven | runtime-behaviour | none |
 | Simultaneous applicable noncurrent results and their reasons remain complete independently of display precedence | proven | runtime-behaviour | none |
 | Exact revision and governed-artifact binding mismatches block deterministically without treating AI-assessed importance as hard | proven | runtime-behaviour | none |
-| Missing or ambiguous material relationships fail closed without making every document universally mandatory | unknown | none | none |
+| Within a declared candidate universe, detected missing or ambiguous material relationships fail closed without making every document universally mandatory | proven | runtime-behaviour | none |
 | Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | proven | runtime-behaviour | none |
 | Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | proven | runtime-behaviour | none |
 | Governed non-records requiring individual freshness receive stable Common document-node identity without record or governing-authority promotion | proven | runtime-behaviour | none |
 | Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | proven | runtime-behaviour | none |
-| Existing Product and Technology repositories can establish a truthful incremental graph baseline | unknown | none | none |
+| The controlled Product profile and actual NKF Technology repository can establish the evidence-bounded incremental baseline required by this investigation | proven | runtime-behaviour | none |
 | Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | proven | runtime-behaviour | none |
 | Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | proven | runtime-behaviour | none |
 
-The proven findings are limited to the 25 controlled experimental cases and
-their versioned semantic oracles. Production behavior, broad consumer
-topologies, migration, receipt operations, and an actually complete Product
-or Technology baseline are not thereby proven. The missing-edge finding stays
-unknown because an incorrectly confirmed but incomplete semantic baseline can
-still hide an undeclared relationship. Confirming the fail-closed baseline
-boundary does not change either unknown capability into proof. The Decision
-classifications are inputs supplied by semantic review, not truths established
-by the evaluator.
+The proven findings are limited to the 25 controlled experimental cases, their
+versioned semantic oracles, and the exact detached NKF self-consumer exercise
+at `1628e2c`. Production behavior, broad consumer topologies, migration,
+receipt operations, actual NKF 0.5 adoption, and universal graph completeness
+are not thereby proven. An incorrectly confirmed incomplete semantic baseline
+can still hide an undeclared relationship; proof here is the bounded behavior
+that detected omissions and unconfirmed completeness block while a reviewed
+edge avoids whole-root mandatory review. The Decision classifications are
+inputs supplied by semantic review, not truths established by the evaluator.

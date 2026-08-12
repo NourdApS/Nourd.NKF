@@ -10,7 +10,7 @@ task: NKF-025
 design_disposition: active
 decision_authority: Human Product Owner, Nourd ApS
 proposal_authority_effect: None; the direction remains a Draft Design until a later Decision adopts an exact revision, and normative NKF 0.5 meaning requires separate exact authority-pair acceptance.
-proposal_evidence: NKF-025 NKF 0.4 freshness and graph-gap inventory, controlled prototype and whole-root comparison, and fresh independent audit.
+proposal_evidence: NKF-025 NKF 0.4 freshness and graph-gap inventory, controlled prototype and whole-root comparison, fresh independent audit, and detached NKF self-consumer worktree exercise.
 implementation_evidence: None; the planned evaluator is disposable Task evidence and cannot establish production Realization.
 ---
 
@@ -535,6 +535,16 @@ rejected two earlier targets with material fail-closed defects, then returned
 a clean evidence-bounded verdict for exact checkpoint `a68254c`. It also
 reproduced the declared limit that an incorrectly confirmed but semantically
 incomplete baseline can still hide an undeclared relationship.
+
+The
+[pre-release NKF self-consumer worktree exercise](../../evidence/audits/nkf-025-pre-release-self-consumer-worktree-exercise.md)
+then ran exact checkpoint `1628e2c` from a separate detached copy of the actual
+NKF Technology repository. The unconfirmed sparse baseline blocked, the
+whole-root oracle exposed the missing Task-to-Design relationship, and the
+reviewed two-subject closure matched with zero false positives or false
+negatives. Repeated measurements were byte-identical, the complete producer
+gate passed, and the detached worktree remained clean. This is pre-release
+evidence, not adoption of a nonexistent NKF 0.5 release.
 
 ## Unresolved Matters
 
