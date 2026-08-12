@@ -115,20 +115,22 @@ validation results are excluded so evaluating a revision cannot change the
 revision being evaluated.
 
 The current contract also carries semantically important Task and Evidence
-non-records. Whether a later contract gives every governed semantic non-record
-a stable document-node identity, promotes selected non-records, or keeps them
-as evaluation-context inputs is deliberately unresolved. The prototype must
-compare these options because excluding them would fail the stated all-document
-freshness goal, while promoting them by implication would change NKF authority
-and Task meaning.
+non-records. A governed non-record that requires an individual freshness
+result receives a stable Common `document` node. The node supplies identity
+and revision-bound tracking only: it does not promote the document to a record
+or grant governing authority. A non-record that does not require an individual
+freshness result may remain context, but context-only aggregation cannot
+satisfy a claim that each governed document was evaluated.
 
 The controlled
 [prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
-now favors stable non-record document nodes: context-only aggregation cannot
+demonstrates the basis for this direction: context-only aggregation cannot
 identify an independently noncurrent Task or Evidence item, while automatic
-promotion changes authority. This remains an evidence-backed candidate, not an
-adopted node kind. Representation coverage also remains distinct from reviewed
-semantic-edge completeness.
+promotion changes authority. The Human Product Owner confirmed the stable
+Common `document` node boundary on `2026-08-12`. This confirmation fixes one
+Product boundary inside the Draft; it does not adopt the complete Design or
+authorize normative implementation. Representation coverage also remains
+distinct from reviewed semantic-edge completeness.
 
 ### Typed Relationships And Evaluation Policy
 
@@ -519,9 +521,6 @@ incomplete baseline can still hide an undeclared relationship.
 
 ## Unresolved Matters
 
-- Whether the evidence-favored stable non-record document node becomes a
-  standard Common node kind, with explicit assurance that it carries no record
-  or governing authority by implication.
 - The exact YAML serialization for freshness policies, invalidation triggers,
   external observations, node revisions, evaluation policies, and receipts.
 - Whether the `hard` versus `review` distinction creates useful safe behavior

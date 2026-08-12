@@ -143,6 +143,11 @@ silently redefine it.
     refined through governed, versioned evidence from NKF and consumer
     adoption. It must not be presented as permanently optimal or be silently
     redefined by per-repository overrides.
+19. On `2026-08-12`, after reviewing the prototype and its independent audit,
+    the Human Product Owner confirmed that every governed non-record requiring
+    an individual freshness result receives a stable Common `document` node.
+    This identity enables independent tracking only: the document remains a
+    non-record and gains no record or governing authority by implication.
 
 ## Provisional And Unresolved Boundaries
 
@@ -358,11 +363,11 @@ decisions, to be confirmed one at a time:
    evaluation can claim readiness, while preserving whole-root review as the
    recovery path when completeness is absent or disputed.
 
-The first unresolved Product boundary is recommendation 1. Until it is
-confirmed or rejected, the Draft Design remains active and this Task cannot
-truthfully conclude. Exact Schema, policy mapping, receipt operations,
-migration, and implementation mechanics remain later technical derivation,
-not Product decisions silently delegated to this investigation.
+The Human Product Owner confirmed recommendation 1 on `2026-08-12`. The Draft
+Design remains active because other Product boundaries and the two unknown
+mandatory capabilities are unresolved. Exact Schema, policy mapping, receipt
+operations, migration, and implementation mechanics remain later technical
+derivation, not Product decisions silently delegated to this investigation.
 
 ## Decision Applicability
 
@@ -395,6 +400,7 @@ not Product decisions silently delegated to this investigation.
 | Missing or ambiguous material relationships fail closed without making every document universally mandatory | unknown | none | none |
 | Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | proven | runtime-behaviour | none |
 | Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | proven | runtime-behaviour | none |
+| Governed non-records requiring individual freshness receive stable Common document-node identity without record or governing-authority promotion | proven | runtime-behaviour | none |
 | Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | proven | runtime-behaviour | none |
 | Existing Product and Technology repositories can establish a truthful incremental graph baseline | unknown | none | none |
 | Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | proven | runtime-behaviour | none |
