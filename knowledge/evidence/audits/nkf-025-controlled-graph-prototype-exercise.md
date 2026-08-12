@@ -43,25 +43,31 @@ set-like node, edge, artifact, universe, and review sequences.
 
 ## Controlled Exercise Results
 
-The command `node --test experiments/nkf-025/evaluator.test.mjs` passed all 18
+The command `node --test experiments/nkf-025/evaluator.test.mjs` passed all 24
 cases:
 
 | Case | Result |
 | --- | --- |
 | Product Decision revision | The mandatory closure was the changed Decision, extending Design, and realizing Realization; exact reason paths were emitted and a revision-bound review made the set current |
+| Change-closure Decision coverage | A changed accepted Decision without an explicit classification became noncurrent and blocked |
 | Technology Specification revision | The closure was the Specification and its Realization; a contextual Technology reference did not expand mandatory review |
 | Whole-root readiness | Every applicable node required a current revision-bound review, and every applicable accepted Decision required an explicit classification |
 | Decision conflict | The classification remained separate from freshness and conformance, emitted a Decision blocker, and blocked consequential readiness |
 | Missing required relationship | The affected Realization became unknown and readiness blocked |
 | Forbidden impact cycle | Evaluation terminated, listed both cycle members, marked them unknown, and blocked readiness |
 | Invalid endpoint and duplicate fact | Both produced stable blocking findings rather than an inferred relationship |
+| Malformed policy and missing revision | An unsupported impact class, missing node revision, and duplicate universe entry failed before evaluation instead of shrinking propagation |
 | Exact artifact-binding mismatch | The owning Realization entered the changed set, carried an exact-binding reason, and was noncurrent |
+| Artifact removal or reassignment | Removal blocked and attached an unknown-removal reason to the stale prior owner; reassignment entered both the prior and new owners in the changed set |
 | Missing external observation | The dependent Evidence became unknown; a mismatched observed revision made it stale |
 | Expiry and invalidation | Explicit time and event inputs produced both reasons; the experimental display precedence selected invalidated without discarding expiry |
+| Invalid expiry input | An invalid explicit evaluation time or expiry boundary became unknown instead of current |
+| Consequential-use axes | Failed conformance and contradicted governing authority blocked use while remaining separate from a current freshness result |
 | Supersession | The predecessor remained in the full graph, left the ordinary applicable graph, and returned for historical reproduction |
 | Receipt replay | Exact repeated inputs reproduced the receipt and evaluation ID; a one-second input change produced a different ID |
+| Review-input binding | A changed evaluation-policy revision or evaluator digest made every otherwise exact review outdated and blocked readiness |
 | Input permutation | Reordered set-like sequences produced byte-equivalent canonical receipt content and the same evaluation ID |
-| Lifecycle projection | A status change altered generated navigation and read-only virtual frontmatter without changing the stable source path or causing evaluator mutation |
+| Lifecycle projection | A status change altered generated navigation and read-only virtual frontmatter without changing the stable source path or causing evaluator mutation; a content-modified receipt was rejected |
 | NKF representation | Every current record, non-record, and governed artifact was projected without promoting non-records to records |
 | NKF whole-root simulation | With an explicitly asserted reviewed baseline, exact reviews were reusable and every applicable accepted Decision was classified |
 | Sparse NKF baseline | The current declared graph missed the active Task when the Draft Design changed; unconfirmed completeness blocked the result |
@@ -92,7 +98,8 @@ authority.
 
 The prototype does not normalize the miss. The current NKF candidate universe
 is `unconfirmed`, so the sparse result is blocked and every applicable subject
-is unknown. A controlled one-time baseline then adds one source-bound
+carries a blocking unknown-completeness reason even when another display
+result has higher precedence. A controlled one-time baseline then adds one source-bound
 `depends-on` edge from the Task document node to the Design record and marks
 that exact experimental universe confirmed. The recomputed closure contains
 both oracle subjects with reason paths and no miss.
@@ -211,7 +218,7 @@ node experiments/nkf-025/measure.mjs
 npm run nkf:check
 ```
 
-The first command must report 18 passing tests. The second must report the
+The first command must report 24 passing tests. The second must report the
 policy digest, zero controlled-fixture misses, the blocked current sparse NKF
 comparison, the single named pre-baseline false negative, and the corrected
 two-subject closure. Repository counts and whole-root byte cost naturally grow

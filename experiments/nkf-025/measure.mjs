@@ -31,7 +31,13 @@ function comparison(computed, expected) {
 }
 
 function context(graph) {
-  return { profile: graph.profile, purpose: "change-impact" };
+  return {
+    profile: graph.profile,
+    purpose: "change-impact",
+    decision_classifications: graph.nodes
+      .filter((node) => node.kind === "decision" && node.governance?.status === "accepted")
+      .map((node) => ({ node: node.id, classification: "compatible", basis: "whole-root-semantic-oracle" })),
+  };
 }
 
 function mutateRevision(graph, nodeId, revision) {

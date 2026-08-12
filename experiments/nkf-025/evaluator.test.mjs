@@ -6,7 +6,9 @@ import test from "node:test";
 import {
   buildNkfGraph,
   canonicalize,
+  digestObject,
   evaluate,
+  evaluatorSourceSha256,
   lifecycleProjection,
   loadYaml,
   virtualFrontmatter,
@@ -23,7 +25,12 @@ function clone(value) {
 }
 
 function contextFor(graph, purpose = "change-impact", additions = {}) {
-  return { profile: graph.profile, purpose, ...additions };
+  return {
+    profile: graph.profile,
+    purpose,
+    decision_classifications: decisionClassifications(graph),
+    ...additions,
+  };
 }
 
 function decisionClassifications(graph, classification = "compatible") {
@@ -39,6 +46,8 @@ function reviewAll(graph, purpose, changesByNode = new Map()) {
     purpose,
     reviewed_changes: [...(changesByNode.get(node.id) ?? [])].sort(),
     reviewer: "fixture-semantic-reviewer",
+    evaluator_sha256: evaluatorSourceSha256,
+    policy_sha256: digestObject(policy),
   }));
 }
 
@@ -77,6 +86,20 @@ test("Product Decision changes conservatively reach the Design and Realization w
     reviews: reviewClosure(candidate, first, context.purpose),
   });
   assert.equal(reviewed.readiness, "ready");
+});
+
+test("an accepted Decision in the change closure requires explicit reconciliation", () => {
+  const candidate = clone(product);
+  candidate.nodes.find((node) => node.id === "decision-access").revision = "decision-access-v2";
+  const receipt = evaluate({
+    baseline: product,
+    candidate,
+    policy,
+    context: { profile: candidate.profile, purpose: "change-impact", decision_classifications: [] },
+  });
+  const decision = nodeResult(receipt, "decision-access");
+  assert.ok(decision.reasons.some((reason) => reason.code === "decision-classification-missing"));
+  assert.notEqual(decision.freshness, "current");
 });
 
 test("Technology Specification changes reach its Realization without pulling a contextual root", () => {
@@ -195,6 +218,39 @@ test("relationship endpoint constraints and duplicate authored facts fail closed
   assert.equal(receipt.readiness, "blocked");
 });
 
+test("malformed policy and missing revision inputs cannot silently shrink propagation", () => {
+  const malformedPolicy = clone(policy);
+  malformedPolicy.relationships.realizes.impact = "reviwe";
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: product, policy: malformedPolicy, context: contextFor(product) }),
+    /unsupported impact/,
+  );
+  const missingRevision = clone(product);
+  delete missingRevision.nodes.find((node) => node.id === "realization-current").revision;
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: missingRevision, policy, context: contextFor(product) }),
+    /revision must be a non-empty string/,
+  );
+  const duplicateUniverse = clone(product);
+  duplicateUniverse.candidate_universe.node_ids.push("product");
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: duplicateUniverse, policy, context: contextFor(product) }),
+    /contains a duplicate/,
+  );
+  const disabledPolicy = clone(policy);
+  disabledPolicy.relationships.realizes.propagation = "none";
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: product, policy: disabledPolicy, context: contextFor(product) }),
+    /disables its mandatory impact propagation/,
+  );
+  const orphanedArtifact = clone(product);
+  orphanedArtifact.artifacts[0].owner_record = "missing-owner";
+  assert.throws(
+    () => evaluate({ baseline: product, candidate: orphanedArtifact, policy, context: contextFor(product) }),
+    /refers to unknown owner/,
+  );
+});
+
 test("broken exact artifact binding changes its owning Realization and blocks", () => {
   const candidate = clone(technology);
   candidate.artifacts[0].observed_revision = "runtime-tampered";
@@ -205,6 +261,27 @@ test("broken exact artifact binding changes its owning Realization and blocks", 
   assert.deepEqual(receipt.changes.artifacts, ["technology-runtime"]);
   assert.ok(realization.reasons.some((reason) => reason.code === "exact-binding-mismatch"));
   assert.notEqual(realization.freshness, "current");
+});
+
+test("removed or reassigned governed artifacts cannot disappear from review", () => {
+  const removed = clone(technology);
+  removed.artifacts = [];
+  const removedReceipt = evaluate({ baseline: technology, candidate: removed, policy, context: contextFor(removed) });
+  assert.deepEqual(removedReceipt.changes.artifacts, ["technology-runtime"]);
+  assert.deepEqual(removedReceipt.changes.initial_nodes, ["realization-current"]);
+  assert.ok(removedReceipt.blockers.some((blocker) => blocker.code === "baseline-artifact-removed"));
+  assert.equal(nodeResult(removedReceipt, "realization-current").freshness, "stale");
+  assert.ok(
+    nodeResult(removedReceipt, "realization-current").reasons.some(
+      (reason) => reason.code === "baseline-artifact-removed",
+    ),
+  );
+
+  const reassigned = clone(product);
+  reassigned.artifacts[0].owner_record = "product";
+  const reassignedReceipt = evaluate({ baseline: product, candidate: reassigned, policy, context: contextFor(reassigned) });
+  assert.deepEqual(reassignedReceipt.changes.artifacts, ["product-runtime"]);
+  assert.deepEqual(reassignedReceipt.changes.initial_nodes, ["product", "realization-current"]);
 });
 
 test("unobserved external state is unknown; mismatched observed state is stale", () => {
@@ -251,6 +328,28 @@ test("expiry and invalidation use explicit observations and retain deterministic
   assert.equal(result.freshness, "invalidated");
   assert.ok(result.reasons.some((reason) => reason.code === "expiry-boundary-passed"));
   assert.ok(result.reasons.some((reason) => reason.code === "invalidation-event-observed"));
+});
+
+test("invalid explicit expiry inputs become unknown instead of current", () => {
+  const candidate = clone(product);
+  candidate.nodes.find((node) => node.id === "evidence-customer-study").freshness = {
+    expires_at: "not-a-time",
+  };
+  const context = contextFor(candidate, "whole-root-readiness", {
+    evaluation_time: "also-not-a-time",
+    decision_coverage: "all-applicable",
+    decision_classifications: decisionClassifications(candidate),
+  });
+  const receipt = evaluate({
+    baseline: product,
+    candidate,
+    policy,
+    context,
+    reviews: reviewAll(candidate, context.purpose),
+  });
+  const evidence = nodeResult(receipt, "evidence-customer-study");
+  assert.equal(evidence.freshness, "unknown");
+  assert.ok(evidence.reasons.some((reason) => reason.code === "expiry-input-invalid"));
 });
 
 test("superseded history stays in the full graph and returns for historical reproduction", () => {
@@ -332,6 +431,24 @@ test("receipts reproduce deterministically and change when a bound input changes
   assert.notEqual(observed.evaluation_id, first.evaluation_id);
 });
 
+test("semantic reviews become outdated when evaluator or policy identity changes", () => {
+  const context = contextFor(product, "whole-root-readiness", {
+    decision_coverage: "all-applicable",
+  });
+  const reviews = reviewAll(product, context.purpose);
+  const changedPolicy = clone(policy);
+  changedPolicy.version = "1";
+  const policyChanged = evaluate({ baseline: product, candidate: product, policy: changedPolicy, context, reviews });
+  assert.equal(policyChanged.readiness, "blocked");
+  assert.ok(policyChanged.nodes.every((node) => node.semantic_review.binding === "outdated"));
+
+  const changedEvaluatorReviews = clone(reviews);
+  for (const review of changedEvaluatorReviews) review.evaluator_sha256 = "0".repeat(64);
+  const evaluatorChanged = evaluate({ baseline: product, candidate: product, policy, context, reviews: changedEvaluatorReviews });
+  assert.equal(evaluatorChanged.readiness, "blocked");
+  assert.ok(evaluatorChanged.nodes.every((node) => node.semantic_review.binding === "outdated"));
+});
+
 test("permuting set-like graph sequences does not change the deterministic receipt", () => {
   const context = contextFor(product, "whole-root-readiness", {
     decision_coverage: "all-applicable",
@@ -367,6 +484,33 @@ test("lifecycle navigation and virtual frontmatter are derived without moving or
   assert.equal(projected.read_only, true);
   assert.equal(projected.declared_lifecycle, "superseded");
   assert.equal(canonicalize(candidate), beforeEvaluation);
+  assert.throws(() => virtualFrontmatter(product, first, "design-access"), /does not bind the supplied graph revision/);
+  const modifiedReceipt = clone(first);
+  modifiedReceipt.nodes.find((node) => node.id === "design-access").freshness = "current";
+  assert.throws(() => virtualFrontmatter(candidate, modifiedReceipt, "design-access"), /identity does not match/);
+});
+
+test("consequential-use blockers preserve separate conformance, authority, and freshness axes", () => {
+  const candidate = clone(product);
+  candidate.nodes.find((node) => node.id === "product").conformance = "failed";
+  candidate.nodes.find((node) => node.id === "decision-access").authority.binding = "contradicted";
+  const context = contextFor(candidate, "consequential-use", {
+    decision_coverage: "all-applicable",
+  });
+  const receipt = evaluate({
+    baseline: candidate,
+    candidate,
+    policy,
+    context,
+    reviews: reviewAll(candidate, context.purpose),
+  });
+  assert.equal(nodeResult(receipt, "product").freshness, "current");
+  assert.equal(nodeResult(receipt, "product").conformance, "failed");
+  assert.equal(nodeResult(receipt, "decision-access").freshness, "current");
+  assert.equal(nodeResult(receipt, "decision-access").authority.binding, "contradicted");
+  assert.ok(receipt.blockers.some((blocker) => blocker.code === "conformance-not-passed"));
+  assert.ok(receipt.blockers.some((blocker) => blocker.code === "governing-authority-not-verified"));
+  assert.equal(receipt.readiness, "blocked");
 });
 
 test("NKF baseline represents every record, non-record, and artifact without promoting documents", async () => {

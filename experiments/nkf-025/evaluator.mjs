@@ -43,6 +43,7 @@ export function digestObject(value) {
 }
 
 const EVALUATOR_SOURCE_SHA256 = sha256(readFileSync(fileURLToPath(import.meta.url)));
+export const evaluatorSourceSha256 = EVALUATOR_SOURCE_SHA256;
 
 function fail(message) {
   throw new Error(message);
@@ -50,6 +51,16 @@ function fail(message) {
 
 function assertObject(value, label) {
   if (!value || typeof value !== "object" || Array.isArray(value)) fail(`${label} must be a mapping`);
+}
+
+function assertString(value, label) {
+  if (typeof value !== "string" || value.length === 0) fail(`${label} must be a non-empty string`);
+}
+
+function assertStringArray(value, label) {
+  if (!Array.isArray(value) || value.some((entry) => typeof entry !== "string" || entry.length === 0)) {
+    fail(`${label} must be a sequence of non-empty strings`);
+  }
 }
 
 function sortedUnique(values) {
@@ -110,8 +121,58 @@ function validateGraph(graph, label) {
   const artifacts = indexById(graph.artifacts ?? [], `${label}.artifacts`);
   if (!Array.isArray(graph.edges)) fail(`${label}.edges must be a sequence`);
   assertObject(graph.candidate_universe, `${label}.candidate_universe`);
-  if (!Array.isArray(graph.candidate_universe.node_ids)) {
-    fail(`${label}.candidate_universe.node_ids must be a sequence`);
+  assertStringArray(graph.candidate_universe.node_ids, `${label}.candidate_universe.node_ids`);
+  if (new Set(graph.candidate_universe.node_ids).size !== graph.candidate_universe.node_ids.length) {
+    fail(`${label}.candidate_universe.node_ids contains a duplicate`);
+  }
+  if (!new Set(["confirmed", "unconfirmed"]).has(graph.candidate_universe.completeness)) {
+    fail(`${label}.candidate_universe.completeness is unsupported`);
+  }
+  for (const node of nodes.values()) {
+    assertString(node.kind, `${label}.nodes.${node.id}.kind`);
+    assertString(node.revision, `${label}.nodes.${node.id}.revision`);
+    if (node.role !== undefined) assertString(node.role, `${label}.nodes.${node.id}.role`);
+    if (node.governance !== undefined) {
+      assertObject(node.governance, `${label}.nodes.${node.id}.governance`);
+      assertString(node.governance.status, `${label}.nodes.${node.id}.governance.status`);
+    }
+    if (node.applicability !== undefined) {
+      assertObject(node.applicability, `${label}.nodes.${node.id}.applicability`);
+      assertStringArray(node.applicability.profiles ?? ["*"], `${label}.nodes.${node.id}.applicability.profiles`);
+      assertStringArray(node.applicability.purposes ?? ["*"], `${label}.nodes.${node.id}.applicability.purposes`);
+    }
+    for (const [index, expectation] of (node.relationship_expectations ?? []).entries()) {
+      assertObject(expectation, `${label}.nodes.${node.id}.relationship_expectations[${index}]`);
+      assertString(expectation.type, `${label}.nodes.${node.id}.relationship_expectations[${index}].type`);
+      if (expectation.target !== undefined) {
+        assertString(expectation.target, `${label}.nodes.${node.id}.relationship_expectations[${index}].target`);
+      }
+    }
+    for (const [index, dependency] of (node.external_dependencies ?? []).entries()) {
+      assertObject(dependency, `${label}.nodes.${node.id}.external_dependencies[${index}]`);
+      assertString(dependency.id, `${label}.nodes.${node.id}.external_dependencies[${index}].id`);
+      if (dependency.required_revision !== undefined) {
+        assertString(dependency.required_revision, `${label}.nodes.${node.id}.external_dependencies[${index}].required_revision`);
+      }
+    }
+    if (node.freshness !== undefined) {
+      assertObject(node.freshness, `${label}.nodes.${node.id}.freshness`);
+      if (node.freshness.expires_at !== undefined) {
+        assertString(node.freshness.expires_at, `${label}.nodes.${node.id}.freshness.expires_at`);
+      }
+      assertStringArray(
+        node.freshness.invalidated_by_events ?? [],
+        `${label}.nodes.${node.id}.freshness.invalidated_by_events`,
+      );
+    }
+  }
+  for (const artifact of artifacts.values()) {
+    assertString(artifact.owner_record, `${label}.artifacts.${artifact.id}.owner_record`);
+    assertString(artifact.expected_revision, `${label}.artifacts.${artifact.id}.expected_revision`);
+    assertString(artifact.observed_revision, `${label}.artifacts.${artifact.id}.observed_revision`);
+    if (!nodes.has(artifact.owner_record)) {
+      fail(`${label}.artifacts.${artifact.id} refers to unknown owner ${artifact.owner_record}`);
+    }
   }
   return { nodes, artifacts };
 }
@@ -121,6 +182,26 @@ function validatePolicy(policy) {
   if (policy.contract !== POLICY_CONTRACT) fail(`policy uses unsupported contract ${String(policy.contract)}`);
   if (typeof policy.id !== "string" || typeof policy.version !== "string") fail("policy requires id and version");
   assertObject(policy.relationships, "policy.relationships");
+  for (const [relationship, behavior] of Object.entries(policy.relationships)) {
+    assertObject(behavior, `policy.relationships.${relationship}`);
+    if (!new Set(["hard", "review", "context", "historical"]).has(behavior.impact)) {
+      fail(`policy relationship ${relationship} has unsupported impact ${String(behavior.impact)}`);
+    }
+    if (!new Set(["reverse", "forward", "both", "none"]).has(behavior.propagation)) {
+      fail(`policy relationship ${relationship} has unsupported propagation ${String(behavior.propagation)}`);
+    }
+    if (!new Set(["allow", "forbid"]).has(behavior.cycles)) {
+      fail(`policy relationship ${relationship} has unsupported cycle rule ${String(behavior.cycles)}`);
+    }
+    if (new Set(["hard", "review"]).has(behavior.impact) && behavior.propagation === "none") {
+      fail(`policy relationship ${relationship} disables its mandatory impact propagation`);
+    }
+    if (new Set(["context", "historical"]).has(behavior.impact) && behavior.propagation !== "none") {
+      fail(`policy relationship ${relationship} propagates a non-mandatory impact class`);
+    }
+    assertStringArray(behavior.allowed_source_kinds, `policy.relationships.${relationship}.allowed_source_kinds`);
+    assertStringArray(behavior.allowed_target_kinds, `policy.relationships.${relationship}.allowed_target_kinds`);
+  }
 }
 
 function nodeIsApplicable(node, context) {
@@ -180,11 +261,13 @@ function cycleMembers(adjacency) {
   return members;
 }
 
-function reviewCovers(review, node, context, requiredChanges) {
+function reviewCovers(review, node, context, requiredChanges, policyDigest) {
   if (
     !review ||
     review.node_revision !== node.revision ||
     review.purpose !== context.purpose ||
+    review.evaluator_sha256 !== EVALUATOR_SOURCE_SHA256 ||
+    review.policy_sha256 !== policyDigest ||
     typeof review.reviewer !== "string" ||
     review.reviewer.length === 0
   ) return false;
@@ -214,6 +297,14 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
     fail("context, baseline, and candidate profile must match");
   }
   if (baseline.bundle_id !== candidate.bundle_id) fail("baseline and candidate bundle must match");
+  assertObject(observations, "observations");
+  assertStringArray(observations.events ?? [], "observations.events");
+  assertObject(observations.external ?? {}, "observations.external");
+  for (const [identity, observation] of Object.entries(observations.external ?? {})) {
+    assertString(identity, "external observation identity");
+    assertObject(observation, `observations.external.${identity}`);
+    assertString(observation.revision, `observations.external.${identity}.revision`);
+  }
 
   const policyDigest = digestObject(policy);
   const candidateNodes = candidateIndex.nodes;
@@ -223,6 +314,7 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   const unknownReasons = new Map();
   const structuralBlockers = [];
   const decisionBlockers = [];
+  const useBlockers = [];
 
   const declaredUniverse = sortedUnique(candidate.candidate_universe.node_ids);
   const actualUniverse = sortedUnique(candidateNodes.keys());
@@ -336,12 +428,19 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   const artifactChanges = [];
   for (const artifact of candidateIndex.artifacts.values()) {
     const baselineArtifact = baselineIndex.artifacts.get(artifact.id);
-    if (baselineArtifact?.observed_revision !== artifact.observed_revision) {
+    const artifactMappingChanged = baselineArtifact !== undefined && (
+      baselineArtifact.owner_record !== artifact.owner_record ||
+      baselineArtifact.expected_revision !== artifact.expected_revision
+    );
+    if (baselineArtifact?.observed_revision !== artifact.observed_revision || artifactMappingChanged) {
       artifactChanges.push(artifact.id);
-      if (typeof artifact.owner_record === "string" && candidateNodes.has(artifact.owner_record)) {
+      if (candidateNodes.has(artifact.owner_record)) {
         initialChanges.add(artifact.owner_record);
       } else {
         structuralBlockers.push({ code: "changed-artifact-owner-missing", artifact: artifact.id });
+      }
+      if (artifactMappingChanged && candidateNodes.has(baselineArtifact.owner_record)) {
+        initialChanges.add(baselineArtifact.owner_record);
       }
     }
     if (artifact.expected_revision !== artifact.observed_revision) {
@@ -350,6 +449,15 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
       } else {
         structuralBlockers.push({ code: "artifact-binding-owner-missing", artifact: artifact.id });
       }
+    }
+  }
+  for (const artifact of baselineIndex.artifacts.values()) {
+    if (candidateIndex.artifacts.has(artifact.id)) continue;
+    artifactChanges.push(artifact.id);
+    structuralBlockers.push({ code: "baseline-artifact-removed", artifact: artifact.id });
+    if (candidateNodes.has(artifact.owner_record)) {
+      initialChanges.add(artifact.owner_record);
+      addReason(unknownReasons, artifact.owner_record, { code: "baseline-artifact-removed", artifact: artifact.id });
     }
   }
 
@@ -379,16 +487,30 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
   const reviewIndex = new Map();
   for (const review of reviews) {
     assertObject(review, "review");
+    assertString(review.node, "review.node");
+    assertString(review.node_revision, `review.${review.node}.node_revision`);
+    assertString(review.purpose, `review.${review.node}.purpose`);
+    assertString(review.reviewer, `review.${review.node}.reviewer`);
+    assertString(review.evaluator_sha256, `review.${review.node}.evaluator_sha256`);
+    assertString(review.policy_sha256, `review.${review.node}.policy_sha256`);
+    assertStringArray(review.reviewed_changes ?? [], `review.${review.node}.reviewed_changes`);
+    if (!candidateNodes.has(review.node)) fail(`review refers to unknown node ${review.node}`);
     if (reviewIndex.has(review.node)) fail(`reviews contain duplicate node ${String(review.node)}`);
     reviewIndex.set(review.node, review);
   }
   const classifications = new Map();
   for (const classification of context.decision_classifications ?? []) {
     assertObject(classification, "decision classification");
+    assertString(classification.node, "decision classification.node");
+    assertString(classification.basis, `decision classification.${classification.node}.basis`);
     if (!DECISION_CLASSIFICATIONS.has(classification.classification)) {
       fail(`unsupported Decision classification ${String(classification.classification)}`);
     }
     if (classifications.has(classification.node)) fail(`duplicate Decision classification ${String(classification.node)}`);
+    if (!candidateNodes.has(classification.node)) fail(`Decision classification refers to unknown node ${classification.node}`);
+    if (candidateNodes.get(classification.node).kind !== "decision") {
+      fail(`Decision classification refers to non-Decision node ${classification.node}`);
+    }
     classifications.set(classification.node, classification);
   }
 
@@ -407,9 +529,16 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
       if (typeof context.evaluation_time !== "string") {
         statuses.add("unknown");
         reasons.push({ code: "evaluation-time-required" });
-      } else if (Date.parse(context.evaluation_time) > Date.parse(node.freshness.expires_at)) {
-        statuses.add("expired");
-        reasons.push({ code: "expiry-boundary-passed", expires_at: node.freshness.expires_at });
+      } else {
+        const evaluationTime = Date.parse(context.evaluation_time);
+        const expiryTime = Date.parse(node.freshness.expires_at);
+        if (!Number.isFinite(evaluationTime) || !Number.isFinite(expiryTime)) {
+          statuses.add("unknown");
+          reasons.push({ code: "expiry-input-invalid" });
+        } else if (evaluationTime > expiryTime) {
+          statuses.add("expired");
+          reasons.push({ code: "expiry-boundary-passed", expires_at: node.freshness.expires_at });
+        }
       }
     }
     for (const dependency of node.external_dependencies ?? []) {
@@ -431,7 +560,7 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
 
     const requiredChanges = rootsByNode.get(nodeId) ?? new Set();
     const review = reviewIndex.get(nodeId);
-    const reviewIsCurrent = reviewCovers(review, node, context, requiredChanges);
+    const reviewIsCurrent = reviewCovers(review, node, context, requiredChanges, policyDigest);
     const reviewRequired = requiredChanges.size > 0 || context.purpose !== "change-impact";
     if (!reviewIsCurrent) {
       if (requiredChanges.size > 0) {
@@ -446,7 +575,12 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
     let decisionClassification = null;
     if (node.kind === "decision" && node.governance?.status === "accepted") {
       const classification = classifications.get(nodeId);
-      if (context.decision_coverage === "all-applicable" && !classification) {
+      const classificationRequired =
+        context.decision_coverage === "all-applicable" ||
+        (context.purpose === "change-impact" && rootsByNode.has(nodeId)) ||
+        context.purpose === "whole-root-readiness" ||
+        context.purpose === "consequential-use";
+      if (classificationRequired && !classification) {
         statuses.add("unknown");
         reasons.push({ code: "decision-classification-missing" });
       } else if (classification) {
@@ -459,6 +593,20 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
     }
 
     const freshness = DISPLAY_PRECEDENCE.find((status) => statuses.has(status)) ?? "current";
+    if (
+      new Set(["whole-root-readiness", "consequential-use"]).has(context.purpose) &&
+      (node.conformance ?? "not-evaluated") !== "passed"
+    ) {
+      useBlockers.push({ code: "conformance-not-passed", node: nodeId, state: node.conformance ?? "not-evaluated" });
+    }
+    if (
+      context.purpose === "consequential-use" &&
+      (node.role ?? "context") === "governs" &&
+      node.authority?.eligible === true &&
+      node.authority?.binding !== "verified"
+    ) {
+      useBlockers.push({ code: "governing-authority-not-verified", node: nodeId, state: node.authority?.binding ?? "not-evaluated" });
+    }
     nodeResults.push({
       id: nodeId,
       revision: node.revision,
@@ -516,9 +664,9 @@ export function evaluate({ baseline, candidate, policy, context, reviews = [], o
     },
     nodes: nodeResults,
     cycles,
-    blockers: [...structuralBlockers, ...decisionBlockers].sort((left, right) =>
+    blockers: [...structuralBlockers, ...decisionBlockers, ...useBlockers].sort((left, right) =>
       canonicalize(left).localeCompare(canonicalize(right))),
-    readiness: noncurrent.length === 0 && structuralBlockers.length === 0 && decisionBlockers.length === 0
+    readiness: noncurrent.length === 0 && structuralBlockers.length === 0 && decisionBlockers.length === 0 && useBlockers.length === 0
       ? "ready"
       : "blocked",
   };
@@ -541,7 +689,16 @@ export function lifecycleProjection(graph) {
 
 export function virtualFrontmatter(graph, receipt, nodeId) {
   validateGraph(graph, "graph");
+  assertObject(receipt, "receipt");
   if (receipt.contract !== RECEIPT_CONTRACT) fail("receipt uses unsupported contract");
+  const { evaluation_id: evaluationId, ...receiptBody } = receipt;
+  if (typeof evaluationId !== "string" || evaluationId !== digestObject(receiptBody)) {
+    fail("receipt evaluation identity does not match its content");
+  }
+  if (receipt.context?.candidate_revision !== digestObject(normalizedGraphForDigest(graph))) {
+    fail("receipt does not bind the supplied graph revision");
+  }
+  if (!Array.isArray(receipt.nodes)) fail("receipt nodes must be a sequence");
   const node = graph.nodes.find((entry) => entry.id === nodeId);
   const result = receipt.nodes.find((entry) => entry.id === nodeId);
   if (!node || !result) fail(`node ${nodeId} is unavailable in graph or receipt`);
