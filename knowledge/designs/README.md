@@ -46,7 +46,6 @@ establishes it.
 [Active Design Index](active/README.md)
 
 - [NKF Task Scope Gate](active/task-scope-gate.md)
-- [NKF Freshness And Deterministic Knowledge Graph](active/freshness-and-deterministic-knowledge-graph.md)
 
 ## Adopted
 
@@ -66,6 +65,7 @@ establishes it.
 - [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
 - [Native Bundle Serialization](adopted/native-bundle-serialization.md)
 - [Native Record Serialization](adopted/native-record-serialization.md)
+- [NKF Freshness And Deterministic Knowledge Graph](adopted/freshness-and-deterministic-knowledge-graph.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](adopted/presentation-guidance.md)
 - [Product Responsibility Identifiers](adopted/product-responsibility-identifiers.md)

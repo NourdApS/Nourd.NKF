@@ -59,6 +59,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0051: Self-Hosting Source Migration](0051-self-hosting-source-migration.md)
 - [ADR 0077: Decision Applicability Gate](0077-decision-applicability-gate.md)
 - [ADR 0079: Dynamic Frontmatter Without Title](0079-dynamic-frontmatter-without-title.md)
+- [ADR 0115: Adopt Freshness And Deterministic Knowledge Graph Direction](0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
 
 ## Executable Authority Validation And Checker
 

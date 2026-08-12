@@ -4,14 +4,16 @@ type: design
 title: NKF Freshness And Deterministic Knowledge Graph
 summary: This Design proposes a declared local knowledge graph, separate versioned evaluation policy, computed freshness, contextual applicability, conservative change closure, and revision-bound receipts for evidence-led NKF 0.5 consideration.
 created_at: 2026-08-12T17:06:00Z
-record_lifecycle: living
-record_status: draft
+record_lifecycle: immutable
+record_status: accepted
 task: NKF-025
-design_disposition: active
+design_disposition: adopted
+design_decisions:
+  - adr-0115
 decision_authority: Human Product Owner, Nourd ApS
-proposal_authority_effect: None; the direction remains a Draft Design until a later Decision adopts an exact revision, and normative NKF 0.5 meaning requires separate exact authority-pair acceptance.
+proposal_authority_effect: Adopted by ADR 0115 as Product direction; normative NKF 0.5 meaning still requires a separate exact authority-pair acceptance.
 proposal_evidence: NKF-025 NKF 0.4 freshness and graph-gap inventory, controlled prototype and whole-root comparison, fresh independent audit, and detached NKF self-consumer worktree exercise.
-implementation_evidence: None; the planned evaluator is disposable Task evidence and cannot establish production Realization.
+implementation_evidence: None for production; the completed evaluator is disposable experimental Task evidence and cannot establish a production Realization.
 ---
 
 # NKF Freshness And Deterministic Knowledge Graph
@@ -38,8 +40,9 @@ This Design covers Product and Technology bundles through Common semantics. It
 does not define another Root Profile, make Product and Technology meaning
 identical, infer external truth, turn AI review into deterministic proof,
 replace [NKF-005](../../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md),
-or authorize production implementation. Exact serialization and evaluation
-behavior remain subject to the controlled exercise and later Decision.
+or authorize production implementation. Exact serialization and production
+evaluation behavior remain later technical derivation for a future NKF 0.5
+implementation Task that must itself receive separate human direction.
 
 ## Governing Inputs And Constraints
 
@@ -127,10 +130,12 @@ The controlled
 demonstrates the basis for this direction: context-only aggregation cannot
 identify an independently noncurrent Task or Evidence item, while automatic
 promotion changes authority. The Human Product Owner confirmed the stable
-Common `document` node boundary on `2026-08-12`. This confirmation fixes one
-Product boundary inside the Draft; it does not adopt the complete Design or
-authorize normative implementation. Representation coverage also remains
-distinct from reviewed semantic-edge completeness.
+Common `document` node boundary on `2026-08-12`.
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
+adopts the exact Design revision after the remaining Product boundaries were
+confirmed individually; neither act authorizes normative implementation.
+Representation coverage also remains distinct from reviewed semantic-edge
+completeness.
 
 ### Typed Relationships And Evaluation Policy
 
@@ -501,7 +506,7 @@ corrected two-subject closure after an explicitly reviewed dependency is
 supplied. These results support the direction while showing that the current
 repository is not ready for a truthful `confirmed` graph baseline.
 
-An informed later Decision requires:
+The adoption Decision is supported by:
 
 - strict prototype schemas for graph, evaluation policy, context, observation,
   semantic review, and receipt inputs;
@@ -526,7 +531,9 @@ An informed later Decision requires:
   reproduces receipts, injects omissions and conflicts, and reconciles every
   Design claim with collected Evidence.
 
-No prototype pass accepts this Design, and no accepted Design would itself
+No prototype pass accepted this Design.
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
+separately adopts this exact revision; an adopted Design does not itself
 accept NKF 0.5 authority or confirm a production Realization.
 
 The
@@ -572,5 +579,6 @@ self-adoption after publication as the two separate stages required by
   [NKF-005](../../tasks/deferred/NKF-005-validation-expiry-and-authority-freshness.md)
   or require a later coordinated Decision.
 
-These are prototype questions. This Draft records no implicit answer and
-grants no authority to production implementation.
+These remain technical derivation and later evidence questions. This adopted
+Design records no implicit answer and grants no authority to production
+implementation.

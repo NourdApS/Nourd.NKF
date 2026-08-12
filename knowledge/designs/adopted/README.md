@@ -23,6 +23,7 @@ normative authority remains in Specifications.
 - [Layered Contract Enforcement](layered-contract-enforcement.md)
 - [Native Bundle Serialization](native-bundle-serialization.md)
 - [Native Record Serialization](native-record-serialization.md)
+- [NKF Freshness And Deterministic Knowledge Graph](freshness-and-deterministic-knowledge-graph.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](presentation-guidance.md)
 - [Product Responsibility Identifiers](product-responsibility-identifiers.md)

@@ -4,13 +4,13 @@ type: design
 body_contract: nkf.design
 title: NKF Freshness And Deterministic Knowledge Graph
 source:
-  path: designs/active/freshness-and-deterministic-knowledge-graph.md
+  path: designs/adopted/freshness-and-deterministic-knowledge-graph.md
   digest:
     algorithm: sha-256
-    value: 1dee1a2fc92f5c556bd1eb76e3c6fb316752e3d39038cfa9a98aeebfec1c064f
+    value: b1f47ce3e3ffbfb74c453696989358e3020269a7f6ee22b5caf55fd01fa00d8a
 governance:
-  lifecycle: living
-  status: draft
+  lifecycle: immutable
+  status: accepted
   authority:
     - human-product-owner
 scope:

@@ -4,8 +4,8 @@
 
 This Evidence supports
 [NKF-025](../../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
-and the active
-[NKF Freshness And Deterministic Knowledge Graph](../../designs/active/freshness-and-deterministic-knowledge-graph.md)
+and the
+[NKF Freshness And Deterministic Knowledge Graph](../../designs/adopted/freshness-and-deterministic-knowledge-graph.md)
 Design. It records a pre-release self-consumer exercise against the actual NKF
 Technology repository at exact commit
 `1628e2c3d1273c04a81b343a113d540d6606092f`.
@@ -13,7 +13,7 @@ Technology repository at exact commit
 The exercise used a separate temporary detached Git worktree. It did not
 create or accept an NKF 0.5 authority pair, change the frozen NKF 0.4 set,
 publish a release, run a candidate-bound or public Adopt operation for 0.5,
-confirm a Realization, or make the Draft Design adopted. It tests the
+confirm a Realization, or make the then-Draft Design adopted. It tests the
 disposable NKF-025 evaluator as pre-release baseline evidence only. The later
 release Task must separately prove an exact-candidate Adopt exercise before
 publication and ordinary public self-adoption after an immutable 0.5 release

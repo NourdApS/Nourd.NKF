@@ -4,8 +4,8 @@
 
 This Evidence supports
 [NKF-025](../../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
-and the active
-[NKF Freshness And Deterministic Knowledge Graph](../../designs/active/freshness-and-deterministic-knowledge-graph.md)
+and the
+[NKF Freshness And Deterministic Knowledge Graph](../../designs/adopted/freshness-and-deterministic-knowledge-graph.md)
 Design. It records a disposable local evaluator, controlled Product and
 Technology fixtures, a direct NKF repository projection, adversarial cases,
 whole-root semantic oracles, and deterministic measurements.

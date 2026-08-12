@@ -281,6 +281,13 @@ format meaning.
     evidence-bounded conclusion, and present only the remaining consequential
     product choices. Normative NKF 0.5 implementation and release require a
     later explicitly authorized Task.
+11. Derive one exact Design-adoption Decision candidate solely from the
+    already confirmed Product boundaries and audited evidence. Reconcile the
+    Design disposition and executable record mechanically, run the canonical
+    gate, obtain a fresh independent audit of the exact candidate, and present
+    its precise adopted meaning before any acceptance or Task conclusion. Any
+    new or changed Product boundary returns to the Human Product Owner rather
+    than entering the candidate by implication.
 
 ## Acceptance Criteria
 
@@ -330,11 +337,12 @@ format meaning.
   exact-byte and structural controls but no deterministic semantic-freshness,
   impact-policy, relationship-completeness, external-observability, or
   targeted-review contract.
-- The active
-  [NKF Freshness And Deterministic Knowledge Graph](../../designs/active/freshness-and-deterministic-knowledge-graph.md)
-  Design consolidates the confirmed direction and explicitly marks
-  serialization, non-record participation, impact mapping, result precedence,
-  baseline completeness, and receipt storage as experimental questions.
+- The adopted
+  [NKF Freshness And Deterministic Knowledge Graph](../../designs/adopted/freshness-and-deterministic-knowledge-graph.md)
+  Design consolidates the confirmed direction. Exact serialization,
+  relationship-policy mapping, baseline-confirmation mechanics and evidence,
+  receipt operations and storage, migration, and broader consumer proof remain
+  technical derivation or later evidence questions.
 - The
   [controlled graph prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
   implements a disposable versioned evaluator and passes 25 Product,
@@ -403,12 +411,13 @@ The evidence supports these Product recommendations, confirmed one at a time:
 
 The Human Product Owner confirmed recommendations 1 through 4 on `2026-08-12`
 and clarified the required producer self-adoption boundary. No Product
-recommendation from this investigation remains unconfirmed. The Draft Design
-remains active because only a later Human Product Owner Decision may adopt its
-exact revision. Exact Schema, policy mapping, baseline-confirmation and receipt
-operations, migration, implementation, publication, and actual self-adoption
-remain later work, not Product decisions silently delegated to this
-investigation.
+recommendation from this investigation remains unconfirmed.
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
+adopts the exact Design revision without accepting NKF 0.5 authority or
+authorizing implementation. Exact Schema, policy mapping,
+baseline-confirmation and receipt operations, migration, implementation,
+publication, and actual self-adoption remain later work, not Product decisions
+silently delegated to this investigation.
 
 ## Decision Applicability
 
@@ -431,6 +440,7 @@ investigation.
 | [`adr-0103`](../../decisions/0103-branch-carried-task-life-and-cancelled-state.md) | record | The normal Task branch carries this Task's active life and merges only after a truthful conclusion, leaving review state in Git. |
 | [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Frozen 0.4 complete-set bytes cannot change; any later accepted complete-set change requires a new version and exact-candidate proof before publication. |
 | [`adr-0113`](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md) | record | Exact NKF 0.4 is immutable predecessor authority; a real vocabulary, topology, authority, validation, onboarding-category, or compatibility change requires a new Human Product Owner Decision. |
+| [`adr-0115`](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md) | record | The exact evidence-bounded Design direction is adopted, while NKF 0.5 authority, technical derivation, implementation, publication, and adoption remain unestablished and require separately directed later work. |
 
 ### Mandatory Capabilities
 
