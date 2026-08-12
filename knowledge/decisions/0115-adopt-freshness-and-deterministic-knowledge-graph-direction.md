@@ -20,7 +20,7 @@ confirmation, but it does not determine which governed knowledge needs
 semantic review after a change or whether every applicable subject remains
 current for one declared purpose.
 
-[NKF-025](../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+[NKF-025](../tasks/completed/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 inventoried the resulting staleness and contradiction risks, tested a
 disposable evaluator against controlled Product and Technology fixtures, and
 exercised the actual NKF Technology repository in a separate detached

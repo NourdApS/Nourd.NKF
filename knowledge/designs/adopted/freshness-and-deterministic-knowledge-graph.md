@@ -22,7 +22,7 @@ implementation_evidence: None for production; the completed evaluator is disposa
 
 This is a Common knowledge-governance and deterministic-evaluation Design
 under
-[NKF-025](../../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md).
+[NKF-025](../../tasks/completed/NKF-025-validate-freshness-and-knowledge-graph-direction.md).
 It proposes how a later NKF version could calculate which governed knowledge
 requires semantic review after a bounded change and prevent stale, expired,
 invalidated, unknown, or unreviewed knowledge from being represented as
@@ -427,7 +427,7 @@ Review every knowledge document after each edit. This minimizes graph omission
 risk but makes cost grow with the whole repository, repeatedly spends context
 on unchanged knowledge, and provides no precise reason path. It remains the
 comparison oracle during
-[this Task](../../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+[this Task](../../tasks/completed/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 but is not the proposed authoring workflow.
 
 ### Computed State In Canonical Markdown
@@ -464,7 +464,7 @@ reproduction and expired for a new consequential claim.
 
 Accept the evaluator once it produces stable output. Rejected: a deterministic
 algorithm can be consistently incomplete.
-[This Task](../../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+[This Task](../../tasks/completed/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 requires whole-root semantic comparison, missing-edge injection, and
 false-negative accounting before the policy is considered safe.
 

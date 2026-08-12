@@ -3,7 +3,7 @@ title: "NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction"
 summary: Test the confirmed NKF 0.5 freshness and knowledge-graph direction against controlled Product and Technology evidence before accepting or implementing normative format meaning.
 created_at: 2026-08-12T16:49:56Z
 task_id: NKF-025
-task_status: active
+task_status: completed
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -418,6 +418,56 @@ authorizing implementation. Exact Schema, policy mapping,
 baseline-confirmation and receipt operations, migration, implementation,
 publication, and actual self-adoption remain later work, not Product decisions
 silently delegated to this investigation.
+
+## Completion Result
+
+NKF-025 completed the bounded evidence and Design investigation it was
+directed to perform. The governed inventory, disposable evaluator, controlled
+Product and Technology cases, actual NKF Technology exercise, whole-root
+comparisons, receipt and invalidation exercises, and adversarial audits
+satisfied every acceptance criterion and mandatory capability within their
+explicitly recorded experimental scope. The known risk remains visible: an
+incorrectly confirmed incomplete semantic baseline can hide an undeclared
+relationship, so unconfirmed or outdated completeness yields `unknown`, blocks
+readiness, and requires whole-root semantic review.
+
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
+records Codex technical-reviewer confirmation under the Human Product Owner's
+explicit delegation. The confirmation was checked clause by clause against
+all 23 individually Human-Product-Owner-confirmed Product boundaries; the
+Human Product Owner remains their source authority, and the consolidating
+record adds no Product meaning. The exact adopted
+[Design](../../designs/adopted/freshness-and-deterministic-knowledge-graph.md)
+therefore establishes the evidence-bounded direction only.
+
+A fresh independent audit of exact remote commit
+`9fc2a7c72057e567fefd51a916142a15d3138a0f` returned CLEAN. It reproduced the
+25 focused evaluator tests, verified the lifecycle indexes and exact
+Markdown/YAML digests, reconciled the Task and Evidence claims, and ran the
+canonical producer gate at 28 test files and 210 tests, 1,093 checked links,
+zero dead links, full-bundle conformance, and zero diagnostics. The disposable
+audit checkout remained tracked-clean and the remote branch remained bound to
+the exact audited commit.
+
+This conclusion does not establish an NKF 0.5 Specification, executable
+companion, Schema, checker, adopter, migration, release set, production
+Realization, publication, recommendation, consumer adoption, or readiness.
+Exact serialization, policy mapping, baseline-confirmation evidence and
+mechanics, receipt operations, migration, implementation, release, and broader
+consumer proof remain future work. Opening or beginning that work requires a
+separately human-directed Task. The two distinct self-adoption obligations
+also remain unchanged: exact-candidate Adopt and audit before publication,
+then ordinary public self-adoption and audit of the immutable published
+release before merge.
+
+Acceptance and state remain separate:
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
+accepts the exact Decision record under the delegated confirmation; the Design
+disposition is adopted;
+no production Realization is implemented or confirmed; the audited snapshot
+is conformant; acceptance-binding verification was not requested; Governing
+Use remains not-ready; and no remote workflow or protected-branch enforcement
+claim is made.
 
 ## Decision Applicability
 
