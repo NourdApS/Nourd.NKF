@@ -1,0 +1,52 @@
+contract: nkf.record
+id: design-nkf-025-freshness-and-deterministic-knowledge-graph
+type: design
+body_contract: nkf.design
+title: NKF Freshness And Deterministic Knowledge Graph
+source:
+  path: designs/active/freshness-and-deterministic-knowledge-graph.md
+  digest:
+    algorithm: sha-256
+    value: 6beb1ac381c8f01e0ded7042d29c6275e78be61d9c7fc295069f452c1de22612
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
+  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
+  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
+  - {id: durable-meaning-and-declared-state, heading_path: [Proposed Direction, Durable Meaning And Declared State], occurrence: 1, authority: proposal, role: boundary}
+  - {id: nodes-identity-and-revision, heading_path: [Proposed Direction, Nodes Identity And Revision], occurrence: 1, authority: proposal, role: boundary}
+  - {id: typed-relationships-and-evaluation-policy, heading_path: [Proposed Direction, Typed Relationships And Evaluation Policy], occurrence: 1, authority: proposal, role: boundary}
+  - {id: evaluation-context-and-purpose, heading_path: [Proposed Direction, Evaluation Context And Purpose], occurrence: 1, authority: proposal, role: boundary}
+  - {id: applicability-role-authority-and-freshness, heading_path: [Proposed Direction, Applicability Role Authority And Freshness], occurrence: 1, authority: proposal, role: boundary}
+  - {id: freshness-results, heading_path: [Proposed Direction, Freshness Results], occurrence: 1, authority: proposal, role: boundary}
+  - {id: full-applicable-and-current-projections, heading_path: [Proposed Direction, Full Applicable And Current Projections], occurrence: 1, authority: proposal, role: boundary}
+  - {id: change-closure-and-review, heading_path: [Proposed Direction, Change Closure And Review], occurrence: 1, authority: proposal, role: governing}
+  - {id: decision-reconciliation, heading_path: [Proposed Direction, Decision Reconciliation], occurrence: 1, authority: proposal, role: governing}
+  - {id: receipts-and-virtual-views, heading_path: [Proposed Direction, Receipts And Virtual Views], occurrence: 1, authority: proposal, role: interface}
+  - {id: completeness-and-unknown, heading_path: [Proposed Direction, Completeness And Unknown], occurrence: 1, authority: proposal, role: boundary}
+  - {id: external-resolution-boundary, heading_path: [Proposed Direction, External Resolution Boundary], occurrence: 1, authority: proposal, role: boundary}
+  - {id: stable-paths-lifecycle-and-migration, heading_path: [Proposed Direction, Stable Paths Lifecycle And Migration], occurrence: 1, authority: proposal, role: recovery}
+  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
+  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
+  - {id: full-semantic-scan-for-every-change, heading_path: [Alternatives And Trade-Offs, Full Semantic Scan For Every Change], occurrence: 1, authority: proposal, role: alternative}
+  - {id: computed-state-in-canonical-markdown, heading_path: [Alternatives And Trade-Offs, Computed State In Canonical Markdown], occurrence: 1, authority: proposal, role: alternative}
+  - {id: infer-the-graph-from-links-or-ai, heading_path: [Alternatives And Trade-Offs, Infer The Graph From Links Or AI], occurrence: 1, authority: proposal, role: alternative}
+  - {id: put-impact-behavior-on-every-edge, heading_path: [Alternatives And Trade-Offs, Put Impact Behavior On Every Edge], occurrence: 1, authority: proposal, role: alternative}
+  - {id: one-intrinsic-document-state, heading_path: [Alternatives And Trade-Offs, One Intrinsic Document State], occurrence: 1, authority: proposal, role: alternative}
+  - {id: trust-determinism-without-whole-root-comparison, heading_path: [Alternatives And Trade-Offs, Trust Determinism Without Whole-Root Comparison], occurrence: 1, authority: proposal, role: alternative}
+  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
+  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
+  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+relationships:
+  - type: extends
+    target: adr-0015
+    source_section: proposed-direction
+  - type: depends-on
+    target: adr-0077
+    source_section: decision-reconciliation

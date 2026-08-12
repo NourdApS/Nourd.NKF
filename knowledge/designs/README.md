@@ -46,6 +46,7 @@ establishes it.
 [Active Design Index](active/README.md)
 
 - [NKF Task Scope Gate](active/task-scope-gate.md)
+- [NKF Freshness And Deterministic Knowledge Graph](active/freshness-and-deterministic-knowledge-graph.md)
 
 ## Adopted
 

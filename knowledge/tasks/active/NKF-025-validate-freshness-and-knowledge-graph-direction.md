@@ -295,7 +295,12 @@ format meaning.
   exact-byte and structural controls but no deterministic semantic-freshness,
   impact-policy, relationship-completeness, external-observability, or
   targeted-review contract.
-- No Design, prototype, Specification, executable companion, production
+- The active
+  [NKF Freshness And Deterministic Knowledge Graph](../../designs/active/freshness-and-deterministic-knowledge-graph.md)
+  Design consolidates the confirmed direction and explicitly marks
+  serialization, non-record participation, impact mapping, result precedence,
+  baseline completeness, and receipt storage as experimental questions.
+- No prototype, Specification, executable companion, production
   tooling, Realization, or release has yet changed under this Task.
 
 ## Decision Applicability
