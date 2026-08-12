@@ -120,6 +120,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-025-nkf-0-4-freshness-and-graph-gap-inventory.md
     kind: evidence
+  - path: evidence/audits/nkf-025-controlled-graph-prototype-exercise.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md

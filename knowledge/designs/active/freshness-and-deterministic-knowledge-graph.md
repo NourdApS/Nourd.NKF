@@ -122,6 +122,14 @@ compare these options because excluding them would fail the stated all-document
 freshness goal, while promoting them by implication would change NKF authority
 and Task meaning.
 
+The controlled
+[prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
+now favors stable non-record document nodes: context-only aggregation cannot
+identify an independently noncurrent Task or Evidence item, while automatic
+promotion changes authority. This remains an evidence-backed candidate, not an
+adopted node kind. Representation coverage also remains distinct from reviewed
+semantic-edge completeness.
+
 ### Typed Relationships And Evaluation Policy
 
 Each semantic relationship fact is authored once in its canonical direction
@@ -356,6 +364,12 @@ frontmatter, Tasks, and links, but an agent or human must review semantic edges
 and completeness. Historical documents are not backfilled with fabricated
 past freshness. Until baseline coverage is confirmed, readiness is `unknown`.
 
+The controlled NKF comparison proves why: the enumerated 0.4 graph omitted the
+active Task from a Draft Design change closure. Unconfirmed completeness
+blocked that sparse result; a reviewed source-bound Task-to-Design dependency
+then made the closure match the whole-root oracle. Node enumeration alone can
+never satisfy the baseline-completeness claim.
+
 ## Responsibilities Interactions And Information Flows
 
 The future Specification would own node kinds, durable relationship meaning,
@@ -457,6 +471,17 @@ supports a governed refinement.
 
 ## Validation And Decision Evidence
 
+The
+[controlled prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
+provides 18 passing Product, Technology, NKF-baseline, adversarial,
+reproduction, permutation, lifecycle, and non-record cases. Its controlled
+Product and Technology closures have zero false positives and zero false
+negatives against their semantic oracles. Its direct NKF comparison exposes
+one real pre-baseline miss, blocks it through `unknown`, and demonstrates the
+corrected two-subject closure after an explicitly reviewed dependency is
+supplied. These results support the direction while showing that the current
+repository is not ready for a truthful `confirmed` graph baseline.
+
 An informed later Decision requires:
 
 - strict prototype schemas for graph, evaluation policy, context, observation,
@@ -487,8 +512,9 @@ accept NKF 0.5 authority or confirm a production Realization.
 
 ## Unresolved Matters
 
-- Whether Task and Evidence non-records become stable document nodes or remain
-  context subjects without creating a second graph authority.
+- Whether the evidence-favored stable non-record document node becomes a
+  standard Common node kind, with explicit assurance that it carries no record
+  or governing authority by implication.
 - The exact YAML serialization for freshness policies, invalidation triggers,
   external observations, node revisions, evaluation policies, and receipts.
 - Whether the `hard` versus `review` distinction creates useful safe behavior

@@ -84,6 +84,12 @@ semantic freshness, catalogs the ways each knowledge kind may become
 noncurrent, measures the existing declared graph, and identifies the exact
 observability and completeness boundaries a later prototype must test.
 
+The NKF-025 controlled graph prototype exercise records the disposable
+Product, Technology, and direct NKF graph evaluator, adversarial cases,
+whole-root semantic oracle comparisons, the blocked sparse-graph false
+negative, the corrected reviewed-baseline simulation, non-record strategy
+results, receipt reproduction, and measured review-cost reduction.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

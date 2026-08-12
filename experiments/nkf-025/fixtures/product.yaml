@@ -1,0 +1,65 @@
+contract: nkf.graph-experiment/0
+bundle_id: product-fixture
+profile: nkf.profile.product
+candidate_universe:
+  completeness: confirmed
+  node_ids:
+    - decision-access
+    - design-access
+    - evidence-customer-study
+    - product
+    - realization-current
+nodes:
+  - id: product
+    kind: product
+    revision: product-v1
+    role: governs
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.product], purposes: ["*"]}
+    conformance: passed
+  - id: decision-access
+    kind: decision
+    revision: decision-access-v1
+    role: governs
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.product], purposes: ["*"]}
+    conformance: passed
+  - id: design-access
+    kind: design
+    revision: design-access-v1
+    role: proposes
+    governance: {status: draft}
+    authority: {eligible: false, binding: not-applicable}
+    applicability: {profiles: [nkf.profile.product], purposes: ["*"]}
+    conformance: passed
+  - id: evidence-customer-study
+    kind: evidence
+    revision: evidence-customer-study-v1
+    role: evidences
+    governance: {status: accepted}
+    authority: {eligible: false, binding: not-applicable}
+    applicability: {profiles: [nkf.profile.product], purposes: ["*"]}
+    conformance: passed
+  - id: realization-current
+    kind: realization
+    revision: realization-current-v1
+    role: realizes
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.product], purposes: ["*"]}
+    relationship_expectations:
+      - {type: realizes, target: decision-access}
+    conformance: passed
+edges:
+  - {source: realization-current, target: decision-access, type: realizes, source_section: governed-meaning-realized}
+  - {source: design-access, target: decision-access, type: extends, source_section: proposed-direction}
+  - {source: evidence-customer-study, target: design-access, type: evidences, source_section: findings}
+  - {source: product, target: realization-current, type: references, source_section: product-map}
+artifacts:
+  - id: product-runtime
+    owner_record: realization-current
+    expected_revision: runtime-v1
+    observed_revision: runtime-v1
+

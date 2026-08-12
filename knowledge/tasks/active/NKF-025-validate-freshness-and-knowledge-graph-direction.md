@@ -300,8 +300,24 @@ format meaning.
   Design consolidates the confirmed direction and explicitly marks
   serialization, non-record participation, impact mapping, result precedence,
   baseline completeness, and receipt storage as experimental questions.
-- No prototype, Specification, executable companion, production
-  tooling, Realization, or release has yet changed under this Task.
+- The
+  [controlled graph prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
+  implements a disposable versioned evaluator and passes 18 Product,
+  Technology, direct-NKF, adversarial, receipt, lifecycle, and non-record
+  cases. Controlled Product and Technology closures match whole-root semantic
+  oracles with no miss.
+- The direct NKF comparison found one material pre-baseline false negative:
+  current 0.4 relationships do not carry the active Task when its owned Draft
+  Design changes. Because graph completeness is unconfirmed, the evaluator
+  blocks rather than calling the sparse result current. A controlled reviewed
+  Task-to-Design edge corrects that exact closure without whole-root expansion.
+- Stable document nodes are the only tested non-record strategy that preserves
+  independent freshness without changing record authority. Exact
+  serialization, full baseline policy, hard/review value, broad relationship
+  mapping, receipt operations, and consumer evidence remain unresolved.
+- No Specification, executable companion, production checker, adopter,
+  migration, Realization, release, or consumer repository has changed under
+  this Task.
 
 ## Decision Applicability
 
@@ -329,12 +345,20 @@ format meaning.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Declared local graph inputs derive a deterministic conservative affected-document closure with reproducible reason paths | unknown | none | none |
-| Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | unknown | none | none |
+| Declared local graph inputs derive a deterministic conservative affected-document closure with reproducible reason paths | proven | runtime-behaviour | none |
+| Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | proven | runtime-behaviour | none |
 | Missing or ambiguous material relationships fail closed without making every document universally mandatory | unknown | none | none |
-| Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | unknown | none | none |
-| Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | unknown | none | none |
-| Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | unknown | none | none |
+| Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | proven | runtime-behaviour | none |
+| Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | proven | runtime-behaviour | none |
+| Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | proven | runtime-behaviour | none |
 | Existing Product and Technology repositories can establish a truthful incremental graph baseline | unknown | none | none |
-| Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | unknown | none | none |
+| Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | proven | runtime-behaviour | none |
 | Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | unknown | none | none |
+
+The proven findings are limited to the 18 controlled experimental cases and
+their versioned semantic oracles. Production behavior, broad consumer
+topologies, migration, receipt operations, and an actually complete Product
+or Technology baseline are not thereby proven. The missing-edge finding stays
+unknown because an incorrectly confirmed but incomplete semantic baseline can
+still hide an undeclared relationship. The Decision classifications are
+inputs supplied by semantic review, not truths established by the evaluator.

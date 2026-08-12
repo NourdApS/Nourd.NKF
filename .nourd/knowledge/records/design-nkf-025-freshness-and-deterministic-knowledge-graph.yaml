@@ -7,7 +7,7 @@ source:
   path: designs/active/freshness-and-deterministic-knowledge-graph.md
   digest:
     algorithm: sha-256
-    value: 6beb1ac381c8f01e0ded7042d29c6275e78be61d9c7fc295069f452c1de22612
+    value: 4ee90da86ee51685c569f60a0a6865f71bcb55fb33b7b5b67d5b453e81c75528
 governance:
   lifecycle: living
   status: draft
