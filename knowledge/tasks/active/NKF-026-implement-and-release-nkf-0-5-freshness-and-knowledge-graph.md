@@ -411,9 +411,20 @@ stops at that boundary and returns to the Human Product Owner.
   bit flips, and unsafe paths. Its verdict is `CLEAN`.
 - [ADR 0120](../../decisions/0120-confirm-the-nkf-0-5-release-candidate.md)
   technically confirms only that exact implementation and private archive
-  under the recorded delegation. No publication, recommendation, ordinary
-  public producer adoption, post-adoption audit, or Task conclusion is yet
-  claimed.
+  under the recorded delegation.
+- The content-addressed tag now resolves remotely to exact release commit
+  `777ea9a3...`. The sole 5,260,800-byte private-prerelease asset was verified
+  before publication, published unchanged at `2026-08-13T17:28:02Z`, and
+  independently re-downloaded byte-identically at SHA-256
+  `e4677933...f99d9`. The
+  [publication Evidence](../../evidence/audits/nkf-026-nkf-0-5-publication.md)
+  owns those time-bound observations.
+- The mutable recommendation now selects the exact published 0.5 archive and
+  declares the accepted breaking 0.1-through-0.4 migrations plus non-breaking
+  0.5 refresh. Its separate verifier passes with the exact archive, source,
+  checker, adopter, and authority bindings. Ordinary public producer adoption,
+  its repeat `current`, the post-adoption audit, and Task conclusion remain
+  separate and are not yet claimed.
 
 ## Created-State Rule
 
@@ -468,6 +479,6 @@ specific created-state facts they explicitly replace.
 | Product, Technology, and actual NKF exercises match reviewed semantic oracles without hidden false negatives | proven | runtime-behaviour | none |
 | One public Adopt operation safely onboards 0.5 and deliberately migrates all supported predecessors with preservation, rollback, and idempotence | proven | runtime-behaviour | none |
 | Current-system Realization remains exact through candidate, publication, producer adoption, and final merge | unknown | none | none |
-| Complete release membership, source reproduction, builds, archive bytes, modes, digests, and recommendation are deterministic and exact | unknown | none | none |
+| Complete release membership, source reproduction, builds, archive bytes, modes, digests, and recommendation are deterministic and exact | proven | data-validity | none |
 | Prepublication candidate-Adopt and post-publication ordinary producer self-adoption each pass their complete gate and independent audit | unknown | none | none |
 | Both active Tasks can conclude without changing accepted immutable record bytes or weakening deep-link validation | unknown | none | none |

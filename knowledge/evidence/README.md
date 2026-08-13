@@ -111,6 +111,18 @@ distinct exact successor, its narrow reviewed retrospective-gate
 transformation, executable closure, and unchanged Product boundaries before
 technical acceptance.
 
+The NKF-026 NKF 0.5 exact-candidate audit independently verifies the complete
+181-member archive, exact source reproduction, candidate-bound producer Adopt,
+whole-root semantic review, deterministic builds, full producer gate,
+supported compatibility paths, repeat `current`, and fail-closed archive,
+pin, and path tampering before technical confirmation and publication.
+
+The NKF-026 NKF 0.5 publication Evidence records the exact content-addressed
+tag, sole private-prerelease asset, authenticated draft and published
+downloads, byte-for-byte identity with the audited candidate, and deliberate
+promotion of the mutable recommendation while producer adoption remains a
+separate later action.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification
