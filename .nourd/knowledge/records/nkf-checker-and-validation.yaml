@@ -5,6 +5,7 @@ body_contract: nkf.realization
 title: NKF Checker And Validation
 source:
   path: realizations/current/checker-and-validation.md
+  stable_path: realizations/current/checker-and-validation.md
   digest:
     algorithm: sha-256
     value: 06b5259ddf9e0870972256971177b018236d291d801dbcdebde95342f75e3d5b
@@ -17,45 +18,85 @@ scope:
   root: nkf
 sections:
   - id: realization-identity-and-kind
-    heading_path: [Realization Identity And Kind]
+    heading_path:
+      - Realization Identity And Kind
     occurrence: 1
     authority: accepted-meaning
     role: identity
-    responsibilities: [realization-identity-and-kind]
+    responsibilities:
+      - realization-identity-and-kind
   - id: governed-meaning-realized
-    heading_path: [Governed Meaning Realized]
+    heading_path:
+      - Governed Meaning Realized
     occurrence: 1
     authority: accepted-meaning
     role: mapping
-    responsibilities: [governed-meaning-realized]
+    responsibilities:
+      - governed-meaning-realized
   - id: durable-mapping
-    heading_path: [Durable Mapping]
+    heading_path:
+      - Durable Mapping
     occurrence: 1
     authority: accepted-meaning
     role: mapping
-    responsibilities: [durable-mapping]
+    responsibilities:
+      - durable-mapping
   - id: responsibilities-and-ownership-boundaries
-    heading_path: [Responsibilities And Ownership Boundaries]
+    heading_path:
+      - Responsibilities And Ownership Boundaries
     occurrence: 1
     authority: accepted-meaning
     role: responsibility
-    responsibilities: [responsibilities-and-ownership-boundaries]
+    responsibilities:
+      - responsibilities-and-ownership-boundaries
   - id: interfaces-dependencies-locators-and-resolution
-    heading_path: [Interfaces Dependencies Locators And Resolution]
+    heading_path:
+      - Interfaces Dependencies Locators And Resolution
     occurrence: 1
     authority: accepted-meaning
     role: interface
-    responsibilities: [interfaces-dependencies-locators-and-resolution]
+    responsibilities:
+      - interfaces-dependencies-locators-and-resolution
   - id: external-authority-and-operational-state-boundaries
-    heading_path: [External Authority And Operational State Boundaries]
+    heading_path:
+      - External Authority And Operational State Boundaries
     occurrence: 1
     authority: accepted-meaning
     role: boundary
-    responsibilities: [external-authority-and-operational-state-boundaries]
+    responsibilities:
+      - external-authority-and-operational-state-boundaries
   - id: compatibility-verification-and-recovery
-    heading_path: [Compatibility Verification And Recovery]
+    heading_path:
+      - Compatibility Verification And Recovery
     occurrence: 1
     authority: accepted-meaning
     role: recovery
-    responsibilities: [compatibility-verification-and-recovery]
+    responsibilities:
+      - compatibility-verification-and-recovery
 relationships: []
+task: NKF-010
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0059
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 06b5259ddf9e0870972256971177b018236d291d801dbcdebde95342f75e3d5b
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-010
+    confirmation_status: confirmed
+    confirmation_decisions:
+      - adr-0059
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-010
+    confirmation_status: confirmed
+    confirmation_decisions:
+      - adr-0059

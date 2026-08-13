@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0044: Accept NKF 0.1 Release Contract"
 source:
   path: decisions/0044-release-contract.md
+  stable_path: decisions/0044-release-contract.md
   digest:
     algorithm: sha-256
     value: f192db99e7310eff987cb3f357a5cff15e0999eb1625834e0fbcd7cd13b17182
@@ -62,3 +63,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: f192db99e7310eff987cb3f357a5cff15e0999eb1625834e0fbcd7cd13b17182
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer acting under explicit Human Product Owner delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

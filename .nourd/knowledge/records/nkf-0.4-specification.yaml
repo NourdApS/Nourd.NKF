@@ -5,6 +5,7 @@ body_contract: nkf.specification
 title: NKF 0.4 — Product And Technology Knowledge Format
 source:
   path: specifications/nkf-0.4.md
+  stable_path: specifications/nkf-0.4.md
   digest:
     algorithm: sha-256
     value: 7298d1a55dcd74d4cc96368648aadbd6a70b5cf4c62d2a1c7f528e7c9181bab1
@@ -369,3 +370,26 @@ relationships:
   - type: governs
     target: nkf
     source_section: scope
+task: NKF-024
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 7298d1a55dcd74d4cc96368648aadbd6a70b5cf4c62d2a1c7f528e7c9181bab1
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit NKF 0.4 maintenance delegation
+    task: NKF-024
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+    task: NKF-024
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit NKF 0.4 maintenance delegation
+    authority_ids:
+      - codex-technical-reviewer
+    approved_by: repository-owner

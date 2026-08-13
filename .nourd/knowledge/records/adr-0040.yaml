@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0040: Confirm Invocation-Precondition Json Schema Bindings"
 source:
   path: decisions/0040-invocation-json-schemas.md
+  stable_path: decisions/0040-invocation-json-schemas.md
   digest:
     algorithm: sha-256
     value: d85c6b99f90c4dac5abe75f5b0f578307eb523e98d3d26ee61f16306ac62f756
@@ -49,3 +50,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: d85c6b99f90c4dac5abe75f5b0f578307eb523e98d3d26ee61f16306ac62f756
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

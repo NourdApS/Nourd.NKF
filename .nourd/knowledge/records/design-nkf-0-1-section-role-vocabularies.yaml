@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Section-Role Vocabularies
 source:
   path: designs/adopted/section-role-vocabularies.md
+  stable_path: designs/adopted/section-role-vocabularies.md
   digest:
     algorithm: sha-256
     value: 568ace967706d8bceb01bb5d336545696c40e49210d17efd49cb3790173039b8
@@ -68,3 +69,41 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0014
+proposal_authority_effect: None
+proposal_evidence: imported NKF-002 checker contract set at `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`, SHA-256 `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 568ace967706d8bceb01bb5d336545696c40e49210d17efd49cb3790173039b8
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0014
+    proposal_authority_effect: None
+    proposal_evidence: imported NKF-002 checker contract set at `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`, SHA-256 `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0014
+    proposal_authority_effect: None
+    proposal_evidence: imported NKF-002 checker contract set at `knowledge/evidence/source-snapshots/nourd-studio/06b96d4b41bc11cd98bc5e7a3ec44e8892930cc1/src/core/knowledge/contracts/nkf/0.1/contract-set.json`, SHA-256 `34ef9a6dc78ea66958dedb7b281b2a92a005f2ad2731178969be909e0fa3b9f8
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

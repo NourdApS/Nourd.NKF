@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 JSON Schema Realization
 source:
   path: designs/superseded/initial-json-schema-realization.md
+  stable_path: designs/superseded/initial-json-schema-realization.md
   digest:
     algorithm: sha-256
     value: 07a9e4b6e97fba6a8c0946f51e153578e1b0720654e1ac107c4ac5c8c10aef52
@@ -57,3 +58,53 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: superseded
+superseded_by:
+  - adr-0013
+  - adr-0014
+  - adr-0015
+  - adr-0016
+  - adr-0017
+  - adr-0018
+proposal_authority_effect: None
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 07a9e4b6e97fba6a8c0946f51e153578e1b0720654e1ac107c4ac5c8c10aef52
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: superseded
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: superseded
+    superseded_by:
+      - adr-0013
+      - adr-0014
+      - adr-0015
+      - adr-0016
+      - adr-0017
+      - adr-0018
+    proposal_authority_effect: None
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: superseded
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: superseded
+    superseded_by:
+      - adr-0013
+      - adr-0014
+      - adr-0015
+      - adr-0016
+      - adr-0017
+      - adr-0018
+    proposal_authority_effect: None
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

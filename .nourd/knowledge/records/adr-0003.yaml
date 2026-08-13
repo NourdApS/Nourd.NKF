@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0003: Accept Product Responsibility Identifiers"
 source:
   path: decisions/0003-product-responsibility-identifiers.md
+  stable_path: decisions/0003-product-responsibility-identifiers.md
   digest:
     algorithm: sha-256
     value: 66e95efa6039f54a93f43adf6927a448937522386d0f9d68e9d17c54869e1794
@@ -50,3 +51,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 66e95efa6039f54a93f43adf6927a448937522386d0f9d68e9d17c54869e1794
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

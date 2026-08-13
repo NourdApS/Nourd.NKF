@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0054: Front-Matter Authority Pair"
 source:
   path: decisions/0054-front-matter-authority-pair.md
+  stable_path: decisions/0054-front-matter-authority-pair.md
   digest:
     algorithm: sha-256
     value: a5a3204d17a3467736fbc35fdc7b65d00b03c754f1f6e95bf317e6ec6d8fe4b8
@@ -55,3 +56,26 @@ sections:
     authority: accepted-meaning
     role: content
 relationships: []
+task: NKF-007
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: a5a3204d17a3467736fbc35fdc7b65d00b03c754f1f6e95bf317e6ec6d8fe4b8
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit authorization for NKF-007 supporting changes
+    task: NKF-007
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-007
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit authorization for NKF-007 supporting changes
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

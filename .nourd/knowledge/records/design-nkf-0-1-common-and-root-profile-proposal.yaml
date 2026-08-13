@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Common And Root Profile Proposal
 source:
   path: designs/adopted/common-and-root-profiles.md
+  stable_path: designs/adopted/common-and-root-profiles.md
   digest:
     algorithm: sha-256
     value: 471a798ddb83878d2ae02e68581140645e6068b80c22c71e80abded88b171591
@@ -101,3 +102,35 @@ sections:
     responsibilities:
       - unresolved-matters
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0049
+  - adr-0050
+proposal_authority_effect: ADR 0049 accepts the architecture only. Every exact contract, identity, serialization, extraction, validation, artifact, and migration detail below remains proposed.
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 471a798ddb83878d2ae02e68581140645e6068b80c22c71e80abded88b171591
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0049
+      - adr-0050
+    proposal_authority_effect: ADR 0049 accepts the architecture only. Every exact contract, identity, serialization, extraction, validation, artifact, and migration detail below remains proposed.
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0049
+      - adr-0050
+    proposal_authority_effect: ADR 0049 accepts the architecture only. Every exact contract, identity, serialization, extraction, validation, artifact, and migration detail below remains proposed.

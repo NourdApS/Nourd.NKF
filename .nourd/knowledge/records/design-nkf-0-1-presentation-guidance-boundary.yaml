@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Presentation-Guidance Boundary
 source:
   path: designs/adopted/presentation-guidance.md
+  stable_path: designs/adopted/presentation-guidance.md
   digest:
     algorithm: sha-256
     value: 9daa8de9dd8f92a638c91112cb2de11a8bc42d77855595bde725e834a646750d
@@ -51,3 +52,38 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0020
+proposal_authority_effect: None
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 9daa8de9dd8f92a638c91112cb2de11a8bc42d77855595bde725e834a646750d
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0020
+    proposal_authority_effect: None
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0020
+    proposal_authority_effect: None
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Initial Release Distribution
 source:
   path: designs/adopted/initial-release-distribution.md
+  stable_path: designs/adopted/initial-release-distribution.md
   digest:
     algorithm: sha-256
     value: 8b10d884bc78ab8b665c028a68cc5fc91c6052720bcf163ac392542b27f98862
@@ -101,3 +102,38 @@ sections:
     authority: proposal
     role: evidence
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0042
+  - adr-0043
+  - adr-0044
+proposal_authority_effect: None until the consequential release-contract boundary and exact realization are separately accepted and confirmed
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 8b10d884bc78ab8b665c028a68cc5fc91c6052720bcf163ac392542b27f98862
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0042
+      - adr-0043
+      - adr-0044
+    proposal_authority_effect: None until the consequential release-contract boundary and exact realization are separately accepted and confirmed
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0042
+      - adr-0043
+      - adr-0044
+    proposal_authority_effect: None until the consequential release-contract boundary and exact realization are separately accepted and confirmed

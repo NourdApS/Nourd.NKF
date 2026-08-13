@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0004: Introduce NKF Record V2"
 source:
   path: decisions/0004-historical-record-contract-versioning.md
+  stable_path: decisions/0004-historical-record-contract-versioning.md
   digest:
     algorithm: sha-256
     value: f8aaaf4e8c4ae6dee0f66b25c0fc1a52a6ffef6d687a7bb22962ac13dd0492b7
@@ -50,3 +51,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: f8aaaf4e8c4ae6dee0f66b25c0fc1a52a6ffef6d687a7bb22962ac13dd0492b7
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

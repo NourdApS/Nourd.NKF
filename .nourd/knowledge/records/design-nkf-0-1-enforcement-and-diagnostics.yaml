@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Enforcement And Diagnostics
 source:
   path: designs/adopted/enforcement-and-diagnostics.md
+  stable_path: designs/adopted/enforcement-and-diagnostics.md
   digest:
     algorithm: sha-256
     value: e7367480316a58bcd166d15cdb7e8b68a34e9d40e41bfdb650948890a3631a7d
@@ -149,3 +150,41 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0019
+proposal_authority_effect: None
+proposal_evidence: accepted NKF 0.1 Decisions through ADR 0018 and the imported NKF-002 schemas, checker phases, diagnostics, and result type; imported implementation remains evidence only
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: e7367480316a58bcd166d15cdb7e8b68a34e9d40e41bfdb650948890a3631a7d
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0019
+    proposal_authority_effect: None
+    proposal_evidence: accepted NKF 0.1 Decisions through ADR 0018 and the imported NKF-002 schemas, checker phases, diagnostics, and result type; imported implementation remains evidence only
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0019
+    proposal_authority_effect: None
+    proposal_evidence: accepted NKF 0.1 Decisions through ADR 0018 and the imported NKF-002 schemas, checker phases, diagnostics, and result type; imported implementation remains evidence only
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

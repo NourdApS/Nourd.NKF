@@ -1,6 +1,6 @@
 # NKF Authoring Protocol
 
-NKF Version: 0.4
+NKF Version: 0.5
 
 This is the complete vendor-neutral procedure for creating, changing,
 classifying, migrating, auditing, or validating NKF-governed knowledge in an
@@ -86,9 +86,12 @@ with provenance and compatibility treatment.
 
 ## Maintain The Decision Applicability Gate
 
-Every Task non-record carries one Decision Applicability section whose exact
-structure and vocabularies the accepted Specification owns. Before Git-backed
-work under a Task:
+Every native Task non-record carries one Decision Applicability section whose
+exact structure and vocabularies the accepted Specification owns. An exact
+legacy-locked predecessor Task may preserve an earlier absence only when its
+declaration records that observed absence. It cannot be completed
+deterministically until a deliberate native rewrite supplies a real gate.
+Before Git-backed work under a Task:
 
 1. Extract every applicable accepted decision into the gate with its carried
    condition, negative finding, rejected capability, supersession, or
@@ -110,16 +113,11 @@ work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under NKF 0.4 frontmatter, every governed document declares a `title` that
-exactly equals its single H1. Task non-records may declare `owner`,
-`decision_authority`, and `related_tasks` orientation keys; any record may
-declare `decision_authority`; and Design documents may declare
-`proposal_authority_effect`, `proposal_evidence`, and
-`implementation_evidence`. Never restate orientation identity as body bullet
-lines: the closed labels Task, Status, Owner, Decision Authority, Design
-Disposition, Repository, Related Tasks, Version, Adopting Decision, Proposal
-Authority Effect, Proposal Evidence, and Implementation Evidence are rejected
-as top-level `- **Label:**` bullets in every non-Evidence document. Every
+Under native NKF 0.5 frontmatter, a record carries only common orientation plus
+`id` and `type`; Task state, ownership, relationships, Design disposition,
+governance, freshness, and confirmation live in YAML declarations. Preserved
+predecessor sources may retain inert mutable keys only through an exact
+`legacy_lock`. Never restate orientation identity as body bullet lines. Every
 same-bundle reference to another governed document — an `ADR NNNN` decision
 mention, a record identifier code span, or a Task identifier — must be a
 deep link resolving to the referenced document's exact source path,
@@ -152,24 +150,13 @@ conformance. It cannot judge whether prose, criteria, or confirmations are
 true. An unmet criterion or unanswered uncertainty means report, not
 transition.
 
-The transition also owns the surrounding Git transition mechanics
-deterministically, and a Task branch carries the Task's whole life.
-Activation requires a clean work tree on the up-to-date default branch,
-creates the Task's own `task/<task_id>` branch together with its own
-working tree at a deterministic sibling path, pushes it, and opens the
-draft merge request that makes the active Task visible. The default-branch
-checkout never leaves the default branch, and the default branch only ever
-rests in `deferred`, `completed`, or `cancelled`: a Task branch merges
-only concluded. Deferral, closure, and cancellation conclude the branch —
-they commit the transition, push it, mark the merge request ready carrying
-the Completion or Cancellation Result, and release the Task's working
-tree. Merging into the default branch is the repository's human review
-act, never the command's. The task command without a transition reports
-the pending view — each Task's resting state with any in-flight branch and
-merge request — read from the version control system, never written into
-knowledge. A Git step that fails after the applied transition is reported
-as an incomplete Git report with its error on the successful transition;
-the applied transition never rolls back for a remote error.
+Task state changes update the stable YAML document declaration and regenerate
+`tasks/by-state/*.md`; they never move canonical Task Markdown or rewrite
+inbound links. Design disposition changes behave the same way through
+`designs/by-disposition/*.md`. Repository Git and review mechanics remain
+project-owned operational state. If a repository uses a task branch and merge
+request, those systems carry review state; NKF does not infer or serialize it
+as document lifecycle truth.
 
 ## Perform Governed Mechanics Deterministically
 
@@ -179,9 +166,9 @@ and authority; commands perform mechanics and validate results. Neither
 substitutes for the other.
 
 Use the internal deterministic adopter commands for governed mechanics instead of
-hand-editing: `task` transitions a Task between active, deferred, and
-completed states with its file-move, index, inbound-link, result-insertion,
-and digest consequences; `repin` recomputes record and governed-artifact
+hand-editing: `task` updates stable Task declaration state, regenerates
+lifecycle navigation, and applies result and digest consequences without a
+source move or inbound-link rewrite; `repin` recomputes record and governed-artifact
 digests after edits; `linkify` rewrites plain same-bundle references into
 verified deep links; `refs` exports the identifier-to-path reference map;
 `set` enumerates the versioned-set members with digests and version stamps;

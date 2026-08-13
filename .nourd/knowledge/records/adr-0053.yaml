@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0053: Repository Knowledge Architecture"
 source:
   path: decisions/0053-repository-knowledge-architecture.md
+  stable_path: decisions/0053-repository-knowledge-architecture.md
   digest:
     algorithm: sha-256
     value: 9a10b84312d02c68141aedc12fde170d76ebf928659a56c0fcfdc9403d287cc2
@@ -83,3 +84,26 @@ sections:
     authority: accepted-meaning
     role: content
 relationships: []
+task: NKF-007
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 9a10b84312d02c68141aedc12fde170d76ebf928659a56c0fcfdc9403d287cc2
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner direction with independent Codex technical review
+    task: NKF-007
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-007
+  authority_mapping:
+    source_value: Human Product Owner direction with independent Codex technical review
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

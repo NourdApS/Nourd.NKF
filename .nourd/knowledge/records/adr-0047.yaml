@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0047: Confirm Release-Bound Checker Realization"
 source:
   path: decisions/0047-release-checker.md
+  stable_path: decisions/0047-release-checker.md
   digest:
     algorithm: sha-256
     value: 9e782894a044c97afebc3dbfb97d9bb57b303dd4eb5045c93c88ab13bf2f0120
@@ -55,3 +56,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 9e782894a044c97afebc3dbfb97d9bb57b303dd4eb5045c93c88ab13bf2f0120
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer acting under explicit Human Product Owner delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

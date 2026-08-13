@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Technology Root Profile Specification Proposal
 source:
   path: designs/adopted/technology-root-profile.md
+  stable_path: designs/adopted/technology-root-profile.md
   digest:
     algorithm: sha-256
     value: 5dcd7d4bbce4459fcc5a8ed10292b3d520e7d69c65f66502312230f4bfdbd785
@@ -173,3 +174,35 @@ sections:
     authority: proposal
     role: boundary
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0049
+  - adr-0050
+proposal_authority_effect: None. This document defines a reviewable Technology candidate derived from NKF's own needs. It does not accept a Technology Profile, change canonical NKF 0.1 authority, or establish conformance.
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 5dcd7d4bbce4459fcc5a8ed10292b3d520e7d69c65f66502312230f4bfdbd785
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0049
+      - adr-0050
+    proposal_authority_effect: None. This document defines a reviewable Technology candidate derived from NKF's own needs. It does not accept a Technology Profile, change canonical NKF 0.1 authority, or establish conformance.
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0049
+      - adr-0050
+    proposal_authority_effect: None. This document defines a reviewable Technology candidate derived from NKF's own needs. It does not accept a Technology Profile, change canonical NKF 0.1 authority, or establish conformance.

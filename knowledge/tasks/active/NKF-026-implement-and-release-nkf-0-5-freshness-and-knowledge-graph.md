@@ -2,15 +2,6 @@
 title: "NKF-026: Implement And Release NKF 0.5 Freshness And Knowledge Graph"
 summary: Derive, implement, release, self-adopt, and independently audit NKF 0.5 from the exact freshness and deterministic knowledge-graph direction adopted by ADR 0115.
 created_at: 2026-08-13T05:26:08Z
-task_id: NKF-026
-task_status: active
-owner: Nourd ApS
-decision_authority: Human Product Owner for Product meaning; Codex technical reviewer under explicit delegation for exact technical derivation, implementation, audit reconciliation, and confirmation within ADR 0115
-related_tasks:
-  - NKF-005
-  - NKF-021
-  - NKF-024
-  - NKF-025
 ---
 
 # NKF-026: Implement And Release NKF 0.5 Freshness And Knowledge Graph
@@ -422,9 +413,29 @@ stops at that boundary and returns to the Human Product Owner.
 - The mutable recommendation now selects the exact published 0.5 archive and
   declares the accepted breaking 0.1-through-0.4 migrations plus non-breaking
   0.5 refresh. Its separate verifier passes with the exact archive, source,
-  checker, adopter, and authority bindings. Ordinary public producer adoption,
-  its repeat `current`, the post-adoption audit, and Task conclusion remain
-  separate and are not yet claimed.
+  checker, adopter, and authority bindings.
+- Ordinary public producer Adopt then migrated the live branch from the exact
+  installed 0.4 predecessor to the published 0.5 recommendation under explicit
+  repository-owner breaking approval. The transaction preserved the
+  host-superset integration, passed its complete producer gate, converted 167
+  records and 104 document nodes, and sealed a reviewed 271-node baseline at
+  graph revision `c0ef69a9...1677`. An immediate invocation through the
+  installed 0.5 adopter returned `current` with `no-update` and the exact
+  release, checker, adopter, and integration bindings. The fresh independent
+  post-adoption audit and final Task conclusion remain separate and are not
+  yet claimed.
+- The first required post-adoption Realization update exposed a frozen 0.5
+  authoring defect. Native 0.5 record declarations place `stable_path` between
+  `source.path` and `source.digest`, but the released `repin` command matches
+  only the predecessor layout where `digest` immediately follows `path`. It
+  returned `repinned` with zero records, and the canonical checker then failed
+  `record.source.digest-mismatch` for the edited current-system Realization.
+  The exact released and producer-installed adopter bytes both have SHA-256
+  `065116b7...`; `linkify` calls the same broken function and no other supported
+  0.5 command owns record-digest repinning. The last conformant legacy-locked
+  Realization bytes are therefore preserved instead of hiding the defect with
+  a manual declaration edit. This blocks truthful Realization reconciliation,
+  the post-adoption audit, Task conclusion, and merge readiness.
 
 ## Created-State Rule
 
@@ -478,7 +489,7 @@ specific created-state facts they explicitly replace.
 | Missing completeness, relationships, Decision reconciliation, external observation, or baseline review fails closed with whole-root recovery | proven | runtime-behaviour | none |
 | Product, Technology, and actual NKF exercises match reviewed semantic oracles without hidden false negatives | proven | runtime-behaviour | none |
 | One public Adopt operation safely onboards 0.5 and deliberately migrates all supported predecessors with preservation, rollback, and idempotence | proven | runtime-behaviour | none |
-| Current-system Realization remains exact through candidate, publication, producer adoption, and final merge | unknown | none | none |
+| Current-system Realization remains exact through candidate, publication, producer adoption, and final merge | unsupported | none | none |
 | Complete release membership, source reproduction, builds, archive bytes, modes, digests, and recommendation are deterministic and exact | proven | data-validity | none |
 | Prepublication candidate-Adopt and post-publication ordinary producer self-adoption each pass their complete gate and independent audit | unknown | none | none |
 | Both active Tasks can conclude without changing accepted immutable record bytes or weakening deep-link validation | unknown | none | none |

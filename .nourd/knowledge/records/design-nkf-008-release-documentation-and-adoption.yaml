@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF Release Documentation And Adoption
 source:
   path: designs/adopted/release-documentation-and-adoption.md
+  stable_path: designs/adopted/release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
     value: b97374b70313c0e66926677189f0ff1ae334aaf3cc8cf6de7d959faa386a76d1
@@ -17,27 +18,203 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
-  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
-  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
-  - {id: native-release-remains-fixed, heading_path: [Proposed Direction, Native Release Remains Fixed], occurrence: 1, authority: proposal, role: boundary}
-  - {id: recommended-internal-release-catalog, heading_path: [Proposed Direction, Recommended Internal Release Catalog], occurrence: 1, authority: proposal, role: interface}
-  - {id: public-documentation-is-a-derived-publication, heading_path: [Proposed Direction, Public Documentation Is A Derived Publication], occurrence: 1, authority: proposal, role: boundary}
-  - {id: one-self-contained-consumer-adopter, heading_path: [Proposed Direction, One Self-Contained Consumer Adopter], occurrence: 1, authority: proposal, role: interface}
-  - {id: installed-consumer-contract, heading_path: [Proposed Direction, Installed Consumer Contract], occurrence: 1, authority: proposal, role: interface}
-  - {id: authorized-consumer-exercise, heading_path: [Proposed Direction, Authorized Consumer Exercise], occurrence: 1, authority: proposal, role: validation}
-  - {id: support-and-compatibility, heading_path: [Proposed Direction, Support And Compatibility], occurrence: 1, authority: proposal, role: boundary}
-  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
-  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
-  - {id: add-the-installer-to-the-native-archive, heading_path: [Alternatives And Trade-Offs, Add The Installer To The Native Archive], occurrence: 1, authority: proposal, role: alternative}
-  - {id: publish-the-private-nkf-repository, heading_path: [Alternatives And Trade-Offs, Publish The Private NKF Repository], occurrence: 1, authority: proposal, role: alternative}
-  - {id: publish-documentation-without-the-normative-specification, heading_path: [Alternatives And Trade-Offs, Publish Documentation Without The Normative Specification], occurrence: 1, authority: proposal, role: alternative}
-  - {id: build-a-documentation-website, heading_path: [Alternatives And Trade-Offs, Build A Documentation Website], occurrence: 1, authority: proposal, role: alternative}
-  - {id: use-a-moving-latest-release, heading_path: [Alternatives And Trade-Offs, Use A Moving Latest Release], occurrence: 1, authority: proposal, role: alternative}
-  - {id: use-a-package-registry-as-the-initial-installer, heading_path: [Alternatives And Trade-Offs, Use A Package Registry As The Initial Installer], occurrence: 1, authority: proposal, role: alternative}
-  - {id: rewrite-existing-consumer-instructions-automatically, heading_path: [Alternatives And Trade-Offs, Rewrite Existing Consumer Instructions Automatically], occurrence: 1, authority: proposal, role: alternative}
-  - {id: claim-the-fixture-is-an-external-migration, heading_path: [Alternatives And Trade-Offs, Claim The Fixture Is An External Migration], occurrence: 1, authority: proposal, role: alternative}
-  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
-  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
-  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: native-release-remains-fixed
+    heading_path:
+      - Proposed Direction
+      - Native Release Remains Fixed
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: recommended-internal-release-catalog
+    heading_path:
+      - Proposed Direction
+      - Recommended Internal Release Catalog
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: public-documentation-is-a-derived-publication
+    heading_path:
+      - Proposed Direction
+      - Public Documentation Is A Derived Publication
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: one-self-contained-consumer-adopter
+    heading_path:
+      - Proposed Direction
+      - One Self-Contained Consumer Adopter
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: installed-consumer-contract
+    heading_path:
+      - Proposed Direction
+      - Installed Consumer Contract
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: authorized-consumer-exercise
+    heading_path:
+      - Proposed Direction
+      - Authorized Consumer Exercise
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: support-and-compatibility
+    heading_path:
+      - Proposed Direction
+      - Support And Compatibility
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: add-the-installer-to-the-native-archive
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Add The Installer To The Native Archive
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: publish-the-private-nkf-repository
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Publish The Private NKF Repository
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: publish-documentation-without-the-normative-specification
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Publish Documentation Without The Normative Specification
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: build-a-documentation-website
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Build A Documentation Website
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-a-moving-latest-release
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use A Moving Latest Release
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-a-package-registry-as-the-initial-installer
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use A Package Registry As The Initial Installer
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: rewrite-existing-consumer-instructions-automatically
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Rewrite Existing Consumer Instructions Automatically
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: claim-the-fixture-is-an-external-migration
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Claim The Fixture Is An External Migration
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
 relationships: []
+task: NKF-008
+design_disposition: adopted
+design_decisions:
+  - adr-0064
+proposal_authority_effect: ADR 0064 adopts this direction without making it normative NKF 0.1 meaning
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: b97374b70313c0e66926677189f0ff1ae334aaf3cc8cf6de7d959faa386a76d1
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-008
+    design_disposition: adopted
+    design_decisions:
+      - adr-0064
+    proposal_authority_effect: ADR 0064 adopts this direction without making it normative NKF 0.1 meaning
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+        - human-product-owner
+    task: NKF-008
+    design_disposition: adopted
+    design_decisions:
+      - adr-0064
+    proposal_authority_effect: ADR 0064 adopts this direction without making it normative NKF 0.1 meaning

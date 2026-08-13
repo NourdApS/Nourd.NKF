@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0116: Accept The NKF 0.5 Authority Pair"
 source:
   path: decisions/0116-accept-the-nkf-0-5-authority-pair.md
+  stable_path: decisions/0116-accept-the-nkf-0-5-authority-pair.md
   digest:
     algorithm: sha-256
     value: 777ecabcbab3c106f2889661125a923ce0f331a759a4bd2b6b0d18e7ed542ee8
@@ -16,14 +17,79 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
-  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
-  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
-  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
-  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
-  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
-  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
 relationships:
   - type: extends
     target: adr-0115
     source_section: decision
+task: NKF-026
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 777ecabcbab3c106f2889661125a923ce0f331a759a4bd2b6b0d18e7ed542ee8
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit NKF 0.5 technical derivation delegation
+    task: NKF-026
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+    task: NKF-026
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit NKF 0.5 technical derivation delegation
+    authority_ids:
+      - codex-technical-reviewer
+    approved_by: repository-owner

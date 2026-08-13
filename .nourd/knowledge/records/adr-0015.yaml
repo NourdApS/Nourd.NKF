@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0015: Accept NKF 0.1 Semantic-Topology And Binding Vocabularies"
 source:
   path: decisions/0015-semantic-topology-and-bindings.md
+  stable_path: decisions/0015-semantic-topology-and-bindings.md
   digest:
     algorithm: sha-256
     value: c030c2c24fc99cb02a58ca81301b2db785335c8dc13c680cf440043571b217d5
@@ -50,3 +51,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: c030c2c24fc99cb02a58ca81301b2db785335c8dc13c680cf440043571b217d5
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

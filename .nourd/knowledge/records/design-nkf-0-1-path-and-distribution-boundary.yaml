@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Project Path And Knowledge Coverage
 source:
   path: designs/adopted/project-path-and-knowledge-coverage.md
+  stable_path: designs/adopted/project-path-and-knowledge-coverage.md
   digest:
     algorithm: sha-256
     value: 7bf2c8917a0b57ef3dc84067ac37a0497ad36f454d68f01634d67585e8ebd227
@@ -86,3 +87,38 @@ sections:
     authority: proposal
     role: boundary
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0018
+proposal_authority_effect: None by itself. ADR 0018 later adopted the proposed direction and records the governing Decision.
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 7bf2c8917a0b57ef3dc84067ac37a0497ad36f454d68f01634d67585e8ebd227
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0018
+    proposal_authority_effect: None by itself. ADR 0018 later adopted the proposed direction and records the governing Decision.
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0018
+    proposal_authority_effect: None by itself. ADR 0018 later adopted the proposed direction and records the governing Decision.
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

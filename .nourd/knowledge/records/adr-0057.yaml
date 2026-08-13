@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0057: Current System Realization"
 source:
   path: decisions/0057-current-system-realization.md
+  stable_path: decisions/0057-current-system-realization.md
   digest:
     algorithm: sha-256
     value: e744d59dd638a139541e8cfe79280a7190f19ccfe7d4f83232b0994d54dac808
@@ -18,64 +19,106 @@ scope:
   root: nkf
 sections:
   - id: context-and-problem
-    heading_path: [Context And Problem]
+    heading_path:
+      - Context And Problem
     occurrence: 1
     authority: accepted-meaning
     role: context
-    responsibilities: [context-and-problem]
+    responsibilities:
+      - context-and-problem
   - id: decision
-    heading_path: [Decision]
+    heading_path:
+      - Decision
     occurrence: 1
     authority: accepted-meaning
     role: governing
-    responsibilities: [decision]
+    responsibilities:
+      - decision
   - id: scope-and-applicability
-    heading_path: [Scope And Applicability]
+    heading_path:
+      - Scope And Applicability
     occurrence: 1
     authority: accepted-meaning
     role: applicability
-    responsibilities: [scope-and-applicability]
+    responsibilities:
+      - scope-and-applicability
   - id: rationale
-    heading_path: [Rationale]
+    heading_path:
+      - Rationale
     occurrence: 1
     authority: accepted-meaning
     role: rationale
-    responsibilities: [rationale]
+    responsibilities:
+      - rationale
   - id: alternatives-considered
-    heading_path: [Alternatives Considered]
+    heading_path:
+      - Alternatives Considered
     occurrence: 1
     authority: accepted-meaning
     role: alternative
-    responsibilities: [alternatives-considered]
+    responsibilities:
+      - alternatives-considered
   - id: consequences-and-trade-offs
-    heading_path: [Consequences And Trade-Offs]
+    heading_path:
+      - Consequences And Trade-Offs
     occurrence: 1
     authority: accepted-meaning
     role: trade-off
-    responsibilities: [consequences-and-trade-offs]
+    responsibilities:
+      - consequences-and-trade-offs
   - id: confirmed-realization-revisions
-    heading_path: [Confirmed Realization Revisions]
+    heading_path:
+      - Confirmed Realization Revisions
     occurrence: 1
     authority: accepted-meaning
     role: governing
   - id: confirmed-derived-artifacts
-    heading_path: [Confirmed Derived Artifacts]
+    heading_path:
+      - Confirmed Derived Artifacts
     occurrence: 1
     authority: accepted-meaning
     role: evidence
   - id: verification-evidence
-    heading_path: [Verification Evidence]
+    heading_path:
+      - Verification Evidence
     occurrence: 1
     authority: evidence
     role: evidence
   - id: recovery-and-supersession
-    heading_path: [Recovery And Supersession]
+    heading_path:
+      - Recovery And Supersession
     occurrence: 1
     authority: accepted-meaning
     role: recovery
   - id: non-claims
-    heading_path: [Non-Claims]
+    heading_path:
+      - Non-Claims
     occurrence: 1
     authority: accepted-meaning
     role: content
 relationships: []
+task: NKF-007
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: e744d59dd638a139541e8cfe79280a7190f19ccfe7d4f83232b0994d54dac808
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit delegated approval and confirmation authority
+    task: NKF-007
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+        - human-product-owner
+    task: NKF-007
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit delegated approval and confirmation authority
+    authority_ids:
+      - codex-technical-reviewer
+      - human-product-owner
+    approved_by: repository-owner

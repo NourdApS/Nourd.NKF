@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Authoritative Artifacts
 source:
   path: designs/superseded/artifact-identities-and-contract-versioning.md
+  stable_path: designs/superseded/artifact-identities-and-contract-versioning.md
   digest:
     algorithm: sha-256
     value: c41cad5a101004bceca02be36eb44f1db8548717f39c4397ed54f41213150bf0
@@ -69,3 +70,44 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: superseded
+design_decisions:
+  - adr-0008
+superseded_by:
+  - adr-0009
+  - adr-0012
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: c41cad5a101004bceca02be36eb44f1db8548717f39c4397ed54f41213150bf0
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: superseded
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: superseded
+    design_decisions:
+      - adr-0008
+    superseded_by:
+      - adr-0009
+      - adr-0012
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: superseded
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: superseded
+    design_decisions:
+      - adr-0008
+    superseded_by:
+      - adr-0009
+      - adr-0012
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

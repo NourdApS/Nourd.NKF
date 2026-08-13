@@ -43,13 +43,13 @@ establishes it.
 
 ## Active
 
-[Active Design Index](active/README.md)
+[Active Design Index](by-disposition/active.md)
 
 - [NKF Task Scope Gate](active/task-scope-gate.md)
 
 ## Adopted
 
-[Adopted Design Index](adopted/README.md)
+[Adopted Design Index](by-disposition/adopted.md)
 
 - [Acceptance Provenance](adopted/acceptance-provenance.md)
 - [Agent-Led Initial Onboarding](adopted/agent-led-initial-onboarding.md)
@@ -79,13 +79,13 @@ establishes it.
 
 ## Rejected
 
-[Rejected Design Index](rejected/README.md)
+[Rejected Design Index](by-disposition/rejected.md)
 
 No Design is currently classified as Rejected.
 
 ## Superseded
 
-[Superseded Design Index](superseded/README.md)
+[Superseded Design Index](by-disposition/superseded.md)
 
 - [Artifact Identities And Contract Versioning](superseded/artifact-identities-and-contract-versioning.md)
 - [Initial JSON Schema Realization](superseded/initial-json-schema-realization.md)
@@ -94,7 +94,7 @@ No Design is currently classified as Rejected.
 
 ## Withdrawn
 
-[Withdrawn Design Index](withdrawn/README.md)
+[Withdrawn Design Index](by-disposition/withdrawn.md)
 
 No Design is currently classified as Withdrawn.
 

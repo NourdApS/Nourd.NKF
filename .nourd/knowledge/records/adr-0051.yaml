@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0051: Govern Self-Hosting Heading Migration"
 source:
   path: decisions/0051-self-hosting-source-migration.md
+  stable_path: decisions/0051-self-hosting-source-migration.md
   digest:
     algorithm: sha-256
     value: 84cb485858331f7e2d74821d58c251e143759cbbde3132b7a1e3860aba179817
@@ -56,3 +57,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 84cb485858331f7e2d74821d58c251e143759cbbde3132b7a1e3860aba179817
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit dynamic-root feature delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit dynamic-root feature delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

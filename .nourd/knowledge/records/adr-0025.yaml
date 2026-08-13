@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0025: Accept NKF 0.1 Validation Result Contract"
 source:
   path: decisions/0025-validation-result.md
+  stable_path: decisions/0025-validation-result.md
   digest:
     algorithm: sha-256
     value: ecb28597ba7a576fd4118c9b84d29c70d6bf8c222319d41c1cf26f6ec4161886
@@ -121,3 +122,26 @@ sections:
     responsibilities:
       - consequences-and-trade-offs
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: ecb28597ba7a576fd4118c9b84d29c70d6bf8c222319d41c1cf26f6ec4161886
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner for consequential semantics; Codex technical reviewer for exact structural serialization under direct bounded delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner for consequential semantics; Codex technical reviewer for exact structural serialization under direct bounded delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

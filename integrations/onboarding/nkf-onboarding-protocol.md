@@ -1,10 +1,10 @@
 # NKF Pre-Adoption Onboarding Protocol
 
-NKF Version: 0.4
+NKF Version: 0.5
 
 This is the complete vendor-neutral procedure for preparing an Empty
 Repository or a Tiny Knowledge, No Source Or Configuration repository for
-initial NKF 0.4 adoption. It applies before the project has a project-root
+initial NKF 0.5 adoption. It applies before the project has a project-root
 `.nourd` directory.
 
 The participating agent owns complete repository review, semantic assessment,
@@ -254,19 +254,32 @@ same-bundle reference — resolve each finding as an explicit sealed candidate
 edit and re-seal; never weaken the plan, misclassify a document, or edit the
 project directly to pass.
 
-Run the public subcommand-free Adopt operation with the sealed plan. Adopt
+Run the public subcommand-free Adopt operation with the sealed plan and a
+writable `--review` path. If that file is absent, Adopt constructs the exact
+isolated 0.5 candidate, writes a complete candidate-specific review template,
+and stops before project mutation. A named human or agent reviews the actual
+candidate and replaces every `REVIEW_REQUIRED` value and placeholder with
+source-bound node applicability and roles, relationship coverage, accepted-
+Decision classifications, observations, and limitations. Rerun the exact same
+Adopt command with the completed file. Deterministic tooling verifies exact
+coverage but never supplies the semantic review.
+
+Adopt
 resolves the governed recommendation and independently trusted release archive
 SHA-256, repeats the source and candidate checks,
-generates native knowledge and integration, creates the complete portable
-topology, validates an isolated full project candidate, and applies only a
-conformant candidate.
+generates native knowledge and integration, creates stable document nodes and
+the complete portable topology, seals the reviewed graph baseline, requires
+whole-root readiness, validates an isolated full project candidate, and
+applies only a conformant ready candidate.
 
-The portable topology includes the canonical `README.md`; parent and state
-indexes for Tasks; parent and disposition indexes for Designs; Decision,
+The portable topology includes the canonical `README.md`; parent indexes and
+generated `tasks/by-state/*.md` projections for Tasks; parent indexes and
+generated `designs/by-disposition/*.md` projections for Designs; Decision,
 Specification, Realization, supporting-current, and Evidence indexes; and the
 single `realizations/current-system.md` record. The managed `NKF Navigation`
-block links the root and all required entry points plus the active onboarding
-Task and the initial Technology Specification when applicable.
+block links the root and all required entry points plus the onboarding Task and
+the initial Technology Specification when applicable. Canonical Task and
+Design paths never move because state changes.
 
 If `README.md` already exists, onboarding reuses it and preserves all
 project-owned bytes outside the managed block. It never creates

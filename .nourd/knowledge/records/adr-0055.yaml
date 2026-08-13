@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0055: Design Responsibility Vocabulary"
 source:
   path: decisions/0055-design-responsibility-vocabulary.md
+  stable_path: decisions/0055-design-responsibility-vocabulary.md
   digest:
     algorithm: sha-256
     value: 08d0eeaff2f92aa1a72fff57091f9fb906ee2fcd04571d49aa2f56333ad455eb
@@ -55,3 +56,26 @@ sections:
     authority: accepted-meaning
     role: content
 relationships: []
+task: NKF-007
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 08d0eeaff2f92aa1a72fff57091f9fb906ee2fcd04571d49aa2f56333ad455eb
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit direction to use vocabulary consistent with NKF’s Design concept
+    task: NKF-007
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-007
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit direction to use vocabulary consistent with NKF’s Design concept
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

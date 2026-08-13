@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0024: Accept Deterministic Markdown Structure And Title Case"
 source:
   path: decisions/0024-deterministic-markdown-structure-and-title-case.md
+  stable_path: decisions/0024-deterministic-markdown-structure-and-title-case.md
   digest:
     algorithm: sha-256
     value: 63105470859cc31552420ad1f53d575367afcb7ce35f703ad034625a49ad9e7c
@@ -99,3 +100,26 @@ sections:
     responsibilities:
       - consequences-and-trade-offs
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 63105470859cc31552420ad1f53d575367afcb7ce35f703ad034625a49ad9e7c
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under explicit delegation from and contingent confirmation by the Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under explicit delegation from and contingent confirmation by the Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

@@ -5,21 +5,101 @@ body_contract: nkf.realization
 title: NKF Layered Contract Enforcement
 source:
   path: realizations/current/layered-contract-enforcement.md
+  stable_path: realizations/current/layered-contract-enforcement.md
   digest:
     algorithm: sha-256
     value: 720dbdd1552c9b7f0810f52e8ff31cdbb82f4813dbe7d1d4f6d6aa8203efa092
 governance:
   lifecycle: immutable
   status: accepted
-  authority: [human-product-owner]
+  authority:
+    - human-product-owner
 scope:
   root: nkf
 sections:
-  - {id: realization-identity-and-kind, heading_path: [Realization Identity And Kind], occurrence: 1, authority: accepted-meaning, role: identity, responsibilities: [realization-identity-and-kind]}
-  - {id: governed-meaning-realized, heading_path: [Governed Meaning Realized], occurrence: 1, authority: accepted-meaning, role: mapping, responsibilities: [governed-meaning-realized]}
-  - {id: durable-mapping, heading_path: [Durable Mapping], occurrence: 1, authority: accepted-meaning, role: mapping, responsibilities: [durable-mapping]}
-  - {id: responsibilities-and-ownership-boundaries, heading_path: [Responsibilities And Ownership Boundaries], occurrence: 1, authority: accepted-meaning, role: responsibility, responsibilities: [responsibilities-and-ownership-boundaries]}
-  - {id: interfaces-dependencies-locators-and-resolution, heading_path: [Interfaces Dependencies Locators And Resolution], occurrence: 1, authority: accepted-meaning, role: interface, responsibilities: [interfaces-dependencies-locators-and-resolution]}
-  - {id: external-authority-and-operational-state-boundaries, heading_path: [External Authority And Operational State Boundaries], occurrence: 1, authority: accepted-meaning, role: boundary, responsibilities: [external-authority-and-operational-state-boundaries]}
-  - {id: compatibility-verification-and-recovery, heading_path: [Compatibility Verification And Recovery], occurrence: 1, authority: accepted-meaning, role: recovery, responsibilities: [compatibility-verification-and-recovery]}
+  - id: realization-identity-and-kind
+    heading_path:
+      - Realization Identity And Kind
+    occurrence: 1
+    authority: accepted-meaning
+    role: identity
+    responsibilities:
+      - realization-identity-and-kind
+  - id: governed-meaning-realized
+    heading_path:
+      - Governed Meaning Realized
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities:
+      - governed-meaning-realized
+  - id: durable-mapping
+    heading_path:
+      - Durable Mapping
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities:
+      - durable-mapping
+  - id: responsibilities-and-ownership-boundaries
+    heading_path:
+      - Responsibilities And Ownership Boundaries
+    occurrence: 1
+    authority: accepted-meaning
+    role: responsibility
+    responsibilities:
+      - responsibilities-and-ownership-boundaries
+  - id: interfaces-dependencies-locators-and-resolution
+    heading_path:
+      - Interfaces Dependencies Locators And Resolution
+    occurrence: 1
+    authority: accepted-meaning
+    role: interface
+    responsibilities:
+      - interfaces-dependencies-locators-and-resolution
+  - id: external-authority-and-operational-state-boundaries
+    heading_path:
+      - External Authority And Operational State Boundaries
+    occurrence: 1
+    authority: accepted-meaning
+    role: boundary
+    responsibilities:
+      - external-authority-and-operational-state-boundaries
+  - id: compatibility-verification-and-recovery
+    heading_path:
+      - Compatibility Verification And Recovery
+    occurrence: 1
+    authority: accepted-meaning
+    role: recovery
+    responsibilities:
+      - compatibility-verification-and-recovery
 relationships: []
+task: NKF-015
+confirmation_status: confirmed
+confirmation_decisions:
+  - adr-0068
+  - adr-0070
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 720dbdd1552c9b7f0810f52e8ff31cdbb82f4813dbe7d1d4f6d6aa8203efa092
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-015
+    confirmation_status: confirmed
+    confirmation_decisions:
+      - adr-0068
+      - adr-0070
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-015
+    confirmation_status: confirmed
+    confirmation_decisions:
+      - adr-0068
+      - adr-0070

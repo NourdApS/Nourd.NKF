@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0052: Confirm Dynamic Root And Self-Hosting Realization"
 source:
   path: decisions/0052-dynamic-root-self-hosting.md
+  stable_path: decisions/0052-dynamic-root-self-hosting.md
   digest:
     algorithm: sha-256
     value: 695298aa707175e118999d6430722606726c4e7b76899945ccf84e44217d3397
@@ -66,3 +67,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 695298aa707175e118999d6430722606726c4e7b76899945ccf84e44217d3397
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit dynamic-root feature delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit dynamic-root feature delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

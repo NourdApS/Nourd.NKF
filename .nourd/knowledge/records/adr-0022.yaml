@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0022: Accept Coherent NKF 0.1 Authority Pair"
 source:
   path: decisions/0022-native-authority-pair.md
+  stable_path: decisions/0022-native-authority-pair.md
   digest:
     algorithm: sha-256
     value: abf405623461ee82f048784dd13a2e59106e3fc984bc0d902677224b4e7a4958
@@ -50,3 +51,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: abf405623461ee82f048784dd13a2e59106e3fc984bc0d902677224b4e7a4958
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

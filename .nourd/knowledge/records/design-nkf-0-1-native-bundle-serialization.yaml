@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Native Bundle Serialization
 source:
   path: designs/adopted/native-bundle-serialization.md
+  stable_path: designs/adopted/native-bundle-serialization.md
   digest:
     algorithm: sha-256
     value: dfe342d0a684273cd6fd7b8f3207581279dd1da6c414a1caa4bcda0e59df1ad4
@@ -57,3 +58,38 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0021
+proposal_authority_effect: None
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: dfe342d0a684273cd6fd7b8f3207581279dd1da6c414a1caa4bcda0e59df1ad4
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0021
+    proposal_authority_effect: None
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0021
+    proposal_authority_effect: None
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

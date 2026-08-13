@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0102: Task Worktrees And Formal Transition Vocabulary"
 source:
   path: decisions/0102-task-worktrees-and-formal-transition-vocabulary.md
+  stable_path: decisions/0102-task-worktrees-and-formal-transition-vocabulary.md
   digest:
     algorithm: sha-256
     value: da57ce7d7d857482375412d45eef7bd95d32250d4070f96ff0d498c881b4ab17
@@ -16,14 +17,79 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
-  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
-  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
-  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
-  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
-  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
-  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
 relationships:
   - type: extends
     target: adr-0101
     source_section: decision
+task: NKF-020
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: da57ce7d7d857482375412d45eef7bd95d32250d4070f96ff0d498c881b4ab17
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-020
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-020
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

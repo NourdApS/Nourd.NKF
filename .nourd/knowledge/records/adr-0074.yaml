@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0074: Separate Authoring And Recommended Release Verification"
 source:
   path: decisions/0074-separate-authoring-and-recommended-release-verification.md
+  stable_path: decisions/0074-separate-authoring-and-recommended-release-verification.md
   digest:
     algorithm: sha-256
     value: e483a5e55b872dfb26adbad52e5a1052b34783f1c1b9605d60c912df3d638cac
@@ -16,15 +17,67 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
-  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
-  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
-  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
-  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
-  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
-  - {id: compatibility, heading_path: [Compatibility], occurrence: 1, authority: accepted-meaning, role: content}
-  - {id: realization-requirements, heading_path: [Realization Requirements], occurrence: 1, authority: accepted-meaning, role: evidence}
-  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+  - id: realization-requirements
+    heading_path:
+      - Realization Requirements
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
 relationships:
   - type: extends
     target: adr-0060
@@ -32,3 +85,20 @@ relationships:
   - type: extends
     target: adr-0064
     source_section: decision
+task: NKF-017
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: e483a5e55b872dfb26adbad52e5a1052b34783f1c1b9605d60c912df3d638cac
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-017
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-017

@@ -5,7 +5,7 @@ description: Author, change, classify, migrate, audit, or validate NKF-governed 
 
 # NKF Authoring
 
-NKF Version: 0.4
+NKF Version: 0.5
 
 From the project root, read and follow
 `integrations/ai/nkf-authoring-protocol.md` before editing governed knowledge.

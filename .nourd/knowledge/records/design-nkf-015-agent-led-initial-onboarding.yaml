@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF Agent-Led Initial Onboarding
 source:
   path: designs/adopted/agent-led-initial-onboarding.md
+  stable_path: designs/adopted/agent-led-initial-onboarding.md
   digest:
     algorithm: sha-256
     value: 51ab780fc89bb87f8bbe43cc6aa0abf0ed095c57b20f4710d45ea180221829f3
@@ -17,23 +18,172 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
-  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
-  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
-  - {id: initial-repository-categories, heading_path: [Proposed Direction, Initial Repository Categories], occurrence: 1, authority: proposal, role: boundary}
-  - {id: agent-assessment-and-human-confirmation, heading_path: [Proposed Direction, Agent Assessment And Human Confirmation], occurrence: 1, authority: proposal, role: interface}
-  - {id: complete-mechanical-source-manifest, heading_path: [Proposed Direction, Complete Mechanical Source Manifest], occurrence: 1, authority: proposal, role: interface}
-  - {id: deterministic-seal-and-application, heading_path: [Proposed Direction, Deterministic Seal And Application], occurrence: 1, authority: proposal, role: validation}
-  - {id: diagnostics-and-handoff, heading_path: [Proposed Direction, Diagnostics And Handoff], occurrence: 1, authority: proposal, role: interface}
-  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
-  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
-  - {id: keep-deterministic-eligibility-thresholds, heading_path: [Alternatives And Trade-Offs, Keep Deterministic Eligibility Thresholds], occurrence: 1, authority: proposal, role: alternative}
-  - {id: build-a-separate-deterministic-survey-command, heading_path: [Alternatives And Trade-Offs, Build A Separate Deterministic Survey Command], occurrence: 1, authority: proposal, role: alternative}
-  - {id: use-a-model-driven-executable-classifier, heading_path: [Alternatives And Trade-Offs, Use A Model-Driven Executable Classifier], occurrence: 1, authority: proposal, role: alternative}
-  - {id: trust-the-agent-without-mechanical-sealing, heading_path: [Alternatives And Trade-Offs, Trust The Agent Without Mechanical Sealing], occurrence: 1, authority: proposal, role: alternative}
-  - {id: require-human-confirmation-for-both-categories, heading_path: [Alternatives And Trade-Offs, Require Human Confirmation For Both Categories], occurrence: 1, authority: proposal, role: alternative}
-  - {id: remove-the-inspect-command-name, heading_path: [Alternatives And Trade-Offs, Remove The Inspect Command Name], occurrence: 1, authority: proposal, role: alternative}
-  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
-  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
-  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: initial-repository-categories
+    heading_path:
+      - Proposed Direction
+      - Initial Repository Categories
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: agent-assessment-and-human-confirmation
+    heading_path:
+      - Proposed Direction
+      - Agent Assessment And Human Confirmation
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: complete-mechanical-source-manifest
+    heading_path:
+      - Proposed Direction
+      - Complete Mechanical Source Manifest
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: deterministic-seal-and-application
+    heading_path:
+      - Proposed Direction
+      - Deterministic Seal And Application
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: diagnostics-and-handoff
+    heading_path:
+      - Proposed Direction
+      - Diagnostics And Handoff
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: keep-deterministic-eligibility-thresholds
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep Deterministic Eligibility Thresholds
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: build-a-separate-deterministic-survey-command
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Build A Separate Deterministic Survey Command
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-a-model-driven-executable-classifier
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use A Model-Driven Executable Classifier
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: trust-the-agent-without-mechanical-sealing
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Trust The Agent Without Mechanical Sealing
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: require-human-confirmation-for-both-categories
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Require Human Confirmation For Both Categories
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: remove-the-inspect-command-name
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Remove The Inspect Command Name
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
 relationships: []
+task: NKF-015
+design_disposition: adopted
+design_decisions:
+  - adr-0069
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 51ab780fc89bb87f8bbe43cc6aa0abf0ed095c57b20f4710d45ea180221829f3
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-015
+    design_disposition: adopted
+    design_decisions:
+      - adr-0069
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+        - human-product-owner
+    task: NKF-015
+    design_disposition: adopted
+    design_decisions:
+      - adr-0069

@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0042: Establish Initial Release Distribution Boundary"
 source:
   path: decisions/0042-release-distribution.md
+  stable_path: decisions/0042-release-distribution.md
   digest:
     algorithm: sha-256
     value: 58d50e56fea744a7357c408edba93904f6e42cf4b786ea56b063edb683ff8b94
@@ -72,3 +73,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 58d50e56fea744a7357c408edba93904f6e42cf4b786ea56b063edb683ff8b94
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

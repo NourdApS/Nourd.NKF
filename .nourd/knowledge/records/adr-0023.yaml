@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0023: Confirm NKF 0.1 JSON Schema Realization"
 source:
   path: decisions/0023-native-json-schemas.md
+  stable_path: decisions/0023-native-json-schemas.md
   digest:
     algorithm: sha-256
     value: a670c08ddd9b0a6494f73623c8e53d3ac1fb5d567db9ff0dfe6a582a6da3fe30
@@ -57,3 +58,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: a670c08ddd9b0a6494f73623c8e53d3ac1fb5d567db9ff0dfe6a582a6da3fe30
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under explicit delegation from the Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

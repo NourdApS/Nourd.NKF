@@ -47,12 +47,12 @@ requires explicit repository-owner approval; exact 0.5 refresh is
 non-breaking. NKF 0.1 through NKF 0.4 remain immutable supported predecessors
 rather than current recommendations.
 
-This producer repository still declares and pins NKF 0.4 at the publication
-checkpoint. Before this branch can merge, it must perform the separate
-ordinary public Adopt of the exact 0.5 recommendation, repeat to `current`,
-pass the preserved host-superset gate, and receive a fresh independent
-post-adoption audit. Publication and recommendation alone do not make that
-claim.
+This producer repository now declares and pins the exact published NKF 0.5
+recommendation. Ordinary public Adopt migrated the producer from 0.4, the
+preserved host-superset gate passed inside that transaction, and a second
+public invocation returned `current`. A fresh independent post-adoption audit
+and final Task reconciliation remain required before this branch is ready to
+merge.
 
 The 0.3 archive carries its complete public-documentation projection and exact
 public adopter. Publication of those bytes to the separate

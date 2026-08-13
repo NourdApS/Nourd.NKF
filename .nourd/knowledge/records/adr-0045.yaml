@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0045: Accept Release Contract Authority Pair"
 source:
   path: decisions/0045-release-authority-pair.md
+  stable_path: decisions/0045-release-authority-pair.md
   digest:
     algorithm: sha-256
     value: ede8d81f95f0c58a30522e71e3edc29faecdb0d45d6dc83d1119df1e6b615c59
@@ -62,3 +63,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: ede8d81f95f0c58a30522e71e3edc29faecdb0d45d6dc83d1119df1e6b615c59
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer acting under explicit Human Product Owner delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner
