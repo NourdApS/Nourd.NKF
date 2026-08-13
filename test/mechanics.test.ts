@@ -3,6 +3,7 @@ import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
+import YAML from "yaml";
 import { repositoryRoot } from "./helpers.js";
 
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
@@ -43,6 +44,13 @@ async function copyFixture(): Promise<string> {
   return project;
 }
 
+async function copyFixture0_5(): Promise<string> {
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-0-5-"));
+  const project = path.join(parent, "project");
+  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-5"), project, { recursive: true });
+  return project;
+}
+
 async function gitFixture() {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
   const project = path.join(parent, "project");
@@ -73,7 +81,7 @@ async function gitFixture() {
 }
 
 beforeAll(async () => {
-  const releaseSet = await readReleaseSet(repositoryRoot);
+  const releaseSet = await readReleaseSet(repositoryRoot, "0.4");
   const memberEntries = releaseEntriesForVersion("0.4", releaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
@@ -225,6 +233,50 @@ describe("deterministic governed mechanics", () => {
     expect(parentIndex.split("## Completed")[1]?.split("## Cancelled")[0]).toContain("(completed/task.md)");
     const check = spawnSync(process.execPath, [checker, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
     expect(JSON.parse(check.stdout).conformance).toBe("passed");
+  });
+
+  it("transitions a native 0.5 Task through YAML state without moving or rewriting its source", async () => {
+    const project = await copyFixture0_5();
+    const source = path.join(project, "knowledge/tasks/active/task.md");
+    const original = await readFile(source);
+    await writeFile(
+      source,
+      Buffer.from(
+        original.toString("utf8")
+          .replace(/^task_id: .*\n/m, "")
+          .replace(/^task_status: .*\n/m, "")
+          .replace(
+            "\n## Decision Applicability\n",
+            "\n## Completion Result\n\nThe fixture work completed with all criteria satisfied.\n\n## Decision Applicability\n",
+          ),
+      ),
+    );
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
+    const task = bundle.non_records.find((item: any) => item.kind === "task" && item.document?.id === "TEST-001");
+    const sourceBytes = await readFile(source);
+    task.document.legacy_lock = undefined;
+    await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0 }));
+    const repin = run("repin", project);
+    expect(repin.status, repin.stderr).toBe(0);
+    expect(repin.json.documents).toBe(1);
+
+    const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json).toMatchObject({
+      from: "tasks/active/task.md",
+      to: "tasks/active/task.md",
+      task_status: "completed",
+      documents_rewritten: 0,
+      git: { state: "project-owned" },
+    });
+    expect(await readFile(source)).toEqual(sourceBytes);
+    await expect(lstat(path.join(project, "knowledge/tasks/completed/task.md"))).rejects.toThrow();
+    const updated = YAML.parse(await readFile(bundlePath, "utf8"));
+    const updatedTask = updated.non_records.find((item: any) => item.kind === "task" && item.document?.id === "TEST-001");
+    expect(updatedTask.document.state.value).toBe("completed");
+    expect(await readFile(path.join(project, "knowledge/tasks/by-state/active.md"), "utf8")).not.toContain("TEST-001");
+    expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../active/task.md)");
   });
 
   it("rebases the moved task's own outbound links", async () => {

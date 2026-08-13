@@ -298,8 +298,48 @@ stops at that boundary and returns to the Human Product Owner.
   Product Owner's derivation delegation and adds no Product meaning.
 - While this producer remains governed by NKF 0.4, the unchanged 0.5 Markdown
   is represented as bootstrap Evidence. Only candidate Adopt may apply the
-  accepted bootstrap lock and make its 0.5 YAML declaration the current
-  accepted Specification lifecycle authority.
+  accepted bootstrap lifecycle transition.
+- Derived checker, migration, sealer, release-set, fixtures, and public-Adopt
+  integration are in implementation. The first cross-version end-to-end run
+  exposed one authority-pair contradiction before any candidate release:
+  migration promises exact preservation of every predecessor Markdown byte,
+  while the native Task rule unconditionally requires a Decision
+  Applicability Gate even for a preserved legacy Task that predates that
+  section. Automatically inventing an applicability result would violate the
+  semantic-review boundary, and rewriting the legacy source would violate the
+  exact-preservation boundary.
+- A proposed conformance exception for a preserved gate-free legacy Task was
+  rejected by independent audit. It would weaken the Human Product Owner's
+  explicit [ADR 0077](../../decisions/0077-decision-applicability-gate.md)
+  direction that every Task, including completed history, carries a truthful
+  retrospective gate. The byte-preservation promise was later technical
+  derivation under
+  [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md)'s
+  express no-new-Product-meaning boundary and
+  therefore cannot supersede
+  [ADR 0077](../../decisions/0077-decision-applicability-gate.md).
+- The technical correction retains universal gate presence and narrows
+  migration preservation only for a predecessor Task missing the gate:
+  migration adds the already-governed explicit retrospective form before
+  deriving the 0.5 declaration, lock, graph revision, and semantic-review
+  candidate. No historical extraction is invented. Every other canonical
+  Markdown byte and stable path remains exact.
+- The corrected revision 2 authority set passed a restarted independent audit
+  against its exact final hashes. The audit also verified its distinct
+  identity, immutable
+  [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md)
+  predecessor provenance, 0.4 bootstrap
+  conformance, exact UTC creation evidence, full executable closure, and no
+  Product-boundary expansion.
+- The first two attempted acceptance records are retained as non-record
+  historical Evidence because their own plain same-bundle references violated
+  the inherited deep-link rule; neither supplies authority or acceptance.
+- [ADR 0119](../../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md)
+  technically accepts only the exact revision 2 Markdown, executable
+  companion, and unchanged freshness policy. It supersedes the
+  [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) pair
+  only as prepublication authority selected for the 0.5 release and preserves
+  that Decision plus both predecessor bytes as immutable historical facts.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.
@@ -343,6 +383,7 @@ specific created-state facts they explicitly replace.
 | [`adr-0114`](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) | record | Technical confirmation binds only the exact audited 0.4 implementation and archive; 0.5 requires its own clean candidate audit and exact confirmation. |
 | [`adr-0115`](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md) | record | The exact evidence-bounded direction and all nonclaims govern 0.5 derivation; implementation is authorized only by this separately human-directed Task and may not add Product meaning. |
 | [`adr-0116`](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) | record | Derived 0.5 contracts and tooling must bind the exact independently audited authority set; technical acceptance adds no Product meaning and does not imply implementation, confirmation, publication, or adoption. |
+| [`adr-0119`](../../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md) | record | The distinct revision 2 pair is the current prepublication 0.5 authority; the [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) pair remains immutable historical provenance, and only the narrow reviewed retrospective Task-gate normalization corrects the technical contradiction without adding Product meaning. |
 
 ### Mandatory Capabilities
 

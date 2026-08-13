@@ -38,15 +38,25 @@ maintenance delegation in
 implementation, technical confirmation, publication, recommendation, and
 repository adoption remain separate later boundaries.
 
-[NKF 0.5](nkf-0.5.md) is the exact technically accepted successor source under
+[NKF 0.5 revision 2](nkf-0.5-revision-2.md) is the exact technically accepted
+prepublication successor source under
 [NKF-026](../tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
-and [ADR 0116](../decisions/0116-accept-the-nkf-0-5-authority-pair.md). While
-this producer still declares NKF 0.4, the unchanged source is carried as
+and
+[ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md).
+While this producer still declares NKF 0.4, the unchanged source is carried as
 bootstrap Evidence rather than falsely represented as an already adopted 0.5
-Specification record. Its digest-bound executable companion and freshness
-policy live at `contracts/nkf/0.5/`. Implementation, Realization confirmation,
-candidate adoption, publication, recommendation, and public producer adoption
-remain separate later boundaries.
+Specification record. Its digest-bound executable companion lives at
+`contracts/nkf/0.5/revision-2/nkf.yaml`; the accepted freshness policy remains
+at `contracts/nkf/0.5/freshness-policy.yaml`.
+
+The original [NKF 0.5 prepublication source](nkf-0.5.md) and executable pair
+accepted by [ADR 0116](../decisions/0116-accept-the-nkf-0-5-authority-pair.md)
+remain immutable historical provenance.
+[ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md)
+supersedes that pair only as
+the authority selected for 0.5 publication. Implementation, Realization
+confirmation, candidate adoption, publication, recommendation, and public
+producer adoption remain separate later boundaries.
 
 
 The Specification contains the automatically applicable non-selectable Common

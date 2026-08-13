@@ -19,13 +19,17 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
-import neutralProtocol from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill from "../../distribution/nkf/0.4/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol from "../../distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill from "../../distribution/nkf/0.4/.agents/skills/nkf-onboarding/SKILL.md";
-import rootAdapter from "../../distribution/nkf/0.4/host-adapters/AGENTS.adapter.md";
-import importAdapter from "../../distribution/nkf/0.4/host-adapters/CLAUDE.adapter.md";
-import copilotAdapter from "../../distribution/nkf/0.4/host-adapters/copilot-instructions.adapter.md";
+import neutralProtocol from "../../distribution/nkf/0.5/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill from "../../distribution/nkf/0.5/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol from "../../distribution/nkf/0.5/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill from "../../distribution/nkf/0.5/.agents/skills/nkf-onboarding/SKILL.md";
+import rootAdapter from "../../distribution/nkf/0.5/host-adapters/AGENTS.adapter.md";
+import importAdapter from "../../distribution/nkf/0.5/host-adapters/CLAUDE.adapter.md";
+import copilotAdapter from "../../distribution/nkf/0.5/host-adapters/copilot-instructions.adapter.md";
+import neutralProtocol0_4 from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol0_4 from "../../distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-onboarding/SKILL.md";
 import {
   buildOnboardingKnowledge,
   buildPortableTopologyRepair,
@@ -42,8 +46,16 @@ import {
   verifyReleaseArchive,
 } from "../release/core.mjs";
 import { readReleaseSet } from "../release/release-set.mjs";
+import { migrateProjectTo0_5 } from "../migration/0-5-core.mjs";
+import { sealBaseline0_5, writeReviewTemplate0_5 } from "../freshness/seal-baseline-0-5.mjs";
+import {
+  gateFreePredecessorTasks,
+  validateRetrospectiveGateReview0_5,
+  writePredecessorGateReviewTemplate0_5,
+} from "../freshness/retrospective-gates-0-5.mjs";
 
-const INTEGRATION_REVISION = 2;
+const CURRENT_NKF_VERSION = "0.5";
+const INTEGRATION_REVISION = 3;
 const PIN_PATH = ".nourd/nkf-release.json";
 const ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
 const RELEASE_DIRECTORY = ".nourd/tools/nkf/releases";
@@ -91,6 +103,17 @@ Use \`npm run nkf:check\` as the only supported authoring-handoff validation
 command. Keep acceptance, Realization confirmation, conformance, local Git
 state, and remote enforcement state separate.
 `, "utf8");
+
+function guidanceForVersion(nkfVersion) {
+  return nkfVersion === "0.4"
+    ? {
+        neutralProtocol: neutralProtocol0_4,
+        portableSkill: portableSkill0_4,
+        onboardingProtocol: onboardingProtocol0_4,
+        onboardingSkill: onboardingSkill0_4,
+      }
+    : { neutralProtocol, portableSkill, onboardingProtocol, onboardingSkill };
+}
 const VERIFIER_SOURCE = `import { spawnSync } from "node:child_process";
 import path from "node:path";
 
@@ -221,6 +244,7 @@ function parseArguments(values) {
       "github-repository",
       "plan",
       "project",
+      "review",
       "recommendation",
       "sha256",
     ]);
@@ -244,10 +268,11 @@ function parseArguments(values) {
       "github-repository",
       "plan",
       "project",
+      "review",
       "sha256",
     ]);
   } else if (["install", "update", "repair-topology", "migrate"].includes(result.command)) {
-    allowed = new Set(["archive", "github-repository", "project", "sha256"]);
+    allowed = new Set(["archive", "github-repository", "project", "review", "sha256"]);
   } else if (result.command === "task") {
     allowed = new Set(["project", "task", "to", "result-file", "checker"]);
   } else {
@@ -304,7 +329,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
       `Recommended compatibility[${index}]`,
     );
     if (
-      !["0.1", "0.2", "0.3", "0.4"].includes(entry.from_nkf_version) ||
+      !["0.1", "0.2", "0.3", "0.4", "0.5"].includes(entry.from_nkf_version) ||
       !["breaking", "non-breaking"].includes(entry.classification) ||
       typeof entry.migration_required !== "boolean" ||
       typeof entry.summary !== "string" ||
@@ -345,7 +370,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
         `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}`;
   if (
     !releaseStateValid ||
-    value.nkf_version !== "0.4" ||
+    value.nkf_version !== CURRENT_NKF_VERSION ||
     !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
     value.archive.asset_name !== assetName ||
     value.archive.tag !== tag ||
@@ -366,10 +391,12 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     compatibility.get("0.1")?.migration_required !== true ||
     compatibility.get("0.2")?.classification !== "breaking" ||
     compatibility.get("0.2")?.migration_required !== true ||
-    compatibility.get("0.3")?.classification !== "non-breaking" ||
-    compatibility.get("0.3")?.migration_required !== false ||
-    compatibility.get("0.4")?.classification !== "non-breaking" ||
-    compatibility.get("0.4")?.migration_required !== false
+    compatibility.get("0.3")?.classification !== "breaking" ||
+    compatibility.get("0.3")?.migration_required !== true ||
+    compatibility.get("0.4")?.classification !== "breaking" ||
+    compatibility.get("0.4")?.migration_required !== true ||
+    compatibility.get("0.5")?.classification !== "non-breaking" ||
+    compatibility.get("0.5")?.migration_required !== false
   ) {
     fail("The recommended release catalog is invalid or inconsistent.");
   }
@@ -473,7 +500,7 @@ async function requireBundle(projectRoot) {
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (!["0.1", "0.2", "0.3", "0.4"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+  if (!["0.1", "0.2", "0.3", "0.4", "0.5"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
     fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
@@ -955,13 +982,14 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
 
   files.set(archivePath, Buffer.from(archiveBytes));
   files.set(ADOPTER_PATH, adopterBytes);
-  files.set(PROTOCOL_PATH, Buffer.from(neutralProtocol, "utf8"));
+  const guidance = guidanceForVersion(verification.manifest.nkf_version);
+  files.set(PROTOCOL_PATH, Buffer.from(guidance.neutralProtocol, "utf8"));
   for (const skillPath of SKILL_PATHS) {
-    files.set(skillPath, Buffer.from(portableSkill, "utf8"));
+    files.set(skillPath, Buffer.from(guidance.portableSkill, "utf8"));
   }
-  files.set(ONBOARDING_PROTOCOL_PATH, Buffer.from(onboardingProtocol, "utf8"));
+  files.set(ONBOARDING_PROTOCOL_PATH, Buffer.from(guidance.onboardingProtocol, "utf8"));
   for (const skillPath of ONBOARDING_SKILL_PATHS) {
-    files.set(skillPath, Buffer.from(onboardingSkill, "utf8"));
+    files.set(skillPath, Buffer.from(guidance.onboardingSkill, "utf8"));
   }
   files.set(VERIFIER_PATH, Buffer.from(VERIFIER_SOURCE, "utf8"));
   if (packageResult.integration.mode === "host-superset") {
@@ -1213,7 +1241,7 @@ function requirePinShape(pin) {
     !pin.integration.scripts.host.includes(HOST_SCRIPT_NAME);
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    !["0.1", "0.2", "0.3", "0.4"].includes(pin?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4", "0.5"].includes(pin?.nkf_version) ||
     pin?.repository !== "kaveh6202/Nourd.NKF" ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
     pin?.archive?.asset_name !==
@@ -1223,7 +1251,9 @@ function requirePinShape(pin) {
     !/^[0-9a-f]{64}$/.test(pin?.checker_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(pin?.adopter?.sha256 ?? "") ||
     pin?.adopter?.path !== ADOPTER_PATH ||
-    pin?.integration_revision !== INTEGRATION_REVISION ||
+    (pin?.nkf_version === CURRENT_NKF_VERSION
+      ? pin?.integration_revision !== INTEGRATION_REVISION
+      : ![2, INTEGRATION_REVISION].includes(pin?.integration_revision)) ||
     (!defaultIntegration && !hostIntegration) ||
     !ROOT_PROFILES.has(pin?.root_profile)
   ) {
@@ -1240,17 +1270,18 @@ function requirePinShape(pin) {
 }
 
 async function verifyIntegration(projectRoot, pin) {
+  const guidance = guidanceForVersion(pin.nkf_version);
   const adopter = await readRegularInside(projectRoot, ADOPTER_PATH);
   if (digest(adopter) !== pin.adopter.sha256) {
     fail("The installed adopter differs from its immutable pin.");
   }
   const protocol = await readRegularInside(projectRoot, PROTOCOL_PATH);
-  if (protocol.toString("utf8") !== neutralProtocol) {
+  if (protocol.toString("utf8") !== guidance.neutralProtocol) {
     fail("The installed neutral authoring protocol differs.");
   }
   for (const skillPath of SKILL_PATHS) {
     const skill = await readRegularInside(projectRoot, skillPath);
-    if (skill.toString("utf8") !== portableSkill) {
+    if (skill.toString("utf8") !== guidance.portableSkill) {
       fail(`The installed portable skill differs: ${skillPath}`);
     }
   }
@@ -1258,12 +1289,12 @@ async function verifyIntegration(projectRoot, pin) {
     projectRoot,
     ONBOARDING_PROTOCOL_PATH,
   );
-  if (installedOnboardingProtocol.toString("utf8") !== onboardingProtocol) {
+  if (installedOnboardingProtocol.toString("utf8") !== guidance.onboardingProtocol) {
     fail("The installed onboarding protocol differs.");
   }
   for (const skillPath of ONBOARDING_SKILL_PATHS) {
     const skill = await readRegularInside(projectRoot, skillPath);
-    if (skill.toString("utf8") !== onboardingSkill) {
+    if (skill.toString("utf8") !== guidance.onboardingSkill) {
       fail(`The installed onboarding skill differs: ${skillPath}`);
     }
   }
@@ -1327,11 +1358,11 @@ async function verifyIntegration(projectRoot, pin) {
   }
   const exactFiles = new Map([
     [PROTOCOL_PATH, protocol],
-    [SKILL_PATHS[0], Buffer.from(portableSkill, "utf8")],
-    [SKILL_PATHS[1], Buffer.from(portableSkill, "utf8")],
+    [SKILL_PATHS[0], Buffer.from(guidance.portableSkill, "utf8")],
+    [SKILL_PATHS[1], Buffer.from(guidance.portableSkill, "utf8")],
     [ONBOARDING_PROTOCOL_PATH, installedOnboardingProtocol],
-    [ONBOARDING_SKILL_PATHS[0], Buffer.from(onboardingSkill, "utf8")],
-    [ONBOARDING_SKILL_PATHS[1], Buffer.from(onboardingSkill, "utf8")],
+    [ONBOARDING_SKILL_PATHS[0], Buffer.from(guidance.onboardingSkill, "utf8")],
+    [ONBOARDING_SKILL_PATHS[1], Buffer.from(guidance.onboardingSkill, "utf8")],
     [VERIFIER_PATH, verifier],
     [WORKFLOW_PATH, workflowBytes],
   ]);
@@ -1435,7 +1466,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
   if (
-    ["0.2", "0.3", "0.4"].includes(verification.manifest.nkf_version) &&
+    ["0.2", "0.3", "0.4", "0.5"].includes(verification.manifest.nkf_version) &&
     (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
   ) {
     fail("The predecessor adopter is not bound by its release archive.");
@@ -1490,6 +1521,205 @@ async function validateCompleteCandidate(projectRoot, files, removedPaths = [], 
   }
 }
 
+async function regularFileInventory(root) {
+  const inventory = new Map();
+  async function walk(directory, prefix = "") {
+    for (const entry of (await readdir(directory, { withFileTypes: true })).sort((left, right) => left.name.localeCompare(right.name, "en"))) {
+      if (prefix === "" && [".git", "node_modules"].includes(entry.name)) continue;
+      if (prefix === "" && entry.name.startsWith(".nkf-transaction-")) continue;
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) await walk(absolute, relative);
+      else if (entry.isFile()) inventory.set(relative, await readFile(absolute));
+    }
+  }
+  await walk(root);
+  return inventory;
+}
+
+async function verified0_5Checker(temporary, verification) {
+  const root = path.join(temporary, "nourd-nkf");
+  for (const entry of verification.release_entries) {
+    const bytes = verification.entries.get(entry.path);
+    if (!Buffer.isBuffer(bytes)) fail(`The verified archive omits ${entry.path}.`);
+    const target = path.join(root, ...entry.path.split("/"));
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, bytes);
+  }
+  const bytes = verification.entries.get("dist/nourd-nkf-checker.mjs");
+  if (!Buffer.isBuffer(bytes) || digest(bytes) !== verification.checker_sha256) {
+    fail("The verified NKF 0.5 archive does not carry its manifest-bound checker.");
+  }
+  return path.join(root, "dist/nourd-nkf-checker.mjs");
+}
+
+async function require0_5Readiness(projectRoot, verification) {
+  const invocation = await invokeVerifiedChecker(verification, [
+    "--project", projectRoot,
+    "--level", "full-bundle",
+    "--purpose", "whole-root-readiness",
+    "--require-readiness",
+    "--runner", "nourd-nkf-adopter",
+    "--no-persist",
+  ]);
+  const report = parseStrictJson(Buffer.from(invocation.stdout, "utf8"));
+  if (report.conformance !== "passed" || report.readiness?.state !== "ready") {
+    fail("The staged NKF 0.5 candidate is not conformant and ready against its reviewed baseline.");
+  }
+  return report;
+}
+
+async function prepare0_5Candidate(
+  projectRoot,
+  seedFiles,
+  reviewPath,
+  verification,
+  originalBundleBytes = null,
+  seedRemovals = [],
+) {
+  if (reviewPath === undefined) {
+    throw new OnboardingError(
+      "NKF-ADOPT-REVIEW-PATH-REQUIRED",
+      "NKF 0.5 onboarding and migration require --review with a writable path for the exact semantic graph review.",
+      { next_action: "rerun-adopt-with-review-path" },
+    );
+  }
+  const review = path.resolve(reviewPath);
+  const reviewStat = await lstat(review).catch(() => null);
+  if (reviewStat !== null && (!reviewStat.isFile() || reviewStat.isSymbolicLink())) {
+    fail("--review must identify one regular semantic graph review file or one absent file to create as a review template.");
+  }
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-5-adopt-"));
+  const candidate = path.join(temporary, "project");
+  try {
+    await cp(projectRoot, candidate, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(projectRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0];
+        return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
+      },
+    });
+    await ensureWritableParents(candidate, seedFiles.keys());
+    for (const relative of seedRemovals) {
+      const target = path.join(candidate, ...safeRelative(relative, "Candidate removed path").split("/"));
+      const stat = await lstat(target).catch(() => null);
+      if (stat === null || !stat.isFile() || stat.isSymbolicLink()) {
+        fail(`The legacy migration removal is not one regular project file: ${relative}`);
+      }
+      await unlink(target);
+    }
+    for (const [relative, bytes] of seedFiles) {
+      const target = path.join(candidate, ...safeRelative(relative, "Candidate seed path").split("/"));
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, bytes);
+    }
+    const gateFree = await gateFreePredecessorTasks(candidate);
+    let retrospective = null;
+    let transitionFromGateReview = false;
+    if (gateFree.tasks.length > 0) {
+      if (reviewStat === null) {
+        const template = await writePredecessorGateReviewTemplate0_5({ projectRoot: candidate, reviewPath: review });
+        throw new OnboardingError(
+          "NKF-ADOPT-RETROSPECTIVE-GATE-REVIEW-REQUIRED",
+          "Adopt created the exact predecessor Task-gate review template and stopped before project mutation. Complete every gate and rerun the same Adopt command.",
+          {
+            review_template: template.path,
+            candidate_tasks: template.tasks,
+            review_stage: template.stage,
+            next_action: "complete-retrospective-gates-and-rerun-adopt",
+          },
+        );
+      }
+      const supplied = YAML.parse(await readFile(review, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      const gateInput = supplied?.stage === "predecessor-gates"
+        ? supplied
+        : supplied?.stage === "whole-root" && supplied.retrospective_gate_review !== undefined
+          ? {
+              contract: supplied.contract,
+              nkf_version: supplied.nkf_version,
+              stage: "predecessor-gates",
+              retrospective_gate_review: supplied.retrospective_gate_review,
+            }
+          : null;
+      if (gateInput === null) fail("A gate-free predecessor requires the preserved predecessor-gates review before whole-root review.");
+      retrospective = await validateRetrospectiveGateReview0_5({ projectRoot: candidate, review: gateInput });
+      transitionFromGateReview = supplied.stage === "predecessor-gates";
+      for (const gate of retrospective.gates.values()) {
+        const relative = `${gateFree.knowledgeRoot}/${gate.path}`;
+        const target = path.join(candidate, ...relative.split("/"));
+        const current = await readFile(target);
+        if (!current.equals(gate.bytes)) fail(`The predecessor Task changed during retrospective review: ${gate.id}`);
+        await writeFile(target, Buffer.concat([current, Buffer.from("\n\n", "utf8"), gate.gate_bytes]));
+      }
+    }
+    const migration = await migrateProjectTo0_5(candidate, { retrospectiveGates: retrospective?.gates });
+    const bundlePath = ".nourd/knowledge/bundle.yaml";
+    if (originalBundleBytes !== null) {
+      const candidateBundleBytes = await readRegularInside(candidate, bundlePath);
+      await writeFile(
+        path.join(candidate, ...bundlePath.split("/")),
+        await updateVerifiedStagedArtifactBindings(
+          projectRoot,
+          originalBundleBytes,
+          candidateBundleBytes,
+          seedFiles,
+        ),
+      );
+    }
+    const checker = await verified0_5Checker(temporary, verification);
+    if (reviewStat === null || transitionFromGateReview) {
+      const template = await writeReviewTemplate0_5({
+        projectRoot: candidate,
+        checker,
+        reviewPath: review,
+        retrospectiveGateReview: retrospective?.review,
+      });
+      throw new OnboardingError(
+        "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
+        "Adopt created an exact candidate review template and stopped before project mutation. A human or agent must complete the review and rerun the same Adopt command.",
+        {
+          review_template: template.path,
+          candidate_nodes: template.nodes,
+          accepted_decisions: template.decisions,
+          review_stage: template.stage,
+          next_action: "complete-review-and-rerun-adopt",
+        },
+      );
+    }
+    const baseline = await sealBaseline0_5({ projectRoot: candidate, checker, reviewPath: review });
+    await require0_5Readiness(candidate, verification);
+    const before = await regularFileInventory(projectRoot);
+    const after = await regularFileInventory(candidate);
+    const files = new Map();
+    const removedPaths = [];
+    for (const [relative, bytes] of after) {
+      const current = before.get(relative);
+      if (current === undefined || !current.equals(bytes)) files.set(relative, bytes);
+    }
+    for (const relative of before.keys()) {
+      if (!after.has(relative)) {
+        if (!seedRemovals.includes(relative)) {
+          fail(`The NKF 0.5 migration attempted to remove a project file: ${relative}`);
+        }
+        removedPaths.push(relative);
+      }
+    }
+    removedPaths.sort((left, right) => left.localeCompare(right, "en"));
+    return { files, removedPaths, migration, baseline };
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+}
+
+async function verifyInstalled0_5Ready(projectRoot) {
+  const installed = await verifyInstalled(projectRoot, true);
+  const readiness = await require0_5Readiness(projectRoot, installed.verification);
+  return { ...installed, readiness };
+}
+
 async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade = false) {
   if (Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10) < 22) {
     fail("NKF adoption requires Node.js 22 or later.");
@@ -1506,10 +1736,7 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
   }
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
-  const versionUpgrade =
-    allowNonBreakingVersionUpgrade &&
-    bundle.nkf_version === "0.3" &&
-    verification.manifest.nkf_version === "0.4";
+  const versionUpgrade = false;
   if (verification.manifest.nkf_version !== bundle.nkf_version && !versionUpgrade) {
     fail("Install or update requires a same-version release; use Adopt for migration.");
   }
@@ -1606,7 +1833,7 @@ async function inspectForOnboarding(options) {
   });
   return {
     contract: "nkf.onboarding-inspect-result",
-    nkf_version: "0.4",
+    nkf_version: CURRENT_NKF_VERSION,
     state: result.inspection.mechanically_ready ? "workspace-created" : "blocked",
     mechanically_ready: result.inspection.mechanically_ready,
     workspace: result.workspace,
@@ -1642,7 +1869,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    !["0.1", "0.2", "0.3", "0.4"].includes(value?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4", "0.5"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -1724,7 +1951,7 @@ function requirePredecessorOnboardingReceipt(value) {
 function onboardingResult(state, projectRoot, receipt, installed, knowledge = null) {
   return {
     contract: "nkf.onboarding-result",
-    nkf_version: "0.4",
+    nkf_version: CURRENT_NKF_VERSION,
     state,
     project: projectRoot,
     profile: receipt.profile,
@@ -1830,38 +2057,47 @@ async function onboard(options) {
       fail(`Onboarding would overwrite an existing owned path: ${relative}`);
     }
   }
-  const createdPaths = [];
-  const changedPaths = [];
-  for (const [relative, bytes] of files) {
-    const current = await readRegularInside(projectRoot, relative, false);
-    if (current === null) createdPaths.push(relative);
-    else if (!current.equals(bytes)) changedPaths.push(relative);
-  }
-  createdPaths.push(ONBOARDING_RECEIPT_PATH);
-  createdPaths.sort();
-  changedPaths.sort();
   const receipt = {
     contract: "nkf.onboarding-receipt",
-    nkf_version: "0.4",
+    nkf_version: CURRENT_NKF_VERSION,
     plan_sha256: knowledge.plan_sha256,
     inspection_sha256: knowledge.inspection.snapshot_sha256,
     profile: knowledge.plan.project.profile,
     knowledge_root: knowledge.plan.inspection.knowledge_root,
     assessment: knowledge.plan.assessment,
-    created_paths: createdPaths,
-    changed_paths: changedPaths,
+    created_paths: [],
+    changed_paths: [],
     preserved_paths: knowledge.preserved_documents,
   };
   files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  await validateCompleteCandidate(projectRoot, files);
-  const installed = await writeTransaction(
+  const candidate = await prepare0_5Candidate(
     projectRoot,
     files,
+    options.review,
+    verification,
+  );
+  const createdPaths = [];
+  const changedPaths = [];
+  for (const [relative, bytes] of candidate.files) {
+    const current = await readRegularInside(projectRoot, relative, false);
+    if (current === null) createdPaths.push(relative);
+    else if (!current.equals(bytes)) changedPaths.push(relative);
+  }
+  if (!createdPaths.includes(ONBOARDING_RECEIPT_PATH)) createdPaths.push(ONBOARDING_RECEIPT_PATH);
+  createdPaths.sort((left, right) => left.localeCompare(right, "en"));
+  changedPaths.sort((left, right) => left.localeCompare(right, "en"));
+  receipt.created_paths = createdPaths;
+  receipt.changed_paths = changedPaths;
+  candidate.files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
+  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_5Ready);
+  const installed = await writeTransaction(
+    projectRoot,
+    candidate.files,
     () => {
       if (process.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
         fail("Injected onboarding transaction failure.");
       }
-      return verifyInstalled(projectRoot, true);
+      return verifyInstalled0_5Ready(projectRoot);
     },
   );
   return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
@@ -2116,6 +2352,7 @@ async function loadGovernedContext(projectRoot) {
   }
   const tasks = new Map();
   const taskEntries = [];
+  const taskDeclarations = new Map();
   for (const item of bundle.non_records ?? []) {
     if (item?.kind !== "task" || typeof item?.path !== "string") continue;
     const absolute = path.join(projectRoot, knowledgeRoot, ...item.path.split("/"));
@@ -2127,13 +2364,17 @@ async function loadGovernedContext(projectRoot) {
     }
     const lines = text.split("\n");
     const close = lines[0] === "---" ? lines.indexOf("---", 1) : -1;
-    const taskId = close > 0 ? lines.slice(1, close).find((line) => line.startsWith("task_id:"))?.slice(8).trim() : undefined;
+    const frontmatterTaskId = close > 0 ? lines.slice(1, close).find((line) => line.startsWith("task_id:"))?.slice(8).trim() : undefined;
+    const taskId = bundle.nkf_version === "0.5" && typeof item.document?.id === "string"
+      ? item.document.id
+      : frontmatterTaskId;
     if (taskId) {
       tasks.set(taskId, item.path);
       taskEntries.push({ taskId, path: item.path });
+      taskDeclarations.set(taskId, item);
     }
   }
-  return { bundle, knowledgeRoot, records, decisionsByNumber, tasks, taskEntries };
+  return { bundle, knowledgeRoot, records, decisionsByNumber, tasks, taskEntries, taskDeclarations };
 }
 
 function relativeLink(fromRelative, toRelative) {
@@ -2257,8 +2498,32 @@ async function repinGoverned(projectRoot) {
     bundleText = bundleText.replace(from, to);
     repinnedArtifacts += 1;
   }
-  if (repinnedArtifacts > 0) await writeFile(bundlePath, bundleText);
-  return { state: "repinned", records: repinnedRecords, artifacts: repinnedArtifacts };
+  let repinnedDocuments = 0;
+  if (context.bundle.nkf_version === "0.5") {
+    const bundleValue = YAML.parse(bundleText);
+    for (const item of bundleValue.non_records ?? []) {
+      if (item?.document?.digest?.algorithm !== "sha-256" || typeof item.path !== "string") continue;
+      let bytes;
+      try {
+        bytes = await readFile(path.join(projectRoot, context.knowledgeRoot, ...item.path.split("/")));
+      } catch {
+        continue;
+      }
+      const observed = digest(bytes);
+      if (item.document.digest.value !== observed) {
+        item.document.digest.value = observed;
+        repinnedDocuments += 1;
+      }
+    }
+    if (repinnedDocuments > 0) bundleText = serializeYaml(bundleValue).toString("utf8");
+  }
+  if (repinnedArtifacts > 0 || repinnedDocuments > 0) await writeFile(bundlePath, bundleText);
+  return {
+    state: "repinned",
+    records: repinnedRecords,
+    documents: repinnedDocuments,
+    artifacts: repinnedArtifacts,
+  };
 }
 
 async function exportReferences(projectRoot) {
@@ -2278,7 +2543,7 @@ async function exportVersionedSet(projectRoot) {
     ? null
     : /^nkf_version: "([^"]+)"$/m.exec(bundleBytes.toString("utf8"));
   const declared = versionMatch?.[1] ?? "0.2";
-  const releaseSet = ["0.3", "0.4"].includes(declared)
+  const releaseSet = ["0.3", "0.4", "0.5"].includes(declared)
     ? await readReleaseSet(projectRoot, declared)
     : undefined;
   const members = [];
@@ -2627,7 +2892,9 @@ async function taskPendingView(options) {
     );
     const entry = {
       task: taskId,
-      task_status: text.match(/^task_status: (\w+)$/m)?.[1] ?? null,
+      task_status: context.bundle.nkf_version === "0.5"
+        ? context.taskDeclarations.get(taskId)?.document?.state?.value ?? null
+        : text.match(/^task_status: (\w+)$/m)?.[1] ?? null,
       path: relative,
       branch: null,
       pull_request: null,
@@ -2664,6 +2931,76 @@ async function taskPendingView(options) {
   };
 }
 
+function generatedTaskStateIndex(state, items, indexPath) {
+  const title = `${state[0].toUpperCase()}${state.slice(1)} Tasks`;
+  const body = items.length === 0
+    ? "No applicable item is currently represented."
+    : items
+        .map((item) => `- [${item.document.id}](${relativeLink(indexPath, item.path)})`)
+        .join("\n");
+  return `# ${title}\n\n${body}\n`;
+}
+
+async function transitionTask0_5(projectRoot, context, options, transition, original, currentRelative) {
+  const task = context.taskDeclarations.get(options.task);
+  if (task?.document?.state?.vocabulary !== "task-status") {
+    fail(`The native NKF 0.5 Task has no task-status declaration: ${options.task}`);
+  }
+  const currentStatus = task.document.state.value;
+  if (currentStatus === transition) fail(`The task already has task_status ${transition}.`);
+  if (currentStatus === "cancelled") fail("cancelled is terminal; later work on the subject is a new Task.");
+  if (transition === "cancelled" && currentStatus === "completed") {
+    fail("A completed Task is never cancelled; reversing delivered work is a later Task.");
+  }
+  if (transition === "completed") {
+    const blockers = gateBlocksCompletion(original);
+    if (blockers.length > 0) fail(`The gate blocks completion: unexcepted findings for ${blockers.join(", ")}.`);
+  }
+  const resultHeading = transition === "completed" ? "## Completion Result" : transition === "cancelled" ? "## Cancellation Result" : null;
+  if (resultHeading !== null && !original.includes(resultHeading)) {
+    fail(`${transition === "completed" ? "close" : "cancel"} requires the canonical Task source to already contain ${resultHeading}.`);
+  }
+  if (typeof options["result-file"] === "string") {
+    fail("Native NKF 0.5 task transitions do not accept --result-file; author the reviewed Result in the stable Task source before transition.");
+  }
+
+  const bundle = structuredClone(context.bundle);
+  const selected = (bundle.non_records ?? []).find(
+    (item) => item?.kind === "task" && item?.document?.id === options.task,
+  );
+  if (selected === undefined) fail(`The native NKF 0.5 Task declaration is unavailable: ${options.task}`);
+  selected.document.state = { ...selected.document.state, value: transition };
+  const files = new Map();
+  files.set(".nourd/knowledge/bundle.yaml", serializeYaml(bundle));
+  const states = ["active", "deferred", "completed", "cancelled"];
+  for (const state of states) {
+    const indexPath = `tasks/by-state/${state}.md`;
+    const items = (bundle.non_records ?? [])
+      .filter((item) => item?.kind === "task" && item?.document?.state?.value === state)
+      .sort((left, right) => String(left.path).localeCompare(String(right.path), "en"));
+    files.set(`${context.knowledgeRoot}/${indexPath}`, Buffer.from(generatedTaskStateIndex(state, items, indexPath), "utf8"));
+  }
+  const pinPresent = (await readRegularInside(projectRoot, PIN_PATH, false)) !== null;
+  const verifier = pinPresent
+    ? null
+    : typeof options.checker === "string"
+      ? externalCheckerVerifier(path.resolve(options.checker))
+      : fail("task requires an installed release pin or an explicit --checker.");
+  await validateCompleteCandidate(projectRoot, files, [], verifier);
+
+  await writeTransaction(projectRoot, files, () => (verifier ?? ((root) => verifyInstalled(root, true)))(projectRoot));
+  return {
+    state: "transitioned",
+    task: options.task,
+    from: currentRelative,
+    to: currentRelative,
+    task_status: transition,
+    documents_rewritten: 0,
+    generated_navigation: states.length,
+    git: { state: "project-owned" },
+  };
+}
+
 async function transitionTask(options) {
   const projectRoot = await requireProjectRoot(options.project);
   const transition = { close: "completed", defer: "deferred", activate: "active", cancel: "cancelled" }[options.to ?? ""];
@@ -2675,7 +3012,12 @@ async function transitionTask(options) {
   const currentAbsolute = path.join(projectRoot, context.knowledgeRoot, ...currentRelative.split("/"));
   const original = await readFile(currentAbsolute, "utf8");
   const statusMatch = original.match(/^task_status: (\w+)$/m);
-  if (statusMatch === null) fail("The task has no task_status line.");
+  if (context.bundle.nkf_version !== "0.5" && statusMatch === null) fail("The task has no task_status line.");
+  if (context.bundle.nkf_version === "0.5") {
+    return transitionTask0_5(projectRoot, context, options, transition, original, currentRelative);
+  }
+  const git = await taskGit(projectRoot);
+  const gitPlan = await gitTransitionPlan(git, projectRoot, transition, options.task);
   if (statusMatch[1] === transition) fail(`The task already has task_status ${transition}.`);
   if (statusMatch[1] === "cancelled") {
     fail("cancelled is terminal; later work on the subject is a new Task.");
@@ -2692,8 +3034,6 @@ async function transitionTask(options) {
       fail(`The gate blocks completion: unexcepted findings for ${blockers.join(", ")}.`);
     }
   }
-  const git = await taskGit(projectRoot);
-  const gitPlan = await gitTransitionPlan(git, projectRoot, transition, options.task);
   const fileName = currentRelative.split("/").pop();
   const targetRelative = `tasks/${transition === "active" ? "active" : transition}/${fileName}`;
   let updated = rewriteOutboundLinks(
@@ -2813,24 +3153,26 @@ async function transitionTask(options) {
   };
 }
 
-async function migrateToCurrent(options) {
+async function resolveMigrationInput(options) {
   const projectRoot = await requireProjectRoot(options.project);
   const { bundle, knowledgeRoot } = await requireBundle(projectRoot);
-  if (!["0.1", "0.2"].includes(bundle.nkf_version)) {
-    fail("migrate requires a project that declares NKF 0.1 or NKF 0.2.");
-  }
-  const predecessorVersion = bundle.nkf_version;
-  const predecessorPinBytes = await readRegularInside(
-    projectRoot,
-    PIN_PATH,
-    false,
-  );
+  const predecessorPinBytes = await readRegularInside(projectRoot, PIN_PATH, false);
   if (predecessorPinBytes !== null) {
     await verifyPredecessorInstallation(projectRoot, predecessorPinBytes);
   }
   const expectedSha256 = requireSha256(options.sha256);
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
+  return { projectRoot, bundle, knowledgeRoot, archiveBytes, verification };
+}
+
+async function migrateLegacyTo0_4(options, prepared = undefined) {
+  const input = prepared ?? await resolveMigrationInput(options);
+  const { projectRoot, bundle, knowledgeRoot, archiveBytes, verification } = input;
+  if (!["0.1", "0.2"].includes(bundle.nkf_version)) {
+    fail("migrate requires a project that declares NKF 0.1 or NKF 0.2.");
+  }
+  const predecessorVersion = bundle.nkf_version;
   if (verification.manifest.nkf_version !== "0.4") {
     fail("migrate requires an NKF 0.4 release archive.");
   }
@@ -2984,10 +3326,94 @@ async function migrateToCurrent(options) {
   };
 }
 
+async function migrateToCurrent(options, prepared = undefined) {
+  const input = prepared ?? await resolveMigrationInput(options);
+  const { projectRoot, bundle, knowledgeRoot, archiveBytes, verification } = input;
+  if (!["0.1", "0.2", "0.3", "0.4"].includes(bundle.nkf_version)) {
+    fail("migrate requires a project that declares a supported NKF 0.1 through 0.4 predecessor.");
+  }
+  const predecessorVersion = bundle.nkf_version;
+  if (verification.manifest.nkf_version !== CURRENT_NKF_VERSION) {
+    fail(`migrate requires an NKF ${CURRENT_NKF_VERSION} release archive.`);
+  }
+
+  const seedFiles = await targetFiles(
+    projectRoot,
+    archiveBytes,
+    verification,
+    bundle.root?.profile ?? "nkf.profile.product",
+  );
+  await stageVerifiedHostRegistryMigration(projectRoot, seedFiles);
+  const seedRemovals = [];
+  if (["0.1", "0.2"].includes(predecessorVersion)) {
+    const requiredTopology = [
+      "tasks/README.md", "tasks/active/README.md", "tasks/deferred/README.md",
+      "tasks/completed/README.md", "tasks/cancelled/README.md", "designs/README.md",
+      "designs/active/README.md", "designs/adopted/README.md", "designs/rejected/README.md",
+      "designs/superseded/README.md", "designs/withdrawn/README.md", "decisions/README.md",
+      "specifications/README.md", "realizations/README.md", "realizations/current/README.md",
+      "evidence/README.md",
+    ];
+    const incomplete = (
+      await Promise.all(requiredTopology.map((relative) =>
+        readRegularInside(projectRoot, `${knowledgeRoot}/${relative}`, false)))
+    ).some((bytes) => bytes === null);
+    if (incomplete) {
+      const receipt = requirePredecessorOnboardingReceipt(
+        parseStrictJson(await readRegularInside(projectRoot, ONBOARDING_RECEIPT_PATH)),
+      );
+      const topology = await buildPortableTopologyRepair(projectRoot, receipt);
+      for (const [relative, bytes] of topology.files) seedFiles.set(relative, bytes);
+      seedRemovals.push(...topology.removals);
+    }
+  }
+  const originalBundleBytes = await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml");
+  const candidate = await prepare0_5Candidate(
+    projectRoot,
+    seedFiles,
+    options.review,
+    verification,
+    originalBundleBytes,
+    seedRemovals,
+  );
+  await validateCompleteCandidate(
+    projectRoot,
+    candidate.files,
+    candidate.removedPaths,
+    verifyInstalled0_5Ready,
+  );
+  const installed = await writeTransaction(
+    projectRoot,
+    candidate.files,
+    () => verifyInstalled0_5Ready(projectRoot),
+    candidate.removedPaths,
+  );
+  return {
+    state: "migrated",
+    nkf_version: CURRENT_NKF_VERSION,
+    predecessor_version: predecessorVersion,
+    records_migrated: candidate.migration.records,
+    documents_migrated: candidate.migration.documents,
+    baseline: candidate.baseline,
+    validation: {
+      conformance: installed.report?.conformance ?? "passed",
+      readiness: installed.readiness?.readiness?.state ?? "ready",
+    },
+  };
+}
+
+async function migrateByArchive(options) {
+  const input = await resolveMigrationInput(options);
+  if (input.verification.manifest.nkf_version === "0.4") {
+    return migrateLegacyTo0_4(options, input);
+  }
+  return migrateToCurrent(options, input);
+}
+
 function adoptResult(state, projectRoot, catalog, compatibility, operation) {
   return {
     contract: "nkf.adopt-result",
-    nkf_version: "0.4",
+    nkf_version: CURRENT_NKF_VERSION,
     state,
     project: projectRoot,
     target: {
@@ -3143,7 +3569,7 @@ async function main() {
   if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project));
   if (command === "set") return exportVersionedSet(await requireProjectRoot(options.project));
   if (command === "task") return options.to === undefined ? taskPendingView(options) : transitionTask(options);
-  if (command === "migrate") return migrateToCurrent(options);
+  if (command === "migrate") return migrateByArchive(options);
   const projectRoot = await requireProjectRoot(options.project);
   const installed = await verifyInstalled(projectRoot, command === "check");
   return {
@@ -3161,7 +3587,7 @@ try {
 } catch (error) {
   const structured = {
     contract: "nkf.adopter-error",
-    nkf_version: "0.4",
+    nkf_version: CURRENT_NKF_VERSION,
     state: "failed",
     diagnostics: [
       {

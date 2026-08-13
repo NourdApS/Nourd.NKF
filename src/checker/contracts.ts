@@ -68,15 +68,24 @@ export async function loadContracts(
   const repositoryRoot = path.resolve(contractRoot, "../../..");
   const specificationPath = path.join(repositoryRoot, bindings.specification.path);
   const executablePath = path.join(repositoryRoot, bindings.executable.path);
+  const freshnessPolicyPath = bindings.freshnessPolicy === undefined
+    ? null
+    : path.join(repositoryRoot, bindings.freshnessPolicy.path);
   const schemaRoot = path.join(contractRoot, "schemas");
 
   const specificationRead = await readArtifact(specificationPath);
   const executableRead = await readArtifact(executablePath);
+  const freshnessPolicyRead = freshnessPolicyPath === null
+    ? null
+    : await readArtifact(freshnessPolicyPath);
   const specificationBinding = binding(
     bindings.specification.sha256,
     specificationRead.observed,
   );
   const executableBinding = binding(bindings.executable.sha256, executableRead.observed);
+  const freshnessPolicyBinding = bindings.freshnessPolicy === undefined
+    ? undefined
+    : binding(bindings.freshnessPolicy.sha256, freshnessPolicyRead?.observed ?? null);
 
   if (specificationBinding.binding !== "verified" || executableBinding.binding !== "verified") {
     const unavailable =
@@ -87,6 +96,17 @@ export async function loadContracts(
         unavailable
           ? `The accepted NKF ${nkfVersion} authority pair is unavailable.`
           : `The observed NKF ${nkfVersion} authority pair does not match its accepted digests.`,
+      ),
+    );
+  }
+  if (freshnessPolicyBinding !== undefined && freshnessPolicyBinding.binding !== "verified") {
+    diagnostics.push(
+      contractDiagnostic(
+        freshnessPolicyBinding.binding === "unavailable"
+          ? "contract-set.unavailable"
+          : "contract-set.binding-mismatch",
+        `The NKF ${nkfVersion} freshness policy is not bound to its accepted digest.`,
+        bindings.freshnessPolicy?.path,
       ),
     );
   }
@@ -118,6 +138,7 @@ export async function loadContracts(
   }
 
   let executable: Record<string, any> = {};
+  let freshnessPolicy: Record<string, any> | null = null;
   if (executableBinding.binding === "verified" && executableRead.bytes !== null) {
     try {
       const documents = YAML.parseAllDocuments(
@@ -142,6 +163,24 @@ export async function loadContracts(
           "The executable contract identity or Markdown binding is inconsistent.",
         ),
       );
+    }
+  }
+  if (
+    freshnessPolicyBinding?.binding === "verified" &&
+    freshnessPolicyRead?.bytes !== null &&
+    freshnessPolicyRead?.bytes !== undefined
+  ) {
+    try {
+      const documents = YAML.parseAllDocuments(
+        new TextDecoder("utf-8", { fatal: true }).decode(freshnessPolicyRead.bytes),
+        { schema: "core", strict: true, uniqueKeys: true },
+      );
+      const document = documents.length === 1 ? documents[0] : undefined;
+      if (document !== undefined && document.errors.length === 0) {
+        freshnessPolicy = asObject(document.toJS({ maxAliasCount: 0 }));
+      }
+    } catch {
+      freshnessPolicy = null;
     }
   }
 
@@ -169,9 +208,16 @@ export async function loadContracts(
     }
   }
 
-  const bundleSchema = parsedSchemas[0] ?? {};
-  const recordSchema = parsedSchemas[1] ?? {};
-  const resultSchema = parsedSchemas[2] ?? {};
+  const schemaByIdentity = (identity: string) => {
+    const index = bindings.schemas.findIndex((schema) => schema.identity === identity);
+    return index < 0 ? {} : parsedSchemas[index] ?? {};
+  };
+  const bundleSchema = schemaByIdentity(`urn:nkf:${nkfVersion}:schema:bundle`);
+  const recordSchema = schemaByIdentity(`urn:nkf:${nkfVersion}:schema:record`);
+  const baselineSchema = schemaByIdentity(`urn:nkf:${nkfVersion}:schema:graph-baseline`);
+  const receiptSchema = schemaByIdentity(`urn:nkf:${nkfVersion}:schema:freshness-receipt`);
+  const policySchema = schemaByIdentity(`urn:nkf:${nkfVersion}:schema:freshness-policy`);
+  const resultSchema = schemaByIdentity(`urn:nkf:${nkfVersion}:schema:validation-result`);
   const AjvConstructor = Ajv2020 as unknown as new (options: Record<string, unknown>) => any;
   const addFormatSupport = addFormats as unknown as (instance: any) => void;
   const ajv = new AjvConstructor({ allErrors: true, strict: true, validateFormats: true });
@@ -190,12 +236,25 @@ export async function loadContracts(
   };
   const validateBundle = compile(bundleSchema);
   const validateRecord = compile(recordSchema);
+  const validateBaseline = compile(baselineSchema);
+  const validateReceipt = compile(receiptSchema);
+  const validatePolicy = compile(policySchema);
   const validateResult = compile(resultSchema);
+  if (freshnessPolicy !== null && !validatePolicy(freshnessPolicy)) {
+    diagnostics.push(
+      contractDiagnostic(
+        "contract-set.binding-mismatch",
+        "The accepted freshness policy violates its derived Schema.",
+        bindings.freshnessPolicy?.path,
+      ),
+    );
+  }
 
   const artifacts: ContractArtifacts = {
     core: {
       specification: specificationBinding,
       executable: executableBinding,
+      ...(freshnessPolicyBinding === undefined ? {} : { freshness_policy: freshnessPolicyBinding }),
       schemas: schemaBindings,
     },
     extensions: [],
@@ -203,15 +262,29 @@ export async function loadContracts(
 
   return {
     executable,
-    schemas: { bundle: bundleSchema, record: recordSchema, result: resultSchema },
+    freshnessPolicy,
+    schemas: {
+      bundle: bundleSchema,
+      record: recordSchema,
+      baseline: baselineSchema,
+      receipt: receiptSchema,
+      policy: policySchema,
+      result: resultSchema,
+    },
     artifacts,
     diagnostics,
     validators: {
       bundle: (value) => validateBundle(value),
       record: (value) => validateRecord(value),
+      baseline: (value) => validateBaseline(value),
+      receipt: (value) => validateReceipt(value),
+      policy: (value) => validatePolicy(value),
       result: (value) => validateResult(value),
       bundleErrors: () => validateBundle.errors,
       recordErrors: () => validateRecord.errors,
+      baselineErrors: () => validateBaseline.errors,
+      receiptErrors: () => validateReceipt.errors,
+      policyErrors: () => validatePolicy.errors,
       resultErrors: () => validateResult.errors,
     },
   };

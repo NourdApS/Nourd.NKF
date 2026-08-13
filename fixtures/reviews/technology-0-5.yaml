@@ -1,0 +1,53 @@
+contract: nkf.semantic-review-input
+nkf_version: "0.5"
+stage: whole-root
+reviewer:
+  kind: agent
+  id: nkf-fixture-semantic-reviewer
+reviewed_at: 2026-08-13T10:00:00.000Z
+claim: semantically-reviewed-whole-root
+disputed: false
+nodes:
+  - node: {kind: document, id: TEST-TECH-001}
+    state: eligible
+    role: context
+    basis: {node: {kind: document, id: TEST-TECH-001}, source: {heading: {heading_path: ["TEST-TECH-001: Maintain Example Technology Knowledge"], occurrence: 1}}}
+  - node: {kind: document, id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a}
+    state: eligible
+    role: evidences
+    basis: {node: {kind: document, id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a}, source: {heading: {heading_path: [Evidence], occurrence: 1}}}
+  - node: {kind: record, id: realization}
+    state: eligible
+    role: realizes
+    basis: {node: {kind: record, id: realization}, source: {section: realization-identity-and-kind}}
+  - node: {kind: record, id: specification}
+    state: eligible
+    role: governs
+    basis: {node: {kind: record, id: specification}, source: {section: specification-definition}}
+  - node: {kind: record, id: technology}
+    state: eligible
+    role: governs
+    basis: {node: {kind: record, id: technology}, source: {section: technology-definition}}
+relationships:
+  - {relationship: part-of, state: inapplicable, basis: {node: {kind: record, id: technology}, source: {section: technology-map}}}
+  - {relationship: defines, state: inapplicable, basis: {node: {kind: record, id: specification}, source: {section: specification-definition}}}
+  - {relationship: governs, state: inapplicable, basis: {node: {kind: record, id: specification}, source: {section: authority-and-normative-status}}}
+  - {relationship: applies-to, state: inapplicable, basis: {node: {kind: record, id: specification}, source: {section: scope-and-applicability}}}
+  - {relationship: depends-on, state: inapplicable, basis: {node: {kind: record, id: technology}, source: {section: scope-authority-and-boundaries}}}
+  - {relationship: extends, state: inapplicable, basis: {node: {kind: record, id: specification}, source: {section: versioning-compatibility-and-migration}}}
+  - {relationship: supersedes, state: inapplicable, basis: {node: {kind: record, id: specification}, source: {section: versioning-compatibility-and-migration}}}
+  - {relationship: rationale-for, state: inapplicable, basis: {node: {kind: record, id: technology}, source: {section: purpose-and-problem}}}
+  - {relationship: realizes, state: reviewed, basis: {node: {kind: record, id: realization}, source: {section: governed-meaning-realized}}}
+  - {relationship: evidences, state: inapplicable, basis: {node: {kind: record, id: realization}, source: {section: compatibility-verification-and-recovery}}}
+  - {relationship: references, state: inapplicable, basis: {node: {kind: record, id: technology}, source: {section: technology-map}}}
+  - {relationship: flows-to, state: inapplicable, basis: {node: {kind: record, id: technology}, source: {section: capabilities-and-contracts}}}
+  - {relationship: transitions-to, state: inapplicable, basis: {node: {kind: record, id: technology}, source: {section: evolution-and-retirement}}}
+  - {relationship: observes, state: inapplicable, basis: {node: {kind: record, id: realization}, source: {section: external-authority-and-operational-state-boundaries}}}
+decision_classifications: []
+observations:
+  - id: technology-fixture-whole-root-review
+    subject: {kind: record, id: technology}
+    basis: {node: {kind: record, id: technology}, source: {section: technology-map}}
+    finding: The complete controlled Technology fixture contains one reviewed realization-to-specification edge and no accepted Decision beyond its five declared freshness subjects.
+limitations:
+  - Controlled Technology fixture only; this review does not prove broader consumer graph completeness.

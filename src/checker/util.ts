@@ -87,6 +87,7 @@ export function diagnosticComparator(phases: readonly Phase[]) {
     (phaseOrder.get(left.phase) ?? phases.length) - (phaseOrder.get(right.phase) ?? phases.length) ||
     compareNullable(left.artifact, right.artifact) ||
     compareNullable(left.record_id, right.record_id) ||
+    compareNullable(left.node_id, right.node_id) ||
     compareNullable(left.instance_pointer, right.instance_pointer) ||
     compareNullable(left.source_section, right.source_section) ||
     utf16Compare(left.rule_id, right.rule_id);
@@ -100,6 +101,7 @@ export function exactDiagnosticIdentity(diagnostic: Diagnostic): string {
     phase: diagnostic.phase,
     artifact: diagnostic.artifact ?? null,
     record_id: diagnostic.record_id ?? null,
+    node_id: diagnostic.node_id ?? null,
     instance_pointer: diagnostic.instance_pointer ?? null,
     source_section: diagnostic.source_section ?? null,
   });

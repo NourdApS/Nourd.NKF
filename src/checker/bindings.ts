@@ -1,6 +1,7 @@
 export interface CoreBindings {
   readonly specification: { readonly path: string; readonly sha256: string };
   readonly executable: { readonly path: string; readonly sha256: string };
+  readonly freshnessPolicy?: { readonly path: string; readonly sha256: string };
   readonly schemas: readonly {
     readonly identity: string;
     readonly file: string;
@@ -115,6 +116,28 @@ export const VERSION_BINDINGS = {
         file: "validation-result.schema.json",
         sha256: "6ed75b295b9ac9dff758c9d654cc76bd22b0385fb9bc9ea01353cb7b6add5fda",
       },
+    ],
+  },
+  "0.5": {
+    specification: {
+      path: "knowledge/specifications/nkf-0.5-revision-2.md",
+      sha256: "0f3b7c085eba4fa92655e20916fccb7013169b5560dd50c241fb4726df31287c",
+    },
+    executable: {
+      path: "contracts/nkf/0.5/revision-2/nkf.yaml",
+      sha256: "2743102a4bddf9a26253fba3982f00bf9c688c819891815221e3ea4ee67c5290",
+    },
+    freshnessPolicy: {
+      path: "contracts/nkf/0.5/freshness-policy.yaml",
+      sha256: "5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd",
+    },
+    schemas: [
+      { identity: "urn:nkf:0.5:schema:bundle", file: "bundle.schema.json", sha256: "a45705d92ff22cd67dc0eeac29ca49a7187e071ae160f3f24d5ecac32a5e7a6d" },
+      { identity: "urn:nkf:0.5:schema:record", file: "record.schema.json", sha256: "002d1b192ae0ca24ee87ecc7609abc1467d4fe4da087630496d21652271a4b22" },
+      { identity: "urn:nkf:0.5:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "cc71c2c85361a50e8b1ce171e9a8b18bf6fd372c5b4e7c419459c915c6976fa5" },
+      { identity: "urn:nkf:0.5:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "0cee6baa9d3883dd6c0935629c124ab0ed283a099302aeb38f2a915bbf01aa88" },
+      { identity: "urn:nkf:0.5:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "80e76c47d05e34eb60d0e37aa43bc218698c5b81cb3ae2da8682461bd3c020ad" },
+      { identity: "urn:nkf:0.5:schema:validation-result", file: "validation-result.schema.json", sha256: "b40d45d1bc781a2203033deff7f7dc063bf890c0eeeec3f9ae2b6c3b992dabf8" },
     ],
   },
 } as const satisfies Record<string, CoreBindings>;

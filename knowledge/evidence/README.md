@@ -104,6 +104,13 @@ whole-root comparison, deterministic measurements, complete producer gate,
 and clean post-exercise state while preserving the distinction between a
 pre-release exercise and adoption of an immutable published version.
 
+The NKF-026 NKF 0.5 revision 2 authority-pair audit records the implementation-
+discovered predecessor Task-gate contradiction, preserves the original ADR
+0116 pair as immutable prepublication history, and independently verifies the
+distinct exact successor, its narrow reviewed retrospective-gate
+transformation, executable closure, and unchanged Product boundaries before
+technical acceptance.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

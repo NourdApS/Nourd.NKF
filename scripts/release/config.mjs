@@ -50,3 +50,16 @@ export const ACCEPTED_0_4_ARTIFACT_DIGESTS = Object.freeze({
   "contracts/nkf/0.4/schemas/validation-result.schema.json":
     "6ed75b295b9ac9dff758c9d654cc76bd22b0385fb9bc9ea01353cb7b6add5fda",
 });
+
+export const ACCEPTED_0_5_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.5-revision-2.md": "0f3b7c085eba4fa92655e20916fccb7013169b5560dd50c241fb4726df31287c",
+  "contracts/nkf/0.5/revision-2/nkf.yaml": "2743102a4bddf9a26253fba3982f00bf9c688c819891815221e3ea4ee67c5290",
+  "contracts/nkf/0.5/freshness-policy.yaml": "5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd",
+  "contracts/nkf/0.5/schemas/bundle.schema.json": "a45705d92ff22cd67dc0eeac29ca49a7187e071ae160f3f24d5ecac32a5e7a6d",
+  "contracts/nkf/0.5/schemas/record.schema.json": "002d1b192ae0ca24ee87ecc7609abc1467d4fe4da087630496d21652271a4b22",
+  "contracts/nkf/0.5/schemas/graph-baseline.schema.json": "cc71c2c85361a50e8b1ce171e9a8b18bf6fd372c5b4e7c419459c915c6976fa5",
+  "contracts/nkf/0.5/schemas/freshness-receipt.schema.json": "0cee6baa9d3883dd6c0935629c124ab0ed283a099302aeb38f2a915bbf01aa88",
+  "contracts/nkf/0.5/schemas/freshness-policy.schema.json": "80e76c47d05e34eb60d0e37aa43bc218698c5b81cb3ae2da8682461bd3c020ad",
+  "contracts/nkf/0.5/schemas/release-manifest.schema.json": "98a8e8f12ba8f1ec5ea90f203c61d68b84f6a124d108f193838aa90b8743df25",
+  "contracts/nkf/0.5/schemas/validation-result.schema.json": "b40d45d1bc781a2203033deff7f7dc063bf890c0eeeec3f9ae2b6c3b992dabf8",
+});

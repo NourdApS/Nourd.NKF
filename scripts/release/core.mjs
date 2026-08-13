@@ -31,6 +31,12 @@ export {
 export const REPOSITORY =
   "https://github.com/kaveh6202/Nourd.NKF.git";
 export const ARCHIVE_ROOT = "nourd-nkf";
+const AUTHORITY_PATHS = Object.freeze({
+  "0.5": {
+    markdown: "knowledge/specifications/nkf-0.5-revision-2.md",
+    executable: "contracts/nkf/0.5/revision-2/nkf.yaml",
+  },
+});
 const LEGACY_0_1_ENTRIES = Object.freeze([
   { path: "contracts/nkf/0.1/nkf.yaml", mode: 0o644 },
   { path: "contracts/nkf/0.1/schemas/bundle.schema.json", mode: 0o644 },
@@ -110,7 +116,28 @@ function fail(message) {
 }
 
 function usesReleaseSet(nkfVersion) {
-  return ["0.3", "0.4"].includes(nkfVersion);
+  return ["0.3", "0.4", "0.5"].includes(nkfVersion);
+}
+
+function schemaBindings(nkfVersion) {
+  if (nkfVersion === "0.5") {
+    return [
+      "bundle",
+      "record",
+      "graph-baseline",
+      "freshness-receipt",
+      "freshness-policy",
+      "release-manifest",
+      "validation-result",
+    ].map((name) => ({
+      identity: `urn:nkf:0.5:schema:${name}`,
+      path: `contracts/nkf/0.5/schemas/${name}.schema.json`,
+    }));
+  }
+  return SCHEMA_BINDINGS.map((schema) => ({
+    identity: schema.identity.replace(":0.2:", `:${nkfVersion}:`),
+    path: schema.path.replace("contracts/nkf/0.2/", `contracts/nkf/${nkfVersion}/`),
+  }));
 }
 
 export function sha256(bytes) {
@@ -142,12 +169,15 @@ export function constructReleaseManifest({
   if (!/^[0-9a-f]{40}$/.test(releaseCommit)) {
     fail("Release commit must be 40 lowercase hexadecimal characters.");
   }
-  const specificationPath = `knowledge/specifications/nkf-${nkfVersion}.md`;
-  const contractsPrefix = `contracts/nkf/${nkfVersion}/`;
+  const authorityPaths = AUTHORITY_PATHS[nkfVersion] ?? {
+    markdown: `knowledge/specifications/nkf-${nkfVersion}.md`,
+    executable: `contracts/nkf/${nkfVersion}/nkf.yaml`,
+  };
+  const specificationPath = authorityPaths.markdown;
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
   const markdown = requireBuffer(entries, specificationPath);
-  const executable = requireBuffer(entries, `${contractsPrefix}nkf.yaml`);
-  const manifest = {
+  const executable = requireBuffer(entries, authorityPaths.executable);
+  const common = {
     contract: "nkf.release-manifest",
     nkf_version: nkfVersion,
     source: {
@@ -170,16 +200,27 @@ export function constructReleaseManifest({
         digest: digest(markdown),
       },
       executable: {
-        path: `${contractsPrefix}nkf.yaml`,
+        path: authorityPaths.executable,
         digest: digest(executable),
       },
     },
-    schemas: SCHEMA_BINDINGS.map((schema) => ({
-      identity: schema.identity.replace(":0.2:", `:${nkfVersion}:`),
-      path: schema.path.replace("contracts/nkf/0.2/", contractsPrefix),
-      digest: digest(requireBuffer(entries, schema.path.replace("contracts/nkf/0.2/", contractsPrefix))),
-    })),
   };
+  const schemas = schemaBindings(nkfVersion).map((schema) => ({
+    identity: schema.identity,
+    path: schema.path,
+    digest: digest(requireBuffer(entries, schema.path)),
+  }));
+  const manifest = nkfVersion === "0.5"
+    ? {
+        ...common,
+        freshness_policy: {
+          identity: "nkf.freshness-policy.0.5",
+          path: "contracts/nkf/0.5/freshness-policy.yaml",
+          digest: digest(requireBuffer(entries, "contracts/nkf/0.5/freshness-policy.yaml")),
+        },
+        schemas,
+      }
+    : { ...common, schemas };
   if (["0.1", "0.2"].includes(nkfVersion)) {
     manifest.source.checker_confirmation = {
       decision: checkerConfirmation.decision,
@@ -524,7 +565,7 @@ export function releaseEntriesForVersion(nkfVersion = "0.2", releaseSet = undefi
 
 function sniffArchiveVersion(archive) {
   const name = readName(archive.subarray(0, 100));
-  const match = /^nourd-nkf\/contracts\/nkf\/(0\.[0-9]+)\/nkf\.yaml$/.exec(name);
+  const match = /^nourd-nkf\/contracts\/nkf\/(0\.[0-9]+)\//.exec(name);
   return match === null ? "0.2" : match[1];
 }
 
@@ -666,7 +707,8 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   ) {
     fail("Release manifest bootstrap contract or NKF version is invalid.");
   }
-  const schema = manifest?.schemas?.[2];
+  const schemaIndex = nkfVersion === "0.5" ? 5 : 2;
+  const schema = manifest?.schemas?.[schemaIndex];
   if (
     schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` ||
     schema?.path !==
@@ -793,7 +835,10 @@ export function verifyReleaseArchive(
   if (!manifestBytes.equals(serializeReleaseManifest(manifest))) {
     fail("Release manifest bytes are not in canonical contract order and format.");
   }
-  const manifestSchema = manifest.schemas[2];
+  const manifestSchema = manifest.schemas.find(
+    (schema) => schema.identity === `urn:nkf:${archiveVersion}:schema:release-manifest`,
+  );
+  if (manifestSchema === undefined) fail("Release manifest omits its bootstrap schema binding.");
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
 
@@ -808,6 +853,7 @@ export function verifyReleaseArchive(
     manifest.checker,
     manifest.authority.markdown,
     manifest.authority.executable,
+    ...(manifest.freshness_policy === undefined ? [] : [manifest.freshness_policy]),
     ...manifest.schemas,
   ];
   for (const artifact of artifacts) verifyArtifact(entries, artifact);
