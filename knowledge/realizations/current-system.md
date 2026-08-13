@@ -225,7 +225,7 @@ revisions and impact closure, reviewed baselines, simultaneous freshness
 results, immutable receipts, strict predecessor migration, and a two-stage
 semantic-review boundary. One public Adopt operation handles onboarding,
 migration, update, and current-state verification. The implementation
-currently passes 29 test files and 217 tests, including 27 Adopt integration
+currently passes 29 test files and 218 tests, including 27 Adopt integration
 cases, a full producer 0.4-to-0.5 migration exercise, and a stable native Task
 transition exercise. The source-level exact-candidate helper now dispatches
 both 0.4 and 0.5 and requires 0.5's external whole-root review before the
@@ -233,7 +233,13 @@ candidate-bound migration. Review-template generation supplies a resolvable
 governing record-section basis for represented non-Markdown documents and
 binds producer relationship-vocabulary review to the accepted 0.5
 Specification relationship section rather than an arbitrary first node. These are technical
-and conformance observations only. No exact 0.5 release candidate has yet
+and conformance observations only. A later candidate-bound migration exposed
+that the producer agent-guidance verifier's supported-version guard still
+stopped at 0.4; the guard and its focused native-0.5 bundle-plus-skill
+regression are now derived for 0.5. Independent semantic review also requires
+full parent-prefixed identifiers for nested Specification sections. The
+affected archive and review were discarded rather than normalized after use.
+No exact 0.5 release candidate has yet
 received candidate-bound Adopt, independent candidate audit, technical
 confirmation, publication, recommendation, or ordinary producer adoption.
 
@@ -300,7 +306,7 @@ Complete Product Or Technology Topology
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
 | NKF 0.5 revision 2 authority | `knowledge/specifications/nkf-0.5-revision-2.md`, `contracts/nkf/0.5/revision-2/nkf.yaml`, `contracts/nkf/0.5/freshness-policy.yaml` | Exact accepted prepublication authority for stable knowledge nodes, lifecycle declarations, graph relationships, applicability, freshness, baseline, receipt, and migration meaning | Accepted by [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md) after a clean independent authority audit; implementation and release confirmation remain separate |
-| NKF 0.5 derived implementation | `contracts/nkf/0.5/schemas/`, `src/checker/freshness.ts`, `scripts/freshness/`, `scripts/migration/`, `scripts/adoption/`, `fixtures/valid/*-0-5/`, `test/` | Branch-local prepublication implementation; 29 test files and 216 tests pass, including deterministic graph, freshness, receipts, migration, rollback, tamper, idempotence, producer-host exercise, and stable native Task transition | Not yet technically confirmed, published, recommended, or adopted; candidate-bound Adopt and independent exact-candidate audit remain required |
+| NKF 0.5 derived implementation | `contracts/nkf/0.5/schemas/`, `src/checker/freshness.ts`, `scripts/freshness/`, `scripts/migration/`, `scripts/adoption/`, `scripts/verify-agent-guidance.mjs`, `fixtures/valid/*-0-5/`, `test/` | Branch-local prepublication implementation; 29 test files and 218 tests pass, including deterministic graph, freshness, receipts, migration, rollback, tamper, idempotence, producer-host exercise, native 0.5 guidance verification, and stable native Task transition | Not yet technically confirmed, published, recommended, or adopted; candidate-bound Adopt and independent exact-candidate audit remain required |
 | NKF 0.5 release realization | `contracts/nkf/0.5/release-set.yaml`, `distribution/nkf/0.5/`, `public-docs/`, `scripts/release/` | One derived 0.5 complete-set enumeration and public projection under prepublication verification | No candidate archive has yet been technically confirmed or published |
 | NKF 0.4 Specification and executable companion | `knowledge/specifications/nkf-0.4.md`, `contracts/nkf/0.4/nkf.yaml` | Current exact non-breaking maintenance authority pair | Accepted by [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md); exact derived candidate confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) |
 | NKF 0.4 distribution | `contracts/nkf/0.4/`, `distribution/nkf/0.4/`, `fixtures/valid/*-0-4/`, `public-docs/`, `scripts/release/`, `scripts/adoption/` | Published, branch-recommended, and producer-adopted exact 136-member archive with one 18-class release set, patched dependency closure, checker, adopter, guidance, fixtures, examples, and public projection | Exact release commit and archive independently audited and confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md); publication and producer adoption observed separately in audit Evidence |
@@ -310,7 +316,7 @@ Complete Product Or Technology Topology
 | Version release and adoption protocols | `integrations/release/`, `integrations/adoption/`, `distribution/nkf/0.4/integrations/` | Accepted repository process sources plus the frozen 0.4 operational copies for candidate proof, publication, one public Adopt operation, compatibility preflight, approval, rollback, recommendation, and post-action audit | Direction adopted by [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md); exact 0.4 release copies confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) |
 | Core JSON Schemas | `contracts/nkf/0.2/schemas/`, `contracts/nkf/0.3/schemas/`, `contracts/nkf/0.4/schemas/` | Source-bound predecessor Schemas and four closed current 0.4 Schemas | 0.4 exact digests confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) |
 | Checker library and CLI | `src/checker/`, `src/cli.ts`, `dist/nourd-nkf-checker.mjs` | Version-dispatching checker with exact 0.2, 0.3, and 0.4 bindings; release checker SHA-256 `425286d3...` | 0.4 exact build confirmed by [ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) |
-| Fixtures and tests | `fixtures/`, `test/` | Product and Technology topology, lifecycle, onboarding, migration, release membership, graph, freshness, security, recovery, stable transitions, and tamper coverage; current branch passes 29 files and 216 tests | 0.4 [candidate audit](../evidence/audits/nkf-024-nkf-0-4-exact-candidate-audit.md), 0.5 implementation tests, and predecessor Evidence; passing tests are conformance evidence only |
+| Fixtures and tests | `fixtures/`, `test/` | Product and Technology topology, lifecycle, onboarding, migration, release membership, graph, freshness, guidance integration, security, recovery, stable transitions, and tamper coverage; current branch passes 29 files and 218 tests | 0.4 [candidate audit](../evidence/audits/nkf-024-nkf-0-4-exact-candidate-audit.md), 0.5 implementation tests, and predecessor Evidence; passing tests are conformance evidence only |
 | Self-host declaration and release pin | `.nourd/knowledge/`, `.nourd/nkf-release.json`, `.nourd/tools/nkf/` | Adopted 0.4 Technology bundle pinned to archive `a7912b92...` with exact installed archive and adopter | Producer adoption independently verified; this consolidated account remains partially confirmed |
 | Neutral authoring and onboarding procedures | `integrations/ai/`, `integrations/onboarding/`, portable skills | Installed 0.4 vendor-neutral protocols and portable skills | Bytes carried by the confirmed archive; repository installation independently audited |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Twelve explicit host surfaces plus the producer-only Task-authorization policy; exact registered bindings verified | Producer installation independently audited; acceptance and confirmation remain separate |
@@ -546,7 +552,7 @@ post-publication audit then reproduced the release, recommendation, pristine-
 checkout producer conformance, repeat `current`, exact tracked-byte
 idempotence, and fail-closed pin, archive, and integration tampering.
 
-The current prepublication NKF 0.5 branch passes 29 test files and 216 tests.
+The current prepublication NKF 0.5 branch passes 29 test files and 218 tests.
 The added coverage exercises both Root Profiles, stable lifecycle-neutral
 document identity, exact graph revision, reviewed-baseline sealing, freshness
 precedence, impact closure, receipt persistence and historical reproduction,

@@ -1183,7 +1183,7 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: 1bf272b5ebc73ce921ef2797ec205b195d14e418a1a5ca3da19a51aedd1e9434
+      value: cb5fe9a966400077617a86840da8e0eb2e441e503bc0bc79cbb0c285eb4f8b1a
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-scripts-verify-build-mjs
@@ -1399,7 +1399,7 @@ governed_artifacts:
     path: test/agent-guidance.test.ts
     digest:
       algorithm: sha-256
-      value: f94d17154f694a65515a6103abfd3b6421e250fed7e3b16369f596c63221c021
+      value: 7b916b49f984fef5262a098d30c88b23c4d30b9cb41657638f4b72d1b4e87fd7
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-test-authority-test-ts

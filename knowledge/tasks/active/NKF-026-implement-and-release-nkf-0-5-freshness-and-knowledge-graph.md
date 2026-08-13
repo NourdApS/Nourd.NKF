@@ -360,6 +360,17 @@ stops at that boundary and returns to the Human Product Owner.
   bundle Root record for ordinary consumers. A focused regression exercises
   the non-Markdown case. This finding invalidates the replacement archive too;
   no impossible or generic review is accepted as evidence.
+- The next exact candidate-bound migration completed its semantic-review and
+  migration phases, then the fresh producer gate exposed a third technical
+  omission: `scripts/verify-agent-guidance.mjs` rejected a native 0.5 bundle
+  because its supported-version guard still stopped at 0.4. The verifier now
+  admits the derived 0.5 producer state and a focused test constructs the exact
+  0.5 bundle-plus-portable-skill combination. The independent review also
+  corrected two nested Specification section references to their exact
+  parent-prefixed identifiers before any review may be reused. The attempted
+  archive and completed review are discarded; both corrections require a new
+  exact release commit, archive, whole-root review, candidate exercise, and
+  independent audit.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.

@@ -94,6 +94,43 @@ describe("agent guidance integrity verifier", () => {
     });
   });
 
+  it("accepts the exact 0.5 bundle and portable skill version", async () => {
+    const project = await copyProject();
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+    await writeFile(
+      bundlePath,
+      (await readFile(bundlePath, "utf8")).replace('nkf_version: "0.4"', 'nkf_version: "0.5"'),
+    );
+
+    const registryPath = path.join(project, "integrations/ai/agent-hosts.yaml");
+    let previousSkill: Buffer | null = null;
+    let currentSkill: Buffer | null = null;
+    for (const relative of [
+      ".agents/skills/nkf-authoring/SKILL.md",
+      ".claude/skills/nkf-authoring/SKILL.md",
+    ]) {
+      const skillPath = path.join(project, relative);
+      const bytes = await readFile(skillPath);
+      previousSkill ??= bytes;
+      const changed = Buffer.from(
+        bytes.toString("utf8").replace("NKF Version: 0.4", "NKF Version: 0.5"),
+      );
+      currentSkill ??= changed;
+      await writeFile(skillPath, changed);
+    }
+    await writeFile(
+      registryPath,
+      (await readFile(registryPath, "utf8")).replace(
+        sha256(previousSkill!),
+        sha256(currentSkill!),
+      ),
+    );
+
+    const result = run(project);
+
+    expect(result.status, result.stderr).toBe(0);
+  });
+
   it("rejects divergent portable skill bytes", async () => {
     const project = await copyProject();
     await appendFile(path.join(project, ".claude/skills/nkf-authoring/SKILL.md"), "\n");
