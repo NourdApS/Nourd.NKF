@@ -130,6 +130,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-026-nkf-0-5-revision-2-authority-pair-audit.md
     kind: evidence
+  - path: evidence/audits/nkf-026-nkf-0-5-exact-candidate-audit.md
+    kind: evidence
   - path: decisions/0117-accept-the-corrected-nkf-0-5-authority-pair.md
     kind: evidence
   - path: decisions/0118-accept-the-nkf-0-5-revision-2-authority-pair.md

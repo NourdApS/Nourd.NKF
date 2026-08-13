@@ -401,8 +401,18 @@ stops at that boundary and returns to the Human Product Owner.
   deliberately broader cases; behavior and assertions are unchanged. Both
   timing-fragile archives remain invalid as release evidence and a later exact
   candidate must pass from clean dependencies under this common bound.
-- No derived Schema, checker, adopter, fixture, documentation, Realization,
-  release candidate, publication, recommendation, or producer adoption is yet
+- The exact replacement release commit `777ea9a3...` and archive SHA-256
+  `e4677933...f99d9` then passed candidate-bound producer migration, ordinary
+  repeat `current`, the complete host-superset gate, 180-member source
+  reproduction, and a separate fresh independent audit. The completed review
+  covers 268 nodes, 351 Decision-purpose classifications, and all 14
+  relationship categories with no unresolved conflict. The independent audit
+  reproduced the 181-member archive byte-for-byte and rejected wrong pins,
+  bit flips, and unsafe paths. Its verdict is `CLEAN`.
+- [ADR 0120](../../decisions/0120-confirm-the-nkf-0-5-release-candidate.md)
+  technically confirms only that exact implementation and private archive
+  under the recorded delegation. No publication, recommendation, ordinary
+  public producer adoption, post-adoption audit, or Task conclusion is yet
   claimed.
 
 ## Created-State Rule
@@ -445,17 +455,18 @@ specific created-state facts they explicitly replace.
 | [`adr-0115`](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md) | record | The exact evidence-bounded direction and all nonclaims govern 0.5 derivation; implementation is authorized only by this separately human-directed Task and may not add Product meaning. |
 | [`adr-0116`](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) | record | Derived 0.5 contracts and tooling must bind the exact independently audited authority set; technical acceptance adds no Product meaning and does not imply implementation, confirmation, publication, or adoption. |
 | [`adr-0119`](../../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md) | record | The distinct revision 2 pair is the current prepublication 0.5 authority; the [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) pair remains immutable historical provenance, and only the narrow reviewed retrospective Task-gate normalization corrects the technical contradiction without adding Product meaning. |
+| [`adr-0120`](../../decisions/0120-confirm-the-nkf-0-5-release-candidate.md) | record | Technical confirmation binds only exact release commit `777ea9a3...`, archive `e4677933...f99d9`, checker `95f53b25...`, and adopter `065116b7...`; publication, recommendation, ordinary adoption, and general Governing Use remain separate. |
 
 ### Mandatory Capabilities
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
 | Exact 0.5 authority pair faithfully implements all 23 confirmed Product boundaries without semantic expansion | proven | data-validity | none |
-| Stable lifecycle-neutral paths prevent Task or Design transitions from rewriting accepted immutable records | unknown | none | none |
-| Closed graph declarations and policies derive deterministic projections, impact closure, reasons, simultaneous freshness results, and receipts | unknown | none | none |
-| Missing completeness, relationships, Decision reconciliation, external observation, or baseline review fails closed with whole-root recovery | unknown | none | none |
-| Product, Technology, and actual NKF exercises match reviewed semantic oracles without hidden false negatives | unknown | none | none |
-| One public Adopt operation safely onboards 0.5 and deliberately migrates all supported predecessors with preservation, rollback, and idempotence | unknown | none | none |
+| Stable lifecycle-neutral paths prevent Task or Design transitions from rewriting accepted immutable records | proven | runtime-behaviour | none |
+| Closed graph declarations and policies derive deterministic projections, impact closure, reasons, simultaneous freshness results, and receipts | proven | runtime-behaviour | none |
+| Missing completeness, relationships, Decision reconciliation, external observation, or baseline review fails closed with whole-root recovery | proven | runtime-behaviour | none |
+| Product, Technology, and actual NKF exercises match reviewed semantic oracles without hidden false negatives | proven | runtime-behaviour | none |
+| One public Adopt operation safely onboards 0.5 and deliberately migrates all supported predecessors with preservation, rollback, and idempotence | proven | runtime-behaviour | none |
 | Current-system Realization remains exact through candidate, publication, producer adoption, and final merge | unknown | none | none |
 | Complete release membership, source reproduction, builds, archive bytes, modes, digests, and recommendation are deterministic and exact | unknown | none | none |
 | Prepublication candidate-Adopt and post-publication ordinary producer self-adoption each pass their complete gate and independent audit | unknown | none | none |

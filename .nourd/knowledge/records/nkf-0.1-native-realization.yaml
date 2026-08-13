@@ -7,7 +7,7 @@ source:
   path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: de084b8a2ca2fa3f7c214722eaa6f72d90f0d3abd7d6e2a60cb32340996366fa
+    value: 4c3f1edfe000912f6410d78d6eb7aed6416ca2664406b2fd392f995e634ddda8
 governance:
   lifecycle: immutable
   status: draft
@@ -77,3 +77,6 @@ relationships:
   - type: realizes
     target: adr-0075
     source_section: compatibility-verification-and-recovery
+  - type: realizes
+    target: adr-0120
+    source_section: governed-meaning-realized
