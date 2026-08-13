@@ -228,6 +228,8 @@ non_records:
     kind: task
   - path: tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
+  - path: tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md
+    kind: task
   - path: tasks/cancelled/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md
     kind: task
   - path: tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md
