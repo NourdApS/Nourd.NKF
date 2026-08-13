@@ -38,6 +38,16 @@ maintenance delegation in
 implementation, technical confirmation, publication, recommendation, and
 repository adoption remain separate later boundaries.
 
+[NKF 0.5](nkf-0.5.md) is the exact technically accepted successor source under
+[NKF-026](../tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+and [ADR 0116](../decisions/0116-accept-the-nkf-0-5-authority-pair.md). While
+this producer still declares NKF 0.4, the unchanged source is carried as
+bootstrap Evidence rather than falsely represented as an already adopted 0.5
+Specification record. Its digest-bound executable companion and freshness
+policy live at `contracts/nkf/0.5/`. Implementation, Realization confirmation,
+candidate adoption, publication, recommendation, and public producer adoption
+remain separate later boundaries.
+
 
 The Specification contains the automatically applicable non-selectable Common
 Specification and the Product and Technology Root Profiles. A bundle must

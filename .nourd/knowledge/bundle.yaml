@@ -126,6 +126,8 @@ non_records:
     kind: evidence
   - path: evidence/audits/nkf-025-pre-release-self-consumer-worktree-exercise.md
     kind: evidence
+  - path: evidence/audits/nkf-026-nkf-0-5-authority-pair-audit.md
+    kind: evidence
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
   - path: evidence/audits/pre-remediation-repository-audit.md
@@ -176,6 +178,8 @@ non_records:
     kind: navigation
   - path: specifications/README.md
     kind: navigation
+  - path: specifications/nkf-0.5.md
+    kind: evidence
   - path: tasks/README.md
     kind: navigation
   - path: tasks/active/README.md

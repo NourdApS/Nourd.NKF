@@ -289,8 +289,20 @@ stops at that boundary and returns to the Human Product Owner.
 - The frozen NKF 0.4 close contradiction is reproduced and recorded; no 0.5
   authority, implementation, Realization confirmation, candidate, release,
   recommendation, or adoption is claimed at Task creation.
-- This created-state snapshot records the exact plan and gate before normative
-  or implementation work begins.
+- The exact prospective normative Markdown, executable companion, and
+  freshness policy passed a restarted independent audit with a `CLEAN` verdict
+  recorded in the
+  [authority-pair audit](../../evidence/audits/nkf-026-nkf-0-5-authority-pair-audit.md).
+- [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md)
+  technically accepts only those three exact audited inputs under the Human
+  Product Owner's derivation delegation and adds no Product meaning.
+- While this producer remains governed by NKF 0.4, the unchanged 0.5 Markdown
+  is represented as bootstrap Evidence. Only candidate Adopt may apply the
+  accepted bootstrap lock and make its 0.5 YAML declaration the current
+  accepted Specification lifecycle authority.
+- No derived Schema, checker, adopter, fixture, documentation, Realization,
+  release candidate, publication, recommendation, or producer adoption is yet
+  claimed.
 
 ## Created-State Rule
 
@@ -330,12 +342,13 @@ specific created-state facts they explicitly replace.
 | [`adr-0113`](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md) | record | Exact NKF 0.4 is immutable predecessor authority; a vocabulary, topology, validation, lifecycle, or compatibility change requires a separately accepted 0.5 pair. |
 | [`adr-0114`](../../decisions/0114-confirm-the-nkf-0-4-release-candidate.md) | record | Technical confirmation binds only the exact audited 0.4 implementation and archive; 0.5 requires its own clean candidate audit and exact confirmation. |
 | [`adr-0115`](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md) | record | The exact evidence-bounded direction and all nonclaims govern 0.5 derivation; implementation is authorized only by this separately human-directed Task and may not add Product meaning. |
+| [`adr-0116`](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) | record | Derived 0.5 contracts and tooling must bind the exact independently audited authority set; technical acceptance adds no Product meaning and does not imply implementation, confirmation, publication, or adoption. |
 
 ### Mandatory Capabilities
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Exact 0.5 authority pair faithfully implements all 23 confirmed Product boundaries without semantic expansion | unknown | none | none |
+| Exact 0.5 authority pair faithfully implements all 23 confirmed Product boundaries without semantic expansion | proven | data-validity | none |
 | Stable lifecycle-neutral paths prevent Task or Design transitions from rewriting accepted immutable records | unknown | none | none |
 | Closed graph declarations and policies derive deterministic projections, impact closure, reasons, simultaneous freshness results, and receipts | unknown | none | none |
 | Missing completeness, relationships, Decision reconciliation, external observation, or baseline review fails closed with whole-root recovery | unknown | none | none |

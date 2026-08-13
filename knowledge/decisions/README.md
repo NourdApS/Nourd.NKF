@@ -128,6 +128,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0112: Allocate NKF 0.4 Security Maintenance](0112-allocate-nkf-0-4-security-maintenance.md)
 - [ADR 0113: Accept The NKF 0.4 Authority Pair](0113-accept-the-nkf-0-4-authority-pair.md)
 - [ADR 0114: Confirm The NKF 0.4 Release Candidate](0114-confirm-the-nkf-0-4-release-candidate.md)
+- [ADR 0116: Accept The NKF 0.5 Authority Pair](0116-accept-the-nkf-0-5-authority-pair.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
