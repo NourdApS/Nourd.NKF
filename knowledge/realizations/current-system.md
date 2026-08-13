@@ -252,9 +252,11 @@ arguments after the repository was current. The helper now confines those
 inputs to the first migration invocation and performs repeat-current Adopt
 with only the exact recommendation, archive, and candidate binding.
 The following migrated gate exposed one default five-second Vitest timeout on
-an otherwise passing multi-process onboarding transaction; that integration
-case now carries an explicit bounded fifteen-second timeout without changing
-its behavior or assertions.
+an otherwise passing multi-process onboarding transaction. A fresh independent
+candidate audit then reproduced the same timing fragility in a different
+multi-process onboarding case. The harness now gives every test one explicit
+bounded fifteen-second default while preserving the existing longer overrides
+for deliberately broader cases; no test behavior or assertion changed.
 No exact 0.5 release candidate has yet
 received candidate-bound Adopt, independent candidate audit, technical
 confirmation, publication, recommendation, or ordinary producer adoption.

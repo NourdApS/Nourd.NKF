@@ -1391,7 +1391,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: bcafff4f52d87185bf6b92261a23e722a7e0bee239af5cd87dcdcd743ba54110
+      value: 159a5486732b206ef1141eeb5948e1afe3a440771ff10ac0ee5bb3a4dade2662
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts
@@ -1567,6 +1567,6 @@ governed_artifacts:
     path: vitest.config.ts
     digest:
       algorithm: sha-256
-      value: d3f713bf444d5606c1e46d9740aaf2adab61c9a6af71e1b0d234cc8e7389fa5d
+      value: 32142295d9c8992601b798387eead5fe62365aec6dac9d6ef1ff951eb1ba0eaa
     record: nkf-0.1-native-realization
     source_section: durable-mapping

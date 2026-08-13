@@ -393,11 +393,14 @@ stops at that boundary and returns to the Human Product Owner.
   `migrated` and `current` end to end.
 - That replacement candidate reached the migrated producer gate without the
   prior functional failures, but one multi-process onboarding transaction
-  crossed Vitest's default five-second timeout. The same case normally runs
-  close to that boundary and emitted no product diagnostic. Its integration
-  timeout is now an explicit bounded fifteen seconds; this changes neither
-  behavior nor assertions. The timed-out archive remains invalid as release
-  evidence and must be replaced.
+  crossed Vitest's default five-second timeout. A fresh independent audit of
+  the next exact candidate then reproduced the same fragility in a different
+  multi-process onboarding case. The first test-level correction was therefore
+  too narrow. The harness now gives every test one explicit bounded
+  fifteen-second default while retaining the existing longer overrides for
+  deliberately broader cases; behavior and assertions are unchanged. Both
+  timing-fragile archives remain invalid as release evidence and a later exact
+  candidate must pass from clean dependencies under this common bound.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.
