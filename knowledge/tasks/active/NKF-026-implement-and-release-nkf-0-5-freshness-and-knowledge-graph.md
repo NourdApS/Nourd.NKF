@@ -340,6 +340,15 @@ stops at that boundary and returns to the Human Product Owner.
   [ADR 0116](../../decisions/0116-accept-the-nkf-0-5-authority-pair.md) pair
   only as prepublication authority selected for the 0.5 release and preserves
   that Decision plus both predecessor bytes as immutable historical facts.
+- The first exact archive construction exposed one producer-only process-tool
+  gap before publication: `scripts/exercise-release-candidate.mjs` still
+  rejected every version except 0.4 and had no way to receive 0.5's required
+  external whole-root review. The generic helper now dispatches 0.4 and 0.5,
+  requires a named review only for 0.5, applies the repository-owner-approved
+  breaking migration, expects `migrated`, runs the full producer gate, and
+  requires `current` on repeat. This source correction invalidates that first
+  candidate archive and requires a new exact candidate before audit or
+  confirmation.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.

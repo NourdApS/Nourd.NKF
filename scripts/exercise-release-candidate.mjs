@@ -26,24 +26,36 @@ function run(command, args, options = {}) {
 }
 
 const values = process.argv.slice(2);
-if (values.length < 4 || values[2] !== "--source-root") {
+if (
+  values.length < 4 ||
+  values[2] !== "--source-root" ||
+  (values.length !== 4 && (values.length !== 6 || values[4] !== "--review"))
+) {
   fail(
-    "Usage: node scripts/exercise-release-candidate.mjs <archive> <sha256> --source-root <repository>",
+    "Usage: node scripts/exercise-release-candidate.mjs <archive> <sha256> --source-root <repository> [--review <semantic-review>]",
   );
 }
 const archivePath = path.resolve(values[0]);
 const expectedSha256 = values[1];
 const sourceRoot = path.resolve(values[3]);
+const reviewPath = values[5] === undefined ? undefined : path.resolve(values[5]);
 const archiveBytes = await readFile(archivePath);
 const verification = verifyReleaseArchive(archiveBytes, expectedSha256, {
   sourceRoot,
 });
-if (verification.manifest.nkf_version !== "0.4") {
-  fail("The exact-candidate exercise requires an NKF 0.4 archive.");
+const nkfVersion = verification.manifest.nkf_version;
+if (!['0.4', '0.5'].includes(nkfVersion)) {
+  fail("The exact-candidate exercise requires an NKF 0.4 or 0.5 archive.");
+}
+if (nkfVersion === "0.5" && reviewPath === undefined) {
+  fail("The NKF 0.5 exact-candidate exercise requires --review with one external whole-root semantic-review path.");
+}
+if (nkfVersion === "0.4" && reviewPath !== undefined) {
+  fail("The NKF 0.4 exact-candidate exercise does not accept --review.");
 }
 const source = await evaluateReleaseSourceProvenance(sourceRoot, verification);
 
-const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-4-candidate-exercise-"));
+const temporary = await mkdtemp(path.join(os.tmpdir(), `nkf-${nkfVersion}-candidate-exercise-`));
 try {
   const project = path.join(temporary, "project");
   run("git", ["clone", "--no-hardlinks", "--local", sourceRoot, project]);
@@ -74,9 +86,44 @@ try {
   await chmod(adopter, 0o755);
 
   const manifest = verification.manifest;
+  const compatibility = nkfVersion === "0.5"
+    ? ["0.1", "0.2", "0.3", "0.4", "0.5"].map((from) => ({
+        from_nkf_version: from,
+        classification: from === "0.5" ? "non-breaking" : "breaking",
+        migration_required: from !== "0.5",
+        summary: from === "0.5"
+          ? "NKF 0.5 refreshes the exact release and integration without semantic migration."
+          : `NKF ${from} requires explicit repository-owner approval for the governed breaking migration to NKF 0.5.`,
+      }))
+    : [
+        {
+          from_nkf_version: "0.1",
+          classification: "breaking",
+          migration_required: true,
+          summary: "NKF 0.1 requires explicit approved migration to NKF 0.4.",
+        },
+        {
+          from_nkf_version: "0.2",
+          classification: "breaking",
+          migration_required: true,
+          summary: "NKF 0.2 requires explicit approved migration to NKF 0.4.",
+        },
+        {
+          from_nkf_version: "0.3",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.3 advances non-breakingly to NKF 0.4 without knowledge migration.",
+        },
+        {
+          from_nkf_version: "0.4",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.4 refreshes the exact release and integration.",
+        },
+      ];
   const catalog = {
     contract: "nkf.release-candidate-binding",
-    nkf_version: "0.4",
+    nkf_version: nkfVersion,
     state: "candidate",
     channel: "internal-exact-candidate",
     archive: {
@@ -97,32 +144,7 @@ try {
       "nkf.profile.product",
       "nkf.profile.technology",
     ],
-    compatibility: [
-      {
-        from_nkf_version: "0.1",
-        classification: "breaking",
-        migration_required: true,
-        summary: "NKF 0.1 requires explicit approved migration to NKF 0.4.",
-      },
-      {
-        from_nkf_version: "0.2",
-        classification: "breaking",
-        migration_required: true,
-        summary: "NKF 0.2 requires explicit approved migration to NKF 0.4.",
-      },
-      {
-        from_nkf_version: "0.3",
-        classification: "non-breaking",
-        migration_required: false,
-        summary: "NKF 0.3 advances non-breakingly to NKF 0.4 without knowledge migration.",
-      },
-      {
-        from_nkf_version: "0.4",
-        classification: "non-breaking",
-        migration_required: false,
-        summary: "NKF 0.4 refreshes the exact release and integration.",
-      },
-    ],
+    compatibility,
     release: {
       prerelease: true,
       published_at: null,
@@ -144,13 +166,17 @@ try {
     localArchive,
     "--candidate-binding",
     verification.archive_sha256,
+    ...(nkfVersion === "0.5"
+      ? ["--accept-breaking", "repository-owner", "--review", reviewPath]
+      : []),
   ];
   const first = run(process.execPath, baseArguments);
   const firstResult = parseStrictJson(Buffer.from(first.stdout, "utf8"));
-  if (firstResult.state !== "updated") {
-    fail(`First candidate Adopt returned ${firstResult.state}, not updated.`);
+  const expectedFirstState = nkfVersion === "0.5" ? "migrated" : "updated";
+  if (firstResult.state !== expectedFirstState) {
+    fail(`First candidate Adopt returned ${firstResult.state}, not ${expectedFirstState}.`);
   }
-  if (
+  if (nkfVersion === "0.4" &&
     execFileSync("git", ["status", "--porcelain", "--", "knowledge"], {
       cwd: project,
       encoding: "utf8",
@@ -184,7 +210,7 @@ try {
   process.stdout.write(
     `${JSON.stringify({
       contract: "nkf.release-candidate-exercise",
-      nkf_version: "0.4",
+      nkf_version: nkfVersion,
       state: "passed",
       archive_sha256: verification.archive_sha256,
       release_commit: verification.release_commit,

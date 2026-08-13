@@ -227,7 +227,9 @@ semantic-review boundary. One public Adopt operation handles onboarding,
 migration, update, and current-state verification. The implementation
 currently passes 29 test files and 216 tests, including 27 Adopt integration
 cases, a full producer 0.4-to-0.5 migration exercise, and a stable native Task
-transition exercise. These are technical
+transition exercise. The source-level exact-candidate helper now dispatches
+both 0.4 and 0.5 and requires 0.5's external whole-root review before the
+candidate-bound migration. These are technical
 and conformance observations only. No exact 0.5 release candidate has yet
 received candidate-bound Adopt, independent candidate audit, technical
 confirmation, publication, recommendation, or ordinary producer adoption.
