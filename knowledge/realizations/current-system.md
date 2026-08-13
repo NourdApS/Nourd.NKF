@@ -239,6 +239,13 @@ stopped at 0.4; the guard and its focused native-0.5 bundle-plus-skill
 regression are now derived for 0.5. Independent semantic review also requires
 full parent-prefixed identifiers for nested Specification sections. The
 affected archive and review were discarded rather than normalized after use.
+The next migrated producer gate exposed and corrected three producer-test
+assumptions that depended on the checkout still declaring 0.4: the producer
+migration fixture now materializes the exact confirmed 0.4 release commit,
+release enumeration includes 0.5's release set, and predecessor topology tests
+construct an explicit 0.2 declaration envelope instead of importing the live
+producer's native declaration shape. These corrections change no accepted
+format meaning.
 No exact 0.5 release candidate has yet
 received candidate-bound Adopt, independent candidate audit, technical
 confirmation, publication, recommendation, or ordinary producer adoption.

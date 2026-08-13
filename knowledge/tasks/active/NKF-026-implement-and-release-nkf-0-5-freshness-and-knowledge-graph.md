@@ -371,6 +371,17 @@ stops at that boundary and returns to the Human Product Owner.
   archive and completed review are discarded; both corrections require a new
   exact release commit, archive, whole-root review, candidate exercise, and
   independent audit.
+- The following candidate then reached the native 0.5 producer host gate and
+  exposed three version-coupled test assumptions: one integration case copied
+  the live producer instead of the exact confirmed 0.4 release source; release
+  enumeration treated only 0.3 and 0.4 as release-set versions; and a topology
+  test copied a native producer declaration into an immutable 0.2 fixture
+  without projecting the predecessor shape. The tests now materialize the
+  exact confirmed 0.4 producer commit, recognize 0.5 release-set enumeration,
+  and deliberately construct the 0.2 declaration envelope needed by the
+  topology subject. All three failed suites pass in the current 0.4 producer
+  checkout. The candidate remains discarded and must be rebuilt and exercised
+  from a new exact commit.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.

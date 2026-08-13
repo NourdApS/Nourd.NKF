@@ -113,7 +113,7 @@ describe("deterministic governed mechanics", () => {
       "utf8",
     );
     const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.2";
-    const usesReleaseSet = ["0.3", "0.4"].includes(declared);
+    const usesReleaseSet = ["0.3", "0.4", "0.5"].includes(declared);
     const releaseSet = usesReleaseSet
       ? await readReleaseSet(repositoryRoot, declared)
       : undefined;

@@ -1375,7 +1375,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: 4ee6cb6ac44368498daecfc5f44dabde4f1197c6bf073b46097daca5877e7d85
+      value: dc3fa7f10f2b0da7e80220c03ac2dfb372cbd5fe58aa7365f8434713f1440698
     record: nkf-0.1-native-realization
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts
@@ -1391,7 +1391,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: f8eb3798cac67edc6de0bf100fdd68820601e509396c75edf5442979e7acdded
+      value: 159a5486732b206ef1141eeb5948e1afe3a440771ff10ac0ee5bb3a4dade2662
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts
@@ -1479,7 +1479,7 @@ governed_artifacts:
     path: test/project-source.test.ts
     digest:
       algorithm: sha-256
-      value: 42e5b7d427c5e46608816dc3f44794763b15a5c7174962178def22cab95f1f7e
+      value: 266f1352e2757d6905b9f4be7fde48fa4bab71202987d3c1590b70767e9799c5
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-public-docs-test-ts

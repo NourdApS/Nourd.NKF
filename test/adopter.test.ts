@@ -48,6 +48,7 @@ let repairArchiveSha256: string;
 
 const validFixture0_4 = path.join(repositoryRoot, "fixtures/valid/minimal-0-4");
 const minimalReview0_5 = path.join(repositoryRoot, "fixtures/reviews/minimal-0-5.yaml");
+const producer0_4ReleaseCommit = "29880a398c26fbc126b13cdaaebe9cf5b7fe7734";
 
 function completeGeneratedReview(reviewPath: string) {
   const review = YAML.parse(readFileSync(reviewPath, "utf8"));
@@ -661,14 +662,18 @@ describe("NKF consumer adopter", () => {
   it("rebinds an exact producer host registry during breaking 0.4-to-0.5 adoption", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
     const project = path.join(parent, "project");
-    await cp(repositoryRoot, project, {
-      recursive: true,
-      filter(source) {
-        const relative = path.relative(repositoryRoot, source);
-        if (relative === "") return true;
-        return ![".git", "node_modules"].includes(relative.split(path.sep)[0] ?? "");
-      },
+    await mkdir(project);
+    const archived = spawnSync(
+      "git",
+      ["-C", repositoryRoot, "archive", "--format=tar", producer0_4ReleaseCommit],
+      { encoding: null, maxBuffer: 64 * 1024 * 1024 },
+    );
+    expect(archived.status, archived.stderr?.toString()).toBe(0);
+    const extracted = spawnSync("tar", ["-x", "-C", project], {
+      input: archived.stdout,
+      encoding: null,
     });
+    expect(extracted.status, extracted.stderr?.toString()).toBe(0);
 
     const reviewPath = path.join(parent, "whole-root-review.yaml");
     const preparation = runAdopt(project, [
