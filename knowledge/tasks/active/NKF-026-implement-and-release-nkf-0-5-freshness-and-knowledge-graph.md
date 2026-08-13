@@ -391,6 +391,13 @@ stops at that boundary and returns to the Human Product Owner.
   Adopt with no breaking-only inputs. The archive is discarded despite the
   successful migration and gate; a later exact candidate must prove both
   `migrated` and `current` end to end.
+- That replacement candidate reached the migrated producer gate without the
+  prior functional failures, but one multi-process onboarding transaction
+  crossed Vitest's default five-second timeout. The same case normally runs
+  close to that boundary and emitted no product diagnostic. Its integration
+  timeout is now an explicit bounded fifteen seconds; this changes neither
+  behavior nor assertions. The timed-out archive remains invalid as release
+  evidence and must be replaced.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.

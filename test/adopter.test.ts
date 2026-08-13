@@ -1698,7 +1698,7 @@ describe("NKF consumer adopter", () => {
     expect(applied.status, applied.stderr).toBe(0);
     expect(await readFile(source, "utf8")).toBe(revised);
     expect(JSON.parse(applied.stdout).paths.changed).toContain("knowledge/notes.md");
-  });
+  }, 15_000);
 
   it("keeps semantic assessment agent-led and fails closed for unresolved or unsafe inputs", async () => {
     const unresolved = await createEmptyProject();
