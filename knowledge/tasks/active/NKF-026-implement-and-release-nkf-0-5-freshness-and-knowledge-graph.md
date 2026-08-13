@@ -382,6 +382,15 @@ stops at that boundary and returns to the Human Product Owner.
   topology subject. All three failed suites pass in the current 0.4 producer
   checkout. The candidate remains discarded and must be rebuilt and exercised
   from a new exact commit.
+- The next candidate passed breaking migration and the complete native 0.5
+  producer gate, then the candidate helper incorrectly reused the first
+  invocation's breaking approval and external review on the repeat-current
+  invocation. Native 0.5 correctly rejects breaking authorization for a
+  non-breaking current check. The helper now separates common candidate
+  binding arguments from first-stage migration authority and repeats public
+  Adopt with no breaking-only inputs. The archive is discarded despite the
+  successful migration and gate; a later exact candidate must prove both
+  `migrated` and `current` end to end.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.

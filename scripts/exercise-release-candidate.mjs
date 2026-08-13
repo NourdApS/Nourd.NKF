@@ -156,7 +156,7 @@ try {
   await writeFile(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`, {
     flag: "wx",
   });
-  const baseArguments = [
+  const commonArguments = [
     adopter,
     "--project",
     project,
@@ -166,11 +166,14 @@ try {
     localArchive,
     "--candidate-binding",
     verification.archive_sha256,
+  ];
+  const firstArguments = [
+    ...commonArguments,
     ...(nkfVersion === "0.5"
       ? ["--accept-breaking", "repository-owner", "--review", reviewPath]
       : []),
   ];
-  const first = run(process.execPath, baseArguments);
+  const first = run(process.execPath, firstArguments);
   const firstResult = parseStrictJson(Buffer.from(first.stdout, "utf8"));
   const expectedFirstState = nkfVersion === "0.5" ? "migrated" : "updated";
   if (firstResult.state !== expectedFirstState) {
@@ -192,7 +195,7 @@ try {
   if (sha256(rebuiltChecker) !== verification.checker_sha256) {
     fail("The self-adopted producer gate did not rebuild the manifest-bound checker.");
   }
-  const second = run(process.execPath, baseArguments);
+  const second = run(process.execPath, commonArguments);
   const secondResult = parseStrictJson(Buffer.from(second.stdout, "utf8"));
   if (secondResult.state !== "current") {
     fail(`Second candidate Adopt returned ${secondResult.state}, not current.`);

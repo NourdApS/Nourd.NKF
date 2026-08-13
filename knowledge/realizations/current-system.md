@@ -246,6 +246,11 @@ release enumeration includes 0.5's release set, and predecessor topology tests
 construct an explicit 0.2 declaration envelope instead of importing the live
 producer's native declaration shape. These corrections change no accepted
 format meaning.
+The subsequent exact-candidate migration and full native 0.5 producer gate
+passed, but its source-level helper repeated breaking-only approval and review
+arguments after the repository was current. The helper now confines those
+inputs to the first migration invocation and performs repeat-current Adopt
+with only the exact recommendation, archive, and candidate binding.
 No exact 0.5 release candidate has yet
 received candidate-bound Adopt, independent candidate audit, technical
 confirmation, publication, recommendation, or ordinary producer adoption.
