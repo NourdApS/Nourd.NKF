@@ -24,9 +24,13 @@ function jcs(value) {
 const key = (node) => jcs(node);
 
 function firstHeading(bytes) {
-  const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-  const heading = text.split(/\r?\n/u).find((line) => line.startsWith("# "))?.slice(2).trim();
-  return heading === undefined || heading === "" ? "REVIEW_HEADING_REQUIRED" : heading;
+  try {
+    const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    const heading = text.split(/\r?\n/u).find((line) => line.startsWith("# "))?.slice(2).trim();
+    return heading === undefined || heading === "" ? null : heading;
+  } catch {
+    return null;
+  }
 }
 
 async function declarations(project, bundle) {
@@ -93,6 +97,21 @@ export async function writeReviewTemplate0_5({ projectRoot, checker, reviewPath,
       .filter((entry) => entry.document !== undefined)
       .map((entry) => [entry.document.id, entry]),
   );
+  const governingBasis = (preferredSection) => {
+    const preferred = recordsById.get("nkf-0.5-specification-revision-2");
+    const preferredMatch = preferred?.sections?.find((section) => section.id === preferredSection);
+    if (preferredMatch !== undefined) {
+      return {
+        node: { kind: "record", id: preferred.id },
+        source: { section: preferredMatch.id },
+      };
+    }
+    const root = recordsById.get(bundle.root.record);
+    return {
+      node: { kind: "record", id: bundle.root.record },
+      source: { section: root?.sections?.[0]?.id ?? "REVIEW_SECTION_REQUIRED" },
+    };
+  };
   const basisFor = async (node) => {
     if (node.kind === "record" || node.kind === "entity") {
       const recordId = node.kind === "record" ? node.id : node.record;
@@ -106,11 +125,18 @@ export async function writeReviewTemplate0_5({ projectRoot, checker, reviewPath,
     const bytes = declaration === undefined
       ? null
       : await readFile(path.join(project, bundle.knowledge_root, ...declaration.path.split("/")));
+    const heading = bytes === null ? null : firstHeading(bytes);
+    if (heading === null) {
+      // A represented non-Markdown evidence file is still a document node, but
+      // it cannot supply a CommonMark heading. Give the reviewer a resolvable
+      // governing basis to assess or replace instead of an impossible marker.
+      return governingBasis("conformance");
+    }
     return {
       node,
       source: {
         heading: {
-          heading_path: [bytes === null ? "REVIEW_HEADING_REQUIRED" : firstHeading(bytes)],
+          heading_path: [heading],
           occurrence: 1,
         },
       },
@@ -125,7 +151,7 @@ export async function writeReviewTemplate0_5({ projectRoot, checker, reviewPath,
       basis: await basisFor(entry.node),
     });
   }
-  const fallbackBasis = await basisFor(result.nodes[0].node);
+  const fallbackBasis = governingBasis("relationships");
   const acceptedDecisions = records
     .filter((record) => record.type === "decision" && record.governance?.status === "accepted")
     .map((record) => record.id)

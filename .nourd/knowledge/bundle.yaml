@@ -359,7 +359,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 21c5fcb37afda75dfb51a50a610cdaa8a12afbee49d2b50ee619a0d9d9e1dac9
+      value: 065116b703c9a636c94768ecfb514a7859174929d94ee3e446c6c48a3dfb1870
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-2-nourd-knowledge-bundle-yaml
@@ -1063,7 +1063,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: 21c5fcb37afda75dfb51a50a610cdaa8a12afbee49d2b50ee619a0d9d9e1dac9
+      value: 065116b703c9a636c94768ecfb514a7859174929d94ee3e446c6c48a3dfb1870
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md

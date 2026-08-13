@@ -349,6 +349,17 @@ stops at that boundary and returns to the Human Product Owner.
   requires `current` on repeat. This source correction invalidates that first
   candidate archive and requires a new exact candidate before audit or
   confirmation.
+- The replacement candidate's fresh review template exposed a second technical
+  defect before mutation: an explicitly represented YAML Evidence document
+  cannot supply the CommonMark heading that the template generator previously
+  demanded as its suggested basis, and the relationship vocabulary was seeded
+  from the first candidate node instead of the accepted 0.5 relationship
+  section. The generator now supplies a resolvable governing record-section
+  basis for represented non-Markdown documents, uses the accepted 0.5
+  relationship section when this producer carries it, and falls back to the
+  bundle Root record for ordinary consumers. A focused regression exercises
+  the non-Markdown case. This finding invalidates the replacement archive too;
+  no impossible or generic review is accepted as evidence.
 - No derived Schema, checker, adopter, fixture, documentation, Realization,
   release candidate, publication, recommendation, or producer adoption is yet
   claimed.

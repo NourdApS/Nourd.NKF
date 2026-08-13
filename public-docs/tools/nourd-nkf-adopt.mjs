@@ -21113,9 +21113,13 @@ function jcs(value) {
 }
 var key = (node) => jcs(node);
 function firstHeading(bytes) {
-  const text3 = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-  const heading2 = text3.split(/\r?\n/u).find((line) => line.startsWith("# "))?.slice(2).trim();
-  return heading2 === void 0 || heading2 === "" ? "REVIEW_HEADING_REQUIRED" : heading2;
+  try {
+    const text3 = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    const heading2 = text3.split(/\r?\n/u).find((line) => line.startsWith("# "))?.slice(2).trim();
+    return heading2 === void 0 || heading2 === "" ? null : heading2;
+  } catch {
+    return null;
+  }
 }
 async function declarations(project, bundle) {
   const root = path5.join(project, ".nourd/knowledge/records");
@@ -21177,6 +21181,21 @@ async function writeReviewTemplate0_5({ projectRoot, checker, reviewPath, retros
   const documentsById = new Map(
     (bundle.non_records ?? []).filter((entry) => entry.document !== void 0).map((entry) => [entry.document.id, entry])
   );
+  const governingBasis = (preferredSection) => {
+    const preferred = recordsById.get("nkf-0.5-specification-revision-2");
+    const preferredMatch = preferred?.sections?.find((section2) => section2.id === preferredSection);
+    if (preferredMatch !== void 0) {
+      return {
+        node: { kind: "record", id: preferred.id },
+        source: { section: preferredMatch.id }
+      };
+    }
+    const root = recordsById.get(bundle.root.record);
+    return {
+      node: { kind: "record", id: bundle.root.record },
+      source: { section: root?.sections?.[0]?.id ?? "REVIEW_SECTION_REQUIRED" }
+    };
+  };
   const basisFor = async (node) => {
     if (node.kind === "record" || node.kind === "entity") {
       const recordId = node.kind === "record" ? node.id : node.record;
@@ -21188,11 +21207,15 @@ async function writeReviewTemplate0_5({ projectRoot, checker, reviewPath, retros
     }
     const declaration = documentsById.get(node.id);
     const bytes = declaration === void 0 ? null : await readFile5(path5.join(project, bundle.knowledge_root, ...declaration.path.split("/")));
+    const heading2 = bytes === null ? null : firstHeading(bytes);
+    if (heading2 === null) {
+      return governingBasis("conformance");
+    }
     return {
       node,
       source: {
         heading: {
-          heading_path: [bytes === null ? "REVIEW_HEADING_REQUIRED" : firstHeading(bytes)],
+          heading_path: [heading2],
           occurrence: 1
         }
       }
@@ -21207,7 +21230,7 @@ async function writeReviewTemplate0_5({ projectRoot, checker, reviewPath, retros
       basis: await basisFor(entry.node)
     });
   }
-  const fallbackBasis = await basisFor(result.nodes[0].node);
+  const fallbackBasis = governingBasis("relationships");
   const acceptedDecisions = records.filter((record) => record.type === "decision" && record.governance?.status === "accepted").map((record) => record.id).sort();
   const review = {
     contract: "nkf.semantic-review-input",

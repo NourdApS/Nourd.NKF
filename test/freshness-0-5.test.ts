@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { appendFile, cp, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -7,7 +8,7 @@ import { validateProject } from "../src/checker/checker.js";
 // @ts-expect-error Repository migration tooling is a directly executable ESM module.
 import { migrateProjectTo0_5 } from "../scripts/migration/0-5-core.mjs";
 // @ts-expect-error Repository freshness tooling is a directly executable ESM module.
-import { sealBaseline0_5 } from "../scripts/freshness/seal-baseline-0-5.mjs";
+import { sealBaseline0_5, writeReviewTemplate0_5 } from "../scripts/freshness/seal-baseline-0-5.mjs";
 import { repositoryRoot } from "./helpers.js";
 
 const fixture = path.join(repositoryRoot, "fixtures/valid/minimal-0-4");
@@ -95,6 +96,39 @@ beforeAll(async () => {
 });
 
 describe("NKF 0.5 deterministic freshness", () => {
+  it("gives a represented non-Markdown document a resolvable review basis", async () => {
+    const { parent, projectRoot } = await project();
+    const evidencePath = path.join(projectRoot, "knowledge/evidence.yaml");
+    const evidenceBytes = Buffer.from("contract: controlled-evidence\nvalue: exact\n", "utf8");
+    await writeFile(evidencePath, evidenceBytes);
+    const bundlePath = path.join(projectRoot, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
+    bundle.non_records.push({
+      path: "evidence.yaml",
+      kind: "evidence",
+      reason: "Controlled non-Markdown evidence exercises document review-basis generation.",
+      document: {
+        id: "document-non-markdown-evidence",
+        stable_path: "evidence.yaml",
+        digest: {
+          algorithm: "sha-256",
+          value: createHash("sha256").update(evidenceBytes).digest("hex"),
+        },
+        relationships: [],
+      },
+    });
+    await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+    const reviewPath = path.join(parent, "generated-review.yaml");
+    await writeReviewTemplate0_5({ projectRoot, checker, reviewPath });
+    const review = YAML.parse(await readFile(reviewPath, "utf8"));
+    const entry = review.nodes.find((item: { node: { id?: string } }) => item.node.id === "document-non-markdown-evidence");
+    expect(entry.basis).toEqual({
+      node: { kind: "record", id: "product" },
+      source: { section: "product-definition" },
+    });
+    expect(review.relationships.every((item: { basis: unknown }) => JSON.stringify(item.basis) === JSON.stringify(entry.basis))).toBe(true);
+  });
+
   it("migrates without rewriting canonical Markdown and separates conformance from readiness", async () => {
     const { projectRoot } = await project();
     const before = await readFile(path.join(fixture, "knowledge/product.md"));
