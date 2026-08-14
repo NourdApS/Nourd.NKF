@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 89b0738219fb4cda6b7b998576fa45269b06de9dedc2c278432944bc0d8c5b29
+  value: 9b90636d6d2f5b42e1cc07ad17df31e598b28bc9f3a259ecd2577e784198b35c
 policy:
   id: nkf.freshness-policy.0.6
   digest:
@@ -166,7 +166,7 @@ node_revisions:
       id: NKF-028
     revision:
       algorithm: sha-256
-      value: 29b9adbfa298df3aef458bf3f6cf2ca69d8c4e71c17246ad71d98a17f99c56cf
+      value: 5cfce897f4bb564273a87ceb5c5ab61cf68994e0d1c3f3fddcee35082e7064a1
   - node:
       kind: record
       id: adr-0001
@@ -1090,7 +1090,7 @@ node_revisions:
       id: design-nkf-028-verifiable-delta-review
     revision:
       algorithm: sha-256
-      value: 4e4cce81e245011c33a9cdcd5c461c449112429456abbd724c3e7d436923cc58
+      value: dddf634b2a383e7ca243d8954bf7eab5bab806c49e02dc271e976537251494f6
   - node:
       kind: record
       id: design-nkf-record-v2-responsibility-bindings
@@ -1624,7 +1624,7 @@ node_revisions:
       id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
     revision:
       algorithm: sha-256
-      value: e41017e68c1c14705aae4a9bbfa8625805bfd146602447f6b4454d967e41ee67
+      value: e84e186bb5f3e71220a43441941b456e9aa2b109bf95d2e72c237443c6a243b0
   - node:
       kind: document
       id: document-f8e5e7110f4dfeb75c39dc67c7aec9379776d2759866ef47dc49fc9e89049b7e
@@ -1643,6 +1643,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 083e7fd6678087713f269918daf3be5c560390eabf9a39b01a2b30f4e52f7b4a
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    revision:
+      algorithm: sha-256
+      value: e8db87e6cbe2b8dbc06ade3d3ea2c3e42ca7c8360b4e7ce697a2f2271d4a5948
   - node:
       kind: record
       id: nkf
@@ -14053,6 +14059,51 @@ applicability_coverage:
       source:
         section: conformance
   - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-7-specification
+      source:
+        heading:
+          heading_path:
+            - NKF 0.7 — Product And Technology Knowledge Format
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-7-specification
+      source:
+        heading:
+          heading_path:
+            - NKF 0.7 — Product And Technology Knowledge Format
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-7-specification
+      source:
+        heading:
+          heading_path:
+            - NKF 0.7 — Product And Technology Knowledge Format
+          occurrence: 1
+  - node:
       kind: record
       id: nkf
     purpose: change-impact
@@ -18062,32 +18113,38 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-14T21:29:05.000Z
+  reviewed_at: 2026-08-14T21:55:09.000Z
   claim: semantically-reviewed-whole-root
   observations:
-    - id: nkf-0-7-direction-adopted
+    - id: nkf-0-7-candidate-authority-authored
       subject:
-        kind: record
-        id: adr-0126
+        kind: document
+        id: document-nkf-0-7-specification
       basis:
         node:
-          kind: record
-          id: adr-0126
+          kind: document
+          id: document-nkf-0-7-specification
         source:
-          section: decision
-      finding: "The Human Product Owner adopted the NKF 0.7 verifiable delta review direction on 2026-08-14 after resolving all four originally reserved matters: the support window stays current plus one predecessor until further explicit notice with no widening by adoption event, the current-system successor identifier is nkf-current-system, the neutral directories extend the tasks/items pattern as designs/items and realizations/items, and the post-audit technical-confirmation Decision is mandatory for every future release and invalid without its bound fresh independent audit. The Decision adopts direction only: it accepts no authority pair, confirms nothing, authorizes no publication, and concludes no Task."
-    - id: design-resolved-and-adopted
+          heading:
+            heading_path:
+              - NKF 0.7 — Product And Technology Knowledge Format
+            occurrence: 1
+      finding: "The candidate NKF 0.7 normative Specification was derived from the immutable 0.6 revision 3 predecessor under the adopted ADR 0126 direction and is represented as non-authoritative candidate Evidence at its exact future canonical path, as the prepublication sequence requires. Its executable companion, evaluation policy, and seeded-and-judged version-delta declaration are carried as prospective repository sources outside the knowledge root. Nothing is accepted: the candidate carries placeholder authority digests, the delta declaration classifications await the independent authority audit, and only a later acceptance Decision can bind exact bytes."
+    - id: task-design-and-evidence-figures-corrected
       subject:
-        kind: record
-        id: design-nkf-028-verifiable-delta-review
+        kind: document
+        id: NKF-028
       basis:
         node:
-          kind: record
-          id: design-nkf-028-verifiable-delta-review
+          kind: document
+          id: NKF-028
         source:
-          section: unresolved-matters
-      finding: The Design's Unresolved Matters section now records that no matter remains unresolved and carries the four explicit Human Product Owner resolutions in its sections; its disposition is adopted through ADR 0126 while the record remains living draft proposal knowledge. The completed NKF-027 Task received one mechanical deep-link edit because the new ADR 0126 identifier made a previously exempt plain mention resolvable; the edit changes reference form only and no NKF-027 meaning.
+          heading:
+            heading_path:
+              - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+            occurrence: 1
+      finding: The predecessor rule-registry size stated in the owning Task, the adopted Design, and the assessment Evidence was corrected from 503 to the parsed-registry figure of 194 after the deterministic version-delta seed exposed the earlier unbounded-scan measurement error; the Evidence records the correction explicitly. The seeded declaration classifies 185 rules identical and 28 semantically-new, including the reviewer's deliberate downgrade of nine registry-identical rules whose 0.7 meaning changed. No other Task, Design, or Evidence meaning changed.
   limitations:
-    - This is a delta re-affirmation of the previously sealed review. Only the new ADR 0126 record, the resolved and adopted NKF 0.7 Design record, the mechanical NKF-027 deep-link edit, and the navigation entries were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
-    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
+    - This is a delta re-affirmation of the previously sealed review. Only the new candidate 0.7 Specification Evidence, the corrected registry figures in the owning Task, adopted Design, and assessment Evidence, and their declarations were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
+    - The review covers knowledge semantics only. It accepts no record, accepts no candidate authority, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
   disputed: false

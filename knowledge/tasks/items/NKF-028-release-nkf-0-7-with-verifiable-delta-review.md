@@ -184,7 +184,7 @@ compatibility returns to the Human Product Owner.
 2. Per-node carry-forward derived from digest identity and the per-rule
    delta declaration, never asserted by a reviewer.
 3. Per-rule version-delta declaration in the accepted authority, seeded by a
-   deterministic registry diff over the 503-rule predecessor registry, with
+   deterministic registry diff over the 194-rule predecessor registry, with
    explicit rule-identity mapping for renames.
 4. Persisted decision classifications keyed on decision digest and purpose.
 5. Deterministic `review --scaffold` and record-declaration scaffold

@@ -157,7 +157,7 @@ catalog's compatibility table shrinks and older repositories must be told
 ## 8. Per-rule delta declaration scale
 
 The 0.6 registry (`contracts/nkf/0.6/revision-3/nkf.yaml:3080+`) contains
-503 rules. The per-rule version-delta declaration
+194 rules (a first count of 503 used an unbounded scan and was corrected against the parsed registry). The per-rule version-delta declaration
 (`identical` / `mechanically-transformable` + proof / `semantically-new`)
 must therefore be generated-and-reviewed, not hand-authored: the authority
 carries the classification table; a deterministic diff of the rule registries

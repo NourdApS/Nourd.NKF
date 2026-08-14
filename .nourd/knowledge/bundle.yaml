@@ -577,7 +577,7 @@ non_records:
       stable_path: evidence/audits/nkf-028-nkf-0-7-source-grounded-assessment.md
       digest:
         algorithm: sha-256
-        value: 13f24f373028c58b89db43f90eb402f7aff7348b7cbc4521e2ccb5420cc8a772
+        value: "81fc57d64b85cf0194d7712b85935caf8955653c95857641d1bae0496afcd4c0"
       relationships: []
   - path: evidence/audits/nkf-whole-repository-development-support-audit.md
     kind: evidence
@@ -838,6 +838,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 6cda03da38ebf5f68fa5565805ea720acf8edff1598a3a43c91f1bf839934f12
+      relationships: []
+  - path: specifications/nkf-0.7.md
+    kind: evidence
+    document:
+      id: document-nkf-0-7-specification
+      stable_path: specifications/nkf-0.7.md
+      digest:
+        algorithm: sha-256
+        value: "1ad25a10519645c99e14069248533838e0c8b005d56598d849b906169457d5b7"
       relationships: []
   - path: tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -1707,7 +1716,7 @@ non_records:
       stable_path: tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md
       digest:
         algorithm: sha-256
-        value: "bd2c1f91ba6a7dfa2c80bca4429c41aa6f914192de76787a9e6a2be3c1032366"
+        value: "6f752dfd874b95e21a748c73bb375345ae3d982323f10a68f623d538870b1466"
       state:
         vocabulary: task-status
         value: "active"

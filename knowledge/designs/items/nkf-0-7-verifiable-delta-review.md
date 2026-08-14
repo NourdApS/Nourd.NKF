@@ -91,7 +91,7 @@ the rule is `identical` to its predecessor, `mechanically-transformable` with
 a stated transformation and proof obligation, or `semantically-new`. The
 declaration is part of the accepted authority pair and is itself
 digest-bound. A deterministic diff of the two rule registries seeds the
-table — the 0.6 registry carries 503 rules — and rule renames require an
+table — the 0.6 registry carries 194 rules — and rule renames require an
 explicit identity mapping; the named reviewer judges only the non-identical
 remainder, and the acceptance of the authority pair accepts the declaration
 with it. The updater derives what it may do mechanically from this
@@ -315,7 +315,7 @@ baseline blocks, the forced whole-root claim over an actual delta review,
 the stale bundle root record sealed by three reviews, the thirty-five
 state-baked paths, the 54 undeclared provenance files, the
 catalog-independent migrate path that makes stepping stones viable, the
-503-rule declaration scale, the exact protocol clauses in contradiction, and
+per-rule declaration scale, the exact protocol clauses in contradiction, and
 the harness defect locations. Pre-acceptance evidence must prove digest
 carry-forward, closure computation, and refusal behavior on exact Product
 and Technology fixtures and on an isolated copy of the real producer before
