@@ -1691,6 +1691,27 @@ non_records:
         - NKF-025
         - NKF-026
       relationships: []
+  - path: tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md
+    kind: task
+    document:
+      id: NKF-028
+      stable_path: tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md
+      digest:
+        algorithm: sha-256
+        value: "0f153df99d10b5b9a78f8b08802df456046104dd9a5d326fb13bd7999d6c9a72"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary; Claude technical reviewer under explicit delegation for exact technical derivation, implementation, inventories, tests, audits, and technical confirmation within the confirmed NKF 0.7 boundaries
+      related_tasks:
+        - NKF-005
+        - NKF-012
+        - NKF-021
+        - NKF-025
+        - NKF-026
+        - NKF-027
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md

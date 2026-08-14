@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: d2faa616b26c01cc3b89e51a2e1e05fe6bc3d1287876aef777612904798d9b9b
+  value: ca9149fc75d776c5ed7a6b91c208ab4f73e7b304633158616ce79b32e95469a5
 policy:
   id: nkf.freshness-policy.0.6
   digest:
@@ -161,6 +161,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 9980958f9ae61eb1dbfc5b0a4552ebefe882b755165a8d25af9d56bdfaa735fd
+  - node:
+      kind: document
+      id: NKF-028
+    revision:
+      algorithm: sha-256
+      value: 9e551cb2d0daec55e542d377a5438b628e7071a10352024e8cbb15f63880accc
   - node:
       kind: record
       id: adr-0001
@@ -4248,6 +4254,51 @@ applicability_coverage:
         heading:
           heading_path:
             - "NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing"
+          occurrence: 1
+  - node:
+      kind: document
+      id: NKF-028
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-028
+      source:
+        heading:
+          heading_path:
+            - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+          occurrence: 1
+  - node:
+      kind: document
+      id: NKF-028
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-028
+      source:
+        heading:
+          heading_path:
+            - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+          occurrence: 1
+  - node:
+      kind: document
+      id: NKF-028
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-028
+      source:
+        heading:
+          heading_path:
+            - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
           occurrence: 1
   - node:
       kind: record
@@ -17744,58 +17795,39 @@ decision_classifications:
 confirmation:
   reviewer:
     kind: agent
-    id: codex-technical-reviewer
-  reviewed_at: 2026-08-14T12:56:55.000Z
+    id: claude-technical-reviewer
+  reviewed_at: 2026-08-14T20:33:48.000Z
   claim: semantically-reviewed-whole-root
   observations:
-    - id: whole-root-universe-reaffirmed
-      subject:
-        kind: record
-        id: nkf-0.6-specification-revision-3
-      basis:
-        node:
-          kind: record
-          id: nkf-0.6-specification-revision-3
-        source:
-          section: deterministic-knowledge-graph-and-freshness-impact-closure-and-decision-reconciliation
-      finding: "The candidate node universe is identical to the 287-node universe reviewed and sealed at source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63: no node was added or removed. Every node applicability, all 14 relationship categories, and all 122 accepted Decisions across all three non-historical purposes are carried forward unchanged from that review, and no carried classification was found to conflict with the authored delta."
-    - id: realization-reconciled-to-nkf-0-6
-      subject:
-        kind: record
-        id: nkf-0.1-native-realization
-      basis:
-        node:
-          kind: record
-          id: nkf-0.1-native-realization
-        source:
-          section: realization-identity-and-kind
-      finding: The prior review recorded the consolidated current-system Realization as semantically stale by design because it still described the producer before ordinary NKF 0.6 adoption. That finding is now resolved. Under the Human Product Owner's 2026-08-14 confirmation the record was converted from immutable to living with its stable identity, stable path, draft status, prior confirmation history, and explicitly unconfirmed scope retained, its legacy-locked predecessor frontmatter was replaced by a native 0.6 envelope, and its content now describes the accepted, published, recommended, and producer-adopted NKF 0.6 state. It remains partially-confirmed draft knowledge and confirms nothing by being current.
-    - id: task-gate-re-extracted-at-end-state
+    - id: nkf-028-created-and-declared-active
       subject:
         kind: document
-        id: NKF-027
+        id: NKF-028
       basis:
         node:
           kind: document
-          id: NKF-027
+          id: NKF-028
         source:
           heading:
             heading_path:
-              - "NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing"
+              - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
             occurrence: 1
-      finding: The owning Task records the delivered end state, its Completion Result, and a re-extracted Decision Applicability gate. Six capabilities are reclassified proven at runtime-behaviour on directly observed outcomes and two licensing capabilities at data-validity, deliberately claiming no production-suitability. One mandatory capability remains unsupported under an explicit non-reusable Human Product Owner exception.
-    - id: nkf-0-6-published-without-a-confirming-decision
+      finding: The NKF 0.7 owning Task was created under explicit Human Product Owner direction recorded in its Human Direction section. Its declaration is active because the task-status vocabulary has no created state; the Task's own Created-State Rule records that implementation begins only on the Human Product Owner's separate explicit direction. The Task carries the confirmed 0.7 boundaries, a complete Decision Applicability gate whose mandatory capabilities are all unknown at creation, and it accepts nothing, adopts no Design, and concludes no other Task.
+    - id: task-navigation-reconciled-to-nkf-027-completion
       subject:
-        kind: record
-        id: nkf-0.6-specification-revision-3
+        kind: document
+        id: NKF-028
       basis:
         node:
-          kind: record
-          id: nkf-0.6-specification-revision-3
+          kind: document
+          id: NKF-028
         source:
-          section: release-distribution
-      finding: The accepted release protocol requires a technical-confirmation Decision before publication, while the prepublication lock makes authoring any governed record impossible before promotion. NKF 0.6 was published under an explicit Human Product Owner exception and no confirming Decision exists. The graph therefore carries an accepted, implemented, published, recommended, and producer-adopted release that is not technically confirmed, and the ordering conflict is recorded for a successor NKF version rather than repaired here.
+          heading:
+            heading_path:
+              - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+            occurrence: 1
+      finding: Registering the new Task exposed that the hand-maintained tasks index still listed the completed NKF-027 under Active; the earlier deterministic close regenerated only the by-state indexes. The index now lists NKF-027 under Completed and NKF-028 under Active, agreeing with the declared task-status values. Navigation is a projection and this correction changes no Task state.
   limitations:
-    - This is a delta re-affirmation of the whole-root review sealed earlier the same day at source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63. Only the knowledge authored under NKF-027 since that seal was re-read in full; every other node carries its prior reviewed classification rather than an independent fresh re-reading.
-    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, licensing readiness, publication, recommendation, adoption, repository visibility, or Governing Use.
+    - This is a delta re-affirmation of the whole-root review sealed at the NKF 0.6 producer promotion and re-affirmed after the NKF-027 conclusion. Only the newly created NKF-028 Task document and the corrected task navigation indexes were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
+    - The review covers knowledge semantics only. It accepts no record, adopts no Design, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
   disputed: false
