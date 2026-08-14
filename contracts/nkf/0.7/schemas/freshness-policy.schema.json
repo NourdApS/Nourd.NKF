@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nkf:0.7:schema:freshness-policy",
+  "title": "NKF 0.7 freshness policy",
+  "x-nkf-source": {
+    "nkf_version": "0.7",
+    "markdown_path": "knowledge/specifications/nkf-0.7.md",
+    "markdown_digest": {
+      "algorithm": "sha-256",
+      "value": "MARKDOWN_DIGEST_PLACEHOLDER"
+    },
+    "executable_path": "contracts/nkf/0.7/nkf.yaml",
+    "executable_digest": {
+      "algorithm": "sha-256",
+      "value": "EXECUTABLE_DIGEST_PLACEHOLDER"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "nkf_version",
+    "id",
+    "classes",
+    "purposes",
+    "mappings"
+  ],
+  "properties": {
+    "contract": {
+      "const": "nkf.freshness-policy"
+    },
+    "nkf_version": {
+      "const": "0.7"
+    },
+    "id": {
+      "const": "nkf.freshness-policy.0.7"
+    },
+    "classes": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "hard"
+        },
+        {
+          "const": "review"
+        },
+        {
+          "const": "context"
+        },
+        {
+          "const": "historical"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "purposes": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "change-impact"
+        },
+        {
+          "const": "whole-root-readiness"
+        },
+        {
+          "const": "consequential-use"
+        },
+        {
+          "const": "historical-reproduction"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "hard_events": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "exact-revision-binding-mismatch",
+          "governed-artifact-binding-mismatch"
+        ]
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relationship",
+          "source_kinds",
+          "target_kinds",
+          "propagation",
+          "class",
+          "purposes"
+        ],
+        "properties": {
+          "relationship": {
+            "enum": [
+              "part-of",
+              "defines",
+              "governs",
+              "applies-to",
+              "depends-on",
+              "extends",
+              "supersedes",
+              "rationale-for",
+              "realizes",
+              "evidences",
+              "references",
+              "flows-to",
+              "transitions-to",
+              "observes"
+            ]
+          },
+          "source_kinds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "record",
+                "document",
+                "entity"
+              ]
+            }
+          },
+          "target_kinds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "record",
+                "document",
+                "entity"
+              ]
+            }
+          },
+          "propagation": {
+            "enum": [
+              "source-to-target",
+              "target-to-source",
+              "both",
+              "none"
+            ]
+          },
+          "class": {
+            "enum": [
+              "review",
+              "context"
+            ]
+          },
+          "purposes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "change-impact",
+                "whole-root-readiness",
+                "consequential-use",
+                "historical-reproduction"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "historical_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "includes_all_authored_relationships",
+        "impact_expansion"
+      ],
+      "properties": {
+        "includes_all_authored_relationships": {
+          "const": true
+        },
+        "impact_expansion": {
+          "const": false
+        }
+      }
+    },
+    "unknown_mapping": {
+      "const": "fail-closed"
+    },
+    "repository_overrides": {
+      "const": "forbidden"
+    },
+    "implementation_heuristics": {
+      "const": "forbidden"
+    }
+  },
+  "$defs": {}
+}
