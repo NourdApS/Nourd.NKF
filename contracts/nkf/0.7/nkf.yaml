@@ -12,10 +12,10 @@ authority:
     value: MARKDOWN_DIGEST_PLACEHOLDER
   freshness_policy_digest:
     algorithm: sha-256
-    value: FRESHNESS_POLICY_DIGEST_PLACEHOLDER
+    value: 9d7ff664a0a0ce788a096f32e1cd74197c10a48523286ea58f04c4c9496077d4
   version_delta_digest:
     algorithm: sha-256
-    value: VERSION_DELTA_DIGEST_PLACEHOLDER
+    value: 595afe8d5517f005644807e4cfa2cca9c45ceca0cc895b3de10bd0e333af9eab
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.6-revision-3.md
     markdown_digest:
