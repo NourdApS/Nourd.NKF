@@ -2307,7 +2307,7 @@ freshness:
       optional_absence: omit-not-null
   policy:
     identity: nkf.freshness-policy.0.7
-    path: contracts/nkf/0.6/freshness-policy.yaml
+    path: contracts/nkf/0.7/freshness-policy.yaml
     digest:
       algorithm: sha-256
       value: a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4
@@ -2850,6 +2850,46 @@ freshness:
       decision_classifications_exact_required_coverage: true
       cycles_exact_detected_coverage: true
 
+version_delta_declaration:
+  contract: nkf.version-delta
+  path: contracts/nkf/0.7/version-delta.yaml
+  part_of: accepted-authority-set
+  digest_bound: true
+  closed: true
+  required_fields: [contract, nkf_version, predecessor_version, predecessor_executable_digest, rules]
+  fields:
+    contract: {const: nkf.version-delta}
+    nkf_version: {const: "0.7"}
+    predecessor_version: {const: "0.6"}
+    predecessor_executable_digest: {ref: common.digest, binds: exact-predecessor-executable-companion}
+    rules:
+      type: mapping
+      key: rule-identifier
+      exact_coverage: union-of-predecessor-and-current-rule-registries
+      value:
+        closed: true
+        required_fields: [classification]
+        optional_fields: [transform, renamed_from]
+        fields:
+          classification: {enum: [identical, mechanically-transformable, semantically-new]}
+          transform:
+            type: string
+            min_length: 1
+            required_exactly_when: classification-is-mechanically-transformable
+            content: exact-named-transformation-and-proof-obligation
+          renamed_from:
+            type: string
+            min_length: 1
+            resolves_to: exact-predecessor-rule-identifier
+      registry_only_rule_without_renamed_from: semantically-new
+  seeded_by: deterministic-registry-diff
+  non_identical_classifications_judged_by: named-reviewer
+  accepted_with: authority-pair-acceptance
+  updater_behavior:
+    derives_permitted_actions: from-this-declaration-alone
+    absent_incomplete_ambiguous_or_unsupported: refuse
+  classifies: rules-never-knowledge-semantics
+
 body_contracts:
   nkf.technology:
     type: technology
@@ -3050,12 +3090,12 @@ enforcement:
   schema:
     dialect: https://json-schema.org/draft/2020-12/schema
     paths:
-      bundle: contracts/nkf/0.6/schemas/bundle.schema.json
-      record: contracts/nkf/0.6/schemas/record.schema.json
-      graph_baseline: contracts/nkf/0.6/schemas/graph-baseline.schema.json
-      freshness_receipt: contracts/nkf/0.6/schemas/freshness-receipt.schema.json
-      freshness_policy: contracts/nkf/0.6/schemas/freshness-policy.schema.json
-      validation_result: contracts/nkf/0.6/schemas/validation-result.schema.json
+      bundle: contracts/nkf/0.7/schemas/bundle.schema.json
+      record: contracts/nkf/0.7/schemas/record.schema.json
+      graph_baseline: contracts/nkf/0.7/schemas/graph-baseline.schema.json
+      freshness_receipt: contracts/nkf/0.7/schemas/freshness-receipt.schema.json
+      freshness_policy: contracts/nkf/0.7/schemas/freshness-policy.schema.json
+      validation_result: contracts/nkf/0.7/schemas/validation-result.schema.json
     ids:
       bundle: urn:nkf:0.7:schema:bundle
       record: urn:nkf:0.7:schema:record
@@ -3287,6 +3327,25 @@ diagnostics:
     freshness.baseline.ambiguous: {severity: error, blocking: readiness, phase: freshness}
     freshness.baseline.unsupported: {severity: error, blocking: readiness, phase: freshness}
     freshness.baseline.coverage-incomplete: {severity: error, blocking: readiness, phase: freshness}
+    freshness.baseline.carry-precondition-violated: {severity: error, blocking: conformance, phase: freshness}
+    freshness.baseline.judgment-digest-mismatch: {severity: error, blocking: conformance, phase: freshness}
+    freshness.baseline.provenance-invalid: {severity: error, blocking: conformance, phase: freshness}
+    freshness.claim.delta-closure-not-contained: {severity: error, blocking: readiness, phase: freshness}
+    freshness.claim.delta-completeness-unprovable: {severity: error, blocking: readiness, phase: freshness}
+    freshness.claim.computed-closure-mismatch: {severity: error, blocking: conformance, phase: freshness}
+    freshness.reconciliation.pending: {severity: error, blocking: readiness, phase: freshness}
+    freshness.reconciliation.invalid: {severity: error, blocking: conformance, phase: freshness}
+    version-delta.unavailable: {severity: error, blocking: conformance, phase: contracts}
+    version-delta.binding-mismatch: {severity: error, blocking: conformance, phase: contracts}
+    version-delta.coverage-incomplete: {severity: error, blocking: conformance, phase: contracts}
+    version-delta.classification-invalid: {severity: error, blocking: conformance, phase: contracts}
+    record.identity-succession.invalid: {severity: error, blocking: conformance, phase: record-contract}
+    record.identity-succession.chain-unresolved: {severity: error, blocking: conformance, phase: record-contract}
+    record.identity.state-asserting: {severity: error, blocking: conformance, phase: record-contract}
+    record.operational-dependency.invalid: {severity: error, blocking: conformance, phase: record-contract}
+    paths.stable-path.state-asserting: {severity: error, blocking: conformance, phase: project}
+    project.knowledge-root-file.undeclared: {severity: error, blocking: conformance, phase: project}
+    bundle.provenance-attachment.invalid: {severity: error, blocking: conformance, phase: bundle-graph}
     freshness.observation.missing: {severity: error, blocking: readiness, phase: freshness}
     freshness.decision.unclassified: {severity: error, blocking: readiness, phase: freshness}
     freshness.decision.conflict: {severity: error, blocking: readiness, phase: freshness}
@@ -4127,7 +4186,7 @@ release_distribution:
       trailing_whitespace: forbidden
       member_order: contract-order
     closed: true
-    required_fields: [contract, nkf_version, source, checker, authority, freshness_policy, schemas, licensing, files]
+    required_fields: [contract, nkf_version, source, checker, authority, freshness_policy, version_delta, schemas, licensing, files]
     fields:
       contract:
         const: nkf.release-manifest
@@ -4141,6 +4200,8 @@ release_distribution:
         ref: release_distribution.authority
       freshness_policy:
         ref: release_distribution.freshness_policy
+      version_delta:
+        ref: release_distribution.version_delta
       schemas:
         ref: release_distribution.schemas
       licensing:
@@ -4161,8 +4222,17 @@ release_distribution:
       - publication-authorization
     post_audit_governance_binding:
       location: outside-release-archive-and-manifest
-      may_bind: [release-commit, archive-digest, checker-digest]
+      may_bind: [release-commit, archive-digest, checker-digest, audit-evidence]
       may_change_archive_bytes: false
+    technical_confirmation_decision:
+      timing: after-clean-fresh-independent-audit-and-before-publication
+      form: post-audit-outside-the-archive-governance-record
+      binds: [exact-release-commit, exact-archive-digest, exact-checker-digest, exact-adopter-digest, exact-audit-evidence]
+      mandatory_for_every_release: true
+      waiver: none
+      invalid_without_bound_audit: true
+      publication_without_it: protocol-violation
+      review_binding_effect: none-by-contract
   source:
     closed: true
     required_fields: [repository, release_commit]
@@ -4208,7 +4278,7 @@ release_distribution:
     required_fields: [path, digest]
     fields:
       path:
-        const: knowledge/specifications/nkf-0.6-revision-3.md
+        const: knowledge/specifications/nkf-0.7.md
       digest:
         ref: common.digest
   executable_artifact:
@@ -4216,7 +4286,7 @@ release_distribution:
     required_fields: [path, digest]
     fields:
       path:
-        const: contracts/nkf/0.6/revision-3/nkf.yaml
+        const: contracts/nkf/0.7/nkf.yaml
       digest:
         ref: common.digest
   freshness_policy:
@@ -4224,7 +4294,14 @@ release_distribution:
     required_fields: [identity, path, digest]
     fields:
       identity: {const: nkf.freshness-policy.0.7}
-      path: {const: contracts/nkf/0.6/freshness-policy.yaml}
+      path: {const: contracts/nkf/0.7/freshness-policy.yaml}
+      digest: {ref: common.digest}
+  version_delta:
+    closed: true
+    required_fields: [contract, path, digest]
+    fields:
+      contract: {const: nkf.version-delta}
+      path: {const: contracts/nkf/0.7/version-delta.yaml}
       digest: {ref: common.digest}
   schema_artifact:
     closed: true
@@ -4240,25 +4317,25 @@ release_distribution:
     type: array
     exact_items_in_order:
       - identity: urn:nkf:0.7:schema:bundle
-        path: contracts/nkf/0.6/schemas/bundle.schema.json
+        path: contracts/nkf/0.7/schemas/bundle.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.7:schema:record
-        path: contracts/nkf/0.6/schemas/record.schema.json
+        path: contracts/nkf/0.7/schemas/record.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.7:schema:graph-baseline
-        path: contracts/nkf/0.6/schemas/graph-baseline.schema.json
+        path: contracts/nkf/0.7/schemas/graph-baseline.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.7:schema:freshness-receipt
-        path: contracts/nkf/0.6/schemas/freshness-receipt.schema.json
+        path: contracts/nkf/0.7/schemas/freshness-receipt.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.7:schema:freshness-policy
-        path: contracts/nkf/0.6/schemas/freshness-policy.schema.json
+        path: contracts/nkf/0.7/schemas/freshness-policy.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.7:schema:release-manifest
-        path: contracts/nkf/0.6/schemas/release-manifest.schema.json
+        path: contracts/nkf/0.7/schemas/release-manifest.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.7:schema:validation-result
-        path: contracts/nkf/0.6/schemas/validation-result.schema.json
+        path: contracts/nkf/0.7/schemas/validation-result.schema.json
         ref: release_distribution.schema_artifact
   licensing_artifact:
     closed: true
@@ -4342,14 +4419,14 @@ release_distribution:
     checker_authority_freshness_policy_schema_and_licensing_bindings_match: required
   schema:
     identity: urn:nkf:0.7:schema:release-manifest
-    path: contracts/nkf/0.6/schemas/release-manifest.schema.json
+    path: contracts/nkf/0.7/schemas/release-manifest.schema.json
     scope: release-package-enforcement-only
     project_declaration_schema: false
     governed_validation_input: false
     validation_result_contract_artifact: false
     self_digest_location: release-manifest
   release_set:
-    path: contracts/nkf/0.6/release-set.yaml
+    path: contracts/nkf/0.7/release-set.yaml
     identity: nkf.release-set
     closed: true
     required_fields: [contract, nkf_version, coverage, members]
@@ -4367,6 +4444,7 @@ release_distribution:
         - normative-specification
         - executable-companion
         - evaluation-policy
+        - version-delta-declaration
         - repository-license
         - repository-notice
         - third-party-notices

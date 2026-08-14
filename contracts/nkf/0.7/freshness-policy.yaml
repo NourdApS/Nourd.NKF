@@ -1,6 +1,6 @@
 contract: nkf.freshness-policy
-nkf_version: "0.6"
-id: nkf.freshness-policy.0.6
+nkf_version: "0.7"
+id: nkf.freshness-policy.0.7
 classes:
   - hard
   - review
