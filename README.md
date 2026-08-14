@@ -18,8 +18,8 @@ its own meaning, acceptance decisions, and operational state.
 | --- | --- |
 | Owner | Nourd ApS |
 | Classification | Shared Technology |
-| Repository | `kaveh6202/Nourd.NKF` |
-| Remote | `https://github.com/kaveh6202/Nourd.NKF.git` |
+| Repository | `NourdApS/Nourd.NKF` |
+| Remote | `https://github.com/NourdApS/Nourd.NKF.git` |
 | Default branch | `master` |
 
 This repository owns NKF specifications, profiles, executable contracts,
@@ -36,7 +36,7 @@ agent skills, host-adapter guidance, fixtures, examples, and the 85-file
 public-documentation projection.
 The content-addressed archive and release tag are identified by SHA-256
 `e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9`.
-The [GitHub release](https://github.com/kaveh6202/Nourd.NKF/releases/tag/release-sha256-e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9)
+The [GitHub release](https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9)
 is an immutable private prerelease.
 
 NKF 0.5 adds stable lifecycle-neutral document nodes, declared graph and
@@ -50,9 +50,12 @@ rather than current recommendations.
 This producer repository now declares and pins the exact published NKF 0.5
 recommendation. Ordinary public Adopt migrated the producer from 0.4, the
 preserved host-superset gate passed inside that transaction, and a second
-public invocation returned `current`. A fresh independent post-adoption audit
-and final Task reconciliation remain required before this branch is ready to
-merge.
+public invocation returned `current`. The post-adoption audit then proved that
+the published adopter cannot re-pin a normally serialized native record with
+the required `stable_path`. NKF 0.5 remains immutable and recommended while
+[NKF-027](knowledge/tasks/items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
+prepares a corrective NKF 0.6 successor and complete prepublication authoring
+rehearsal. No 0.6 release or recommendation exists yet.
 
 The 0.3 archive carries its complete public-documentation projection and exact
 public adopter. Publication of those bytes to the separate
@@ -71,6 +74,19 @@ Passing validation establishes conformance for one observed snapshot only. It
 does not verify every historical acceptance binding, accept consumer
 knowledge, confirm implementation correctness, publish a release, or migrate
 a consumer.
+
+## License
+
+Nourd ApS makes its NKF repository work available under the standard
+[Apache License 2.0](LICENSE), with the informational attribution in
+[NOTICE](NOTICE). Code and data identified in
+[Third-Party Notices](THIRD_PARTY_NOTICES.md) remain under their own compatible
+licenses.
+
+Licensing does not by itself make this private repository public, publish a
+release, accept governed knowledge, confirm a Realization, or establish
+conformance. Trademark, contribution, governance, security-response, and
+community-conduct policies remain separate matters.
 
 ## Start Here
 

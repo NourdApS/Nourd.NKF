@@ -1,0 +1,82 @@
+contract: nkf.record
+id: adr-0121
+type: decision
+body_contract: nkf.decision
+title: "ADR 0121: Adopt The NKF 0.6 Corrective And Licensing Direction"
+source:
+  path: decisions/0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md
+  stable_path: decisions/0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md
+  digest:
+    algorithm: sha-256
+    value: 50c14b984e1a1b6799664323a9b2a4cd27e9e0fc74d1b56eba105db0247da630
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships:
+  - type: extends
+    target: adr-0109
+    source_section: decision
+  - type: extends
+    target: adr-0042
+    source_section: decision
+  - type: depends-on
+    target: adr-0119
+    source_section: decision
+  - type: rationale-for
+    target: design-nkf-027-corrective-release-and-open-source-licensing
+    source_section: decision
+task: NKF-027

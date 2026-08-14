@@ -63,3 +63,18 @@ export const ACCEPTED_0_5_ARTIFACT_DIGESTS = Object.freeze({
   "contracts/nkf/0.5/schemas/release-manifest.schema.json": "98a8e8f12ba8f1ec5ea90f203c61d68b84f6a124d108f193838aa90b8743df25",
   "contracts/nkf/0.5/schemas/validation-result.schema.json": "b40d45d1bc781a2203033deff7f7dc063bf890c0eeeec3f9ae2b6c3b992dabf8",
 });
+
+export const ACCEPTED_0_6_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.6-revision-3.md": "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
+  "contracts/nkf/0.6/revision-3/nkf.yaml": "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
+  "contracts/nkf/0.6/freshness-policy.yaml": "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4",
+  "contracts/nkf/0.6/schemas/bundle.schema.json": "f146dd0e04d4ee8aff5d013abf476620f458d03328f758684ea4019b564a9290",
+  "contracts/nkf/0.6/schemas/record.schema.json": "a3e799112ff0d6af1111c2d574ebc31d783bd00a8193f10721437cc5ed40cd8a",
+  "contracts/nkf/0.6/schemas/graph-baseline.schema.json": "9edb4c488577635059c7a4545aaba8a318a625811a93078e76a8d5621f1dd77b",
+  "contracts/nkf/0.6/schemas/freshness-receipt.schema.json": "819685c152751aca279284a0f6ce8b565f45c985af40d006b5d81463a20421fb",
+  "contracts/nkf/0.6/schemas/freshness-policy.schema.json": "a1b21747d9cbd72416599224a9a9dcb80d1fca7b8f50bc2fa9f411dc77277b2f",
+  "contracts/nkf/0.6/schemas/release-manifest.schema.json": "22cdf7da250d7be4017fcaaa1bfabe9f3d2dfca88d9890553a32f6d3875019dd",
+  "contracts/nkf/0.6/schemas/validation-result.schema.json": "8d751bb013dc87d9ebf3287b85e8589f628e7369eca67902d503b12595a6d743",
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
+});

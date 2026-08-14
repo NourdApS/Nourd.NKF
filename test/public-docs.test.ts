@@ -35,6 +35,11 @@ async function copyProjection() {
     { recursive: true },
   );
   await cp(
+    path.join(repositoryRoot, "knowledge/specifications/nkf-0.6-revision-3.md"),
+    path.join(root, "knowledge/specifications/nkf-0.6-revision-3.md"),
+    { recursive: true },
+  );
+  await cp(
     path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs"),
     path.join(root, "dist/nourd-nkf-adopt.mjs"),
     { recursive: true },
@@ -45,13 +50,13 @@ async function copyProjection() {
     { recursive: true },
   );
   await cp(
-    path.join(repositoryRoot, "contracts/nkf/0.5"),
-    path.join(root, "contracts/nkf/0.5"),
+    path.join(repositoryRoot, "contracts/nkf/0.6"),
+    path.join(root, "contracts/nkf/0.6"),
     { recursive: true },
   );
   await cp(
-    path.join(repositoryRoot, "distribution/nkf/0.5"),
-    path.join(root, "distribution/nkf/0.5"),
+    path.join(repositoryRoot, "distribution/nkf/0.6"),
+    path.join(root, "distribution/nkf/0.6"),
     { recursive: true },
   );
   return root;
@@ -63,7 +68,7 @@ describe("NKF public documentation", () => {
     expect(result).toMatchObject({
       contract: "nkf.public-documentation-verification",
       status: "passed",
-      files: 85,
+      files: 86,
       examples: 2,
     });
     expect(result.mermaid_diagrams).toBeGreaterThanOrEqual(5);

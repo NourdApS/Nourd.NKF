@@ -15,6 +15,7 @@
 - [NKF Layered Contract Enforcement](../adopted/layered-contract-enforcement.md)
 - [NKF 0.1 Native Bundle Serialization](../adopted/native-bundle-serialization.md)
 - [NKF 0.1 Native Record Serialization](../adopted/native-record-serialization.md)
+- [NKF 0.6 Corrective Release And Open-Source Licensing](../items/nkf-0-6-corrective-release-and-open-source-licensing.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](../adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [NKF 0.1 Presentation-Guidance Boundary](../adopted/presentation-guidance.md)
 - [NKF 0.1 Product Responsibility Identifiers](../adopted/product-responsibility-identifiers.md)

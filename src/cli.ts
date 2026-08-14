@@ -4,6 +4,7 @@ import { validateProject } from "./checker/index.js";
 import type { ConformanceLevel, ValidationRequest } from "./checker/types.js";
 
 interface CliArguments {
+  operation: "validate" | "evaluate";
   project: string;
   level: ConformanceLevel;
   record: string | null;
@@ -21,7 +22,7 @@ interface CliArguments {
 
 function usage(): string {
   return [
-    "Usage: nourd-nkf-checker [validate] [options]",
+    "Usage: nourd-nkf-checker [validate|evaluate] [options]",
     "",
     "Options:",
     "  --project <path>             Project root (default: current directory)",
@@ -42,8 +43,10 @@ function usage(): string {
 }
 
 function parseArguments(argv: string[]): CliArguments {
-  const values = argv[0] === "validate" ? argv.slice(1) : argv;
+  const operation = argv[0] === "validate" || argv[0] === "evaluate" ? argv[0] : "validate";
+  const values = argv[0] === "validate" || argv[0] === "evaluate" ? argv.slice(1) : argv;
   const result: CliArguments = {
+    operation,
     project: process.cwd(),
     level: "full-bundle",
     record: null,
@@ -111,6 +114,11 @@ function parseArguments(argv: string[]): CliArguments {
       throw new TypeError(`Unknown or incomplete argument: ${argument ?? ""}`);
     }
   }
+  if (result.operation === "evaluate") {
+    if (result.level !== "full-bundle" || result.purpose === null || !result.persist) {
+      throw new TypeError("evaluate requires persisted full-bundle validation with one explicit purpose.");
+    }
+  }
   return result;
 }
 
@@ -140,6 +148,7 @@ async function main(): Promise<void> {
   };
   const checkerArtifact = fileURLToPath(import.meta.url);
   const contractRoot = fileURLToPath(new URL("../contracts/nkf/0.2", import.meta.url));
+  let evaluation: { state: "evaluated" | "evaluated-current"; receipt: { id: string; path: string } } | undefined;
   const result = await validateProject({
     projectRoot: argumentsValue.project,
     contractRoot,
@@ -148,8 +157,23 @@ async function main(): Promise<void> {
     runner: argumentsValue.runner,
     request,
     persist: argumentsValue.persist,
+    evaluationObserver(value) { evaluation = value; },
   });
-  process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
+  const output = argumentsValue.operation === "evaluate"
+    ? {
+        state: evaluation?.state,
+        candidate_graph_revision: result.knowledge_graph?.candidate_graph_revision,
+        policy: result.knowledge_graph?.policy,
+        purpose: result.request.purpose,
+        receipt: evaluation?.receipt,
+        freshness_results: result.nodes,
+        readiness: result.readiness,
+      }
+    : result;
+  if (argumentsValue.operation === "evaluate" && evaluation === undefined) {
+    throw new TypeError("evaluate did not persist one exact freshness receipt transaction.");
+  }
+  process.stdout.write(`${JSON.stringify(output, null, 2)}\n`);
   process.exitCode =
     result.conformance === "passed" &&
     (!argumentsValue.requireReadiness || result.readiness?.state === "ready")

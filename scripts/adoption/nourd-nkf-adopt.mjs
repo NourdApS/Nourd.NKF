@@ -19,17 +19,23 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
-import neutralProtocol from "../../distribution/nkf/0.5/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill from "../../distribution/nkf/0.5/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol from "../../distribution/nkf/0.5/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill from "../../distribution/nkf/0.5/.agents/skills/nkf-onboarding/SKILL.md";
-import rootAdapter from "../../distribution/nkf/0.5/host-adapters/AGENTS.adapter.md";
-import importAdapter from "../../distribution/nkf/0.5/host-adapters/CLAUDE.adapter.md";
-import copilotAdapter from "../../distribution/nkf/0.5/host-adapters/copilot-instructions.adapter.md";
+import neutralProtocol from "../../distribution/nkf/0.6/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill from "../../distribution/nkf/0.6/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol from "../../distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill from "../../distribution/nkf/0.6/.agents/skills/nkf-onboarding/SKILL.md";
+import rootAdapter from "../../distribution/nkf/0.6/host-adapters/AGENTS.adapter.md";
+import importAdapter from "../../distribution/nkf/0.6/host-adapters/CLAUDE.adapter.md";
+import copilotAdapter from "../../distribution/nkf/0.6/host-adapters/copilot-instructions.adapter.md";
+import freshnessPolicy0_5 from "../../contracts/nkf/0.5/freshness-policy.yaml";
+import predecessorContract0_5 from "nkf:predecessor-0.5";
 import neutralProtocol0_4 from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
 import portableSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-authoring/SKILL.md";
 import onboardingProtocol0_4 from "../../distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md";
 import onboardingSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-onboarding/SKILL.md";
+import neutralProtocol0_5 from "../../distribution/nkf/0.5/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill0_5 from "../../distribution/nkf/0.5/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol0_5 from "../../distribution/nkf/0.5/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill0_5 from "../../distribution/nkf/0.5/.agents/skills/nkf-onboarding/SKILL.md";
 import {
   buildOnboardingKnowledge,
   buildPortableTopologyRepair,
@@ -47,14 +53,27 @@ import {
 } from "../release/core.mjs";
 import { readReleaseSet } from "../release/release-set.mjs";
 import { migrateProjectTo0_5 } from "../migration/0-5-core.mjs";
-import { sealBaseline0_5, writeReviewTemplate0_5 } from "../freshness/seal-baseline-0-5.mjs";
+import {
+  sealBaseline0_5,
+  sealBaselineModern,
+  writeReviewTemplate0_5,
+  writeReviewTemplateModern,
+} from "../freshness/seal-baseline-0-5.mjs";
 import {
   gateFreePredecessorTasks,
   validateRetrospectiveGateReview0_5,
   writePredecessorGateReviewTemplate0_5,
 } from "../freshness/retrospective-gates-0-5.mjs";
 
-const CURRENT_NKF_VERSION = "0.5";
+const CURRENT_NKF_VERSION = "0.6";
+const MODERN_NKF_VERSIONS = new Set(["0.5", "0.6"]);
+const RELATIONSHIP_TYPES = new Set([
+  "part-of", "defines", "governs", "applies-to", "depends-on", "extends",
+  "supersedes", "rationale-for", "realizes", "evidences", "references",
+  "flows-to", "transitions-to", "observes",
+]);
+const CURRENT_REPOSITORY = "NourdApS/Nourd.NKF";
+const LEGACY_REPOSITORY = "kaveh6202/Nourd.NKF";
 const INTEGRATION_REVISION = 3;
 const PIN_PATH = ".nourd/nkf-release.json";
 const ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
@@ -75,6 +94,26 @@ const ONBOARDING_SKILL_PATHS = [
   ".agents/skills/nkf-onboarding/SKILL.md",
   ".claude/skills/nkf-onboarding/SKILL.md",
 ];
+const PRODUCER_PROMOTION_INPUT_PATH =
+  "knowledge/evidence/release/nkf-0.6-revision-3-producer-promotion.yaml";
+const PRODUCER_PROMOTION_INPUT_SHA256 =
+  "d9f2f36e81a380f0862619093ddfdb45da0352d108e0a525104a4b399007a043";
+const PRODUCER_ACCEPTING_DECISION_PATH =
+  "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md";
+const PRODUCER_ACCEPTING_DECISION_SHA256 =
+  "1f50640755184fe1fd117295ffb5056d55e2a23c78d2f8b3ab56533df5e72ac6";
+const PRODUCER_HISTORICAL_DECLARATION_PATH =
+  ".nourd/knowledge/records/adr-0122.yaml";
+const PRODUCER_HISTORICAL_DECLARATION_SHA256 =
+  "dac8ccfe377138d45c5720eeb4d3f0fbdc2b2504224eb50a6a85888c44aaf3b9";
+const PRODUCER_HISTORICAL_SOURCE_PATH =
+  "knowledge/decisions/0122-accept-the-nkf-0-6-authority-set.md";
+const PRODUCER_HISTORICAL_SOURCE_SHA256 =
+  "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547";
+const PRODUCER_PROMOTION_STAGES = new Set([
+  "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+  "postpublication-ordinary-public-self-adopt-by-exact-live-producer",
+]);
 const ROOT_PROFILES = new Set([
   "nkf.profile.product",
   "nkf.profile.technology",
@@ -112,7 +151,14 @@ function guidanceForVersion(nkfVersion) {
         onboardingProtocol: onboardingProtocol0_4,
         onboardingSkill: onboardingSkill0_4,
       }
-    : { neutralProtocol, portableSkill, onboardingProtocol, onboardingSkill };
+    : nkfVersion === "0.5"
+      ? {
+          neutralProtocol: neutralProtocol0_5,
+          portableSkill: portableSkill0_5,
+          onboardingProtocol: onboardingProtocol0_5,
+          onboardingSkill: onboardingSkill0_5,
+        }
+      : { neutralProtocol, portableSkill, onboardingProtocol, onboardingSkill };
 }
 const VERIFIER_SOURCE = `import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -137,6 +183,30 @@ function fail(message) {
 
 function digest(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function utf16Compare(left, right) {
+  const length = Math.min(left.length, right.length);
+  for (let index = 0; index < length; index += 1) {
+    const difference = left.charCodeAt(index) - right.charCodeAt(index);
+    if (difference !== 0) return difference;
+  }
+  return left.length - right.length;
+}
+
+function jcs(value) {
+  if (value === null || typeof value === "boolean" || typeof value === "string") {
+    return JSON.stringify(value);
+  }
+  if (typeof value === "number") {
+    if (!Number.isFinite(value)) fail("JCS cannot encode a non-finite number.");
+    return JSON.stringify(value);
+  }
+  if (Array.isArray(value)) return `[${value.map(jcs).join(",")}]`;
+  if (typeof value === "object") {
+    return `{${Object.keys(value).sort(utf16Compare).map((key) => `${JSON.stringify(key)}:${jcs(value[key])}`).join(",")}}`;
+  }
+  fail(`JCS cannot encode ${typeof value}.`);
 }
 
 function inside(root, candidate) {
@@ -220,7 +290,7 @@ function parseArguments(values) {
     "adopt",
   ].includes(result.command)) {
     fail(
-      "Usage: nourd-nkf-adopt.mjs --project <path> [--plan <sealed-plan>] [--recommendation <catalog>] [--archive <archive>|--github-repository kaveh6202/Nourd.NKF] [--accept-breaking <authority>]",
+      `Usage: nourd-nkf-adopt.mjs --project <path> [--plan <sealed-plan>] [--recommendation <catalog>] [--archive <archive>|--github-repository ${CURRENT_REPOSITORY}] [--accept-breaking <authority>]`,
     );
   }
   for (let index = publicAdopt ? 0 : 1; index < values.length; index += 2) {
@@ -244,6 +314,9 @@ function parseArguments(values) {
       "github-repository",
       "plan",
       "project",
+      "promotion-input",
+      "promotion-stage",
+      "accepting-decision",
       "review",
       "recommendation",
       "sha256",
@@ -275,6 +348,8 @@ function parseArguments(values) {
     allowed = new Set(["archive", "github-repository", "project", "review", "sha256"]);
   } else if (result.command === "task") {
     allowed = new Set(["project", "task", "to", "result-file", "checker"]);
+  } else if (["repin", "linkify"].includes(result.command)) {
+    allowed = new Set(["project", "checker"]);
   } else {
     allowed = new Set(["project"]);
   }
@@ -329,7 +404,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
       `Recommended compatibility[${index}]`,
     );
     if (
-      !["0.1", "0.2", "0.3", "0.4", "0.5"].includes(entry.from_nkf_version) ||
+      !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(entry.from_nkf_version) ||
       !["breaking", "non-breaking"].includes(entry.classification) ||
       typeof entry.migration_required !== "boolean" ||
       typeof entry.summary !== "string" ||
@@ -367,7 +442,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
       value.release.prerelease === true &&
       value.release.visibility === "private" &&
       value.release.url ===
-        `https://github.com/kaveh6202/Nourd.NKF/releases/tag/${tag}`;
+        `https://github.com/${CURRENT_REPOSITORY}/releases/tag/${tag}`;
   if (
     !releaseStateValid ||
     value.nkf_version !== CURRENT_NKF_VERSION ||
@@ -379,7 +454,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     (candidate
       ? value.archive.url !== null
       : value.archive.url !==
-        `https://github.com/kaveh6202/Nourd.NKF/releases/download/${tag}/${assetName}`) ||
+        `https://github.com/${CURRENT_REPOSITORY}/releases/download/${tag}/${assetName}`) ||
     !/^[0-9a-f]{40}$/.test(value.source_commit ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.checker_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.adopter_sha256 ?? "") ||
@@ -396,7 +471,9 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     compatibility.get("0.4")?.classification !== "breaking" ||
     compatibility.get("0.4")?.migration_required !== true ||
     compatibility.get("0.5")?.classification !== "non-breaking" ||
-    compatibility.get("0.5")?.migration_required !== false
+    compatibility.get("0.5")?.migration_required !== false ||
+    compatibility.get("0.6")?.classification !== "non-breaking" ||
+    compatibility.get("0.6")?.migration_required !== false
   ) {
     fail("The recommended release catalog is invalid or inconsistent.");
   }
@@ -430,7 +507,7 @@ async function resolveRecommendedRelease(options) {
         "gh",
         [
           "api",
-          "repos/kaveh6202/Nourd.NKF/contents/release/recommended.json",
+          `repos/${CURRENT_REPOSITORY}/contents/release/recommended.json`,
           "--method",
           "GET",
           "-f",
@@ -443,7 +520,7 @@ async function resolveRecommendedRelease(options) {
     } catch (error) {
       const detail = error?.stderr?.toString().trim();
       fail(
-        `Unable to resolve the governed recommended release from kaveh6202/Nourd.NKF${detail ? `: ${detail}` : "."}`,
+        `Unable to resolve the governed recommended release from ${CURRENT_REPOSITORY}${detail ? `: ${detail}` : "."}`,
       );
     }
     bytes = Buffer.from(encoded.replace(/\s/g, ""), "base64");
@@ -496,11 +573,15 @@ async function requireBundle(projectRoot) {
   );
   let bundle;
   try {
-    bundle = YAML.parse(bundleBytes.toString("utf8"));
+    bundle = YAML.parse(bundleBytes.toString("utf8"), {
+      schema: "core",
+      strict: true,
+      uniqueKeys: true,
+    });
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (!["0.1", "0.2", "0.3", "0.4", "0.5"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+  if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
     fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
@@ -552,8 +633,8 @@ async function acquireArchive(options, expectedSha256) {
     return readFile(path.resolve(options.archive));
   }
   const repository = options["github-repository"];
-  if (repository !== "kaveh6202/Nourd.NKF") {
-    fail("--github-repository must be kaveh6202/Nourd.NKF.");
+  if (repository !== CURRENT_REPOSITORY) {
+    fail(`--github-repository must be ${CURRENT_REPOSITORY}.`);
   }
   const { assetName, tag } = releaseIdentity(expectedSha256);
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-download-"));
@@ -737,6 +818,174 @@ function serializeYaml(value) {
   return Buffer.from(YAML.stringify(value, { lineWidth: 0 }), "utf8");
 }
 
+function replaceYamlScalars(text, mutations, label) {
+  const document = YAML.parseDocument(text, {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+    keepSourceTokens: true,
+  });
+  if (document.errors.length > 0) {
+    fail(`${label} is not strict YAML: ${document.errors[0].message}`);
+  }
+  const patches = mutations.map(({ field, value }) => {
+    let node = document.contents;
+    for (const segment of field) {
+      if (node?.anchor !== undefined || node?.tag !== undefined || YAML.isAlias(node)) {
+        fail(`${label} has an anchored, tagged, or aliased mutation path at ${field.join(".")}.`);
+      }
+      if (YAML.isMap(node)) {
+        if (node.items.some((pair) => YAML.isScalar(pair.key) && pair.key.value === "<<")) {
+          fail(`${label} has a merged mutation path at ${field.join(".")}.`);
+        }
+        const matches = node.items.filter(
+          (pair) => YAML.isScalar(pair.key) && pair.key.value === segment,
+        );
+        if (matches.length !== 1) fail(`${label} has no unique scalar at ${field.join(".")}.`);
+        node = matches[0].value;
+      } else if (YAML.isSeq(node) && Number.isInteger(segment) && segment >= 0 && segment < node.items.length) {
+        node = node.items[segment];
+      } else {
+        fail(`${label} has no unique scalar at ${field.join(".")}.`);
+      }
+    }
+    if (
+      !YAML.isScalar(node) || node.anchor !== undefined || node.tag !== undefined ||
+      !Array.isArray(node.range) || node.range.length < 2
+    ) {
+      fail(`${label} has no unique scalar at ${field.join(".")}.`);
+    }
+    return { start: node.range[0], end: node.range[1], value: JSON.stringify(value), field };
+  }).sort((left, right) => right.start - left.start);
+  for (let index = 0; index < patches.length - 1; index += 1) {
+    if (patches[index].start < patches[index + 1].end) {
+      fail(`${label} scalar ranges overlap.`);
+    }
+  }
+  let updated = text;
+  for (const patch of patches) {
+    updated = `${updated.slice(0, patch.start)}${patch.value}${updated.slice(patch.end)}`;
+  }
+  const reparsed = YAML.parseDocument(updated, {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+  });
+  if (reparsed.errors.length > 0) fail(`${label} scalar replacement produced invalid YAML.`);
+  for (const mutation of mutations) {
+    if (reparsed.getIn(mutation.field) !== mutation.value) {
+      fail(`${label} scalar replacement failed at ${mutation.field.join(".")}.`);
+    }
+  }
+  return updated;
+}
+
+function removeTopLevelYamlField(text, field, label) {
+  const document = YAML.parseDocument(text, {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+    keepSourceTokens: true,
+  });
+  if (document.errors.length > 0 || !YAML.isMap(document.contents)) {
+    fail(`${label} is not a strict YAML mapping.`);
+  }
+  const matches = document.contents.items
+    .map((pair, index) => ({ pair, index }))
+    .filter(({ pair }) => YAML.isScalar(pair.key) && pair.key.value === field);
+  if (matches.length !== 1) fail(`${label} does not contain exactly one ${field} field.`);
+  const [{ pair, index }] = matches;
+  const next = document.contents.items[index + 1];
+  if (!Array.isArray(pair.key.range)) fail(`${label} cannot locate ${field}.`);
+  const start = pair.key.range[0];
+  const end = next === undefined
+    ? text.length
+    : Array.isArray(next.key?.range)
+      ? next.key.range[0]
+      : fail(`${label} cannot locate the field after ${field}.`);
+  if (start !== 0 && text[start - 1] !== "\n") {
+    fail(`${label} ${field} is not a top-level line.`);
+  }
+  const updated = `${text.slice(0, start)}${text.slice(end)}`;
+  const reparsed = YAML.parseDocument(updated, {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+  });
+  if (reparsed.errors.length > 0 || reparsed.has(field)) {
+    fail(`${label} structural removal failed for ${field}.`);
+  }
+  return updated;
+}
+
+function removeYamlFieldAtPath(text, parentPath, field, label) {
+  const document = YAML.parseDocument(text, {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+    keepSourceTokens: true,
+  });
+  if (document.errors.length > 0) fail(`${label} is not strict YAML.`);
+  const parent = document.getIn(parentPath, true);
+  if (!YAML.isMap(parent)) fail(`${label} has no mapping at ${parentPath.join(".")}.`);
+  const matches = parent.items
+    .map((pair, index) => ({ pair, index }))
+    .filter(({ pair }) => YAML.isScalar(pair.key) && pair.key.value === field);
+  if (matches.length !== 1) fail(`${label} does not contain exactly one ${[...parentPath, field].join(".")} field.`);
+  const [{ pair, index }] = matches;
+  if (!Array.isArray(pair.key.range) || !Array.isArray(pair.value?.range)) {
+    fail(`${label} cannot locate ${[...parentPath, field].join(".")}.`);
+  }
+  const lineStart = text.lastIndexOf("\n", pair.key.range[0] - 1) + 1;
+  const next = parent.items[index + 1];
+  let end;
+  if (next !== undefined) {
+    if (!Array.isArray(next.key?.range)) fail(`${label} cannot locate the field after ${field}.`);
+    end = text.lastIndexOf("\n", next.key.range[0] - 1) + 1;
+  } else {
+    end = pair.value.range[1];
+  }
+  const updated = `${text.slice(0, lineStart)}${text.slice(end)}`;
+  const reparsed = YAML.parseDocument(updated, { schema: "core", strict: true, uniqueKeys: true });
+  if (reparsed.errors.length > 0 || reparsed.getIn([...parentPath, field]) !== undefined) {
+    fail(`${label} structural removal failed for ${[...parentPath, field].join(".")}.`);
+  }
+  return updated;
+}
+
+function requireNativeRecordEnvelope(sourceBytes, declaration, label) {
+  const text = sourceBytes.toString("utf8");
+  if (!text.startsWith("---\n")) fail(`${label} has no native frontmatter envelope.`);
+  const close = text.indexOf("\n---\n", 4);
+  if (close === -1) fail(`${label} has no closed native frontmatter envelope.`);
+  const frontmatter = YAML.parse(text.slice(4, close), {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+  });
+  requireExactKeys(frontmatter, ["title", "summary", "created_at", "id", "type"], `${label} frontmatter`);
+  if (
+    frontmatter.id !== declaration.id ||
+    frontmatter.type !== declaration.type ||
+    frontmatter.title !== declaration.title
+  ) {
+    fail(`${label} native frontmatter does not match its declaration identity.`);
+  }
+}
+
+function requireNativeDocumentEnvelope(sourceBytes, label) {
+  const text = sourceBytes.toString("utf8");
+  if (!text.startsWith("---\n")) fail(`${label} has no native frontmatter envelope.`);
+  const close = text.indexOf("\n---\n", 4);
+  if (close === -1) fail(`${label} has no closed native frontmatter envelope.`);
+  const frontmatter = YAML.parse(text.slice(4, close), {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+  });
+  requireExactKeys(frontmatter, ["title", "summary", "created_at"], `${label} frontmatter`);
+}
+
 function serializeJson(value) {
   return Buffer.from(`${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
@@ -845,6 +1094,24 @@ async function updateVerifiedStagedArtifactBindings(
     const current = await readRegularInside(projectRoot, relative);
     if (digest(current) !== predecessor.digest.value) {
       fail(`The governed artifact has drifted before migration: ${relative}`);
+    }
+    artifact.digest.value = digest(files.get(relative));
+  }
+  return serializeYaml(staged);
+}
+
+function updatePreparedStagedArtifactBindings(stagedBundleBytes, files) {
+  const staged = YAML.parse(stagedBundleBytes.toString("utf8"));
+  if (!Array.isArray(staged.governed_artifacts)) return stagedBundleBytes;
+
+  for (const artifact of staged.governed_artifacts) {
+    if (typeof artifact?.path !== "string" || !files.has(artifact.path)) continue;
+    const relative = safeRelative(artifact.path, "Governed artifact path");
+    if (
+      artifact?.digest?.algorithm !== "sha-256" ||
+      !/^[0-9a-f]{64}$/.test(artifact?.digest?.value ?? "")
+    ) {
+      fail(`The prepared governed artifact binding is invalid: ${relative}`);
     }
     artifact.digest.value = digest(files.get(relative));
   }
@@ -1046,7 +1313,7 @@ async function targetFiles(projectRoot, archiveBytes, verification, rootProfile)
     serializeJson({
       contract: "nkf.consumer-release-pin",
       nkf_version: verification.manifest.nkf_version,
-      repository: "kaveh6202/Nourd.NKF",
+      repository: CURRENT_REPOSITORY,
       archive: {
         sha256: verification.archive_sha256,
         tag,
@@ -1202,7 +1469,7 @@ function requirePinShape(pin) {
     if (
       pin?.contract !== "nkf.consumer-release-pin" ||
       !["0.1", "0.2"].includes(pin?.nkf_version) ||
-      pin?.repository !== "kaveh6202/Nourd.NKF" ||
+      pin?.repository !== LEGACY_REPOSITORY ||
       !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
       pin?.archive?.asset_name !== `nourd-nkf-sha256-${pin?.archive?.sha256}.tar` ||
       pin?.archive?.tag !== `release-sha256-${pin?.archive?.sha256}` ||
@@ -1241,8 +1508,10 @@ function requirePinShape(pin) {
     !pin.integration.scripts.host.includes(HOST_SCRIPT_NAME);
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    !["0.1", "0.2", "0.3", "0.4", "0.5"].includes(pin?.nkf_version) ||
-    pin?.repository !== "kaveh6202/Nourd.NKF" ||
+    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(pin?.nkf_version) ||
+    (pin?.nkf_version === "0.6"
+      ? pin?.repository !== CURRENT_REPOSITORY
+      : ![LEGACY_REPOSITORY, CURRENT_REPOSITORY].includes(pin?.repository)) ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
     pin?.archive?.asset_name !==
       `nourd-nkf-sha256-${pin?.archive?.sha256}.tar` ||
@@ -1377,9 +1646,10 @@ async function verifyIntegration(projectRoot, pin) {
   if (!registryBytes.equals(expectedRegistry)) {
     fail("The installed integration registry differs from its canonical form.");
   }
-  const packageManifest = parseStrictJson(
-    await readRegularInside(projectRoot, "package.json"),
-  );
+  const packageBytesValue = await readRegularInside(projectRoot, "package.json", false);
+  const packageManifest = packageBytesValue === null
+    ? null
+    : parseStrictJson(packageBytesValue);
   if (
     packageManifest?.scripts?.["nkf:check"] !== pin.integration.scripts.canonical ||
     (pin.integration.mode === "default" &&
@@ -1466,7 +1736,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
   if (
-    ["0.2", "0.3", "0.4", "0.5"].includes(verification.manifest.nkf_version) &&
+    ["0.2", "0.3", "0.4", "0.5", "0.6"].includes(verification.manifest.nkf_version) &&
     (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
   ) {
     fail("The predecessor adopter is not bound by its release archive.");
@@ -1547,6 +1817,11 @@ async function verified0_5Checker(temporary, verification) {
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, bytes);
   }
+  for (const [relative, encoded] of Object.entries(predecessorContract0_5)) {
+    const target = path.join(root, ...relative.split("/"));
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, Buffer.from(encoded, "base64"));
+  }
   const bytes = verification.entries.get("dist/nourd-nkf-checker.mjs");
   if (!Buffer.isBuffer(bytes) || digest(bytes) !== verification.checker_sha256) {
     fail("The verified NKF 0.5 archive does not carry its manifest-bound checker.");
@@ -1554,7 +1829,29 @@ async function verified0_5Checker(temporary, verification) {
   return path.join(root, "dist/nourd-nkf-checker.mjs");
 }
 
-async function require0_5Readiness(projectRoot, verification) {
+async function require0_5Readiness(projectRoot, verification, checkerPath = null) {
+  const argumentsValue = [
+    "--project", projectRoot,
+    "--level", "full-bundle",
+    "--purpose", "whole-root-readiness",
+    "--require-readiness",
+    "--runner", "nourd-nkf-adopter",
+    "--no-persist",
+  ];
+  const invocation = checkerPath === null
+    ? await invokeVerifiedChecker(verification, argumentsValue)
+    : spawnSync(process.execPath, [checkerPath, ...argumentsValue], { encoding: "utf8" });
+  if (invocation.status !== 0) {
+    fail(`The staged NKF 0.5 candidate did not pass whole-root readiness: ${invocation.stderr || invocation.stdout}`);
+  }
+  const report = parseStrictJson(Buffer.from(invocation.stdout, "utf8"));
+  if (report.conformance !== "passed" || report.readiness?.state !== "ready") {
+    fail("The staged NKF 0.5 candidate is not conformant and ready against its reviewed baseline.");
+  }
+  return report;
+}
+
+async function requireModernReadiness(projectRoot, verification, version) {
   const invocation = await invokeVerifiedChecker(verification, [
     "--project", projectRoot,
     "--level", "full-bundle",
@@ -1564,10 +1861,309 @@ async function require0_5Readiness(projectRoot, verification) {
     "--no-persist",
   ]);
   const report = parseStrictJson(Buffer.from(invocation.stdout, "utf8"));
-  if (report.conformance !== "passed" || report.readiness?.state !== "ready") {
-    fail("The staged NKF 0.5 candidate is not conformant and ready against its reviewed baseline.");
+  if (
+    report.nkf_version !== version ||
+    report.conformance !== "passed" ||
+    report.readiness?.state !== "ready"
+  ) {
+    fail(`The staged NKF ${version} project is not conformant and ready against its reviewed baseline.`);
   }
   return report;
+}
+
+function normalizedFreshnessPolicy(policy) {
+  const normalized = structuredClone(policy);
+  delete normalized.nkf_version;
+  delete normalized.id;
+  return normalized;
+}
+
+function graphRevision(baseline, version, policyId, policyDigest) {
+  return digest(Buffer.from(jcs({
+    contract: "nkf.graph-revision",
+    nkf_version: version,
+    bundle: baseline.bundle,
+    profile: baseline.profile,
+    nodes: baseline.node_revisions,
+    edges: baseline.authored_edges,
+    external_dependencies: baseline.external_dependencies,
+    authority_inputs: baseline.authority_inputs,
+    policy: { id: policyId, sha256: policyDigest },
+  }), "utf8"));
+}
+
+async function stage0_5To0_6CarryForward(
+  projectRoot,
+  bundle,
+  predecessorVerification,
+  successorVerification,
+  files,
+  preparedCandidateReady = false,
+) {
+  const oldPolicyId = "nkf.freshness-policy.0.5";
+  const newPolicyId = "nkf.freshness-policy.0.6";
+  const oldPolicyDigest = "5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd";
+  const newPolicyDigest = "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4";
+  const bundleText = (
+    files.get(".nourd/knowledge/bundle.yaml") ??
+    await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml")
+  ).toString("utf8");
+  const candidateBundle = YAML.parse(bundleText);
+  if (
+    (predecessorVerification !== null &&
+      predecessorVerification.manifest.nkf_version !== "0.5") ||
+    (predecessorVerification === null && !preparedCandidateReady) ||
+    successorVerification.manifest.nkf_version !== "0.6" ||
+    candidateBundle.nkf_version !== "0.5" ||
+    candidateBundle.knowledge_graph?.policy !== oldPolicyId
+  ) {
+    fail("The non-breaking carry-forward requires an exact native NKF 0.5 predecessor and NKF 0.6 successor.");
+  }
+  const predecessorReport = predecessorVerification === null
+    ? null
+    : await requireModernReadiness(projectRoot, predecessorVerification, "0.5");
+  const baselineRelative = safeRelative(
+    String(candidateBundle.knowledge_graph?.baseline ?? ""),
+    "Freshness baseline path",
+  );
+  if (baselineRelative !== ".nourd/knowledge/freshness/baseline.yaml") {
+    fail("The native 0.5 baseline path differs from the exact supported carry-forward path.");
+  }
+  const baselineText = (
+    files.get(baselineRelative) ?? await readRegularInside(projectRoot, baselineRelative)
+  ).toString("utf8");
+  const baseline = YAML.parse(baselineText);
+  const oldPolicyBytes = predecessorVerification === null
+    ? Buffer.from(freshnessPolicy0_5, "utf8")
+    : predecessorVerification.entries.get("contracts/nkf/0.5/freshness-policy.yaml");
+  const newPolicyBytes = successorVerification.entries.get("contracts/nkf/0.6/freshness-policy.yaml");
+  if (
+    !Buffer.isBuffer(oldPolicyBytes) || digest(oldPolicyBytes) !== oldPolicyDigest ||
+    !Buffer.isBuffer(newPolicyBytes) || digest(newPolicyBytes) !== newPolicyDigest
+  ) {
+    fail("The predecessor or successor freshness policy does not match its accepted digest.");
+  }
+  const oldPolicy = YAML.parse(oldPolicyBytes.toString("utf8"));
+  const newPolicy = YAML.parse(newPolicyBytes.toString("utf8"));
+  if (jcs(normalizedFreshnessPolicy(oldPolicy)) !== jcs(normalizedFreshnessPolicy(newPolicy))) {
+    fail("The 0.5 and 0.6 freshness policies differ beyond their version and identity coordinates.");
+  }
+  if (
+    baseline?.contract !== "nkf.graph-baseline" ||
+    baseline?.nkf_version !== "0.5" ||
+    baseline?.policy?.id !== oldPolicyId ||
+    baseline?.policy?.digest?.value !== oldPolicyDigest
+  ) {
+    fail("The predecessor baseline is not an exact native NKF 0.5 baseline.");
+  }
+  const predecessorRevision = graphRevision(baseline, "0.5", oldPolicyId, oldPolicyDigest);
+  if (
+    baseline.graph_revision?.value !== predecessorRevision ||
+    (predecessorReport !== null &&
+      predecessorReport.readiness?.candidate_graph_revision?.value !== predecessorRevision)
+  ) {
+    fail("Automatic NKF 0.6 update requires a current exact NKF 0.5 reviewed baseline.");
+  }
+  const successorRevision = graphRevision(baseline, "0.6", newPolicyId, newPolicyDigest);
+  files.set(
+    ".nourd/knowledge/bundle.yaml",
+    Buffer.from(replaceYamlScalars(bundleText, [
+      { field: ["nkf_version"], value: "0.6" },
+      { field: ["knowledge_graph", "policy"], value: newPolicyId },
+    ], ".nourd/knowledge/bundle.yaml"), "utf8"),
+  );
+  files.set(
+    baselineRelative,
+    Buffer.from(replaceYamlScalars(baselineText, [
+      { field: ["nkf_version"], value: "0.6" },
+      { field: ["graph_revision", "value"], value: successorRevision },
+      { field: ["policy", "id"], value: newPolicyId },
+      { field: ["policy", "digest", "value"], value: newPolicyDigest },
+    ], baselineRelative), "utf8"),
+  );
+  return { predecessorRevision, successorRevision };
+}
+
+async function stageProducerPromotionBaseline(projectRoot, files) {
+  const baselinePath = ".nourd/knowledge/freshness/baseline.yaml";
+  const baselineText = (await readRegularInside(projectRoot, baselinePath)).toString("utf8");
+  const baseline = YAML.parse(baselineText, {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+  });
+  const oldPolicyId = "nkf.freshness-policy.0.5";
+  const oldPolicyDigest = "5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd";
+  const newPolicyId = "nkf.freshness-policy.0.6";
+  const newPolicyDigest = "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4";
+  if (
+    baseline?.contract !== "nkf.graph-baseline" ||
+    baseline?.nkf_version !== "0.5" ||
+    baseline?.policy?.id !== oldPolicyId ||
+    baseline?.policy?.digest?.value !== oldPolicyDigest ||
+    baseline?.graph_revision?.value !==
+      graphRevision(baseline, "0.5", oldPolicyId, oldPolicyDigest)
+  ) {
+    fail("Producer promotion requires one internally consistent native NKF 0.5 predecessor baseline.");
+  }
+  const successorRevision = graphRevision(
+    baseline,
+    "0.6",
+    newPolicyId,
+    newPolicyDigest,
+  );
+  files.set(
+    baselinePath,
+    Buffer.from(replaceYamlScalars(baselineText, [
+      { field: ["nkf_version"], value: "0.6" },
+      { field: ["graph_revision", "value"], value: successorRevision },
+      { field: ["policy", "id"], value: newPolicyId },
+      { field: ["policy", "digest", "value"], value: newPolicyDigest },
+    ], baselinePath), "utf8"),
+  );
+}
+
+async function isExactProducer(projectRoot, bundle) {
+  const packageBytes = await readRegularInside(projectRoot, "package.json", false);
+  const packageManifest = packageBytes === null ? null : parseStrictJson(packageBytes);
+  return (
+    bundle.id === "nourd-knowledge-format" &&
+    bundle.root?.record === "nkf" &&
+    bundle.root?.profile === "nkf.profile.technology" &&
+    packageManifest?.repository?.url ===
+      "git+https://github.com/NourdApS/Nourd.NKF.git"
+  );
+}
+
+async function requireProducerPromotionInput(projectRoot, options, bundle) {
+  const requested = ["promotion-input", "promotion-stage", "accepting-decision"]
+    .some((name) => options[name] !== undefined);
+  const candidateEntry = (bundle.non_records ?? []).filter(
+    (entry) => entry?.path === "specifications/nkf-0.6-revision-3.md" &&
+      entry?.kind === "evidence" && entry?.document !== undefined,
+  );
+  const producerIdentity = await isExactProducer(projectRoot, bundle);
+
+  if (!requested && (!producerIdentity || candidateEntry.length === 0)) return null;
+  if (!producerIdentity) {
+    fail("Producer promotion is forbidden outside the exact NourdApS/Nourd.NKF producer.");
+  }
+  if (candidateEntry.length !== 1) {
+    fail("Producer promotion requires exactly one candidate Evidence representation of NKF 0.6.");
+  }
+  if (
+    options["promotion-input"] === undefined ||
+    options["promotion-stage"] === undefined ||
+    options["accepting-decision"] === undefined ||
+    options.review === undefined
+  ) {
+    fail("Producer promotion requires --promotion-input, --accepting-decision, --promotion-stage, and --review.");
+  }
+  if (!PRODUCER_PROMOTION_STAGES.has(options["promotion-stage"])) {
+    fail("The producer promotion stage is not one of the two accepted stages.");
+  }
+  const requireCanonicalInput = async (option, relative, expectedDigest, label) => {
+    const supplied = await realpath(path.resolve(option)).catch(() => null);
+    const canonical = await realpath(
+      path.resolve(projectRoot, ...relative.split("/")),
+    ).catch(() => null);
+    if (supplied !== canonical) fail(`${label} must use its exact canonical project path.`);
+    const bytes = await readRegularInside(projectRoot, relative);
+    if (digest(bytes) !== expectedDigest) fail(`${label} differs from its accepted exact bytes.`);
+    return bytes;
+  };
+  const inputBytes = await requireCanonicalInput(
+    options["promotion-input"],
+    PRODUCER_PROMOTION_INPUT_PATH,
+    PRODUCER_PROMOTION_INPUT_SHA256,
+    "Producer promotion input",
+  );
+  const decisionBytes = await requireCanonicalInput(
+    options["accepting-decision"],
+    PRODUCER_ACCEPTING_DECISION_PATH,
+    PRODUCER_ACCEPTING_DECISION_SHA256,
+    "Producer accepting Decision",
+  );
+  const input = YAML.parse(inputBytes.toString("utf8"), {
+    schema: "core",
+    strict: true,
+    uniqueKeys: true,
+  });
+  requireExactKeys(input, [
+    "contract", "nkf_version", "repository", "task", "specification",
+    "executable", "freshness_policy", "declaration_path", "record_declaration",
+    "historical_containment",
+  ], "Producer promotion input");
+  if (
+    input.contract !== "nkf.producer-candidate-promotion" ||
+    input.nkf_version !== "0.6" ||
+    input.repository !== CURRENT_REPOSITORY ||
+    input.task !== "NKF-027" ||
+    input.declaration_path !== ".nourd/knowledge/records/nkf-0.6-specification-revision-3.yaml"
+  ) {
+    fail("The producer promotion input has the wrong contract identity or destination.");
+  }
+  for (const [key, expectedPath] of [
+    ["specification", "knowledge/specifications/nkf-0.6-revision-3.md"],
+    ["executable", "contracts/nkf/0.6/revision-3/nkf.yaml"],
+    ["freshness_policy", "contracts/nkf/0.6/freshness-policy.yaml"],
+  ]) {
+    const binding = input[key];
+    requireExactKeys(binding, ["path", "digest"], `Promotion ${key} binding`);
+    if (
+      binding.path !== expectedPath ||
+      binding.digest?.algorithm !== "sha-256" ||
+      digest(await readRegularInside(projectRoot, expectedPath)) !== binding.digest?.value
+    ) {
+      fail(`The producer promotion ${key} binding does not resolve exactly.`);
+    }
+  }
+  if (!decisionBytes.toString("utf8").includes(PRODUCER_PROMOTION_INPUT_SHA256)) {
+    fail("The accepting Decision does not bind the exact producer-promotion input digest.");
+  }
+  const expectedContainment = expectedProducerHistoricalContainment();
+  if (jcs(input.historical_containment) !== jcs(expectedContainment)) {
+    fail("The producer promotion historical containment is not the exact accepted two-occurrence input.");
+  }
+  const historicalSource = await readRegularInside(projectRoot, PRODUCER_HISTORICAL_SOURCE_PATH);
+  const historicalDeclaration = await readRegularInside(projectRoot, PRODUCER_HISTORICAL_DECLARATION_PATH);
+  if (
+    digest(historicalSource) !== PRODUCER_HISTORICAL_SOURCE_SHA256 ||
+    digest(historicalDeclaration) !== PRODUCER_HISTORICAL_DECLARATION_SHA256
+  ) {
+    fail("The exact ADR 0122 source or predecessor declaration differs from the accepted historical containment.");
+  }
+  const decisionDeclaration = YAML.parse(
+    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0125.yaml")).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (
+    decisionDeclaration.id !== "adr-0125" ||
+    decisionDeclaration.type !== "decision" ||
+    decisionDeclaration.governance?.lifecycle !== "immutable" ||
+    decisionDeclaration.governance?.status !== "accepted" ||
+    decisionDeclaration.source?.digest?.value !== PRODUCER_ACCEPTING_DECISION_SHA256 ||
+    JSON.stringify(decisionDeclaration.governance?.authority) !==
+      JSON.stringify(input.record_declaration?.governance?.authority)
+  ) {
+    fail("The exact accepting Decision does not authorize the supplied native declaration.");
+  }
+  const recordsDirectory = path.join(projectRoot, ".nourd/knowledge/records");
+  for (const name of (await readdir(recordsDirectory)).filter((item) => item.endsWith(".yaml"))) {
+    const declaration = YAML.parse(await readFile(path.join(recordsDirectory, name), "utf8"), {
+      schema: "core", strict: true, uniqueKeys: true,
+    });
+    if (
+      declaration.id === "nkf-0.6-specification-revision-3" ||
+      declaration.source?.path === "specifications/nkf-0.6-revision-3.md"
+    ) {
+      fail("The native NKF 0.6 Specification declaration already exists or collides.");
+    }
+  }
+  if (await readRegularInside(projectRoot, input.declaration_path, false) !== null) {
+    fail("The exact producer-promotion declaration destination already exists.");
+  }
+  return { input, inputBytes, candidateEntry: candidateEntry[0], stage: options["promotion-stage"] };
 }
 
 async function prepare0_5Candidate(
@@ -1592,6 +2188,18 @@ async function prepare0_5Candidate(
   }
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-5-adopt-"));
   const candidate = path.join(temporary, "project");
+  const workingSeed = new Map(seedFiles);
+  workingSeed.set(PROTOCOL_PATH, Buffer.from(neutralProtocol0_5, "utf8"));
+  for (const skillPath of SKILL_PATHS) {
+    workingSeed.set(skillPath, Buffer.from(portableSkill0_5, "utf8"));
+  }
+  workingSeed.set(
+    ONBOARDING_PROTOCOL_PATH,
+    Buffer.from(onboardingProtocol0_5, "utf8"),
+  );
+  for (const skillPath of ONBOARDING_SKILL_PATHS) {
+    workingSeed.set(skillPath, Buffer.from(onboardingSkill0_5, "utf8"));
+  }
   try {
     await cp(projectRoot, candidate, {
       recursive: true,
@@ -1602,7 +2210,7 @@ async function prepare0_5Candidate(
         return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
       },
     });
-    await ensureWritableParents(candidate, seedFiles.keys());
+    await ensureWritableParents(candidate, workingSeed.keys());
     for (const relative of seedRemovals) {
       const target = path.join(candidate, ...safeRelative(relative, "Candidate removed path").split("/"));
       const stat = await lstat(target).catch(() => null);
@@ -1611,7 +2219,7 @@ async function prepare0_5Candidate(
       }
       await unlink(target);
     }
-    for (const [relative, bytes] of seedFiles) {
+    for (const [relative, bytes] of workingSeed) {
       const target = path.join(candidate, ...safeRelative(relative, "Candidate seed path").split("/"));
       await mkdir(path.dirname(target), { recursive: true });
       await writeFile(target, bytes);
@@ -1665,7 +2273,7 @@ async function prepare0_5Candidate(
           projectRoot,
           originalBundleBytes,
           candidateBundleBytes,
-          seedFiles,
+          workingSeed,
         ),
       );
     }
@@ -1690,7 +2298,7 @@ async function prepare0_5Candidate(
       );
     }
     const baseline = await sealBaseline0_5({ projectRoot: candidate, checker, reviewPath: review });
-    await require0_5Readiness(candidate, verification);
+    await require0_5Readiness(candidate, verification, checker);
     const before = await regularFileInventory(projectRoot);
     const after = await regularFileInventory(candidate);
     const files = new Map();
@@ -1720,6 +2328,94 @@ async function verifyInstalled0_5Ready(projectRoot) {
   return { ...installed, readiness };
 }
 
+function expectedProducerHistoricalContainment() {
+  return {
+    path: "decisions/0122-accept-the-nkf-0-6-authority-set.md",
+    kind: "evidence",
+    document: {
+      id: "document-cddf78f71eac865b267a0b88c15600cf61383285d6d3b2558ff2e07d7bceda95",
+      stable_path: "decisions/0122-accept-the-nkf-0-6-authority-set.md",
+      digest: { algorithm: "sha-256", value: PRODUCER_HISTORICAL_SOURCE_SHA256 },
+      relationships: [],
+      historical_acceptance_attempt_lock: {
+        record_id: "adr-0122",
+        record_declaration: {
+          path: PRODUCER_HISTORICAL_DECLARATION_PATH,
+          digest: { algorithm: "sha-256", value: PRODUCER_HISTORICAL_DECLARATION_SHA256 },
+        },
+        source: {
+          path: PRODUCER_HISTORICAL_SOURCE_PATH,
+          digest: { algorithm: "sha-256", value: PRODUCER_HISTORICAL_SOURCE_SHA256 },
+        },
+        violations: [
+          { diagnostic: "markdown.reference.deep-link.required", section: "scope-and-applicability", token: "NKF-027", occurrence: 1 },
+          { diagnostic: "markdown.reference.deep-link.required", section: "alternatives-considered", token: "ADR 0121", occurrence: 1 },
+        ],
+        historical_effect: "accepted-history-not-current-release-authority",
+        correction_decision: "adr-0125",
+      },
+    },
+  };
+}
+
+async function requireProducer0_6TerminalState(projectRoot) {
+  const { bundle } = await requireBundle(projectRoot);
+  const producer =
+    bundle.nkf_version === "0.6" &&
+    await isExactProducer(projectRoot, bundle);
+  if (!producer) return;
+  const expectedContainment = expectedProducerHistoricalContainment();
+  const candidateEvidence = (bundle.non_records ?? []).filter(
+    (entry) => entry?.path === "specifications/nkf-0.6-revision-3.md",
+  );
+  const historical = (bundle.non_records ?? []).filter(
+    (entry) => entry?.path === expectedContainment.path,
+  );
+  if (candidateEvidence.length !== 0 || historical.length !== 1 ||
+      jcs(historical[0]) !== jcs(expectedContainment)) {
+    fail("The native NKF 0.6 producer does not carry the exact terminal Evidence containment state.");
+  }
+  if (await readRegularInside(projectRoot, PRODUCER_HISTORICAL_DECLARATION_PATH, false) !== null) {
+    fail("The native NKF 0.6 producer still carries the superseded ADR 0122 record declaration.");
+  }
+  const promotion = YAML.parse(
+    (await readRegularInside(projectRoot, PRODUCER_PROMOTION_INPUT_PATH)).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  const nativeDeclaration = YAML.parse(
+    (await readRegularInside(projectRoot, promotion.declaration_path)).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (jcs(nativeDeclaration) !== jcs(promotion.record_declaration)) {
+    fail("The native NKF 0.6 producer Specification declaration differs from the exact accepted promotion input.");
+  }
+  const acceptingDecision = YAML.parse(
+    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0125.yaml")).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (acceptingDecision.source?.digest?.value !== PRODUCER_ACCEPTING_DECISION_SHA256) {
+    fail("The native NKF 0.6 producer no longer binds the exact accepting Decision.");
+  }
+  const decisionIndex = (await readRegularInside(projectRoot, "knowledge/decisions/README.md")).toString("utf8");
+  if (
+    decisionIndex.includes("[ADR 0122: Accept The NKF 0.6 Authority Set]") ||
+    !decisionIndex.includes("ADR 0122 is retained as non-record historical Evidence")
+  ) {
+    fail("The native NKF 0.6 producer Decision navigation is not in the exact historical terminal state.");
+  }
+}
+
+async function verifyInstalled0_6Ready(projectRoot) {
+  const installed = await verifyInstalled(projectRoot, true);
+  const readiness = await requireModernReadiness(
+    projectRoot,
+    installed.verification,
+    "0.6",
+  );
+  await requireProducer0_6TerminalState(projectRoot);
+  return { ...installed, readiness };
+}
+
 async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade = false) {
   if (Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10) < 22) {
     fail("NKF adoption requires Node.js 22 or later.");
@@ -1731,12 +2427,15 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
   if (command === "update" && priorBytes === null) {
     fail("Update requires an existing NKF consumer release pin.");
   }
-  if (priorBytes !== null) {
-    await verifyPredecessorInstallation(projectRoot, priorBytes);
-  }
+  const predecessorInstallation = priorBytes === null
+    ? null
+    : await verifyPredecessorInstallation(projectRoot, priorBytes);
   const archiveBytes = await acquireArchive(options, expectedSha256);
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
-  const versionUpgrade = false;
+  const versionUpgrade =
+    allowNonBreakingVersionUpgrade &&
+    bundle.nkf_version === "0.5" &&
+    verification.manifest.nkf_version === "0.6";
   if (verification.manifest.nkf_version !== bundle.nkf_version && !versionUpgrade) {
     fail("Install or update requires a same-version release; use Adopt for migration.");
   }
@@ -1747,14 +2446,28 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
     bundle.root.profile,
   );
   if (versionUpgrade) {
+    let preparedCandidateReady = false;
+    if (predecessorInstallation === null) {
+      const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-5-predecessor-"));
+      try {
+        const checker = await verified0_5Checker(temporary, verification);
+        await require0_5Readiness(projectRoot, verification, checker);
+        preparedCandidateReady = true;
+      } finally {
+        await rm(temporary, { recursive: true, force: true });
+      }
+    }
+    await stage0_5To0_6CarryForward(
+      projectRoot,
+      bundle,
+      predecessorInstallation?.verification ?? null,
+      verification,
+      files,
+      preparedCandidateReady,
+    );
     await stageVerifiedHostRegistryMigration(projectRoot, files);
-  }
-  if (versionUpgrade) {
     const bundlePath = ".nourd/knowledge/bundle.yaml";
     const originalBundleBytes = await readRegularInside(projectRoot, bundlePath);
-    const nextBundle = YAML.parse(originalBundleBytes.toString("utf8"));
-    nextBundle.nkf_version = verification.manifest.nkf_version;
-    files.set(bundlePath, serializeYaml(nextBundle));
     files.set(
       bundlePath,
       await updateVerifiedStagedArtifactBindings(
@@ -1791,20 +2504,45 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
       prior.integration_revision === nextPin.integration_revision &&
       !versionUpgrade
     ) {
-      await verifyInstalled(projectRoot, true);
+      if (
+        bundle.nkf_version === "0.6" &&
+        await isExactProducer(projectRoot, bundle)
+      ) {
+        await verifyInstalled0_6Ready(projectRoot);
+      } else {
+        await verifyInstalled(projectRoot, true);
+      }
       return { state: "no-update", project: projectRoot, pin: prior };
     }
   }
-  await validateCompleteCandidate(projectRoot, files);
+  const verifier = versionUpgrade
+    ? async (candidateRoot) => {
+        const installed = await verifyInstalled(candidateRoot, true);
+        const readiness = await requireModernReadiness(candidateRoot, installed.verification, "0.6");
+        return { ...installed, readiness };
+      }
+    : null;
+  await validateCompleteCandidate(projectRoot, files, [], verifier);
   const installed = await writeTransaction(
     projectRoot,
     files,
-    () => verifyInstalled(projectRoot, true),
+    () => verifier === null ? verifyInstalled(projectRoot, true) : verifier(projectRoot),
   );
   return {
     state: priorBytes === null ? "installed" : "updated",
     project: projectRoot,
     pin: installed.pin,
+    ...(versionUpgrade
+      ? {
+          compatibility: {
+            from_nkf_version: "0.5",
+            to_nkf_version: "0.6",
+            classification: "non-breaking",
+            repository_owner_approval: "not-required",
+            readiness: installed.readiness?.readiness?.state ?? "ready",
+          },
+        }
+      : {}),
   };
 }
 
@@ -1869,7 +2607,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    !["0.1", "0.2", "0.3", "0.4", "0.5"].includes(value?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -2076,6 +2814,22 @@ async function onboard(options) {
     options.review,
     verification,
   );
+  for (const [relative, bytes] of integration) {
+    candidate.files.set(relative, bytes);
+  }
+  await stage0_5To0_6CarryForward(
+    projectRoot,
+    knowledge.plan.project,
+    null,
+    verification,
+    candidate.files,
+    true,
+  );
+  const bundlePath = ".nourd/knowledge/bundle.yaml";
+  candidate.files.set(
+    bundlePath,
+    updatePreparedStagedArtifactBindings(candidate.files.get(bundlePath), candidate.files),
+  );
   const createdPaths = [];
   const changedPaths = [];
   for (const [relative, bytes] of candidate.files) {
@@ -2089,7 +2843,7 @@ async function onboard(options) {
   receipt.created_paths = createdPaths;
   receipt.changed_paths = changedPaths;
   candidate.files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_5Ready);
+  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_6Ready);
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
@@ -2097,7 +2851,7 @@ async function onboard(options) {
       if (process.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
         fail("Injected onboarding transaction failure.");
       }
-      return verifyInstalled0_5Ready(projectRoot);
+      return verifyInstalled0_6Ready(projectRoot);
     },
   );
   return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
@@ -2339,16 +3093,58 @@ async function loadGovernedContext(projectRoot) {
   for (const entry of (await readdir(recordsDir, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
     if (!entry.name.endsWith(".yaml")) continue;
     const declarationPath = path.join(recordsDir, entry.name);
-    const value = YAML.parse(await readFile(declarationPath, "utf8"));
-    if (typeof value?.id !== "string" || typeof value?.source?.path !== "string") continue;
+    const value = YAML.parse(await readFile(declarationPath, "utf8"), {
+      schema: "core",
+      strict: true,
+      uniqueKeys: true,
+    });
+    if (
+      value === null || typeof value !== "object" || Array.isArray(value) ||
+      typeof value.id !== "string" || value.id === "" ||
+      typeof value.source?.path !== "string" || value.source.path === ""
+    ) {
+      fail(`Governed declaration .nourd/knowledge/records/${entry.name} has no exact record identity and source path.`);
+    }
+    if (records.has(value.id)) fail(`Duplicate governed record identity: ${value.id}`);
+    if (!Array.isArray(value.sections)) {
+      fail(`Governed declaration ${value.id} has no exact section array.`);
+    }
+    const sections = new Set();
+    for (const section of value.sections) {
+      if (typeof section?.id !== "string" || section.id === "" || sections.has(section.id)) {
+        fail(`Governed declaration ${value.id} has an invalid or duplicate section identity.`);
+      }
+      sections.add(section.id);
+    }
+    const relationships = value.relationships === undefined ? [] : value.relationships;
+    const entityRelationships = value.entity_relationships === undefined ? [] : value.entity_relationships;
+    const entitiesValue = value.entities === undefined ? [] : value.entities;
+    if (!Array.isArray(relationships) || !Array.isArray(entityRelationships) || !Array.isArray(entitiesValue)) {
+      fail(`Governed declaration ${value.id} has a non-array relationship or entity field.`);
+    }
+    const entities = new Set();
+    for (const entity of entitiesValue) {
+      if (typeof entity?.id !== "string" || entity.id === "" || entities.has(entity.id)) {
+        fail(`Governed declaration ${value.id} has an invalid or duplicate entity identity.`);
+      }
+      entities.add(entity.id);
+    }
     records.set(value.id, {
       sourcePath: value.source.path,
       declarationFile: `.nourd/knowledge/records/${entry.name}`,
       type: value.type,
+      lifecycle: value.governance?.lifecycle,
       status: value.governance?.status,
+      sections,
+      entities,
+      relationships,
+      entityRelationships,
     });
     const adr = /^adr-(\d{4})$/.exec(value.id);
-    if (adr && value.governance?.status === "accepted") decisionsByNumber.set(adr[1], value.source.path);
+    if (adr && value.governance?.status === "accepted") {
+      if (decisionsByNumber.has(adr[1])) fail(`Duplicate accepted Decision number: ADR ${adr[1]}`);
+      decisionsByNumber.set(adr[1], value.source.path);
+    }
   }
   const tasks = new Map();
   const taskEntries = [];
@@ -2360,19 +3156,21 @@ async function loadGovernedContext(projectRoot) {
     try {
       text = await readFile(absolute, "utf8");
     } catch {
-      continue;
+      fail(`Governed Task source is unreadable: ${item.path}`);
     }
     const lines = text.split("\n");
     const close = lines[0] === "---" ? lines.indexOf("---", 1) : -1;
     const frontmatterTaskId = close > 0 ? lines.slice(1, close).find((line) => line.startsWith("task_id:"))?.slice(8).trim() : undefined;
-    const taskId = bundle.nkf_version === "0.5" && typeof item.document?.id === "string"
+    const taskId = MODERN_NKF_VERSIONS.has(bundle.nkf_version) && typeof item.document?.id === "string"
       ? item.document.id
       : frontmatterTaskId;
-    if (taskId) {
-      tasks.set(taskId, item.path);
-      taskEntries.push({ taskId, path: item.path });
-      taskDeclarations.set(taskId, item);
+    if (typeof taskId !== "string" || taskId === "") {
+      fail(`Governed Task ${item.path} has no exact Task identity.`);
     }
+    if (tasks.has(taskId)) fail(`Duplicate governed Task identity: ${taskId}`);
+    tasks.set(taskId, item.path);
+    taskEntries.push({ taskId, path: item.path });
+    taskDeclarations.set(taskId, item);
   }
   return { bundle, knowledgeRoot, records, decisionsByNumber, tasks, taskEntries, taskDeclarations };
 }
@@ -2459,66 +3257,105 @@ async function knowledgeMarkdownFiles(projectRoot, knowledgeRoot, bundle) {
   return results.sort();
 }
 
-async function repinGoverned(projectRoot) {
+async function planRepinGoverned(projectRoot, sourceOverrides = new Map()) {
   const context = await loadGovernedContext(projectRoot);
+  const files = new Map();
   let repinnedRecords = 0;
   for (const [, record] of context.records) {
     const declarationAbsolute = path.join(projectRoot, ...record.declarationFile.split("/"));
-    const sourceAbsolute = path.join(projectRoot, context.knowledgeRoot, ...record.sourcePath.split("/"));
+    const projectSourcePath = `${context.knowledgeRoot}/${record.sourcePath}`;
+    const sourceAbsolute = path.join(projectRoot, ...projectSourcePath.split("/"));
     let sourceBytes;
     try {
-      sourceBytes = await readFile(sourceAbsolute);
+      sourceBytes = sourceOverrides.get(projectSourcePath) ?? await readFile(sourceAbsolute);
     } catch {
       continue;
     }
     const observed = digest(sourceBytes);
     const declarationText = await readFile(declarationAbsolute, "utf8");
-    const updated = declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${observed}`);
+    const declaration = YAML.parse(declarationText);
+    if (declaration?.source?.digest?.algorithm !== "sha-256") {
+      fail(`Governed record ${record.declarationFile} has no SHA-256 source binding.`);
+    }
+    let updated = declarationText;
+    if (declaration.source.digest.value !== observed) {
+      if (declaration.legacy_lock !== undefined) {
+        if (context.bundle.nkf_version !== "0.6") {
+          fail(`Legacy-locked record ${record.declarationFile} cannot change before native NKF 0.6 adoption.`);
+        }
+        requireNativeRecordEnvelope(sourceBytes, declaration, record.declarationFile);
+        updated = removeTopLevelYamlField(updated, "legacy_lock", record.declarationFile);
+      }
+      updated = replaceYamlScalars(
+        updated,
+        [{ field: ["source", "digest", "value"], value: observed }],
+        record.declarationFile,
+      );
+    }
     if (updated !== declarationText) {
-      await writeFile(declarationAbsolute, updated);
+      files.set(record.declarationFile, Buffer.from(updated, "utf8"));
       repinnedRecords += 1;
     }
   }
   const bundlePath = path.join(projectRoot, ".nourd/knowledge/bundle.yaml");
   let bundleText = await readFile(bundlePath, "utf8");
   let repinnedArtifacts = 0;
-  const artifactPattern = /(    path: ([^\n]+)\n    digest:\n      algorithm: sha-256\n      value: )([0-9a-f]{64})/g;
-  const replacements = [];
-  for (const match of bundleText.matchAll(artifactPattern)) {
+  const artifactMutations = [];
+  for (const [index, artifact] of (context.bundle.governed_artifacts ?? []).entries()) {
+    if (typeof artifact?.path !== "string" || artifact?.digest?.algorithm !== "sha-256") continue;
     let bytes;
     try {
-      bytes = await readFile(path.join(projectRoot, ...match[2].split("/")));
+      bytes = sourceOverrides.get(artifact.path) ?? await readFile(path.join(projectRoot, ...artifact.path.split("/")));
     } catch {
       continue;
     }
     const observed = digest(bytes);
-    if (observed !== match[3]) replacements.push([match[0], `${match[1]}${observed}`]);
-  }
-  for (const [from, to] of replacements) {
-    bundleText = bundleText.replace(from, to);
-    repinnedArtifacts += 1;
+    if (observed !== artifact.digest.value) {
+      artifactMutations.push({ field: ["governed_artifacts", index, "digest", "value"], value: observed });
+      repinnedArtifacts += 1;
+    }
   }
   let repinnedDocuments = 0;
-  if (context.bundle.nkf_version === "0.5") {
-    const bundleValue = YAML.parse(bundleText);
-    for (const item of bundleValue.non_records ?? []) {
+  if (MODERN_NKF_VERSIONS.has(context.bundle.nkf_version)) {
+    const documentMutations = [];
+    const legacyRemovals = [];
+    for (const [index, item] of (context.bundle.non_records ?? []).entries()) {
       if (item?.document?.digest?.algorithm !== "sha-256" || typeof item.path !== "string") continue;
       let bytes;
       try {
-        bytes = await readFile(path.join(projectRoot, context.knowledgeRoot, ...item.path.split("/")));
+        const projectDocumentPath = `${context.knowledgeRoot}/${item.path}`;
+        bytes = sourceOverrides.get(projectDocumentPath) ?? await readFile(path.join(projectRoot, ...projectDocumentPath.split("/")));
       } catch {
         continue;
       }
       const observed = digest(bytes);
       if (item.document.digest.value !== observed) {
-        item.document.digest.value = observed;
+        if (item.document.legacy_lock !== undefined) {
+          if (context.bundle.nkf_version !== "0.6") {
+            fail(`Legacy-locked document ${item.path} cannot change before native NKF 0.6 adoption.`);
+          }
+          if (item.kind !== "evidence") requireNativeDocumentEnvelope(bytes, item.path);
+          legacyRemovals.push(["non_records", index, "document"]);
+        }
+        documentMutations.push({ field: ["non_records", index, "document", "digest", "value"], value: observed });
         repinnedDocuments += 1;
       }
     }
-    if (repinnedDocuments > 0) bundleText = serializeYaml(bundleValue).toString("utf8");
+    for (const parentPath of legacyRemovals.sort((left, right) => Number(right[1]) - Number(left[1]))) {
+      bundleText = removeYamlFieldAtPath(bundleText, parentPath, "legacy_lock", ".nourd/knowledge/bundle.yaml");
+    }
+    if (documentMutations.length > 0) {
+      bundleText = replaceYamlScalars(bundleText, documentMutations, ".nourd/knowledge/bundle.yaml");
+    }
   }
-  if (repinnedArtifacts > 0 || repinnedDocuments > 0) await writeFile(bundlePath, bundleText);
+  if (artifactMutations.length > 0) {
+    bundleText = replaceYamlScalars(bundleText, artifactMutations, ".nourd/knowledge/bundle.yaml");
+  }
+  if (repinnedArtifacts > 0 || repinnedDocuments > 0) {
+    files.set(".nourd/knowledge/bundle.yaml", Buffer.from(bundleText, "utf8"));
+  }
   return {
+    files,
     state: "repinned",
     records: repinnedRecords,
     documents: repinnedDocuments,
@@ -2526,26 +3363,163 @@ async function repinGoverned(projectRoot) {
   };
 }
 
+async function authoringVerifier(projectRoot, options) {
+  const pinPresent = (await readRegularInside(projectRoot, PIN_PATH, false)) !== null;
+  if (pinPresent) return (root) => verifyInstalled(root, true);
+  if (typeof options?.checker === "string") {
+    return externalCheckerVerifier(path.resolve(options.checker));
+  }
+  fail("Authoring validation requires an installed release pin or an explicit --checker.");
+}
+
+async function repinGoverned(projectRoot, options = {}) {
+  const plan = await planRepinGoverned(projectRoot);
+  const verifier = await authoringVerifier(projectRoot, options);
+  if (plan.files.size > 0) {
+    await validateCompleteCandidate(projectRoot, plan.files, [], verifier);
+    await writeTransaction(
+      projectRoot,
+      plan.files,
+      () => verifier(projectRoot),
+    );
+  } else {
+    await verifier(projectRoot);
+  }
+  return {
+    state: plan.state,
+    records: plan.records,
+    documents: plan.documents,
+    artifacts: plan.artifacts,
+  };
+}
+
 async function exportReferences(projectRoot) {
   const context = await loadGovernedContext(projectRoot);
+  const documents = new Map();
+  const relationships = [];
+  const nonempty = (value, label) => {
+    if (typeof value !== "string" || value === "") fail(`${label} must be one non-empty string.`);
+    return value;
+  };
+  const entityReference = (value, label) => {
+    requireExactKeys(value, ["record", "entity"], label);
+    const recordId = nonempty(value.record, `${label} record`);
+    const entityId = nonempty(value.entity, `${label} entity`);
+    if (!context.records.get(recordId)?.entities.has(entityId)) {
+      fail(`${label} does not resolve to one exact same-bundle entity.`);
+    }
+    return { record: recordId, entity: entityId };
+  };
+  for (const item of context.bundle.non_records ?? []) {
+    const document = item?.document;
+    if (document === undefined) continue;
+    if (
+      typeof item?.path !== "string" || item.path === "" ||
+      typeof document?.id !== "string" || document.id === ""
+    ) {
+      fail("A represented document has no exact identity and source path.");
+    }
+    if (documents.has(document.id)) fail(`Duplicate governed document identity: ${document.id}`);
+    if (document.relationships !== undefined && !Array.isArray(document.relationships)) {
+      fail(`Governed document ${document.id} has a non-array relationship field.`);
+    }
+    documents.set(document.id, item.path);
+  }
+  const nodeReference = (value, label) => {
+    if (value?.kind === "record") {
+      requireExactKeys(value, ["kind", "id"], label);
+      if (!context.records.has(value.id)) fail(`${label} does not resolve to one exact record.`);
+    } else if (value?.kind === "document") {
+      requireExactKeys(value, ["kind", "id"], label);
+      if (!documents.has(value.id)) fail(`${label} does not resolve to one exact document.`);
+    } else if (value?.kind === "entity") {
+      requireExactKeys(value, ["kind", "record", "entity"], label);
+      entityReference({ record: value.record, entity: value.entity }, label);
+    } else {
+      fail(`${label} has an unsupported node-reference kind.`);
+    }
+    return structuredClone(value);
+  };
+  for (const [id, record] of context.records) {
+    for (const [index, relationship] of record.relationships.entries()) {
+      const label = `Record ${id} relationship ${index}`;
+      requireExactKeys(relationship, ["type", "target", "source_section"], label);
+      if (!RELATIONSHIP_TYPES.has(relationship.type)) fail(`${label} has an unsupported relationship type.`);
+      if (!context.records.has(relationship.target)) fail(`${label} target does not resolve to one exact record.`);
+      if (!record.sections.has(relationship.source_section)) fail(`${label} source section does not resolve exactly.`);
+      const source = { kind: "record", id };
+      relationships.push({
+        source,
+        relationship: relationship.type,
+        target: { kind: "record", id: relationship.target },
+        source_binding: { kind: "section", node: source, section: relationship.source_section },
+      });
+    }
+    for (const [index, relationship] of record.entityRelationships.entries()) {
+      const label = `Record ${id} entity relationship ${index}`;
+      requireExactKeys(relationship, ["type", "source", "target", "source_section"], label);
+      if (!RELATIONSHIP_TYPES.has(relationship.type)) fail(`${label} has an unsupported relationship type.`);
+      if (!record.sections.has(relationship.source_section)) fail(`${label} source section does not resolve exactly.`);
+      const source = { kind: "entity", ...entityReference(relationship.source, `${label} source`) };
+      const target = { kind: "entity", ...entityReference(relationship.target, `${label} target`) };
+      relationships.push({
+        source,
+        relationship: relationship.type,
+        target,
+        source_binding: { kind: "section", node: source, section: relationship.source_section },
+      });
+    }
+  }
+  for (const item of context.bundle.non_records ?? []) {
+    const document = item?.document;
+    if (document === undefined) continue;
+    for (const [index, relationship] of (document.relationships ?? []).entries()) {
+      const label = `Document ${document.id} relationship ${index}`;
+      requireExactKeys(relationship, ["type", "target", "source_heading"], label);
+      if (!RELATIONSHIP_TYPES.has(relationship.type)) fail(`${label} has an unsupported relationship type.`);
+      requireExactKeys(relationship.source_heading, ["heading_path", "occurrence"], `${label} source heading`);
+      if (
+        !Array.isArray(relationship.source_heading.heading_path) ||
+        relationship.source_heading.heading_path.length === 0 ||
+        relationship.source_heading.heading_path.some((heading) => typeof heading !== "string" || heading === "") ||
+        !Number.isInteger(relationship.source_heading.occurrence) || relationship.source_heading.occurrence < 1
+      ) {
+        fail(`${label} has an invalid source heading.`);
+      }
+      const source = { kind: "document", id: document.id };
+      relationships.push({
+        source,
+        relationship: relationship.type,
+        target: nodeReference(relationship.target, `${label} target`),
+        source_binding: { kind: "heading", node: source, heading: structuredClone(relationship.source_heading) },
+      });
+    }
+  }
+  relationships.sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right), "en"));
   return {
     state: "exported",
     knowledge_root: context.knowledgeRoot,
     records: Object.fromEntries([...context.records].map(([id, record]) => [id, record.sourcePath])),
+    documents: Object.fromEntries([...documents].sort(([left], [right]) => left.localeCompare(right, "en"))),
     decisions: Object.fromEntries(context.decisionsByNumber),
     tasks: Object.fromEntries(context.tasks),
+    relationships,
   };
 }
 
 async function exportVersionedSet(projectRoot) {
-  const bundleBytes = await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml", false);
-  const versionMatch = bundleBytes === null
-    ? null
-    : /^nkf_version: "([^"]+)"$/m.exec(bundleBytes.toString("utf8"));
-  const declared = versionMatch?.[1] ?? "0.2";
-  const releaseSet = ["0.3", "0.4", "0.5"].includes(declared)
+  const { bundle } = await requireBundle(projectRoot);
+  const declared = bundle.nkf_version;
+  const releaseSet = ["0.3", "0.4", "0.5", "0.6"].includes(declared)
     ? await readReleaseSet(projectRoot, declared)
     : undefined;
+  if (releaseSet !== undefined) {
+    return {
+      state: "enumerated",
+      nkf_version: declared,
+      members: structuredClone(releaseSet.members),
+    };
+  }
   const members = [];
   for (const entry of releaseEntriesForVersion(declared, releaseSet)) {
     if (entry.path === "release-manifest.json") continue;
@@ -2566,21 +3540,47 @@ async function exportVersionedSet(projectRoot) {
   return { state: "enumerated", nkf_version: declared, members };
 }
 
-async function linkifyProject(projectRoot) {
+async function linkifyProject(projectRoot, options = {}) {
   const context = await loadGovernedContext(projectRoot);
-  const files = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
+  const markdownFiles = await knowledgeMarkdownFiles(projectRoot, context.knowledgeRoot, context.bundle);
+  const staged = new Map();
+  const recordsBySource = new Map(
+    [...context.records.values()].map((record) => [record.sourcePath, record]),
+  );
   let changed = 0;
-  for (const relative of files) {
+  for (const relative of markdownFiles) {
     const absolute = path.join(projectRoot, context.knowledgeRoot, ...relative.split("/"));
     const original = await readFile(absolute, "utf8");
     const result = linkifyText(original, context, relative);
     if (result.changed) {
-      await writeFile(absolute, result.text);
+      const record = recordsBySource.get(relative);
+      if (record?.lifecycle === "immutable") {
+        fail(`Linkify cannot change immutable governed source ${relative}.`);
+      }
+      staged.set(`${context.knowledgeRoot}/${relative}`, Buffer.from(result.text, "utf8"));
       changed += 1;
     }
   }
-  const repin = await repinGoverned(projectRoot);
-  return { state: "linkified", files: files.length, changed, repinned_records: repin.records };
+  const repin = await planRepinGoverned(projectRoot, staged);
+  for (const [relative, bytes] of repin.files) staged.set(relative, bytes);
+  const verifier = await authoringVerifier(projectRoot, options);
+  if (staged.size > 0) {
+    await validateCompleteCandidate(projectRoot, staged, [], verifier);
+    await writeTransaction(
+      projectRoot,
+      staged,
+      () => verifier(projectRoot),
+    );
+  } else {
+    await verifier(projectRoot);
+  }
+  return {
+    state: "linkified",
+    files: markdownFiles.length,
+    changed,
+    repinned_records: repin.records,
+    repinned_documents: repin.documents,
+  };
 }
 
 function externalCheckerVerifier(checkerPath) {
@@ -2892,7 +3892,7 @@ async function taskPendingView(options) {
     );
     const entry = {
       task: taskId,
-      task_status: context.bundle.nkf_version === "0.5"
+      task_status: MODERN_NKF_VERSIONS.has(context.bundle.nkf_version)
         ? context.taskDeclarations.get(taskId)?.document?.state?.value ?? null
         : text.match(/^task_status: (\w+)$/m)?.[1] ?? null,
       path: relative,
@@ -2947,8 +3947,9 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
     fail(`The native NKF 0.5 Task has no task-status declaration: ${options.task}`);
   }
   const currentStatus = task.document.state.value;
-  if (currentStatus === transition) fail(`The task already has task_status ${transition}.`);
-  if (currentStatus === "cancelled") fail("cancelled is terminal; later work on the subject is a new Task.");
+  if (currentStatus === "cancelled" && transition !== "cancelled") {
+    fail("cancelled is terminal; later work on the subject is a new Task.");
+  }
   if (transition === "cancelled" && currentStatus === "completed") {
     fail("A completed Task is never cancelled; reversing delivered work is a later Task.");
   }
@@ -2964,14 +3965,42 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
     fail("Native NKF 0.5 task transitions do not accept --result-file; author the reviewed Result in the stable Task source before transition.");
   }
 
-  const bundle = structuredClone(context.bundle);
-  const selected = (bundle.non_records ?? []).find(
+  const selectedIndex = (context.bundle.non_records ?? []).findIndex(
     (item) => item?.kind === "task" && item?.document?.id === options.task,
   );
+  const selected = context.bundle.non_records?.[selectedIndex];
   if (selected === undefined) fail(`The native NKF 0.5 Task declaration is unavailable: ${options.task}`);
-  selected.document.state = { ...selected.document.state, value: transition };
+  const priorTaskStatus = selected.document?.state?.value;
+  if (!["active", "deferred", "completed", "cancelled"].includes(priorTaskStatus)) {
+    fail(`The native Task ${options.task} has no supported declared state.`);
+  }
+  if (priorTaskStatus === "cancelled" && transition !== "cancelled") {
+    fail("cancelled is terminal; later work on the subject is a new Task.");
+  }
+  if (transition === "cancelled" && priorTaskStatus === "completed") {
+    fail("A completed Task is never cancelled; reversing delivered work is a later Task.");
+  }
+  if (priorTaskStatus === transition) {
+    const verifier = await authoringVerifier(projectRoot, options);
+    await verifier(projectRoot);
+    return {
+      state: "current",
+      task: options.task,
+      prior_task_status: priorTaskStatus,
+      task_status: transition,
+      generated_navigation: 0,
+      changed_subjects: [],
+    };
+  }
+  const originalBundleText = await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8");
+  const updatedBundleText = replaceYamlScalars(
+    originalBundleText,
+    [{ field: ["non_records", selectedIndex, "document", "state", "value"], value: transition }],
+    ".nourd/knowledge/bundle.yaml",
+  );
+  const bundle = YAML.parse(updatedBundleText, { schema: "core", strict: true, uniqueKeys: true });
   const files = new Map();
-  files.set(".nourd/knowledge/bundle.yaml", serializeYaml(bundle));
+  files.set(".nourd/knowledge/bundle.yaml", Buffer.from(updatedBundleText, "utf8"));
   const states = ["active", "deferred", "completed", "cancelled"];
   for (const state of states) {
     const indexPath = `tasks/by-state/${state}.md`;
@@ -2992,12 +4021,10 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
   return {
     state: "transitioned",
     task: options.task,
-    from: currentRelative,
-    to: currentRelative,
+    prior_task_status: priorTaskStatus,
     task_status: transition,
-    documents_rewritten: 0,
     generated_navigation: states.length,
-    git: { state: "project-owned" },
+    changed_subjects: [...files.keys()].sort((left, right) => left.localeCompare(right, "en")),
   };
 }
 
@@ -3012,8 +4039,8 @@ async function transitionTask(options) {
   const currentAbsolute = path.join(projectRoot, context.knowledgeRoot, ...currentRelative.split("/"));
   const original = await readFile(currentAbsolute, "utf8");
   const statusMatch = original.match(/^task_status: (\w+)$/m);
-  if (context.bundle.nkf_version !== "0.5" && statusMatch === null) fail("The task has no task_status line.");
-  if (context.bundle.nkf_version === "0.5") {
+  if (!MODERN_NKF_VERSIONS.has(context.bundle.nkf_version) && statusMatch === null) fail("The task has no task_status line.");
+  if (MODERN_NKF_VERSIONS.has(context.bundle.nkf_version)) {
     return transitionTask0_5(projectRoot, context, options, transition, original, currentRelative);
   }
   const git = await taskGit(projectRoot);
@@ -3097,7 +4124,11 @@ async function transitionTask(options) {
     const staged = files.get(changedPath);
     if (staged === undefined) continue;
     const declarationText = await readFile(path.join(projectRoot, ...record.declarationFile.split("/")), "utf8");
-    const repinned = declarationText.replace(/(\n  path: [^\n]+\n  digest:\n    algorithm: sha-256\n    value: )[0-9a-f]{64}/, `$1${digest(staged)}`);
+    const repinned = replaceYamlScalars(
+      declarationText,
+      [{ field: ["source", "digest", "value"], value: digest(staged) }],
+      record.declarationFile,
+    );
     files.set(record.declarationFile, Buffer.from(repinned, "utf8"));
   }
   const pinPresent = (await readRegularInside(projectRoot, PIN_PATH, false)) !== null;
@@ -3337,12 +4368,13 @@ async function migrateToCurrent(options, prepared = undefined) {
     fail(`migrate requires an NKF ${CURRENT_NKF_VERSION} release archive.`);
   }
 
-  const seedFiles = await targetFiles(
+  const targetIntegration = await targetFiles(
     projectRoot,
     archiveBytes,
     verification,
     bundle.root?.profile ?? "nkf.profile.product",
   );
+  const seedFiles = new Map(targetIntegration);
   await stageVerifiedHostRegistryMigration(projectRoot, seedFiles);
   const seedRemovals = [];
   if (["0.1", "0.2"].includes(predecessorVersion)) {
@@ -3376,16 +4408,32 @@ async function migrateToCurrent(options, prepared = undefined) {
     originalBundleBytes,
     seedRemovals,
   );
+  for (const [relative, bytes] of targetIntegration) {
+    candidate.files.set(relative, bytes);
+  }
+  const carryForward = await stage0_5To0_6CarryForward(
+    projectRoot,
+    bundle,
+    null,
+    verification,
+    candidate.files,
+    true,
+  );
+  const bundlePath = ".nourd/knowledge/bundle.yaml";
+  candidate.files.set(
+    bundlePath,
+    updatePreparedStagedArtifactBindings(candidate.files.get(bundlePath), candidate.files),
+  );
   await validateCompleteCandidate(
     projectRoot,
     candidate.files,
     candidate.removedPaths,
-    verifyInstalled0_5Ready,
+    verifyInstalled0_6Ready,
   );
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
-    () => verifyInstalled0_5Ready(projectRoot),
+    () => verifyInstalled0_6Ready(projectRoot),
     candidate.removedPaths,
   );
   return {
@@ -3395,6 +4443,7 @@ async function migrateToCurrent(options, prepared = undefined) {
     records_migrated: candidate.migration.records,
     documents_migrated: candidate.migration.documents,
     baseline: candidate.baseline,
+    carry_forward: carryForward,
     validation: {
       conformance: installed.report?.conformance ?? "passed",
       readiness: installed.readiness?.readiness?.state ?? "ready",
@@ -3428,6 +4477,201 @@ function adoptResult(state, projectRoot, catalog, compatibility, operation) {
   };
 }
 
+async function promoteProducerTo0_6(
+  projectRoot,
+  bundle,
+  options,
+  releaseOptions,
+  catalog,
+  promotion,
+) {
+  if (bundle.nkf_version !== "0.5") {
+    fail("Producer promotion requires the exact NKF producer still declaring NKF 0.5.");
+  }
+  const prepublication = promotion.stage ===
+    "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy";
+  if (prepublication !== (options["candidate-binding"] !== undefined)) {
+    fail("The producer promotion stage does not match candidate versus published release selection.");
+  }
+  const archiveBytes = await acquireArchive(releaseOptions, catalog.archive.sha256);
+  const verification = verifyReleaseArchive(archiveBytes, catalog.archive.sha256);
+  if (verification.manifest.nkf_version !== "0.6") {
+    fail("Producer promotion requires one exact NKF 0.6 release candidate or published archive.");
+  }
+  const targetIntegration = await targetFiles(
+    projectRoot,
+    archiveBytes,
+    verification,
+    "nkf.profile.technology",
+  );
+  const authoringPlan = await planRepinGoverned(projectRoot);
+  const files = new Map(authoringPlan.files);
+  for (const [relative, bytes] of targetIntegration) files.set(relative, bytes);
+  await stageVerifiedHostRegistryMigration(projectRoot, files);
+
+  const decisionIndexPath = "knowledge/decisions/README.md";
+  const decisionIndexBytes = await readRegularInside(projectRoot, decisionIndexPath);
+  const decisionLink =
+    "- [ADR 0122: Accept The NKF 0.6 Authority Set](0122-accept-the-nkf-0-6-authority-set.md)";
+  const historicalEvidenceEntry =
+    "- ADR 0122 is retained as non-record historical Evidence because its exact\n" +
+    "  acceptance attempt failed the inherited deep-link conformance rule.";
+  const decisionIndexText = decisionIndexBytes.toString("utf8");
+  if (
+    decisionIndexText.split(decisionLink).length !== 2 ||
+    decisionIndexText.includes(historicalEvidenceEntry)
+  ) {
+    fail("Producer promotion requires exactly one current ADR 0122 Decision index entry.");
+  }
+  files.set(
+    decisionIndexPath,
+    Buffer.from(decisionIndexText.replace(decisionLink, historicalEvidenceEntry), "utf8"),
+  );
+
+  const bundlePath = ".nourd/knowledge/bundle.yaml";
+  const originalBundleBytes = await readRegularInside(projectRoot, bundlePath);
+  const promotedBundle = YAML.parse(
+    (files.get(bundlePath) ?? originalBundleBytes).toString("utf8"), {
+    schema: "core", strict: true, uniqueKeys: true,
+    },
+  );
+  promotedBundle.nkf_version = "0.6";
+  promotedBundle.knowledge_graph.policy = "nkf.freshness-policy.0.6";
+  const originalNonRecords = promotedBundle.non_records ?? [];
+  promotedBundle.non_records = originalNonRecords.filter(
+    (entry) => entry?.path !== "specifications/nkf-0.6-revision-3.md",
+  );
+  if (promotedBundle.non_records.length !== originalNonRecords.length - 1) {
+    fail("Producer promotion did not remove exactly one candidate Evidence representation.");
+  }
+  if (promotedBundle.non_records.some(
+    (entry) => entry?.document?.historical_acceptance_attempt_lock !== undefined,
+  )) {
+    fail("Producer promotion found a pre-existing historical acceptance containment.");
+  }
+  promotedBundle.non_records.push(promotion.input.historical_containment);
+  files.set(bundlePath, serializeYaml(promotedBundle));
+  files.set(
+    promotion.input.declaration_path,
+    serializeYaml(promotion.input.record_declaration),
+  );
+  await stageProducerPromotionBaseline(projectRoot, files);
+  files.set(
+    bundlePath,
+    updatePreparedStagedArtifactBindings(files.get(bundlePath), files),
+  );
+
+  const review = path.resolve(options.review);
+  const reviewStat = await lstat(review).catch(() => null);
+  if (reviewStat !== null && (!reviewStat.isFile() || reviewStat.isSymbolicLink())) {
+    fail("--review must identify one regular semantic graph review file or one absent file to create as a review template.");
+  }
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-6-producer-promotion-"));
+  const candidate = path.join(temporary, "project");
+  try {
+    await cp(projectRoot, candidate, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(projectRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0];
+        return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
+      },
+    });
+    await ensureWritableParents(candidate, files.keys());
+    for (const [relative, bytes] of files) {
+      const target = path.join(candidate, ...safeRelative(relative, "Promotion target").split("/"));
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, bytes);
+    }
+    const historicalDeclaration = path.join(
+      candidate,
+      ...PRODUCER_HISTORICAL_DECLARATION_PATH.split("/"),
+    );
+    const historicalStat = await lstat(historicalDeclaration).catch(() => null);
+    if (historicalStat === null || !historicalStat.isFile() || historicalStat.isSymbolicLink()) {
+      fail("Producer promotion cannot remove the exact ADR 0122 predecessor declaration.");
+    }
+    await unlink(historicalDeclaration);
+    const checker = await verified0_5Checker(temporary, verification);
+    if (reviewStat === null) {
+      const template = await writeReviewTemplateModern({
+        projectRoot: candidate,
+        checker,
+        reviewPath: review,
+        nkfVersion: "0.6",
+        preferredSpecificationId: "nkf-0.6-specification-revision-3",
+      });
+      throw new OnboardingError(
+        "NKF-ADOPT-PRODUCER-PROMOTION-REVIEW-REQUIRED",
+        "Adopt created the exact post-promotion whole-root review template and stopped before producer mutation.",
+        {
+          review_template: template.path,
+          candidate_nodes: template.nodes,
+          accepted_decisions: template.decisions,
+          promotion_stage: promotion.stage,
+          next_action: "complete-review-and-rerun-producer-adopt",
+        },
+      );
+    }
+    const baseline = await sealBaselineModern({
+      projectRoot: candidate,
+      checker,
+      reviewPath: review,
+      nkfVersion: "0.6",
+    });
+    await requireModernReadiness(candidate, verification, "0.6");
+    const before = await regularFileInventory(projectRoot);
+    const after = await regularFileInventory(candidate);
+    const transactionFiles = new Map();
+    for (const [relative, bytes] of after) {
+      const current = before.get(relative);
+      if (current === undefined || !current.equals(bytes)) {
+        transactionFiles.set(relative, bytes);
+      }
+    }
+    const removedPaths = [PRODUCER_HISTORICAL_DECLARATION_PATH];
+    for (const relative of before.keys()) {
+      if (!after.has(relative)) {
+        if (!removedPaths.includes(relative)) {
+          fail(`Producer promotion attempted to remove a project source file: ${relative}`);
+        }
+      }
+    }
+    if (
+      !after.get("knowledge/specifications/nkf-0.6-revision-3.md")?.equals(
+        before.get("knowledge/specifications/nkf-0.6-revision-3.md"),
+      )
+    ) {
+      fail("Producer promotion changed the accepted NKF 0.6 Markdown bytes.");
+    }
+    await validateCompleteCandidate(
+      projectRoot,
+      transactionFiles,
+      removedPaths,
+      verifyInstalled0_6Ready,
+    );
+    const installed = await writeTransaction(
+      projectRoot,
+      transactionFiles,
+      () => verifyInstalled0_6Ready(projectRoot),
+      removedPaths,
+    );
+    return {
+      state: "updated",
+      stage: promotion.stage,
+      removed_evidence_document: promotion.candidateEntry.document.id,
+      created_declaration: promotion.input.declaration_path,
+      graph_revision: baseline.graph_revision,
+      baseline,
+      changed_subjects: [...transactionFiles.keys()].sort((left, right) =>
+        left.localeCompare(right, "en")),
+    };
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+}
+
 async function adopt(options) {
   if (options.project === undefined) fail("adopt requires --project.");
   const projectRoot = await requireProjectRoot(options.project);
@@ -3454,7 +4698,7 @@ async function adopt(options) {
     releaseOptions.archive === undefined &&
     releaseOptions["github-repository"] === undefined
   ) {
-    releaseOptions["github-repository"] = "kaveh6202/Nourd.NKF";
+    releaseOptions["github-repository"] = CURRENT_REPOSITORY;
   }
 
   const nourdPath = path.join(projectRoot, ".nourd");
@@ -3491,6 +4735,23 @@ async function adopt(options) {
   }
 
   const { bundle } = await requireBundle(projectRoot);
+  const promotion = await requireProducerPromotionInput(projectRoot, options, bundle);
+  if (promotion !== null) {
+    const result = await promoteProducerTo0_6(
+      projectRoot,
+      bundle,
+      options,
+      releaseOptions,
+      catalog,
+      promotion,
+    );
+    return adoptResult("updated", projectRoot, catalog, {
+      from_nkf_version: "0.5",
+      classification: "non-breaking",
+      migration_required: false,
+      summary: "The exact NKF producer promotion applies the accepted native 0.6 declaration and separately reviewed graph.",
+    }, result);
+  }
   const rule = compatibility.get(bundle.nkf_version);
   if (rule === undefined) {
     throw new OnboardingError(
@@ -3564,9 +4825,9 @@ async function main() {
   if (command === "install" || command === "update") {
     return installOrUpdate(command, options);
   }
-  if (command === "repin") return repinGoverned(await requireProjectRoot(options.project));
+  if (command === "repin") return repinGoverned(await requireProjectRoot(options.project), options);
   if (command === "refs") return exportReferences(await requireProjectRoot(options.project));
-  if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project));
+  if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project), options);
   if (command === "set") return exportVersionedSet(await requireProjectRoot(options.project));
   if (command === "task") return options.to === undefined ? taskPendingView(options) : transitionTask(options);
   if (command === "migrate") return migrateByArchive(options);

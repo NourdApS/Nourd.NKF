@@ -1,5 +1,5 @@
 import { execFileSync, spawnSync } from "node:child_process";
-import { chmod, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { chmod, cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {
@@ -44,11 +44,11 @@ const verification = verifyReleaseArchive(archiveBytes, expectedSha256, {
   sourceRoot,
 });
 const nkfVersion = verification.manifest.nkf_version;
-if (!['0.4', '0.5'].includes(nkfVersion)) {
-  fail("The exact-candidate exercise requires an NKF 0.4 or 0.5 archive.");
+if (!["0.4", "0.5", "0.6"].includes(nkfVersion)) {
+  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, or 0.6 archive.");
 }
-if (nkfVersion === "0.5" && reviewPath === undefined) {
-  fail("The NKF 0.5 exact-candidate exercise requires --review with one external whole-root semantic-review path.");
+if (["0.5", "0.6"].includes(nkfVersion) && reviewPath === undefined) {
+  fail(`The NKF ${nkfVersion} exact-candidate exercise requires --review with one external whole-root semantic-review path.`);
 }
 if (nkfVersion === "0.4" && reviewPath !== undefined) {
   fail("The NKF 0.4 exact-candidate exercise does not accept --review.");
@@ -86,7 +86,18 @@ try {
   await chmod(adopter, 0o755);
 
   const manifest = verification.manifest;
-  const compatibility = nkfVersion === "0.5"
+  const compatibility = nkfVersion === "0.6"
+    ? ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].map((from) => ({
+        from_nkf_version: from,
+        classification: ["0.5", "0.6"].includes(from) ? "non-breaking" : "breaking",
+        migration_required: !["0.5", "0.6"].includes(from),
+        summary: from === "0.6"
+          ? "NKF 0.6 refreshes the exact release and integration without semantic migration."
+          : from === "0.5"
+            ? "NKF 0.5 advances non-breakingly to NKF 0.6 only under the accepted exact policy and baseline-carry-forward preconditions."
+            : `NKF ${from} requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.`,
+      }))
+    : nkfVersion === "0.5"
     ? ["0.1", "0.2", "0.3", "0.4", "0.5"].map((from) => ({
         from_nkf_version: from,
         classification: from === "0.5" ? "non-breaking" : "breaking",
@@ -156,6 +167,19 @@ try {
   await writeFile(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`, {
     flag: "wx",
   });
+  const producerPrepromotionRoot = path.join(temporary, "producer-prepromotion");
+  if (nkfVersion === "0.6") {
+    await cp(project, producerPrepromotionRoot, {
+      recursive: true,
+      filter(sourcePath) {
+        const relative = path.relative(project, sourcePath);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0] ?? "";
+        return ![".git", "node_modules"].includes(first) &&
+          !first.startsWith(".nkf-transaction-");
+      },
+    });
+  }
   const commonArguments = [
     adopter,
     "--project",
@@ -169,7 +193,14 @@ try {
   ];
   const firstArguments = [
     ...commonArguments,
-    ...(nkfVersion === "0.5"
+    ...(nkfVersion === "0.6"
+      ? [
+          "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.6-revision-3-producer-promotion.yaml"),
+          "--accepting-decision", path.join(project, "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md"),
+          "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+          "--review", reviewPath,
+        ]
+      : nkfVersion === "0.5"
       ? ["--accept-breaking", "repository-owner", "--review", reviewPath]
       : []),
   ];
@@ -188,7 +219,15 @@ try {
     fail("Non-breaking candidate self-adoption changed producer knowledge bytes.");
   }
 
-  const producerGate = run("npm", ["run", "nkf:check"], { cwd: project });
+  const producerGate = run("npm", ["run", "nkf:check"], {
+    cwd: project,
+    env: {
+      ...process.env,
+      ...(nkfVersion === "0.6"
+        ? { NKF_PRODUCER_PREPROMOTION_ROOT: producerPrepromotionRoot }
+        : {}),
+    },
+  });
   const rebuiltChecker = await readFile(
     path.join(project, verification.manifest.checker.path),
   );

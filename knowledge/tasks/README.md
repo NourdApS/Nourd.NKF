@@ -15,6 +15,7 @@ status; it does not establish that status.
 [Active Task Index](by-state/active.md)
 - [NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction](active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
 - [NKF-026: Implement And Release NKF 0.5 Freshness And Knowledge Graph](active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+- [NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing](items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 
 ## Deferred
 

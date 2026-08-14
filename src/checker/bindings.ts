@@ -140,6 +140,28 @@ export const VERSION_BINDINGS = {
       { identity: "urn:nkf:0.5:schema:validation-result", file: "validation-result.schema.json", sha256: "b40d45d1bc781a2203033deff7f7dc063bf890c0eeeec3f9ae2b6c3b992dabf8" },
     ],
   },
+  "0.6": {
+    specification: {
+      path: "knowledge/specifications/nkf-0.6-revision-3.md",
+      sha256: "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
+    },
+    executable: {
+      path: "contracts/nkf/0.6/revision-3/nkf.yaml",
+      sha256: "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
+    },
+    freshnessPolicy: {
+      path: "contracts/nkf/0.6/freshness-policy.yaml",
+      sha256: "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4",
+    },
+    schemas: [
+      { identity: "urn:nkf:0.6:schema:bundle", file: "bundle.schema.json", sha256: "f146dd0e04d4ee8aff5d013abf476620f458d03328f758684ea4019b564a9290" },
+      { identity: "urn:nkf:0.6:schema:record", file: "record.schema.json", sha256: "a3e799112ff0d6af1111c2d574ebc31d783bd00a8193f10721437cc5ed40cd8a" },
+      { identity: "urn:nkf:0.6:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "9edb4c488577635059c7a4545aaba8a318a625811a93078e76a8d5621f1dd77b" },
+      { identity: "urn:nkf:0.6:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "819685c152751aca279284a0f6ce8b565f45c985af40d006b5d81463a20421fb" },
+      { identity: "urn:nkf:0.6:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "a1b21747d9cbd72416599224a9a9dcb80d1fca7b8f50bc2fa9f411dc77277b2f" },
+      { identity: "urn:nkf:0.6:schema:validation-result", file: "validation-result.schema.json", sha256: "8d751bb013dc87d9ebf3287b85e8589f628e7369eca67902d503b12595a6d743" },
+    ],
+  },
 } as const satisfies Record<string, CoreBindings>;
 
 export type SupportedNkfVersion = keyof typeof VERSION_BINDINGS;

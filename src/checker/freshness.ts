@@ -37,7 +37,7 @@ interface NormalizedEdge {
 export interface KnowledgeGraphResult {
   summary: {
     policy: {
-      identity: "nkf.freshness-policy.0.5";
+      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6";
       digest: DigestValue;
       binding: "verified" | "unavailable" | "mismatched";
     };
@@ -463,6 +463,7 @@ function detectedCycles(edges: NormalizedEdge[]): Array<Record<string, unknown>>
 }
 
 export function evaluateKnowledgeGraph(args: {
+  nkfVersion: "0.5" | "0.6";
   bundle: Record<string, any>;
   records: RecordUnit[];
   documents: DocumentUnit[];
@@ -476,12 +477,13 @@ export function evaluateKnowledgeGraph(args: {
   emitter: RuleEmitter;
   selectedReceipt?: Record<string, any> | null;
 }): KnowledgeGraphResult {
-  const { bundle, records, documents, executable, policy, policyBinding, baseline, request, diagnostics, emitter } = args;
+  const { nkfVersion, bundle, records, documents, executable, policy, policyBinding, baseline, request, diagnostics, emitter } = args;
+  const policyId = `nkf.freshness-policy.${nkfVersion}` as const;
   const policyDigest = policyBinding?.expected_sha256 ?? "0".repeat(64);
   const policyState = policyBinding?.binding === "verified" && policy !== null
     ? "verified" as const
     : policyBinding?.binding === "mismatched" ? "mismatched" as const : "unavailable" as const;
-  if (policyState === "unavailable") emitter.emit("graph.policy.unavailable", "The immutable NKF 0.5 freshness policy is unavailable.");
+  if (policyState === "unavailable") emitter.emit("graph.policy.unavailable", `The immutable NKF ${nkfVersion} freshness policy is unavailable.`);
   if (policyState === "mismatched") emitter.emit("graph.policy.binding-mismatch", "The freshness policy does not match its accepted digest.");
 
   const nodeRevisions: NodeRevision[] = [];
@@ -567,7 +569,7 @@ export function evaluateKnowledgeGraph(args: {
     const vocabulary = executable.vocabularies?.graph_relationship_types?.[edge.relationship];
     const sourceInfo = edgeSources.get(key);
     if (vocabulary === undefined) {
-      emitter.emit("graph.relationship.policy-unsupported", "The graph relationship has no immutable 0.5 vocabulary and policy entry.", { node_id: nodeKey(edge.source) });
+      emitter.emit("graph.relationship.policy-unsupported", `The graph relationship has no immutable NKF ${nkfVersion} vocabulary and policy entry.`, { node_id: nodeKey(edge.source) });
       continue;
     }
     if (!values<string>(vocabulary.source_kinds).includes(edge.source.kind) || !values<string>(vocabulary.target_kinds).includes(edge.target.kind)) {
@@ -596,11 +598,11 @@ export function evaluateKnowledgeGraph(args: {
   }
 
   const graphInput = {
-    contract: "nkf.graph-revision", nkf_version: "0.5", bundle: bundle.id,
+    contract: "nkf.graph-revision", nkf_version: nkfVersion, bundle: bundle.id,
     profile: bundle.root?.profile, nodes: nodeRevisions, edges,
     external_dependencies: sortedByJcs(values(bundle.external_dependencies)),
     authority_inputs: sortedByJcs(values(bundle.authority_inputs)),
-    policy: { id: "nkf.freshness-policy.0.5", sha256: policyDigest },
+    policy: { id: policyId, sha256: policyDigest },
   };
   const candidateRevision = digest(sha256(Buffer.from(jcs(graphInput), "utf8")));
   let baselineState: KnowledgeGraphResult["summary"]["baseline_state"] = request.purpose === null || request.purpose === undefined ? "not-evaluated" : "missing";
@@ -613,7 +615,7 @@ export function evaluateKnowledgeGraph(args: {
     if (declaredInternalRevision !== baseline.graph_revision?.value) {
       emitter.emit("graph.revision.mismatch", "The baseline graph revision does not equal its own exact bound graph inputs.", { artifact: String(bundle.knowledge_graph?.baseline) });
       baselineState = "unsupported";
-    } else if (baseline.policy?.id !== "nkf.freshness-policy.0.5" || baseline.policy?.digest?.value !== policyDigest || baseline.bundle !== bundle.id || baseline.profile !== bundle.root?.profile) {
+    } else if (baseline.policy?.id !== policyId || baseline.policy?.digest?.value !== policyDigest || baseline.bundle !== bundle.id || baseline.profile !== bundle.root?.profile) {
       baselineState = "outdated";
     } else {
       baselineState = completenessState(baseline, nodeRevisions, edges, relationshipNames, decisions);
@@ -767,7 +769,7 @@ export function evaluateKnowledgeGraph(args: {
     historicalReady = receipt !== null && receipt !== undefined &&
       receipt.id === request.historical_receipt &&
       receipt.context?.candidate_graph_revision?.value === candidateRevision.value &&
-      receipt.context?.policy?.id === "nkf.freshness-policy.0.5" &&
+      receipt.context?.policy?.id === policyId &&
       receipt.context?.policy?.digest?.value === policyDigest &&
       jcs(sortedByJcs(receiptUniverse)) === jcs(sortedByJcs(currentUniverse));
     if (!historicalReady) {
@@ -797,7 +799,7 @@ export function evaluateKnowledgeGraph(args: {
     baseline_graph_revision: baselineRevision,
     candidate_graph_revision: candidateRevision,
     evaluator: { id: "nourd-nkf-checker", digest: { algorithm: "sha-256", value: "0".repeat(64) } },
-    policy: { id: "nkf.freshness-policy.0.5", digest: digest(policyDigest) },
+    policy: { id: policyId, digest: digest(policyDigest) },
     purpose: request.purpose,
     candidate_universe: nodeRevisions.map((entry) => entry.node),
     changed_inputs: sortedByJcs(values<Record<string, unknown>>(request.changed_inputs)),
@@ -829,7 +831,7 @@ export function evaluateKnowledgeGraph(args: {
   };
   return {
     summary: {
-      policy: { identity: "nkf.freshness-policy.0.5", digest: digest(policyDigest), binding: policyState },
+      policy: { identity: policyId, digest: digest(policyDigest), binding: policyState },
       candidate_graph_revision: candidateRevision, baseline_graph_revision: baselineRevision, baseline_state: baselineState,
       node_count: nodeRevisions.length, authored_edge_count: edges.length,
       projection_counts: { full: nodeRevisions.length, applicable: applicableCount, current: currentCount },

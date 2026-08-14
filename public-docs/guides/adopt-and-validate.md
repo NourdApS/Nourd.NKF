@@ -2,17 +2,17 @@
 
 NKF has one public operation: **Adopt**. The same invocation brings a supported
 repository to the current governed recommended release whether it is new to
-NKF, already on NKF 0.1 through 0.4, missing integration, behind within NKF
-0.5, or already current.
+NKF, already on NKF 0.1 through 0.5, missing integration, behind within NKF
+0.6, or already current.
 
-NKF 0.5 is pre-stable. The checker and release archive are private to
+NKF 0.6 is pre-stable. The checker and release archive are private to
 authorized Nourd projects; this public adopter contains no checker or private
 credential.
 
 ## Before You Run Adopt
 
 Use Node.js 22 or later. For the default authenticated path, install `gh` and
-log in to an account authorized for `kaveh6202/Nourd.NKF`. Download
+log in to an account authorized for `NourdApS/Nourd.NKF`. Download
 `tools/nourd-nkf-adopt.mjs` and verify its SHA-256 against
 `reference/publication.json`.
 
@@ -46,9 +46,9 @@ before archive use.
 
 | State | Meaning |
 | --- | --- |
-| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.5 project |
-| `migrated` | A supported 0.1-through-0.4 predecessor was deliberately migrated to NKF 0.5 with a reviewed baseline |
-| `updated` | Existing native 0.5 received the recommended exact release and integration |
+| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.6 project |
+| `migrated` | A supported 0.1-through-0.4 predecessor was deliberately migrated to NKF 0.6 with a reviewed baseline |
+| `updated` | Existing native 0.5 was safely carried forward, or native 0.6 received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
 
 Every result names the target archive, source commit, checker, adopter, and
@@ -69,7 +69,7 @@ node nourd-nkf-adopt.mjs \
   --review /absolute/path/to/whole-root-review.yaml
 ```
 
-If the `--review` file does not exist, Adopt builds the complete isolated 0.5
+If the `--review` file does not exist, Adopt builds the complete isolated 0.6
 candidate, writes a candidate-specific review template there, and stops before
 project mutation. A named human or agent must review the actual graph, replace
 every `REVIEW_REQUIRED` value and placeholder with source-bound findings, then
@@ -79,7 +79,7 @@ stale, incomplete, or unsupported plans or reviews stop without mutation.
 
 ## Breaking NKF 0.1 Through 0.4 Migrations
 
-NKF 0.5 is declared breaking from NKF 0.1, 0.2, 0.3, and 0.4. For any such
+NKF 0.6 is declared breaking from NKF 0.1, 0.2, 0.3, and 0.4. For any such
 predecessor, Adopt first
 reports the exact predecessor-relative target and migration requirement, then
 stops before changing the repository. After the repository owner approves that
@@ -95,6 +95,16 @@ node nourd-nkf-adopt.mjs \
 The approval argument is valid only for a declared breaking path. Tooling does
 not manufacture the human approval or infer compatibility. An absent review
 path follows the same template-and-rerun workflow described above.
+
+## Non-Breaking NKF 0.5 Update
+
+NKF 0.5 to 0.6 needs no repository-owner breaking approval and no new semantic
+review during the update. Adopt first proves that the exact 0.5 policy and
+reviewed baseline are current, then preserves canonical source bytes,
+declarations, nodes, edges, and review meaning while updating only authorized
+version, policy, graph-revision, release-pin, integration, and derived artifact
+coordinates. If the 0.5 baseline is stale or not ready, Adopt refuses before
+mutation; refresh and review the 0.5 baseline first.
 
 ## What Adopt Installs
 

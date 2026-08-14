@@ -2,9 +2,9 @@ import { lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import YAML from "yaml";
 
-export const CURRENT_RELEASE_VERSION = "0.5";
+export const CURRENT_RELEASE_VERSION = "0.6";
 export function releaseSetPathForVersion(nkfVersion) {
-  if (!["0.3", "0.4", "0.5"].includes(nkfVersion)) {
+  if (!["0.3", "0.4", "0.5", "0.6"].includes(nkfVersion)) {
     fail(`NKF ${nkfVersion} does not use the complete release-set contract.`);
   }
   return `contracts/nkf/${nkfVersion}/release-set.yaml`;
@@ -14,6 +14,9 @@ export const RELEASE_CLASSES = Object.freeze([
   "normative-specification",
   "executable-companion",
   "evaluation-policy",
+  "repository-license",
+  "repository-notice",
+  "third-party-notices",
   "release-set-contract",
   "release-manifest",
   "derived-schema",
@@ -32,10 +35,21 @@ export const RELEASE_CLASSES = Object.freeze([
   "public-documentation",
 ]);
 
-function releaseClassesForVersion(nkfVersion) {
-  return nkfVersion === "0.5"
-    ? RELEASE_CLASSES
-    : RELEASE_CLASSES.filter((className) => className !== "evaluation-policy");
+export function releaseClassesForVersion(nkfVersion) {
+  if (nkfVersion === "0.6") return RELEASE_CLASSES;
+  if (nkfVersion === "0.5") {
+    return RELEASE_CLASSES.filter((className) => ![
+      "repository-license",
+      "repository-notice",
+      "third-party-notices",
+    ].includes(className));
+  }
+  return RELEASE_CLASSES.filter((className) => ![
+    "evaluation-policy",
+    "repository-license",
+    "repository-notice",
+    "third-party-notices",
+  ].includes(className));
 }
 
 const SELECTIONS = new Set([
@@ -120,7 +134,7 @@ export function validateReleaseSet(value) {
   exactKeys(value, ["contract", "nkf_version", "coverage", "members"], "Release set");
   if (
     value.contract !== "nkf.release-set" ||
-    !["0.3", "0.4", "0.5"].includes(value.nkf_version) ||
+    !["0.3", "0.4", "0.5", "0.6"].includes(value.nkf_version) ||
     !Array.isArray(value.coverage) ||
     value.coverage.length === 0 ||
     !Array.isArray(value.members) ||
@@ -254,6 +268,13 @@ async function recursiveFiles(root, relative) {
 
 export async function reproduceReleaseMembers(repositoryRoot, releaseSet) {
   validateReleaseSet(releaseSet);
+  if (releaseSet.nkf_version !== CURRENT_RELEASE_VERSION) {
+    for (const member of releaseSet.members) {
+      if (member.path === "release-manifest.json") continue;
+      await containedRegular(repositoryRoot, member.path, false);
+    }
+    return releaseSet.members;
+  }
   const discovered = [];
   for (const selector of releaseSet.coverage) {
     let paths;

@@ -123,6 +123,24 @@ downloads, byte-for-byte identity with the audited candidate, and deliberate
 promotion of the mutable recommendation while producer adoption remains a
 separate later action.
 
+The NKF-027 open-source licensing preparation assessment inventories current
+repository authorship evidence, package and bundled-runtime licenses, required
+third-party notices, source-header treatment, organization-transfer
+references, private distribution assumptions, and separately governed public-
+project policies before any Apache-2.0 release or visibility change.
+
+The NKF-027 NKF 0.5-to-0.6 compatibility proof binds the exact prospective
+authority bytes and independently reviewable disposable updater results. It
+records ready Product and Technology fixture updates, stale-producer refusal,
+separate current-0.5 review and seal, ready real-producer update, exact
+preservation, repeat current, rollback, and tamper rejection before any 0.6
+authority acceptance.
+
+The NKF-027 NKF 0.6 authority and compatibility audit independently verifies
+the exact authority pins, section and policy closure, command matrix, producer
+promotion, fixture and real-producer results, rollback and tamper rejection,
+and canonical producer gate before exact technical acceptance.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

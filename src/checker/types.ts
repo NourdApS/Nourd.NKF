@@ -126,11 +126,15 @@ export interface ValidateOptions {
   persist?: boolean;
   now?: () => Date;
   executionId?: () => string;
+  evaluationObserver?: (result: {
+    state: "evaluated" | "evaluated-current";
+    receipt: { id: string; path: string };
+  }) => void;
 }
 
 export interface ValidationResult {
   contract: "nkf.validation-result";
-  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5";
+  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6";
   execution: {
     id: string;
     runner: string;

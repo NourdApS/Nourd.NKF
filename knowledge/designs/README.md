@@ -65,6 +65,7 @@ establishes it.
 - [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
 - [Native Bundle Serialization](adopted/native-bundle-serialization.md)
 - [Native Record Serialization](adopted/native-record-serialization.md)
+- [NKF 0.6 Corrective Release And Open-Source Licensing](items/nkf-0-6-corrective-release-and-open-source-licensing.md)
 - [NKF Freshness And Deterministic Knowledge Graph](adopted/freshness-and-deterministic-knowledge-graph.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](adopted/presentation-guidance.md)

@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
-import { appendFile, cp, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { appendFile, cp, lstat, mkdtemp, readFile, readdir, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import YAML from "yaml";
@@ -45,9 +46,25 @@ async function validate(projectRoot: string, value = request()) {
 }
 
 function basis(node: Record<string, unknown>) {
-  return node.kind === "record"
-    ? { node, source: { section: "product-definition" } }
-    : { node, source: { heading: { heading_path: ["Fixture"], occurrence: 1 } } };
+  if (node.kind === "record") {
+    return {
+      node,
+      source: {
+        section: node.id === "product" ? "product-definition" : "realization-identity-and-kind",
+      },
+    };
+  }
+  return {
+    node,
+    source: {
+      heading: {
+        heading_path: [node.id === "TEST-001"
+          ? "TEST-001: Maintain Example Product Knowledge"
+          : "Evidence"],
+        occurrence: 1,
+      },
+    },
+  };
 }
 
 async function reviewFile(parent: string, nodes: Array<{ node: Record<string, unknown> }>) {
@@ -87,7 +104,7 @@ async function reviewFile(parent: string, nodes: Array<{ node: Record<string, un
 async function seal(parent: string, projectRoot: string) {
   const measured = await validate(projectRoot, request(null));
   const review = await reviewFile(parent, measured.nodes as Array<{ node: Record<string, unknown> }>);
-  await sealBaseline0_5({ projectRoot, checker, reviewPath: review });
+  return { result: await sealBaseline0_5({ projectRoot, checker, reviewPath: review }), review };
 }
 
 beforeAll(async () => {
@@ -142,7 +159,15 @@ describe("NKF 0.5 deterministic freshness", () => {
 
   it("seals one exact reviewed baseline and reaches whole-root readiness", async () => {
     const { parent, projectRoot } = await project();
-    await seal(parent, projectRoot);
+    const sealed = await seal(parent, projectRoot);
+    expect(sealed.result).toMatchObject({
+      state: "sealed",
+      nodes: 4,
+      reviewer: { kind: "agent", id: "fixture-semantic-reviewer" },
+      reviewed_at: "2026-08-13T09:00:00.000Z",
+    });
+    const current = await sealBaseline0_5({ projectRoot, checker, reviewPath: sealed.review });
+    expect(current).toEqual({ ...sealed.result, state: "current" });
     const first = await validate(projectRoot);
     const second = await validate(projectRoot);
     expect(first.conformance).toBe("passed");
@@ -150,6 +175,72 @@ describe("NKF 0.5 deterministic freshness", () => {
     expect(first.diagnostics).toEqual([]);
     expect(second.knowledge_graph).toEqual(first.knowledge_graph);
     expect(second.nodes).toEqual(first.nodes);
+  });
+
+  it("rejects an unresolved review basis without baseline mutation", async () => {
+    const { parent, projectRoot } = await project();
+    const measured = await validate(projectRoot, request(null));
+    const review = await reviewFile(parent, measured.nodes as Array<{ node: Record<string, unknown> }>);
+    const value = YAML.parse(await readFile(review, "utf8"));
+    value.nodes[0].basis.source.heading.heading_path = ["Missing heading"];
+    await writeFile(review, YAML.stringify(value, { lineWidth: 0, aliasDuplicateObjects: false }));
+    await expect(sealBaseline0_5({ projectRoot, checker, reviewPath: review })).rejects.toThrow(/basis.*resolve/i);
+    await expect(lstat(path.join(projectRoot, ".nourd/knowledge/freshness/baseline.yaml"))).rejects.toThrow();
+  });
+
+  it("rejects symlinked freshness persistence paths without writing outside the project", async () => {
+    const baselineCase = await project();
+    const baselineOutside = await mkdtemp(path.join(os.tmpdir(), "nkf-baseline-outside-"));
+    const freshnessPath = path.join(baselineCase.projectRoot, ".nourd/knowledge/freshness");
+    await rm(freshnessPath, { recursive: true, force: true });
+    await symlink(baselineOutside, freshnessPath);
+    const measured = await validate(baselineCase.projectRoot, request(null));
+    const review = await reviewFile(
+      baselineCase.parent,
+      measured.nodes as Array<{ node: Record<string, unknown> }>,
+    );
+    await expect(sealBaseline0_5({
+      projectRoot: baselineCase.projectRoot,
+      checker,
+      reviewPath: review,
+    })).rejects.toThrow(/direct directory/i);
+    expect(await readdir(baselineOutside)).toEqual([]);
+
+    const receiptCase = await project();
+    await seal(receiptCase.parent, receiptCase.projectRoot);
+    const receiptOutside = await mkdtemp(path.join(os.tmpdir(), "nkf-receipt-outside-"));
+    const receiptsPath = path.join(
+      receiptCase.projectRoot,
+      ".nourd/knowledge/freshness/receipts",
+    );
+    await rm(receiptsPath, { recursive: true, force: true });
+    await symlink(receiptOutside, receiptsPath);
+    await expect(validateProject({
+      projectRoot: receiptCase.projectRoot,
+      contractRoot,
+      checkerArtifact: checker,
+      request: request("change-impact", [{ kind: "node", node: { kind: "record", id: "product" } }]),
+      persist: true,
+    })).rejects.toThrow(/direct directory/i);
+    expect(await readdir(receiptOutside)).toEqual([]);
+  });
+
+  it("rolls back a newly written receipt when the validation-result transaction fails", async () => {
+    const { parent, projectRoot } = await project();
+    await seal(parent, projectRoot);
+    process.env.NKF_FRESHNESS_TEST_FAIL_AFTER_RECEIPT_WRITE = "1";
+    try {
+      await expect(validateProject({
+        projectRoot,
+        contractRoot,
+        checkerArtifact: checker,
+        request: request("change-impact", [{ kind: "node", node: { kind: "record", id: "product" } }]),
+        persist: true,
+      })).rejects.toThrow(/injected freshness persistence failure/i);
+    } finally {
+      delete process.env.NKF_FRESHNESS_TEST_FAIL_AFTER_RECEIPT_WRITE;
+    }
+    expect(await readdir(path.join(projectRoot, ".nourd/knowledge/freshness/receipts"))).toEqual([]);
   });
 
   it("detects a canonical source change as conformance failure and baseline drift", async () => {
@@ -180,14 +271,34 @@ describe("NKF 0.5 deterministic freshness", () => {
   it("persists an immutable receipt and reproduces it only against exact current inputs", async () => {
     const { parent, projectRoot } = await project();
     await seal(parent, projectRoot);
+    const evaluations: Array<{
+      state: "evaluated" | "evaluated-current";
+      receipt: { id: string; path: string };
+    }> = [];
     const result = await validateProject({
       projectRoot,
       contractRoot,
       checkerArtifact: checker,
       request: request("change-impact", [{ kind: "node", node: { kind: "record", id: "product" } }]),
       persist: true,
+      evaluationObserver(value) { evaluations.push(value); },
     });
     expect(result.readiness?.state).toBe("ready");
+    const repeated = await validateProject({
+      projectRoot,
+      contractRoot,
+      checkerArtifact: checker,
+      request: request("change-impact", [{ kind: "node", node: { kind: "record", id: "product" } }]),
+      persist: true,
+      evaluationObserver(value) { evaluations.push(value); },
+    });
+    expect(repeated.readiness?.state).toBe("ready");
+    expect(evaluations).toHaveLength(2);
+    expect(evaluations[0]?.state).toBe("evaluated");
+    expect(evaluations[1]).toEqual({
+      state: "evaluated-current",
+      receipt: evaluations[0]?.receipt,
+    });
     const directory = path.join(projectRoot, ".nourd/knowledge/freshness/receipts");
     const receipts = await readdir(directory);
     expect(receipts).toHaveLength(1);
@@ -221,5 +332,45 @@ describe("NKF 0.5 deterministic freshness", () => {
     });
     expect(changed.readiness?.state).toBe("not-ready");
     expect(changed.diagnostics.map((item) => item.rule_id)).toContain("freshness.receipt.binding-mismatch");
+  });
+
+  it("emits the exact evaluated and evaluated-current CLI result shape", async () => {
+    const { parent, projectRoot } = await project();
+    await seal(parent, projectRoot);
+    const argumentsValue = [
+      checker,
+      "evaluate",
+      "--project", projectRoot,
+      "--level", "full-bundle",
+      "--purpose", "change-impact",
+      "--require-readiness",
+      "--changed-input", JSON.stringify({
+        kind: "node",
+        node: { kind: "record", id: "product" },
+      }),
+    ];
+    const first = spawnSync(process.execPath, argumentsValue, { encoding: "utf8" });
+    expect(first.status, first.stderr).toBe(0);
+    const firstResult = JSON.parse(first.stdout);
+    expect(Object.keys(firstResult)).toEqual([
+      "state",
+      "candidate_graph_revision",
+      "policy",
+      "purpose",
+      "receipt",
+      "freshness_results",
+      "readiness",
+    ]);
+    expect(firstResult).toMatchObject({
+      state: "evaluated",
+      purpose: "change-impact",
+      readiness: { state: "ready" },
+    });
+    const second = spawnSync(process.execPath, argumentsValue, { encoding: "utf8" });
+    expect(second.status, second.stderr).toBe(0);
+    expect(JSON.parse(second.stdout)).toMatchObject({
+      state: "evaluated-current",
+      receipt: firstResult.receipt,
+    });
   });
 });

@@ -16,6 +16,7 @@ const REFERENCE_FILES = [
   "reference/nkf-0.3.md",
   "reference/nkf-0.4.md",
   "reference/nkf-0.5.md",
+  "reference/nkf-0.6.md",
 ];
 export const PUBLIC_FILES = releaseSet.members
   .filter((member) => [
@@ -155,8 +156,12 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     );
   }
   let specification;
-  for (const version of ["0.2", "0.3", "0.4", "0.5"]) {
-    const authorityName = version === "0.5" ? "nkf-0.5-revision-2.md" : `nkf-${version}.md`;
+  for (const version of ["0.2", "0.3", "0.4", "0.5", "0.6"]) {
+    const authorityName = version === "0.5"
+      ? "nkf-0.5-revision-2.md"
+      : version === "0.6"
+        ? "nkf-0.6-revision-3.md"
+        : `nkf-${version}.md`;
     const authority = await readFile(
       path.join(root, "knowledge/specifications", authorityName),
     );
@@ -166,7 +171,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     if (!mirror.equals(authority)) {
       throw new Error(`The public NKF ${version} Markdown mirror differs from authority.`);
     }
-    if (version === "0.5") specification = authority;
+    if (version === "0.6") specification = authority;
   }
   const adopter = await readFile(path.join(root, "dist/nourd-nkf-adopt.mjs"));
   const publicAdopter = await readFile(
@@ -176,7 +181,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     throw new Error("The public adopter differs from the deterministic build.");
   }
   const onboardingProtocol = await readFile(
-    path.join(root, "distribution/nkf/0.5/integrations/onboarding/nkf-onboarding-protocol.md"),
+    path.join(root, "distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md"),
   );
   const publicOnboardingProtocol = await readFile(
     path.join(docsRoot, "tools/nkf-onboarding-protocol.md"),
@@ -185,7 +190,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     throw new Error("The public onboarding protocol differs from its governed source.");
   }
   const onboardingSkill = await readFile(
-    path.join(root, "distribution/nkf/0.5/.agents/skills/nkf-onboarding/SKILL.md"),
+    path.join(root, "distribution/nkf/0.6/.agents/skills/nkf-onboarding/SKILL.md"),
   );
   for (const directory of [".agents", ".claude"]) {
     const publishedSkill = await readFile(

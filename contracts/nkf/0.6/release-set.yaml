@@ -1,0 +1,646 @@
+contract: nkf.release-set
+nkf_version: "0.6"
+coverage:
+  - class: normative-specification
+    selection: exact-file
+    path: knowledge/specifications/nkf-0.6-revision-3.md
+  - class: executable-companion
+    selection: exact-file
+    path: contracts/nkf/0.6/revision-3/nkf.yaml
+  - class: evaluation-policy
+    selection: exact-file
+    path: contracts/nkf/0.6/freshness-policy.yaml
+  - class: repository-license
+    selection: exact-file
+    path: LICENSE
+  - class: repository-notice
+    selection: exact-file
+    path: NOTICE
+  - class: third-party-notices
+    selection: exact-file
+    path: THIRD_PARTY_NOTICES.md
+  - class: release-set-contract
+    selection: exact-file
+    path: contracts/nkf/0.6/release-set.yaml
+  - class: release-manifest
+    selection: generated-release-manifest
+    path: release-manifest.json
+  - class: derived-schema
+    selection: recursive-regular-files
+    path: contracts/nkf/0.6/schemas
+  - class: checker
+    selection: exact-file
+    path: dist/nourd-nkf-checker.mjs
+  - class: adopter
+    selection: exact-file
+    path: dist/nourd-nkf-adopt.mjs
+  - class: authoring-protocol
+    selection: exact-file
+    path: distribution/nkf/0.6/integrations/ai/nkf-authoring-protocol.md
+  - class: onboarding-protocol
+    selection: exact-file
+    path: distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md
+  - class: release-protocol
+    selection: exact-file
+    path: distribution/nkf/0.6/integrations/release/nkf-release-protocol.md
+  - class: adoption-protocol
+    selection: exact-file
+    path: distribution/nkf/0.6/integrations/adoption/nkf-adoption-protocol.md
+  - class: portable-skill
+    selection: recursive-regular-files
+    path: distribution/nkf/0.6/.agents
+  - class: portable-skill
+    selection: recursive-regular-files
+    path: distribution/nkf/0.6/.claude
+  - class: host-adapter-instruction
+    selection: recursive-regular-files
+    path: distribution/nkf/0.6/host-adapters
+  - class: product-fixture
+    selection: recursive-regular-files
+    path: fixtures/valid/minimal-0-6
+  - class: technology-fixture
+    selection: recursive-regular-files
+    path: fixtures/valid/technology-0-6
+  - class: product-public-example
+    selection: recursive-regular-files
+    path: public-docs/examples/product
+  - class: technology-public-example
+    selection: recursive-regular-files
+    path: public-docs/examples/technology
+  - class: public-documentation
+    selection: recursive-regular-files
+    path: public-docs/.agents
+  - class: public-documentation
+    selection: recursive-regular-files
+    path: public-docs/.claude
+  - class: public-documentation
+    selection: exact-file
+    path: public-docs/README.md
+  - class: public-documentation
+    selection: recursive-regular-files
+    path: public-docs/concepts
+  - class: public-documentation
+    selection: recursive-regular-files
+    path: public-docs/guides
+  - class: public-documentation
+    selection: recursive-regular-files
+    path: public-docs/reference
+  - class: public-documentation
+    selection: recursive-regular-files
+    path: public-docs/tools
+members:
+  - path: LICENSE
+    class: repository-license
+    mode: "0644"
+  - path: NOTICE
+    class: repository-notice
+    mode: "0644"
+  - path: THIRD_PARTY_NOTICES.md
+    class: third-party-notices
+    mode: "0644"
+  - path: contracts/nkf/0.6/freshness-policy.yaml
+    class: evaluation-policy
+    mode: "0644"
+  - path: contracts/nkf/0.6/release-set.yaml
+    class: release-set-contract
+    mode: "0644"
+  - path: contracts/nkf/0.6/revision-3/nkf.yaml
+    class: executable-companion
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/bundle.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/freshness-policy.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/freshness-receipt.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/graph-baseline.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/record.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/release-manifest.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: contracts/nkf/0.6/schemas/validation-result.schema.json
+    class: derived-schema
+    mode: "0644"
+  - path: dist/nourd-nkf-adopt.mjs
+    class: adopter
+    mode: "0644"
+  - path: dist/nourd-nkf-checker.mjs
+    class: checker
+    mode: "0755"
+  - path: distribution/nkf/0.6/.agents/skills/nkf-authoring/SKILL.md
+    class: portable-skill
+    mode: "0644"
+  - path: distribution/nkf/0.6/.agents/skills/nkf-onboarding/SKILL.md
+    class: portable-skill
+    mode: "0644"
+  - path: distribution/nkf/0.6/.claude/skills/nkf-authoring/SKILL.md
+    class: portable-skill
+    mode: "0644"
+  - path: distribution/nkf/0.6/.claude/skills/nkf-onboarding/SKILL.md
+    class: portable-skill
+    mode: "0644"
+  - path: distribution/nkf/0.6/host-adapters/AGENTS.adapter.md
+    class: host-adapter-instruction
+    mode: "0644"
+  - path: distribution/nkf/0.6/host-adapters/CLAUDE.adapter.md
+    class: host-adapter-instruction
+    mode: "0644"
+  - path: distribution/nkf/0.6/host-adapters/GEMINI.adapter.md
+    class: host-adapter-instruction
+    mode: "0644"
+  - path: distribution/nkf/0.6/host-adapters/agent-hosts.yaml
+    class: host-adapter-instruction
+    mode: "0644"
+  - path: distribution/nkf/0.6/host-adapters/copilot-instructions.adapter.md
+    class: host-adapter-instruction
+    mode: "0644"
+  - path: distribution/nkf/0.6/integrations/adoption/nkf-adoption-protocol.md
+    class: adoption-protocol
+    mode: "0644"
+  - path: distribution/nkf/0.6/integrations/ai/nkf-authoring-protocol.md
+    class: authoring-protocol
+    mode: "0644"
+  - path: distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md
+    class: onboarding-protocol
+    mode: "0644"
+  - path: distribution/nkf/0.6/integrations/release/nkf-release-protocol.md
+    class: release-protocol
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/.nourd/knowledge/bundle.yaml
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/.nourd/knowledge/freshness/baseline.yaml
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/.nourd/knowledge/records/product-current-system.yaml
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/.nourd/knowledge/records/product.yaml
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/decisions/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/active/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/adopted/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/by-disposition/active.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/by-disposition/adopted.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/by-disposition/rejected.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/by-disposition/superseded.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/by-disposition/withdrawn.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/rejected/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/superseded/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/designs/withdrawn/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/evidence/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/product.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/realizations/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/realizations/current-system.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/realizations/current/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/specifications/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/active/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/active/task.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/by-state/active.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/by-state/cancelled.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/by-state/completed.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/by-state/deferred.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/cancelled/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/completed/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/minimal-0-6/knowledge/tasks/deferred/README.md
+    class: product-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/.nourd/knowledge/bundle.yaml
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/.nourd/knowledge/freshness/baseline.yaml
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/.nourd/knowledge/records/realization.yaml
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/.nourd/knowledge/records/specification.yaml
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/.nourd/knowledge/records/technology.yaml
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/decisions/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/active/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/adopted/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/by-disposition/active.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/by-disposition/adopted.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/by-disposition/rejected.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/by-disposition/superseded.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/by-disposition/withdrawn.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/rejected/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/superseded/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/designs/withdrawn/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/evidence/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/realizations/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/realizations/current-system.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/realizations/current/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/specifications/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/specifications/specification.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/active/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/active/task.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/by-state/active.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/by-state/cancelled.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/by-state/completed.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/by-state/deferred.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/cancelled/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/completed/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/tasks/deferred/README.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/knowledge/technology.md
+    class: technology-fixture
+    mode: "0644"
+  - path: fixtures/valid/technology-0-6/src/example.ts
+    class: technology-fixture
+    mode: "0644"
+  - path: knowledge/specifications/nkf-0.6-revision-3.md
+    class: normative-specification
+    mode: "0644"
+  - path: public-docs/.agents/skills/nkf-onboarding/SKILL.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/.claude/skills/nkf-onboarding/SKILL.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/README.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/concepts/authority-and-lifecycle.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/concepts/topology.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/examples/product/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/.nourd/knowledge/bundle.yaml
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/.nourd/knowledge/freshness/baseline.yaml
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/.nourd/knowledge/records/product-current-system.yaml
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/.nourd/knowledge/records/product.yaml
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/decisions/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/active/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/adopted/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/by-disposition/active.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/by-disposition/adopted.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/by-disposition/rejected.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/by-disposition/superseded.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/by-disposition/withdrawn.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/rejected/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/superseded/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/designs/withdrawn/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/evidence/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/product.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/realizations/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/realizations/current-system.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/realizations/current/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/specifications/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/active/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/active/task.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/by-state/active.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/by-state/cancelled.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/by-state/completed.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/by-state/deferred.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/cancelled/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/completed/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/product/project/knowledge/tasks/deferred/README.md
+    class: product-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/.nourd/knowledge/bundle.yaml
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/.nourd/knowledge/freshness/baseline.yaml
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/.nourd/knowledge/records/realization.yaml
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/.nourd/knowledge/records/specification.yaml
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/.nourd/knowledge/records/technology.yaml
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/decisions/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/active/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/adopted/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/by-disposition/active.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/by-disposition/adopted.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/by-disposition/rejected.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/by-disposition/superseded.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/by-disposition/withdrawn.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/rejected/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/superseded/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/designs/withdrawn/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/evidence/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/realizations/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/realizations/current-system.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/realizations/current/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/specifications/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/specifications/specification.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/active/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/active/task.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/by-state/active.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/by-state/cancelled.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/by-state/completed.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/by-state/deferred.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/cancelled/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/completed/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/tasks/deferred/README.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/knowledge/technology.md
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/examples/technology/project/src/example.ts
+    class: technology-public-example
+    mode: "0644"
+  - path: public-docs/guides/adopt-and-validate.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/guides/initial-onboarding.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/guides/update-and-recover.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/reference/nkf-0.2.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/reference/nkf-0.3.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/reference/nkf-0.4.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/reference/nkf-0.5.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/reference/nkf-0.6.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/tools/nkf-onboarding-protocol.md
+    class: public-documentation
+    mode: "0644"
+  - path: public-docs/tools/nourd-nkf-adopt.mjs
+    class: public-documentation
+    mode: "0644"
+  - path: release-manifest.json
+    class: release-manifest
+    mode: "0644"

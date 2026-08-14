@@ -1,0 +1,208 @@
+contract: nkf.record
+id: design-nkf-027-corrective-release-and-open-source-licensing
+type: design
+body_contract: nkf.design
+title: NKF 0.6 Corrective Release And Open-Source Licensing
+source:
+  path: designs/items/nkf-0-6-corrective-release-and-open-source-licensing.md
+  stable_path: designs/items/nkf-0-6-corrective-release-and-open-source-licensing.md
+  digest:
+    algorithm: sha-256
+    value: 1ecaa9917b6f1690bbfa8e485aa47a4c83db834c9d312a6b33b3e3bb6abb307f
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: structural-governed-mutation
+    heading_path:
+      - Proposed Direction
+      - Structural Governed Mutation
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: truthful-mutation-results-and-transactions
+    heading_path:
+      - Proposed Direction
+      - Truthful Mutation Results And Transactions
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: command-and-subject-coverage
+    heading_path:
+      - Proposed Direction
+      - Command And Subject Coverage
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: prepublication-producer-rehearsal
+    heading_path:
+      - Proposed Direction
+      - Prepublication Producer Rehearsal
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: apache-2-0-repository-and-release-preparation
+    heading_path:
+      - Proposed Direction
+      - Apache-2.0 Repository And Release Preparation
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: repository-identity-and-distribution-compatibility
+    heading_path:
+      - Proposed Direction
+      - Repository Identity And Distribution Compatibility
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: compatibility-and-versioning
+    heading_path:
+      - Proposed Direction
+      - Compatibility And Versioning
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: separate-public-project-policies
+    heading_path:
+      - Proposed Direction
+      - Separate Public-Project Policies
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: patch-the-published-0-5-adopter
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Patch The Published 0.5 Adopter
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: keep-regex-repinning-and-add-stable-path
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep Regex Repinning And Add Stable Path
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: rely-on-the-final-producer-gate
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Rely On The Final Producer Gate
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: publish-then-self-adopt-and-withdraw-if-broken
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Publish Then Self-Adopt And Withdraw If Broken
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-a-custom-nkf-license-or-put-restrictions-in-notice
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use A Custom NKF License Or Put Restrictions In Notice
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: add-headers-to-every-file
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Add Headers To Every File
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: globally-replace-the-old-repository-name
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Globally Replace The Old Repository Name
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships:
+  - type: depends-on
+    target: adr-0096
+    source_section: structural-governed-mutation
+  - type: extends
+    target: adr-0109
+    source_section: prepublication-producer-rehearsal
+  - type: extends
+    target: adr-0042
+    source_section: apache-2-0-repository-and-release-preparation
+  - type: depends-on
+    target: adr-0119
+    source_section: governing-inputs-and-constraints
+task: NKF-027
+design_disposition: adopted
+design_decisions:
+  - adr-0121
+proposal_authority_effect: Adopted by ADR 0121 as the corrective and licensing-preparation direction; normative NKF 0.6 meaning still requires a separate exact authority-pair acceptance.
+proposal_evidence: NKF-027 published 0.5 repin reproduction, licensing and organization-transfer assessment, and Human Product Owner-confirmed 0.6 licensing and prepublication-proof boundaries.
+implementation_evidence: None for NKF 0.6; the published 0.5 defect reproduction is predecessor failure Evidence and cannot establish a 0.6 Realization.
