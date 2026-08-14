@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 835a03099cc9d6ab824cbf01a6482ad301155972f45820c377611398b4413afb
+  value: d2faa616b26c01cc3b89e51a2e1e05fe6bc3d1287876aef777612904798d9b9b
 policy:
   id: nkf.freshness-policy.0.6
   digest:
@@ -160,7 +160,7 @@ node_revisions:
       id: NKF-027
     revision:
       algorithm: sha-256
-      value: 73c2bd53093dbe59f105bd73d00a36fec02351463020970e18b960c668d76b5e
+      value: 9980958f9ae61eb1dbfc5b0a4552ebefe882b755165a8d25af9d56bdfaa735fd
   - node:
       kind: record
       id: adr-0001
@@ -1630,7 +1630,7 @@ node_revisions:
       id: nkf-0.1-native-realization
     revision:
       algorithm: sha-256
-      value: 1690fdd3fe7be767d9428152e93a9561b4cde0f522a435bfb2bcbe0f02888399
+      value: fdf6cb22c4cda72e63319831b782830a888803ab6e1ee32d07dd6d8512cdd072
   - node:
       kind: record
       id: nkf-0.2-specification
@@ -2781,6 +2781,19 @@ authored_edges:
     target:
       kind: record
       id: adr-0120
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: nkf-0.1-native-realization
+      section: governed-meaning-realized
+  - source:
+      kind: record
+      id: nkf-0.1-native-realization
+    relationship: realizes
+    target:
+      kind: record
+      id: adr-0125
     source_binding:
       kind: section
       node:
@@ -17732,10 +17745,10 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-08-14T06:16:11.000Z
+  reviewed_at: 2026-08-14T12:56:55.000Z
   claim: semantically-reviewed-whole-root
   observations:
-    - id: exact-current-universe-reviewed
+    - id: whole-root-universe-reaffirmed
       subject:
         kind: record
         id: nkf-0.6-specification-revision-3
@@ -17745,8 +17758,8 @@ confirmation:
           id: nkf-0.6-specification-revision-3
         source:
           section: deterministic-knowledge-graph-and-freshness-impact-closure-and-decision-reconciliation
-      finding: The exact 287-node post-promotion candidate universe, all 122 accepted Decisions for all three non-historical purposes, and all 14 relationship categories were reviewed from source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63 and archive b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95; no unresolved applicable Decision conflict was found.
-    - id: prepromotion-realization-is-known-stale
+      finding: "The candidate node universe is identical to the 287-node universe reviewed and sealed at source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63: no node was added or removed. Every node applicability, all 14 relationship categories, and all 122 accepted Decisions across all three non-historical purposes are carried forward unchanged from that review, and no carried classification was found to conflict with the authored delta."
+    - id: realization-reconciled-to-nkf-0-6
       subject:
         kind: record
         id: nkf-0.1-native-realization
@@ -17755,20 +17768,23 @@ confirmation:
           kind: record
           id: nkf-0.1-native-realization
         source:
-          section: governed-meaning-realized
-      finding: The consolidated current-system Realization remains an immutable draft predecessor snapshot that describes the producer before ordinary NKF 0.6 adoption. In this post-promotion candidate graph it is semantically stale by design; it does not confirm NKF 0.6 implementation or current producer state.
-    - id: historical-acceptance-containment-reviewed
+          section: realization-identity-and-kind
+      finding: The prior review recorded the consolidated current-system Realization as semantically stale by design because it still described the producer before ordinary NKF 0.6 adoption. That finding is now resolved. Under the Human Product Owner's 2026-08-14 confirmation the record was converted from immutable to living with its stable identity, stable path, draft status, prior confirmation history, and explicitly unconfirmed scope retained, its legacy-locked predecessor frontmatter was replaced by a native 0.6 envelope, and its content now describes the accepted, published, recommended, and producer-adopted NKF 0.6 state. It remains partially-confirmed draft knowledge and confirms nothing by being current.
+    - id: task-gate-re-extracted-at-end-state
       subject:
         kind: document
-        id: document-cddf78f71eac865b267a0b88c15600cf61383285d6d3b2558ff2e07d7bceda95
+        id: NKF-027
       basis:
         node:
-          kind: record
-          id: adr-0125
+          kind: document
+          id: NKF-027
         source:
-          section: decision
-      finding: The immutable ADR 0122 source remains graph-visible history under the exact non-reusable two-occurrence containment accepted by ADR 0125; it supplies no current NKF 0.6 release-authority selection.
-    - id: relationship-vocabulary-reviewed
+          heading:
+            heading_path:
+              - "NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing"
+            occurrence: 1
+      finding: The owning Task records the delivered end state, its Completion Result, and a re-extracted Decision Applicability gate. Six capabilities are reclassified proven at runtime-behaviour on directly observed outcomes and two licensing capabilities at data-validity, deliberately claiming no production-suitability. One mandatory capability remains unsupported under an explicit non-reusable Human Product Owner exception.
+    - id: nkf-0-6-published-without-a-confirming-decision
       subject:
         kind: record
         id: nkf-0.6-specification-revision-3
@@ -17777,12 +17793,9 @@ confirmation:
           kind: record
           id: nkf-0.6-specification-revision-3
         source:
-          section: relationships
-      finding: Seven relationship categories have authored edges and seven have none in this exact graph; inapplicable means absent here and does not weaken the accepted relationship vocabulary.
+          section: release-distribution
+      finding: The accepted release protocol requires a technical-confirmation Decision before publication, while the prepublication lock makes authoring any governed record impossible before promotion. NKF 0.6 was published under an explicit Human Product Owner exception and no confirming Decision exists. The graph therefore carries an accepted, implemented, published, recommended, and producer-adopted release that is not technically confirmed, and the ordering conflict is recorded for a successor NKF version rather than repaired here.
   limitations:
-    - This semantic review is bound only to exact source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63 and exact archive b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95.
-    - The consolidated current-system Realization is intentionally retained as a stale predecessor snapshot during prepublication promotion. The Human-confirmed live immutable-to-living conversion, truthful content update, re-pin, linkification, review, and reseal occur only after separately authorized ordinary public producer self-Adopt and before merge.
-    - Repository licensing files and third-party notices were technically reviewed against the candidate build graph, but Company rights confirmation, GitHub public visibility, and trademark-policy terms remain separate external or Human-authority facts.
-    - Relationship categories marked inapplicable have no authored instance in this exact graph; the classification does not remove, narrow, or supersede any accepted relationship meaning.
-    - Completing this semantic-review input supplies no Product acceptance, Realization confirmation, checker conformance, freshness readiness, technical confirmation, release publication, recommendation promotion, ordinary public adoption, Task completion, master merge, remote protection, or general Governing Use readiness.
+    - This is a delta re-affirmation of the whole-root review sealed earlier the same day at source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63. Only the knowledge authored under NKF-027 since that seal was re-read in full; every other node carries its prior reviewed classification rather than an independent fresh re-reading.
+    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, licensing readiness, publication, recommendation, adoption, repository visibility, or Governing Use.
   disputed: false

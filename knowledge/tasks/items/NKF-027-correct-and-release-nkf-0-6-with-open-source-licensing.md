@@ -40,6 +40,21 @@ they faithfully implement those boundaries. Any new consequential licensing,
 trademark, governance, contribution, security-policy, public-visibility, or
 Product meaning returns to the Human Product Owner.
 
+On `2026-08-14` the Human Product Owner separately lifted parts of that
+withholding, one act at a time and only after the preceding proof was
+delivered. Committing and pushing on the existing branch were authorized;
+publishing the exact audited NKF 0.6 candidate as a private prerelease was
+authorized; promoting the recommendation and performing ordinary public
+producer self-adoption were authorized; converting the consolidated
+current-system Realization from `immutable` to `living` was authorized; and
+closing this Task, marking pull request 9 ready, and merging it to `master`
+were authorized. The withholding of a Github visibility change was never
+lifted, no second release is authorized, the published release may not be
+deleted or rebound, and no NKF 0.7 work is authorized. The Human Product Owner
+also explicitly directed that a separate NKF 0.6 technical-confirmation
+Decision and separate audit, publication, and producer-adoption Evidence
+documents be dropped as non-minimal, with that omission recorded here instead.
+
 ## Problem
 
 The immutable published NKF 0.5 adopter assumes that a native record
@@ -485,9 +500,156 @@ Deliver one immutable NKF 0.6 successor that:
   clean committed source snapshot, fresh independent implementation audit,
   public producer self-adoption, actual current-system Realization update,
   post-adoption audit, and merge remain pending.
-- No visibility change, implementation confirmation, release,
-  recommendation, public adoption, confirmed Realization, or Governing Use
-  claim is made at this checkpoint.
+- The preceding entries are historical checkpoints. Every statement in them
+  that describes pending work is superseded by the entries below, which record
+  the delivered end state. No earlier checkpoint is rewritten.
+- The sole canonical handoff passed on one clean committed source snapshot,
+  the exact unpublished 0.6 candidate archive was built from that snapshot,
+  and a fresh independent implementation audit of the exact candidate returned
+  no unresolved material finding. That audit was performed in session under the
+  existing technical-derivation delegation; by explicit Human Product Owner
+  direction it was not written up as a separate Evidence document, so the
+  governed record of it is this entry rather than a dedicated Evidence record.
+- NKF 0.6 is published and permanently frozen. Release commit
+  `96652985ab7749d6f58677dbf0947af4c9ff4e63` produced archive
+  `b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95`,
+  published `2026-08-14T11:05:54Z` as a private prerelease under tag
+  `release-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95`
+  in repository `NourdApS/Nourd.NKF`. The published asset was re-downloaded and
+  compared byte-identically against the independently audited candidate
+  archive. No repository visibility change was made; the repository and the
+  release both remain private.
+- The exact release was then deliberately promoted in the governed catalog
+  `release/recommended.json`, and ordinary public Adopt performed the producer
+  self-adoption: the first invocation returned `updated` and an immediate
+  repeat returned `current`. The installed pin declares NKF 0.6, repository
+  `NourdApS/Nourd.NKF`, checker `9a019c4c...b376`, adopter `d552e7c2...eb50`,
+  and the preserved host-superset integration. Producer promotion replaced the
+  [ADR 0122](../../decisions/0122-accept-the-nkf-0-6-authority-set.md) record
+  declaration with its locked Evidence document and created the native
+  [`nkf-0.6-specification-revision-3`](../../specifications/nkf-0.6-revision-3.md) record declaration, both inside the same
+  validated transaction.
+- The governed multi-process exercises then received machine-independent hang
+  bounds scaled four times, so that they fail on genuine hangs rather than on
+  slower hardware. No assertion, contract, or format meaning changed.
+- `npm run nkf:check` is green: installed conformance passes at NKF 0.6 and the
+  host gate passes 29 test files with 231 tests, 1,429 checked links across 103
+  living files with zero dead links, deterministic checker and adopter
+  reproduction, third-party notice reproduction, the 86-file public projection,
+  and full-bundle self-validation with zero diagnostics. The exact-commit
+  Github Actions `NKF Contracts` workflow last succeeded on branch commit
+  `29c9a1bd85e69d28489a95a76709694d869bd5b1`. Github owns that time-bound run
+  state, and the concluding commit's own run is observed separately after
+  push; no run result is claimed here for a commit that does not yet exist.
+- The consolidated current-system Realization is reconciled in the live
+  producer through supported 0.6 mechanics. Under the Human Product Owner's
+  `2026-08-14` confirmation it was converted from `immutable` to `living`
+  while retaining stable identity [`nkf-0.1-native-realization`](../../realizations/current-system.md), stable path
+  `realizations/current-system.md`, `draft` status, its prior confirmation
+  history, and its explicitly unconfirmed scope. Its legacy-locked predecessor
+  frontmatter was replaced with a valid native 0.6 envelope, its content was
+  updated to the 0.6 reality, and the structural repin, linkify, whole-root
+  review, and reseal completed. This is the first ordinary post-publication
+  native record conversion against the installed 0.6 adopter, and it directly
+  exercises the corrective mechanics the release exists to deliver.
+- The governed artifact `scripts/verify-recommended-release.mjs` was still
+  bound to the 0.5 catalog and rejected the valid published 0.6 catalog. It now
+  verifies the exact 0.6 archive, source commit, checker, adopter, authority
+  digests, six-state compatibility set, and current `NourdApS/Nourd.NKF`
+  release URLs, and it was re-pinned as a governed artifact.
+- Two deliverables were deliberately dropped as non-minimal by explicit Human
+  Product Owner direction: a separate NKF 0.6 technical-confirmation Decision
+  (which would have been ADR 0126), and separate audit, publication, and
+  producer-adoption Evidence documents for 0.6. The consequence is recorded
+  plainly rather than hidden: NKF 0.6 is accepted, implemented, published,
+  recommended, and producer-adopted, but it is **not** technically confirmed by
+  any Decision, and its publication, adoption, and implementation-audit facts
+  rest on this Task record, this reconciled Realization, and the authoritative
+  Git, Github, catalog, and installed-pin state rather than on dedicated
+  Evidence records.
+- One finding is preserved for the successor. The accepted NKF 0.6 release
+  protocol requires a technical-confirmation Decision before publication, but
+  the 0.6 prepublication lock makes authoring any governed record impossible
+  before promotion, and adding one would have invalidated the whole-root
+  semantic review bound to the exact release commit. The requirement and the
+  mechanism are therefore mutually unsatisfiable as accepted. The Human Product
+  Owner resolved this instance by choosing to publish first and record
+  afterwards. A successor NKF version should reconcile that ordering in the
+  release protocol rather than repeat the exception.
+- The Decision Applicability gate below was re-extracted at this end state.
+  Every capability that NKF 0.6 has now actually proven is reclassified with
+  the exact verification level reached, and no capability is represented at a
+  higher level than the level directly observed.
+
+## Completion Result
+
+Every acceptance criterion is satisfied by delivered, validated, and tested
+reality, with the two deliberate scope reductions and the one unresolved
+protocol finding stated explicitly rather than absorbed silently.
+
+Delivered:
+
+- One accepted immutable NKF 0.6 authority set defines the corrective and
+  strengthened release-process boundary without mutating any frozen 0.5 byte.
+  [ADR 0125](../../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md)
+  accepts the current revision-3 selection; the revision-1 and revision-2
+  acceptances and the one failed attempt remain immutable governed history.
+- Structural record, document, and governed-artifact re-pinning works with
+  native `stable_path`, every dependent command uses the corrected
+  implementation, required postconditions are verified, transactions roll
+  back, and a zero-change result is truthful rather than a silent failure.
+- The command-by-subject matrix and adversarial fixtures cover every shipped
+  deterministic mutation capability, and exact-candidate adoption into an
+  isolated copy of the real producer exercised the complete ordinary native
+  authoring lifecycle and the complete producer gate before publication.
+- A fresh independent audit of the exact candidate reported no unresolved
+  material finding before publication.
+- Final evidence supports the truthful non-breaking ready-0.5-to-0.6
+  classification, including fail-closed refusal of a not-ready predecessor
+  baseline.
+- The unmodified standard Apache License 2.0 text is at the repository root,
+  package metadata declares SPDX identifier `Apache-2.0`, the root `NOTICE`
+  carries the exact approved informational attribution and adds no
+  restriction, and `THIRD_PARTY_NOTICES.md` carries the compatible third-party
+  attributions reproduced from the exact bundled checker and adopter build
+  graphs by a governed verifier.
+- The complete source-grounded inventory classifies repository-owned material,
+  every third-party component, its license compatibility, and its required
+  notice, and the licensing treatment of source headers, package metadata,
+  immutable Evidence, and third-party material is explicit and justified.
+- Every old repository reference was classified before change; historically
+  correct immutable provenance is preserved, and only current identity,
+  executable distribution and adoption behavior, and stale mutable
+  documentation were reconciled.
+- Private-release, authentication, workflow, release-URL, and
+  organization-transfer assumptions were exercised in the real publication,
+  re-download, recommendation, and producer self-adoption path.
+- The need for separate trademark, governance, contribution, security, and
+  community-conduct documents is reported without drafting or accepting any
+  consequential policy.
+- `npm run nkf:check` reports zero diagnostics for the coherent candidate, and
+  the consolidated current-system Realization is reconciled through supported,
+  proven 0.6 mechanics.
+
+Not delivered, deliberately:
+
+- No NKF 0.6 technical-confirmation Decision exists, and no separate 0.6
+  audit, publication, or producer-adoption Evidence document was authored.
+  Both omissions were explicitly directed by the Human Product Owner as
+  non-minimal for this Task. NKF 0.6 therefore remains unconfirmed by any
+  Decision.
+- No repository visibility change, no trademark or governance policy, and no
+  NKF 0.7 work is performed here.
+
+Carried forward:
+
+- The release-protocol ordering conflict between the required
+  prepublication technical-confirmation Decision and the prepublication lock
+  is unresolved in the accepted authority and belongs to a successor NKF
+  version.
+- Acceptance, Realization confirmation, conformance, licensing readiness,
+  publication, recommendation, adoption, local Git state, remote state, and
+  public visibility remain separate facts and are reported separately.
 
 ## Decision Applicability
 
@@ -517,11 +679,28 @@ Deliver one immutable NKF 0.6 successor that:
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Native record, document, and governed-artifact authoring remains deterministic and truthful after 0.6 candidate adoption | unsupported | none | none |
-| Every shipped authoring command is exercised against every applicable native subject kind before publication | unsupported | none | none |
-| Apache-2.0 can cover all Nourd ApS-owned repository content without conflicting third-party obligations | unknown | none | none |
-| The exact standard Apache-2.0 text, SPDX metadata, NOTICE, and required third-party notices are complete and nonrestrictive | unknown | none | none |
-| Current organization identity and executable distribution behavior can be corrected without rewriting historical provenance | unknown | none | none |
-| Private-release and authenticated-adoption assumptions remain coherent before any later public visibility change | unknown | none | none |
-| The 0.5-to-0.6 update is non-breaking | proven | data-validity | none |
-| Current-system Realization and graph freshness can be reconciled through supported 0.6 mechanics | unsupported | none | none |
+| Native record, document, and governed-artifact authoring remains deterministic and truthful after 0.6 candidate adoption | proven | runtime-behaviour | none |
+| Every shipped authoring command is exercised against every applicable native subject kind before publication | proven | runtime-behaviour | none |
+| Apache-2.0 can cover all Nourd ApS-owned repository content without conflicting third-party obligations | proven | data-validity | none |
+| The exact standard Apache-2.0 text, SPDX metadata, NOTICE, and required third-party notices are complete and nonrestrictive | proven | data-validity | none |
+| Current organization identity and executable distribution behavior can be corrected without rewriting historical provenance | proven | runtime-behaviour | none |
+| Private-release and authenticated-adoption assumptions remain coherent before any later public visibility change | proven | runtime-behaviour | none |
+| The 0.5-to-0.6 update is non-breaking | proven | runtime-behaviour | none |
+| Current-system Realization and graph freshness can be reconciled through supported 0.6 mechanics | proven | runtime-behaviour | none |
+| Publication of an NKF release is preceded by a technical-confirmation Decision over the exact candidate bytes | unsupported | none | The Human Product Owner explicitly directed on 2026-08-14 that NKF 0.6 publish first and record afterwards. The 0.6 prepublication lock makes authoring any governed record impossible before promotion, and adding one would have invalidated the whole-root semantic review bound to the exact release commit, so the requirement and the mechanism are mutually unsatisfiable as accepted. This exception covers only the NKF 0.6 release; a successor version must reconcile the ordering rather than reuse it. |
+
+This gate was re-extracted at the Task end state. Each `proven` finding names
+the highest level directly observed and no lower-level result is represented
+as a higher one. The two `data-validity` licensing findings establish that the
+exact license, notice, metadata, and third-party inventory artifacts are
+well-formed, complete, and integrity-bound against the exact bundled build
+graphs. They deliberately do not claim `production-suitability`: commercial
+and legal suitability of the licensing set remains with its owning authority
+and is not established here. The six `runtime-behaviour` findings rest on
+directly observed outcomes in the isolated real-producer rehearsal and in this
+live producer — the published release, its byte-identical re-download, the
+`updated` then `current` public Adopt results, and this Realization
+conversion, repin, linkify, review, and reseal — rather than on invoked
+methods or available inputs. The single `unsupported` finding carries an
+explicit non-reusable Human Product Owner exception and is the reason NKF 0.6
+is published without being technically confirmed by a Decision.

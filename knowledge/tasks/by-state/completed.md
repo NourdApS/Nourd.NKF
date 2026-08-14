@@ -12,3 +12,4 @@
 - [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
 - [NKF-023](../completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 - [NKF-024](../completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
+- [NKF-027](../items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)

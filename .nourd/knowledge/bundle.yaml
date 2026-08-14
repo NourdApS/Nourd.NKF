@@ -1679,10 +1679,10 @@ non_records:
       stable_path: tasks/items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md
       digest:
         algorithm: sha-256
-        value: 1dd661c938c79fbe50181304e30297e02fe235d1aa432f9654d0dd3d0b190e82
+        value: "36c4d2984965065f0ce996f98f41b8b9a3274ffeb9851074dd4c24612284ee17"
       state:
         vocabulary: task-status
-        value: active
+        value: "completed"
       owner: Nourd ApS
       decision_authority: Human Product Owner for licensing, trademark, public-scope, and Product meaning; Codex technical reviewer under explicit delegation for faithful technical derivation, implementation, audit reconciliation, and confirmation
       related_tasks:
@@ -2702,7 +2702,7 @@ governed_artifacts:
     path: scripts/verify-recommended-release.mjs
     digest:
       algorithm: sha-256
-      value: 62204b378e318e3e48c6d243c41fcdbc05ffb0aa9aba6719b99e7f69c3fc09fd
+      value: "bfff921d6b0546a3a33e5aa02d04efbe83cc84b251c093bbc1a0bcc4978799a9"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-release-mjs

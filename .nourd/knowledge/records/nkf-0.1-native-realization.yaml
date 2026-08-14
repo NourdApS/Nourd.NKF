@@ -8,9 +8,9 @@ source:
   stable_path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: c3ac68a1e48bc800f7395d350362551e59fda9ec3cd62929e4f5a309ea2d2747
+    value: "c903d54ed0b4ccbfdf98ad13f220093f40999b82d0719f006a411bbed3910961"
 governance:
-  lifecycle: immutable
+  lifecycle: living
   status: draft
   authority:
     - codex-technical-reviewer
@@ -81,7 +81,10 @@ relationships:
   - type: realizes
     target: adr-0120
     source_section: governed-meaning-realized
-task: NKF-026
+  - type: realizes
+    target: adr-0125
+    source_section: governed-meaning-realized
+task: NKF-027
 confirmation_status: partially-confirmed
 confirmation_decisions:
   - adr-0068
@@ -93,45 +96,4 @@ confirmation_decisions:
   - adr-0111
   - adr-0114
   - adr-0120
-unconfirmed_scope: ADR 0114 confirms the exact NKF 0.4 maintenance implementation and candidate archive; its publication, recommendation, ordinary producer adoption, master reconciliation, and post-action audit are separately observed. ADR 0119 accepts the exact NKF 0.5 revision 2 authority set and ADR 0120 confirms only exact release commit 777ea9a3a87591de36494296db4437c5b4343ce2 and archive e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9. Publication and recommendation are separately observed in NKF-026 Evidence. Ordinary producer adoption, post-adoption audit, final Task reconciliation, and master merge remain unconfirmed or unobserved.
-legacy_lock:
-  predecessor_version: "0.4"
-  source_digest:
-    algorithm: sha-256
-    value: c3ac68a1e48bc800f7395d350362551e59fda9ec3cd62929e4f5a309ea2d2747
-  predecessor_state:
-    record_lifecycle: immutable
-    record_status: draft
-    task: NKF-026
-    confirmation_status: partially-confirmed
-    confirmation_decisions:
-      - adr-0068
-      - adr-0070
-      - adr-0075
-      - adr-0082
-      - adr-0106
-      - adr-0108
-      - adr-0111
-      - adr-0114
-      - adr-0120
-    unconfirmed_scope: ADR 0114 confirms the exact NKF 0.4 maintenance implementation and candidate archive; its publication, recommendation, ordinary producer adoption, master reconciliation, and post-action audit are separately observed. ADR 0119 accepts the exact NKF 0.5 revision 2 authority set and ADR 0120 confirms only exact release commit 777ea9a3a87591de36494296db4437c5b4343ce2 and archive e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9. Publication and recommendation are separately observed in NKF-026 Evidence. Ordinary producer adoption, post-adoption audit, final Task reconciliation, and master merge remain unconfirmed or unobserved.
-  initial_declaration_state:
-    governance:
-      lifecycle: immutable
-      status: draft
-      authority:
-        - codex-technical-reviewer
-        - human-product-owner
-    task: NKF-026
-    confirmation_status: partially-confirmed
-    confirmation_decisions:
-      - adr-0068
-      - adr-0070
-      - adr-0075
-      - adr-0082
-      - adr-0106
-      - adr-0108
-      - adr-0111
-      - adr-0114
-      - adr-0120
-    unconfirmed_scope: ADR 0114 confirms the exact NKF 0.4 maintenance implementation and candidate archive; its publication, recommendation, ordinary producer adoption, master reconciliation, and post-action audit are separately observed. ADR 0119 accepts the exact NKF 0.5 revision 2 authority set and ADR 0120 confirms only exact release commit 777ea9a3a87591de36494296db4437c5b4343ce2 and archive e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9. Publication and recommendation are separately observed in NKF-026 Evidence. Ordinary producer adoption, post-adoption audit, final Task reconciliation, and master merge remain unconfirmed or unobserved.
+unconfirmed_scope: ADR 0114 confirms the exact NKF 0.4 maintenance implementation and candidate archive; its publication, recommendation, ordinary producer adoption, master reconciliation, and post-action audit are separately observed. ADR 0119 accepts the exact NKF 0.5 revision 2 authority set and ADR 0120 confirms only exact release commit 777ea9a3a87591de36494296db4437c5b4343ce2 and archive e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9. Publication and recommendation are separately observed in NKF-026 Evidence. ADR 0125 accepts only the exact NKF 0.6 revision 3 authority and producer-promotion set. No Decision confirms the NKF 0.6 implementation, release candidate, licensing set, or this reconciled account, and no separate NKF 0.6 publication, producer-adoption, or implementation-audit Evidence record exists. The NKF 0.6 implementation, licensing preparation, publication, recommendation, ordinary producer adoption, this live Realization reconciliation, final Task reconciliation, and master merge therefore remain unconfirmed. The lifecycle conversion from immutable to living was explicitly confirmed by the Human Product Owner on 2026-08-14 and confirms no content.
