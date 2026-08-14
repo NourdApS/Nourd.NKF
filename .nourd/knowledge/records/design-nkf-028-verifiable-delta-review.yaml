@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/nkf-0-7-verifiable-delta-review.md
   digest:
     algorithm: sha-256
-    value: "fa97743648b2fd2206c187caab35412da77068f849ecc0f6dd4fac4fc5b9a09a"
+    value: "130ffd40c8fe5f0fb4d890e2f38ad3b9a62cf14ace96f3eab7f7ee2792e7bb53"
 governance:
   lifecycle: living
   status: draft
@@ -214,7 +214,9 @@ relationships:
     target: adr-0125
     source_section: compatibility-and-versioning
 task: NKF-028
-design_disposition: active
-proposal_authority_effect: None until a Decision adopts the direction and the exact NKF 0.7 authority pair is separately accepted.
+design_disposition: adopted
+design_decisions:
+  - adr-0126
+proposal_authority_effect: Adopted by ADR 0126 as the NKF 0.7 verifiable delta review direction; normative NKF 0.7 meaning still requires a separate exact authority-pair acceptance and the mandatory audit-bound confirmation Decision.
 proposal_evidence: NKF-028 source-grounded assessment and the Human Product Owner boundaries recorded in the owning Task.
 implementation_evidence: None; this is a Design proposal.

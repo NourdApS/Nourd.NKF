@@ -130,11 +130,14 @@ succession provenance, and the effective baseline; prior baselines, receipts,
 and immutable records keep the old identifier as correct historical fact,
 and the checker resolves the succession chain when verifying carried
 judgments. Under that rule the consolidated current-system record's
-version-baked identifier is renamed to a version-free one. One deliberate
+version-baked identifier is renamed to the Human-Product-Owner-confirmed
+version-free identifier `nkf-current-system`. One deliberate
 governed migration moves the thirty-five state- and currency-baked stable
 paths — the legacy `tasks/active`, `tasks/completed`, `tasks/deferred`,
 `tasks/cancelled`, `designs/active`, and `realizations/current` trees — to
-lifecycle-neutral locations, rewriting declarations, navigation, and links
+the confirmed lifecycle-neutral locations extending the existing
+`tasks/items` pattern: `designs/items` and `realizations/items`. The
+migration rewrites declarations, navigation, and links
 mechanically while leaving immutable record meaning untouched. New living
 identifiers and new stable paths must not assert version, lifecycle state,
 disposition, or currency; immutable version-scoped snapshots keep their
@@ -163,9 +166,13 @@ outside the archive. The technical-confirmation Decision becomes exactly
 such a post-audit, outside-the-archive record with a defined slot between
 the clean independent audit and publication, authored on the release branch
 without invalidating the review bound to the release commit, because review
-binding excludes the post-audit governance records by contract. The 0.6
-publication-order exception is thereby made unnecessary rather than
-repeated.
+binding excludes the post-audit governance records by contract. The Human
+Product Owner resolved on `2026-08-14` that this confirmation Decision is
+mandatory for every future release with no waiver, and that it must bind the
+fresh independent audit of the exact candidate: a confirmation without its
+audit evidence is invalid, and publication without the confirmation Decision
+is a protocol violation rather than an exception. The 0.6 publication-order
+exception is thereby made unnecessary rather than repeated.
 
 ### Support Window And Stepping-Stone Migration
 
@@ -179,9 +186,12 @@ archive's own adopter with an explicit archive and digest, and the Adopt
 compatibility preflight names the exact stepping-stone archive instead of
 refusing unexplained. The window policy is recorded in the authority as
 conditional on the standing fact that no external repository has adopted any
-NKF release, together with what widens when the first external adoption
-occurs; the widening choice is an unresolved matter for the Human Product
-Owner below.
+NKF release. The Human Product Owner resolved the widening question on
+`2026-08-14`: until further explicit Human Product Owner notice, the window
+remains the current version plus one predecessor even after the first
+external adoption, with stepping-stone migration through published archives
+as the permanent path for everything older. No adoption event widens the
+window by implication.
 
 ### Consumer Applicability And Fixtures
 
@@ -315,16 +325,14 @@ confirmation ordering and any separately authorized publication.
 
 ## Unresolved Matters
 
-1. What widens when the first external repository adopts NKF: reverting to
-   live support for every published version, supporting exactly the versions
-   external adopters are pinned to, or keeping current plus one predecessor
-   with stepping-stone migration as the permanent policy. Adopters are not
-   trackable for private repositories, which constrains the second option.
-2. The version-free successor identifier for the consolidated current-system
-   record, proposed as `nkf-current-system`.
-3. The neutral directory names for the migrated Task, Design, and
-   Realization trees, proposed as the existing `tasks/items` pattern
-   extended to `designs/items` and `realizations/items`.
-4. Whether the reordered release protocol makes the post-audit confirmation
-   Decision mandatory for every future release or permits a recorded Human
-   Product Owner waiver, given that 0.6 shipped without one.
+No matter remains unresolved. The four matters this Design originally
+reserved were each resolved by the Human Product Owner on `2026-08-14`
+before adoption, and the resolutions are recorded in the sections above:
+the support window stays current plus one predecessor until further explicit
+Human Product Owner notice, with no widening by adoption event; the
+consolidated current-system record's successor identifier is
+`nkf-current-system`; the neutral directories extend the `tasks/items`
+pattern as `designs/items` and `realizations/items`; and the post-audit
+technical-confirmation Decision is mandatory for every future release, with
+no waiver, and is invalid without the bound fresh independent audit of the
+exact candidate.

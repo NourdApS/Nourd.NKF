@@ -1688,7 +1688,7 @@ non_records:
       stable_path: tasks/items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md
       digest:
         algorithm: sha-256
-        value: "36c4d2984965065f0ce996f98f41b8b9a3274ffeb9851074dd4c24612284ee17"
+        value: "c0b3eaeff8f1762fb6844819704432a259d4f6726f81c6aa39e7d804295aefdb"
       state:
         vocabulary: task-status
         value: "completed"

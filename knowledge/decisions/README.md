@@ -141,6 +141,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0123: Accept The Conformant NKF 0.6 Authority Set](0123-accept-the-conformant-nkf-0-6-authority-set.md)
 - [ADR 0124: Accept The NKF 0.6 Revision 2 Authority Set](0124-accept-the-nkf-0-6-revision-2-authority-set.md)
 - [ADR 0125: Accept The NKF 0.6 Revision 3 Authority Set](0125-accept-the-nkf-0-6-revision-3-authority-set.md)
+- [ADR 0126: Adopt The NKF 0.7 Verifiable Delta Review Direction](0126-adopt-the-nkf-0-7-verifiable-delta-review-direction.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)

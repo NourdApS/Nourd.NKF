@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 8b1ea7f59fb82732f3436387937f11400d1738b03b4fdc092f000fc8f435c208
+  value: 89b0738219fb4cda6b7b998576fa45269b06de9dedc2c278432944bc0d8c5b29
 policy:
   id: nkf.freshness-policy.0.6
   digest:
@@ -160,7 +160,7 @@ node_revisions:
       id: NKF-027
     revision:
       algorithm: sha-256
-      value: 9980958f9ae61eb1dbfc5b0a4552ebefe882b755165a8d25af9d56bdfaa735fd
+      value: 283a5054c83d416a82e5761613cb3be492e19d351bb128631b7254d4b7f8eacb
   - node:
       kind: document
       id: NKF-028
@@ -901,6 +901,12 @@ node_revisions:
       value: 5143303cf7cb25ae777cb59272ed91a7412bcfc2c2ec20811031ce0b1971444e
   - node:
       kind: record
+      id: adr-0126
+    revision:
+      algorithm: sha-256
+      value: 4dd4043a8ca4d6d43aae3e849e1c4622a206328a7b310e7c1ba84c4f8f02b72a
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     revision:
       algorithm: sha-256
@@ -1084,7 +1090,7 @@ node_revisions:
       id: design-nkf-028-verifiable-delta-review
     revision:
       algorithm: sha-256
-      value: ffb667e57e6b376f9f48382a5c67f9586828d9936f8bc2a5063662f41623640e
+      value: 4e4cce81e245011c33a9cdcd5c461c449112429456abbd724c3e7d436923cc58
   - node:
       kind: record
       id: design-nkf-record-v2-responsibility-bindings
@@ -1777,6 +1783,19 @@ authored_edges:
       node:
         kind: record
         id: adr-0123
+      section: decision
+  - source:
+      kind: record
+      id: adr-0126
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0125
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
       section: decision
   - source:
       kind: record
@@ -2573,6 +2592,32 @@ authored_edges:
       section: decision
   - source:
       kind: record
+      id: adr-0126
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0109
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
+      section: decision
+  - source:
+      kind: record
+      id: adr-0126
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0115
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
+      section: decision
+  - source:
+      kind: record
       id: design-nkf-025-freshness-and-deterministic-knowledge-graph
     relationship: extends
     target:
@@ -2791,6 +2836,19 @@ authored_edges:
       node:
         kind: record
         id: adr-0121
+      section: decision
+  - source:
+      kind: record
+      id: adr-0126
+    relationship: rationale-for
+    target:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
       section: decision
   - source:
       kind: record
@@ -8754,6 +8812,42 @@ applicability_coverage:
       node:
         kind: record
         id: adr-0125
+      source:
+        section: context-and-problem
+  - node:
+      kind: record
+      id: adr-0126
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: context-and-problem
+  - node:
+      kind: record
+      id: adr-0126
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: context-and-problem
+  - node:
+      kind: record
+      id: adr-0126
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0126
       source:
         section: context-and-problem
   - node:
@@ -17937,14 +18031,52 @@ decision_classifications:
         id: adr-0125
       source:
         section: context-and-problem
+  - decision: adr-0126
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: decision
+  - decision: adr-0126
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: decision
+  - decision: adr-0126
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: decision
 confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-14T20:56:05.000Z
+  reviewed_at: 2026-08-14T21:29:05.000Z
   claim: semantically-reviewed-whole-root
   observations:
-    - id: nkf-0-7-design-proposed-active
+    - id: nkf-0-7-direction-adopted
+      subject:
+        kind: record
+        id: adr-0126
+      basis:
+        node:
+          kind: record
+          id: adr-0126
+        source:
+          section: decision
+      finding: "The Human Product Owner adopted the NKF 0.7 verifiable delta review direction on 2026-08-14 after resolving all four originally reserved matters: the support window stays current plus one predecessor until further explicit notice with no widening by adoption event, the current-system successor identifier is nkf-current-system, the neutral directories extend the tasks/items pattern as designs/items and realizations/items, and the post-audit technical-confirmation Decision is mandatory for every future release and invalid without its bound fresh independent audit. The Decision adopts direction only: it accepts no authority pair, confirms nothing, authorizes no publication, and concludes no Task."
+    - id: design-resolved-and-adopted
       subject:
         kind: record
         id: design-nkf-028-verifiable-delta-review
@@ -17953,23 +18085,9 @@ confirmation:
           kind: record
           id: design-nkf-028-verifiable-delta-review
         source:
-          section: proposed-direction
-      finding: "The NKF 0.7 Design was authored under NKF-028 with disposition active. It proposes digest-bound review baselines with computed carry-forward, a per-rule version-delta declaration in the accepted authority, a fail-closed delta review claim, deterministic scaffolds, identity succession with lifecycle-neutral paths, operational-fact triggers, a reconciled release-confirmation ordering, the conditional current-plus-one support window, consumer-shaped fixtures, harness corrections, and the predecessor Task conclusions. It is a proposal: it carries no authority, accepts nothing, and its unresolved matters name the choices reserved for the Human Product Owner's adoption Decision."
-    - id: nkf-0-7-assessment-recorded-as-evidence
-      subject:
-        kind: document
-        id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
-      basis:
-        node:
-          kind: document
-          id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
-        source:
-          heading:
-            heading_path:
-              - NKF-028 NKF 0.7 Source-Grounded Assessment
-            occurrence: 1
-      finding: The read-only source-grounded assessment performed before the Design was imported as governed Evidence. It records the measured review-cost surface, the unverifiable-delta defect in the current sealed baseline, the stale bundle root record sealed unread by three whole-root reviews, the identity and path staleness inventory, the undeclared provenance files, stepping-stone migration feasibility, the live support removal surface, the 503-rule delta-declaration scale, the exact confirmation-ordering clauses, and the harness defect locations, each cited to exact files and lines at master commit 265095d. It supplies grounding only and establishes no authority.
+          section: unresolved-matters
+      finding: The Design's Unresolved Matters section now records that no matter remains unresolved and carries the four explicit Human Product Owner resolutions in its sections; its disposition is adopted through ADR 0126 while the record remains living draft proposal knowledge. The completed NKF-027 Task received one mechanical deep-link edit because the new ADR 0126 identifier made a previously exempt plain mention resolvable; the edit changes reference form only and no NKF-027 meaning.
   limitations:
-    - This is a delta re-affirmation of the previously sealed review. Only the newly authored NKF 0.7 Design record, the imported assessment Evidence document, their navigation entries, and the four new authored edges were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
-    - The review covers knowledge semantics only. It accepts no record, adopts no Design, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
+    - This is a delta re-affirmation of the previously sealed review. Only the new ADR 0126 record, the resolved and adopted NKF 0.7 Design record, the mechanical NKF-027 deep-link edit, and the navigation entries were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
+    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
   disputed: false
