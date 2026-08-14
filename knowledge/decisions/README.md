@@ -136,7 +136,8 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0119: Accept The NKF 0.5 Revision 2 Authority Pair](0119-accept-the-nkf-0-5-revision-2-authority-pair.md)
 - [ADR 0120: Confirm The NKF 0.5 Release Candidate](0120-confirm-the-nkf-0-5-release-candidate.md)
 - [ADR 0121: Adopt The NKF 0.6 Corrective And Licensing Direction](0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md)
-- [ADR 0122: Accept The NKF 0.6 Authority Set](0122-accept-the-nkf-0-6-authority-set.md)
+- ADR 0122 is retained as non-record historical Evidence because its exact
+  acceptance attempt failed the inherited deep-link conformance rule.
 - [ADR 0123: Accept The Conformant NKF 0.6 Authority Set](0123-accept-the-conformant-nkf-0-6-authority-set.md)
 - [ADR 0124: Accept The NKF 0.6 Revision 2 Authority Set](0124-accept-the-nkf-0-6-revision-2-authority-set.md)
 - [ADR 0125: Accept The NKF 0.6 Revision 3 Authority Set](0125-accept-the-nkf-0-6-revision-3-authority-set.md)

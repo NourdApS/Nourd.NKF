@@ -131,6 +131,30 @@ async function createProject(fixture = validFixture0_4) {
   return project;
 }
 
+// The producer-promotion exercise requires the exact pre-promotion producer.
+// Once this repository has adopted 0.6 that state no longer exists in the
+// working tree, so materialize it from the exact release commit the installed
+// pin already binds instead of weakening the exercise.
+async function materializePinnedPrepromotionRoot(parent: string) {
+  const pinnedCommit = JSON.parse(
+    readFileSync(path.join(repositoryRoot, ".nourd/nkf-release.json"), "utf8"),
+  ).source_commit;
+  const root = path.join(parent, "prepromotion");
+  const tarball = path.join(parent, "prepromotion.tar");
+  await mkdir(root, { recursive: true });
+  const exported = spawnSync(
+    "git",
+    ["-C", repositoryRoot, "archive", "-o", tarball, pinnedCommit],
+    { encoding: "utf8" },
+  );
+  expect(exported.status, exported.stderr).toBe(0);
+  const extracted = spawnSync("tar", ["-x", "-f", tarball, "-C", root], {
+    encoding: "utf8",
+  });
+  expect(extracted.status, extracted.stderr).toBe(0);
+  return root;
+}
+
 function run(
   command: string,
   project: string,
@@ -729,9 +753,13 @@ describe("NKF consumer adopter", () => {
   it("promotes the exact producer candidate to one native 0.6 Specification only at the authorized public stage", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-promotion-test-"));
     const project = path.join(parent, "project");
-    const producerPrepromotionRoot = process.env.NKF_PRODUCER_PREPROMOTION_ROOT === undefined
+    const producerPrepromotionRoot = process.env.NKF_PRODUCER_PREPROMOTION_ROOT !== undefined
+      ? path.resolve(process.env.NKF_PRODUCER_PREPROMOTION_ROOT)
+      : /^nkf_version:\s*"0\.5"/m.test(
+          readFileSync(path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
+        )
       ? repositoryRoot
-      : path.resolve(process.env.NKF_PRODUCER_PREPROMOTION_ROOT);
+      : await materializePinnedPrepromotionRoot(parent);
     await cp(producerPrepromotionRoot, project, {
       recursive: true,
       filter(source) {

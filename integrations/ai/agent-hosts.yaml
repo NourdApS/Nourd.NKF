@@ -3,7 +3,7 @@ version: 1
 canonical_command: npm run nkf:check
 neutral_protocol:
   path: integrations/ai/nkf-authoring-protocol.md
-  sha256: 07ca9c043e739bd653ff49cb82e72c275a096ba19a6324ce96d47d5225740538
+  sha256: 473990a2d9f89cfc224a102ab11f71310ef4524e0d32df5ae80d5d8550cdf904
 adapters:
   - id: root-agents
     path: AGENTS.md
@@ -32,7 +32,7 @@ skills:
   representations:
     - .agents/skills/nkf-authoring/SKILL.md
     - .claude/skills/nkf-authoring/SKILL.md
-  sha256: ae0c9215c388aedb5398346086bdcd31564e56abbe77f62e7c2a26dbbc0878cd
+  sha256: 92f257f1848741f4667dffa71a972794359492ffc9c37a64e1a7b8967b25061d
 surfaces:
   - id: openai-codex-cli
     provider: OpenAI

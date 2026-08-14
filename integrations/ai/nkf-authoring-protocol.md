@@ -1,6 +1,6 @@
 # NKF Authoring Protocol
 
-NKF Version: 0.5
+NKF Version: 0.6
 
 This is the complete vendor-neutral procedure for creating, changing,
 classifying, migrating, auditing, or validating NKF-governed knowledge in an
@@ -113,7 +113,7 @@ Before Git-backed work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under native NKF 0.5 frontmatter, a record carries only common orientation plus
+Under native NKF 0.6 frontmatter, a record carries only common orientation plus
 `id` and `type`; Task state, ownership, relationships, Design disposition,
 governance, freshness, and confirmation live in YAML declarations. Preserved
 predecessor sources may retain inert mutable keys only through an exact
@@ -171,7 +171,7 @@ lifecycle navigation, and applies result and digest consequences without a
 source move or inbound-link rewrite; `repin` recomputes record and governed-artifact
 digests after edits; `linkify` rewrites plain same-bundle references into
 verified deep links; `refs` exports the identifier-to-path reference map;
-`set` enumerates the versioned-set members with digests and version stamps;
+`set` exports the exact accepted release-set member paths, classes, and modes;
 and `migrate` performs a declared prior-version migration beneath the one
 public Adopt operation. Every command
 validates its staged result and rolls back on failure. Prose, gate
