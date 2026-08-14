@@ -52,6 +52,15 @@ conversation:
    snapshots, and one pull request delivers the complete NKF 0.7 release for
    one human merge.
 
+After receiving the created Task's short description on `2026-08-14`, the
+Human Product Owner confirmed one clarified premise and gave the explicit
+direction to begin work. The clarified premise: the digest-bound delta-review
+machinery is format meaning that applies to every adopted repository — both
+to a consumer's version upgrades and to its ordinary authoring impact
+closure — and the producer self-upgrade is the proof obligation, not the
+applicability boundary. Consumer-shaped fixtures must prove the delta path
+so the closure rules are not overfitted to the producer's own topology.
+
 ## Problem
 
 Every producer promotion requires a fresh whole-root semantic review whose
