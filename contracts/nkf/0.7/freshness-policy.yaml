@@ -1,0 +1,107 @@
+contract: nkf.freshness-policy
+nkf_version: "0.6"
+id: nkf.freshness-policy.0.6
+classes:
+  - hard
+  - review
+  - context
+  - historical
+purposes:
+  - change-impact
+  - whole-root-readiness
+  - consequential-use
+  - historical-reproduction
+hard_events:
+  - exact-revision-binding-mismatch
+  - governed-artifact-binding-mismatch
+mappings:
+  - relationship: part-of
+    source_kinds: [record, entity]
+    target_kinds: [record, entity]
+    propagation: both
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: defines
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: source-to-target
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: governs
+    source_kinds: [record]
+    target_kinds: [record, document, entity]
+    propagation: source-to-target
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: applies-to
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: source-to-target
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: depends-on
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: target-to-source
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: extends
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: both
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: supersedes
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: both
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]
+  - relationship: rationale-for
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: source-to-target
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: realizes
+    source_kinds: [record, entity]
+    target_kinds: [record, document, entity]
+    propagation: target-to-source
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: evidences
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: source-to-target
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]
+  - relationship: references
+    source_kinds: [record, document, entity]
+    target_kinds: [record, document, entity]
+    propagation: none
+    class: context
+    purposes: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]
+  - relationship: flows-to
+    source_kinds: [entity]
+    target_kinds: [entity]
+    propagation: both
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: transitions-to
+    source_kinds: [entity]
+    target_kinds: [entity]
+    propagation: both
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use]
+  - relationship: observes
+    source_kinds: [entity]
+    target_kinds: [record, document, entity]
+    propagation: source-to-target
+    class: review
+    purposes: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]
+historical_projection:
+  includes_all_authored_relationships: true
+  impact_expansion: false
+unknown_mapping: fail-closed
+repository_overrides: forbidden
+implementation_heuristics: forbidden
