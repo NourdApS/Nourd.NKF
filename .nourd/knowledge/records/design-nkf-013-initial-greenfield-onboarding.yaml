@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF Initial Greenfield Onboarding
 source:
   path: designs/adopted/initial-greenfield-onboarding.md
+  stable_path: designs/adopted/initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
     value: b08526b68e47e8cd4380309a15566b4d5e6f3bdf40c71d534ba0026b9d8274d3
@@ -17,25 +18,186 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
-  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
-  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
-  - {id: exact-initial-eligibility-boundary, heading_path: [Proposed Direction, Exact Initial Eligibility Boundary], occurrence: 1, authority: proposal, role: boundary}
-  - {id: stable-inspection-and-plan-boundary, heading_path: [Proposed Direction, Stable Inspection And Plan Boundary], occurrence: 1, authority: proposal, role: interface}
-  - {id: honest-profile-specific-scaffolds, heading_path: [Proposed Direction, Honest Profile-Specific Scaffolds], occurrence: 1, authority: proposal, role: boundary}
-  - {id: whole-project-transaction, heading_path: [Proposed Direction, Whole-Project Transaction], occurrence: 1, authority: proposal, role: recovery}
-  - {id: idempotence-and-operational-state, heading_path: [Proposed Direction, Idempotence And Operational State], occurrence: 1, authority: proposal, role: boundary}
-  - {id: ai-neutral-semantic-handoff, heading_path: [Proposed Direction, AI-Neutral Semantic Handoff], occurrence: 1, authority: proposal, role: interface}
-  - {id: user-facing-result-and-diagnostics, heading_path: [Proposed Direction, User-Facing Result And Diagnostics], occurrence: 1, authority: proposal, role: interface}
-  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
-  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
-  - {id: fully-automatic-model-driven-onboarding, heading_path: [Alternatives And Trade-Offs, Fully Automatic Model-Driven Onboarding], occurrence: 1, authority: proposal, role: alternative}
-  - {id: deterministic-scaffolding-without-a-semantic-plan, heading_path: [Alternatives And Trade-Offs, Deterministic Scaffolding Without A Semantic Plan], occurrence: 1, authority: proposal, role: alternative}
-  - {id: require-users-to-author-native-yaml, heading_path: [Alternatives And Trade-Offs, Require Users To Author Native YAML], occurrence: 1, authority: proposal, role: alternative}
-  - {id: mutate-the-project-during-interactive-resolution, heading_path: [Alternatives And Trade-Offs, Mutate The Project During Interactive Resolution], occurrence: 1, authority: proposal, role: alternative}
-  - {id: treat-every-numerically-small-corpus-as-greenfield, heading_path: [Alternatives And Trade-Offs, Treat Every Numerically Small Corpus As Greenfield], occurrence: 1, authority: proposal, role: alternative}
-  - {id: publish-a-new-native-archive-for-adopter-only-changes, heading_path: [Alternatives And Trade-Offs, Publish A New Native Archive For Adopter-Only Changes], occurrence: 1, authority: proposal, role: alternative}
-  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
-  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
-  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: exact-initial-eligibility-boundary
+    heading_path:
+      - Proposed Direction
+      - Exact Initial Eligibility Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: stable-inspection-and-plan-boundary
+    heading_path:
+      - Proposed Direction
+      - Stable Inspection And Plan Boundary
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: honest-profile-specific-scaffolds
+    heading_path:
+      - Proposed Direction
+      - Honest Profile-Specific Scaffolds
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: whole-project-transaction
+    heading_path:
+      - Proposed Direction
+      - Whole-Project Transaction
+    occurrence: 1
+    authority: proposal
+    role: recovery
+  - id: idempotence-and-operational-state
+    heading_path:
+      - Proposed Direction
+      - Idempotence And Operational State
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: ai-neutral-semantic-handoff
+    heading_path:
+      - Proposed Direction
+      - AI-Neutral Semantic Handoff
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: user-facing-result-and-diagnostics
+    heading_path:
+      - Proposed Direction
+      - User-Facing Result And Diagnostics
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: fully-automatic-model-driven-onboarding
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Fully Automatic Model-Driven Onboarding
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: deterministic-scaffolding-without-a-semantic-plan
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Deterministic Scaffolding Without A Semantic Plan
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: require-users-to-author-native-yaml
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Require Users To Author Native YAML
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: mutate-the-project-during-interactive-resolution
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Mutate The Project During Interactive Resolution
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: treat-every-numerically-small-corpus-as-greenfield
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Treat Every Numerically Small Corpus As Greenfield
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: publish-a-new-native-archive-for-adopter-only-changes
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Publish A New Native Archive For Adopter-Only Changes
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
 relationships: []
+task: NKF-013
+design_disposition: adopted
+design_decisions:
+  - adr-0067
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: b08526b68e47e8cd4380309a15566b4d5e6f3bdf40c71d534ba0026b9d8274d3
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-013
+    design_disposition: adopted
+    design_decisions:
+      - adr-0067
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+        - human-product-owner
+    task: NKF-013
+    design_disposition: adopted
+    design_decisions:
+      - adr-0067

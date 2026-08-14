@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0036: Accept Checker-Findings-Resolved Authority Pair"
 source:
   path: decisions/0036-checker-ready-authority-pair.md
+  stable_path: decisions/0036-checker-ready-authority-pair.md
   digest:
     algorithm: sha-256
     value: 9ba0fb7162c8822372d60bc063c4beebabfcca96a6e2cbb094e281710fc725b8
@@ -62,3 +63,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 9ba0fb7162c8822372d60bc063c4beebabfcca96a6e2cbb094e281710fc725b8
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting within delegated authority to compose and approve exact technical artifacts from the Human Product Owner boundary accepted in ADR 0035 and the mechanical completions accepted in ADR 0034
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting within delegated authority to compose and approve exact technical artifacts from the Human Product Owner boundary accepted in ADR 0035 and the mechanical completions accepted in ADR 0034
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

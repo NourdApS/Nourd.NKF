@@ -59,6 +59,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0051: Self-Hosting Source Migration](0051-self-hosting-source-migration.md)
 - [ADR 0077: Decision Applicability Gate](0077-decision-applicability-gate.md)
 - [ADR 0079: Dynamic Frontmatter Without Title](0079-dynamic-frontmatter-without-title.md)
+- [ADR 0115: Adopt Freshness And Deterministic Knowledge Graph Direction](0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
 
 ## Executable Authority Validation And Checker
 
@@ -127,6 +128,19 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0112: Allocate NKF 0.4 Security Maintenance](0112-allocate-nkf-0-4-security-maintenance.md)
 - [ADR 0113: Accept The NKF 0.4 Authority Pair](0113-accept-the-nkf-0-4-authority-pair.md)
 - [ADR 0114: Confirm The NKF 0.4 Release Candidate](0114-confirm-the-nkf-0-4-release-candidate.md)
+- [ADR 0116: Accept The NKF 0.5 Authority Pair](0116-accept-the-nkf-0-5-authority-pair.md)
+- ADR 0117 is retained as non-record historical Evidence because its exact
+  acceptance attempt failed the inherited deep-link conformance rule.
+- ADR 0118 is retained as non-record historical Evidence because its distinct
+  acceptance snapshot also failed the inherited deep-link conformance rule.
+- [ADR 0119: Accept The NKF 0.5 Revision 2 Authority Pair](0119-accept-the-nkf-0-5-revision-2-authority-pair.md)
+- [ADR 0120: Confirm The NKF 0.5 Release Candidate](0120-confirm-the-nkf-0-5-release-candidate.md)
+- [ADR 0121: Adopt The NKF 0.6 Corrective And Licensing Direction](0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md)
+- ADR 0122 is retained as non-record historical Evidence because its exact
+  acceptance attempt failed the inherited deep-link conformance rule.
+- [ADR 0123: Accept The Conformant NKF 0.6 Authority Set](0123-accept-the-conformant-nkf-0-6-authority-set.md)
+- [ADR 0124: Accept The NKF 0.6 Revision 2 Authority Set](0124-accept-the-nkf-0-6-revision-2-authority-set.md)
+- [ADR 0125: Accept The NKF 0.6 Revision 3 Authority Set](0125-accept-the-nkf-0-6-revision-3-authority-set.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)

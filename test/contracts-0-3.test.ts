@@ -31,7 +31,7 @@ describe("accepted NKF 0.3 authority and derived checker realization", () => {
     expect(decision).toContain(VERSION_BINDINGS["0.3"].executable.sha256);
   });
 
-  it("dispatches both complete 0.3 Root Profile fixtures and fails closed for 0.5", async () => {
+  it("dispatches both complete 0.3 Root Profile fixtures and rejects an unbound 0.5 authority set", async () => {
     for (const fixture of ["minimal-0-3", "technology-0-3"]) {
       const result = await validateProject(
         options(path.join(repositoryRoot, "fixtures/valid", fixture)),
@@ -51,7 +51,7 @@ describe("accepted NKF 0.3 authority and derived checker realization", () => {
       "0.5",
     );
     expect(unsupported.diagnostics.map((diagnostic) => diagnostic.rule_id)).toContain(
-      "contract-set.unavailable",
+      "contract-set.binding-mismatch",
     );
   });
 });

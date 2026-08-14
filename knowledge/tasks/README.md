@@ -12,11 +12,14 @@ status; it does not establish that status.
 
 ## Active
 
-[Active Task Index](active/README.md)
+[Active Task Index](by-state/active.md)
+- [NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction](active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+- [NKF-026: Implement And Release NKF 0.5 Freshness And Knowledge Graph](active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+- [NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing](items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 
 ## Deferred
 
-[Deferred Task Index](deferred/README.md)
+[Deferred Task Index](by-state/deferred.md)
 
 - [NKF-004: Define Portable Presentation Guidance Extension](deferred/NKF-004-portable-presentation-guidance.md)
 - [NKF-005: Investigate Validation Expiry And Authority Freshness](deferred/NKF-005-validation-expiry-and-authority-freshness.md)
@@ -29,7 +32,7 @@ status; it does not establish that status.
 
 ## Completed
 
-[Completed Task Index](completed/README.md)
+[Completed Task Index](by-state/completed.md)
 
 - [NKF-003: Establish Independent NKF Authority](completed/NKF-003-independent-nkf-authority.md)
 - [NKF-007: Repair Knowledge Structure And Confirmation](completed/NKF-007-knowledge-structure-and-confirmation.md)
@@ -46,6 +49,6 @@ status; it does not establish that status.
 
 ## Cancelled
 
-[Cancelled Task Index](cancelled/README.md)
+[Cancelled Task Index](by-state/cancelled.md)
 
 - [NKF-022: Pin The NKF Repository To Released NKF 0.2](cancelled/NKF-022-pin-nkf-repository-to-released-nkf-0-2.md)

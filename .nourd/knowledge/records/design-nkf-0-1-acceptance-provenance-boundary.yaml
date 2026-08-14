@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Acceptance-Provenance Boundary
 source:
   path: designs/adopted/acceptance-provenance.md
+  stable_path: designs/adopted/acceptance-provenance.md
   digest:
     algorithm: sha-256
     value: 0df37cb70e7637c8c6e4565b7fb2dfbc8b272bc6f8962cb823379da8caf1d658
@@ -76,3 +77,41 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0017
+proposal_authority_effect: None
+proposal_evidence: accepted NKF authority/conformance rules and the imported NKF-002 `governance.acceptance_source` Git-revision check; the imported field and checker are not authority
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 0df37cb70e7637c8c6e4565b7fb2dfbc8b272bc6f8962cb823379da8caf1d658
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0017
+    proposal_authority_effect: None
+    proposal_evidence: accepted NKF authority/conformance rules and the imported NKF-002 `governance.acceptance_source` Git-revision check; the imported field and checker are not authority
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0017
+    proposal_authority_effect: None
+    proposal_evidence: accepted NKF authority/conformance rules and the imported NKF-002 `governance.acceptance_source` Git-revision check; the imported field and checker are not authority
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

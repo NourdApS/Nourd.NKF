@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0049: Establish Common Specification And Concrete Root Profiles"
 source:
   path: decisions/0049-common-and-root-profiles.md
+  stable_path: decisions/0049-common-and-root-profiles.md
   digest:
     algorithm: sha-256
     value: 9570b35bb6c25c246baacfc762cfccf4b9605f6d354d1fac8da5ad8f1b8f0aa0
@@ -80,3 +81,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 9570b35bb6c25c246baacfc762cfccf4b9605f6d354d1fac8da5ad8f1b8f0aa0
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

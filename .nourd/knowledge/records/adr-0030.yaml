@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0030: Confirm Rebound NKF 0.1 Json Schemas"
 source:
   path: decisions/0030-source-bound-json-schemas.md
+  stable_path: decisions/0030-source-bound-json-schemas.md
   digest:
     algorithm: sha-256
     value: 95f377a951ee2f19eeea3c401595cfb841f916a2f61a1735401325f04ced1c3f
@@ -56,3 +57,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 95f377a951ee2f19eeea3c401595cfb841f916a2f61a1735401325f04ced1c3f
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact derived revisions after independent review
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact derived revisions after independent review
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

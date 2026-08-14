@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0031: Establish Checker Development Layout And Identity"
 source:
   path: decisions/0031-checker-layout-and-identity.md
+  stable_path: decisions/0031-checker-layout-and-identity.md
   digest:
     algorithm: sha-256
     value: a654886750a669ff5c0186c02f6caaad44bd620024365918ee9b2b20a31492d6
@@ -79,3 +80,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: a654886750a669ff5c0186c02f6caaad44bd620024365918ee9b2b20a31492d6
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

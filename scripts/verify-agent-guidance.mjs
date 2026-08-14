@@ -375,8 +375,8 @@ export async function verifyAgentGuidance(projectRootInput) {
   const bundle = YAML.parse(
     await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
   );
-  if (!["0.2", "0.3", "0.4"].includes(bundle?.nkf_version)) {
-    fail("The producer guidance verifier requires an NKF 0.2, 0.3, or 0.4 bundle.");
+  if (!["0.2", "0.3", "0.4", "0.5", "0.6"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2, 0.3, 0.4, 0.5, or 0.6 bundle.");
   }
   const expectedSkill = expectedSkill0_2.replace(
     "NKF Version: 0.2",
@@ -577,7 +577,7 @@ export async function verifyAgentGuidance(projectRootInput) {
   const hostSupersetInstalled = packageManifest.scripts?.["nkf:check"] === installedHostChain;
   const expectedScripts = {
     build: "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
-    check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
+    check: "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs && npm run verify:third-party-notices",
     "nkf:check": hostSupersetInstalled ? installedHostChain : producerCheck,
     test: "vitest run",
     typecheck: "tsc --noEmit",
@@ -589,6 +589,7 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:onboarding-guidance": "node scripts/verify-onboarding-guidance.mjs --project .",
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
+    "verify:third-party-notices": "node scripts/verify-third-party-notices.mjs",
   };
   if (hostSupersetInstalled) {
     expectedScripts["nkf:check:pinned"] =

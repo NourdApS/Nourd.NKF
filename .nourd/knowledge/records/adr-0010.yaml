@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0010: Accept Canonical NKF 0.1 Markdown"
 source:
   path: decisions/0010-nkf-0-1-markdown-authority.md
+  stable_path: decisions/0010-nkf-0-1-markdown-authority.md
   digest:
     algorithm: sha-256
     value: d97917d9c694600796de1063a4e702951bead97a074560be134ddca135ce8480
@@ -37,3 +38,26 @@ sections:
     responsibilities:
       - consequences-and-trade-offs
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: d97917d9c694600796de1063a4e702951bead97a074560be134ddca135ce8480
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

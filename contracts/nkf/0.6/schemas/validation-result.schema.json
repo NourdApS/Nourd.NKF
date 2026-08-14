@@ -1,0 +1,4217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nkf:0.6:schema:validation-result",
+  "title": "NKF 0.6 validation result",
+  "x-nkf-source": {
+    "nkf_version": "0.6",
+    "markdown_path": "knowledge/specifications/nkf-0.6-revision-3.md",
+    "markdown_digest": {
+      "algorithm": "sha-256",
+      "value": "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a"
+    },
+    "executable_path": "contracts/nkf/0.6/revision-3/nkf.yaml",
+    "executable_digest": {
+      "algorithm": "sha-256",
+      "value": "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "nkf_version",
+    "execution",
+    "checker",
+    "contract_artifacts",
+    "request",
+    "bundle_id",
+    "profile",
+    "validated_snapshot",
+    "phases",
+    "conformance",
+    "knowledge_graph",
+    "nodes",
+    "records",
+    "readiness",
+    "governing_use",
+    "diagnostics"
+  ],
+  "properties": {
+    "contract": {
+      "const": "nkf.validation-result"
+    },
+    "nkf_version": {
+      "const": "0.6"
+    },
+    "execution": {
+      "$ref": "#/$defs/execution"
+    },
+    "checker": {
+      "$ref": "#/$defs/checker"
+    },
+    "contract_artifacts": {
+      "$ref": "#/$defs/contractArtifacts"
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "bundle_id": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/identifier"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "profile": {
+      "$ref": "#/$defs/profile"
+    },
+    "validated_snapshot": {
+      "$ref": "#/$defs/validatedSnapshot"
+    },
+    "phases": {
+      "$ref": "#/$defs/phases"
+    },
+    "conformance": {
+      "$ref": "#/$defs/conformance"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recordResult"
+      }
+    },
+    "governing_use": {
+      "$ref": "#/$defs/governingUse"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    },
+    "knowledge_graph": {
+      "$ref": "#/$defs/knowledgeGraph"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nodeResult"
+      }
+    },
+    "readiness": {
+      "$ref": "#/$defs/readinessResult"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "binding"
+      ],
+      "properties": {
+        "identity": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding": {
+          "enum": [
+            "verified",
+            "unsupported",
+            "not-evaluated"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "const": "not-evaluated"
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "identity": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "enum": [
+                  "verified",
+                  "unsupported"
+                ]
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "identity": {
+                "$ref": "#/$defs/identifier"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "portableIdentity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:(?:[0-5][0-9]|60)\\.[0-9]{3}Z$"
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "runner",
+        "started_at",
+        "completed_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "runner": {
+          "$ref": "#/$defs/portableIdentity"
+        },
+        "started_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "checker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "digest"
+      ],
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/portableIdentity"
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "artifactBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_sha256",
+        "observed_sha256",
+        "binding"
+      ],
+      "properties": {
+        "expected_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "observed_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding": {
+          "enum": [
+            "verified",
+            "unavailable",
+            "mismatched"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "enum": [
+                  "verified",
+                  "mismatched"
+                ]
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "schemaBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity",
+        "expected_sha256",
+        "observed_sha256",
+        "binding"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "observed_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "binding": {
+          "enum": [
+            "verified",
+            "unavailable",
+            "mismatched"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "const": "unavailable"
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "binding": {
+                "enum": [
+                  "verified",
+                  "mismatched"
+                ]
+              }
+            },
+            "required": [
+              "binding"
+            ]
+          },
+          "then": {
+            "properties": {
+              "observed_sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "coreArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "specification",
+        "executable",
+        "freshness_policy",
+        "schemas"
+      ],
+      "properties": {
+        "specification": {
+          "$ref": "#/$defs/artifactBinding"
+        },
+        "executable": {
+          "$ref": "#/$defs/artifactBinding"
+        },
+        "schemas": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/schemaBundleBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaRecordBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaGraphBaselineBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaFreshnessReceiptBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaFreshnessPolicyBinding"
+            },
+            {
+              "$ref": "#/$defs/schemaValidationResultBinding"
+            }
+          ],
+          "items": false,
+          "minItems": 6,
+          "maxItems": 6
+        },
+        "freshness_policy": {
+          "$ref": "#/$defs/artifactBinding"
+        }
+      }
+    },
+    "extensionArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "specification",
+        "executable"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z](?:[a-z0-9-]*[a-z0-9])?){2,}$"
+        },
+        "specification": {
+          "$ref": "#/$defs/artifactBinding"
+        },
+        "executable": {
+          "$ref": "#/$defs/artifactBinding"
+        }
+      }
+    },
+    "contractArtifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "core",
+        "extensions"
+      ],
+      "properties": {
+        "core": {
+          "$ref": "#/$defs/coreArtifacts"
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/extensionArtifacts"
+          }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "record_id",
+        "acceptance_binding",
+        "purpose",
+        "require_readiness",
+        "changed_inputs",
+        "targets",
+        "observations",
+        "evaluation_time",
+        "historical_receipt"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "structural",
+            "contract",
+            "full-bundle"
+          ]
+        },
+        "record_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/identifier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acceptance_binding": {
+          "enum": [
+            "requested",
+            "not-requested"
+          ]
+        },
+        "purpose": {
+          "oneOf": [
+            {
+              "enum": [
+                "change-impact",
+                "whole-root-readiness",
+                "consequential-use",
+                "historical-reproduction"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "require_readiness": {
+          "type": "boolean"
+        },
+        "changed_inputs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "node"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "node"
+                  },
+                  "node": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "id"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "record"
+                          },
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "id"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "document"
+                          },
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "kind",
+                          "record",
+                          "entity"
+                        ],
+                        "properties": {
+                          "kind": {
+                            "const": "entity"
+                          },
+                          "record": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "entity": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "governed-artifact"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "external-dependency"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "authority-input"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "external-observation"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "authority-observation"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "edge"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "authored-edge"
+                  },
+                  "edge": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "source",
+                      "relationship",
+                      "target",
+                      "source_binding"
+                    ],
+                    "properties": {
+                      "source": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "id"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "record"
+                              },
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "id"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "document"
+                              },
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "record",
+                              "entity"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "entity"
+                              },
+                              "record": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "entity": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "relationship": {
+                        "enum": [
+                          "part-of",
+                          "defines",
+                          "governs",
+                          "applies-to",
+                          "depends-on",
+                          "extends",
+                          "supersedes",
+                          "rationale-for",
+                          "realizes",
+                          "evidences",
+                          "references",
+                          "flows-to",
+                          "transitions-to",
+                          "observes"
+                        ]
+                      },
+                      "target": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "id"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "record"
+                              },
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "id"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "document"
+                              },
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "record",
+                              "entity"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "entity"
+                              },
+                              "record": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "entity": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "source_binding": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "node",
+                              "section"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "section"
+                              },
+                              "node": {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "kind",
+                                      "id"
+                                    ],
+                                    "properties": {
+                                      "kind": {
+                                        "const": "record"
+                                      },
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "kind",
+                                      "id"
+                                    ],
+                                    "properties": {
+                                      "kind": {
+                                        "const": "document"
+                                      },
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "kind",
+                                      "record",
+                                      "entity"
+                                    ],
+                                    "properties": {
+                                      "kind": {
+                                        "const": "entity"
+                                      },
+                                      "record": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      "entity": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "section": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "node",
+                              "heading"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "heading"
+                              },
+                              "node": {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "kind",
+                                      "id"
+                                    ],
+                                    "properties": {
+                                      "kind": {
+                                        "const": "record"
+                                      },
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "kind",
+                                      "id"
+                                    ],
+                                    "properties": {
+                                      "kind": {
+                                        "const": "document"
+                                      },
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "kind",
+                                      "record",
+                                      "entity"
+                                    ],
+                                    "properties": {
+                                      "kind": {
+                                        "const": "entity"
+                                      },
+                                      "record": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      },
+                                      "entity": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "heading": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "heading_path",
+                                  "occurrence"
+                                ],
+                                "properties": {
+                                  "heading_path": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "items": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "occurrence": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "targets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "record"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "document"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "record",
+                  "entity"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "entity"
+                  },
+                  "record": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "entity": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "kind",
+              "subject",
+              "observed_revision",
+              "observed_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "external",
+                  "authority"
+                ]
+              },
+              "subject": {
+                "type": "string",
+                "minLength": 1
+              },
+              "observed_revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:(?:[0-6][0-9]|60)\\.[0-9]{3}Z$"
+              }
+            }
+          }
+        },
+        "evaluation_time": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:(?:[0-6][0-9]|60)\\.[0-9]{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "historical_receipt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^freshness-[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "level": {
+              "const": "structural"
+            },
+            "record_id": {
+              "type": "null"
+            },
+            "acceptance_binding": {
+              "const": "not-requested"
+            }
+          }
+        },
+        {
+          "properties": {
+            "level": {
+              "const": "contract"
+            },
+            "record_id": {
+              "$ref": "#/$defs/identifier"
+            }
+          }
+        },
+        {
+          "properties": {
+            "level": {
+              "const": "full-bundle"
+            },
+            "record_id": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "validatedSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "canonicalization",
+        "value",
+        "entry_count"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "canonicalization": {
+          "const": "rfc8785-jcs"
+        },
+        "value": {
+          "$ref": "#/$defs/sha256"
+        },
+        "entry_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "phaseState": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-evaluated"
+      ]
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/$defs/phaseState"
+        }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/phaseContracts"
+        },
+        {
+          "$ref": "#/$defs/phaseParse"
+        },
+        {
+          "$ref": "#/$defs/phaseSchema"
+        },
+        {
+          "$ref": "#/$defs/phaseProject"
+        },
+        {
+          "$ref": "#/$defs/phaseSource"
+        },
+        {
+          "$ref": "#/$defs/phaseExtensionResolution"
+        },
+        {
+          "$ref": "#/$defs/phaseBundleGraph"
+        },
+        {
+          "$ref": "#/$defs/phaseKnowledgeGraph"
+        },
+        {
+          "$ref": "#/$defs/phaseRecordContract"
+        },
+        {
+          "$ref": "#/$defs/phaseFreshness"
+        },
+        {
+          "$ref": "#/$defs/phaseSecurity"
+        },
+        {
+          "$ref": "#/$defs/phaseAuthorityBinding"
+        },
+        {
+          "$ref": "#/$defs/phaseResult"
+        }
+      ],
+      "items": false,
+      "minItems": 13,
+      "maxItems": 13
+    },
+    "conformance": {
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "recordConformance": {
+      "enum": [
+        "passed",
+        "failed",
+        "not-evaluated"
+      ]
+    },
+    "acceptanceBinding": {
+      "enum": [
+        "not-applicable",
+        "not-verified",
+        "verified",
+        "contradicted"
+      ]
+    },
+    "governingUse": {
+      "enum": [
+        "ready",
+        "not-ready",
+        "not-evaluated"
+      ]
+    },
+    "declaredGovernance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifecycle",
+        "status",
+        "authority"
+      ],
+      "properties": {
+        "lifecycle": {
+          "enum": [
+            "living",
+            "immutable"
+          ]
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "accepted",
+            "superseded",
+            "retired"
+          ]
+        },
+        "authority": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "accepted_at": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "recordResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_id",
+        "declared_governance",
+        "conformance",
+        "acceptance_binding",
+        "governing_use"
+      ],
+      "properties": {
+        "record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "declared_governance": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/declaredGovernance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conformance": {
+          "$ref": "#/$defs/recordConformance"
+        },
+        "acceptance_binding": {
+          "$ref": "#/$defs/acceptanceBinding"
+        },
+        "governing_use": {
+          "$ref": "#/$defs/governingUse"
+        }
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "severity",
+        "blocking",
+        "phase",
+        "message"
+      ],
+      "properties": {
+        "rule_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning"
+          ]
+        },
+        "blocking": {
+          "enum": [
+            "conformance",
+            "readiness",
+            "governing-use",
+            "none"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "contracts",
+            "parse",
+            "schema",
+            "project",
+            "source",
+            "extension-resolution",
+            "bundle-graph",
+            "knowledge-graph",
+            "record-contract",
+            "freshness",
+            "security",
+            "authority-binding",
+            "result"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "instance_pointer": {
+          "type": "string",
+          "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+        },
+        "source_section": {
+          "$ref": "#/$defs/identifier"
+        },
+        "remediation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "severity": {
+                "const": "warning"
+              }
+            },
+            "required": [
+              "severity"
+            ]
+          },
+          "then": {
+            "properties": {
+              "blocking": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "blocking": {
+                "enum": [
+                  "conformance",
+                  "governing-use"
+                ]
+              }
+            },
+            "required": [
+              "blocking"
+            ]
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "error"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "nodeReference": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "record"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "document"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "record",
+            "entity"
+          ],
+          "properties": {
+            "kind": {
+              "const": "entity"
+            },
+            "record": {
+              "type": "string",
+              "minLength": 1
+            },
+            "entity": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "changedInput": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "node"
+          ],
+          "properties": {
+            "kind": {
+              "const": "node"
+            },
+            "node": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "id"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "record"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "id"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "document"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "record",
+                    "entity"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "const": "entity"
+                    },
+                    "record": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "entity": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "governed-artifact"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "external-dependency"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "authority-input"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "external-observation"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "authority-observation"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "edge"
+          ],
+          "properties": {
+            "kind": {
+              "const": "authored-edge"
+            },
+            "edge": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source",
+                "relationship",
+                "target",
+                "source_binding"
+              ],
+              "properties": {
+                "source": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "record"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "document"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "record",
+                        "entity"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "entity"
+                        },
+                        "record": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "entity": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  ]
+                },
+                "relationship": {
+                  "enum": [
+                    "part-of",
+                    "defines",
+                    "governs",
+                    "applies-to",
+                    "depends-on",
+                    "extends",
+                    "supersedes",
+                    "rationale-for",
+                    "realizes",
+                    "evidences",
+                    "references",
+                    "flows-to",
+                    "transitions-to",
+                    "observes"
+                  ]
+                },
+                "target": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "record"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "document"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "record",
+                        "entity"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "entity"
+                        },
+                        "record": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "entity": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  ]
+                },
+                "source_binding": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "node",
+                        "section"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "section"
+                        },
+                        "node": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "id"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "record"
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "id"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "document"
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "record",
+                                "entity"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "entity"
+                                },
+                                "record": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "entity": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "section": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "node",
+                        "heading"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "heading"
+                        },
+                        "node": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "id"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "record"
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "id"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "document"
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "kind",
+                                "record",
+                                "entity"
+                              ],
+                              "properties": {
+                                "kind": {
+                                  "const": "entity"
+                                },
+                                "record": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "entity": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "heading": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "heading_path",
+                            "occurrence"
+                          ],
+                          "properties": {
+                            "heading_path": {
+                              "type": "array",
+                              "minItems": 1,
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "occurrence": {
+                              "type": "integer",
+                              "minimum": 1
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "subject",
+        "observed_revision",
+        "observed_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "external",
+            "authority"
+          ]
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:(?:[0-6][0-9]|60)\\.[0-9]{3}Z$"
+        }
+      }
+    },
+    "reasonPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "initial_change",
+        "target",
+        "nodes",
+        "relationships"
+      ],
+      "properties": {
+        "initial_change": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "node"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "node"
+                },
+                "node": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "record"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "document"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "record",
+                        "entity"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "entity"
+                        },
+                        "record": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "entity": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "governed-artifact"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "external-dependency"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "authority-input"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "external-observation"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "authority-observation"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "edge"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "authored-edge"
+                },
+                "edge": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "source",
+                    "relationship",
+                    "target",
+                    "source_binding"
+                  ],
+                  "properties": {
+                    "source": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "id"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "record"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "id"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "document"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "record",
+                            "entity"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "entity"
+                            },
+                            "record": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "entity": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "relationship": {
+                      "enum": [
+                        "part-of",
+                        "defines",
+                        "governs",
+                        "applies-to",
+                        "depends-on",
+                        "extends",
+                        "supersedes",
+                        "rationale-for",
+                        "realizes",
+                        "evidences",
+                        "references",
+                        "flows-to",
+                        "transitions-to",
+                        "observes"
+                      ]
+                    },
+                    "target": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "id"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "record"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "id"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "document"
+                            },
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "record",
+                            "entity"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "entity"
+                            },
+                            "record": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "entity": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "source_binding": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "node",
+                            "section"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "section"
+                            },
+                            "node": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "id"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "record"
+                                    },
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "id"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "document"
+                                    },
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "record",
+                                    "entity"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "entity"
+                                    },
+                                    "record": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "entity": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "section": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "kind",
+                            "node",
+                            "heading"
+                          ],
+                          "properties": {
+                            "kind": {
+                              "const": "heading"
+                            },
+                            "node": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "id"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "record"
+                                    },
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "id"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "document"
+                                    },
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "additionalProperties": false,
+                                  "required": [
+                                    "kind",
+                                    "record",
+                                    "entity"
+                                  ],
+                                  "properties": {
+                                    "kind": {
+                                      "const": "entity"
+                                    },
+                                    "record": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "entity": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "heading": {
+                              "type": "object",
+                              "additionalProperties": false,
+                              "required": [
+                                "heading_path",
+                                "occurrence"
+                              ],
+                              "properties": {
+                                "heading_path": {
+                                  "type": "array",
+                                  "minItems": 1,
+                                  "items": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "occurrence": {
+                                  "type": "integer",
+                                  "minimum": 1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "record"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "document"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "record",
+                "entity"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "entity"
+                },
+                "record": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "entity": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ]
+        },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "record"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "document"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "record",
+                  "entity"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "entity"
+                  },
+                  "record": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "entity": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "part-of",
+              "defines",
+              "governs",
+              "applies-to",
+              "depends-on",
+              "extends",
+              "supersedes",
+              "rationale-for",
+              "realizes",
+              "evidences",
+              "references",
+              "flows-to",
+              "transitions-to",
+              "observes"
+            ]
+          }
+        }
+      }
+    },
+    "nodeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "revision",
+        "applicability",
+        "participation_role",
+        "authority_eligibility",
+        "authority_binding",
+        "freshness",
+        "conformance",
+        "impact_selected",
+        "reason_paths"
+      ],
+      "properties": {
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "record"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "id"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "document"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "record",
+                "entity"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "entity"
+                },
+                "record": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "entity": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          ]
+        },
+        "revision": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "value"
+          ],
+          "properties": {
+            "algorithm": {
+              "const": "sha-256"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "applicability": {
+          "enum": [
+            "applicable",
+            "not-applicable",
+            "unknown"
+          ]
+        },
+        "participation_role": {
+          "oneOf": [
+            {
+              "enum": [
+                "governs",
+                "proposes",
+                "realizes",
+                "evidences",
+                "context",
+                "history"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authority_eligibility": {
+          "enum": [
+            "eligible",
+            "ineligible",
+            "unknown"
+          ]
+        },
+        "authority_binding": {
+          "enum": [
+            "verified",
+            "not-verified",
+            "contradicted",
+            "not-applicable"
+          ]
+        },
+        "freshness": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "result",
+              "reasons"
+            ],
+            "properties": {
+              "result": {
+                "enum": [
+                  "current",
+                  "stale",
+                  "expired",
+                  "invalidated",
+                  "unknown"
+                ]
+              },
+              "reasons": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "conformance": {
+          "enum": [
+            "passed",
+            "failed",
+            "not-evaluated"
+          ]
+        },
+        "impact_selected": {
+          "type": "boolean"
+        },
+        "reason_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "initial_change",
+              "target",
+              "nodes",
+              "relationships"
+            ],
+            "properties": {
+              "initial_change": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "node"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "node"
+                      },
+                      "node": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "id"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "record"
+                              },
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "id"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "document"
+                              },
+                              "id": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "kind",
+                              "record",
+                              "entity"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "const": "entity"
+                              },
+                              "record": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "entity": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "governed-artifact"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "external-dependency"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "authority-input"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "external-observation"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "authority-observation"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "edge"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "authored-edge"
+                      },
+                      "edge": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "source",
+                          "relationship",
+                          "target",
+                          "source_binding"
+                        ],
+                        "properties": {
+                          "source": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "id"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "record"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "id"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "document"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "record",
+                                  "entity"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "entity"
+                                  },
+                                  "record": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "entity": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "relationship": {
+                            "enum": [
+                              "part-of",
+                              "defines",
+                              "governs",
+                              "applies-to",
+                              "depends-on",
+                              "extends",
+                              "supersedes",
+                              "rationale-for",
+                              "realizes",
+                              "evidences",
+                              "references",
+                              "flows-to",
+                              "transitions-to",
+                              "observes"
+                            ]
+                          },
+                          "target": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "id"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "record"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "id"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "document"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "record",
+                                  "entity"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "entity"
+                                  },
+                                  "record": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "entity": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          "source_binding": {
+                            "oneOf": [
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "node",
+                                  "section"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "section"
+                                  },
+                                  "node": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": [
+                                          "kind",
+                                          "id"
+                                        ],
+                                        "properties": {
+                                          "kind": {
+                                            "const": "record"
+                                          },
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": [
+                                          "kind",
+                                          "id"
+                                        ],
+                                        "properties": {
+                                          "kind": {
+                                            "const": "document"
+                                          },
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": [
+                                          "kind",
+                                          "record",
+                                          "entity"
+                                        ],
+                                        "properties": {
+                                          "kind": {
+                                            "const": "entity"
+                                          },
+                                          "record": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          },
+                                          "entity": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "section": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": [
+                                  "kind",
+                                  "node",
+                                  "heading"
+                                ],
+                                "properties": {
+                                  "kind": {
+                                    "const": "heading"
+                                  },
+                                  "node": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": [
+                                          "kind",
+                                          "id"
+                                        ],
+                                        "properties": {
+                                          "kind": {
+                                            "const": "record"
+                                          },
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": [
+                                          "kind",
+                                          "id"
+                                        ],
+                                        "properties": {
+                                          "kind": {
+                                            "const": "document"
+                                          },
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "object",
+                                        "additionalProperties": false,
+                                        "required": [
+                                          "kind",
+                                          "record",
+                                          "entity"
+                                        ],
+                                        "properties": {
+                                          "kind": {
+                                            "const": "entity"
+                                          },
+                                          "record": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          },
+                                          "entity": {
+                                            "type": "string",
+                                            "minLength": 1
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "heading": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "required": [
+                                      "heading_path",
+                                      "occurrence"
+                                    ],
+                                    "properties": {
+                                      "heading_path": {
+                                        "type": "array",
+                                        "minItems": 1,
+                                        "items": {
+                                          "type": "string",
+                                          "minLength": 1
+                                        }
+                                      },
+                                      "occurrence": {
+                                        "type": "integer",
+                                        "minimum": 1
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "target": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "record"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "id"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "document"
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "record",
+                      "entity"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "entity"
+                      },
+                      "record": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "entity": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              "nodes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "record"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "id"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "document"
+                        },
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "kind",
+                        "record",
+                        "entity"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "const": "entity"
+                        },
+                        "record": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "entity": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "relationships": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "part-of",
+                    "defines",
+                    "governs",
+                    "applies-to",
+                    "depends-on",
+                    "extends",
+                    "supersedes",
+                    "rationale-for",
+                    "realizes",
+                    "evidences",
+                    "references",
+                    "flows-to",
+                    "transitions-to",
+                    "observes"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "readinessResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose",
+        "state",
+        "baseline_graph_revision",
+        "candidate_graph_revision",
+        "blocking_nodes",
+        "blocking_rules"
+      ],
+      "properties": {
+        "purpose": {
+          "oneOf": [
+            {
+              "enum": [
+                "change-impact",
+                "whole-root-readiness",
+                "consequential-use",
+                "historical-reproduction"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "ready",
+            "not-ready",
+            "not-evaluated"
+          ]
+        },
+        "baseline_graph_revision": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "algorithm",
+                "value"
+              ],
+              "properties": {
+                "algorithm": {
+                  "const": "sha-256"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidate_graph_revision": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "algorithm",
+                "value"
+              ],
+              "properties": {
+                "algorithm": {
+                  "const": "sha-256"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blocking_nodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "record"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "id"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "document"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "record",
+                  "entity"
+                ],
+                "properties": {
+                  "kind": {
+                    "const": "entity"
+                  },
+                  "record": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "entity": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "blocking_rules": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "knowledgeGraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "candidate_graph_revision",
+        "baseline_graph_revision",
+        "baseline_state",
+        "node_count",
+        "authored_edge_count",
+        "projection_counts"
+      ],
+      "properties": {
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "identity",
+            "digest",
+            "binding"
+          ],
+          "properties": {
+            "identity": {
+              "const": "nkf.freshness-policy.0.6"
+            },
+            "digest": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "algorithm",
+                "value"
+              ],
+              "properties": {
+                "algorithm": {
+                  "const": "sha-256"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "binding": {
+              "enum": [
+                "verified",
+                "unavailable",
+                "mismatched"
+              ]
+            }
+          }
+        },
+        "candidate_graph_revision": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "algorithm",
+                "value"
+              ],
+              "properties": {
+                "algorithm": {
+                  "const": "sha-256"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baseline_graph_revision": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "algorithm",
+                "value"
+              ],
+              "properties": {
+                "algorithm": {
+                  "const": "sha-256"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baseline_state": {
+          "enum": [
+            "confirmed",
+            "missing",
+            "outdated",
+            "disputed",
+            "ambiguous",
+            "unsupported",
+            "not-evaluated"
+          ]
+        },
+        "node_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authored_edge_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "full",
+            "applicable",
+            "current"
+          ],
+          "properties": {
+            "full": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "applicable": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "current": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "phaseContracts": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "contracts"
+            }
+          }
+        }
+      ]
+    },
+    "phaseParse": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "parse"
+            }
+          }
+        }
+      ]
+    },
+    "phaseSchema": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "schema"
+            }
+          }
+        }
+      ]
+    },
+    "phaseProject": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "project"
+            }
+          }
+        }
+      ]
+    },
+    "phaseSource": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "source"
+            }
+          }
+        }
+      ]
+    },
+    "phaseExtensionResolution": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "extension-resolution"
+            }
+          }
+        }
+      ]
+    },
+    "phaseBundleGraph": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "bundle-graph"
+            }
+          }
+        }
+      ]
+    },
+    "phaseKnowledgeGraph": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "knowledge-graph"
+            }
+          }
+        }
+      ]
+    },
+    "phaseRecordContract": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "record-contract"
+            }
+          }
+        }
+      ]
+    },
+    "phaseFreshness": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "freshness"
+            }
+          }
+        }
+      ]
+    },
+    "phaseSecurity": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "security"
+            }
+          }
+        }
+      ]
+    },
+    "phaseAuthorityBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "authority-binding"
+            }
+          }
+        }
+      ]
+    },
+    "phaseResult": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/phase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "result"
+            }
+          }
+        }
+      ]
+    },
+    "schemaBundleBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.6:schema:bundle"
+            }
+          }
+        }
+      ]
+    },
+    "schemaRecordBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.6:schema:record"
+            }
+          }
+        }
+      ]
+    },
+    "schemaGraphBaselineBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.6:schema:graph-baseline"
+            }
+          }
+        }
+      ]
+    },
+    "schemaFreshnessReceiptBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.6:schema:freshness-receipt"
+            }
+          }
+        }
+      ]
+    },
+    "schemaFreshnessPolicyBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.6:schema:freshness-policy"
+            }
+          }
+        }
+      ]
+    },
+    "schemaValidationResultBinding": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/schemaBinding"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "const": "urn:nkf:0.6:schema:validation-result"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

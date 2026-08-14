@@ -91,13 +91,27 @@ async function installRepositoryRecord(
       "utf8",
     ),
   );
-  declaration.source.path = targetPath;
+  const predecessorDeclaration = {
+    contract: declaration.contract,
+    id: declaration.id,
+    type: declaration.type,
+    body_contract: declaration.body_contract,
+    title: declaration.title,
+    source: {
+      path: targetPath,
+      digest: declaration.source.digest,
+    },
+    governance: declaration.governance,
+    scope: declaration.scope,
+    sections: declaration.sections,
+    relationships: declaration.relationships,
+  };
   const target = path.join(project, "knowledge", targetPath);
   await mkdir(path.dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(
     path.join(project, ".nourd/knowledge/records", declarationFile),
-    YAML.stringify(declaration),
+    YAML.stringify(predecessorDeclaration),
     "utf8",
   );
 }

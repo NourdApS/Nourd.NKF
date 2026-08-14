@@ -1,0 +1,21 @@
+contract: nkf.graph-semantic-oracle-experiment/0
+authority_effect: none
+reviewer: codex-technical-reviewer
+scenarios:
+  product-decision-change:
+    whole_root_review:
+      - decision-access
+      - design-access
+      - realization-current
+    basis: The accepted access Decision is changed; its extending Design and realizing Realization require review.
+  technology-specification-change:
+    whole_root_review:
+      - realization-current
+      - specification
+    basis: The Specification and its Realization require review; the Technology map is a contextual reference only.
+  nkf-draft-design-change:
+    whole_root_review:
+      - design-nkf-025-freshness-and-deterministic-knowledge-graph
+      - document:tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md
+    basis: The active Task owns and reports the Draft Design work, so a Design revision requires the Task progress and evidence boundary to be reviewed.
+

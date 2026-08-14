@@ -1,0 +1,393 @@
+contract: nkf.graph-baseline
+nkf_version: "0.5"
+bundle: example-technology
+profile: nkf.profile.technology
+graph_revision:
+  algorithm: sha-256
+  value: 062b9ffc0ea7b7e9a1dee67c78e7f24b5cf820779ccdd9ecebc0369fdeefa813
+policy:
+  id: nkf.freshness-policy.0.5
+  digest:
+    algorithm: sha-256
+    value: 5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd
+node_revisions:
+  - node:
+      kind: document
+      id: TEST-TECH-001
+    revision:
+      algorithm: sha-256
+      value: 157ea536fd68a910df6b2e67c57620571dec42a706efb7d50c083b79b604d676
+  - node:
+      kind: document
+      id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+    revision:
+      algorithm: sha-256
+      value: d6c2beb47048a10359a3df64b56c5d43beb93785f103f62695f27d5fd8b66806
+  - node:
+      kind: record
+      id: realization
+    revision:
+      algorithm: sha-256
+      value: 1b84b9555e86eaa026abfbe81df2a0ff687712dec375a99e6310d4797f73c3aa
+  - node:
+      kind: record
+      id: specification
+    revision:
+      algorithm: sha-256
+      value: bc9242ce25231b48f6c7668bfd434b3e3a20a69710042bb256e2ddb0308cf06a
+  - node:
+      kind: record
+      id: technology
+    revision:
+      algorithm: sha-256
+      value: 0b82bcdac72ef7e848a78cf5765c68d53d9193368eb907955b474e472ef86b80
+authored_edges:
+  - source:
+      kind: record
+      id: realization
+    relationship: realizes
+    target:
+      kind: record
+      id: specification
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: realization
+      section: governed-meaning-realized
+external_dependencies: []
+authority_inputs: []
+relationship_coverage:
+  - relationship: part-of
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: technology-map
+  - relationship: defines
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: specification-definition
+  - relationship: governs
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: authority-and-normative-status
+  - relationship: applies-to
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: scope-and-applicability
+  - relationship: depends-on
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: scope-authority-and-boundaries
+  - relationship: extends
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: versioning-compatibility-and-migration
+  - relationship: supersedes
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: versioning-compatibility-and-migration
+  - relationship: rationale-for
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: purpose-and-problem
+  - relationship: realizes
+    state: reviewed
+    basis:
+      node:
+        kind: record
+        id: realization
+      source:
+        section: governed-meaning-realized
+  - relationship: evidences
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: realization
+      source:
+        section: compatibility-verification-and-recovery
+  - relationship: references
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: technology-map
+  - relationship: flows-to
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: capabilities-and-contracts
+  - relationship: transitions-to
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: evolution-and-retirement
+  - relationship: observes
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: realization
+      source:
+        section: external-authority-and-operational-state-boundaries
+applicability_coverage:
+  - node:
+      kind: document
+      id: TEST-TECH-001
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: TEST-TECH-001
+      source:
+        heading:
+          heading_path:
+            - "TEST-TECH-001: Maintain Example Technology Knowledge"
+          occurrence: 1
+  - node:
+      kind: document
+      id: TEST-TECH-001
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: TEST-TECH-001
+      source:
+        heading:
+          heading_path:
+            - "TEST-TECH-001: Maintain Example Technology Knowledge"
+          occurrence: 1
+  - node:
+      kind: document
+      id: TEST-TECH-001
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: TEST-TECH-001
+      source:
+        heading:
+          heading_path:
+            - "TEST-TECH-001: Maintain Example Technology Knowledge"
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+      source:
+        heading:
+          heading_path:
+            - Evidence
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+      source:
+        heading:
+          heading_path:
+            - Evidence
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+      source:
+        heading:
+          heading_path:
+            - Evidence
+          occurrence: 1
+  - node:
+      kind: record
+      id: realization
+    purpose: change-impact
+    state: eligible
+    role: realizes
+    basis:
+      node:
+        kind: record
+        id: realization
+      source:
+        section: realization-identity-and-kind
+  - node:
+      kind: record
+      id: realization
+    purpose: whole-root-readiness
+    state: eligible
+    role: realizes
+    basis:
+      node:
+        kind: record
+        id: realization
+      source:
+        section: realization-identity-and-kind
+  - node:
+      kind: record
+      id: realization
+    purpose: consequential-use
+    state: eligible
+    role: realizes
+    basis:
+      node:
+        kind: record
+        id: realization
+      source:
+        section: realization-identity-and-kind
+  - node:
+      kind: record
+      id: specification
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: specification-definition
+  - node:
+      kind: record
+      id: specification
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: specification-definition
+  - node:
+      kind: record
+      id: specification
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: specification
+      source:
+        section: specification-definition
+  - node:
+      kind: record
+      id: technology
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: technology-definition
+  - node:
+      kind: record
+      id: technology
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: technology-definition
+  - node:
+      kind: record
+      id: technology
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: technology
+      source:
+        section: technology-definition
+decision_classifications: []
+confirmation:
+  reviewer:
+    kind: agent
+    id: nkf-fixture-semantic-reviewer
+  reviewed_at: 2026-08-13T10:00:00.000Z
+  claim: semantically-reviewed-whole-root
+  observations:
+    - id: technology-fixture-whole-root-review
+      subject:
+        kind: record
+        id: technology
+      basis:
+        node:
+          kind: record
+          id: technology
+        source:
+          section: technology-map
+      finding: The complete controlled Technology fixture contains one reviewed realization-to-specification edge and no accepted Decision beyond its five declared freshness subjects.
+  limitations:
+    - Controlled Technology fixture only; this review does not prove broader consumer graph completeness.
+  disputed: false

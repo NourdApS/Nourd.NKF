@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0027: Accept Pre-Checker NKF 0.1 Authority Pair"
 source:
   path: decisions/0027-validation-authority-pair.md
+  stable_path: decisions/0027-validation-authority-pair.md
   digest:
     algorithm: sha-256
     value: 7f4acfaff130310777b5afcb311d90f315de8bb626d8e3dc008b366f6e9cbfcf
@@ -56,3 +57,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 7f4acfaff130310777b5afcb311d90f315de8bb626d8e3dc008b366f6e9cbfcf
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact revisions after independent review
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under the Human Product Owner's direct authorization to approve exact revisions after independent review
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

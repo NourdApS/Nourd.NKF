@@ -5,40 +5,237 @@ body_contract: nkf.design
 title: NKF 0.1 Governed Frontmatter
 source:
   path: designs/adopted/governed-frontmatter.md
+  stable_path: designs/adopted/governed-frontmatter.md
   digest:
     algorithm: sha-256
     value: 676fbd4126372a765fe82047773db16ac702c2371a06ea3349768014add6c8ef
 governance:
   lifecycle: immutable
   status: accepted
-  authority: [human-product-owner]
+  authority:
+    - human-product-owner
 scope:
   root: nkf
 sections:
-  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
-  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
-  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
-  - {id: common-orientation-fields, heading_path: [Proposed Direction, Common Orientation Fields], occurrence: 1, authority: proposal, role: content}
-  - {id: record-orientation-fields, heading_path: [Proposed Direction, Record Orientation Fields], occurrence: 1, authority: proposal, role: content}
-  - {id: design-orientation-fields, heading_path: [Proposed Direction, Design Orientation Fields], occurrence: 1, authority: proposal, role: content}
-  - {id: realization-orientation-fields, heading_path: [Proposed Direction, Realization Orientation Fields], occurrence: 1, authority: proposal, role: content}
-  - {id: task-provenance-for-lifecycle-records, heading_path: [Proposed Direction, Task Provenance For Lifecycle Records], occurrence: 1, authority: proposal, role: evidence}
-  - {id: task-non-record-orientation-fields, heading_path: [Proposed Direction, Task Non-Record Orientation Fields], occurrence: 1, authority: proposal, role: boundary}
-  - {id: evidence-classification-and-exemption, heading_path: [Proposed Direction, Evidence Classification And Exemption], occurrence: 1, authority: proposal, role: boundary}
-  - {id: optional-provenance-references, heading_path: [Proposed Direction, Optional Provenance References], occurrence: 1, authority: proposal, role: evidence}
-  - {id: closed-core-key-vocabulary, heading_path: [Proposed Direction, Closed Core Key Vocabulary], occurrence: 1, authority: proposal, role: governing}
-  - {id: diagnostics, heading_path: [Proposed Direction, Diagnostics], occurrence: 1, authority: proposal, role: validation}
-  - {id: migration-and-compatibility, heading_path: [Proposed Direction, Migration And Compatibility], occurrence: 1, authority: proposal, role: content}
-  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
-  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
-  - {id: keep-only-created-at, heading_path: [Alternatives And Trade-Offs, Keep Only Created At], occurrence: 1, authority: proposal, role: alternative}
-  - {id: put-all-orientation-only-in-nourd, heading_path: [Alternatives And Trade-Offs, Put All Orientation Only In Nourd], occurrence: 1, authority: proposal, role: alternative}
-  - {id: copy-every-declaration-and-relationship-into-frontmatter, heading_path: [Alternatives And Trade-Offs, Copy Every Declaration And Relationship Into Frontmatter], occurrence: 1, authority: proposal, role: alternative}
-  - {id: use-one-generic-status, heading_path: [Alternatives And Trade-Offs, Use One Generic Status], occurrence: 1, authority: proposal, role: alternative}
-  - {id: require-updated-at, heading_path: [Alternatives And Trade-Offs, Require Updated At], occurrence: 1, authority: proposal, role: alternative}
-  - {id: infer-evidence-from-its-directory, heading_path: [Alternatives And Trade-Offs, Infer Evidence From Its Directory], occurrence: 1, authority: proposal, role: alternative}
-  - {id: treat-summary-as-verified-meaning, heading_path: [Alternatives And Trade-Offs, Treat Summary As Verified Meaning], occurrence: 1, authority: proposal, role: alternative}
-  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: proposal, role: trade-off}
-  - {id: risks-and-failure-modes, heading_path: [Risks And Failure Modes], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations, unresolved-matters]}
-  - {id: acceptance-criteria, heading_path: [Acceptance Criteria], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: common-orientation-fields
+    heading_path:
+      - Proposed Direction
+      - Common Orientation Fields
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: record-orientation-fields
+    heading_path:
+      - Proposed Direction
+      - Record Orientation Fields
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: design-orientation-fields
+    heading_path:
+      - Proposed Direction
+      - Design Orientation Fields
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: realization-orientation-fields
+    heading_path:
+      - Proposed Direction
+      - Realization Orientation Fields
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: task-provenance-for-lifecycle-records
+    heading_path:
+      - Proposed Direction
+      - Task Provenance For Lifecycle Records
+    occurrence: 1
+    authority: proposal
+    role: evidence
+  - id: task-non-record-orientation-fields
+    heading_path:
+      - Proposed Direction
+      - Task Non-Record Orientation Fields
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: evidence-classification-and-exemption
+    heading_path:
+      - Proposed Direction
+      - Evidence Classification And Exemption
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: optional-provenance-references
+    heading_path:
+      - Proposed Direction
+      - Optional Provenance References
+    occurrence: 1
+    authority: proposal
+    role: evidence
+  - id: closed-core-key-vocabulary
+    heading_path:
+      - Proposed Direction
+      - Closed Core Key Vocabulary
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: diagnostics
+    heading_path:
+      - Proposed Direction
+      - Diagnostics
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: migration-and-compatibility
+    heading_path:
+      - Proposed Direction
+      - Migration And Compatibility
+    occurrence: 1
+    authority: proposal
+    role: content
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: keep-only-created-at
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep Only Created At
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: put-all-orientation-only-in-nourd
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Put All Orientation Only In Nourd
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: copy-every-declaration-and-relationship-into-frontmatter
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Copy Every Declaration And Relationship Into Frontmatter
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-one-generic-status
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use One Generic Status
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: require-updated-at
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Require Updated At
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: infer-evidence-from-its-directory
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Infer Evidence From Its Directory
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: treat-summary-as-verified-meaning
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Treat Summary As Verified Meaning
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: trade-off
+  - id: risks-and-failure-modes
+    heading_path:
+      - Risks And Failure Modes
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+      - unresolved-matters
+  - id: acceptance-criteria
+    heading_path:
+      - Acceptance Criteria
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
 relationships: []
+task: NKF-010
+design_disposition: adopted
+design_decisions:
+  - adr-0058
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 676fbd4126372a765fe82047773db16ac702c2371a06ea3349768014add6c8ef
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-010
+    design_disposition: adopted
+    design_decisions:
+      - adr-0058
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-010
+    design_disposition: adopted
+    design_decisions:
+      - adr-0058
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

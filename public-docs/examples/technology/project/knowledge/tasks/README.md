@@ -6,7 +6,7 @@ created_at: 2026-07-30T07:53:41Z
 
 # Tasks
 
-- [Active Tasks](active/README.md)
-- [Deferred Tasks](deferred/README.md)
-- [Completed Tasks](completed/README.md)
-- [Cancelled Tasks](cancelled/README.md)
+- [Active Tasks](by-state/active.md)
+- [Deferred Tasks](by-state/deferred.md)
+- [Completed Tasks](by-state/completed.md)
+- [Cancelled Tasks](by-state/cancelled.md)

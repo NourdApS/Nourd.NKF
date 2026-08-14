@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0012: Reconcile Single-Version Artifact Authority"
 source:
   path: decisions/0012-nkf-0-1-artifact-authority.md
+  stable_path: decisions/0012-nkf-0-1-artifact-authority.md
   digest:
     algorithm: sha-256
     value: 79bb5ae9d8252d8c319a2bf5656869906cc30ccba0befa9e4490f0b0fe3cf6a5
@@ -50,3 +51,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 79bb5ae9d8252d8c319a2bf5656869906cc30ccba0befa9e4490f0b0fe3cf6a5
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

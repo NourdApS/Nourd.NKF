@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0048: Confirm Initial Release Package Realization"
 source:
   path: decisions/0048-release-package.md
+  stable_path: decisions/0048-release-package.md
   digest:
     algorithm: sha-256
     value: c7ca71dc1fc4e879f1f824c3da44b405cf8048053a72519733b3b56ee3d2b03a
@@ -55,3 +56,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: c7ca71dc1fc4e879f1f824c3da44b405cf8048053a72519733b3b56ee3d2b03a
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer acting under explicit Human Product Owner delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

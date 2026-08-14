@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0021: Accept NKF 0.1 Native Bundle Serialization"
 source:
   path: decisions/0021-native-bundle-serialization.md
+  stable_path: decisions/0021-native-bundle-serialization.md
   digest:
     algorithm: sha-256
     value: 456babbffccfdbbb48b077d1b320217a668ac9f2bd23147668dd6db50f403b4a
@@ -43,3 +44,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 456babbffccfdbbb48b077d1b320217a668ac9f2bd23147668dd6db50f403b4a
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

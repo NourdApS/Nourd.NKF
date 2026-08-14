@@ -1,0 +1,103 @@
+nkf_version: "0.5"
+contract: nkf.bundle
+id: example-technology
+root:
+  record: technology
+  profile: nkf.profile.technology
+knowledge_root: knowledge
+non_records:
+  - path: decisions/README.md
+    kind: navigation
+  - path: designs/active/README.md
+    kind: navigation
+  - path: designs/adopted/README.md
+    kind: navigation
+  - path: designs/by-disposition/active.md
+    kind: generated
+  - path: designs/by-disposition/adopted.md
+    kind: generated
+  - path: designs/by-disposition/rejected.md
+    kind: generated
+  - path: designs/by-disposition/superseded.md
+    kind: generated
+  - path: designs/by-disposition/withdrawn.md
+    kind: generated
+  - path: designs/README.md
+    kind: navigation
+  - path: designs/rejected/README.md
+    kind: navigation
+  - path: designs/superseded/README.md
+    kind: navigation
+  - path: designs/withdrawn/README.md
+    kind: navigation
+  - path: evidence/README.md
+    kind: evidence
+    document:
+      id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+      stable_path: evidence/README.md
+      digest:
+        algorithm: sha-256
+        value: 71f3af76de314579ce9c4d739619bf8f32c9b3ebe1a87da17e025f24e8837067
+      relationships: []
+  - path: README.md
+    kind: navigation
+  - path: realizations/current/README.md
+    kind: navigation
+  - path: realizations/README.md
+    kind: navigation
+  - path: specifications/README.md
+    kind: navigation
+  - path: tasks/active/README.md
+    kind: navigation
+  - path: tasks/active/task.md
+    kind: task
+    document:
+      id: TEST-TECH-001
+      stable_path: tasks/active/task.md
+      digest:
+        algorithm: sha-256
+        value: c349f1287d8e4dafc6e28cc91b5302c0c5bc71f8b25dfb4eb62e0d3e66b5fd6f
+      state:
+        vocabulary: task-status
+        value: active
+      relationships: []
+      legacy_lock:
+        predecessor_version: "0.4"
+        source_digest:
+          algorithm: sha-256
+          value: c349f1287d8e4dafc6e28cc91b5302c0c5bc71f8b25dfb4eb62e0d3e66b5fd6f
+        predecessor_state:
+          task_id: TEST-TECH-001
+          task_status: active
+        initial_declaration_state:
+          document_state:
+            vocabulary: task-status
+            value: active
+  - path: tasks/by-state/active.md
+    kind: generated
+  - path: tasks/by-state/cancelled.md
+    kind: generated
+  - path: tasks/by-state/completed.md
+    kind: generated
+  - path: tasks/by-state/deferred.md
+    kind: generated
+  - path: tasks/cancelled/README.md
+    kind: navigation
+  - path: tasks/completed/README.md
+    kind: navigation
+  - path: tasks/deferred/README.md
+    kind: navigation
+  - path: tasks/README.md
+    kind: navigation
+governed_artifacts:
+  - id: example-source
+    kind: checker-source
+    path: src/example.ts
+    digest:
+      algorithm: sha-256
+      value: 5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29
+    record: realization
+    source_section: durable-mapping
+knowledge_graph:
+  policy: nkf.freshness-policy.0.5
+  baseline: .nourd/knowledge/freshness/baseline.yaml

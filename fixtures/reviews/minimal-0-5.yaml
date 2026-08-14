@@ -1,0 +1,49 @@
+contract: nkf.semantic-review-input
+nkf_version: "0.5"
+stage: whole-root
+reviewer:
+  kind: agent
+  id: nkf-fixture-semantic-reviewer
+reviewed_at: 2026-08-13T10:00:00.000Z
+claim: semantically-reviewed-whole-root
+disputed: false
+nodes:
+  - node: {kind: document, id: TEST-001}
+    state: eligible
+    role: context
+    basis: {node: {kind: document, id: TEST-001}, source: {heading: {heading_path: ["TEST-001: Maintain Example Product Knowledge"], occurrence: 1}}}
+  - node: {kind: document, id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79}
+    state: eligible
+    role: evidences
+    basis: {node: {kind: document, id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79}, source: {heading: {heading_path: [Evidence], occurrence: 1}}}
+  - node: {kind: record, id: product}
+    state: eligible
+    role: governs
+    basis: {node: {kind: record, id: product}, source: {section: product-definition}}
+  - node: {kind: record, id: product-current-system}
+    state: eligible
+    role: realizes
+    basis: {node: {kind: record, id: product-current-system}, source: {section: realization-identity-and-kind}}
+relationships:
+  - {relationship: part-of, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: product-map}}}
+  - {relationship: defines, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: product-map}}}
+  - {relationship: governs, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: boundaries}}}
+  - {relationship: applies-to, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: people-served}}}
+  - {relationship: depends-on, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: boundaries}}}
+  - {relationship: extends, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: product-map}}}
+  - {relationship: supersedes, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: product-map}}}
+  - {relationship: rationale-for, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: purpose}}}
+  - {relationship: realizes, state: inapplicable, basis: {node: {kind: record, id: product-current-system}, source: {section: durable-mapping}}}
+  - {relationship: evidences, state: inapplicable, basis: {node: {kind: record, id: product-current-system}, source: {section: compatibility-verification-and-recovery}}}
+  - {relationship: references, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: product-map}}}
+  - {relationship: flows-to, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: needs-and-outcomes}}}
+  - {relationship: transitions-to, state: inapplicable, basis: {node: {kind: record, id: product}, source: {section: vision}}}
+  - {relationship: observes, state: inapplicable, basis: {node: {kind: record, id: product-current-system}, source: {section: external-authority-and-operational-state-boundaries}}}
+decision_classifications: []
+observations:
+  - id: minimal-fixture-whole-root-review
+    subject: {kind: record, id: product}
+    basis: {node: {kind: record, id: product}, source: {section: product-map}}
+    finding: The complete controlled Product fixture contains no authored semantic edge or accepted Decision beyond its four declared freshness subjects.
+limitations:
+  - Controlled Product fixture only; this review does not prove broader consumer graph completeness.

@@ -10,24 +10,43 @@ node nourd-nkf-adopt.mjs --project /absolute/path/to/project
 
 An exact-current repository returns `current` only after its installed pin,
 adopter, integration, archive, manifest, knowledge, and checker result pass.
-An NKF 0.3 repository advances non-breakingly to 0.4 without knowledge
-migration. A behind NKF 0.4 repository receives the exact integration refresh.
-Either successful change returns `updated`.
+An NKF 0.1-through-0.4 repository takes a deliberate breaking migration to
+0.6 because the modern format adds stable document nodes, YAML-owned lifecycle
+and graph state, and a reviewed freshness baseline. An exact native 0.5
+repository uses the non-breaking reviewed-baseline carry-forward; a native 0.6
+repository receives the exact integration refresh.
 
 ## Review A Breaking Migration
 
-For NKF 0.1 or NKF 0.2, the first run shows the exact 0.4 target, declares the
+For NKF 0.1 through NKF 0.4, the first run shows the exact 0.6 target, declares the
 predecessor-relative path breaking and migration-required, and exits without
 mutation. Review that target and the consumer repository's migration
 implications. After explicit repository-owner approval, rerun with:
 
 ```text
+--review /absolute/path/to/whole-root-review.yaml
 --accept-breaking repository-owner
 ```
 
-Adopt performs the known topology repair and version migration inside one
+The first approved run may name an absent review file. Adopt writes an exact
+candidate-specific review template there and stops before project mutation.
+A named human or agent completes its source-bound node, relationship, Decision,
+observation, and limitation review, then reruns the same command. Adopt rejects
+placeholder, incomplete, stale, or mismatched review coverage.
+
+Adopt performs any trusted topology repair, stable-node migration, reviewed
+baseline sealing, and version migration inside one
 validated rollback-capable transaction. Do not edit generated repair paths or
 change the bundle version manually.
+
+## Refresh NKF 0.5 Before Updating
+
+The 0.5-to-0.6 update carries reviewed meaning forward only when the installed
+0.5 checker proves the predecessor graph and baseline are exact and ready.
+If that precheck is stale, disputed, incomplete, or not ready, Adopt changes no
+project byte. Complete the normal 0.5 whole-root review and baseline sealing,
+then rerun the same Adopt operation. Do not manually change version or policy
+fields.
 
 ## Offline And Exact Recovery
 

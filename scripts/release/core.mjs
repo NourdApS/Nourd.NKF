@@ -29,8 +29,22 @@ export {
 } from "./set-files.mjs";
 
 export const REPOSITORY =
+  "https://github.com/NourdApS/Nourd.NKF.git";
+export const LEGACY_REPOSITORY =
   "https://github.com/kaveh6202/Nourd.NKF.git";
 export const ARCHIVE_ROOT = "nourd-nkf";
+const NKF_0_6_THIRD_PARTY_NOTICES_SHA256 =
+  "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea";
+const AUTHORITY_PATHS = Object.freeze({
+  "0.5": {
+    markdown: "knowledge/specifications/nkf-0.5-revision-2.md",
+    executable: "contracts/nkf/0.5/revision-2/nkf.yaml",
+  },
+  "0.6": {
+    markdown: "knowledge/specifications/nkf-0.6-revision-3.md",
+    executable: "contracts/nkf/0.6/revision-3/nkf.yaml",
+  },
+});
 const LEGACY_0_1_ENTRIES = Object.freeze([
   { path: "contracts/nkf/0.1/nkf.yaml", mode: 0o644 },
   { path: "contracts/nkf/0.1/schemas/bundle.schema.json", mode: 0o644 },
@@ -110,7 +124,28 @@ function fail(message) {
 }
 
 function usesReleaseSet(nkfVersion) {
-  return ["0.3", "0.4"].includes(nkfVersion);
+  return ["0.3", "0.4", "0.5", "0.6"].includes(nkfVersion);
+}
+
+function schemaBindings(nkfVersion) {
+  if (["0.5", "0.6"].includes(nkfVersion)) {
+    return [
+      "bundle",
+      "record",
+      "graph-baseline",
+      "freshness-receipt",
+      "freshness-policy",
+      "release-manifest",
+      "validation-result",
+    ].map((name) => ({
+      identity: `urn:nkf:${nkfVersion}:schema:${name}`,
+      path: `contracts/nkf/${nkfVersion}/schemas/${name}.schema.json`,
+    }));
+  }
+  return SCHEMA_BINDINGS.map((schema) => ({
+    identity: schema.identity.replace(":0.2:", `:${nkfVersion}:`),
+    path: schema.path.replace("contracts/nkf/0.2/", `contracts/nkf/${nkfVersion}/`),
+  }));
 }
 
 export function sha256(bytes) {
@@ -132,6 +167,42 @@ function requireBuffer(entries, artifactPath) {
   return value;
 }
 
+function bundledDependencyNames(bytes, label) {
+  const source = Buffer.from(bytes).toString("utf8");
+  if (!Buffer.from(source, "utf8").equals(Buffer.from(bytes))) {
+    fail(`${label} is not valid UTF-8 for third-party notice verification.`);
+  }
+  const names = [...source.matchAll(/^\/\/ node_modules\/((?:@[^/]+\/)?[^/\n]+)\//gmu)]
+    .map((match) => match[1]);
+  return [...new Set(names)].sort((left, right) => left.localeCompare(right, "en"));
+}
+
+export function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, noticeBytes) {
+  const checkerPackages = bundledDependencyNames(checkerBytes, "The release checker");
+  const adopterPackages = bundledDependencyNames(adopterBytes, "The release adopter");
+  if (checkerPackages.length !== 10 || adopterPackages.length !== 9) {
+    fail(`Unexpected NKF 0.6 bundled dependency graph sizes: checker=${checkerPackages.length}, adopter=${adopterPackages.length}.`);
+  }
+  const notice = Buffer.from(noticeBytes).toString("utf8");
+  if (!Buffer.from(notice, "utf8").equals(Buffer.from(noticeBytes))) {
+    fail("THIRD_PARTY_NOTICES.md is not valid UTF-8.");
+  }
+  const declared = [...notice.matchAll(/^## `([^`]+)` ([^\n]+)$/gmu)].map((match) => match[1]);
+  if (new Set(declared).size !== declared.length) {
+    fail("THIRD_PARTY_NOTICES.md contains duplicate package sections.");
+  }
+  const expected = [...new Set([...checkerPackages, ...adopterPackages])]
+    .sort((left, right) => left.localeCompare(right, "en"));
+  const observed = [...declared].sort((left, right) => left.localeCompare(right, "en"));
+  if (JSON.stringify(observed) !== JSON.stringify(expected)) {
+    fail(`Third-party notice coverage differs from the exact bundled dependency graph: expected ${expected.join(", ")}; observed ${observed.join(", ")}.`);
+  }
+  if (sha256(noticeBytes) !== NKF_0_6_THIRD_PARTY_NOTICES_SHA256) {
+    fail("THIRD_PARTY_NOTICES.md differs from the exact reviewed NKF 0.6 license, copyright, attribution, and disclaimer text.");
+  }
+  return { checker_packages: checkerPackages, adopter_packages: adopterPackages, noticed_packages: observed };
+}
+
 export function constructReleaseManifest({
   releaseCommit,
   checkerConfirmation,
@@ -142,16 +213,20 @@ export function constructReleaseManifest({
   if (!/^[0-9a-f]{40}$/.test(releaseCommit)) {
     fail("Release commit must be 40 lowercase hexadecimal characters.");
   }
-  const specificationPath = `knowledge/specifications/nkf-${nkfVersion}.md`;
-  const contractsPrefix = `contracts/nkf/${nkfVersion}/`;
+  const authorityPaths = AUTHORITY_PATHS[nkfVersion] ?? {
+    markdown: `knowledge/specifications/nkf-${nkfVersion}.md`,
+    executable: `contracts/nkf/${nkfVersion}/nkf.yaml`,
+  };
+  const specificationPath = authorityPaths.markdown;
+  const repository = nkfVersion === "0.6" ? REPOSITORY : LEGACY_REPOSITORY;
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
   const markdown = requireBuffer(entries, specificationPath);
-  const executable = requireBuffer(entries, `${contractsPrefix}nkf.yaml`);
-  const manifest = {
+  const executable = requireBuffer(entries, authorityPaths.executable);
+  const common = {
     contract: "nkf.release-manifest",
     nkf_version: nkfVersion,
     source: {
-      repository: REPOSITORY,
+      repository,
       release_commit: releaseCommit,
     },
     checker: {
@@ -170,16 +245,40 @@ export function constructReleaseManifest({
         digest: digest(markdown),
       },
       executable: {
-        path: `${contractsPrefix}nkf.yaml`,
+        path: authorityPaths.executable,
         digest: digest(executable),
       },
     },
-    schemas: SCHEMA_BINDINGS.map((schema) => ({
-      identity: schema.identity.replace(":0.2:", `:${nkfVersion}:`),
-      path: schema.path.replace("contracts/nkf/0.2/", contractsPrefix),
-      digest: digest(requireBuffer(entries, schema.path.replace("contracts/nkf/0.2/", contractsPrefix))),
-    })),
   };
+  const schemas = schemaBindings(nkfVersion).map((schema) => ({
+    identity: schema.identity,
+    path: schema.path,
+    digest: digest(requireBuffer(entries, schema.path)),
+  }));
+  const manifest = ["0.5", "0.6"].includes(nkfVersion)
+    ? {
+        ...common,
+        freshness_policy: {
+          identity: `nkf.freshness-policy.${nkfVersion}`,
+          path: `contracts/nkf/${nkfVersion}/freshness-policy.yaml`,
+          digest: digest(requireBuffer(entries, `contracts/nkf/${nkfVersion}/freshness-policy.yaml`)),
+        },
+        schemas,
+        ...(nkfVersion === "0.6"
+          ? {
+              licensing: {
+                spdx: "Apache-2.0",
+                license: { path: "LICENSE", digest: digest(requireBuffer(entries, "LICENSE")) },
+                notice: { path: "NOTICE", digest: digest(requireBuffer(entries, "NOTICE")) },
+                third_party_notices: {
+                  path: "THIRD_PARTY_NOTICES.md",
+                  digest: digest(requireBuffer(entries, "THIRD_PARTY_NOTICES.md")),
+                },
+              },
+            }
+          : {}),
+      }
+    : { ...common, schemas };
   if (["0.1", "0.2"].includes(nkfVersion)) {
     manifest.source.checker_confirmation = {
       decision: checkerConfirmation.decision,
@@ -523,9 +622,24 @@ export function releaseEntriesForVersion(nkfVersion = "0.2", releaseSet = undefi
 }
 
 function sniffArchiveVersion(archive) {
-  const name = readName(archive.subarray(0, 100));
-  const match = /^nourd-nkf\/contracts\/nkf\/(0\.[0-9]+)\/nkf\.yaml$/.exec(name);
-  return match === null ? "0.2" : match[1];
+  const versions = new Set();
+  const dataEnd = archive.length - 1024;
+  let offset = 0;
+  while (offset < dataEnd) {
+    if (offset + 512 > dataEnd) fail("USTAR header exceeds the archive boundary.");
+    const header = archive.subarray(offset, offset + 512);
+    const name = readName(header.subarray(0, 100));
+    const match = /^nourd-nkf\/contracts\/nkf\/(0\.[0-9]+)\//.exec(name);
+    if (match !== null) versions.add(match[1]);
+    const size = parseCanonicalOctal(header.subarray(124, 136), "USTAR file size");
+    const next = offset + 512 + Math.ceil(size / 512) * 512;
+    if (next <= offset || next > dataEnd) fail("USTAR entry exceeds the archive boundary.");
+    offset = next;
+  }
+  if (offset !== dataEnd || versions.size !== 1) {
+    fail("The archive does not carry exactly one discoverable NKF contract version.");
+  }
+  return [...versions][0];
 }
 
 export function inspectUstar(archiveBytes) {
@@ -666,7 +780,8 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   ) {
     fail("Release manifest bootstrap contract or NKF version is invalid.");
   }
-  const schema = manifest?.schemas?.[2];
+  const schemaIndex = ["0.5", "0.6"].includes(nkfVersion) ? 5 : 2;
+  const schema = manifest?.schemas?.[schemaIndex];
   if (
     schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` ||
     schema?.path !==
@@ -712,7 +827,12 @@ export function verifySourceProvenance(sourceRoot, manifest) {
     execFileSync("git", ["-C", sourceRoot, ...argumentsValue], {
       encoding: "utf8",
     }).trim();
-  if (git("remote", "get-url", "origin") !== manifest.source.repository) {
+  const observedRemote = git("remote", "get-url", "origin");
+  const acceptedRepositoryTransport =
+    observedRemote === manifest.source.repository ||
+    (manifest.source.repository === REPOSITORY &&
+      observedRemote === LEGACY_REPOSITORY);
+  if (!acceptedRepositoryTransport) {
     fail("Source repository remote does not match the release manifest.");
   }
   const releaseCommit = git("rev-parse", `${manifest.source.release_commit}^{commit}`);
@@ -793,9 +913,23 @@ export function verifyReleaseArchive(
   if (!manifestBytes.equals(serializeReleaseManifest(manifest))) {
     fail("Release manifest bytes are not in canonical contract order and format.");
   }
-  const manifestSchema = manifest.schemas[2];
+  const manifestSchema = manifest.schemas.find(
+    (schema) => schema.identity === `urn:nkf:${archiveVersion}:schema:release-manifest`,
+  );
+  if (manifestSchema === undefined) fail("Release manifest omits its bootstrap schema binding.");
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
+  if (archiveVersion === "0.6") {
+    if (
+      manifest.licensing?.spdx !== "Apache-2.0" ||
+      sha256(requireBuffer(entries, "LICENSE")) !==
+        "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30" ||
+      sha256(requireBuffer(entries, "NOTICE")) !==
+        "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6"
+    ) {
+      fail("The NKF 0.6 release does not carry the exact Apache-2.0 license and informational NOTICE.");
+    }
+  }
 
   const releaseSet = usesReleaseSet(archiveVersion)
     ? parseReleaseSet(
@@ -808,9 +942,20 @@ export function verifyReleaseArchive(
     manifest.checker,
     manifest.authority.markdown,
     manifest.authority.executable,
+    ...(manifest.freshness_policy === undefined ? [] : [manifest.freshness_policy]),
     ...manifest.schemas,
+    ...(manifest.licensing === undefined
+      ? []
+      : [manifest.licensing.license, manifest.licensing.notice, manifest.licensing.third_party_notices]),
   ];
   for (const artifact of artifacts) verifyArtifact(entries, artifact);
+  if (archiveVersion === "0.6") {
+    verifyThirdPartyNoticeCoverage(
+      requireBuffer(entries, "dist/nourd-nkf-checker.mjs"),
+      requireBuffer(entries, "dist/nourd-nkf-adopt.mjs"),
+      requireBuffer(entries, "THIRD_PARTY_NOTICES.md"),
+    );
+  }
   if (sourceRoot !== undefined) verifySourceProvenance(sourceRoot, manifest);
 
   return {

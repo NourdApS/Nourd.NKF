@@ -10,8 +10,8 @@ This directory is the independent Git repository for **Nourd Knowledge Format
 | Property | Required value |
 | --- | --- |
 | Local workspace path | `/Users/kam/Documents/NourdApS/shared_technology/nourd_knowledge_format` |
-| GitHub repository | `kaveh6202/Nourd.NKF` |
-| Expected remote | `https://github.com/kaveh6202/Nourd.NKF.git` |
+| GitHub repository | `NourdApS/Nourd.NKF` |
+| Expected remote | `https://github.com/NourdApS/Nourd.NKF.git` |
 | Default branch | `master` |
 
 The parent Nourd ApS repository ignores this complete directory. This

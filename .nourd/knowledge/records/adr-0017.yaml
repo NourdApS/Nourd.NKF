@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0017: Accept NKF 0.1 Acceptance-Provenance Boundary"
 source:
   path: decisions/0017-acceptance-provenance.md
+  stable_path: decisions/0017-acceptance-provenance.md
   digest:
     algorithm: sha-256
     value: 96a2eef14d0ca00c633fb879598dce1a214c7179f4f93dbff125f74ca179ef5d
@@ -50,3 +51,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 96a2eef14d0ca00c633fb879598dce1a214c7179f4f93dbff125f74ca179ef5d
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

@@ -1,0 +1,79 @@
+contract: nkf.record
+id: adr-0125
+type: decision
+body_contract: nkf.decision
+title: "ADR 0125: Accept The NKF 0.6 Revision 3 Authority Set"
+source:
+  path: decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md
+  stable_path: decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md
+  digest:
+    algorithm: sha-256
+    value: 1f50640755184fe1fd117295ffb5056d55e2a23c78d2f8b3ab56533df5e72ac6
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships:
+  - type: extends
+    target: adr-0121
+    source_section: decision
+  - type: supersedes
+    target: adr-0124
+    source_section: decision
+  - type: extends
+    target: adr-0109
+    source_section: decision
+task: NKF-027

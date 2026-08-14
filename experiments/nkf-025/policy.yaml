@@ -1,0 +1,14 @@
+contract: nkf.graph-evaluation-policy-experiment/0
+id: nkf-025-conservative-local-policy
+version: "0"
+relationships:
+  depends-on: {impact: review, propagation: reverse, cycles: forbid, allowed_source_kinds: [decision, design, document, realization], allowed_target_kinds: [decision, design, realization, specification]}
+  realizes: {impact: review, propagation: reverse, cycles: forbid, allowed_source_kinds: [decision, realization], allowed_target_kinds: [decision, specification]}
+  extends: {impact: review, propagation: reverse, cycles: forbid, allowed_source_kinds: [decision, design], allowed_target_kinds: [decision]}
+  supersedes: {impact: review, propagation: reverse, cycles: forbid, allowed_source_kinds: [decision], allowed_target_kinds: [decision]}
+  governs: {impact: review, propagation: forward, cycles: forbid, allowed_source_kinds: [decision, specification], allowed_target_kinds: [product, technology]}
+  applies-to: {impact: review, propagation: reverse, cycles: forbid, allowed_source_kinds: [decision, design, specification], allowed_target_kinds: [product, realization, technology]}
+  evidences: {impact: review, propagation: forward, cycles: forbid, allowed_source_kinds: [evidence], allowed_target_kinds: [decision, design, specification]}
+  binds: {impact: hard, propagation: both, cycles: allow, allowed_source_kinds: [entity, realization], allowed_target_kinds: [entity, realization]}
+  references: {impact: context, propagation: none, cycles: allow, allowed_source_kinds: [product, technology], allowed_target_kinds: [realization]}
+  rationale-for: {impact: historical, propagation: none, cycles: allow, allowed_source_kinds: [decision], allowed_target_kinds: [design, specification]}

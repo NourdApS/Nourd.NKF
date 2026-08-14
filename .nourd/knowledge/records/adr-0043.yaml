@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0043: Establish Native Release Manifest Contract"
 source:
   path: decisions/0043-release-manifest.md
+  stable_path: decisions/0043-release-manifest.md
   digest:
     algorithm: sha-256
     value: 58fad7dae3a558aa749efd22b028dce99456cfd5e5ea100e9a9bd7c02e9e4e1e
@@ -71,3 +72,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 58fad7dae3a558aa749efd22b028dce99456cfd5e5ea100e9a9bd7c02e9e4e1e
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

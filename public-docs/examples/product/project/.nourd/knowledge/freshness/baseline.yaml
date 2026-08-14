@@ -1,0 +1,338 @@
+contract: nkf.graph-baseline
+nkf_version: "0.6"
+bundle: example-product
+profile: nkf.profile.product
+graph_revision:
+  algorithm: sha-256
+  value: "639cecf16005a12a5415d84cdd8261ff607bd4d4086e7a4cd173e9a732fc0cd1"
+policy:
+  id: "nkf.freshness-policy.0.6"
+  digest:
+    algorithm: sha-256
+    value: "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4"
+node_revisions:
+  - node:
+      kind: document
+      id: TEST-001
+    revision:
+      algorithm: sha-256
+      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+  - node:
+      kind: document
+      id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+    revision:
+      algorithm: sha-256
+      value: 04ce16c368c50f0b313e84c8252704c2527f9d4ef45de1caa4c703ac5cdd5064
+  - node:
+      kind: record
+      id: product
+    revision:
+      algorithm: sha-256
+      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+  - node:
+      kind: record
+      id: product-current-system
+    revision:
+      algorithm: sha-256
+      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+authored_edges: []
+external_dependencies: []
+authority_inputs: []
+relationship_coverage:
+  - relationship: part-of
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-map
+  - relationship: defines
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-map
+  - relationship: governs
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: boundaries
+  - relationship: applies-to
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: people-served
+  - relationship: depends-on
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: boundaries
+  - relationship: extends
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-map
+  - relationship: supersedes
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-map
+  - relationship: rationale-for
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: purpose
+  - relationship: realizes
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product-current-system
+      source:
+        section: durable-mapping
+  - relationship: evidences
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product-current-system
+      source:
+        section: compatibility-verification-and-recovery
+  - relationship: references
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-map
+  - relationship: flows-to
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: needs-and-outcomes
+  - relationship: transitions-to
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: vision
+  - relationship: observes
+    state: inapplicable
+    basis:
+      node:
+        kind: record
+        id: product-current-system
+      source:
+        section: external-authority-and-operational-state-boundaries
+applicability_coverage:
+  - node:
+      kind: document
+      id: TEST-001
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: TEST-001
+      source:
+        heading:
+          heading_path:
+            - "TEST-001: Maintain Example Product Knowledge"
+          occurrence: 1
+  - node:
+      kind: document
+      id: TEST-001
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: TEST-001
+      source:
+        heading:
+          heading_path:
+            - "TEST-001: Maintain Example Product Knowledge"
+          occurrence: 1
+  - node:
+      kind: document
+      id: TEST-001
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: TEST-001
+      source:
+        heading:
+          heading_path:
+            - "TEST-001: Maintain Example Product Knowledge"
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+      source:
+        heading:
+          heading_path:
+            - Evidence
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+      source:
+        heading:
+          heading_path:
+            - Evidence
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
+      source:
+        heading:
+          heading_path:
+            - Evidence
+          occurrence: 1
+  - node:
+      kind: record
+      id: product
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-definition
+  - node:
+      kind: record
+      id: product
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-definition
+  - node:
+      kind: record
+      id: product
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: product
+      source:
+        section: product-definition
+  - node:
+      kind: record
+      id: product-current-system
+    purpose: change-impact
+    state: eligible
+    role: realizes
+    basis:
+      node:
+        kind: record
+        id: product-current-system
+      source:
+        section: realization-identity-and-kind
+  - node:
+      kind: record
+      id: product-current-system
+    purpose: whole-root-readiness
+    state: eligible
+    role: realizes
+    basis:
+      node:
+        kind: record
+        id: product-current-system
+      source:
+        section: realization-identity-and-kind
+  - node:
+      kind: record
+      id: product-current-system
+    purpose: consequential-use
+    state: eligible
+    role: realizes
+    basis:
+      node:
+        kind: record
+        id: product-current-system
+      source:
+        section: realization-identity-and-kind
+decision_classifications: []
+confirmation:
+  reviewer:
+    kind: agent
+    id: nkf-fixture-semantic-reviewer
+  reviewed_at: 2026-08-13T10:00:00.000Z
+  claim: semantically-reviewed-whole-root
+  observations:
+    - id: minimal-fixture-whole-root-review
+      subject:
+        kind: record
+        id: product
+      basis:
+        node:
+          kind: record
+          id: product
+        source:
+          section: product-map
+      finding: The complete controlled Product fixture contains no authored semantic edge or accepted Decision beyond its four declared freshness subjects.
+  limitations:
+    - Controlled Product fixture only; this review does not prove broader consumer graph completeness.
+  disputed: false

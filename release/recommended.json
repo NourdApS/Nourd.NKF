@@ -1,6 +1,6 @@
 {
   "contract": "nkf.recommended-release",
-  "nkf_version": "0.4",
+  "nkf_version": "0.6",
   "state": "recommended",
   "channel": "internal-private-github-prerelease",
   "compatibility": [
@@ -8,44 +8,56 @@
       "from_nkf_version": "0.1",
       "classification": "breaking",
       "migration_required": true,
-      "summary": "NKF 0.1 requires explicit repository-owner approval for the governed breaking migration to NKF 0.4."
+      "summary": "NKF 0.1 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6."
     },
     {
       "from_nkf_version": "0.2",
       "classification": "breaking",
       "migration_required": true,
-      "summary": "NKF 0.2 requires explicit repository-owner approval for the governed breaking migration to NKF 0.4."
+      "summary": "NKF 0.2 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6."
     },
     {
       "from_nkf_version": "0.3",
-      "classification": "non-breaking",
-      "migration_required": false,
-      "summary": "NKF 0.3 updates to NKF 0.4 without knowledge migration or breaking approval."
+      "classification": "breaking",
+      "migration_required": true,
+      "summary": "NKF 0.3 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6."
     },
     {
       "from_nkf_version": "0.4",
+      "classification": "breaking",
+      "migration_required": true,
+      "summary": "NKF 0.4 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6."
+    },
+    {
+      "from_nkf_version": "0.5",
       "classification": "non-breaking",
       "migration_required": false,
-      "summary": "NKF 0.4 refreshes the exact recommended release and integration without semantic migration."
+      "summary": "NKF 0.5 advances non-breakingly to NKF 0.6 only under the accepted exact policy and baseline-carry-forward preconditions."
+    },
+    {
+      "from_nkf_version": "0.6",
+      "classification": "non-breaking",
+      "migration_required": false,
+      "summary": "NKF 0.6 refreshes the exact recommended release and integration without semantic migration."
     }
   ],
   "archive": {
-    "sha256": "a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd",
-    "asset_name": "nourd-nkf-sha256-a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd.tar",
-    "tag": "release-sha256-a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd",
-    "size": 4164608,
-    "url": "https://github.com/kaveh6202/Nourd.NKF/releases/download/release-sha256-a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd/nourd-nkf-sha256-a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd.tar"
+    "sha256": "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+    "asset_name": "nourd-nkf-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95.tar",
+    "tag": "release-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+    "size": 7999488,
+    "url": "https://github.com/NourdApS/Nourd.NKF/releases/download/release-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95/nourd-nkf-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95.tar"
   },
-  "source_commit": "29880a398c26fbc126b13cdaaebe9cf5b7fe7734",
-  "checker_sha256": "425286d383fa2a93461ebbae4fc986c67f987adab3b5545a927b75064c9ed123",
+  "source_commit": "96652985ab7749d6f58677dbf0947af4c9ff4e63",
+  "checker_sha256": "9a019c4cfb1c9515cbefa76f3b0513328b9a910d8675b8c17d8b9018542bb376",
   "authority": {
-    "markdown_sha256": "7298d1a55dcd74d4cc96368648aadbd6a70b5cf4c62d2a1c7f528e7c9181bab1",
-    "executable_sha256": "a84fcc1e99567b6716e3281efedbbc87c978ffa465cd4cb5d8cac1d46ad0d217"
+    "markdown_sha256": "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
+    "executable_sha256": "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4"
   },
-  "adopter_sha256": "416b26e7413afebf24fdb97d47cedae613242476839c98250a330c3cdcf0cd65",
+  "adopter_sha256": "d552e7c251bf38da574d2d950c5d3497d3ee5415e3e3de44ce1e64f7f564eb50",
   "release": {
-    "url": "https://github.com/kaveh6202/Nourd.NKF/releases/tag/release-sha256-a7912b92c3b5ec1a0000009edf40f36a8b74b746c2ccc00b7ae76ae14ad79ecd",
-    "published_at": "2026-08-11T15:27:44Z",
+    "url": "https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+    "published_at": "2026-08-14T11:05:54Z",
     "prerelease": true,
     "visibility": "private"
   },

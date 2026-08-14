@@ -2,6 +2,15 @@
   "name": "@nourd/nkf-checker",
   "version": "0.0.0-development",
   "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NourdApS/Nourd.NKF.git"
+  },
+  "homepage": "https://github.com/NourdApS/Nourd.NKF#readme",
+  "bugs": {
+    "url": "https://github.com/NourdApS/Nourd.NKF/issues"
+  },
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -14,7 +23,7 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs && node scripts/build-adopter.mjs && node scripts/build-public-docs.mjs",
-    "check": "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs",
+    "check": "npm run typecheck && npm run build && npm run test && npm run verify:build && npm run verify:adopter && npm run verify:public-docs && npm run verify:third-party-notices",
     "nkf:check": "npm run nkf:check:pinned && npm run nkf:check:host",
     "package:release": "node scripts/package-release.mjs",
     "test": "vitest run",
@@ -27,6 +36,7 @@
     "verify:links": "node scripts/verify-links.mjs --project .",
     "verify:onboarding-guidance": "node scripts/verify-onboarding-guidance.mjs --project .",
     "verify:public-docs": "node scripts/verify-public-docs.mjs",
+    "verify:third-party-notices": "node scripts/verify-third-party-notices.mjs",
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
     "verify:release": "node scripts/verify-release.mjs",
     "nkf:check:pinned": "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .",

@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF Unified Adopt Operation
 source:
   path: designs/adopted/unified-adopt-operation.md
+  stable_path: designs/adopted/unified-adopt-operation.md
   digest:
     algorithm: sha-256
     value: c1e6708944751489d21cc8a44f70173db8323da093d88a8ce5006f29a9c62ce2
@@ -16,17 +17,135 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
-  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
-  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
-  - {id: one-public-adopt-operation, heading_path: [Proposed Direction, One Public Adopt Operation], occurrence: 1, authority: proposal, role: interface}
-  - {id: state-resolution, heading_path: [Proposed Direction, State Resolution], occurrence: 1, authority: proposal, role: interface}
-  - {id: recommended-release-and-compatibility-signal, heading_path: [Proposed Direction, Recommended Release And Compatibility Signal], occurrence: 1, authority: proposal, role: governing}
-  - {id: transaction-and-result-states, heading_path: [Proposed Direction, Transaction And Result States], occurrence: 1, authority: proposal, role: recovery}
-  - {id: supported-boundary, heading_path: [Proposed Direction, Supported Boundary], occurrence: 1, authority: proposal, role: boundary}
-  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
-  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
-  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
-  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
-  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: one-public-adopt-operation
+    heading_path:
+      - Proposed Direction
+      - One Public Adopt Operation
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: state-resolution
+    heading_path:
+      - Proposed Direction
+      - State Resolution
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: recommended-release-and-compatibility-signal
+    heading_path:
+      - Proposed Direction
+      - Recommended Release And Compatibility Signal
+    occurrence: 1
+    authority: proposal
+    role: governing
+  - id: transaction-and-result-states
+    heading_path:
+      - Proposed Direction
+      - Transaction And Result States
+    occurrence: 1
+    authority: proposal
+    role: recovery
+  - id: supported-boundary
+    heading_path:
+      - Proposed Direction
+      - Supported Boundary
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
 relationships: []
+task: NKF-020
+design_disposition: adopted
+design_decisions:
+  - adr-0107
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: c1e6708944751489d21cc8a44f70173db8323da093d88a8ce5006f29a9c62ce2
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-020
+    design_disposition: adopted
+    design_decisions:
+      - adr-0107
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-020
+    design_disposition: adopted
+    design_decisions:
+      - adr-0107
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

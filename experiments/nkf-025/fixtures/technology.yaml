@@ -1,0 +1,54 @@
+contract: nkf.graph-experiment/0
+bundle_id: technology-fixture
+profile: nkf.profile.technology
+candidate_universe:
+  completeness: confirmed
+  node_ids:
+    - decision-portability
+    - realization-current
+    - specification
+    - technology
+nodes:
+  - id: technology
+    kind: technology
+    revision: technology-v1
+    role: governs
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.technology], purposes: ["*"]}
+    conformance: passed
+  - id: decision-portability
+    kind: decision
+    revision: decision-portability-v1
+    role: governs
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.technology], purposes: ["*"]}
+    conformance: passed
+  - id: specification
+    kind: specification
+    revision: specification-v1
+    role: governs
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.technology], purposes: ["*"]}
+    conformance: passed
+  - id: realization-current
+    kind: realization
+    revision: realization-current-v1
+    role: realizes
+    governance: {status: accepted}
+    authority: {eligible: true, binding: verified}
+    applicability: {profiles: [nkf.profile.technology], purposes: ["*"]}
+    relationship_expectations:
+      - {type: realizes, target: specification}
+    conformance: passed
+edges:
+  - {source: realization-current, target: specification, type: realizes, source_section: governed-meaning-realized}
+  - {source: realization-current, target: decision-portability, type: depends-on, source_section: interfaces-dependencies-locators-and-resolution}
+  - {source: technology, target: realization-current, type: references, source_section: technology-map}
+artifacts:
+  - id: technology-runtime
+    owner_record: realization-current
+    expected_revision: runtime-v1
+    observed_revision: runtime-v1

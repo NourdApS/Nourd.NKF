@@ -77,6 +77,70 @@ repeats ordinary Adopt to `current` without tracked mutation, preserves the
 knowledge tree and frozen 0.3 surfaces, and rejects pin, archive, and
 integration tampering.
 
+The NKF-025 NKF 0.4 freshness and graph-gap inventory reviews the complete
+current Common, Product, and Technology contract surfaces against the
+repository's declarations. It separates byte-current conformance from
+semantic freshness, catalogs the ways each knowledge kind may become
+noncurrent, measures the existing declared graph, and identifies the exact
+observability and completeness boundaries a later prototype must test.
+
+The NKF-025 controlled graph prototype exercise records the disposable
+Product, Technology, and direct NKF graph evaluator, adversarial cases,
+whole-root semantic oracle comparisons, the blocked sparse-graph false
+negative, the corrected reviewed-baseline simulation, non-record strategy
+results, receipt reproduction, and measured review-cost reduction.
+
+The NKF-025 controlled graph prototype independent audit records two rejected
+audit targets, then independently reproduces the final exact remote checkpoint
+from a new clone. It verifies the canonical gate, focused cases, deterministic
+measurements, source-bound receipts, adversarial fail-closed behavior, clean
+scope isolation, and the known limit that a falsely confirmed incomplete
+semantic baseline can still hide an undeclared relationship.
+
+The NKF-025 pre-release NKF self-consumer worktree exercise runs the disposable
+prototype from a clean detached copy of the actual NKF Technology repository.
+It reproduces the blocked sparse baseline, the reviewed two-subject closure,
+whole-root comparison, deterministic measurements, complete producer gate,
+and clean post-exercise state while preserving the distinction between a
+pre-release exercise and adoption of an immutable published version.
+
+The NKF-026 NKF 0.5 revision 2 authority-pair audit records the implementation-
+discovered predecessor Task-gate contradiction, preserves the original ADR
+0116 pair as immutable prepublication history, and independently verifies the
+distinct exact successor, its narrow reviewed retrospective-gate
+transformation, executable closure, and unchanged Product boundaries before
+technical acceptance.
+
+The NKF-026 NKF 0.5 exact-candidate audit independently verifies the complete
+181-member archive, exact source reproduction, candidate-bound producer Adopt,
+whole-root semantic review, deterministic builds, full producer gate,
+supported compatibility paths, repeat `current`, and fail-closed archive,
+pin, and path tampering before technical confirmation and publication.
+
+The NKF-026 NKF 0.5 publication Evidence records the exact content-addressed
+tag, sole private-prerelease asset, authenticated draft and published
+downloads, byte-for-byte identity with the audited candidate, and deliberate
+promotion of the mutable recommendation while producer adoption remains a
+separate later action.
+
+The NKF-027 open-source licensing preparation assessment inventories current
+repository authorship evidence, package and bundled-runtime licenses, required
+third-party notices, source-header treatment, organization-transfer
+references, private distribution assumptions, and separately governed public-
+project policies before any Apache-2.0 release or visibility change.
+
+The NKF-027 NKF 0.5-to-0.6 compatibility proof binds the exact prospective
+authority bytes and independently reviewable disposable updater results. It
+records ready Product and Technology fixture updates, stale-producer refusal,
+separate current-0.5 review and seal, ready real-producer update, exact
+preservation, repeat current, rollback, and tamper rejection before any 0.6
+authority acceptance.
+
+The NKF-027 NKF 0.6 authority and compatibility audit independently verifies
+the exact authority pins, section and policy closure, command matrix, producer
+promotion, fixture and real-producer results, rollback and tamper rejection,
+and canonical producer gate before exact technical acceptance.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

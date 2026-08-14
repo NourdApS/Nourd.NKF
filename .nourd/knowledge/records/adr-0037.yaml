@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0037: Confirm Checker-Findings-Resolved Json Schema Bindings"
 source:
   path: decisions/0037-checker-ready-json-schemas.md
+  stable_path: decisions/0037-checker-ready-json-schemas.md
   digest:
     algorithm: sha-256
     value: a243c48d4e768d9b2411e3e3aec72e791c2b839ea295d4105b44616dd10f991c
@@ -49,3 +50,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: a243c48d4e768d9b2411e3e3aec72e791c2b839ea295d4105b44616dd10f991c
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer, acting under the Human Product Owner's authorization to approve exact derived revisions after independent review
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

@@ -1,8 +1,8 @@
 # Nourd Knowledge Format
 
-> NKF 0.4 is pre-stable. The current checker release is internal to authorized
+> NKF 0.6 is pre-stable. The current checker release is internal to authorized
 > Nourd projects. This public documentation is explanatory; the exact
-> digest-bound [NKF 0.4 Specification](reference/nkf-0.4.md) is normative.
+> digest-bound [NKF 0.6 Specification](reference/nkf-0.6.md) is normative.
 
 Nourd Knowledge Format, or NKF, is a governed way to keep important project
 knowledge understandable to people and mechanically coherent for tools and AI
@@ -33,7 +33,9 @@ project-root/
 ├── .nourd/
 │   ├── knowledge/
 │   │   ├── bundle.yaml
-│   │   └── records/
+│   │   ├── records/
+│   │   └── freshness/
+│   │       └── baseline.yaml
 │   ├── nkf-release.json
 │   └── validation-result.json
 └── <configured-knowledge-root>/
@@ -52,9 +54,10 @@ inside the same project. Common NKF rules apply to both profiles. The selected
 profile adds root-specific meaning and validation.
 
 Every Markdown file in the knowledge root has exactly one record declaration
-or one explicit non-record entry. A record declaration binds the source,
-governance, sections, responsibilities, relationships, and digest needed for
-deterministic validation.
+or one explicit document/non-record entry. Markdown remains canonical durable
+meaning; YAML owns lifecycle, graph relationships, and freshness policy.
+Generated state and disposition navigation does not move or rewrite canonical
+documents.
 
 ```mermaid
 flowchart TB
@@ -131,7 +134,8 @@ so. A passing checker never accepts knowledge.
    Adopt operation.
 4. If Adopt displays a breaking migration, review its exact target and obtain
    real repository-authority approval before rerunning with the reported
-   approval argument.
+   approval argument and the exact whole-root semantic-review file used to
+   seal the candidate graph baseline.
 5. Author through the installed AI-neutral protocol and run
    `npm run nkf:check` before handoff.
 
@@ -160,14 +164,17 @@ evidence and stops without guessing a later brownfield category.
   bundle.
 - [Technology Example](examples/technology/README.md) is a complete small
   Technology bundle with governed artifacts.
-- [NKF 0.4 Specification](reference/nkf-0.4.md) is the exact normative
+- [NKF 0.6 Specification](reference/nkf-0.6.md) is the exact normative
   Markdown mirror.
 
 ## Current Boundaries
 
-- NKF 0.4 is pre-stable and may change through the governed change process.
+- NKF 0.6 is pre-stable and may change through the governed change process.
+- Repository licensing is Apache-2.0 with informational NOTICE and retained
+  compatible third-party notices. Licensing does not imply public GitHub
+  visibility or a published release.
 - The current checker release is private and available only to authorized
-  users of `kaveh6202/Nourd.NKF`.
+  users of `NourdApS/Nourd.NKF`.
 - The exact Specification mirror preserves source-relative provenance links
   whose internal Evidence targets are intentionally absent from this public
   projection.

@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF-007 Knowledge Architecture
 source:
   path: designs/adopted/knowledge-architecture.md
+  stable_path: designs/adopted/knowledge-architecture.md
   digest:
     algorithm: sha-256
     value: 1fa3d64dfd50d38498caf180176d51b193a0a9c7fb402e843df0eb8037e4bd99
@@ -228,3 +229,35 @@ sections:
     responsibilities:
       - unresolved-matters
 relationships: []
+task: NKF-007
+design_disposition: adopted
+design_decisions:
+  - adr-0053
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 1fa3d64dfd50d38498caf180176d51b193a0a9c7fb402e843df0eb8037e4bd99
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-007
+    design_disposition: adopted
+    design_decisions:
+      - adr-0053
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-007
+    design_disposition: adopted
+    design_decisions:
+      - adr-0053
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

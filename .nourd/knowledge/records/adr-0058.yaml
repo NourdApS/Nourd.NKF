@@ -5,23 +5,100 @@ body_contract: nkf.decision
 title: "ADR 0058: Governed Frontmatter"
 source:
   path: decisions/0058-governed-frontmatter.md
+  stable_path: decisions/0058-governed-frontmatter.md
   digest:
     algorithm: sha-256
     value: 57f0d4a0ee752938cf5520be7523da98a3297520c05485b779c56a1a2ed3e06f
 governance:
   lifecycle: immutable
   status: accepted
-  authority: [human-product-owner]
+  authority:
+    - human-product-owner
 scope:
   root: nkf
 sections:
-  - {id: context-and-problem, heading_path: [Context And Problem], occurrence: 1, authority: accepted-meaning, role: context}
-  - {id: decision, heading_path: [Decision], occurrence: 1, authority: accepted-meaning, role: governing, responsibilities: [context-and-problem, decision, scope-and-applicability, rationale, alternatives-considered, consequences-and-trade-offs]}
-  - {id: scope-and-applicability, heading_path: [Scope And Applicability], occurrence: 1, authority: accepted-meaning, role: applicability}
-  - {id: rationale, heading_path: [Rationale], occurrence: 1, authority: accepted-meaning, role: rationale}
-  - {id: alternatives-considered, heading_path: [Alternatives Considered], occurrence: 1, authority: accepted-meaning, role: alternative}
-  - {id: consequences-and-trade-offs, heading_path: [Consequences And Trade-Offs], occurrence: 1, authority: accepted-meaning, role: consequence}
-  - {id: compatibility, heading_path: [Compatibility], occurrence: 1, authority: accepted-meaning, role: content}
-  - {id: realization-requirements, heading_path: [Realization Requirements], occurrence: 1, authority: accepted-meaning, role: evidence}
-  - {id: non-claims, heading_path: [Non-Claims], occurrence: 1, authority: accepted-meaning, role: content}
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: compatibility
+    heading_path:
+      - Compatibility
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+  - id: realization-requirements
+    heading_path:
+      - Realization Requirements
+    occurrence: 1
+    authority: accepted-meaning
+    role: evidence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
 relationships: []
+task: NKF-010
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 57f0d4a0ee752938cf5520be7523da98a3297520c05485b779c56a1a2ed3e06f
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit acceptance of the frontmatter boundary and authorization to complete its coherent NKF 0.1 adoption
+    task: NKF-010
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-010
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit acceptance of the frontmatter boundary and authorization to complete its coherent NKF 0.1 adoption
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

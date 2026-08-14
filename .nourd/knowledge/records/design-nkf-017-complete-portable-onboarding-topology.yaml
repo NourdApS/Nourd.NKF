@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF Complete Portable Onboarding Topology
 source:
   path: designs/adopted/complete-portable-onboarding-topology.md
+  stable_path: designs/adopted/complete-portable-onboarding-topology.md
   digest:
     algorithm: sha-256
     value: 6a4a0513489d2568dbb9316ec9b8a815e96ecc3d2be301cfd3a0663dff6221e6
@@ -17,27 +18,200 @@ governance:
 scope:
   root: nkf
 sections:
-  - {id: design-kind-problem-and-scope, heading_path: [Design Kind Problem And Scope], occurrence: 1, authority: proposal, role: context, responsibilities: [design-kind-problem-and-scope]}
-  - {id: governing-inputs-and-constraints, heading_path: [Governing Inputs And Constraints], occurrence: 1, authority: proposal, role: governing, responsibilities: [governing-inputs-and-constraints]}
-  - {id: proposed-direction, heading_path: [Proposed Direction], occurrence: 1, authority: proposal, role: governing, responsibilities: [proposed-direction]}
-  - {id: common-portable-topology, heading_path: [Proposed Direction, Common Portable Topology], occurrence: 1, authority: proposal, role: boundary}
-  - {id: product-and-technology-additions, heading_path: [Proposed Direction, Product And Technology Additions], occurrence: 1, authority: proposal, role: boundary}
-  - {id: canonical-knowledge-map-reconciliation, heading_path: [Proposed Direction, Canonical Knowledge Map Reconciliation], occurrence: 1, authority: proposal, role: interface}
-  - {id: existing-and-partial-topology, heading_path: [Proposed Direction, Existing And Partial Topology], occurrence: 1, authority: proposal, role: boundary}
-  - {id: lifecycle-placement-and-index-completeness, heading_path: [Proposed Direction, Lifecycle Placement And Index Completeness], occurrence: 1, authority: proposal, role: boundary}
-  - {id: continuing-enforcement, heading_path: [Proposed Direction, Continuing Enforcement], occurrence: 1, authority: proposal, role: validation}
-  - {id: predecessor-repair, heading_path: [Proposed Direction, Predecessor Repair], occurrence: 1, authority: proposal, role: recovery}
-  - {id: responsibilities-interactions-and-information-flows, heading_path: [Responsibilities Interactions And Information Flows], occurrence: 1, authority: proposal, role: responsibility, responsibilities: [responsibilities-interactions-and-information-flows]}
-  - {id: alternatives-and-trade-offs, heading_path: [Alternatives And Trade-Offs], occurrence: 1, authority: proposal, role: alternative, responsibilities: [alternatives-and-trade-offs]}
-  - {id: retain-the-minimal-populated-only-scaffold, heading_path: [Alternatives And Trade-Offs, Retain The Minimal Populated-Only Scaffold], occurrence: 1, authority: proposal, role: alternative}
-  - {id: create-empty-directories-without-files, heading_path: [Alternatives And Trade-Offs, Create Empty Directories Without Files], occurrence: 1, authority: proposal, role: alternative}
-  - {id: use-hidden-placeholder-files, heading_path: [Alternatives And Trade-Offs, Use Hidden Placeholder Files], occurrence: 1, authority: proposal, role: alternative}
-  - {id: generate-every-possible-semantic-record, heading_path: [Alternatives And Trade-Offs, Generate Every Possible Semantic Record], occurrence: 1, authority: proposal, role: alternative}
-  - {id: give-product-and-technology-separate-lifecycle-trees, heading_path: [Alternatives And Trade-Offs, Give Product And Technology Separate Lifecycle Trees], occurrence: 1, authority: proposal, role: alternative}
-  - {id: keep-a-selectable-layout-in-the-plan, heading_path: [Alternatives And Trade-Offs, Keep A Selectable Layout In The Plan], occurrence: 1, authority: proposal, role: alternative}
-  - {id: replace-an-existing-knowledge-map, heading_path: [Alternatives And Trade-Offs, Replace An Existing Knowledge Map], occurrence: 1, authority: proposal, role: alternative}
-  - {id: make-topology-generation-only, heading_path: [Alternatives And Trade-Offs, Make Topology Generation-Only], occurrence: 1, authority: proposal, role: alternative}
-  - {id: failure-safety-recovery-and-operations, heading_path: [Failure Safety Recovery And Operations], occurrence: 1, authority: proposal, role: risk, responsibilities: [failure-safety-recovery-and-operations]}
-  - {id: validation-and-decision-evidence, heading_path: [Validation And Decision Evidence], occurrence: 1, authority: proposal, role: validation, responsibilities: [validation-and-decision-evidence]}
-  - {id: unresolved-matters, heading_path: [Unresolved Matters], occurrence: 1, authority: unresolved, role: unresolved, responsibilities: [unresolved-matters]}
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: common-portable-topology
+    heading_path:
+      - Proposed Direction
+      - Common Portable Topology
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: product-and-technology-additions
+    heading_path:
+      - Proposed Direction
+      - Product And Technology Additions
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: canonical-knowledge-map-reconciliation
+    heading_path:
+      - Proposed Direction
+      - Canonical Knowledge Map Reconciliation
+    occurrence: 1
+    authority: proposal
+    role: interface
+  - id: existing-and-partial-topology
+    heading_path:
+      - Proposed Direction
+      - Existing And Partial Topology
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: lifecycle-placement-and-index-completeness
+    heading_path:
+      - Proposed Direction
+      - Lifecycle Placement And Index Completeness
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: continuing-enforcement
+    heading_path:
+      - Proposed Direction
+      - Continuing Enforcement
+    occurrence: 1
+    authority: proposal
+    role: validation
+  - id: predecessor-repair
+    heading_path:
+      - Proposed Direction
+      - Predecessor Repair
+    occurrence: 1
+    authority: proposal
+    role: recovery
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: retain-the-minimal-populated-only-scaffold
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Retain The Minimal Populated-Only Scaffold
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: create-empty-directories-without-files
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Create Empty Directories Without Files
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: use-hidden-placeholder-files
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Use Hidden Placeholder Files
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: generate-every-possible-semantic-record
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Generate Every Possible Semantic Record
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: give-product-and-technology-separate-lifecycle-trees
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Give Product And Technology Separate Lifecycle Trees
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: keep-a-selectable-layout-in-the-plan
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep A Selectable Layout In The Plan
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: replace-an-existing-knowledge-map
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Replace An Existing Knowledge Map
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: make-topology-generation-only
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Make Topology Generation-Only
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
 relationships: []
+task: NKF-017
+design_disposition: adopted
+design_decisions:
+  - adr-0071
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 6a4a0513489d2568dbb9316ec9b8a815e96ecc3d2be301cfd3a0663dff6221e6
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-017
+    design_disposition: adopted
+    design_decisions:
+      - adr-0071
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - codex-technical-reviewer
+        - human-product-owner
+    task: NKF-017
+    design_disposition: adopted
+    design_decisions:
+      - adr-0071

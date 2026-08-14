@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF 0.1 Product–Technology Common Comparison
 source:
   path: designs/adopted/product-technology-common-allocation.md
+  stable_path: designs/adopted/product-technology-common-allocation.md
   digest:
     algorithm: sha-256
     value: ec430c566a1c5e5f983984b6156c3713a7333b1e33ac1a2449358ec74be952c1
@@ -134,3 +135,35 @@ sections:
       - proposed-direction
       - unresolved-matters
 relationships: []
+task: NKF-003
+design_disposition: adopted
+design_decisions:
+  - adr-0049
+  - adr-0050
+proposal_authority_effect: None. The current Product specification is accepted; the Technology specification and every allocation below remain proposed.
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: ec430c566a1c5e5f983984b6156c3713a7333b1e33ac1a2449358ec74be952c1
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0049
+      - adr-0050
+    proposal_authority_effect: None. The current Product specification is accepted; the Technology specification and every allocation below remain proposed.
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: adopted
+    design_decisions:
+      - adr-0049
+      - adr-0050
+    proposal_authority_effect: None. The current Product specification is accepted; the Technology specification and every allocation below remain proposed.

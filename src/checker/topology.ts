@@ -248,25 +248,37 @@ export function validatePortableTopology(input: TopologyInput): void {
     }
   };
 
-  requireIndexTargets("tasks/README.md", [
-    "tasks/active/README.md",
-    "tasks/deferred/README.md",
-    "tasks/completed/README.md",
-    "tasks/cancelled/README.md",
-  ]);
+  const version = String(bundle.nkf_version ?? "0.1");
+  const modernTopology = version === "0.5" || version === "0.6";
+  const taskIndexPaths = modernTopology
+    ? {
+        active: "tasks/by-state/active.md",
+        deferred: "tasks/by-state/deferred.md",
+        completed: "tasks/by-state/completed.md",
+        cancelled: "tasks/by-state/cancelled.md",
+      }
+    : {
+        active: "tasks/active/README.md",
+        deferred: "tasks/deferred/README.md",
+        completed: "tasks/completed/README.md",
+        cancelled: "tasks/cancelled/README.md",
+      };
+  requireIndexTargets("tasks/README.md", Object.values(taskIndexPaths));
   const tasks = nonRecords.filter((item) => item.declaration.kind === "task");
-  const taskPlacements: Record<string, { prefix: string; index: string }> = {
-    active: { prefix: "tasks/active/", index: "tasks/active/README.md" },
-    deferred: { prefix: "tasks/deferred/", index: "tasks/deferred/README.md" },
-    completed: { prefix: "tasks/completed/", index: "tasks/completed/README.md" },
-    cancelled: { prefix: "tasks/cancelled/", index: "tasks/cancelled/README.md" },
+  const taskPlacements: Record<string, { prefix?: string; index: string }> = {
+    active: { ...(modernTopology ? {} : { prefix: "tasks/active/" }), index: taskIndexPaths.active },
+    deferred: { ...(modernTopology ? {} : { prefix: "tasks/deferred/" }), index: taskIndexPaths.deferred },
+    completed: { ...(modernTopology ? {} : { prefix: "tasks/completed/" }), index: taskIndexPaths.completed },
+    cancelled: { ...(modernTopology ? {} : { prefix: "tasks/cancelled/" }), index: taskIndexPaths.cancelled },
   };
   for (const task of tasks) {
     const taskPath = String(task.declaration.path);
-    const status = markdown(task.observation)?.frontMatter?.task_status;
+    const status = modernTopology
+      ? task.declaration.document?.state?.value
+      : markdown(task.observation)?.frontMatter?.task_status;
     const placement = typeof status === "string" ? taskPlacements[status] : undefined;
     if (placement === undefined) continue;
-    if (!taskPath.startsWith(placement.prefix) || taskPath === `${placement.prefix}README.md`) {
+    if (placement.prefix !== undefined && (!taskPath.startsWith(placement.prefix) || taskPath === `${placement.prefix}README.md`)) {
       emitter.emit("knowledge.topology.lifecycle-path.invalid", "The Task path does not agree with task_status.", {
         artifact: artifact(knowledgeRoot, taskPath),
       });
@@ -279,26 +291,37 @@ export function validatePortableTopology(input: TopologyInput): void {
     }
   }
 
-  requireIndexTargets("designs/README.md", [
-    "designs/active/README.md",
-    "designs/adopted/README.md",
-    "designs/rejected/README.md",
-    "designs/superseded/README.md",
-    "designs/withdrawn/README.md",
-  ]);
-  const designPlacements: Record<string, { prefix: string; index: string }> = {
-    active: { prefix: "designs/active/", index: "designs/active/README.md" },
-    adopted: { prefix: "designs/adopted/", index: "designs/adopted/README.md" },
-    rejected: { prefix: "designs/rejected/", index: "designs/rejected/README.md" },
-    superseded: { prefix: "designs/superseded/", index: "designs/superseded/README.md" },
-    withdrawn: { prefix: "designs/withdrawn/", index: "designs/withdrawn/README.md" },
+  const designIndexPaths = modernTopology
+    ? {
+        active: "designs/by-disposition/active.md",
+        adopted: "designs/by-disposition/adopted.md",
+        rejected: "designs/by-disposition/rejected.md",
+        superseded: "designs/by-disposition/superseded.md",
+        withdrawn: "designs/by-disposition/withdrawn.md",
+      }
+    : {
+        active: "designs/active/README.md",
+        adopted: "designs/adopted/README.md",
+        rejected: "designs/rejected/README.md",
+        superseded: "designs/superseded/README.md",
+        withdrawn: "designs/withdrawn/README.md",
+      };
+  requireIndexTargets("designs/README.md", Object.values(designIndexPaths));
+  const designPlacements: Record<string, { prefix?: string; index: string }> = {
+    active: { ...(modernTopology ? {} : { prefix: "designs/active/" }), index: designIndexPaths.active },
+    adopted: { ...(modernTopology ? {} : { prefix: "designs/adopted/" }), index: designIndexPaths.adopted },
+    rejected: { ...(modernTopology ? {} : { prefix: "designs/rejected/" }), index: designIndexPaths.rejected },
+    superseded: { ...(modernTopology ? {} : { prefix: "designs/superseded/" }), index: designIndexPaths.superseded },
+    withdrawn: { ...(modernTopology ? {} : { prefix: "designs/withdrawn/" }), index: designIndexPaths.withdrawn },
   };
   for (const design of records.filter((record) => record.value?.type === "design")) {
     const designPath = sourcePath(design);
-    const disposition = markdown(design.sourceObservation)?.frontMatter?.design_disposition;
+    const disposition = modernTopology
+      ? design.value?.design_disposition
+      : markdown(design.sourceObservation)?.frontMatter?.design_disposition;
     const placement = typeof disposition === "string" ? designPlacements[disposition] : undefined;
     if (designPath === null || placement === undefined) continue;
-    if (!designPath.startsWith(placement.prefix) || designPath === `${placement.prefix}README.md`) {
+    if (placement.prefix !== undefined && (!designPath.startsWith(placement.prefix) || designPath === `${placement.prefix}README.md`)) {
       emitter.emit("knowledge.topology.lifecycle-path.invalid", "The Design path does not agree with design_disposition.", {
         artifact: artifact(knowledgeRoot, designPath),
         record_id: String(design.value?.id),

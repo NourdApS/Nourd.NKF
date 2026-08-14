@@ -3,6 +3,7 @@ import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
+import YAML from "yaml";
 import { repositoryRoot } from "./helpers.js";
 
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
@@ -43,6 +44,20 @@ async function copyFixture(): Promise<string> {
   return project;
 }
 
+async function copyFixture0_5(): Promise<string> {
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-0-5-"));
+  const project = path.join(parent, "project");
+  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-5"), project, { recursive: true });
+  return project;
+}
+
+async function copyFixture0_6(): Promise<string> {
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-0-6-"));
+  const project = path.join(parent, "project");
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-6"), project, { recursive: true });
+  return project;
+}
+
 async function gitFixture() {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
   const project = path.join(parent, "project");
@@ -73,7 +88,7 @@ async function gitFixture() {
 }
 
 beforeAll(async () => {
-  const releaseSet = await readReleaseSet(repositoryRoot);
+  const releaseSet = await readReleaseSet(repositoryRoot, "0.4");
   const memberEntries = releaseEntriesForVersion("0.4", releaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
@@ -92,20 +107,86 @@ beforeAll(async () => {
 
 describe("deterministic governed mechanics", () => {
   it("exports the reference maps", async () => {
-    const project = await copyFixture();
+    const project = await copyFixture0_5();
+    const productDeclarationPath = path.join(project, ".nourd/knowledge/records/product.yaml");
+    const productDeclaration = YAML.parse(await readFile(productDeclarationPath, "utf8"));
+    productDeclaration.entities = [
+      { id: "source-entity", kind: "concept", defining_section: "product-definition" },
+      { id: "target-entity", kind: "concept", defining_section: "product-definition" },
+    ];
+    productDeclaration.entity_relationships = [{
+      type: "depends-on",
+      source: { record: "product", entity: "source-entity" },
+      target: { record: "product", entity: "target-entity" },
+      source_section: "product-definition",
+    }];
+    await writeFile(productDeclarationPath, YAML.stringify(productDeclaration, { lineWidth: 0 }));
     const result = run("refs", project);
     expect(result.status, result.stderr).toBe(0);
+    expect(result.json.state).toBe("exported");
+    expect(result.json.records.product).toBe("product.md");
+    expect(result.json.documents["TEST-001"]).toBe("tasks/active/task.md");
     expect(result.json.tasks["TEST-001"]).toBe("tasks/active/task.md");
+    expect(result.json.relationships).toEqual([{
+      source: { kind: "entity", record: "product", entity: "source-entity" },
+      relationship: "depends-on",
+      target: { kind: "entity", record: "product", entity: "target-entity" },
+      source_binding: {
+        kind: "section",
+        node: { kind: "entity", record: "product", entity: "source-entity" },
+        section: "product-definition",
+      },
+    }]);
+
+    await writeFile(
+      path.join(project, ".nourd/knowledge/records/duplicate-product.yaml"),
+      await readFile(productDeclarationPath),
+    );
+    const duplicateRecord = run("refs", project);
+    expect(duplicateRecord.status).toBe(1);
+    expect(duplicateRecord.stderr).toContain("Duplicate governed record identity: product");
   });
 
-  it("enumerates the versioned set with digests and stamps", async () => {
+  it("fails closed instead of collapsing duplicate represented document identities", async () => {
+    const project = await copyFixture0_5();
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
+    const represented = bundle.non_records.find((item: any) => item.document?.id !== undefined);
+    bundle.non_records.push(structuredClone(represented));
+    await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0 }));
+    const result = run("refs", project);
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(`Duplicate governed document identity: ${represented.document.id}`);
+  });
+
+  it("fails closed instead of omitting malformed authored relationships", async () => {
+    const nonArrayProject = await copyFixture0_5();
+    const nonArrayPath = path.join(nonArrayProject, ".nourd/knowledge/records/product.yaml");
+    const nonArray = YAML.parse(await readFile(nonArrayPath, "utf8"));
+    nonArray.relationships = {};
+    await writeFile(nonArrayPath, YAML.stringify(nonArray, { lineWidth: 0 }));
+    const omitted = run("refs", nonArrayProject);
+    expect(omitted.status).toBe(1);
+    expect(omitted.stderr).toContain("non-array relationship or entity field");
+
+    const malformedProject = await copyFixture0_5();
+    const malformedPath = path.join(malformedProject, ".nourd/knowledge/records/product.yaml");
+    const malformed = YAML.parse(await readFile(malformedPath, "utf8"));
+    malformed.relationships = [{ type: "depends-on", source_section: "product-definition" }];
+    await writeFile(malformedPath, YAML.stringify(malformed, { lineWidth: 0 }));
+    const invalid = run("refs", malformedProject);
+    expect(invalid.status).toBe(1);
+    expect(invalid.stderr).toContain("unsupported fields");
+  });
+
+  it("exports the exact accepted release-set membership", async () => {
     const result = run("set", repositoryRoot);
     const bundle = await readFile(
       path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"),
       "utf8",
     );
     const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.2";
-    const usesReleaseSet = ["0.3", "0.4"].includes(declared);
+    const usesReleaseSet = ["0.3", "0.4", "0.5", "0.6"].includes(declared);
     const releaseSet = usesReleaseSet
       ? await readReleaseSet(repositoryRoot, declared)
       : undefined;
@@ -116,14 +197,13 @@ describe("deterministic governed mechanics", () => {
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("enumerated");
     expect(result.json.nkf_version).toBe(declared);
-    const expectedPaths = expectedEntries
-      .filter((entry: { path: string }) => entry.path !== "release-manifest.json")
-      .map((entry: { path: string }) => entry.path);
+    const expectedPaths = expectedEntries.map((entry: { path: string }) => entry.path);
     expect(result.json.members.map((member: { path: string }) => member.path)).toEqual(
       expectedPaths,
     );
     expect(result.json.members).toHaveLength(expectedPaths.length);
-    for (const member of result.json.members) {
+    if (usesReleaseSet) expect(result.json.members).toEqual(releaseSet.members);
+    else for (const member of result.json.members) {
       expect(member.present, member.path).toBe(true);
       expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
     }
@@ -173,32 +253,180 @@ describe("deterministic governed mechanics", () => {
       guidancePaths.includes(member.path),
     );
     expect(guidance).toHaveLength(guidancePaths.length);
-    for (const member of guidance) {
-      expect(member.nkf_version_stamp, member.path).toBe(declared);
+    if (usesReleaseSet) {
+      for (const member of guidance) expect(member.mode, member.path).toBe("0644");
+    } else {
+      for (const member of guidance) expect(member.nkf_version_stamp, member.path).toBe(declared);
     }
+
+    const representationProject = path.join(
+      await mkdtemp(path.join(os.tmpdir(), "nkf-set-representation-")),
+      "project",
+    );
+    await mkdir(path.join(representationProject, ".nourd/knowledge"), { recursive: true });
+    await mkdir(path.join(representationProject, "knowledge"), { recursive: true });
+    await mkdir(path.join(representationProject, "contracts/nkf/0.6"), { recursive: true });
+    await writeFile(
+      path.join(representationProject, ".nourd/knowledge/bundle.yaml"),
+      [
+        "contract: nkf.bundle",
+        "root:",
+        "  profile: nkf.profile.technology",
+        "  record: representation-fixture",
+        "knowledge_root: knowledge",
+        "nkf_version: '0.6'",
+        "id: representation-fixture",
+        "non_records: []",
+        "",
+      ].join("\n"),
+    );
+    await cp(
+      path.join(repositoryRoot, "contracts/nkf/0.6/release-set.yaml"),
+      path.join(representationProject, "contracts/nkf/0.6/release-set.yaml"),
+    );
+    const representedSet = run("set", representationProject);
+    expect(representedSet.status, representedSet.stderr).toBe(0);
+    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.6" });
+    expect(representedSet.json.members).toHaveLength(185);
   });
 
   it("re-pins record digests after an edit", async () => {
     const project = await copyFixture();
     const doc = path.join(project, "knowledge/product.md");
     await writeFile(doc, `${await readFile(doc, "utf8")}\nAppended sentence.\n`);
-    const result = run("repin", project);
+    const result = run("repin", project, ["--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.records).toBe(1);
     const check = spawnSync(process.execPath, [checker, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
     expect(JSON.parse(check.stdout).conformance).toBe("passed");
   });
 
+  it("re-pins a governed artifact independent of sibling order without rewriting other bundle bytes", async () => {
+    const project = await copyFixture0_6();
+    const artifactPath = path.join(project, "src/example.ts");
+    const changedArtifact = Buffer.from("export const value = 2;\n", "utf8");
+    await writeFile(artifactPath, changedArtifact);
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+    const original = await readFile(bundlePath, "utf8");
+    const priorDigest = YAML.parse(original).governed_artifacts[0].digest.value;
+    const reordered = original.replace(
+      "    path: src/example.ts\n    digest:\n      algorithm: sha-256\n      value:",
+      "    # preserved artifact sibling comment\n    digest:\n      algorithm: sha-256\n      value:",
+    ).replace(
+      "    record: realization",
+      "    path: src/example.ts\n    record: realization",
+    );
+    expect(reordered).not.toBe(original);
+    await writeFile(bundlePath, reordered);
+    const result = run("repin", project, ["--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json.artifacts).toBe(1);
+    expect(await readFile(bundlePath, "utf8")).toBe(
+      reordered.replace(priorDigest, `"${sha256(changedArtifact)}"`),
+    );
+  });
+
+  it("rejects anchored, tagged, aliased, and merged scalar mutation targets before writing", async () => {
+    for (const representation of ["anchored", "tagged", "aliased", "merged"] as const) {
+      const project = await copyFixture0_6();
+      const artifactPath = path.join(project, "src/example.ts");
+      await writeFile(artifactPath, "export const value = 3;\n");
+      const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+      const original = await readFile(bundlePath, "utf8");
+      const priorDigest = YAML.parse(original).governed_artifacts[0].digest.value;
+      let unsupported = original;
+      if (representation === "anchored") {
+        unsupported = original.replace(`value: ${priorDigest}`, `value: &bound ${priorDigest}`);
+      } else if (representation === "tagged") {
+        unsupported = original.replace(`value: ${priorDigest}`, `value: !!str ${priorDigest}`);
+      } else if (representation === "aliased") {
+        unsupported = original
+          .replace("algorithm: sha-256", "algorithm: &bound sha-256")
+          .replace(`value: ${priorDigest}`, "value: *bound");
+      } else {
+        unsupported = original.replace(
+          `    digest:\n      algorithm: sha-256\n      value: ${priorDigest}`,
+          `    digest:\n      <<: &inherited-digest\n        algorithm: sha-256\n        value: ${priorDigest}\n      algorithm: sha-256\n      value: ${priorDigest}`,
+        );
+      }
+      expect(unsupported, representation).not.toBe(original);
+      await writeFile(bundlePath, unsupported);
+      const result = run("repin", project, ["--checker", checker]);
+      expect(result.status, `${representation}: ${result.stderr}`).toBe(1);
+      expect(result.stderr).toMatch(/anchored|tagged|aliased|merged|unique scalar/i);
+      expect(await readFile(bundlePath, "utf8")).toBe(unsupported);
+    }
+  });
+
+  it("converts one changed legacy-locked Task document to its native envelope transactionally", async () => {
+    const project = await copyFixture0_6();
+    const sourcePath = path.join(project, "knowledge/tasks/active/task.md");
+    const originalSource = await readFile(sourcePath, "utf8");
+    const nativeSource = originalSource
+      .replace(/^task_id: .*\n/m, "")
+      .replace(/^task_status: .*\n/m, "")
+      .replace("\n## Decision Applicability\n", "\nNative 0.6 Task edit.\n\n## Decision Applicability\n");
+    await writeFile(sourcePath, nativeSource);
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+    const originalBundle = await readFile(bundlePath, "utf8");
+    const commentedBundle = originalBundle.replace(
+      "      legacy_lock:\n",
+      "      # preserved Task sibling comment\n      legacy_lock:\n",
+    );
+    await writeFile(bundlePath, commentedBundle);
+    const result = run("repin", project, ["--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json.documents).toBe(1);
+    const repinnedText = await readFile(bundlePath, "utf8");
+    const repinned = YAML.parse(repinnedText);
+    const task = repinned.non_records.find((item: any) => item.kind === "task");
+    expect(task.document.legacy_lock).toBeUndefined();
+    expect(task.document.digest.value).toBe(sha256(Buffer.from(nativeSource, "utf8")));
+    expect(repinnedText).toContain("# preserved Task sibling comment");
+    const repeated = run("repin", project, ["--checker", checker]);
+    expect(repeated.status, repeated.stderr).toBe(0);
+    expect(repeated.json).toMatchObject({ records: 0, documents: 0, artifacts: 0 });
+    expect(await readFile(bundlePath, "utf8")).toBe(repinnedText);
+  });
+
   it("linkifies same-bundle references idempotently", async () => {
     const project = await copyFixture();
     const map = path.join(project, "knowledge/README.md");
     await writeFile(map, `${(await readFile(map, "utf8")).trimEnd()}\n\nSee TEST-001 for the active work.\n`);
-    const first = run("linkify", project);
+    const first = run("linkify", project, ["--checker", checker]);
     expect(first.status, first.stderr).toBe(0);
     expect(first.json.changed).toBe(1);
     expect(await readFile(map, "utf8")).toContain("[TEST-001](tasks/active/task.md)");
-    const second = run("linkify", project);
+    const second = run("linkify", project, ["--checker", checker]);
     expect(second.json.changed).toBe(0);
+  });
+
+  it("linkifies and natively re-pins a represented legacy Task document", async () => {
+    const project = await copyFixture0_6();
+    const taskPath = path.join(project, "knowledge/tasks/active/task.md");
+    const nativeTask = (await readFile(taskPath, "utf8"))
+      .replace(/^task_id: .*\n/m, "")
+      .replace(/^task_status: .*\n/m, "")
+      .replace(
+        "\n## Decision Applicability\n",
+        "\nSee `realization` for the realized system.\n\n## Decision Applicability\n",
+      );
+    await writeFile(taskPath, nativeTask);
+    const first = run("linkify", project, ["--checker", checker]);
+    expect(first.status, first.stderr).toBe(0);
+    expect(first.json).toMatchObject({ changed: 1, repinned_documents: 1 });
+    expect(await readFile(taskPath, "utf8")).toContain(
+      "See [`realization`](../../realizations/current-system.md) for the realized system.",
+    );
+    const bundle = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+    );
+    const task = bundle.non_records.find((item: any) => item.kind === "task");
+    expect(task.document.legacy_lock).toBeUndefined();
+    expect(task.document.digest.value).toBe(sha256(await readFile(taskPath)));
+    const second = run("linkify", project, ["--checker", checker]);
+    expect(second.status, second.stderr).toBe(0);
+    expect(second.json).toMatchObject({ changed: 0, repinned_documents: 0 });
   });
 
   it("closes a task through the verified transaction and rewrites links", async () => {
@@ -227,6 +455,78 @@ describe("deterministic governed mechanics", () => {
     expect(JSON.parse(check.stdout).conformance).toBe("passed");
   });
 
+  it("transitions a native 0.5 Task through YAML state without moving or rewriting its source", async () => {
+    const project = await copyFixture0_5();
+    const source = path.join(project, "knowledge/tasks/active/task.md");
+    const original = await readFile(source);
+    await writeFile(
+      source,
+      Buffer.from(
+        original.toString("utf8")
+          .replace(/^task_id: .*\n/m, "")
+          .replace(/^task_status: .*\n/m, "")
+          .replace(
+            "\n## Decision Applicability\n",
+            "\n## Completion Result\n\nThe fixture work completed with all criteria satisfied.\n\n## Decision Applicability\n",
+          ),
+      ),
+    );
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
+    const task = bundle.non_records.find((item: any) => item.kind === "task" && item.document?.id === "TEST-001");
+    const sourceBytes = await readFile(source);
+    task.document.legacy_lock = undefined;
+    await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0 }));
+    const repin = run("repin", project, ["--checker", checker]);
+    expect(repin.status, repin.stderr).toBe(0);
+    expect(repin.json.documents).toBe(1);
+    const repinnedBundleText = await readFile(bundlePath, "utf8");
+    const transitionBundleText = repinnedBundleText.replace(
+      "      state:\n        vocabulary: task-status\n        value: active",
+      "      state:\n        value: active\n        vocabulary: task-status",
+    );
+    expect(transitionBundleText).not.toBe(repinnedBundleText);
+    await writeFile(bundlePath, transitionBundleText);
+
+    const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.json).toMatchObject({
+      state: "transitioned",
+      task: "TEST-001",
+      prior_task_status: "active",
+      task_status: "completed",
+      generated_navigation: 4,
+    });
+    expect(result.json.changed_subjects).toEqual([
+      ".nourd/knowledge/bundle.yaml",
+      "knowledge/tasks/by-state/active.md",
+      "knowledge/tasks/by-state/cancelled.md",
+      "knowledge/tasks/by-state/completed.md",
+      "knowledge/tasks/by-state/deferred.md",
+    ]);
+    expect(await readFile(source)).toEqual(sourceBytes);
+    expect(await readFile(bundlePath, "utf8")).toBe(
+      transitionBundleText.replace("        value: active", "        value: \"completed\""),
+    );
+    await expect(lstat(path.join(project, "knowledge/tasks/completed/task.md"))).rejects.toThrow();
+    const updated = YAML.parse(await readFile(bundlePath, "utf8"));
+    const updatedTask = updated.non_records.find((item: any) => item.kind === "task" && item.document?.id === "TEST-001");
+    expect(updatedTask.document.state.value).toBe("completed");
+    expect(await readFile(path.join(project, "knowledge/tasks/by-state/active.md"), "utf8")).not.toContain("TEST-001");
+    expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../active/task.md)");
+
+    const current = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
+    expect(current.status, current.stderr).toBe(0);
+    expect(current.json).toEqual({
+      state: "current",
+      task: "TEST-001",
+      prior_task_status: "completed",
+      task_status: "completed",
+      generated_navigation: 0,
+      changed_subjects: [],
+    });
+  });
+
   it("rebases the moved task's own outbound links", async () => {
     const project = await copyFixture();
     const task = path.join(project, "knowledge/tasks/active/task.md");
@@ -234,7 +534,7 @@ describe("deterministic governed mechanics", () => {
       "\n## Decision Applicability\n",
       "\nSee the [active index](README.md) for peers.\n\n## Decision Applicability\n",
     ));
-    run("repin", project);
+    run("repin", project, ["--checker", checker]);
     const resultFile = path.join(project, "..", "outbound-result.md");
     await writeFile(resultFile, "Completed with outbound links rebased.\n");
     const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
@@ -251,7 +551,7 @@ describe("deterministic governed mechanics", () => {
       "No mandatory capability is implicated by this Task.",
       "| Capability | Finding | Verification | Exception |\n| --- | --- | --- | --- |\n| Custom terrain | unsupported | none | none |",
     ));
-    run("repin", project);
+    run("repin", project, ["--checker", checker]);
     const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("gate blocks completion");
@@ -274,7 +574,7 @@ describe("deterministic governed mechanics", () => {
       "No mandatory capability is implicated by this Task.",
       "| Capability | Finding | Verification | Exception |\n| --- | --- | --- | --- |\n| Custom terrain | unsupported | none | none |",
     ));
-    run("repin", project);
+    run("repin", project, ["--checker", checker]);
     const noRationale = run("task", project, ["--task", "TEST-001", "--to", "cancel", "--checker", checker]);
     expect(noRationale.status).toBe(1);
     expect(noRationale.stderr).toContain("cancellation rationale");

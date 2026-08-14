@@ -6,7 +6,9 @@ export const PHASES = [
   "source",
   "extension-resolution",
   "bundle-graph",
+  "knowledge-graph",
   "record-contract",
+  "freshness",
   "security",
   "authority-binding",
   "result",
@@ -20,16 +22,24 @@ export interface ValidationRequest {
   level: ConformanceLevel;
   record_id: string | null;
   acceptance_binding: "requested" | "not-requested";
+  purpose?: "change-impact" | "whole-root-readiness" | "consequential-use" | "historical-reproduction" | null;
+  require_readiness?: boolean;
+  changed_inputs?: unknown[];
+  targets?: unknown[];
+  observations?: unknown[];
+  evaluation_time?: string | null;
+  historical_receipt?: string | null;
 }
 
 export interface Diagnostic {
   rule_id: string;
   severity: "error" | "warning";
-  blocking: "conformance" | "governing-use" | "none";
+  blocking: "conformance" | "readiness" | "governing-use" | "none";
   phase: Phase;
   message: string;
   artifact?: string;
   record_id?: string;
+  node_id?: string;
   instance_pointer?: string;
   source_section?: string;
   remediation?: string;
@@ -49,6 +59,7 @@ export interface ContractArtifacts {
   core: {
     specification: ArtifactBinding;
     executable: ArtifactBinding;
+    freshness_policy?: ArtifactBinding;
     schemas: SchemaBinding[];
   };
   extensions: Array<{
@@ -115,11 +126,15 @@ export interface ValidateOptions {
   persist?: boolean;
   now?: () => Date;
   executionId?: () => string;
+  evaluationObserver?: (result: {
+    state: "evaluated" | "evaluated-current";
+    receipt: { id: string; path: string };
+  }) => void;
 }
 
 export interface ValidationResult {
   contract: "nkf.validation-result";
-  nkf_version: "0.1" | "0.2" | "0.3" | "0.4";
+  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6";
   execution: {
     id: string;
     runner: string;
@@ -148,6 +163,8 @@ export interface ValidationResult {
   };
   phases: Array<{ id: Phase; state: PhaseState }>;
   conformance: "passed" | "failed";
+  knowledge_graph?: Record<string, unknown>;
+  nodes?: Array<Record<string, unknown>>;
   records: Array<{
     record_id: string;
     declared_governance: Record<string, unknown> | null;
@@ -156,14 +173,19 @@ export interface ValidationResult {
     governing_use: "ready" | "not-ready" | "not-evaluated";
   }>;
   governing_use: "ready" | "not-ready" | "not-evaluated";
+  readiness?: Record<string, unknown>;
   diagnostics: Diagnostic[];
 }
 
 export interface LoadedContracts {
   executable: Record<string, any>;
+  freshnessPolicy: Record<string, any> | null;
   schemas: {
     bundle: Record<string, unknown>;
     record: Record<string, unknown>;
+    baseline: Record<string, unknown>;
+    receipt: Record<string, unknown>;
+    policy: Record<string, unknown>;
     result: Record<string, unknown>;
   };
   artifacts: ContractArtifacts;
@@ -171,9 +193,15 @@ export interface LoadedContracts {
   validators: {
     bundle: (value: unknown) => boolean;
     record: (value: unknown) => boolean;
+    baseline: (value: unknown) => boolean;
+    receipt: (value: unknown) => boolean;
+    policy: (value: unknown) => boolean;
     result: (value: unknown) => boolean;
     bundleErrors: () => readonly unknown[] | null | undefined;
     recordErrors: () => readonly unknown[] | null | undefined;
+    baselineErrors: () => readonly unknown[] | null | undefined;
+    receiptErrors: () => readonly unknown[] | null | undefined;
+    policyErrors: () => readonly unknown[] | null | undefined;
     resultErrors: () => readonly unknown[] | null | undefined;
   };
 }

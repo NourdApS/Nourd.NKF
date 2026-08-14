@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0013: Accept NKF 0.1 Native Record Serialization"
 source:
   path: decisions/0013-native-record-serialization.md
+  stable_path: decisions/0013-native-record-serialization.md
   digest:
     algorithm: sha-256
     value: a6c224c47b640b55681b56e7b301a9bbf6a6d2a65fbc26e859b0a604ce60daf5
@@ -50,3 +51,26 @@ sections:
     responsibilities:
       - consequences-and-trade-offs
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: a6c224c47b640b55681b56e7b301a9bbf6a6d2a65fbc26e859b0a604ce60daf5
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

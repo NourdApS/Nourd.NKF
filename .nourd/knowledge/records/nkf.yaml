@@ -5,6 +5,7 @@ body_contract: nkf.technology
 title: Nourd Knowledge Format
 source:
   path: nkf.md
+  stable_path: nkf.md
   digest:
     algorithm: sha-256
     value: acc8c0c2e108e75dbffa59ca8db8bbb29c4cad1fcdb1537e821cc418ea918d3c
@@ -91,3 +92,17 @@ relationships:
   - type: references
     target: nkf-0.1-native-realization
     source_section: technology-map
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: acc8c0c2e108e75dbffa59ca8db8bbb29c4cad1fcdb1537e821cc418ea918d3c
+  predecessor_state:
+    record_lifecycle: living
+    record_status: accepted
+  initial_declaration_state:
+    governance:
+      lifecycle: living
+      status: accepted
+      authority:
+        - human-product-owner

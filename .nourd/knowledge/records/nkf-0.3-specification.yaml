@@ -5,6 +5,7 @@ body_contract: nkf.specification
 title: NKF 0.3 — Product And Technology Knowledge Format
 source:
   path: specifications/nkf-0.3.md
+  stable_path: specifications/nkf-0.3.md
   digest:
     algorithm: sha-256
     value: 0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e
@@ -369,3 +370,26 @@ relationships:
   - type: governs
     target: nkf
     source_section: scope
+task: NKF-023
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 0094bedce5485901c3ab6fb542e3d2785e961991cf7cc6f24e9aa3462498436e
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-023
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-023
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

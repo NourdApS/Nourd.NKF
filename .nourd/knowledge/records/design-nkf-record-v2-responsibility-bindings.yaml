@@ -5,6 +5,7 @@ body_contract: nkf.design
 title: NKF Record V2 Responsibility Bindings
 source:
   path: designs/superseded/record-v2-responsibility-bindings.md
+  stable_path: designs/superseded/record-v2-responsibility-bindings.md
   digest:
     algorithm: sha-256
     value: bd53b4ff1dbaeae57661533871d7419c9774865ea4aaecb59a9b787c0108b3a6
@@ -76,3 +77,41 @@ sections:
     authority: proposal
     role: context
 relationships: []
+task: NKF-003
+design_disposition: superseded
+design_decisions:
+  - adr-0005
+superseded_by:
+  - adr-0009
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: bd53b4ff1dbaeae57661533871d7419c9774865ea4aaecb59a9b787c0108b3a6
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: superseded
+    decision_authority: Human Product Owner, Nourd ApS
+    task: NKF-003
+    design_disposition: superseded
+    design_decisions:
+      - adr-0005
+    superseded_by:
+      - adr-0009
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: superseded
+      authority:
+        - human-product-owner
+    task: NKF-003
+    design_disposition: superseded
+    design_decisions:
+      - adr-0005
+    superseded_by:
+      - adr-0009
+  authority_mapping:
+    source_value: Human Product Owner, Nourd ApS
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

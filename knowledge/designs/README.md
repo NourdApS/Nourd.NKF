@@ -43,13 +43,13 @@ establishes it.
 
 ## Active
 
-[Active Design Index](active/README.md)
+[Active Design Index](by-disposition/active.md)
 
 - [NKF Task Scope Gate](active/task-scope-gate.md)
 
 ## Adopted
 
-[Adopted Design Index](adopted/README.md)
+[Adopted Design Index](by-disposition/adopted.md)
 
 - [Acceptance Provenance](adopted/acceptance-provenance.md)
 - [Agent-Led Initial Onboarding](adopted/agent-led-initial-onboarding.md)
@@ -65,6 +65,8 @@ establishes it.
 - [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
 - [Native Bundle Serialization](adopted/native-bundle-serialization.md)
 - [Native Record Serialization](adopted/native-record-serialization.md)
+- [NKF 0.6 Corrective Release And Open-Source Licensing](items/nkf-0-6-corrective-release-and-open-source-licensing.md)
+- [NKF Freshness And Deterministic Knowledge Graph](adopted/freshness-and-deterministic-knowledge-graph.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](adopted/presentation-guidance.md)
 - [Product Responsibility Identifiers](adopted/product-responsibility-identifiers.md)
@@ -78,13 +80,13 @@ establishes it.
 
 ## Rejected
 
-[Rejected Design Index](rejected/README.md)
+[Rejected Design Index](by-disposition/rejected.md)
 
 No Design is currently classified as Rejected.
 
 ## Superseded
 
-[Superseded Design Index](superseded/README.md)
+[Superseded Design Index](by-disposition/superseded.md)
 
 - [Artifact Identities And Contract Versioning](superseded/artifact-identities-and-contract-versioning.md)
 - [Initial JSON Schema Realization](superseded/initial-json-schema-realization.md)
@@ -93,7 +95,7 @@ No Design is currently classified as Rejected.
 
 ## Withdrawn
 
-[Withdrawn Design Index](withdrawn/README.md)
+[Withdrawn Design Index](by-disposition/withdrawn.md)
 
 No Design is currently classified as Withdrawn.
 

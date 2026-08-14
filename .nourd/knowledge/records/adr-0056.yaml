@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0056: Design Direction And Record Authority"
 source:
   path: decisions/0056-design-direction-and-record-authority.md
+  stable_path: decisions/0056-design-direction-and-record-authority.md
   digest:
     algorithm: sha-256
     value: a2bf52cae95f7cbfe2f3423d28619658f3e4cb8cb7aa9df289edab45e6274ce5
@@ -17,54 +18,92 @@ scope:
   root: nkf
 sections:
   - id: context-and-problem
-    heading_path: [Context And Problem]
+    heading_path:
+      - Context And Problem
     occurrence: 1
     authority: accepted-meaning
     role: context
-    responsibilities: [context-and-problem]
+    responsibilities:
+      - context-and-problem
   - id: decision
-    heading_path: [Decision]
+    heading_path:
+      - Decision
     occurrence: 1
     authority: accepted-meaning
     role: governing
-    responsibilities: [decision]
+    responsibilities:
+      - decision
   - id: scope-and-applicability
-    heading_path: [Scope And Applicability]
+    heading_path:
+      - Scope And Applicability
     occurrence: 1
     authority: accepted-meaning
     role: applicability
-    responsibilities: [scope-and-applicability]
+    responsibilities:
+      - scope-and-applicability
   - id: rationale
-    heading_path: [Rationale]
+    heading_path:
+      - Rationale
     occurrence: 1
     authority: accepted-meaning
     role: rationale
-    responsibilities: [rationale]
+    responsibilities:
+      - rationale
   - id: alternatives-considered
-    heading_path: [Alternatives Considered]
+    heading_path:
+      - Alternatives Considered
     occurrence: 1
     authority: accepted-meaning
     role: alternative
-    responsibilities: [alternatives-considered]
+    responsibilities:
+      - alternatives-considered
   - id: consequences-and-trade-offs
-    heading_path: [Consequences And Trade-Offs]
+    heading_path:
+      - Consequences And Trade-Offs
     occurrence: 1
     authority: accepted-meaning
     role: trade-off
-    responsibilities: [consequences-and-trade-offs]
+    responsibilities:
+      - consequences-and-trade-offs
   - id: accepted-revisions
-    heading_path: [Accepted Revisions]
+    heading_path:
+      - Accepted Revisions
     occurrence: 1
     authority: accepted-meaning
     role: governing
   - id: supersession-and-compatibility
-    heading_path: [Supersession And Compatibility]
+    heading_path:
+      - Supersession And Compatibility
     occurrence: 1
     authority: accepted-meaning
     role: consequence
   - id: non-claims
-    heading_path: [Non-Claims]
+    heading_path:
+      - Non-Claims
     occurrence: 1
     authority: accepted-meaning
     role: content
 relationships: []
+task: NKF-007
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: a2bf52cae95f7cbfe2f3423d28619658f3e4cb8cb7aa9df289edab45e6274ce5
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer under the Human Product Owner's explicit direction to choose vocabulary consistent with NKF’s Design concept
+    task: NKF-007
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-007
+  authority_mapping:
+    source_value: Codex technical reviewer under the Human Product Owner's explicit direction to choose vocabulary consistent with NKF’s Design concept
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

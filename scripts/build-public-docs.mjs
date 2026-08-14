@@ -26,21 +26,29 @@ export async function buildPublicDocs(root = repositoryRoot) {
     path.join(docsRoot, "reference/nkf-0.4.md"),
   );
   await copyFile(
+    path.join(root, "knowledge/specifications/nkf-0.5-revision-2.md"),
+    path.join(docsRoot, "reference/nkf-0.5.md"),
+  );
+  await copyFile(
+    path.join(root, "knowledge/specifications/nkf-0.6-revision-3.md"),
+    path.join(docsRoot, "reference/nkf-0.6.md"),
+  );
+  await copyFile(
     path.join(root, "dist/nourd-nkf-adopt.mjs"),
     path.join(docsRoot, "tools/nourd-nkf-adopt.mjs"),
   );
   await copyFile(
-    path.join(root, "distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md"),
+    path.join(root, "distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md"),
     path.join(docsRoot, "tools/nkf-onboarding-protocol.md"),
   );
   for (const directory of [".agents", ".claude"]) {
     await copyFile(
-      path.join(root, `distribution/nkf/0.4/${directory}/skills/nkf-onboarding/SKILL.md`),
+      path.join(root, `distribution/nkf/0.6/${directory}/skills/nkf-onboarding/SKILL.md`),
       path.join(docsRoot, `${directory}/skills/nkf-onboarding/SKILL.md`),
     );
   }
   for (const kind of ["product", "technology"]) {
-    const fixture = kind === "product" ? "minimal-0-4" : "technology-0-4";
+    const fixture = kind === "product" ? "minimal-0-6" : "technology-0-6";
     const target = path.join(docsRoot, "examples", kind, "project");
     await rm(target, { recursive: true, force: true });
     await cp(path.join(root, "fixtures", "valid", fixture), target, {

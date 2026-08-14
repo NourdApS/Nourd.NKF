@@ -2,9 +2,9 @@ import { lstat, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import YAML from "yaml";
 
-export const CURRENT_RELEASE_VERSION = "0.4";
+export const CURRENT_RELEASE_VERSION = "0.6";
 export function releaseSetPathForVersion(nkfVersion) {
-  if (!["0.3", "0.4"].includes(nkfVersion)) {
+  if (!["0.3", "0.4", "0.5", "0.6"].includes(nkfVersion)) {
     fail(`NKF ${nkfVersion} does not use the complete release-set contract.`);
   }
   return `contracts/nkf/${nkfVersion}/release-set.yaml`;
@@ -13,6 +13,10 @@ export const RELEASE_SET_PATH = releaseSetPathForVersion(CURRENT_RELEASE_VERSION
 export const RELEASE_CLASSES = Object.freeze([
   "normative-specification",
   "executable-companion",
+  "evaluation-policy",
+  "repository-license",
+  "repository-notice",
+  "third-party-notices",
   "release-set-contract",
   "release-manifest",
   "derived-schema",
@@ -30,6 +34,23 @@ export const RELEASE_CLASSES = Object.freeze([
   "technology-public-example",
   "public-documentation",
 ]);
+
+export function releaseClassesForVersion(nkfVersion) {
+  if (nkfVersion === "0.6") return RELEASE_CLASSES;
+  if (nkfVersion === "0.5") {
+    return RELEASE_CLASSES.filter((className) => ![
+      "repository-license",
+      "repository-notice",
+      "third-party-notices",
+    ].includes(className));
+  }
+  return RELEASE_CLASSES.filter((className) => ![
+    "evaluation-policy",
+    "repository-license",
+    "repository-notice",
+    "third-party-notices",
+  ].includes(className));
+}
 
 const SELECTIONS = new Set([
   "exact-file",
@@ -113,7 +134,7 @@ export function validateReleaseSet(value) {
   exactKeys(value, ["contract", "nkf_version", "coverage", "members"], "Release set");
   if (
     value.contract !== "nkf.release-set" ||
-    !["0.3", "0.4"].includes(value.nkf_version) ||
+    !["0.3", "0.4", "0.5", "0.6"].includes(value.nkf_version) ||
     !Array.isArray(value.coverage) ||
     value.coverage.length === 0 ||
     !Array.isArray(value.members) ||
@@ -122,9 +143,10 @@ export function validateReleaseSet(value) {
     fail("Release set identity, version, coverage, or members are invalid.");
   }
 
+  const releaseClasses = releaseClassesForVersion(value.nkf_version);
   const selectors = value.coverage.map((selector, index) => {
     exactKeys(selector, ["class", "selection", "path"], `Coverage selector ${index}`);
-    const classIndex = RELEASE_CLASSES.indexOf(selector.class);
+    const classIndex = releaseClasses.indexOf(selector.class);
     if (classIndex === -1 || !SELECTIONS.has(selector.selection)) {
       fail(`Coverage selector ${index} uses an unsupported class or selection.`);
     }
@@ -157,7 +179,7 @@ export function validateReleaseSet(value) {
       }
     }
   }
-  for (const className of RELEASE_CLASSES) {
+  for (const className of releaseClasses) {
     if (!selectors.some((selector) => selector.class === className)) {
       fail(`Coverage omits required class: ${className}.`);
     }
@@ -169,7 +191,7 @@ export function validateReleaseSet(value) {
   for (const [index, member] of value.members.entries()) {
     exactKeys(member, ["path", "class", "mode"], `Release member ${index}`);
     safeReleasePath(member.path, `Release member ${index} path`);
-    if (!RELEASE_CLASSES.includes(member.class)) {
+    if (!releaseClasses.includes(member.class)) {
       fail(`Release member ${index} uses an unsupported class.`);
     }
     const expectedMode = member.path === "dist/nourd-nkf-checker.mjs" ? "0755" : "0644";
@@ -193,7 +215,7 @@ export function validateReleaseSet(value) {
       fail(`Coverage selector is empty: ${selector.path}.`);
     }
   }
-  for (const className of RELEASE_CLASSES) {
+  for (const className of releaseClasses) {
     if ((classCounts.get(className) ?? 0) < 1) fail(`Members omit required class: ${className}.`);
   }
   if (
@@ -246,6 +268,13 @@ async function recursiveFiles(root, relative) {
 
 export async function reproduceReleaseMembers(repositoryRoot, releaseSet) {
   validateReleaseSet(releaseSet);
+  if (releaseSet.nkf_version !== CURRENT_RELEASE_VERSION) {
+    for (const member of releaseSet.members) {
+      if (member.path === "release-manifest.json") continue;
+      await containedRegular(repositoryRoot, member.path, false);
+    }
+    return releaseSet.members;
+  }
   const discovered = [];
   for (const selector of releaseSet.coverage) {
     let paths;

@@ -1,0 +1,15 @@
+# Completed Tasks
+
+- [NKF-003](../completed/NKF-003-independent-nkf-authority.md)
+- [NKF-007](../completed/NKF-007-knowledge-structure-and-confirmation.md)
+- [NKF-008](../completed/NKF-008-publish-and-onboard-consumers.md)
+- [NKF-010](../completed/NKF-010-governed-frontmatter-adoption.md)
+- [NKF-011](../completed/NKF-011-enforce-nkf-contracts.md)
+- [NKF-013](../completed/NKF-013-initial-greenfield-onboarding.md)
+- [NKF-015](../completed/NKF-015-agent-led-initial-onboarding.md)
+- [NKF-017](../completed/NKF-017-complete-portable-onboarding-topology.md)
+- [NKF-019](../completed/NKF-019-decision-applicability-gate.md)
+- [NKF-020](../completed/NKF-020-version-release-adoption-and-compatibility-process.md)
+- [NKF-023](../completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
+- [NKF-024](../completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
+- [NKF-027](../items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)

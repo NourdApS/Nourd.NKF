@@ -1,7 +1,7 @@
 # Initial Onboarding
 
 Initial onboarding takes an unadopted Empty Repository or Tiny Knowledge, No
-Source Or Configuration repository to a complete checked NKF 0.4 candidate
+Source Or Configuration repository to a complete checked and reviewed NKF 0.6 candidate
 without requiring manual native YAML or integration assembly.
 
 It supports Product and Technology roots. Common rules apply to both but are
@@ -204,8 +204,9 @@ node nourd-nkf-adopt.mjs seal \
 
 Sealing verifies the assessment and applicable confirmation, recreates the
 complete mechanical snapshot, requires every Markdown representation, and
-refreshes exact candidate digests. It does not change the project, prove the
-semantic category, or establish conformance.
+refreshes exact candidate digests. It does not change the project, construct
+the later 0.6 graph candidate, prove the semantic category, or establish
+conformance.
 
 ## Apply The Complete Candidate With Adopt
 
@@ -214,8 +215,17 @@ For authenticated access to the governed recommendation and private release:
 ```sh
 node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
-  --plan /absolute/path/to/onboarding-workspace/plan.yaml
+  --plan /absolute/path/to/onboarding-workspace/plan.yaml \
+  --review /absolute/path/to/onboarding-workspace/whole-root-review.yaml
 ```
+
+On the first run, use an absent `--review` file. Adopt constructs the exact
+isolated 0.6 candidate, writes its complete review template to that path, and
+stops before mutation. A named human or agent reviews the actual candidate,
+replaces every placeholder with source-bound classifications and observations,
+then reruns the same Adopt command. The adopter validates exact node,
+relationship-vocabulary, and accepted-Decision coverage; it never invents the
+semantic review.
 
 For an approved offline recommendation and archive:
 
@@ -223,6 +233,7 @@ For an approved offline recommendation and archive:
 node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
   --plan /absolute/path/to/onboarding-workspace/plan.yaml \
+  --review /absolute/path/to/whole-root-review.yaml \
   --recommendation /absolute/path/to/recommended.json \
   --archive /absolute/path/to/nourd-nkf-sha256-<release-sha256>.tar
 ```
@@ -241,17 +252,12 @@ Every successful initial onboarding creates the complete portable topology:
 ├── README.md
 ├── tasks/
 │   ├── README.md
-│   ├── active/README.md
-│   ├── deferred/README.md
-│   ├── completed/README.md
-│   └── cancelled/README.md
+│   ├── items/
+│   └── by-state/
 ├── designs/
 │   ├── README.md
-│   ├── active/README.md
-│   ├── adopted/README.md
-│   ├── rejected/README.md
-│   ├── superseded/README.md
-│   └── withdrawn/README.md
+│   ├── items/
+│   └── by-disposition/
 ├── decisions/README.md
 ├── specifications/README.md
 ├── realizations/
@@ -287,7 +293,7 @@ NKF conformance:
   },
   "validation": {
     "conformance": "passed",
-    "governing_use": "not-ready"
+    "readiness": "ready"
   }
 }
 ```

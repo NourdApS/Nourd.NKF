@@ -27,7 +27,8 @@ Start with the actual
 [bundle](project/.nourd/knowledge/bundle.yaml), then inspect the
 [Product declaration](project/.nourd/knowledge/records/product.yaml) and its
 [canonical Markdown](project/knowledge/product.md). The
-[Task](project/knowledge/tasks/active/task.md) is an explicit non-record and the
+[Task](project/knowledge/tasks/active/task.md) is a stable document node whose
+lifecycle is declared in YAML and projected under `tasks/by-state/`; the
 [knowledge README](project/knowledge/README.md) is explicit navigation. No
 Markdown source is left unrepresented.
 
@@ -44,5 +45,6 @@ npm run nkf:check
 ```
 
 The publication verifier runs the bundled checker against this exact project
-before publication. A passing example check proves only snapshot conformance;
+and requires its reviewed whole-root baseline to be ready. A passing example
+check proves only snapshot conformance and readiness;
 it does not accept the synthetic Product meaning.

@@ -12,7 +12,7 @@ export class RuleEmitter {
     ruleId: string,
     message: string,
     fields: Partial<
-      Pick<Diagnostic, "artifact" | "record_id" | "instance_pointer" | "source_section" | "remediation">
+      Pick<Diagnostic, "artifact" | "record_id" | "node_id" | "instance_pointer" | "source_section" | "remediation">
     > = {},
   ): void {
     const rule = this.#rules[ruleId];

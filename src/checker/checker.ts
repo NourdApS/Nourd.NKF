@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import {
+  mkdir,
   lstat,
   readFile,
   readdir,
@@ -11,10 +12,11 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import { validateDecisionApplicabilityGate } from "./applicability.js";
-import { bindingsForVersion, unsupportedVersionBindings } from "./bindings.js";
+import { bindingsForVersion, unsupportedVersionBindings, type SupportedNkfVersion } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
 import { validateExtensions } from "./extensions.js";
+import { evaluateKnowledgeGraph, type KnowledgeGraphResult } from "./freshness.js";
 import { findIdentityBulletLabels, findUnlinkedReferences, parseMarkdown, type MarkdownModel, type ReferenceMaps } from "./markdown.js";
 import {
   discoverMarkdown,
@@ -51,6 +53,7 @@ import {
   escapePointer,
   fixedUtc,
   isWithin,
+  jcs,
   sha256,
   snapshot,
   uniqueDiagnostics,
@@ -78,6 +81,10 @@ interface ParsedNonRecord {
   markdown?: MarkdownModel;
 }
 
+type ModernNkfVersion = "0.5" | "0.6";
+const isModernNkfVersion = (version: SupportedNkfVersion): version is ModernNkfVersion =>
+  version === "0.5" || version === "0.6";
+
 export class ProjectNotInitializedError extends Error {
   readonly code = "NKF_PROJECT_NOT_INITIALIZED";
 
@@ -104,6 +111,29 @@ async function assertNourdInvocationPrecondition(projectRoot: string): Promise<v
   }
 }
 
+async function requireSafePersistenceDirectory(
+  projectRoot: string,
+  relative: string[],
+): Promise<string> {
+  let current = projectRoot;
+  for (const segment of relative) {
+    current = path.join(current, segment);
+    let direct = await lstat(current).catch(() => null);
+    if (direct === null) {
+      await mkdir(current, { mode: 0o700 });
+      direct = await lstat(current);
+    }
+    if (direct.isSymbolicLink() || !direct.isDirectory()) {
+      throw new Error(`Freshness persistence path is not a direct directory: ${relative.join("/")}`);
+    }
+    const resolved = await realpath(current);
+    if (!isWithin(projectRoot, resolved)) {
+      throw new Error(`Freshness persistence path escapes the project: ${relative.join("/")}`);
+    }
+  }
+  return current;
+}
+
 function validateRequest(options: ValidateOptions): void {
   const { request } = options;
   if (!["structural", "contract", "full-bundle"].includes(request.level)) {
@@ -118,10 +148,36 @@ function validateRequest(options: ValidateOptions): void {
   if (request.level === "structural" && request.acceptance_binding !== "not-requested") {
     throw new TypeError("Structural validation cannot request acceptance binding.");
   }
+  const purpose = request.purpose ?? null;
+  const changedInputs = request.changed_inputs ?? [];
+  const targets = request.targets ?? [];
+  if (request.require_readiness === true && purpose === null) {
+    throw new TypeError("Readiness can be required only with an explicit purpose.");
+  }
+  if (purpose === "change-impact" && changedInputs.length === 0) {
+    throw new TypeError("Change-impact validation requires at least one changed input.");
+  }
+  if (purpose === "consequential-use" && targets.length === 0) {
+    throw new TypeError("Consequential-use validation requires at least one target node.");
+  }
+  if (purpose !== "consequential-use" && targets.length > 0) {
+    throw new TypeError("Only consequential-use validation accepts target nodes.");
+  }
+  if (purpose === "historical-reproduction" && request.historical_receipt == null) {
+    throw new TypeError("Historical reproduction requires one receipt identity.");
+  }
+  if (purpose !== "historical-reproduction" && request.historical_receipt != null) {
+    throw new TypeError("A historical receipt is valid only for historical reproduction.");
+  }
 }
 
 function phaseHasError(diagnostics: Diagnostic[], phase: Phase): boolean {
-  return diagnostics.some((diagnostic) => diagnostic.phase === phase && diagnostic.severity === "error");
+  return diagnostics.some(
+    (diagnostic) =>
+      diagnostic.phase === phase &&
+      diagnostic.severity === "error" &&
+      diagnostic.blocking === "conformance",
+  );
 }
 
 function schemaMessage(error: any): string {
@@ -172,7 +228,7 @@ function securityScan(
 const COMMON_FRONTMATTER_KEYS = ["title", "summary", "created_at"] as const;
 const TASK_ORIENTATION_KEYS_0_2 = ["owner", "decision_authority", "related_tasks"] as const;
 const DESIGN_ORIENTATION_KEYS_0_2 = ["proposal_authority_effect", "proposal_evidence", "implementation_evidence"] as const;
-function commonFrontMatterKeysFor(_nkfVersion: "0.1" | "0.2" | "0.3" | "0.4"): readonly string[] {
+function commonFrontMatterKeysFor(_nkfVersion: SupportedNkfVersion): readonly string[] {
   return COMMON_FRONTMATTER_KEYS;
 }
 const RECORD_FRONTMATTER_KEYS = ["id", "type", "record_lifecycle", "record_status"] as const;
@@ -189,6 +245,12 @@ const REALIZATION_FRONTMATTER_KEYS = [
   "unconfirmed_scope",
 ] as const;
 const TASK_FRONTMATTER_KEYS = ["task_id", "task_status"] as const;
+const MUTABLE_FRONTMATTER_KEYS_0_5 = [
+  "record_lifecycle", "record_status", "decision_authority", "task", "design_disposition",
+  "design_decisions", "superseded_by", "withdrawal_source", "proposal_authority_effect",
+  "proposal_evidence", "implementation_evidence", "confirmation_status", "confirmation_decisions",
+  "unconfirmed_scope", "task_id", "task_status", "owner", "related_tasks",
+] as const;
 
 function hasOwn(value: Record<string, unknown>, key: string): boolean {
   return Object.prototype.hasOwnProperty.call(value, key);
@@ -298,6 +360,70 @@ function deepLinkChecks(
   }
 }
 
+const ADR_0122_HISTORICAL_LOCK = {
+  record_id: "adr-0122",
+  record_declaration: {
+    path: ".nourd/knowledge/records/adr-0122.yaml",
+    digest: { algorithm: "sha-256", value: "dac8ccfe377138d45c5720eeb4d3f0fbdc2b2504224eb50a6a85888c44aaf3b9" },
+  },
+  source: {
+    path: "knowledge/decisions/0122-accept-the-nkf-0-6-authority-set.md",
+    digest: { algorithm: "sha-256", value: "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547" },
+  },
+  violations: [
+    { diagnostic: "markdown.reference.deep-link.required", section: "scope-and-applicability", token: "NKF-027", occurrence: 1 },
+    { diagnostic: "markdown.reference.deep-link.required", section: "alternatives-considered", token: "ADR 0121", occurrence: 1 },
+  ],
+  historical_effect: "accepted-history-not-current-release-authority",
+  correction_decision: "adr-0125",
+};
+
+function historicalEvidenceDeepLinkChecks(
+  nonRecord: ParsedNonRecord,
+  model: MarkdownModel,
+  maps: ReferenceMaps | null,
+  emitter: RuleEmitter,
+): void {
+  const artifact = nonRecord.observation.entry.path;
+  const document = asObject(nonRecord.declaration.document);
+  const lock = asObject(document?.historical_acceptance_attempt_lock);
+  if (lock === null) return;
+  const exactDeclaration =
+    nonRecord.declaration.kind === "evidence" &&
+    nonRecord.declaration.path === "decisions/0122-accept-the-nkf-0-6-authority-set.md" &&
+    document?.id === "document-cddf78f71eac865b267a0b88c15600cf61383285d6d3b2558ff2e07d7bceda95" &&
+    document?.stable_path === "decisions/0122-accept-the-nkf-0-6-authority-set.md" &&
+    document?.digest?.value === "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547" &&
+    nonRecord.observation.entry.content_sha256 === document?.digest?.value &&
+    jcs(lock) === jcs(ADR_0122_HISTORICAL_LOCK);
+  if (!exactDeclaration || maps === null) {
+    emitter.emit("markdown.reference.deep-link.required", "The historical acceptance containment does not exactly bind its one authorized Evidence document.", { artifact });
+    return;
+  }
+  const actual = findUnlinkedReferences(model.body, maps);
+  const headings = model.headings.filter((heading) => heading.level === 2);
+  const sectionAt = (line: number): string | null =>
+    headings.filter((heading) => heading.line < line).at(-1)?.text ?? null;
+  const projected = actual.map((violation) => ({
+    diagnostic: "markdown.reference.deep-link.required",
+    section: sectionAt(violation.line)?.toLowerCase().replaceAll(" ", "-") ?? "",
+    token: violation.token,
+    occurrence: 1,
+    reason: violation.reason,
+  }));
+  const exact = projected.length === 2 && projected.every((value, index) => {
+    const expected = ADR_0122_HISTORICAL_LOCK.violations[index];
+    return value.reason === "unlinked" &&
+      value.diagnostic === expected?.diagnostic &&
+      value.section === expected?.section &&
+      value.token === expected?.token &&
+      value.occurrence === expected?.occurrence;
+  });
+  if (!exact) {
+    emitter.emit("markdown.reference.deep-link.required", "The historical acceptance source differs from its exact two authorized deep-link diagnostics.", { artifact });
+  }
+}
+
 function identityBulletChecks(
   model: MarkdownModel,
   artifact: string,
@@ -318,7 +444,7 @@ function commonFrontMatterChecks(
   artifact: string,
   emitter: RuleEmitter,
   recordId?: string,
-  nkfVersion: "0.1" | "0.2" | "0.3" | "0.4" = "0.1",
+    nkfVersion: SupportedNkfVersion = "0.1",
 ): Record<string, unknown> | null {
   if (!model.frontMatterPresent || model.frontMatter === null) {
     emitter.emit(
@@ -371,7 +497,7 @@ function recordFrontMatterChecks(
   record: ParsedRecord,
   model: MarkdownModel,
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" | "0.3" | "0.4" = "0.1",
+  nkfVersion: SupportedNkfVersion = "0.1",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -380,6 +506,82 @@ function recordFrontMatterChecks(
   const artifact = record.sourceObservation?.entry.path ?? record.artifact;
   const frontMatter = commonFrontMatterChecks(model, artifact, emitter, recordId, nkfVersion);
   if (frontMatter === null) return;
+
+  if (isModernNkfVersion(nkfVersion)) {
+    requiredFrontMatterKeys(frontMatter, ["id", "type"], artifact, emitter, recordId);
+    const allowed = new Set<string>([...commonFrontMatterKeysFor(nkfVersion), "id", "type"]);
+    const lock = asObject(declaration.legacy_lock);
+    const bootstrap = asObject(declaration.accepted_bootstrap_lock);
+    const prepublicationSupersession = asObject(declaration.prepublication_supersession_lock);
+    if (lock !== null || bootstrap !== null || prepublicationSupersession !== null) {
+      for (const key of MUTABLE_FRONTMATTER_KEYS_0_5) allowed.add(key);
+    } else {
+      for (const key of MUTABLE_FRONTMATTER_KEYS_0_5) {
+        if (hasOwn(frontMatter, key)) {
+          emitter.emit("markdown.frontmatter.mutable-state-forbidden", `Native NKF ${nkfVersion} Markdown cannot persist mutable declaration state.`, frontMatterContext(artifact, recordId, key));
+        }
+      }
+    }
+    rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter, recordId);
+    for (const [key, expected] of Object.entries({ id: declaration.id, type: declaration.type, title: declaration.title })) {
+      if (frontMatter[key] !== expected) {
+        emitter.emit("markdown.frontmatter.record-mismatch", "The stable frontmatter identity does not equal the declaration.", frontMatterContext(artifact, recordId, key));
+      }
+    }
+    const predecessor = Object.fromEntries(MUTABLE_FRONTMATTER_KEYS_0_5.filter((key) => hasOwn(frontMatter, key)).map((key) => [key, frontMatter[key]]));
+    const initial = {
+      governance: declaration.governance,
+      ...Object.fromEntries([
+        "task", "design_disposition", "design_decisions", "superseded_by", "withdrawal_source",
+        "proposal_authority_effect", "proposal_evidence", "implementation_evidence", "confirmation_status",
+        "confirmation_decisions", "unconfirmed_scope",
+      ].filter((key) => hasOwn(declaration, key)).map((key) => [key, declaration[key]])),
+    };
+    if (lock !== null) {
+      const valid =
+        record.sourceObservation?.entry.content_sha256 === lock.source_digest?.value &&
+        jcs(predecessor) === jcs(lock.predecessor_state) &&
+        jcs(initial) === jcs(lock.initial_declaration_state) &&
+        (typeof predecessor.decision_authority !== "string" || (
+          lock.authority_mapping?.source_value === predecessor.decision_authority &&
+          lock.authority_mapping?.approved_by === "repository-owner" &&
+          jcs(lock.authority_mapping?.authority_ids) === jcs(declaration.governance?.authority)
+        ));
+      if (!valid) emitter.emit("markdown.frontmatter.legacy-lock.invalid", "The record legacy lock does not exactly bind predecessor bytes, state, conversion, and authority mapping.", { artifact, record_id: recordId });
+    } else if (bootstrap !== null) {
+      const valid =
+        declaration.id === "nkf-0.5-specification-revision-2" &&
+        declaration.type === "specification" &&
+        record.sourceObservation?.entry.content_sha256 === bootstrap.source_digest?.value &&
+        bootstrap.predecessor_version === "0.4" &&
+        jcs(bootstrap.predecessor_state) === jcs(predecessor) &&
+        jcs(bootstrap.current_state) === jcs({ lifecycle: declaration.governance?.lifecycle, status: declaration.governance?.status }) &&
+        bootstrap.accepting_decision?.id === "adr-0119" &&
+        bootstrap.accepting_decision?.digest?.value === "142802158a2f874d8d2d626428a07e172e7769bc1a918bf65a954067c596641c";
+      if (!valid) emitter.emit("markdown.frontmatter.bootstrap-lock.invalid", "The version-canonical Specification bootstrap lock does not exactly bind its predecessor and current accepted state.", { artifact, record_id: recordId });
+    } else if (prepublicationSupersession !== null) {
+      const valid =
+        declaration.id === "nkf-0.5-specification" &&
+        declaration.type === "specification" &&
+        record.sourceObservation?.entry.content_sha256 === "d93e8da4e3abeb7d047d15351f2003d2d242596790fb7db94be994b7e88499dc" &&
+        prepublicationSupersession.source?.id === "nkf-0.5-specification" &&
+        prepublicationSupersession.source?.path === "knowledge/specifications/nkf-0.5.md" &&
+        prepublicationSupersession.source?.digest?.value === "d93e8da4e3abeb7d047d15351f2003d2d242596790fb7db94be994b7e88499dc" &&
+        prepublicationSupersession.accepted_executable?.path === "contracts/nkf/0.5/nkf.yaml" &&
+        prepublicationSupersession.accepted_executable?.digest?.value === "73d9cf683a799729fba6fb64e59aefef0477601827f8f0045aec7d95955d3fd2" &&
+        prepublicationSupersession.acceptance_decision?.id === "adr-0116" &&
+        prepublicationSupersession.acceptance_decision?.digest?.value === "777ecabcbab3c106f2889661125a923ce0f331a759a4bd2b6b0d18e7ed542ee8" &&
+        prepublicationSupersession.correction_decision?.id === "adr-0119" &&
+        prepublicationSupersession.correction_decision?.digest?.value === "142802158a2f874d8d2d626428a07e172e7769bc1a918bf65a954067c596641c" &&
+        jcs(prepublicationSupersession.current_state) === jcs({ lifecycle: declaration.governance?.lifecycle, status: declaration.governance?.status }) &&
+        jcs(prepublicationSupersession.superseded_by) === jcs(declaration.superseded_by) &&
+        jcs(declaration.superseded_by) === jcs(["nkf-0.5-specification-revision-2"]);
+      if (!valid) emitter.emit("markdown.frontmatter.legacy-lock.invalid", "The prepublication Specification supersession lock does not exactly preserve and bind the ADR 0116 authority pair and correction Decision.", { artifact, record_id: recordId });
+    }
+    identityBulletChecks(model, artifact, emitter, recordId);
+    deepLinkChecks(model, artifact, referenceMaps, emitter, recordId);
+    return;
+  }
 
   requiredFrontMatterKeys(frontMatter, RECORD_FRONTMATTER_KEYS, artifact, emitter, recordId);
   const type = String(declaration.type);
@@ -561,7 +763,7 @@ function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" | "0.3" | "0.4" = "0.1",
+  nkfVersion: SupportedNkfVersion = "0.1",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -678,7 +880,7 @@ function sourceChecks(
 function nonRecordSourceChecks(
   nonRecord: ParsedNonRecord,
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" | "0.3" | "0.4" = "0.1",
+  nkfVersion: SupportedNkfVersion = "0.1",
   acceptedDecisionIds: ReadonlySet<string> = new Set(),
   referenceMaps: ReferenceMaps | null = null,
   acceptedDecisionPaths: ReadonlyMap<string, string> = new Map(),
@@ -705,10 +907,57 @@ function nonRecordSourceChecks(
     );
     return;
   }
-  if (nonRecord.declaration.kind === "evidence") return;
+  if (nonRecord.declaration.kind === "evidence") {
+    if (nkfVersion === "0.6") {
+      historicalEvidenceDeepLinkChecks(nonRecord, model, referenceMaps, emitter);
+    }
+    return;
+  }
+  if (nonRecord.declaration.kind === "generated") return;
 
   const frontMatter = commonFrontMatterChecks(model, artifact, emitter, undefined, nkfVersion);
   if (frontMatter === null) return;
+  if (isModernNkfVersion(nkfVersion)) {
+    const document = asObject(nonRecord.declaration.document);
+    const lock = asObject(document?.legacy_lock);
+    const allowed = new Set<string>(commonFrontMatterKeysFor(nkfVersion));
+    if (lock !== null) {
+      for (const key of MUTABLE_FRONTMATTER_KEYS_0_5) allowed.add(key);
+      const predecessor = Object.fromEntries(MUTABLE_FRONTMATTER_KEYS_0_5.filter((key) => hasOwn(frontMatter, key)).map((key) => [key, frontMatter[key]]));
+      const initial = Object.fromEntries([
+        ["document_state", typeof predecessor.task_status === "string" ? { vocabulary: "task-status", value: predecessor.task_status } : undefined],
+        ["owner", predecessor.owner],
+        ["decision_authority", predecessor.decision_authority],
+        ["related_tasks", predecessor.related_tasks],
+      ].filter(([, value]) => value !== undefined));
+      const valid =
+        nonRecord.observation.entry.content_sha256 === lock.source_digest?.value &&
+        jcs(predecessor) === jcs(lock.predecessor_state) &&
+        jcs(initial) === jcs(lock.initial_declaration_state) &&
+        (predecessor.task_id === undefined || predecessor.task_id === document?.id) &&
+        lock.authority_mapping === undefined;
+      if (!valid) emitter.emit("markdown.frontmatter.legacy-lock.invalid", "The document legacy lock does not exactly bind predecessor bytes and converted declaration state.", { artifact });
+    } else {
+      for (const key of MUTABLE_FRONTMATTER_KEYS_0_5) {
+        if (hasOwn(frontMatter, key)) emitter.emit("markdown.frontmatter.mutable-state-forbidden", `Native NKF ${nkfVersion} Markdown cannot persist mutable document state.`, frontMatterContext(artifact, undefined, key));
+      }
+    }
+    rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter);
+    identityBulletChecks(model, artifact, emitter);
+    deepLinkChecks(model, artifact, referenceMaps, emitter);
+    if (nonRecord.declaration.kind === "task") {
+      validateDecisionApplicabilityGate({
+        artifact,
+        model,
+        taskStatus: typeof document?.state?.value === "string" ? document.state.value : null,
+        acceptedDecisionIds,
+        acceptedDecisionPaths,
+        selfPath: String(nonRecord.declaration.path),
+        emitter,
+      });
+    }
+    return;
+  }
   if (nkfVersion !== "0.1") {
     identityBulletChecks(model, artifact, emitter);
     deepLinkChecks(model, artifact, referenceMaps, emitter);
@@ -827,12 +1076,14 @@ function frontMatterReferenceChecks(
   records: ParsedRecord[],
   nonRecords: ParsedNonRecord[],
   emitter: RuleEmitter,
-  nkfVersion: "0.1" | "0.2" | "0.3" | "0.4" = "0.1",
+  nkfVersion: SupportedNkfVersion = "0.1",
 ): void {
   const taskGroups = new Map<string, ParsedNonRecord[]>();
   for (const nonRecord of nonRecords) {
     if (nonRecord.declaration.kind !== "task") continue;
-    const taskId = nonRecord.markdown?.frontMatter?.task_id;
+    const taskId = isModernNkfVersion(nkfVersion)
+      ? nonRecord.declaration.document?.id
+      : nonRecord.markdown?.frontMatter?.task_id;
     if (!orientationString(taskId)) continue;
     const group = taskGroups.get(taskId) ?? [];
     group.push(nonRecord);
@@ -853,9 +1104,13 @@ function frontMatterReferenceChecks(
     for (const nonRecord of nonRecords) {
       if (nonRecord.declaration.kind !== "task") continue;
       const frontMatter = nonRecord.markdown?.frontMatter;
-      const related = frontMatter?.related_tasks;
+      const related = isModernNkfVersion(nkfVersion)
+        ? nonRecord.declaration.document?.related_tasks
+        : frontMatter?.related_tasks;
       if (!Array.isArray(related)) continue;
-      const ownTaskId = typeof frontMatter?.task_id === "string" ? frontMatter.task_id : null;
+      const ownTaskId = isModernNkfVersion(nkfVersion)
+        ? nonRecord.declaration.document?.id
+        : typeof frontMatter?.task_id === "string" ? frontMatter.task_id : null;
       for (const target of related) {
         if (!orientationString(target) || target === ownTaskId) continue;
         if ((taskGroups.get(target)?.length ?? 0) !== 1) {
@@ -966,6 +1221,144 @@ async function persistResult(projectRoot: string, result: ValidationResult): Pro
   }
 }
 
+async function readSelectedFreshnessReceipt(
+  id: string | null | undefined,
+  collector: SnapshotCollector,
+  loaded: Awaited<ReturnType<typeof loadContracts>>,
+  diagnostics: Diagnostic[],
+): Promise<Record<string, any> | null> {
+  if (id === null || id === undefined) return null;
+  const relative = `.nourd/knowledge/freshness/receipts/${id}.json`;
+  const observation = await collector.observe(relative, { content: true });
+  if (observation.bytes === null || observation.entry.final_kind !== "regular-file") return null;
+  let value: unknown;
+  try {
+    value = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(observation.bytes));
+  } catch {
+    diagnostics.push({
+      rule_id: "schema.freshness-receipt.invalid",
+      severity: "error",
+      blocking: "conformance",
+      phase: "schema",
+      message: "The selected freshness receipt is not valid UTF-8 JSON.",
+      artifact: relative,
+    });
+    return null;
+  }
+  if (!loaded.validators.receipt(value)) {
+    diagnostics.push({
+      rule_id: "schema.freshness-receipt.invalid",
+      severity: "error",
+      blocking: "conformance",
+      phase: "schema",
+      message: `The selected freshness receipt is schema-invalid: ${JSON.stringify(loaded.validators.receiptErrors())}`,
+      artifact: relative,
+    });
+    return null;
+  }
+  return value as Record<string, any>;
+}
+
+function preparedFreshnessReceipt(
+  graphResult: KnowledgeGraphResult,
+  checker: ValidationResult["checker"],
+  nkfVersion: ModernNkfVersion,
+): { id: string; bytes: Buffer } | null {
+  if (graphResult.receipt === null) return null;
+  const unsigned = structuredClone(graphResult.receipt);
+  unsigned.context.evaluator = { id: checker.identity, digest: checker.digest };
+  const id = `freshness-${sha256(Buffer.from(jcs({
+    contract: "nkf.freshness-receipt",
+    nkf_version: nkfVersion,
+    context: unsigned.context,
+    result: unsigned.result,
+  }), "utf8"))}`;
+  const receipt = {
+    contract: "nkf.freshness-receipt",
+    nkf_version: nkfVersion,
+    id,
+    context: unsigned.context,
+    result: unsigned.result,
+  };
+  return { id, bytes: Buffer.from(`${JSON.stringify(receipt, null, 2)}\n`, "utf8") };
+}
+
+async function persistEvaluationTransaction(
+  projectRoot: string,
+  result: ValidationResult,
+  graphResult: KnowledgeGraphResult,
+  nkfVersion: ModernNkfVersion,
+): Promise<{ state: "evaluated" | "evaluated-current"; receipt: { id: string; path: string } }> {
+  const prepared = preparedFreshnessReceipt(graphResult, result.checker, nkfVersion);
+  if (prepared === null) throw new Error("An explicit freshness evaluation did not produce a receipt.");
+  const resultDirectory = await requireSafePersistenceDirectory(projectRoot, [".nourd"]);
+  const receiptDirectory = await requireSafePersistenceDirectory(
+    projectRoot,
+    [".nourd", "knowledge", "freshness", "receipts"],
+  );
+  const receiptRelative = `.nourd/knowledge/freshness/receipts/${prepared.id}.json`;
+  const receiptTarget = path.join(projectRoot, ...receiptRelative.split("/"));
+  const receiptStat = await lstat(receiptTarget).catch(() => null);
+  if (receiptStat?.isSymbolicLink()) {
+    throw new Error("The deterministic freshness receipt target must not be a symbolic link.");
+  }
+  const existingReceipt = receiptStat === null ? null : await readFile(receiptTarget);
+  if (existingReceipt !== null && !existingReceipt.equals(prepared.bytes)) {
+    throw new Error("The deterministic freshness receipt identity resolves to different existing bytes.");
+  }
+  const state = existingReceipt === null ? "evaluated" as const : "evaluated-current" as const;
+  const resultTarget = path.join(resultDirectory, "validation-result.json");
+  const resultTemporary = path.join(resultDirectory, `.validation-result.${result.execution.id}.tmp`);
+  const resultBytes = Buffer.from(`${JSON.stringify(result, null, 2)}\n`, "utf8");
+  const receiptTemporary = path.join(receiptDirectory, `.${prepared.id}.${randomUUID()}.tmp`);
+  await writeFile(resultTemporary, resultBytes, { mode: 0o600, flag: "wx" });
+  let receiptCreated = false;
+  try {
+    if (existingReceipt === null) {
+      await writeFile(receiptTemporary, prepared.bytes, { mode: 0o600, flag: "wx" });
+      await rename(receiptTemporary, receiptTarget);
+      receiptCreated = true;
+    }
+    if (process.env.NKF_FRESHNESS_TEST_FAIL_AFTER_RECEIPT_WRITE === "1") {
+      throw new Error("Injected freshness persistence failure after receipt write.");
+    }
+    await rename(resultTemporary, resultTarget);
+  } catch (error) {
+    await unlink(resultTemporary).catch(() => undefined);
+    await unlink(receiptTemporary).catch(() => undefined);
+    if (receiptCreated) await unlink(receiptTarget).catch(() => undefined);
+    throw error;
+  }
+  return { state, receipt: { id: prepared.id, path: receiptRelative } };
+}
+
+async function persistFreshnessReceipt(
+  projectRoot: string,
+  graphResult: KnowledgeGraphResult,
+  checker: ValidationResult["checker"],
+  nkfVersion: ModernNkfVersion,
+): Promise<void> {
+  const prepared = preparedFreshnessReceipt(graphResult, checker, nkfVersion);
+  if (prepared === null) return;
+  const directory = await requireSafePersistenceDirectory(
+    projectRoot,
+    [".nourd", "knowledge", "freshness", "receipts"],
+  );
+  const target = path.join(directory, `${prepared.id}.json`);
+  const targetStat = await lstat(target).catch(() => null);
+  if (targetStat?.isSymbolicLink()) {
+    throw new Error("The deterministic freshness receipt target must not be a symbolic link.");
+  }
+  const temporary = path.join(directory, `.${prepared.id}.${randomUUID()}.tmp`);
+  await writeFile(temporary, prepared.bytes, { mode: 0o600, flag: "wx" });
+  try {
+    await rename(temporary, target);
+  } catch (error) {
+    await unlink(temporary).catch(() => undefined);
+    throw error;
+  }
+}
+
 async function peekBundleNkfVersion(projectRoot: string): Promise<string | null> {
   try {
     const bytes = await readFile(path.join(projectRoot, ".nourd", "knowledge", "bundle.yaml"));
@@ -996,10 +1389,10 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     bindingsForVersion(nkfVersion) ?? unsupportedVersionBindings(nkfVersion),
     nkfVersion,
   );
-  const resultVersion: "0.1" | "0.2" | "0.3" | "0.4" =
+  const resultVersion: SupportedNkfVersion =
     bindingsForVersion(nkfVersion) === undefined
       ? "0.1"
-      : (nkfVersion as "0.1" | "0.2" | "0.3" | "0.4");
+      : (nkfVersion as SupportedNkfVersion);
   const emitter = new RuleEmitter(loaded.executable);
   const diagnostics: Diagnostic[] = [...loaded.diagnostics];
   const evaluated = new Set<Phase>(["contracts"]);
@@ -1024,8 +1417,11 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   }
 
   let bundle: Record<string, any> | null = null;
+  let graphBaseline: Record<string, any> | null = null;
+  let graphBaselinePresent = false;
   const parsedRecords: ParsedRecord[] = [];
   const parsedNonRecords: ParsedNonRecord[] = [];
+  let selectedFreshnessReceipt: Record<string, any> | null = null;
   if (phasePassed("contracts")) {
     evaluated.add("parse");
     if (bundleObservation.bytes === null) {
@@ -1036,6 +1432,17 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       const parsed = parseNativeYaml(bundleObservation.bytes, ".nourd/knowledge/bundle.yaml");
       bundle = parsed.value;
       diagnostics.push(...parsed.diagnostics);
+    }
+
+    if (isModernNkfVersion(resultVersion) && bundle !== null) {
+      const baselinePath = String(bundle.knowledge_graph?.baseline ?? ".nourd/knowledge/freshness/baseline.yaml");
+      const baselineObservation = await collector.observe(baselinePath, { content: true });
+      graphBaselinePresent = baselineObservation.entry.final_kind === "regular-file" && baselineObservation.bytes !== null;
+      if (graphBaselinePresent && baselineObservation.bytes !== null) {
+        const parsed = parseNativeYaml(baselineObservation.bytes, baselinePath);
+        graphBaseline = parsed.value;
+        diagnostics.push(...parsed.diagnostics);
+      }
     }
 
     if (recordsDirectoryObservation.entry.final_kind === "directory") {
@@ -1090,6 +1497,23 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           });
         }
       }
+    }
+    if (isModernNkfVersion(resultVersion) && graphBaseline !== null && !loaded.validators.baseline(graphBaseline)) {
+      for (const error of loaded.validators.baselineErrors() ?? []) {
+        const ajvError = error as any;
+        emitter.emit("schema.graph-baseline.invalid", schemaMessage(ajvError), {
+          artifact: String(bundle?.knowledge_graph?.baseline ?? ".nourd/knowledge/freshness/baseline.yaml"),
+          instance_pointer: `${ajvError.instancePath || ""}/${ajvError.keyword}`,
+        });
+      }
+    }
+    if (isModernNkfVersion(resultVersion)) {
+      selectedFreshnessReceipt = await readSelectedFreshnessReceipt(
+        options.request.historical_receipt,
+        collector,
+        loaded,
+        diagnostics,
+      );
     }
   }
 
@@ -1426,7 +1850,13 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       }
     }
     for (const nonRecord of parsedNonRecords) {
-      if (nonRecord.declaration.kind !== "task" || nonRecord.observation.bytes === null) continue;
+      if (nonRecord.declaration.kind !== "task") continue;
+      const declaredDocument = asObject(nonRecord.declaration.document);
+      const declaredTaskId = declaredDocument?.id;
+      if (typeof declaredTaskId === "string" && /^[A-Z][A-Z0-9]*-\d+$/.test(declaredTaskId)) {
+        taskIdToPath.set(declaredTaskId, String(nonRecord.declaration.path));
+      }
+      if (nonRecord.observation.bytes === null) continue;
       let text: string;
       try {
         text = new TextDecoder("utf-8", { fatal: true }).decode(nonRecord.observation.bytes);
@@ -1545,6 +1975,38 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     validateRecordContracts(recordUnits, requestedScope, bundle ?? {}, loaded.executable, emitter);
   }
 
+  let graphResult: KnowledgeGraphResult | null = null;
+  if (isModernNkfVersion(resultVersion) && bundle !== null && phasePassed("project")) {
+    evaluated.add("knowledge-graph");
+    graphResult = evaluateKnowledgeGraph({
+      nkfVersion: resultVersion,
+      bundle: bundle ?? {},
+      records: recordUnits,
+      documents: parsedNonRecords,
+      executable: loaded.executable,
+      policy: loaded.freshnessPolicy,
+      policyBinding: loaded.artifacts.core.freshness_policy,
+      baseline: graphBaseline,
+      baselinePresent: graphBaselinePresent,
+      request: {
+        purpose: null,
+        require_readiness: false,
+        changed_inputs: [],
+        targets: [],
+        observations: [],
+        evaluation_time: null,
+        historical_receipt: null,
+        ...options.request,
+      },
+      diagnostics: [...diagnostics, ...emitter.diagnostics],
+      emitter,
+      selectedReceipt: selectedFreshnessReceipt,
+    });
+    if (options.request.level === "full-bundle" && phasePassed("knowledge-graph")) {
+      evaluated.add("freshness");
+    }
+  }
+
   if (phasePassed("project")) {
     evaluated.add("security");
     securityScan(emitter, [
@@ -1593,6 +2055,9 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
 
   diagnostics.push(...emitter.diagnostics);
   const sortedDiagnostics = uniqueDiagnostics(diagnostics, PHASES);
+  const resultPhases = isModernNkfVersion(resultVersion)
+    ? PHASES
+    : PHASES.filter((phase) => !["knowledge-graph", "freshness"].includes(phase));
   const requiredPhases: Phase[] = [
     "contracts",
     "parse",
@@ -1601,7 +2066,9 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     "source",
     "extension-resolution",
     "bundle-graph",
+    ...(isModernNkfVersion(resultVersion) ? ["knowledge-graph" as const] : []),
     ...(options.request.level === "structural" ? [] : ["record-contract" as const]),
+    ...(isModernNkfVersion(resultVersion) && options.request.level === "full-bundle" ? ["freshness" as const] : []),
     "security",
   ];
   const state = (phase: Phase): PhaseState => {
@@ -1679,6 +2146,34 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const checkerBytes = await readFile(options.checkerArtifact);
   const observedCompletion = (options.now ?? (() => new Date()))();
   const completed = observedCompletion < started ? started : observedCompletion;
+  const unevaluatedGraph = isModernNkfVersion(resultVersion) && graphResult === null
+    ? {
+        knowledge_graph: {
+          policy: {
+            identity: `nkf.freshness-policy.${resultVersion}`,
+            digest: loaded.artifacts.core.freshness_policy?.expected_sha256 === undefined
+              ? { algorithm: "sha-256" as const, value: "0".repeat(64) }
+              : { algorithm: "sha-256" as const, value: loaded.artifacts.core.freshness_policy.expected_sha256 },
+            binding: loaded.artifacts.core.freshness_policy?.binding ?? "unavailable",
+          },
+          candidate_graph_revision: null,
+          baseline_graph_revision: null,
+          baseline_state: "not-evaluated",
+          node_count: 0,
+          authored_edge_count: 0,
+          projection_counts: { full: 0, applicable: 0, current: 0 },
+        },
+        nodes: [],
+        readiness: {
+          purpose: options.request.purpose ?? null,
+          state: "not-evaluated",
+          baseline_graph_revision: null,
+          candidate_graph_revision: null,
+          blocking_nodes: [],
+          blocking_rules: [],
+        },
+      }
+    : {};
   const result: ValidationResult = {
     contract: "nkf.validation-result",
     nkf_version: resultVersion,
@@ -1693,7 +2188,18 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       digest: { algorithm: "sha-256", value: sha256(checkerBytes) },
     },
     contract_artifacts: loaded.artifacts,
-    request: options.request,
+    request: isModernNkfVersion(resultVersion)
+      ? {
+          purpose: null,
+          require_readiness: false,
+          changed_inputs: [],
+          targets: [],
+          observations: [],
+          evaluation_time: null,
+          historical_receipt: null,
+          ...options.request,
+        }
+      : options.request,
     bundle_id: typeof bundle?.id === "string" ? bundle.id : null,
     profile:
       typeof bundle?.root?.profile !== "string"
@@ -1702,10 +2208,13 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           ? { identity: bundle.root.profile, binding: "verified" }
           : { identity: bundle.root.profile, binding: "unsupported" },
     validated_snapshot: snapshot(collector.values(), resultVersion),
-    phases: PHASES.map((id) => ({ id, state: state(id) })),
+    phases: resultPhases.map((id) => ({ id, state: state(id) })),
     conformance,
+    ...unevaluatedGraph,
+    ...(graphResult === null ? {} : { knowledge_graph: graphResult.summary, nodes: graphResult.nodes }),
     records: recordResults,
     governing_use: governingUse,
+    ...(graphResult === null ? {} : { readiness: graphResult.readiness }),
     diagnostics: sortedDiagnostics,
   };
   if (!loaded.validators.result(result)) {
@@ -1717,7 +2226,25 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
     options.request.level === "full-bundle" &&
     options.persist !== false
   ) {
-    await persistResult(projectRoot, result);
+    if (
+      isModernNkfVersion(resultVersion) &&
+      graphResult !== null &&
+      options.request.purpose !== null &&
+      options.request.purpose !== undefined
+    ) {
+      const evaluation = await persistEvaluationTransaction(
+        projectRoot,
+        result,
+        graphResult,
+        resultVersion,
+      );
+      options.evaluationObserver?.(evaluation);
+    } else {
+      await persistResult(projectRoot, result);
+      if (isModernNkfVersion(resultVersion) && graphResult !== null) {
+        await persistFreshnessReceipt(projectRoot, graphResult, result.checker, resultVersion);
+      }
+    }
   }
   return result;
 }

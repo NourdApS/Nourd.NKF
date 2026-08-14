@@ -5,6 +5,7 @@ body_contract: nkf.decision
 title: "ADR 0046: Confirm Release Contract Json Schema Bindings"
 source:
   path: decisions/0046-release-json-schemas.md
+  stable_path: decisions/0046-release-json-schemas.md
   digest:
     algorithm: sha-256
     value: 11a96f5aaffae941949ba47f5c08ab271a3f63777a3eb46245355e1df17a839d
@@ -49,3 +50,26 @@ sections:
     authority: accepted-meaning
     role: governing
 relationships: []
+task: NKF-003
+legacy_lock:
+  predecessor_version: "0.4"
+  source_digest:
+    algorithm: sha-256
+    value: 11a96f5aaffae941949ba47f5c08ab271a3f63777a3eb46245355e1df17a839d
+  predecessor_state:
+    record_lifecycle: immutable
+    record_status: accepted
+    decision_authority: Codex technical reviewer acting under explicit Human Product Owner delegation
+    task: NKF-003
+  initial_declaration_state:
+    governance:
+      lifecycle: immutable
+      status: accepted
+      authority:
+        - human-product-owner
+    task: NKF-003
+  authority_mapping:
+    source_value: Codex technical reviewer acting under explicit Human Product Owner delegation
+    authority_ids:
+      - human-product-owner
+    approved_by: repository-owner

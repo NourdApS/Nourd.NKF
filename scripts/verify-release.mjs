@@ -62,6 +62,7 @@ if (project !== undefined) {
 process.stdout.write(
   `${JSON.stringify(
     {
+      state: "verified",
       archive_sha256: verification.archive_sha256,
       asset_name: verification.asset_name,
       tag: verification.tag,

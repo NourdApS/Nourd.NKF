@@ -34,7 +34,8 @@ Start with the actual
 The other declarations bind the
 [Technology](project/knowledge/technology.md) and
 [Specification](project/knowledge/specifications/specification.md) sources. The
-[Task](project/knowledge/tasks/active/task.md) is an explicit non-record.
+[Task](project/knowledge/tasks/active/task.md) is a stable document node whose
+lifecycle is declared in YAML and projected under `tasks/by-state/`.
 
 The Technology record defines purpose, consumers, contracts, boundaries, and
 evolution. The Specification owns current normative meaning. The Realization
@@ -56,6 +57,7 @@ install the same exact governed recommendation, and then run:
 npm run nkf:check
 ```
 
-The publication verifier runs the bundled checker against this exact project
-before publication. The result observes one snapshot; it does not confirm the
+The publication verifier runs the bundled checker and requires the exact
+reviewed whole-root baseline to be ready. The result observes one snapshot;
+it does not confirm the
 Realization or own the runtime state of the implemented Technology.

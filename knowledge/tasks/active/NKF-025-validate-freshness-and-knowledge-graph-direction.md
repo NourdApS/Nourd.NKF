@@ -3,7 +3,7 @@ title: "NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction"
 summary: Test the confirmed NKF 0.5 freshness and knowledge-graph direction against controlled Product and Technology evidence before accepting or implementing normative format meaning.
 created_at: 2026-08-12T16:49:56Z
 task_id: NKF-025
-task_status: deferred
+task_status: active
 owner: Nourd ApS
 decision_authority: Human Product Owner, Nourd ApS
 related_tasks:
@@ -143,12 +143,47 @@ silently redefine it.
     refined through governed, versioned evidence from NKF and consumer
     adoption. It must not be presented as permanently optimal or be silently
     redefined by per-repository overrides.
+19. On `2026-08-12`, after reviewing the prototype and its independent audit,
+    the Human Product Owner confirmed that every governed non-record requiring
+    an individual freshness result receives a stable Common `document` node.
+    This identity enables independent tracking only: the document remains a
+    non-record and gains no record or governing authority by implication.
+20. On `2026-08-12`, the Human Product Owner confirmed that incremental
+    freshness evaluation may claim readiness only after a named human or agent
+    has semantically reviewed and confirmed the exact graph baseline. The
+    confirmation is bound to the exact graph revision and identifies its
+    reviewer. When that confirmation is absent, outdated, or disputed, NKF
+    reports `unknown`, blocks readiness, and requires whole-root semantic
+    review as the recovery path. A checker cannot infer semantic completeness
+    from the absence of detected omissions.
+21. On `2026-08-12`, the Human Product Owner confirmed that the normative
+    freshness result preserves every simultaneously applicable noncurrent
+    result and its reasons. A renderer may choose a primary label or display
+    order, but presentation cannot discard, replace, or alter the underlying
+    result set.
+22. On `2026-08-12`, the Human Product Owner confirmed that an exact revision
+    or governed-artifact binding mismatch is a deterministic hard blocker.
+    NKF must not standardize a broader `hard` versus `review` distinction until
+    real consumer evidence demonstrates useful, different, and safe behavior.
+    Until then, uncertain non-context and non-historical relationships default
+    to review, and AI-assessed importance cannot create a hard blocker.
+23. On `2026-08-12`, the Human Product Owner clarified that NKF itself must
+    adopt every new NKF version. The implementation and release Task must prove
+    two separate stages. Before publication, the exact candidate archive must
+    run the candidate-bound Adopt operation in a fresh isolated clone, return
+    `current` on repeat, pass the complete producer gate, and receive a fresh
+    independent audit. This is an Adopt exercise of exact candidate bytes, not
+    completed ordinary repository adoption of a published version. After
+    immutable publication, the producer branch must perform ordinary public
+    self-adoption of that exact release, return `current` on repeat, receive a
+    post-adoption independent audit, and merge only afterward.
 
 ## Provisional And Unresolved Boundaries
 
-- The useful distinction between a hard dependency and a review dependency is
-  provisional. For the prototype, only an exact revision binding may qualify
-  as hard; uncertain non-context relationships default to review.
+- Exact policy serialization and the evidence threshold for any future,
+  versioned expansion beyond exact-binding hard blockers remain technical
+  derivation. The confirmed conservative default may not be weakened by those
+  mechanics.
 - Semantic relationship meaning and endpoint constraints are global format
   vocabulary, while exact impact traversal is expected to be a separately
   versioned evaluation policy. The exercise must test whether this separation
@@ -159,10 +194,10 @@ silently redefine it.
 - The first implementation is local-root only. Cross-repository traversal,
   polling, public registries, and live external authority resolution remain
   deferred until the local model is proven.
-- Existing repositories require a truthful one-time graph baseline. The
-  exercise must measure whether that baseline can be incremental without
-  fabricating historical edges or silently treating absent declarations as
-  current.
+- The exact declaration, evidence, invalidation, and receipt mechanics for a
+  named reviewer's revision-bound baseline confirmation remain technical
+  derivation. The confirmed Product behavior is fail-closed and may not be
+  weakened by those mechanics.
 - The precise conservative policy is expected to produce false positives.
   Evidence must quantify them, identify any false negative, and propose later
   refinement rather than optimizing prematurely.
@@ -174,7 +209,7 @@ format meaning.
 ## Scope
 
 - reconcile the confirmed direction with current accepted NKF Decisions,
-  deferred [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md),
+  deferred [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md),
   current 0.4 authority, and the consolidated Realization;
 - inventory every NKF knowledge and declaration surface that can currently
   become stale, invalidated, contradictory, superseded, or unverifiable;
@@ -206,9 +241,9 @@ format meaning.
 - treating AI semantic review as deterministic proof or letting validation
   accept knowledge;
 - implementing deferred
-  [NKF-021](NKF-021-task-scope-gate.md) or absorbing its scope into this Task;
+  [NKF-021](../deferred/NKF-021-task-scope-gate.md) or absorbing its scope into this Task;
 - replacing the authority-freshness investigation owned by
-  [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md); and
+  [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md); and
 - automatic cross-repository discovery, external polling, or a public graph
   registry.
 
@@ -246,6 +281,13 @@ format meaning.
     evidence-bounded conclusion, and present only the remaining consequential
     product choices. Normative NKF 0.5 implementation and release require a
     later explicitly authorized Task.
+11. Derive one exact Design-adoption Decision candidate solely from the
+    already confirmed Product boundaries and audited evidence. Reconcile the
+    Design disposition and executable record mechanically, run the canonical
+    gate, obtain a fresh independent audit of the exact candidate, and present
+    its precise adopted meaning before any acceptance or Task conclusion. Any
+    new or changed Product boundary returns to the Human Product Owner rather
+    than entering the candidate by implication.
 
 ## Acceptance Criteria
 
@@ -286,9 +328,108 @@ format meaning.
 
 - Human direction and the confirmed product boundaries are now allocated to
   this Task.
-- Task creation is the only governed repository change so far. No Design,
-  Evidence, prototype, Specification, executable companion, production
-  tooling, Realization, or release has yet changed under this Task.
+- The normal deterministic Task transition created `task/NKF-025`, moved this
+  Task to active, validated and committed the transition, pushed the branch,
+  and opened draft pull request 9 while `master` remained concluded.
+- The initial
+  [NKF 0.4 freshness and graph-gap inventory](../../evidence/audits/nkf-025-nkf-0-4-freshness-and-graph-gap-inventory.md)
+  reviews the current authority and repository declarations. It finds strong
+  exact-byte and structural controls but no deterministic semantic-freshness,
+  impact-policy, relationship-completeness, external-observability, or
+  targeted-review contract.
+- The adopted
+  [NKF Freshness And Deterministic Knowledge Graph](../../designs/adopted/freshness-and-deterministic-knowledge-graph.md)
+  Design consolidates the confirmed direction. Exact serialization,
+  relationship-policy mapping, baseline-confirmation mechanics and evidence,
+  receipt operations and storage, migration, and broader consumer proof remain
+  technical derivation or later evidence questions.
+- The
+  [controlled graph prototype exercise](../../evidence/audits/nkf-025-controlled-graph-prototype-exercise.md)
+  implements a disposable versioned evaluator and passes 25 Product,
+  Technology, direct-NKF, adversarial, receipt, lifecycle, and non-record
+  cases. Controlled Product and Technology closures match whole-root semantic
+  oracles with no miss.
+- The direct NKF comparison found one material pre-baseline false negative:
+  current 0.4 relationships do not carry the active Task when its owned Draft
+  Design changes. Because graph completeness is unconfirmed, the evaluator
+  blocks rather than calling the sparse result current. A controlled reviewed
+  Task-to-Design edge corrects that exact closure without whole-root expansion.
+- Stable document nodes are the only tested non-record strategy that preserves
+  independent freshness without changing record authority. Exact
+  serialization, full baseline policy, broad hard/review value, relationship
+  mapping, receipt operations, and consumer evidence remain unresolved; the
+  confirmed default limits hard blocking to exact-binding mismatches meanwhile.
+- The
+  [fresh independent audit](../../evidence/audits/nkf-025-controlled-graph-prototype-independent-audit.md)
+  rejected two earlier targets with material fail-closed defects. From a new
+  remote clone of corrected exact checkpoint `a68254c`, it reproduced the
+  complete gate, all 25 focused cases, byte-identical measurements, 23
+  independent adversarial assertions, clean scope isolation, and the known
+  incomplete-baseline limitation without finding a further material defect.
+- The
+  [pre-release NKF self-consumer worktree exercise](../../evidence/audits/nkf-025-pre-release-self-consumer-worktree-exercise.md)
+  ran exact checkpoint `1628e2c` in a separate detached worktree. The sparse
+  actual NKF projection blocked, whole-root review exposed the missing
+  Task-to-Design relationship, and the reviewed two-subject closure matched
+  the oracle with zero false positives or false negatives. All 25 focused
+  tests and the 28-file, 210-test canonical producer gate passed, repeated
+  measurements were byte-identical, and the detached worktree stayed clean.
+- No Specification, executable companion, production checker, adopter,
+  migration, Realization, release, or consumer repository has changed under
+  this Task.
+- A deterministic close attempt at `9cfa55e` exposed a frozen NKF 0.4
+  transition contradiction. The close rewrote lifecycle-sensitive Task links
+  inside the already accepted immutable ADR and Design, changing their exact
+  accepted bytes; restoring those bytes then caused the 0.4 checker to reject
+  their historical active-path links because the Task had moved to completed.
+  The move also made two focused evaluator cases address a nonexistent active
+  Task. The close was therefore independently rejected and withdrawn through
+  non-destructive revert commit `bf11090`; this Task remains active. A later
+  versioned implementation must reconcile stable lifecycle addressing,
+  immutable accepted bytes, deep-link validation, and experiment fixtures.
+  This is a technical finding, not new Product meaning, and beginning its fix
+  still requires a separately human-directed Task.
+
+## Investigation Conclusion
+
+The tested direction is technically sound enough to continue, but it is not
+yet safe to turn into normative NKF 0.5 meaning. The evidence proves that a
+declared local graph can calculate small reproducible review closures, preserve
+separate lifecycle/applicability/role/authority/freshness/conformance axes,
+bind receipts to exact revisions, and block unconfirmed completeness. It also
+proves that stable document nodes cover Task and Evidence non-records without
+promoting them to governing records.
+
+The experiment does not prove that software can discover every omitted
+semantic relationship. A one-time semantic baseline review remains necessary,
+and an incorrectly confirmed incomplete baseline can still hide impact. The
+safe contract is therefore: unconfirmed completeness is `unknown` and blocks;
+confirmation is a revision-bound human or agent semantic act whose authority
+and evidence must be explicit, not a checker inference.
+
+The evidence supports these Product recommendations, confirmed one at a time:
+
+1. adopt a Common stable `document` node for independently freshness-evaluable
+   governed non-records, explicitly carrying no record or governing authority;
+2. keep exact revision and artifact mismatches as deterministic hard blockers,
+   but do not standardize a broader `hard` versus `review` distinction until a
+   real consumer exercise demonstrates useful different behavior;
+3. make the normative result a set of simultaneous noncurrent reasons rather
+   than the prototype's single display precedence; a renderer may choose a
+   presentation order without changing contract meaning; and
+4. require a revision-bound reviewed baseline before incremental impact
+   evaluation can claim readiness, while preserving whole-root review as the
+   recovery path when completeness is absent or disputed.
+
+The Human Product Owner confirmed recommendations 1 through 4 on `2026-08-12`
+and clarified the required producer self-adoption boundary. No Product
+recommendation from this investigation remains unconfirmed.
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md)
+adopts the exact Design revision without accepting NKF 0.5 authority or
+authorizing implementation. Exact Schema, policy mapping,
+baseline-confirmation and receipt operations, migration, implementation,
+publication, and actual self-adoption remain later work, not Product decisions
+silently delegated to this investigation.
 
 ## Decision Applicability
 
@@ -311,17 +452,31 @@ format meaning.
 | [`adr-0103`](../../decisions/0103-branch-carried-task-life-and-cancelled-state.md) | record | The normal Task branch carries this Task's active life and merges only after a truthful conclusion, leaving review state in Git. |
 | [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Frozen 0.4 complete-set bytes cannot change; any later accepted complete-set change requires a new version and exact-candidate proof before publication. |
 | [`adr-0113`](../../decisions/0113-accept-the-nkf-0-4-authority-pair.md) | record | Exact NKF 0.4 is immutable predecessor authority; a real vocabulary, topology, authority, validation, onboarding-category, or compatibility change requires a new Human Product Owner Decision. |
+| [`adr-0115`](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md) | record | The exact evidence-bounded Design direction is adopted, while NKF 0.5 authority, technical derivation, implementation, publication, and adoption remain unestablished and require separately directed later work. |
 
 ### Mandatory Capabilities
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Declared local graph inputs derive a deterministic conservative affected-document closure with reproducible reason paths | unknown | none | none |
-| Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | unknown | none | none |
-| Missing or ambiguous material relationships fail closed without making every document universally mandatory | unknown | none | none |
-| Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | unknown | none | none |
-| Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | unknown | none | none |
-| Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | unknown | none | none |
-| Existing Product and Technology repositories can establish a truthful incremental graph baseline | unknown | none | none |
-| Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | unknown | none | none |
-| Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | unknown | none | none |
+| Declared local graph inputs derive a deterministic conservative affected-document closure with reproducible reason paths | proven | runtime-behaviour | none |
+| Product and Technology evaluations keep lifecycle, applicability, role, authority, freshness, and conformance separate | proven | runtime-behaviour | none |
+| Simultaneous applicable noncurrent results and their reasons remain complete independently of display precedence | proven | runtime-behaviour | none |
+| Exact revision and governed-artifact binding mismatches block deterministically without treating AI-assessed importance as hard | proven | runtime-behaviour | none |
+| Within a declared candidate universe, detected missing or ambiguous material relationships fail closed without making every document universally mandatory | proven | runtime-behaviour | none |
+| Relevant accepted Decisions are reconciled without silently losing conditions, supersessions, conflicts, or unknowns | proven | runtime-behaviour | none |
+| Stable paths and durable Markdown meaning survive lifecycle and computed-freshness changes | proven | runtime-behaviour | none |
+| Governed non-records requiring individual freshness receive stable Common document-node identity without record or governing-authority promotion | proven | runtime-behaviour | none |
+| Revision-bound receipts reproduce historical evaluation and become unusable when an input changes | proven | runtime-behaviour | none |
+| The controlled Product profile and actual NKF Technology repository can establish the evidence-bounded incremental baseline required by this investigation | proven | runtime-behaviour | none |
+| Whole-root comparison exposes every false negative and quantifies conservative false positives and review cost | proven | runtime-behaviour | none |
+| Fresh independent audit can reproduce the prototype and verify its evidence-bounded claims | proven | runtime-behaviour | none |
+
+The proven findings are limited to the 25 controlled experimental cases, their
+versioned semantic oracles, and the exact detached NKF self-consumer exercise
+at `1628e2c`. Production behavior, broad consumer topologies, migration,
+receipt operations, actual NKF 0.5 adoption, and universal graph completeness
+are not thereby proven. An incorrectly confirmed incomplete semantic baseline
+can still hide an undeclared relationship; proof here is the bounded behavior
+that detected omissions and unconfirmed completeness block while a reviewed
+edge avoids whole-root mandatory review. The Decision classifications are
+inputs supplied by semantic review, not truths established by the evaluator.
