@@ -1,30 +1,34 @@
 contract: nkf.contract-set
-nkf_version: "0.6"
+nkf_version: "0.7"
 
 authority:
   precedence: normative-markdown
-  markdown_path: knowledge/specifications/nkf-0.6-revision-3.md
-  executable_path: contracts/nkf/0.6/revision-3/nkf.yaml
-  freshness_policy_path: contracts/nkf/0.6/freshness-policy.yaml
+  markdown_path: knowledge/specifications/nkf-0.7.md
+  executable_path: contracts/nkf/0.7/nkf.yaml
+  freshness_policy_path: contracts/nkf/0.7/freshness-policy.yaml
+  version_delta_path: contracts/nkf/0.7/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a
+    value: MARKDOWN_DIGEST_PLACEHOLDER
   freshness_policy_digest:
     algorithm: sha-256
-    value: a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4
+    value: FRESHNESS_POLICY_DIGEST_PLACEHOLDER
+  version_delta_digest:
+    algorithm: sha-256
+    value: VERSION_DELTA_DIGEST_PLACEHOLDER
   accepted_baseline:
-    markdown_path: knowledge/specifications/nkf-0.5-revision-2.md
+    markdown_path: knowledge/specifications/nkf-0.6-revision-3.md
     markdown_digest:
       algorithm: sha-256
-      value: 0f3b7c085eba4fa92655e20916fccb7013169b5560dd50c241fb4726df31287c
-    executable_path: contracts/nkf/0.5/revision-2/nkf.yaml
+      value: bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a
+    executable_path: contracts/nkf/0.6/revision-3/nkf.yaml
     executable_digest:
       algorithm: sha-256
-      value: 2743102a4bddf9a26253fba3982f00bf9c688c819891815221e3ea4ee67c5290
-    freshness_policy_path: contracts/nkf/0.5/freshness-policy.yaml
+      value: 7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4
+    freshness_policy_path: contracts/nkf/0.6/freshness-policy.yaml
     freshness_policy_digest:
       algorithm: sha-256
-      value: 5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd
+      value: a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4
   governing_decisions:
     - ADR-0001
     - ADR-0002
@@ -82,13 +86,15 @@ authority:
     - ADR-0115
     - ADR-0119
     - ADR-0121
+    - ADR-0125
+    - ADR-0126
   conflict_behavior: fail-closed
   semantic_acceptance_from_validation: false
   realization_confirmation_from_validation: false
 
 versioning:
   coordinate: major-minor
-  current: "0.6"
+  current: "0.7"
   stable_reserved: "1.0"
   candidate:
     mutable_until: authenticated-publication
@@ -271,7 +277,7 @@ bundle:
     - required_extensions
   fields:
     nkf_version:
-      const: "0.6"
+      const: "0.7"
     contract:
       const: nkf.bundle
     id:
@@ -347,14 +353,14 @@ bundle:
   non_record:
     closed: true
     required_fields: [path, kind]
-    optional_fields: [reason, document]
+    optional_fields: [reason, document, selection, digest]
     fields:
       path:
         ref: paths.knowledge_relative_file
         must_exist: true
-        file_kind: regular-file
+        file_kind: regular-file-or-directory-for-provenance-attachment-recursive-selection
       kind:
-        enum: [navigation, task, evidence, generated, redirect, other]
+        enum: [navigation, task, evidence, generated, redirect, provenance-attachment, other]
       reason:
         type: string
         min_length: 1
@@ -363,6 +369,13 @@ bundle:
           equals: other
       document:
         ref: bundle.document
+      selection:
+        enum: [recursive-regular-files]
+        permitted_only_for: provenance-attachment
+        covers: every-regular-file-beneath-one-existing-non-empty-directory
+      digest:
+        ref: common.digest
+        permitted_only_for: provenance-attachment-exact-file
     document_requirement:
       task: required
       evidence: required
@@ -370,13 +383,22 @@ bundle:
       other: optional
       generated: forbidden
       redirect: forbidden
+      provenance-attachment: forbidden
+    provenance_attachment:
+      inert: true
+      graph_participation: none
+      authority: none
+      markdown_requirements: none
+    knowledge_root_file_coverage:
+      every_regular_file_is_exactly_one_of: [record-source, declared-non-record, declared-provenance-attachment]
+      undeclared_file: fail-closed
     path_unique_after_resolution: true
     may_conflict_with_record_source: false
     document_id_collides_with_record_id: forbidden
   document:
     closed: true
     required_fields: [id, stable_path, digest, relationships]
-    optional_fields: [state, freshness, owner, decision_authority, related_tasks, legacy_lock, historical_acceptance_attempt_lock]
+    optional_fields: [state, freshness, owner, decision_authority, related_tasks, identity_succession, operational_dependencies, legacy_lock, historical_acceptance_attempt_lock]
     fields:
       id:
         ref: common.identifier
@@ -407,6 +429,18 @@ bundle:
         unique_items: true
         order_semantic: false
         items: {ref: common.identifier, resolves_to: same-bundle-task-document-node}
+      identity_succession:
+        ref: record.fields.identity_succession
+      operational_dependencies:
+        type: array
+        min_items: 1
+        unique_by: [kind, source_heading]
+        items:
+          closed: true
+          required_fields: [kind, source_heading]
+          fields:
+            kind: {enum: [release-version, recommendation, installed-pin]}
+            source_heading: {ref: common.heading_reference, resolves_to: declaring-document-heading}
       legacy_lock:
         ref: bundle.legacy_lock
       historical_acceptance_attempt_lock:
@@ -763,7 +797,7 @@ bundle:
     closed: true
     required_fields: [policy, baseline]
     fields:
-      policy: {const: nkf.freshness-policy.0.6}
+      policy: {const: nkf.freshness-policy.0.7}
       baseline:
         const: .nourd/knowledge/freshness/baseline.yaml
   governed_artifact:
@@ -1078,57 +1112,60 @@ portable_topology:
     receipt_fields: [predecessor_release, successor_release, created_paths, changed_paths, removed_paths, preserved_paths]
     missing_trustworthy_receipt: governed-migration-plan
     silent_consumer_migration: forbidden
-  legacy_migration_0_1_through_0_4:
-    supported_predecessors: ["0.1", "0.2", "0.3", "0.4"]
+  migration_0_6_to_0_7:
+    supported_predecessors: ["0.6"]
     compatibility: breaking
     repository_owner_approval: required-before-mutation
-    preserve_canonical_markdown_bytes:
-      default: exact
-      sole_exception: reviewed-retrospective-task-gate-normalization
-    preserve_existing_task_and_design_paths: true
-    allocate_document_ids: deterministic-and-persisted
+    preserve_canonical_markdown_bytes: exact
+    stable_path_neutralization:
+      applies_exactly_to:
+        - tasks/active
+        - tasks/completed
+        - tasks/deferred
+        - tasks/cancelled
+        - designs/active
+        - designs/adopted
+        - designs/rejected
+        - designs/superseded
+        - designs/withdrawn
+        - realizations/current
+      destination_by_subject:
+        task: tasks/items
+        design: designs/items
+        realization: realizations/items
+      performed: exactly-once-in-one-transaction
+      declaration_navigation_and_link_rewrite: mechanical-and-complete
+      immutable_record_meaning_change: forbidden
+      later_source_move: forbidden
+    identity_succession_application: exactly-each-accepted-succession-once
+    provenance_attachment_classification: required-for-every-undeclared-knowledge-root-file
+    obsolete_legacy_lock_removal: exactly-completed-predecessor-locks-in-the-same-governed-act
     lifecycle_source: yaml-declaration
-    predecessor_frontmatter:
-      source_with_now-forbidden-mutable-state-key: legacy-locked-inert
-      source-already-matching-native-envelope: no-lock
-    new_0_6_record_accepted_bootstrap_lock: forbidden
+    baseline_conversion:
+      contract: digest-bound-0.7-baseline
+      carry_forward: computed-per-judgment-under-accepted-version-delta-declaration
+      carry_preconditions:
+        - judged-node-revision-unchanged
+        - basis-digest-unchanged
+        - every-depended-rule-identical
+        - decision-declaration-digest-unchanged-for-decision-classifications
+      reviewer_asserted_carry: forbidden
+      required_fresh_review: computed-closure
+    out_of_window_predecessor:
+      versions: ["0.1", "0.2", "0.3", "0.4", "0.5"]
+      behavior: fail-closed-naming-exact-stepping-stone-archive
     graph_candidate_generation: required
-    whole_root_semantic_review: required-before-seal
     named_human_or_agent_reviewer: required
-    baseline_confirmation: required-before-seal
+    baseline_seal_before_apply: required
     silent_semantic_confirmation: forbidden
-    predecessor_task_gate_normalization:
-      applies_exactly_to: every-gate-free-predecessor-task
-      timing: before-0.6-source-digest-legacy-lock-graph-and-baseline-derivation
-      review_input:
-        ref: freshness.whole_root_review_input
-        retrospective_gate_review_required_exactly_when: one-or-more-gate-free-predecessor-tasks
-        gates_exact_coverage: every-and-only-gate-free-predecessor-task
-        supplied_by: retrospective-gate-review-reviewer
-        placeholder_or_missing: fail-before-project-mutation
-      deterministic_tool_may: append-exact-reviewed-block-after-exact-UTF8-LF-LF
-      deterministic_tool_may_not: infer-applicable-decisions-capabilities-findings-verification-or-exceptions
-      native_gate_grammar_and-completion_rule: required
-      retrospective_disclosure: required
-      no_historical_extraction_claim: required
-      existing_gate_bytes: preserve-exactly
-      every_non-gate-canonical-markdown-byte: preserve-exactly
-      post-normalization-source-digest: authoritative-for-document-and-legacy-lock
-  ordinary_update_0_5_to_0_6:
-    compatibility: non-breaking
-    repository_owner_approval: forbidden
-    detailed_contract: compatibility.update_0_5_to_0_6
-    retrospective_task_gate_normalization: forbidden
-    existing_predecessor-only-locks: preserve-exactly
-    new_0_6_record_accepted_bootstrap_lock: forbidden
-    confirmed_baseline_carry_forward: only-when-all-exact-equivalence-preconditions-pass
-  producer_candidate_promotion_0_5_to_0_6:
+  producer_candidate_promotion_0_6_to_0_7:
     availability: producer-only-at-the-two-authorized-prepublication-and-postpublication-stages
-    detailed_contract: compatibility.producer_candidate_promotion_0_5_to_0_6
+    detailed_contract: compatibility.producer_candidate_promotion_0_6_to_0_7
     serialized_input: required
     destination: serialized_input.declaration_path
-    new_0_6_record_accepted_bootstrap_lock: forbidden
-    whole_root_review: required-for-exact-post-promotion-graph
+    predecessor_only_locks_on_new_record: forbidden
+    promotion_reconciliation_entries: written-for-every-operational-dependency-declaring-node
+    whole_root_review: required-for-exact-post-promotion-graph-as-the-last-whole-root-review
 
 markdown:
   grammar: CommonMark-0.31.2
@@ -1380,6 +1417,8 @@ record:
     - confirmation_decisions
     - unconfirmed_scope
     - freshness
+    - identity_succession
+    - operational_dependencies
     - legacy_lock
     - accepted_bootstrap_lock
     - prepublication_supersession_lock
@@ -1480,6 +1519,29 @@ record:
       items: {ref: common.identifier, resolves_to: same-bundle-accepted-decision-record}
     unconfirmed_scope: {type: string, min_length: 1}
     freshness: {ref: freshness.declaration}
+    identity_succession:
+      closed: true
+      required_fields: [predecessor_id, graph_revision, recorded_by]
+      fields:
+        predecessor_id: {ref: common.identifier, resolves_to: no-live-record-or-document-node}
+        graph_revision: {ref: common.digest, binds: exact-succession-effective-graph-revision}
+        recorded_by: {type: string, min_length: 1}
+      permitted_only_for: {governance.lifecycle: living}
+      predecessor_identifier: permanently-resolvable-through-succession-chain
+      chain_cycles: forbidden
+      live_identifier_reuse: forbidden
+      new_identifier_asserting_version_state_disposition_or_currency: forbidden
+    operational_dependencies:
+      type: array
+      min_items: 1
+      unique_by: [kind, source_section]
+      items:
+        closed: true
+        required_fields: [kind, source_section]
+        fields:
+          kind: {enum: [release-version, recommendation, installed-pin]}
+          source_section: {ref: common.identifier, resolves_to: declared-record-section}
+      promotion_effect: one-pending-reconciliation-entry-per-declaring-node
     legacy_lock: {ref: bundle.legacy_lock}
     accepted_bootstrap_lock: {ref: bundle.accepted_bootstrap_lock}
     prepublication_supersession_lock: {ref: bundle.prepublication_supersession_lock}
@@ -2224,7 +2286,7 @@ freshness:
         required_fields: [contract, nkf_version, bundle, profile, nodes, edges, external_dependencies, authority_inputs, policy]
         fields:
           contract: {const: nkf.graph-revision}
-          nkf_version: {const: "0.6"}
+          nkf_version: {const: "0.7"}
           bundle: {ref: common.identifier}
           profile: {enum: [nkf.profile.product, nkf.profile.technology]}
           nodes: {type: array, unique_by: node, order: node-reference-jcs-by-rfc8785-unsigned-utf16, items: {ref: freshness.node_revision_entry}}
@@ -2235,7 +2297,7 @@ freshness:
             closed: true
             required_fields: [id, sha256]
             fields:
-              id: {const: nkf.freshness-policy.0.6}
+              id: {const: nkf.freshness-policy.0.7}
               sha256: {ref: common.digest.value}
       exclude: [baseline, receipts, generated-navigation, backlinks, virtual-frontmatter, validation-results]
     array_normalization:
@@ -2244,19 +2306,19 @@ freshness:
       string_normalization: none-beyond-field-contract
       optional_absence: omit-not-null
   policy:
-    identity: nkf.freshness-policy.0.6
+    identity: nkf.freshness-policy.0.7
     path: contracts/nkf/0.6/freshness-policy.yaml
     digest:
       algorithm: sha-256
       value: a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4
-    schema: urn:nkf:0.6:schema:freshness-policy
+    schema: urn:nkf:0.7:schema:freshness-policy
     closed: true
     required_fields: [contract, nkf_version, id, classes, purposes, mappings]
     optional_fields: [hard_events, historical_projection, unknown_mapping, repository_overrides, implementation_heuristics]
     field_contracts:
       contract: {const: nkf.freshness-policy}
-      nkf_version: {const: "0.6"}
-      id: {const: nkf.freshness-policy.0.6}
+      nkf_version: {const: "0.7"}
+      id: {const: nkf.freshness-policy.0.7}
       classes: {exact_items_in_order: [hard, review, context, historical]}
       purposes: {exact_items_in_order: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]}
       hard_events: {exact_items_in_order: [exact-revision-binding-mismatch, governed-artifact-binding-mismatch]}
@@ -2332,124 +2394,96 @@ freshness:
     exact_binding_mismatch: {result: invalidated, class: hard}
     missing_required_input: {result: unknown, blocking: readiness}
   whole_root_review_input:
-    one_of:
-      - closed: true
-        required_fields: [contract, nkf_version, stage, retrospective_gate_review]
-        fields:
-          contract: {const: nkf.semantic-review-input}
-          nkf_version: {const: "0.6"}
-          stage: {const: predecessor-gates}
-          retrospective_gate_review: {ref: freshness.retrospective_gate_review}
-      - closed: true
-        required_fields: [contract, nkf_version, stage, reviewer, reviewed_at, claim, disputed, nodes, relationships, decision_classifications, observations, limitations]
-        optional_fields: [retrospective_gate_review]
-        fields:
-          contract: {const: nkf.semantic-review-input}
-          nkf_version: {const: "0.6"}
-          stage: {const: whole-root}
-          reviewer: {ref: freshness.reviewer}
-          reviewed_at: {ref: common.utc_millisecond_timestamp}
-          claim: {const: semantically-reviewed-whole-root}
-          disputed: {const: false}
-          retrospective_gate_review: {ref: freshness.retrospective_gate_review}
-          nodes:
-            type: array
-            min_items: 1
-            unique_by: node
-            exact_coverage: exact-candidate-node-universe
-            items:
-              closed: true
-              required_fields: [node, state, role, basis]
-              fields:
-                node: {ref: common.node_reference}
-                state: {enum: [eligible, inapplicable]}
-                role: {enum: [governs, proposes, realizes, evidences, context, history]}
-                basis: {ref: freshness.review_basis}
-          relationships:
-            type: array
-            exact_coverage: vocabularies.graph_relationship_types
-            unique_by: relationship
-            order: graph-relationship-vocabulary-order
-            items:
-              closed: true
-              required_fields: [relationship, state, basis]
-              fields:
-                relationship: {ref: vocabularies.graph_relationship_types}
-                state: {enum: [reviewed, inapplicable]}
-                basis: {ref: freshness.review_basis}
-          decision_classifications:
-            type: array
-            unique_by: [decision, purpose]
-            exact_coverage: every-accepted-decision-for-each-non-historical-purpose
-            items: {ref: freshness.decision_classification}
-          observations:
-            type: array
-            min_items: 1
-            unique_by: id
-            items: {ref: freshness.review_observation}
-          limitations:
-            type: array
-            min_items: 1
-            unique_items: true
-            items: {type: string, min_length: 1}
-    stage_transition:
-      predecessor-gates-to-whole-root:
-        performed_after: isolated-candidate-gate-normalization-and-exact-graph-derivation
-        preserved_fields: [contract, nkf_version, retrospective_gate_review]
-        reset_to-placeholders: [reviewer, reviewed_at, claim, disputed, nodes, relationships, decision_classifications, observations, limitations]
-        project_mutation: forbidden
-      no-gate-free-predecessor-task:
-        first_stage: whole-root
-        retrospective_gate_review: forbidden
-      whole-root-to-baseline-seal: reviewer-completed-input-required
+    closed: true
+    required_fields: [contract, nkf_version, stage, reviewer, reviewed_at, claim, disputed, nodes, relationships, decision_classifications, observations, limitations]
+    optional_fields: [computed_closure]
+    fields:
+      contract: {const: nkf.semantic-review-input}
+      nkf_version: {const: "0.7"}
+      stage: {enum: [whole-root, delta]}
+      reviewer: {ref: freshness.reviewer}
+      reviewed_at: {ref: common.utc_millisecond_timestamp}
+      claim: {enum: [semantically-reviewed-whole-root, semantically-reviewed-delta]}
+      disputed: {const: false}
+      computed_closure:
+        type: array
+        unique_by: node
+        order: stable-node-reference-order
+        items: {ref: common.node_reference}
+        required_exactly_when: stage-is-delta
+        content: exact-tool-computed-required-review-closure
+      nodes:
+        type: array
+        min_items: 1
+        unique_by: node
+        exact_coverage: exact-candidate-node-universe
+        items:
+          closed: true
+          required_fields: [node, state, role, basis, revision, basis_digest, provenance]
+          fields:
+            node: {ref: common.node_reference}
+            state: {enum: [eligible, inapplicable]}
+            role: {enum: [governs, proposes, realizes, evidences, context, history]}
+            basis: {ref: freshness.review_basis}
+            revision: {ref: common.digest, binds: exact-judged-node-revision}
+            basis_digest: {ref: common.digest, binds: exact-cited-basis-content-digest}
+            provenance: {ref: freshness.judgment_provenance}
+      relationships:
+        type: array
+        exact_coverage: vocabularies.graph_relationship_types
+        unique_by: relationship
+        order: graph-relationship-vocabulary-order
+        items:
+          closed: true
+          required_fields: [relationship, state, basis]
+          fields:
+            relationship: {ref: vocabularies.graph_relationship_types}
+            state: {enum: [reviewed, inapplicable]}
+            basis: {ref: freshness.review_basis}
+      decision_classifications:
+        type: array
+        unique_by: [decision, purpose]
+        exact_coverage: every-accepted-decision-for-each-non-historical-purpose
+        items: {ref: freshness.decision_classification}
+      observations:
+        type: array
+        min_items: 1
+        unique_by: id
+        items: {ref: freshness.review_observation}
+      limitations:
+        type: array
+        min_items: 1
+        unique_items: true
+        items: {type: string, min_length: 1}
+    stage_rules:
+      whole-root:
+        claim: semantically-reviewed-whole-root
+        every_judgment_provenance: performed
+        computed_closure: forbidden
+      delta:
+        claim: semantically-reviewed-delta
+        computed_closure: required-and-exactly-tool-computed
+        admission: performed-set-contains-computed-closure
+        smaller_performed_set: refuse-naming-exact-missing-subjects
+        unprovable_completeness: refuse-with-whole-root-recovery
+      any-stage-to-baseline-seal: reviewer-completed-input-required
   reviewer:
     closed: true
     required_fields: [kind, id]
     fields:
       kind: {enum: [human, agent]}
       id: {type: string, min_length: 1}
-  retrospective_gate_review:
-    closed: true
-    required_fields: [reviewer, reviewed_at, gates]
-    fields:
-      reviewer: {ref: freshness.reviewer}
-      reviewed_at: {ref: common.utc_millisecond_timestamp}
-      gates: {ref: freshness.retrospective_task_gates}
-  retrospective_task_gates:
-    type: array
-    min_items: 1
-    unique_by: task
-    order: task-id-rfc8785-unsigned-utf16
-    items:
-      closed: true
-      required_fields: [task, predecessor_source_digest, gate_markdown]
-      fields:
-        task: {ref: common.identifier, resolves_to: exact-gate-free-predecessor-task}
-        predecessor_source_digest: {ref: common.digest}
-        gate_markdown:
-          type: string
-          encoding: UTF-8
-          line_endings: LF
-          begins_with_exact_line: "## Decision Applicability"
-          ends_with: one-LF
-          parses_as: exact-complete-native-decision-applicability-section
-          required_final_explanatory_paragraph:
-            exact_lines:
-              - "This gate was added retrospectively during the NKF <predecessor>-to-0.6 migration; no"
-              - historical extraction is implied.
-            predecessor_placeholder_replaced_by: exact-declared-predecessor-version
-    exact_coverage: every-and-only-gate-free-predecessor-task
   baseline:
     contract: nkf.graph-baseline
-    nkf_version: "0.6"
+    nkf_version: "0.7"
     path: .nourd/knowledge/freshness/baseline.yaml
-    schema: urn:nkf:0.6:schema:graph-baseline
+    schema: urn:nkf:0.7:schema:graph-baseline
     committed: true
     closed: true
-    required_fields: [contract, nkf_version, bundle, profile, graph_revision, policy, node_revisions, authored_edges, external_dependencies, authority_inputs, relationship_coverage, applicability_coverage, decision_classifications, confirmation]
+    required_fields: [contract, nkf_version, bundle, profile, graph_revision, policy, version_delta, node_revisions, authored_edges, external_dependencies, authority_inputs, relationship_coverage, applicability_coverage, decision_classifications, promotion_reconciliation, confirmation]
     fields:
       contract: {const: nkf.graph-baseline}
-      nkf_version: {const: "0.6"}
+      nkf_version: {const: "0.7"}
       bundle: {ref: common.identifier}
       profile: {enum: [nkf.profile.product, nkf.profile.technology]}
       graph_revision: {ref: common.digest}
@@ -2457,8 +2491,30 @@ freshness:
         closed: true
         required_fields: [id, digest]
         fields:
-          id: {const: nkf.freshness-policy.0.6}
+          id: {const: nkf.freshness-policy.0.7}
           digest: {ref: common.digest}
+      version_delta:
+        closed: true
+        required_fields: [contract, digest]
+        fields:
+          contract: {const: nkf.version-delta}
+          digest: {ref: common.digest, binds: exact-accepted-version-delta-declaration}
+      promotion_reconciliation:
+        type: array
+        unique_by: node
+        order: stable-node-reference-order
+        items:
+          closed: true
+          required_fields: [node, coordinate, written_at_graph_revision, state]
+          fields:
+            node: {ref: common.node_reference}
+            coordinate: {enum: [release-version, recommendation, installed-pin]}
+            written_at_graph_revision: {ref: common.digest}
+            state: {enum: [pending, resolved]}
+        pending_entry_blocks: readiness
+        pending_entry_in: every-delta-claim-computed-closure
+        resolution: governed-edit-plus-performed-judgment-only
+        tool_resolution: forbidden
       node_revisions:
         type: array
         min_items: 1
@@ -2506,13 +2562,16 @@ freshness:
         exact_coverage: every-node-times-every-non-historical-purpose
         items:
           closed: true
-          required_fields: [node, purpose, state, role, basis]
+          required_fields: [node, purpose, state, role, basis, revision, basis_digest, provenance]
           fields:
             node: {ref: common.node_reference}
             purpose: {enum: [change-impact, whole-root-readiness, consequential-use]}
             state: {enum: [eligible, inapplicable]}
             role: {enum: [governs, proposes, realizes, evidences, context, history]}
             basis: {ref: freshness.review_basis}
+            revision: {ref: common.digest, binds: exact-judged-node-revision}
+            basis_digest: {ref: common.digest, binds: exact-cited-basis-content-digest}
+            provenance: {ref: freshness.judgment_provenance}
       decision_classifications:
         type: array
         unique_by: [decision, purpose]
@@ -2522,6 +2581,7 @@ freshness:
       confirmation:
         closed: true
         required_fields: [reviewer, reviewed_at, claim, observations, limitations, disputed]
+        optional_fields: [computed_closure, performed_set]
         fields:
           reviewer:
             closed: true
@@ -2530,7 +2590,20 @@ freshness:
               kind: {enum: [human, agent]}
               id: {type: string, min_length: 1}
           reviewed_at: {ref: common.utc_millisecond_timestamp}
-          claim: {const: semantically-reviewed-whole-root}
+          claim: {enum: [semantically-reviewed-whole-root, semantically-reviewed-delta]}
+          computed_closure:
+            type: array
+            unique_by: node
+            order: stable-node-reference-order
+            items: {ref: common.node_reference}
+            required_exactly_when: claim-is-delta
+          performed_set:
+            type: array
+            unique_by: node
+            order: stable-node-reference-order
+            items: {ref: common.node_reference}
+            required_exactly_when: claim-is-delta
+            admission: contains-computed-closure
           observations:
             type: array
             min_items: 1
@@ -2547,7 +2620,8 @@ freshness:
     confirmation:
       required_fields: [reviewer, reviewed_at, claim, observations, limitations, disputed]
       reviewer_kind: [human, agent]
-      claim_const: semantically-reviewed-whole-root
+      claim_enum: [semantically-reviewed-whole-root, semantically-reviewed-delta]
+      delta_claim_admission: performed-set-contains-tool-computed-closure
       observations_min_items: 1
       observations_exact_source_bound: true
       limitations_required: true
@@ -2565,9 +2639,9 @@ freshness:
     excluded_from_graph_revision: true
   receipt:
     contract: nkf.freshness-receipt
-    nkf_version: "0.6"
+    nkf_version: "0.7"
     path_directory: .nourd/knowledge/freshness/receipts
-    schema: urn:nkf:0.6:schema:freshness-receipt
+    schema: urn:nkf:0.7:schema:freshness-receipt
     operational: true
     committed: false
     append_only: true
@@ -2580,7 +2654,7 @@ freshness:
     required_fields: [contract, nkf_version, id, context, result]
     fields:
       contract: {const: nkf.freshness-receipt}
-      nkf_version: {const: "0.6"}
+      nkf_version: {const: "0.7"}
       id: {type: string, pattern: "^freshness-[0-9a-f]{64}$"}
       context: {ref: freshness.evaluation_context}
       result: {ref: freshness.evaluation_result}
@@ -2590,9 +2664,9 @@ freshness:
   readiness:
     states: [ready, not-ready, not-evaluated]
     purpose_rules:
-      change-impact: [confirmed-current-graph-baseline, all-impact-selected-nodes-current, complete-applicable-decision-reconciliation, no-unresolved-conflict, all-required-observations-and-reviews-bound]
-      whole-root-readiness: [confirmed-current-graph-baseline, all-applicable-nodes-current, complete-applicable-decision-reconciliation, no-unresolved-conflict, all-required-observations-and-reviews-bound]
-      consequential-use: [confirmed-current-graph-baseline, all-target-closure-nodes-current, complete-applicable-decision-reconciliation, no-unresolved-conflict, all-required-observations-and-reviews-bound]
+      change-impact: [confirmed-current-graph-baseline, all-impact-selected-nodes-current, complete-applicable-decision-reconciliation, no-unresolved-conflict, no-pending-promotion-reconciliation, all-required-observations-and-reviews-bound]
+      whole-root-readiness: [confirmed-current-graph-baseline, all-applicable-nodes-current, complete-applicable-decision-reconciliation, no-unresolved-conflict, no-pending-promotion-reconciliation, all-required-observations-and-reviews-bound]
+      consequential-use: [confirmed-current-graph-baseline, all-target-closure-nodes-current, complete-applicable-decision-reconciliation, no-unresolved-conflict, no-pending-promotion-reconciliation, all-required-observations-and-reviews-bound]
       historical-reproduction: [selected-historical-receipt-binding-exact, receipt-inputs-reproduced, receipt-policy-and-evaluator-reproduced, no-current-baseline-required]
     distinct_from: [conformance, acceptance, authority-binding, realization-confirmation, governing-use]
     required_for: [task-completion-claim, candidate-sealing, release, adoption, declared-consequential-use]
@@ -2633,12 +2707,35 @@ freshness:
       finding: {type: string, min_length: 1}
   decision_classification:
     closed: true
-    required_fields: [decision, purpose, classification, basis]
+    required_fields: [decision, decision_digest, purpose, classification, basis, basis_digest, provenance]
     fields:
       decision: {ref: common.identifier, resolves_to: same-bundle-accepted-decision-record}
+      decision_digest: {ref: common.digest, binds: exact-decision-declaration-digest-at-judgment}
       purpose: {enum: [change-impact, whole-root-readiness, consequential-use]}
       classification: {enum: [compatible, extends, supersedes, conflicts, not-applicable]}
       basis: {ref: freshness.review_basis}
+      basis_digest: {ref: common.digest, binds: exact-cited-basis-content-digest-at-judgment}
+      provenance: {ref: freshness.judgment_provenance}
+  judgment_provenance:
+    one_of:
+      - {closed: true, required_fields: [performed], fields: {performed: {const: true}}}
+      - closed: true
+        required_fields: [carried]
+        fields:
+          carried:
+            closed: true
+            required_fields: [performed_in_graph_revision, performing_reviewer]
+            fields:
+              performed_in_graph_revision: {ref: common.digest}
+              performing_reviewer: {ref: freshness.reviewer}
+    carry_preconditions:
+      - judged-node-revision-unchanged
+      - basis-digest-unchanged
+      - every-depended-rule-identical-under-accepted-version-delta-declaration
+      - decision-declaration-digest-unchanged-for-decision-classifications
+    computed_by: tool-only
+    reviewer_asserted_carry: forbidden
+    failed_precondition: refuse
   reason_path:
     closed: true
     required_fields: [initial_change, target, nodes, relationships]
@@ -2698,7 +2795,7 @@ freshness:
         closed: true
         required_fields: [id, digest]
         fields:
-          id: {const: nkf.freshness-policy.0.6}
+          id: {const: nkf.freshness-policy.0.7}
           digest: {ref: common.digest}
       purpose: {enum: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]}
       candidate_universe: {type: array, min_items: 1, unique_items: true, order: stable-node-reference-order, items: {ref: common.node_reference}}
@@ -2960,12 +3057,12 @@ enforcement:
       freshness_policy: contracts/nkf/0.6/schemas/freshness-policy.schema.json
       validation_result: contracts/nkf/0.6/schemas/validation-result.schema.json
     ids:
-      bundle: urn:nkf:0.6:schema:bundle
-      record: urn:nkf:0.6:schema:record
-      graph_baseline: urn:nkf:0.6:schema:graph-baseline
-      freshness_receipt: urn:nkf:0.6:schema:freshness-receipt
-      freshness_policy: urn:nkf:0.6:schema:freshness-policy
-      validation_result: urn:nkf:0.6:schema:validation-result
+      bundle: urn:nkf:0.7:schema:bundle
+      record: urn:nkf:0.7:schema:record
+      graph_baseline: urn:nkf:0.7:schema:graph-baseline
+      freshness_receipt: urn:nkf:0.7:schema:freshness-receipt
+      freshness_policy: urn:nkf:0.7:schema:freshness-policy
+      validation_result: urn:nkf:0.7:schema:validation-result
     source_metadata:
       - nkf_version
       - markdown_path
@@ -3304,7 +3401,7 @@ governed_validation_inputs:
     - operational-resources
   snapshot_inventory:
     identity: nkf.validation-snapshot
-    nkf_version: "0.6"
+    nkf_version: "0.7"
     persisted: false
     closed: true
     required_fields: [contract, nkf_version, inputs]
@@ -3312,7 +3409,7 @@ governed_validation_inputs:
       contract:
         const: nkf.validation-snapshot
       nkf_version:
-        const: "0.6"
+        const: "0.7"
       inputs:
         type: array
         order: exact-path-rfc8785-unsigned-utf16
@@ -3351,7 +3448,7 @@ governed_validation_inputs:
 
 validation_result:
   identity: nkf.validation-result
-  nkf_version: "0.6"
+  nkf_version: "0.7"
   path: .nourd/validation-result.json
   encoding:
     character_encoding: UTF-8
@@ -3390,7 +3487,7 @@ validation_result:
     contract:
       const: nkf.validation-result
     nkf_version:
-      const: "0.6"
+      const: "0.7"
     execution:
       ref: validation_result.execution
     checker:
@@ -3512,17 +3609,17 @@ validation_result:
           schemas:
             type: array
             exact_items_in_order:
-              - identity: urn:nkf:0.6:schema:bundle
+              - identity: urn:nkf:0.7:schema:bundle
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.6:schema:record
+              - identity: urn:nkf:0.7:schema:record
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.6:schema:graph-baseline
+              - identity: urn:nkf:0.7:schema:graph-baseline
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.6:schema:freshness-receipt
+              - identity: urn:nkf:0.7:schema:freshness-receipt
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.6:schema:freshness-policy
+              - identity: urn:nkf:0.7:schema:freshness-policy
                 ref: validation_result.schema_binding
-              - identity: urn:nkf:0.6:schema:validation-result
+              - identity: urn:nkf:0.7:schema:validation-result
                 ref: validation_result.schema_binding
       extensions:
         type: array
@@ -3642,7 +3739,7 @@ validation_result:
         closed: true
         required_fields: [identity, digest, binding]
         fields:
-          identity: {const: nkf.freshness-policy.0.6}
+          identity: {const: nkf.freshness-policy.0.7}
           digest: {ref: common.digest}
           binding: {enum: [verified, unavailable, mismatched]}
       candidate_graph_revision: {type: [common.digest, "null"]}
@@ -3873,6 +3970,33 @@ governed_mechanics:
         success_result: {state: enumerated, exact_fields: [nkf_version, members]}
         no_change_result: same-as-success-read-only
         failure_result: {state: failed, exact_stage_and_diagnostic: required}
+      review-scaffold:
+        closed: true
+        mutation_owner: none-read-only
+        semantic_input: pending-claim-candidate-graph-predecessor-baseline-policy-and-accepted-version-delta-declaration
+        subjects: [exact-candidate-node-universe, exact-computed-required-review-closure, exact-carriable-judgment-set]
+        postconditions: [read-only, carried-judgments-prefilled-with-exact-provenance, required-fresh-set-emitted-with-empty-judgment-fields, no-state-role-classification-finding-claim-or-dispute-value-supplied]
+        success_result: {state: scaffolded, exact_fields: [stage, nodes, carried, fresh]}
+        no_change_result: same-as-success-read-only
+        failure_result: {state: failed, exact_stage_and_diagnostic: required}
+      record-scaffold:
+        closed: true
+        mutation_owner: none-read-only
+        semantic_input: one-exact-markdown-source
+        subjects: [exact-markdown-source, exact-derived-heading-structure]
+        postconditions: [read-only, exact-digests-and-section-heading-paths-emitted, empty-semantic-fields, no-governance-relationship-authority-or-lifecycle-value-supplied]
+        success_result: {state: scaffolded, exact_fields: [path, digest, sections]}
+        no_change_result: same-as-success-read-only
+        failure_result: {state: failed, exact_stage_and_diagnostic: required}
+      identity-succession:
+        closed: true
+        mutation_owner: succession-transaction
+        semantic_input: accepted-successor-identifier-and-recording-authority
+        subjects: [exact-living-record-or-document, every-affected-declaration, baseline-bindings, generated-navigation, same-bundle-links]
+        postconditions: [predecessor-identifier-resolvable-through-chain, succession-recorded-with-provenance, immutable-record-bytes-unchanged, no-cycle, no-live-identifier-reuse]
+        success_result: {state: succeeded, exact_fields: [predecessor_id, successor_id, changed_subjects]}
+        no_change_result: {state: current, permitted_only_when: exact-succession-already-recorded-and-current}
+        failure_result: {state: failed, exact_stage_and_diagnostic: required}
       freshness-evaluation:
         closed: true
         mutation_owner: checker-result-and-receipt-transaction
@@ -3885,9 +4009,9 @@ governed_mechanics:
       reviewed-baseline-seal:
         closed: true
         mutation_owner: baseline-seal-transaction
-        semantic_input: named-reviewer-completed-whole-root-review
-        subjects: [exact-candidate-node-universe, exact-authored-edges, external-dependencies, authority-inputs, relationship-coverage, applicability-coverage, decision-classifications, observations, limitations, disputed-state, graph-baseline]
-        postconditions: [review-input-exact-coverage-and-bases-resolve, checker-candidate-graph-exactly-matches-review, resulting-baseline-schema-valid-and-confirmed]
+        semantic_input: named-reviewer-completed-whole-root-or-delta-review
+        subjects: [exact-candidate-node-universe, exact-authored-edges, external-dependencies, authority-inputs, relationship-coverage, applicability-coverage, decision-classifications, promotion-reconciliation, observations, limitations, disputed-state, graph-baseline]
+        postconditions: [review-input-exact-coverage-and-bases-resolve, checker-candidate-graph-exactly-matches-review, every-carried-judgment-precondition-proven, delta-performed-set-contains-exact-computed-closure, resulting-baseline-schema-valid-and-confirmed]
         success_result: {state: sealed, exact_fields: [graph_revision, nodes, reviewer, reviewed_at]}
         no_change_result: {state: current, permitted_only_when: existing-confirmed-baseline-is-byte-identical-to-derived-result}
         failure_result: {state: failed, exact_stage_and-diagnostic: required, baseline-mutation: forbidden}
@@ -3896,25 +4020,22 @@ governed_mechanics:
         mutation_owner: adopt-project-transaction
         semantic_input:
           onboard-or-install: [reviewed-onboarding-plan, exact-release-selection]
-          breaking-migrate: [exact-release-selection, repository-owner-approval, retrospective-task-gate-review-when-one-or-more-predecessor-tasks-lack-gate, separately-completed-exact-post-migration-whole-root-review]
-          non-breaking-update: [exact-release-selection, exact-policy-and-baseline-carry-forward-precondition-proof]
+          breaking-migrate: [exact-release-selection, repository-owner-approval, separately-completed-exact-post-migration-review-of-the-computed-required-set-or-whole-root]
           current: [exact-release-selection]
-          producer-promotion: [exact-accepted-serialized-promotion-input, exact-accepting-decision, exact-stage-proof, exact-historical-containment, separately-completed-exact-post-promotion-whole-root-review]
+          producer-promotion: [exact-accepted-serialized-promotion-input, exact-accepting-decision, exact-stage-proof, separately-completed-exact-post-promotion-whole-root-review]
         subjects:
           common-installation: [version-declaration, release-pin, installed-checker, installed-adopter, host-integration, complete-gate]
           onboard-or-install-additional: [reviewed-onboarding-plan, complete-portable-topology, initial-native-declarations, generated-navigation, candidate-graph, confirmed-baseline]
-          breaking-migrate-additional: [every-gate-free-predecessor-task, reviewed-retrospective-task-gates, every-post-normalization-source-digest, migrated-record-and-document-declarations, generated-navigation, post-migration-graph, post-migration-confirmed-baseline]
-          non-breaking-update-additional: [preserved-native-declarations, preserved-predecessor-only-locks, baseline-version, baseline-policy-identity, baseline-policy-digest, derived-successor-graph-revision]
+          breaking-migrate-additional: [neutralized-stable-paths, applied-identity-successions, classified-provenance-attachments, removed-completed-legacy-locks, migrated-record-and-document-declarations, converted-digest-bound-baseline, generated-navigation, post-migration-graph, post-migration-confirmed-baseline]
           current: [exact-complete-installed-integration]
-          producer-promotion-additional: [candidate-evidence-document-representation, supplied-native-specification-declaration-destination, supplied-native-specification-declaration-content, exact-adr-0122-native-declaration, exact-adr-0122-historical-evidence-document, generated-navigation, post-promotion-graph, post-promotion-confirmed-baseline]
+          producer-promotion-additional: [candidate-evidence-document-representation, supplied-native-specification-declaration-destination, supplied-native-specification-declaration-content, applied-path-neutralization-and-successions, written-promotion-reconciliation-entries, generated-navigation, post-promotion-graph, post-promotion-confirmed-baseline]
         postconditions:
           common: [complete-owned-rollback, requested-version-current]
           onboard-or-install: [reviewed-plan-applied-exactly, complete-topology-and-native-declarations-valid, confirmed-baseline-matches-exact-candidate-graph]
-          breaking-migrate: [repository-owner-approval-bound, every-and-only-gate-free-predecessor-task-normalized-from-review, all-other-canonical-markdown-bytes-preserved, migrated-declarations-and-navigation-valid, confirmed-baseline-matches-exact-post-migration-graph]
-          non-breaking-update: [policy-equivalence-proven, node-and-edge-and-review-meaning-unchanged, only-authorized-baseline-scalars-changed, predecessor-only-locks-preserved-exactly, successor-baseline-current]
+          breaking-migrate: [repository-owner-approval-bound, all-canonical-markdown-bytes-preserved, stable-path-neutralization-applied-exactly-once, every-accepted-succession-applied-exactly-once, every-knowledge-root-file-classified, every-carried-judgment-precondition-proven, computed-required-set-reviewed-before-seal, migrated-declarations-and-navigation-valid, confirmed-baseline-matches-exact-post-migration-graph]
           current: [no-governed-byte-change, exact-selected-release-and-complete-integration-current]
-          producer-promotion: [exact-candidate-evidence-representation-removed, exact-native-declaration-created-once-at-supplied-destination, exact-adr-0122-native-declaration-replaced-by-locked-historical-evidence-with-source-byte-preservation, exact-two-bound-deep-link-diagnostics-contained-at-the-two-authorized-occurrences, accepted-input-and-decision-bindings-exact, source-executable-policy-bytes-preserved, generated-navigation-current, post-promotion-graph-and-baseline-match-separate-completed-review]
-        internal_modes: [onboard, install, update, migrate, producer-promotion, current]
+          producer-promotion: [exact-candidate-evidence-representation-removed, exact-native-declaration-created-once-at-supplied-destination, accepted-input-and-decision-bindings-exact, source-executable-policy-and-version-delta-bytes-preserved, path-neutralization-and-successions-applied-exactly-once, promotion-reconciliation-entries-written, generated-navigation-current, post-promotion-graph-and-baseline-match-separate-completed-review]
+        internal_modes: [onboard, install, migrate, producer-promotion, current]
         producer-promotion-availability:
           stages: [prepublication-isolated-exact-producer, postpublication-exact-live-producer]
           ordinary-non-producer: forbidden
@@ -3990,7 +4111,7 @@ release_distribution:
   operational_state_authority: github
   manifest:
     identity: nkf.release-manifest
-    nkf_version: "0.6"
+    nkf_version: "0.7"
     path: release-manifest.json
     encoding:
       character_encoding: UTF-8
@@ -4011,7 +4132,7 @@ release_distribution:
       contract:
         const: nkf.release-manifest
       nkf_version:
-        const: "0.6"
+        const: "0.7"
       source:
         ref: release_distribution.source
       checker:
@@ -4102,7 +4223,7 @@ release_distribution:
     closed: true
     required_fields: [identity, path, digest]
     fields:
-      identity: {const: nkf.freshness-policy.0.6}
+      identity: {const: nkf.freshness-policy.0.7}
       path: {const: contracts/nkf/0.6/freshness-policy.yaml}
       digest: {ref: common.digest}
   schema_artifact:
@@ -4118,25 +4239,25 @@ release_distribution:
   schemas:
     type: array
     exact_items_in_order:
-      - identity: urn:nkf:0.6:schema:bundle
+      - identity: urn:nkf:0.7:schema:bundle
         path: contracts/nkf/0.6/schemas/bundle.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.6:schema:record
+      - identity: urn:nkf:0.7:schema:record
         path: contracts/nkf/0.6/schemas/record.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.6:schema:graph-baseline
+      - identity: urn:nkf:0.7:schema:graph-baseline
         path: contracts/nkf/0.6/schemas/graph-baseline.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.6:schema:freshness-receipt
+      - identity: urn:nkf:0.7:schema:freshness-receipt
         path: contracts/nkf/0.6/schemas/freshness-receipt.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.6:schema:freshness-policy
+      - identity: urn:nkf:0.7:schema:freshness-policy
         path: contracts/nkf/0.6/schemas/freshness-policy.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.6:schema:release-manifest
+      - identity: urn:nkf:0.7:schema:release-manifest
         path: contracts/nkf/0.6/schemas/release-manifest.schema.json
         ref: release_distribution.schema_artifact
-      - identity: urn:nkf:0.6:schema:validation-result
+      - identity: urn:nkf:0.7:schema:validation-result
         path: contracts/nkf/0.6/schemas/validation-result.schema.json
         ref: release_distribution.schema_artifact
   licensing_artifact:
@@ -4220,7 +4341,7 @@ release_distribution:
     unique_paths: true
     checker_authority_freshness_policy_schema_and_licensing_bindings_match: required
   schema:
-    identity: urn:nkf:0.6:schema:release-manifest
+    identity: urn:nkf:0.7:schema:release-manifest
     path: contracts/nkf/0.6/schemas/release-manifest.schema.json
     scope: release-package-enforcement-only
     project_declaration_schema: false
@@ -4236,7 +4357,7 @@ release_distribution:
       contract:
         const: nkf.release-set
       nkf_version:
-        const: "0.6"
+        const: "0.7"
       coverage:
         ref: release_distribution.release_set.coverage
       members:
@@ -4441,126 +4562,64 @@ release_distribution:
 
 compatibility:
   supported_predecessors:
-    - from_nkf_version: "0.1"
-      to_nkf_version: "0.6"
-      classification: breaking
-      migration_required: true
-      repository_owner_approval_before_mutation: required
-    - from_nkf_version: "0.2"
-      to_nkf_version: "0.6"
-      classification: breaking
-      migration_required: true
-      repository_owner_approval_before_mutation: required
-    - from_nkf_version: "0.3"
-      to_nkf_version: "0.6"
-      classification: breaking
-      migration_required: true
-      repository_owner_approval_before_mutation: required
-    - from_nkf_version: "0.4"
-      to_nkf_version: "0.6"
-      classification: breaking
-      migration_required: true
-      repository_owner_approval_before_mutation: required
-    - from_nkf_version: "0.5"
-      to_nkf_version: "0.6"
-      classification: non-breaking
-      migration_required: false
-      repository_owner_approval_before_mutation: not-required
-      preserves:
-        - canonical-knowledge-source-bytes
-        - native-declaration-meaning
-        - stable-node-identities-and-paths
-        - accepted-bootstrap-and-prepublication-supersession-locks
-        - graph-semantic-sets-and-confirmed-review-meaning-when-all-exact-carry-forward-preconditions-pass
-      deterministic_successor_changes:
-        - graph-revision-recomputed-for-0.6-version-and-policy-coordinates
-        - baseline-version-and-policy-coordinates
     - from_nkf_version: "0.6"
-      to_nkf_version: "0.6"
+      to_nkf_version: "0.7"
+      classification: breaking
+      migration_required: true
+      repository_owner_approval_before_mutation: required
+      effects:
+        - one-deliberate-stable-path-neutralization
+        - accepted-identity-succession-application
+        - provenance-attachment-classification
+        - digest-bound-baseline-conversion-with-computed-carry-forward
+        - computed-required-set-review-before-seal
+    - from_nkf_version: "0.7"
+      to_nkf_version: "0.7"
       classification: non-breaking
       migration_required: false
       repository_owner_approval_before_mutation: not-required
-  migration_0_1_through_0_4:
-    preserve_canonical_markdown_bytes:
-      default: required
-      sole_exception: reviewed-retrospective-task-gate-normalization
-    preserve_existing_task_and_design_paths: required
-    document_node_allocation:
-      existing_task: preserve-exact-task-id-as-document-id
-      new_task: explicit-task-id-equals-document-id
-      other_document: document-prefix-plus-sha256-bundle-id-NUL-initial-path
-      collision_missing-or-unsafe-task-id: fail-before-mutation
-      persisted: required
+  support_window:
+    live_versions: ["0.7", "0.6"]
+    policy: current-version-plus-one-predecessor
+    policy_condition: until-further-explicit-human-product-owner-notice
+    widened_by_adoption_event: false
+    out_of_window:
+      versions: ["0.1", "0.2", "0.3", "0.4", "0.5"]
+      behavior: fail-closed
+      required_signal: exact-next-stepping-stone-release-archive
+      stepping_stone_for_0_1_through_0_5:
+        repository: NourdApS/Nourd.NKF
+        nkf_version: "0.6"
+        archive_sha256: b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95
+  migration_0_6_to_0_7:
+    preserve_canonical_markdown_bytes: exact
+    stable_path_neutralization: {ref: bundle.migration_0_6_to_0_7.stable_path_neutralization}
+    identity_succession_application: exactly-each-accepted-succession-once
+    provenance_attachment_classification: required-for-every-undeclared-knowledge-root-file
+    obsolete_legacy_lock_removal: exactly-completed-predecessor-locks-in-the-same-governed-act
     lifecycle_state_conversion: declaration-owned
-    legacy_lock:
-      required_for: preserved-source-with-now-forbidden-mutable-state-key
-      source_digest: exact
-      predecessor_state: exact-complete-present-mutable-state-projection
-      initial_declaration_state: exact-complete-converted-declaration-projection
-      predecessor-to-initial-conversion: exact-bundle-legacy-lock-conversion-rules
-      authority_mapping: required-exactly-for-record-decision-authority
-      gate-normalized-task-source-digest: exact-post-normalization-source
-      gate-normalized-task-predecessor-state: exact-unchanged-frontmatter-projection
-    predecessor_task_gate_normalization:
-      coverage: every-and-only-gate-free-predecessor-task
-      reviewed_input: {ref: freshness.retrospective_gate_review}
-      named_semantic_reviewer_supplies_meaning: required
-      tool_semantic_inference: forbidden
-      native_gate_validation: required-before-project-mutation
-      explicit_retrospective-no-historical-extraction-disclosure: required
-      existing_gate_rewrite: forbidden
-      append_boundary: predecessor-source-bytes-then-exact-UTF8-LF-LF-then-reviewed-gate-bytes
     generated_navigation:
       task_paths: tasks/by-state
       design_paths: designs/by-disposition
       canonical_markdown_rewrite: forbidden
-    graph_candidate: required
-    semantic_whole_root_review: required
-    named_reviewer: human-or-agent
-    confirmed_baseline_before-seal: required
-    mechanical_tool_may_infer-semantic-completeness: false
-  update_0_5_to_0_6:
-    operation: install-and-declare-supported-successor-without-semantic-conversion
-    structural_declaration_rewrite: exact-version-and-release-pin-only-plus-required-derived-artifact-refresh
-    manual_semantic_input: forbidden
-    repository_owner_breaking_approval: forbidden
-    policy_equivalence:
-      predecessor: {id: nkf.freshness-policy.0.5, digest: 5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd}
-      successor: {id: nkf.freshness-policy.0.6, digest: a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4}
-      exact_structural_equality_after_removing_top_level: [nkf_version, id]
-      any_other_difference: fail-before-mutation
-    confirmed_baseline_carry_forward:
-      permitted_exactly_when:
-        - predecessor-baseline-current-for-exact-predecessor-graph
-        - exact-node-revision-set-unchanged
-        - exact-authored-edge-set-unchanged
-        - exact-external-dependency-set-unchanged
-        - exact-authority-input-set-unchanged
-        - exact-relationship-coverage-unchanged
-        - exact-applicability-coverage-unchanged
-        - exact-decision-classifications-unchanged
-        - exact-confirmation-observations-limitations-and-disputed-state-unchanged
-        - exact-policy-equivalence-proven
-      exact_scalar_changes: [baseline.nkf_version, baseline.graph_revision, baseline.policy.id, baseline.policy.digest]
-      preserve_byte-for-byte:
-        - node_revisions
-        - authored_edges
-        - external_dependencies
-        - authority_inputs
-        - relationship_coverage
-        - applicability_coverage
-        - decision_classifications
-        - confirmation
-      operation_result_records: [predecessor_graph_revision, successor_graph_revision, predecessor_policy_digest, successor_policy_digest]
-      any_failed_precondition: fail-before-mutation
+    baseline_conversion:
+      predecessor_baseline: required-current-for-exact-predecessor-graph
       predecessor_not_ready: fail-before-mutation
-      predecessor_baseline_review_or_seal:
-        operation: separate-governed-0.5-knowledge-maintenance
-        performed_or_inferred_by_0.6-updater: forbidden
-    unsupported_or-lossy-conversion: fail-before-mutation
+      carry_forward: computed-per-judgment-under-accepted-version-delta-declaration
+      carry_preconditions:
+        - judged-node-revision-unchanged
+        - basis-digest-unchanged
+        - every-depended-rule-identical
+        - decision-declaration-digest-unchanged-for-decision-classifications
+      carried_judgment_records: [performed_in_graph_revision, performing_reviewer]
+      reviewer_asserted_carry: forbidden
+      required_fresh_review: computed-closure
+      tool_semantic_inference: forbidden
+    semantic_review_before_seal: required
+    named_reviewer: human-or-agent
     rollback: complete-project-owned-pre-mutation-snapshot
     repeat_state: current
-  producer_candidate_promotion_0_5_to_0_6:
+  producer_candidate_promotion_0_6_to_0_7:
     availability:
       repository: exact-NourdApS/Nourd.NKF-producer-only
       stages:
@@ -4569,7 +4628,7 @@ compatibility:
       identical_accepted_input_and_decision_constraints: required
       non-producer-or-other-stage: forbidden
     serialized_input:
-      path: knowledge/evidence/release/nkf-0.6-revision-3-producer-promotion.yaml
+      path: knowledge/evidence/release/nkf-0.7-producer-promotion.yaml
       encoding:
         character_encoding: UTF-8
         bom: forbidden
@@ -4580,58 +4639,54 @@ compatibility:
         aliases_anchors_custom-tags-merge-keys: forbidden
         duplicate_keys: forbidden
       closed: true
-      required_fields: [contract, nkf_version, repository, task, specification, executable, freshness_policy, declaration_path, record_declaration, historical_containment]
+      required_fields: [contract, nkf_version, repository, task, specification, executable, freshness_policy, version_delta, declaration_path, record_declaration]
       fields:
         contract: {const: nkf.producer-candidate-promotion}
-        nkf_version: {const: "0.6"}
+        nkf_version: {const: "0.7"}
         repository: {const: NourdApS/Nourd.NKF}
-        task: {const: NKF-027}
+        task: {const: NKF-028}
         specification:
           closed: true
           required_fields: [path, digest]
           fields:
-            path: {const: knowledge/specifications/nkf-0.6-revision-3.md}
+            path: {const: knowledge/specifications/nkf-0.7.md}
             digest: {ref: common.digest}
         executable:
           closed: true
           required_fields: [path, digest]
           fields:
-            path: {const: contracts/nkf/0.6/revision-3/nkf.yaml}
+            path: {const: contracts/nkf/0.7/nkf.yaml}
             digest: {ref: common.digest}
         freshness_policy:
           closed: true
           required_fields: [path, digest]
           fields:
-            path: {const: contracts/nkf/0.6/freshness-policy.yaml}
+            path: {const: contracts/nkf/0.7/freshness-policy.yaml}
             digest: {ref: common.digest}
-        declaration_path: {const: .nourd/knowledge/records/nkf-0.6-specification-revision-3.yaml}
+        version_delta:
+          closed: true
+          required_fields: [path, digest]
+          fields:
+            path: {const: contracts/nkf/0.7/version-delta.yaml}
+            digest: {ref: common.digest}
+        declaration_path: {const: .nourd/knowledge/records/nkf-0.7-specification.yaml}
         record_declaration:
           ref: record
           exact_required_values:
             contract: nkf.record
-            id: nkf-0.6-specification-revision-3
+            id: nkf-0.7-specification
             type: specification
             body_contract: nkf.specification
-            title: NKF 0.6 — Product And Technology Knowledge Format
-            task: NKF-027
-            source.path: specifications/nkf-0.6-revision-3.md
-            source.stable_path: specifications/nkf-0.6-revision-3.md
+            title: NKF 0.7 — Product And Technology Knowledge Format
+            task: NKF-028
+            source.path: specifications/nkf-0.7.md
+            source.stable_path: specifications/nkf-0.7.md
             source.digest: exact-specification-binding
             governance.lifecycle: immutable
             governance.status: accepted
             scope.root: nkf
           acceptance_fields_derived_by-tool: forbidden
           section-and-relationship-semantics-derived-by-tool: forbidden
-        historical_containment:
-          ref: bundle.non_record
-          exact_required_values:
-            path: decisions/0122-accept-the-nkf-0-6-authority-set.md
-            kind: evidence
-            document.id: document-cddf78f71eac865b267a0b88c15600cf61383285d6d3b2558ff2e07d7bceda95
-            document.stable_path: decisions/0122-accept-the-nkf-0-6-authority-set.md
-            document.digest: exact-adr-0122-source-digest
-            document.relationships: []
-            document.historical_acceptance_attempt_lock: exact-bundle.historical_acceptance_attempt_lock
       accepting_decision_digest_field: forbidden
       prospective_accepted_governance_declaration:
         permitted: true
@@ -4639,83 +4694,74 @@ compatibility:
         becomes_applicable_only_after: exact-accepting-decision-resolves-and-binds-input-digest
       digest_binding:
         authority: exact-accepting-decision
-        decision_must_explicitly_accept: [specification, executable, freshness_policy, serialized-input-digest]
+        decision_must_explicitly_accept: [specification, executable, freshness_policy, version_delta, serialized-input-digest]
         predecessor_release_authority:
-          decision: adr-0124
-          source:
-            path: knowledge/decisions/0124-accept-the-nkf-0-6-revision-2-authority-set.md
-            digest: 7a5310ccc473e6e29f46a206741e44582c0226c7f32c8eafae385e3b0121f048
-          declaration:
-            path: .nourd/knowledge/records/adr-0124.yaml
-            digest: 2a135504e994d94f69ca09bd42e7aa80c5e77d2cb7fddb90790c2bb8bc31e652
+          decision: adr-0125
           preservation: exact-unchanged-governed-graph-visible-accepted-history
         decision_must_explicitly_supersede:
-          decision: adr-0124
-          exact_subject: adr-0124-revision-2-release-authority-selection
+          decision: adr-0125
+          exact_subject: adr-0125-revision-3-release-authority-selection
           other-historical-acceptance-and-conclusions: preserved
         validation_or-input-proves-acceptance: false
     required_exact_inputs:
       source_repository_identity: NourdApS/Nourd.NKF
-      owning_task: NKF-027
+      owning_task: NKF-028
       specification:
-        id: nkf-0.6-specification-revision-3
-        path: knowledge/specifications/nkf-0.6-revision-3.md
+        id: nkf-0.7-specification
+        path: knowledge/specifications/nkf-0.7.md
         digest: exact-authority-markdown-digest
-        producer_0_5_representation: non-record-kind-evidence-at-same-exact-path
+        producer_0_6_representation: non-record-kind-evidence-at-same-exact-path
       executable:
-        path: contracts/nkf/0.6/revision-3/nkf.yaml
+        path: contracts/nkf/0.7/nkf.yaml
         digest: exact-accepted-executable-digest
       freshness_policy:
-        path: contracts/nkf/0.6/freshness-policy.yaml
+        path: contracts/nkf/0.7/freshness-policy.yaml
         digest: exact-accepted-policy-digest
+      version_delta:
+        path: contracts/nkf/0.7/version-delta.yaml
+        digest: exact-accepted-version-delta-digest
       accepting_decision:
         resolves_to: same-bundle-accepted-decision-record
-        exactly_accepts: exact-specification-executable-policy-and-serialized-promotion-input
+        exactly_accepts: exact-specification-executable-policy-version-delta-and-serialized-promotion-input
       accepted_native_record_declaration:
         source: serialized_input.record_declaration
         destination: serialized_input.declaration_path
         semantic_derivation_by-tool: forbidden
-      historical_containment:
-        source: serialized_input.historical_containment
-        predecessor_declaration: exact-.nourd/knowledge/records/adr-0122.yaml
-        successor_representation: exact-locked-evidence-document
-        source_markdown_change: forbidden
       whole_root_review:
         ref: freshness.whole_root_review_input
         exact_stage: whole-root
-        candidate_universe: exact-post-promotion-native-0.6-graph
+        candidate_universe: exact-post-promotion-native-0.7-graph
         named-reviewer-completed: required
         authority_or-acceptance-effect: none
+        lineage_effect: deliberate-last-whole-root-review
     preconditions:
       - all-exact-input-digests-match
       - exact-candidate-evidence-document-resolves-once
-      - no-existing-record-has-nkf-0.6-specification-revision-3-identity
+      - no-existing-record-has-nkf-0.7-specification-identity
       - exact-declaration-destination-is-safe-project-relative-path-under-.nourd/knowledge/records
       - exact-declaration-destination-does-not-exist
       - no-other-document-or-record-uses-canonical-source-path
-      - complete-native-record-declaration-valid-under-accepted-0.6-contract
+      - complete-native-record-declaration-valid-under-accepted-0.7-contract
       - declaration-source-digest-equals-exact-candidate-markdown
       - declaration-governance-is-immutable-accepted
-      - declaration-task-is-NKF-027
+      - declaration-task-is-NKF-028
       - declaration-authority-and-acceptance-binding-match-exact-accepting-decision
       - accepting-decision-binds-exact-serialized-input-digest
-      - exact-adr-0124-source-and-native-declaration-digests-match
-      - accepting-decision-explicitly-supersedes-only-adr-0124-revision-2-release-authority-selection
-      - exact-adr-0122-source-and-native-declaration-digests-match
-      - exact-adr-0122-source-has-one-plain-NKF-027-in-Scope-And-Applicability-and-one-plain-ADR-0121-in-Alternatives-Considered
-      - exact-historical-containment-lock-and-document-identity-match
-      - no-other-node-carries-historical-acceptance-attempt-lock
+      - accepting-decision-explicitly-supersedes-only-adr-0125-revision-3-release-authority-selection
       - whole-root-review-exactly-covers-post-promotion-candidate
     exact_transaction:
       remove:
         - exact-candidate-evidence-document-representation
-        - exact-native-adr-0122-record-declaration
       add:
         - path: serialized_input.declaration_path
           content: serialized_input.record_declaration
-        - manifest_entry: serialized_input.historical_containment
+      apply:
+        - accepted-stable-path-neutralization-exactly-once
+        - accepted-identity-succession-exactly-once
+        - provenance-attachment-classification
+        - promotion-reconciliation-entries-for-every-operational-dependency-declaring-node
       source_markdown_change: forbidden
-      executable_or-policy_change: forbidden
+      executable_policy_or-version-delta_change: forbidden
       generated-navigation: regenerate
       graph-and-baseline: derive-exact-post-promotion-graph-and-seal-from-supplied-whole-root-review
       failure: rollback-complete-project-owned-snapshot
@@ -4725,27 +4771,25 @@ compatibility:
         source: isolated-exact-candidate-source-copy
         archive: exact-unpublished-candidate
       postpublication:
-        source: exact-live-producer-still-declaring-0.5-with-candidate-evidence
+        source: exact-live-producer-still-declaring-0.6-with-candidate-evidence
         archive: exact-immutable-published-archive-acquired-through-promoted-recommendation
       whole_root_review: separately-completed-for-each-exact-post-promotion-candidate
     dispatch:
       promote_exactly_when:
         - exact-producer-repository
-        - bundle-declares-0.5
+        - bundle-declares-0.6
         - exact-candidate-evidence-document-resolves-once
-        - exact-native-0.6-specification-declaration-is-absent
+        - exact-native-0.7-specification-declaration-is-absent
         - authorized-stage-proves-all-stage-specific-inputs
       current_exactly_when:
         - exact-producer-repository
-        - bundle-declares-0.6
+        - bundle-declares-0.7
         - candidate-evidence-document-is-absent
-        - exact-native-0.6-specification-declaration-resolves-once-and-is-current
-        - exact-native-adr-0122-record-declaration-is-absent
-        - exact-serialized-adr-0122-historical-evidence-document-resolves-once-and-is-current
-        - exact-historical-acceptance-attempt-lock-and-adr-0125-binding-are-current
-        - no-other-node-carries-historical-acceptance-attempt-lock
+        - exact-native-0.7-specification-declaration-resolves-once-and-is-current
+        - exact-applied-path-neutralization-and-successions-are-current
         - exact-generated-navigation-and-host-integration-are-current
         - exact-candidate-graph-and-confirmed-baseline-are-current
+        - no-pending-promotion-reconciliation-entry-remains-unresolved-at-readiness-claim
       conflicting-or-ambiguous-state: fail-before-mutation
       repeat_after-success: current
     ordinary-consumer-update: forbidden
