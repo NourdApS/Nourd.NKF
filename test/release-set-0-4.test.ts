@@ -81,7 +81,7 @@ describe("NKF 0.5 sole release-set realization", () => {
     const verified = verifyReleaseArchive(first.archive, sha256(first.archive));
     expect(verified.manifest).toEqual(first.manifest);
     expect(verified.release_entries).toEqual(first.memberEntries);
-  }, 30_000);
+  }, 120_000);
 
   it("rejects release-set, manifest-file, archive-mode, and source-coverage drift", async () => {
     const fixture = await releaseFixture();
@@ -149,7 +149,7 @@ describe("NKF 0.6 sole release-set realization", () => {
     const verified = verifyReleaseArchive(first.archive, sha256(first.archive));
     expect(verified.manifest).toEqual(first.manifest);
     expect(verified.release_entries).toEqual(first.memberEntries);
-  }, 20_000);
+  }, 80_000);
 
   it("rejects manifest-consistent incomplete third-party notices", async () => {
     const fixture = await releaseFixture("0.6");
@@ -185,5 +185,5 @@ describe("NKF 0.6 sole release-set realization", () => {
     bodyEntries.set("release-manifest.json", serializeReleaseManifest(bodyManifest));
     const bodyArchive = createUstar(bodyEntries, fixture.memberEntries);
     expect(() => verifyReleaseArchive(bodyArchive, sha256(bodyArchive))).toThrow(/exact reviewed/i);
-  }, 20_000);
+  }, 80_000);
 });

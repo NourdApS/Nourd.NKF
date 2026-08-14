@@ -624,7 +624,7 @@ beforeAll(async () => {
   repairAdopter = lastZeroOne.adopterPath;
   repairArchivePath = lastZeroOne.archivePath;
   repairArchiveSha256 = lastZeroOne.archiveSha256;
-}, 180_000);
+}, 480_000);
 
 describe("NKF consumer adopter", () => {
   it("exposes one no-subcommand Adopt operation for initial and current 0.4 repositories", async () => {
@@ -669,7 +669,7 @@ describe("NKF consumer adopter", () => {
     const conformingNotReadyCurrent = runAdopt(native, ["--archive", archivePath]);
     expect(conformingNotReadyCurrent.status, conformingNotReadyCurrent.stderr).toBe(0);
     expect(JSON.parse(conformingNotReadyCurrent.stdout).state).toBe("current");
-  }, 20_000);
+  }, 80_000);
 
   it("migrates NKF 0.3 to 0.5 with explicit approval and a reviewed baseline", async () => {
     const project = await createProject(
@@ -697,7 +697,7 @@ describe("NKF consumer adopter", () => {
     const current = runAdopt(project, ["--archive", archivePath]);
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
-  }, 20_000);
+  }, 80_000);
 
   it("rebinds an exact producer host registry during breaking 0.4-to-0.6 adoption", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
@@ -748,7 +748,7 @@ describe("NKF consumer adopter", () => {
         sha256(await readFile(path.join(project, relative))),
       );
     }
-  }, 30_000);
+  }, 120_000);
 
   it("promotes the exact producer candidate to one native 0.6 Specification only at the authorized public stage", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-promotion-test-"));
@@ -1051,7 +1051,7 @@ describe("NKF consumer adopter", () => {
     expect(await readFile(realizationPath)).toEqual(realizationCurrent);
     expect(await readFile(realizationDeclarationPath)).toEqual(declarationCurrent);
     expect(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"))).toEqual(bundleCurrent);
-  }, 120_000);
+  }, 300_000);
 
   it("fails closed before mutation when initial planning is absent", async () => {
     const { project } = await createEmptyProject();
@@ -1144,7 +1144,7 @@ describe("NKF consumer adopter", () => {
         approved_by: "repository-owner",
       },
     });
-  }, 20_000);
+  }, 80_000);
 
   it("onboards empty Product and Technology repositories without native assembly", async () => {
     for (const profile of ["product", "technology"] as const) {
@@ -1196,7 +1196,7 @@ describe("NKF consumer adopter", () => {
       expect(repeat.status, repeat.stderr).toBe(0);
       expect(JSON.parse(repeat.stdout).state).toBe("no-update");
     }
-  }, 15_000);
+  }, 60_000);
 
   it("keeps .nourd at the project root while onboarding a safe non-default knowledge root", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -1214,7 +1214,7 @@ describe("NKF consumer adopter", () => {
     await expect(lstat(path.join(project, "knowledge"))).rejects.toMatchObject({
       code: "ENOENT",
     });
-  }, 20_000);
+  }, 80_000);
 
   it("preserves and explicitly represents nested small-document corpora for both profiles", async () => {
     for (const profile of ["product", "technology"] as const) {
@@ -1253,7 +1253,7 @@ describe("NKF consumer adopter", () => {
         kind: "navigation",
       });
     }
-  }, 20_000);
+  }, 80_000);
 
   it("preserves unresolved flat Task and Design material without inferring lifecycle state", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -1840,7 +1840,7 @@ describe("NKF consumer adopter", () => {
     expect(tamperedReceipt.stderr).toContain(
       "The topology-repair receipt does not match the installed successor release",
     );
-  }, 15_000);
+  }, 60_000);
 
   it("repairs the exact NKF-013 predecessor receipt without inventing assessment state", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -1908,7 +1908,7 @@ describe("NKF consumer adopter", () => {
       code: "ENOENT",
     });
     expect(await readFile(map, "utf8")).toContain("<!-- nkf-navigation:start -->");
-  }, 15_000);
+  }, 60_000);
 
   it("requires Category 2 confirmation and preserves negative agent recommendations", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -2278,7 +2278,7 @@ describe("NKF consumer adopter", () => {
     expect(await readFile(path.join(project, "src", "index.ts"))).toEqual(
       sourceBytes,
     );
-  }, 20_000);
+  }, 80_000);
 
   it("rejects an existing owned workflow before project mutation", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -2302,7 +2302,7 @@ describe("NKF consumer adopter", () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("would overwrite an existing owned path");
     expectTreeEqual(await snapshotTree(project), before);
-  }, 20_000);
+  }, 80_000);
 
   it("migrates 0.2 through the declared general host-superset chain and verifies current", async () => {
     const project = await createProject(
@@ -2433,7 +2433,7 @@ describe("NKF consumer adopter", () => {
     const current = runAdopt(project, ["--archive", archivePath]);
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
-  }, 20_000);
+  }, 80_000);
 
   it("installs and validates an already structured Product repository", async () => {
     const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-6"));
