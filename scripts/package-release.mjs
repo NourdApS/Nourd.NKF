@@ -72,7 +72,7 @@ if (!checkerFirst.equals(checkerSecond)) {
 }
 const releaseSet = await readReleaseSet(repositoryRoot);
 await reproduceReleaseMembers(repositoryRoot, releaseSet);
-const memberEntries = releaseEntriesForVersion("0.6", releaseSet);
+const memberEntries = releaseEntriesForVersion("0.7", releaseSet);
 const entries = await readReleaseEntries(repositoryRoot, memberEntries);
 entries.set("dist/nourd-nkf-checker.mjs", checkerSecond);
 for (const [artifactPath, expected] of Object.entries(
@@ -92,7 +92,7 @@ if (
 const manifest = constructReleaseManifest({
   releaseCommit,
   entries,
-  nkfVersion: "0.6",
+  nkfVersion: "0.7",
   releaseSet,
 });
 const manifestBytes = serializeReleaseManifest(manifest);

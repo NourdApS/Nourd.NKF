@@ -19781,9 +19781,9 @@ import path3 from "node:path";
 var import_yaml2 = __toESM(require_dist(), 1);
 import { lstat as lstat2, readFile as readFile2, readdir as readdir2, writeFile as writeFile2 } from "node:fs/promises";
 import path2 from "node:path";
-var CURRENT_RELEASE_VERSION = "0.6";
+var CURRENT_RELEASE_VERSION = "0.7";
 function releaseSetPathForVersion(nkfVersion) {
-  if (!["0.3", "0.4", "0.5", "0.6"].includes(nkfVersion)) {
+  if (!["0.6", "0.7"].includes(nkfVersion)) {
     fail2(`NKF ${nkfVersion} does not use the complete release-set contract.`);
   }
   return `contracts/nkf/${nkfVersion}/release-set.yaml`;
@@ -19793,6 +19793,7 @@ var RELEASE_CLASSES = Object.freeze([
   "normative-specification",
   "executable-companion",
   "evaluation-policy",
+  "version-delta-declaration",
   "repository-license",
   "repository-notice",
   "third-party-notices",
@@ -19814,20 +19815,8 @@ var RELEASE_CLASSES = Object.freeze([
   "public-documentation"
 ]);
 function releaseClassesForVersion(nkfVersion) {
-  if (nkfVersion === "0.6") return RELEASE_CLASSES;
-  if (nkfVersion === "0.5") {
-    return RELEASE_CLASSES.filter((className) => ![
-      "repository-license",
-      "repository-notice",
-      "third-party-notices"
-    ].includes(className));
-  }
-  return RELEASE_CLASSES.filter((className) => ![
-    "evaluation-policy",
-    "repository-license",
-    "repository-notice",
-    "third-party-notices"
-  ].includes(className));
+  if (nkfVersion === "0.7") return RELEASE_CLASSES;
+  return RELEASE_CLASSES.filter((className) => className !== "version-delta-declaration");
 }
 var SELECTIONS = /* @__PURE__ */ new Set([
   "exact-file",
@@ -19884,7 +19873,7 @@ function parseYaml2(bytes) {
 }
 function validateReleaseSet(value) {
   exactKeys(value, ["contract", "nkf_version", "coverage", "members"], "Release set");
-  if (value.contract !== "nkf.release-set" || !["0.3", "0.4", "0.5", "0.6"].includes(value.nkf_version) || !Array.isArray(value.coverage) || value.coverage.length === 0 || !Array.isArray(value.members) || value.members.length === 0) {
+  if (value.contract !== "nkf.release-set" || !["0.6", "0.7"].includes(value.nkf_version) || !Array.isArray(value.coverage) || value.coverage.length === 0 || !Array.isArray(value.members) || value.members.length === 0) {
     fail2("Release set identity, version, coverage, or members are invalid.");
   }
   const releaseClasses = releaseClassesForVersion(value.nkf_version);
@@ -20106,6 +20095,10 @@ var AUTHORITY_PATHS = Object.freeze({
   "0.6": {
     markdown: "knowledge/specifications/nkf-0.6-revision-3.md",
     executable: "contracts/nkf/0.6/revision-3/nkf.yaml"
+  },
+  "0.7": {
+    markdown: "knowledge/specifications/nkf-0.7.md",
+    executable: "contracts/nkf/0.7/nkf.yaml"
   }
 });
 var LEGACY_0_1_ENTRIES = Object.freeze([
@@ -20183,7 +20176,7 @@ function fail3(message) {
   throw new Error(message);
 }
 function usesReleaseSet(nkfVersion) {
-  return ["0.3", "0.4", "0.5", "0.6"].includes(nkfVersion);
+  return ["0.3", "0.4", "0.5", "0.6", "0.7"].includes(nkfVersion);
 }
 function sha2562(bytes) {
   return createHash2("sha256").update(bytes).digest("hex");
@@ -20609,7 +20602,7 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   if (manifest?.contract !== "nkf.release-manifest" || manifest?.nkf_version !== nkfVersion) {
     fail3("Release manifest bootstrap contract or NKF version is invalid.");
   }
-  const schemaIndex = ["0.5", "0.6"].includes(nkfVersion) ? 5 : 2;
+  const schemaIndex = ["0.5", "0.6", "0.7"].includes(nkfVersion) ? 5 : 2;
   const schema = manifest?.schemas?.[schemaIndex];
   if (schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` || schema?.path !== `contracts/nkf/${nkfVersion}/schemas/release-manifest.schema.json` || schema?.digest?.algorithm !== "sha-256" || !/^[0-9a-f]{64}$/.test(schema?.digest?.value ?? "")) {
     fail3("Release manifest bootstrap schema entry is invalid.");
@@ -20713,9 +20706,9 @@ function verifyReleaseArchive(archiveBytes, expectedArchiveSha256, { sourceRoot 
   if (manifestSchema === void 0) fail3("Release manifest omits its bootstrap schema binding.");
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
-  if (archiveVersion === "0.6") {
+  if (["0.6", "0.7"].includes(archiveVersion)) {
     if (manifest.licensing?.spdx !== "Apache-2.0" || sha2562(requireBuffer(entries, "LICENSE")) !== "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30" || sha2562(requireBuffer(entries, "NOTICE")) !== "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6") {
-      fail3("The NKF 0.6 release does not carry the exact Apache-2.0 license and informational NOTICE.");
+      fail3(`The NKF ${archiveVersion} release does not carry the exact Apache-2.0 license and informational NOTICE.`);
     }
   }
   const releaseSet = usesReleaseSet(archiveVersion) ? parseReleaseSet(
@@ -20727,11 +20720,12 @@ function verifyReleaseArchive(archiveBytes, expectedArchiveSha256, { sourceRoot 
     manifest.authority.markdown,
     manifest.authority.executable,
     ...manifest.freshness_policy === void 0 ? [] : [manifest.freshness_policy],
+    ...manifest.version_delta === void 0 ? [] : [manifest.version_delta],
     ...manifest.schemas,
     ...manifest.licensing === void 0 ? [] : [manifest.licensing.license, manifest.licensing.notice, manifest.licensing.third_party_notices]
   ];
   for (const artifact of artifacts) verifyArtifact(entries, artifact);
-  if (archiveVersion === "0.6") {
+  if (["0.6", "0.7"].includes(archiveVersion)) {
     verifyThirdPartyNoticeCoverage(
       requireBuffer(entries, "dist/nourd-nkf-checker.mjs"),
       requireBuffer(entries, "dist/nourd-nkf-adopt.mjs"),

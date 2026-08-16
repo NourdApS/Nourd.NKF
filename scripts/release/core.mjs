@@ -44,6 +44,10 @@ const AUTHORITY_PATHS = Object.freeze({
     markdown: "knowledge/specifications/nkf-0.6-revision-3.md",
     executable: "contracts/nkf/0.6/revision-3/nkf.yaml",
   },
+  "0.7": {
+    markdown: "knowledge/specifications/nkf-0.7.md",
+    executable: "contracts/nkf/0.7/nkf.yaml",
+  },
 });
 const LEGACY_0_1_ENTRIES = Object.freeze([
   { path: "contracts/nkf/0.1/nkf.yaml", mode: 0o644 },
@@ -124,11 +128,11 @@ function fail(message) {
 }
 
 function usesReleaseSet(nkfVersion) {
-  return ["0.3", "0.4", "0.5", "0.6"].includes(nkfVersion);
+  return ["0.3", "0.4", "0.5", "0.6", "0.7"].includes(nkfVersion);
 }
 
 function schemaBindings(nkfVersion) {
-  if (["0.5", "0.6"].includes(nkfVersion)) {
+  if (["0.5", "0.6", "0.7"].includes(nkfVersion)) {
     return [
       "bundle",
       "record",
@@ -218,7 +222,7 @@ export function constructReleaseManifest({
     executable: `contracts/nkf/${nkfVersion}/nkf.yaml`,
   };
   const specificationPath = authorityPaths.markdown;
-  const repository = nkfVersion === "0.6" ? REPOSITORY : LEGACY_REPOSITORY;
+  const repository = ["0.6", "0.7"].includes(nkfVersion) ? REPOSITORY : LEGACY_REPOSITORY;
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
   const markdown = requireBuffer(entries, specificationPath);
   const executable = requireBuffer(entries, authorityPaths.executable);
@@ -255,7 +259,7 @@ export function constructReleaseManifest({
     path: schema.path,
     digest: digest(requireBuffer(entries, schema.path)),
   }));
-  const manifest = ["0.5", "0.6"].includes(nkfVersion)
+  const manifest = ["0.5", "0.6", "0.7"].includes(nkfVersion)
     ? {
         ...common,
         freshness_policy: {
@@ -263,8 +267,17 @@ export function constructReleaseManifest({
           path: `contracts/nkf/${nkfVersion}/freshness-policy.yaml`,
           digest: digest(requireBuffer(entries, `contracts/nkf/${nkfVersion}/freshness-policy.yaml`)),
         },
+        ...(nkfVersion === "0.7"
+          ? {
+              version_delta: {
+                contract: "nkf.version-delta",
+                path: "contracts/nkf/0.7/version-delta.yaml",
+                digest: digest(requireBuffer(entries, "contracts/nkf/0.7/version-delta.yaml")),
+              },
+            }
+          : {}),
         schemas,
-        ...(nkfVersion === "0.6"
+        ...(["0.6", "0.7"].includes(nkfVersion)
           ? {
               licensing: {
                 spdx: "Apache-2.0",
@@ -780,7 +793,7 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   ) {
     fail("Release manifest bootstrap contract or NKF version is invalid.");
   }
-  const schemaIndex = ["0.5", "0.6"].includes(nkfVersion) ? 5 : 2;
+  const schemaIndex = ["0.5", "0.6", "0.7"].includes(nkfVersion) ? 5 : 2;
   const schema = manifest?.schemas?.[schemaIndex];
   if (
     schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` ||
@@ -919,7 +932,7 @@ export function verifyReleaseArchive(
   if (manifestSchema === undefined) fail("Release manifest omits its bootstrap schema binding.");
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
-  if (archiveVersion === "0.6") {
+  if (["0.6", "0.7"].includes(archiveVersion)) {
     if (
       manifest.licensing?.spdx !== "Apache-2.0" ||
       sha256(requireBuffer(entries, "LICENSE")) !==
@@ -927,7 +940,7 @@ export function verifyReleaseArchive(
       sha256(requireBuffer(entries, "NOTICE")) !==
         "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6"
     ) {
-      fail("The NKF 0.6 release does not carry the exact Apache-2.0 license and informational NOTICE.");
+      fail(`The NKF ${archiveVersion} release does not carry the exact Apache-2.0 license and informational NOTICE.`);
     }
   }
 
@@ -943,13 +956,14 @@ export function verifyReleaseArchive(
     manifest.authority.markdown,
     manifest.authority.executable,
     ...(manifest.freshness_policy === undefined ? [] : [manifest.freshness_policy]),
+    ...(manifest.version_delta === undefined ? [] : [manifest.version_delta]),
     ...manifest.schemas,
     ...(manifest.licensing === undefined
       ? []
       : [manifest.licensing.license, manifest.licensing.notice, manifest.licensing.third_party_notices]),
   ];
   for (const artifact of artifacts) verifyArtifact(entries, artifact);
-  if (archiveVersion === "0.6") {
+  if (["0.6", "0.7"].includes(archiveVersion)) {
     verifyThirdPartyNoticeCoverage(
       requireBuffer(entries, "dist/nourd-nkf-checker.mjs"),
       requireBuffer(entries, "dist/nourd-nkf-adopt.mjs"),
