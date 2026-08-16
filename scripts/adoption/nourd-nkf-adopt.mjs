@@ -19,6 +19,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
+import * as commonmark from "commonmark";
 import neutralProtocol from "../../distribution/nkf/0.6/integrations/ai/nkf-authoring-protocol.md";
 import portableSkill from "../../distribution/nkf/0.6/.agents/skills/nkf-authoring/SKILL.md";
 import onboardingProtocol from "../../distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md";
@@ -65,6 +66,10 @@ function migrateProjectTo0_5() {
     + `${STEPPING_STONE_0_6.repository} NKF ${STEPPING_STONE_0_6.nkf_version} archive sha256 ${STEPPING_STONE_0_6.archive_sha256}.`,
   );
 }
+import {
+  sealBaseline0_7,
+  writeReviewTemplate0_7,
+} from "../freshness/seal-baseline-0-7.mjs";
 import {
   sealBaseline0_5,
   sealBaselineModern,
@@ -299,6 +304,8 @@ function parseArguments(values) {
     "linkify",
     "set",
     "migrate",
+    "review",
+    "record",
     "adopt",
   ].includes(result.command)) {
     fail(
@@ -362,6 +369,10 @@ function parseArguments(values) {
     allowed = new Set(["project", "task", "to", "result-file", "checker"]);
   } else if (["repin", "linkify"].includes(result.command)) {
     allowed = new Set(["project", "checker"]);
+  } else if (result.command === "review") {
+    allowed = new Set(["project", "checker", "scaffold", "stage"]);
+  } else if (result.command === "record") {
+    allowed = new Set(["project", "scaffold", "source"]);
   } else {
     allowed = new Set(["project"]);
   }
@@ -4463,6 +4474,101 @@ async function migrateToCurrent(options, prepared = undefined) {
   };
 }
 
+
+// Deterministic scaffolds: structure only, never a judgment.
+async function scaffoldReview(projectRoot, options) {
+  if (typeof options.scaffold !== "string") fail("review requires --scaffold with a writable review path.");
+  if (typeof options.checker !== "string") fail("review --scaffold requires --checker with the verified checker path.");
+  const stage = options.stage ?? "delta";
+  if (!["delta", "whole-root"].includes(stage)) fail("--stage must be delta or whole-root.");
+  const out = await writeReviewTemplate0_7({
+    projectRoot,
+    checker: path.resolve(options.checker),
+    reviewPath: path.resolve(options.scaffold),
+    stage,
+  });
+  return { state: "scaffolded", ...out };
+}
+
+async function scaffoldRecord(projectRoot, options) {
+  if (typeof options.scaffold !== "string") fail("record requires --scaffold with a writable declaration path.");
+  if (typeof options.source !== "string") fail("record --scaffold requires --source with one knowledge-relative Markdown path.");
+  const { bundle } = await requireBundle(projectRoot);
+  const relative = safeRelative(options.source, "Record source path");
+  const bytes = await readRegularInside(projectRoot, `${bundle.knowledge_root}/${relative}`);
+  let text = bytes.toString("utf8");
+  // The optional front-matter envelope is not CommonMark content.
+  if (text.startsWith("---\n")) {
+    const close = text.indexOf("\n---\n", 4);
+    if (close >= 0) text = text.slice(close + 5);
+  }
+  const headings = [];
+  {
+    const parser = new commonmark.Parser();
+    const walker = parser.parse(text).walker();
+    let event = walker.next();
+    while (event !== null) {
+      if (event.entering && event.node.type === "heading" && event.node.level <= 3) {
+        let inner = event.node.walker();
+        let innerEvent = inner.next();
+        let headingText = "";
+        while (innerEvent !== null) {
+          if (innerEvent.entering && (innerEvent.node.type === "text" || innerEvent.node.type === "code")) {
+            headingText += innerEvent.node.literal ?? "";
+          }
+          innerEvent = inner.next();
+        }
+        headings.push({ level: event.node.level, text: headingText });
+      }
+      event = walker.next();
+    }
+  }
+  const occurrences = new Map();
+  const sections = [];
+  const trail = [];
+  for (const heading of headings) {
+    trail.length = Math.max(0, heading.level - 1);
+    trail[heading.level - 1] = heading.text;
+    if (heading.level === 1) continue;
+    const headingPath = trail.slice(1, heading.level).filter((item) => item !== undefined);
+    const key = JSON.stringify(headingPath);
+    const occurrence = (occurrences.get(key) ?? 0) + 1;
+    occurrences.set(key, occurrence);
+    const slug = heading.text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    sections.push({
+      id: slug === "" ? "SECTION_ID_REQUIRED" : slug,
+      heading_path: headingPath,
+      occurrence,
+      authority: "SEMANTIC_VALUE_REQUIRED",
+      role: "SEMANTIC_VALUE_REQUIRED",
+    });
+  }
+  const declaration = {
+    contract: "nkf.record",
+    id: "RECORD_ID_REQUIRED",
+    type: "SEMANTIC_VALUE_REQUIRED",
+    body_contract: "SEMANTIC_VALUE_REQUIRED",
+    title: headings.find((heading) => heading.level === 1)?.text ?? "TITLE_REQUIRED",
+    source: {
+      path: relative,
+      stable_path: relative,
+      digest: { algorithm: "sha-256", value: digest(bytes) },
+    },
+    governance: {
+      lifecycle: "SEMANTIC_VALUE_REQUIRED",
+      status: "SEMANTIC_VALUE_REQUIRED",
+      authority: ["SEMANTIC_VALUE_REQUIRED"],
+    },
+    scope: { root: bundle.root.record },
+    sections,
+    relationships: [],
+  };
+  const target = path.resolve(options.scaffold);
+  await mkdir(path.dirname(target), { recursive: true });
+  await writeFile(target, YAML.stringify(declaration, { lineWidth: 0, aliasDuplicateObjects: false }));
+  return { state: "scaffolded", path: target, source: relative, sections: sections.length };
+}
+
 async function migrateByArchive(options) {
   const input = await resolveMigrationInput(options);
   if (input.verification.manifest.nkf_version === "0.4") {
@@ -4842,6 +4948,8 @@ async function main() {
   if (command === "linkify") return linkifyProject(await requireProjectRoot(options.project), options);
   if (command === "set") return exportVersionedSet(await requireProjectRoot(options.project));
   if (command === "task") return options.to === undefined ? taskPendingView(options) : transitionTask(options);
+  if (command === "review") return scaffoldReview(await requireProjectRoot(options.project), options);
+  if (command === "record") return scaffoldRecord(await requireProjectRoot(options.project), options);
   if (command === "migrate") return migrateByArchive(options);
   const projectRoot = await requireProjectRoot(options.project);
   const installed = await verifyInstalled(projectRoot, command === "check");
