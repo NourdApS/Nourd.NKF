@@ -4,7 +4,7 @@ bundle: example-product
 profile: nkf.profile.product
 graph_revision:
   algorithm: sha-256
-  value: 4cf635572924aa22e99cbc68aa310be63972dee8688fc75e35c269c685d0e1f5
+  value: 80b544fda478adb9addd7191e5b05a62e469116420e53acb6b748fe63241b797
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -16,7 +16,7 @@ node_revisions:
       id: TEST-001
     revision:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
   - node:
       kind: document
       id: document-b3dbb8b77abce6374c6c6aab58b9a097dcaff5f81b0c4b1f14579191e17d7c79
@@ -28,13 +28,13 @@ node_revisions:
       id: product
     revision:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
   - node:
       kind: record
       id: product-current-system
     revision:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
 authored_edges: []
 external_dependencies: []
 authority_inputs: []
@@ -169,10 +169,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
     basis_digest:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
     provenance:
       performed: true
   - node:
@@ -192,10 +192,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
     basis_digest:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
     provenance:
       performed: true
   - node:
@@ -215,10 +215,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
     basis_digest:
       algorithm: sha-256
-      value: 6e8a3a5bda391d140c08f02323255ee676b7dd3db8acb0802a991f2e04645bf1
+      value: 7fbc5eafe90619fb519b938f8c122d5dfeaba819f76e301957e6530048eb331b
     provenance:
       performed: true
   - node:
@@ -304,10 +304,10 @@ applicability_coverage:
         section: product-definition
     revision:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
     basis_digest:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
     provenance:
       performed: true
   - node:
@@ -324,10 +324,10 @@ applicability_coverage:
         section: product-definition
     revision:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
     basis_digest:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
     provenance:
       performed: true
   - node:
@@ -344,10 +344,10 @@ applicability_coverage:
         section: product-definition
     revision:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
     basis_digest:
       algorithm: sha-256
-      value: 39c868041497178cb6728e5d0682230f193a727a66e7baf6c31bf93f9e9d0dac
+      value: 5d052175ea77961b44c9b4137952a216d174927fe5ea4b6d328a6d9e82f1cb0d
     provenance:
       performed: true
   - node:
@@ -364,10 +364,10 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
     basis_digest:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
     provenance:
       performed: true
   - node:
@@ -384,10 +384,10 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
     basis_digest:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
     provenance:
       performed: true
   - node:
@@ -404,10 +404,10 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
     basis_digest:
       algorithm: sha-256
-      value: 3d0b954f50ef03d3bca4145c2196784b24e185a709d6f632de12179c95f17aa6
+      value: cf599c9a703eeb7f98366bfe8a9a17bd409f08f2487d08963168004f91c837b0
     provenance:
       performed: true
 decision_classifications: []

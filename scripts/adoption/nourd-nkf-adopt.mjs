@@ -26,8 +26,8 @@ import onboardingSkill from "../../distribution/nkf/0.6/.agents/skills/nkf-onboa
 import rootAdapter from "../../distribution/nkf/0.6/host-adapters/AGENTS.adapter.md";
 import importAdapter from "../../distribution/nkf/0.6/host-adapters/CLAUDE.adapter.md";
 import copilotAdapter from "../../distribution/nkf/0.6/host-adapters/copilot-instructions.adapter.md";
-import freshnessPolicy0_5 from "../../contracts/nkf/0.5/freshness-policy.yaml";
-import predecessorContract0_5 from "nkf:predecessor-0.5";
+import freshnessPolicy0_6 from "../../contracts/nkf/0.6/freshness-policy.yaml";
+import predecessorContract0_6 from "nkf:predecessor-0.6";
 import neutralProtocol0_4 from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
 import portableSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-authoring/SKILL.md";
 import onboardingProtocol0_4 from "../../distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md";
@@ -52,7 +52,19 @@ import {
   verifyReleaseArchive,
 } from "../release/core.mjs";
 import { readReleaseSet } from "../release/release-set.mjs";
-import { migrateProjectTo0_5 } from "../migration/0-5-core.mjs";
+// Out-of-window predecessors migrate through their own immutable published
+// archives; the 0.7 adopter carries no live legacy migration.
+const STEPPING_STONE_0_6 = Object.freeze({
+  repository: "NourdApS/Nourd.NKF",
+  nkf_version: "0.6",
+  archive_sha256: "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+});
+function migrateProjectTo0_5() {
+  fail(
+    "This repository declares an out-of-window NKF version. Migrate through the exact stepping-stone release first: "
+    + `${STEPPING_STONE_0_6.repository} NKF ${STEPPING_STONE_0_6.nkf_version} archive sha256 ${STEPPING_STONE_0_6.archive_sha256}.`,
+  );
+}
 import {
   sealBaseline0_5,
   sealBaselineModern,
@@ -1817,7 +1829,7 @@ async function verified0_5Checker(temporary, verification) {
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, bytes);
   }
-  for (const [relative, encoded] of Object.entries(predecessorContract0_5)) {
+  for (const [relative, encoded] of Object.entries(predecessorContract0_6)) {
     const target = path.join(root, ...relative.split("/"));
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, Buffer.from(encoded, "base64"));
@@ -1934,8 +1946,8 @@ async function stage0_5To0_6CarryForward(
   ).toString("utf8");
   const baseline = YAML.parse(baselineText);
   const oldPolicyBytes = predecessorVerification === null
-    ? Buffer.from(freshnessPolicy0_5, "utf8")
-    : predecessorVerification.entries.get("contracts/nkf/0.5/freshness-policy.yaml");
+    ? Buffer.from(freshnessPolicy0_6, "utf8")
+    : predecessorVerification.entries.get("contracts/nkf/0.6/freshness-policy.yaml");
   const newPolicyBytes = successorVerification.entries.get("contracts/nkf/0.6/freshness-policy.yaml");
   if (
     !Buffer.isBuffer(oldPolicyBytes) || digest(oldPolicyBytes) !== oldPolicyDigest ||
