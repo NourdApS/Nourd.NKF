@@ -1877,7 +1877,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "43448ec7a75106217f7007c4b83fa1a616a59c367976a48aaf35628a967e4a3a"
+      value: "d15ce164da441c5082f27e6b17c877897d71a3378d4f74d9fce3ee6428721237"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-bundle-yaml
@@ -2589,7 +2589,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "43448ec7a75106217f7007c4b83fa1a616a59c367976a48aaf35628a967e4a3a"
+      value: "d15ce164da441c5082f27e6b17c877897d71a3378d4f74d9fce3ee6428721237"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -2613,7 +2613,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "3df11479cfc848088dacba3a2c5271fb268c7fc8471924a34a6cbf126a36f756"
+      value: "f7011d491a356a23bae617124cb63e883619907f0e5114fa3e7e35ce01486fd4"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
@@ -2909,7 +2909,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: "9ea807a9c1eea8921df0e9cfce7d01f93f8b2436f4fe98398514d250097f3da1"
+      value: "dd004dc4f764d37ba71d0cd92394d1d5e9af4675a804404194a8ee8396f5a8bc"
     record: nkf-0.1-native-realization
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts
@@ -2925,7 +2925,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: a196839c389dae3ad182495fbe9998c2f530ef57ed7fdb111270612206316b6f
+      value: "bb8a5c17dbef37a6983f8b8d049bb60b26e470efb2cd25a4b0fe167492183638"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts
@@ -2997,7 +2997,7 @@ governed_artifacts:
     path: test/helpers.ts
     digest:
       algorithm: sha-256
-      value: efd248e11b3da78302fbb191ede5d3ca83ca366155406161cb32a80e7193505c
+      value: "8dacc377a2822424123aa56a7ad32bf5b448ede6cd44177217ba39106e6f2c42"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-onboarding-guidance-test-ts

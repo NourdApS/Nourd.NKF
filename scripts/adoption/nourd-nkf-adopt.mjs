@@ -4014,6 +4014,10 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
       changed_subjects: [],
     };
   }
+  // The guidance-visible git orchestration: plan before mutation so a dirty
+  // tree refuses the act, and report every later git step truthfully.
+  const git = await taskGit(projectRoot);
+  const gitPlan = await gitTransitionPlan(git, projectRoot, transition, options.task);
   const originalBundleText = await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8");
   const updatedBundleText = replaceYamlScalars(
     originalBundleText,
@@ -4039,7 +4043,37 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
       : fail("task requires an installed release pin or an explicit --checker.");
   await validateCompleteCandidate(projectRoot, files, [], verifier);
 
-  await writeTransaction(projectRoot, files, () => (verifier ?? ((root) => verifyInstalled(root, true)))(projectRoot));
+  let effectiveRoot = projectRoot;
+  let materializedArtifacts = [];
+  if (git !== null && gitPlan.state === "planned") {
+    if (gitPlan.mode === "worktree") {
+      await mkdir(path.dirname(gitPlan.worktree), { recursive: true });
+      git.run("worktree", "add", "-b", gitPlan.branch, gitPlan.worktree);
+      effectiveRoot = gitPlan.worktree;
+      materializedArtifacts = await materializeMissingWorktreeArtifacts(
+        projectRoot,
+        effectiveRoot,
+        context.bundle,
+      );
+    } else if (gitPlan.mode === "in-place" && gitPlan.create) {
+      git.run("checkout", "-b", gitPlan.branch);
+    }
+  }
+  await writeTransaction(effectiveRoot, files, () => (verifier ?? ((root) => verifyInstalled(root, true)))(effectiveRoot));
+  const resultHeading0_5 = transition === "completed" ? "## Completion Result" : transition === "cancelled" ? "## Cancellation Result" : null;
+  const prBody =
+    transition === "active"
+      ? `Deterministic activation of ${options.task}. This draft accompanies the Task's whole life; its conclusion marks it ready, and merging is the repository's human review act.`
+      : resultHeading0_5 !== null && original.includes(resultHeading0_5)
+        ? `Deterministic ${transition === "cancelled" ? "cancellation" : "close"} of ${options.task}. The merge is the repository's human review act.\n\n${original.split(`\n${resultHeading0_5}\n`)[1]?.split("\n## ")[0]?.trim() ?? ""}`
+        : `Deterministic ${transition === "deferred" ? "deferral" : "transition"} of ${options.task}. The merge is the repository's human review act.`;
+  const gitReport =
+    git === null || gitPlan.state !== "planned"
+      ? { state: "not-a-repository" }
+      : gitCompleteTransition(effectiveRoot, gitPlan, transition, options.task, prBody);
+  if (materializedArtifacts.length > 0) {
+    gitReport.materialized_artifacts = materializedArtifacts;
+  }
   return {
     state: "transitioned",
     task: options.task,
@@ -4047,6 +4081,7 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
     task_status: transition,
     generated_navigation: states.length,
     changed_subjects: [...files.keys()].sort((left, right) => left.localeCompare(right, "en")),
+    git: gitReport,
   };
 }
 
