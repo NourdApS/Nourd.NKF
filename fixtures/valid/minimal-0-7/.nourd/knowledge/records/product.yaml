@@ -8,7 +8,7 @@ source:
   stable_path: product.md
   digest:
     algorithm: sha-256
-    value: bdf6537ce5e16a096854802d21a965121c65346ed0679e2fd6ad10489db92847
+    value: f4491444c972e59b571e9c87814011ae019aa17866614bce2a53a2ea39a7fc00
 governance:
   lifecycle: living
   status: draft
@@ -74,17 +74,3 @@ sections:
     responsibilities:
       - product-map
 relationships: []
-legacy_lock:
-  predecessor_version: "0.4"
-  source_digest:
-    algorithm: sha-256
-    value: bdf6537ce5e16a096854802d21a965121c65346ed0679e2fd6ad10489db92847
-  predecessor_state:
-    record_lifecycle: living
-    record_status: draft
-  initial_declaration_state:
-    governance:
-      lifecycle: living
-      status: draft
-      authority:
-        - human-product-owner

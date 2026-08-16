@@ -56,23 +56,11 @@ non_records:
       stable_path: tasks/active/task.md
       digest:
         algorithm: sha-256
-        value: 2788da4f4a11cbd51fae22c15b817d7d25421c93aedbfa6953c9393a230c774c
+        value: 625ab44d1c502b5e2a433ead44cc631ac6e32faf0637df6c73b5b4ddcc5be124
       state:
         vocabulary: task-status
         value: active
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 2788da4f4a11cbd51fae22c15b817d7d25421c93aedbfa6953c9393a230c774c
-        predecessor_state:
-          task_id: TEST-001
-          task_status: active
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: active
   - path: tasks/by-state/active.md
     kind: generated
   - path: tasks/by-state/cancelled.md
@@ -90,5 +78,5 @@ non_records:
   - path: tasks/README.md
     kind: navigation
 knowledge_graph:
-  policy: "nkf.freshness-policy.0.7"
+  policy: nkf.freshness-policy.0.7
   baseline: .nourd/knowledge/freshness/baseline.yaml

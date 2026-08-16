@@ -56,23 +56,11 @@ non_records:
       stable_path: tasks/active/task.md
       digest:
         algorithm: sha-256
-        value: c349f1287d8e4dafc6e28cc91b5302c0c5bc71f8b25dfb4eb62e0d3e66b5fd6f
+        value: 69242bdfdff6260031920fdcfe69d502c4072516df7d8f384252438f64a24bc6
       state:
         vocabulary: task-status
         value: active
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: c349f1287d8e4dafc6e28cc91b5302c0c5bc71f8b25dfb4eb62e0d3e66b5fd6f
-        predecessor_state:
-          task_id: TEST-TECH-001
-          task_status: active
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: active
   - path: tasks/by-state/active.md
     kind: generated
   - path: tasks/by-state/cancelled.md
@@ -99,5 +87,5 @@ governed_artifacts:
     record: realization
     source_section: durable-mapping
 knowledge_graph:
-  policy: "nkf.freshness-policy.0.7"
+  policy: nkf.freshness-policy.0.7
   baseline: .nourd/knowledge/freshness/baseline.yaml

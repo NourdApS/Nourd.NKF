@@ -2,10 +2,8 @@
 title: Example Product
 id: product
 type: product
-summary: "Defines the purpose, people, boundaries, and knowledge map of Example Product."
+summary: Defines the purpose, people, boundaries, and knowledge map of Example Product.
 created_at: 2026-07-30T07:53:41Z
-record_lifecycle: living
-record_status: draft
 ---
 
 # Example Product

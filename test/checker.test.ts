@@ -17,16 +17,11 @@ async function mutateRecord(
 }
 
 async function acceptProductRecord(project: string): Promise<void> {
-  const sourceFile = path.join(project, "knowledge/product.md");
-  const source = (await readFile(sourceFile, "utf8")).replace(
-    "record_status: draft",
-    "record_status: accepted",
-  );
-  await writeFile(sourceFile, source, "utf8");
+  // Native 0.7 sources carry no mutable state keys; acceptance lives in the
+  // declaration alone.
   await mutateRecord(project, (record) => {
     record.governance.status = "accepted";
     record.governance.accepted_at = "2026-07-30";
-    record.source.digest.value = sha256(Buffer.from(source, "utf8"));
   });
 }
 

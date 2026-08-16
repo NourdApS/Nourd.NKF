@@ -2,12 +2,8 @@
 title: Example Realization
 id: realization
 type: realization
-summary: "Describes how the Example Technology contract is realized by the fixture artifacts."
+summary: Describes how the Example Technology contract is realized by the fixture artifacts.
 created_at: 2026-07-30T15:59:54Z
-record_lifecycle: living
-record_status: draft
-task: TEST-TECH-001
-confirmation_status: unconfirmed
 ---
 
 # Example Realization

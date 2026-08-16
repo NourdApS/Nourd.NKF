@@ -1,9 +1,7 @@
 ---
 title: "TEST-001: Maintain Example Product Knowledge"
-summary: "Tracks the work that maintains the Example Product knowledge fixture."
+summary: Tracks the work that maintains the Example Product knowledge fixture.
 created_at: 2026-07-30T07:53:41Z
-task_id: TEST-001
-task_status: active
 ---
 
 # TEST-001: Maintain Example Product Knowledge

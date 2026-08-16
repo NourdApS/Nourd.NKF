@@ -2,12 +2,8 @@
 title: Example Product Current System
 id: product-current-system
 type: realization
-summary: "Provides the unconfirmed current-system view for the Example Product fixture."
+summary: Provides the unconfirmed current-system view for the Example Product fixture.
 created_at: 2026-07-30T07:53:41Z
-record_lifecycle: living
-record_status: draft
-task: TEST-001
-confirmation_status: unconfirmed
 ---
 
 # Example Product Current System
