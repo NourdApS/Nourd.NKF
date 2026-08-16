@@ -18897,9 +18897,7 @@ function rootScaffold(plan, kind) {
     type: kind,
     title,
     summary: `Provides the initial Draft ${kind === "product" ? "Product" : "Technology"} orientation for ${title} without inventing accepted meaning.`,
-    created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft"
+    created_at: plan.project.created_at
   };
   if (kind === "product") {
     const headings2 = [
@@ -18943,11 +18941,7 @@ function realizationScaffold(plan) {
     type: "realization",
     title,
     summary: `Provides the initial unconfirmed current-system view for ${plan.project.root.title} without reconstructing implementation from source.`,
-    created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
-    task: plan.project.task.id,
-    confirmation_status: "unconfirmed"
+    created_at: plan.project.created_at
   };
   const sections = [
     ["Realization Identity And Kind", `This is the initial consolidated current-system Realization for ${plan.project.root.title}.`],
@@ -18972,10 +18966,7 @@ function specificationScaffold(plan) {
     type: "specification",
     title,
     summary: `Makes the required Draft Specification boundary visible for ${plan.project.root.title} without inventing accepted normative meaning.`,
-    created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
-    task: plan.project.task.id
+    created_at: plan.project.created_at
   };
   const sections = [
     ["Specification Definition", "This Draft reserves the initial Technology Specification boundary. No normative contract is accepted by this scaffold."],
@@ -19524,7 +19515,7 @@ async function buildOnboardingKnowledge(projectRootInput, planPathInput) {
   rootDeclaration.scope.root = plan.project.root.id;
   const realizationId = `${plan.project.root.id}-current-system`;
   const realizationDeclaration = generatedDeclaration({
-    extra: { confirmation_status: "unconfirmed" },
+    extra: { confirmation_status: "unconfirmed", task: plan.project.task.id },
     id: realizationId,
     type: "realization",
     title: `${plan.project.root.title} Current System`,
@@ -19540,6 +19531,7 @@ async function buildOnboardingKnowledge(projectRootInput, planPathInput) {
   const declarations3 = [rootDeclaration, realizationDeclaration, ...retainedDeclarations];
   if (specificationBytes !== null) {
     const specificationDeclaration = selectedSpecificationDeclaration === void 0 ? generatedDeclaration({
+      extra: { task: plan.project.task.id },
       id: `${plan.project.root.id}-initial-specification`,
       type: "specification",
       title: `${plan.project.root.title} Initial Specification`,
@@ -21757,7 +21749,7 @@ var STEPPING_STONE_0_6 = Object.freeze({
   archive_sha256: "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95"
 });
 var CURRENT_NKF_VERSION = "0.7";
-var MODERN_NKF_VERSIONS = /* @__PURE__ */ new Set(["0.5", "0.6"]);
+var MODERN_NKF_VERSIONS = /* @__PURE__ */ new Set(["0.5", "0.6", "0.7"]);
 var RELATIONSHIP_TYPES = /* @__PURE__ */ new Set([
   "part-of",
   "defines",
@@ -22070,7 +22062,7 @@ function requireRecommendedRelease(value, candidateBinding = void 0) {
       ["classification", "from_nkf_version", "migration_required", "summary"],
       `Recommended compatibility[${index}]`
     );
-    if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(entry.from_nkf_version) || !["breaking", "non-breaking"].includes(entry.classification) || typeof entry.migration_required !== "boolean" || typeof entry.summary !== "string" || entry.summary.trim() !== entry.summary || entry.summary === "" || compatibility.has(entry.from_nkf_version)) {
+    if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(entry.from_nkf_version) || !["breaking", "non-breaking"].includes(entry.classification) || typeof entry.migration_required !== "boolean" || typeof entry.summary !== "string" || entry.summary.trim() !== entry.summary || entry.summary === "" || compatibility.has(entry.from_nkf_version)) {
       fail6("Recommended release compatibility is invalid or ambiguous.");
     }
     if (entry.classification === "breaking" !== entry.migration_required) {
@@ -22085,7 +22077,10 @@ function requireRecommendedRelease(value, candidateBinding = void 0) {
     fail6("The internal candidate binding differs from the selected archive digest.");
   }
   const releaseStateValid = candidate ? value.contract === "nkf.release-candidate-binding" && value.state === "candidate" && value.channel === "internal-exact-candidate" && value.release.prerelease === true && value.release.published_at === null && value.release.url === null && value.release.visibility === "unpublished" : value.contract === "nkf.recommended-release" && value.state === "recommended" && value.channel === "internal-private-github-prerelease" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value.release.published_at ?? "") && value.release.prerelease === true && value.release.visibility === "private" && value.release.url === `https://github.com/${CURRENT_REPOSITORY}/releases/tag/${tag3}`;
-  if (!releaseStateValid || value.nkf_version !== CURRENT_NKF_VERSION || !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") || value.archive.asset_name !== assetName || value.archive.tag !== tag3 || !Number.isSafeInteger(value.archive.size) || value.archive.size <= 0 || (candidate ? value.archive.url !== null : value.archive.url !== `https://github.com/${CURRENT_REPOSITORY}/releases/download/${tag3}/${assetName}`) || !/^[0-9a-f]{40}$/.test(value.source_commit ?? "") || !/^[0-9a-f]{64}$/.test(value.checker_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value.adopter_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value.authority.markdown_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value.authority.executable_sha256 ?? "") || JSON.stringify(value.supported_root_profiles) !== JSON.stringify(["nkf.profile.product", "nkf.profile.technology"]) || compatibility.get("0.1")?.classification !== "breaking" || compatibility.get("0.1")?.migration_required !== true || compatibility.get("0.2")?.classification !== "breaking" || compatibility.get("0.2")?.migration_required !== true || compatibility.get("0.3")?.classification !== "breaking" || compatibility.get("0.3")?.migration_required !== true || compatibility.get("0.4")?.classification !== "breaking" || compatibility.get("0.4")?.migration_required !== true || compatibility.get("0.5")?.classification !== "non-breaking" || compatibility.get("0.5")?.migration_required !== false || compatibility.get("0.6")?.classification !== "non-breaking" || compatibility.get("0.6")?.migration_required !== false) {
+  if (!releaseStateValid || value.nkf_version !== CURRENT_NKF_VERSION || !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") || value.archive.asset_name !== assetName || value.archive.tag !== tag3 || !Number.isSafeInteger(value.archive.size) || value.archive.size <= 0 || (candidate ? value.archive.url !== null : value.archive.url !== `https://github.com/${CURRENT_REPOSITORY}/releases/download/${tag3}/${assetName}`) || !/^[0-9a-f]{40}$/.test(value.source_commit ?? "") || !/^[0-9a-f]{64}$/.test(value.checker_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value.adopter_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value.authority.markdown_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value.authority.executable_sha256 ?? "") || JSON.stringify(value.supported_root_profiles) !== JSON.stringify(["nkf.profile.product", "nkf.profile.technology"]) || // The live support window is the current version plus one predecessor;
+  // out-of-window repositories migrate through published stepping-stone
+  // releases instead of a declared compatibility rule.
+  compatibility.size !== 2 || compatibility.get("0.6")?.classification !== "breaking" || compatibility.get("0.6")?.migration_required !== true || compatibility.get("0.7")?.classification !== "non-breaking" || compatibility.get("0.7")?.migration_required !== false) {
     fail6("The recommended release catalog is invalid or inconsistent.");
   }
   return { catalog: value, compatibility };
@@ -23149,7 +23144,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
     fail6("The predecessor adopter differs from its installed pin.");
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
-  if (["0.2", "0.3", "0.4", "0.5", "0.6"].includes(verification.manifest.nkf_version) && (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)) {
+  if (["0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(verification.manifest.nkf_version) && (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)) {
     fail6("The predecessor adopter is not bound by its release archive.");
   }
   const result = spawnSync4(
@@ -23754,7 +23749,7 @@ function requireOnboardingReceipt(value) {
     ],
     "Onboarding receipt"
   );
-  if (value?.contract !== "nkf.onboarding-receipt" || !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(value?.nkf_version) || !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") || !ROOT_PROFILES2.has(value?.profile) || typeof value?.knowledge_root !== "string" || typeof value?.assessment !== "object" || !["empty-repository", "tiny-knowledge-no-source-or-configuration"].includes(
+  if (value?.contract !== "nkf.onboarding-receipt" || !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(value?.nkf_version) || !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") || !ROOT_PROFILES2.has(value?.profile) || typeof value?.knowledge_root !== "string" || typeof value?.assessment !== "object" || !["empty-repository", "tiny-knowledge-no-source-or-configuration"].includes(
     value?.assessment?.category
   ) || !["recommended", "not-recommended", "indeterminate"].includes(
     value?.assessment?.recommendation
@@ -23940,14 +23935,6 @@ async function onboard(options) {
   for (const [relative, bytes] of integration) {
     candidate.files.set(relative, bytes);
   }
-  await stage0_5To0_6CarryForward(
-    projectRoot,
-    knowledge.plan.project,
-    null,
-    verification,
-    candidate.files,
-    true
-  );
   const bundlePath = ".nourd/knowledge/bundle.yaml";
   candidate.files.set(
     bundlePath,
@@ -23966,7 +23953,7 @@ async function onboard(options) {
   receipt.created_paths = createdPaths;
   receipt.changed_paths = changedPaths;
   candidate.files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_6Ready);
+  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_7Ready);
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
@@ -23974,7 +23961,7 @@ async function onboard(options) {
       if (process2.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
         fail6("Injected onboarding transaction failure.");
       }
-      return verifyInstalled0_6Ready(projectRoot);
+      return verifyInstalled0_7Ready(projectRoot);
     }
   );
   return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
@@ -24349,7 +24336,7 @@ async function planRepinGoverned(projectRoot, sourceOverrides = /* @__PURE__ */ 
     let updated = declarationText;
     if (declaration.source.digest.value !== observed) {
       if (declaration.legacy_lock !== void 0) {
-        if (context.bundle.nkf_version !== "0.6") {
+        if (!["0.6", "0.7"].includes(context.bundle.nkf_version)) {
           fail6(`Legacy-locked record ${record.declarationFile} cannot change before native NKF 0.6 adoption.`);
         }
         requireNativeRecordEnvelope(sourceBytes, declaration, record.declarationFile);
@@ -24400,7 +24387,7 @@ async function planRepinGoverned(projectRoot, sourceOverrides = /* @__PURE__ */ 
       const observed = digest(bytes);
       if (item2.document.digest.value !== observed) {
         if (item2.document.legacy_lock !== void 0) {
-          if (context.bundle.nkf_version !== "0.6") {
+          if (!["0.6", "0.7"].includes(context.bundle.nkf_version)) {
             fail6(`Legacy-locked document ${item2.path} cannot change before native NKF 0.6 adoption.`);
           }
           if (item2.kind !== "evidence") requireNativeDocumentEnvelope(bytes, item2.path);
@@ -24567,7 +24554,7 @@ async function exportReferences(projectRoot) {
 async function exportVersionedSet(projectRoot) {
   const { bundle } = await requireBundle(projectRoot);
   const declared = bundle.nkf_version;
-  const releaseSet = ["0.3", "0.4", "0.5", "0.6"].includes(declared) ? await readReleaseSet(projectRoot, declared) : void 0;
+  const releaseSet = ["0.3", "0.4", "0.5", "0.6", "0.7"].includes(declared) ? await readReleaseSet(projectRoot, declared) : void 0;
   if (releaseSet !== void 0) {
     return {
       state: "enumerated",
@@ -25368,6 +25355,28 @@ var NEUTRALIZATION_SOURCES = Object.freeze([
 ]);
 async function neutralizeStatePaths(candidate, knowledgeRoot) {
   const knowledgeAbsolute = path6.join(candidate, ...knowledgeRoot.split("/"));
+  const lockedSources = /* @__PURE__ */ new Set();
+  {
+    const lockedRecordsDirectory = path6.join(candidate, ".nourd/knowledge/records");
+    for (const name of (await readdir5(lockedRecordsDirectory).catch(() => [])).filter((item2) => item2.endsWith(".yaml"))) {
+      const declaration = import_yaml6.default.parse(
+        await readFile6(path6.join(lockedRecordsDirectory, name), "utf8"),
+        { schema: "core", strict: true, uniqueKeys: true }
+      );
+      if (declaration?.legacy_lock !== void 0 || declaration?.accepted_bootstrap_lock !== void 0 || declaration?.prepublication_supersession_lock !== void 0) {
+        if (typeof declaration?.source?.path === "string") lockedSources.add(declaration.source.path);
+      }
+    }
+    const lockedBundle = import_yaml6.default.parse(
+      await readFile6(path6.join(candidate, ".nourd/knowledge/bundle.yaml"), "utf8"),
+      { schema: "core", strict: true, uniqueKeys: true }
+    );
+    for (const entry of lockedBundle.non_records ?? []) {
+      if (entry?.document?.legacy_lock !== void 0 || entry?.document?.historical_acceptance_attempt_lock !== void 0) {
+        if (typeof entry.path === "string") lockedSources.add(entry.path);
+      }
+    }
+  }
   const markdownFiles = [];
   const walk = async (directory, prefix = "") => {
     for (const entry of await readdir5(directory, { withFileTypes: true })) {
@@ -25397,12 +25406,15 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
     moves.set(relative, destination);
   }
   const movedTo = new Map([...moves.entries()].map(([from, to]) => [from, to]));
+  const rewrittenPaths = /* @__PURE__ */ new Set();
   for (const [from, to] of moves) {
     const source = path6.join(knowledgeAbsolute, ...from.split("/"));
     const target = path6.join(knowledgeAbsolute, ...to.split("/"));
     await mkdir5(path6.dirname(target), { recursive: true });
     const text3 = await readFile6(source, "utf8");
-    await writeFile6(target, rewriteOutboundLinks(text3, from, to));
+    const rebased = lockedSources.has(from) ? text3 : rewriteOutboundLinks(text3, from, to);
+    if (rebased !== text3) rewrittenPaths.add(to);
+    await writeFile6(target, rebased);
     await unlink(source);
   }
   for (const relative of removals) {
@@ -25423,7 +25435,11 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
   };
   await rewalk(knowledgeAbsolute);
   const removedSet = new Set(removals);
+  const lockedCurrent = new Set(
+    [...lockedSources].map((locked) => movedTo.get(locked) ?? locked)
+  );
   for (const relative of remaining) {
+    if (lockedCurrent.has(relative)) continue;
     const file = path6.join(knowledgeAbsolute, ...relative.split("/"));
     const directory = relative.split("/").slice(0, -1);
     let fenced = false;
@@ -25465,16 +25481,52 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
       }
       return rewritten;
     }).filter((line) => line !== null);
-    if (changed) await writeFile6(file, lines.join("\n"));
+    if (changed) {
+      await writeFile6(file, lines.join("\n"));
+      rewrittenPaths.add(relative);
+    }
   }
+  const realizationsIndex = "realizations/README.md";
+  const movedRealizations = [...moves.values()].filter((destination) => destination.startsWith("realizations/items/"));
+  if (movedRealizations.length > 0) {
+    const indexFile = path6.join(knowledgeAbsolute, ...realizationsIndex.split("/"));
+    const indexStat = await lstat5(indexFile).catch(() => null);
+    if (indexStat !== null && indexStat.isFile()) {
+      let indexText = await readFile6(indexFile, "utf8");
+      const appended = [];
+      for (const destination of movedRealizations) {
+        const link2 = destination.slice("realizations/".length);
+        if (indexText.includes(`](${link2})`)) continue;
+        const movedText = await readFile6(path6.join(knowledgeAbsolute, ...destination.split("/")), "utf8");
+        const title = /^#\s+(.+)$/m.exec(movedText)?.[1] ?? path6.basename(destination, ".md");
+        appended.push(`- [${title}](${link2})`);
+      }
+      if (appended.length > 0) {
+        if (!indexText.endsWith("\n")) indexText += "\n";
+        indexText += `
+## Migrated Supporting Realizations
+
+${appended.join("\n")}
+`;
+        await writeFile6(indexFile, indexText);
+        rewrittenPaths.add(realizationsIndex);
+      }
+    }
+  }
+  const rebindDigest = async (relative) => digest(await readFile6(path6.join(knowledgeAbsolute, ...relative.split("/"))));
   const recordsDirectory = path6.join(candidate, ".nourd/knowledge/records");
   for (const name of (await readdir5(recordsDirectory)).filter((item2) => item2.endsWith(".yaml"))) {
     const file = path6.join(recordsDirectory, name);
     const record = import_yaml6.default.parse(await readFile6(file, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
     const moved = movedTo.get(record.source?.path);
-    if (moved === void 0) continue;
-    record.source.path = moved;
-    record.source.stable_path = moved;
+    const currentPath = moved ?? record.source?.path;
+    const rebound = typeof currentPath === "string" && rewrittenPaths.has(currentPath);
+    if (moved === void 0 && !rebound) continue;
+    if (moved !== void 0) {
+      record.source.path = moved;
+      record.source.stable_path = moved;
+    }
+    if (rebound) record.source.digest.value = await rebindDigest(currentPath);
     await writeFile6(file, import_yaml6.default.stringify(record, { lineWidth: 0, aliasDuplicateObjects: false }));
   }
   const bundlePath = path6.join(candidate, ".nourd/knowledge/bundle.yaml");
@@ -25482,9 +25534,13 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
   bundle.non_records = (bundle.non_records ?? []).filter((entry) => !removedSet.has(entry.path));
   for (const entry of bundle.non_records) {
     const moved = movedTo.get(entry.path);
-    if (moved === void 0) continue;
-    entry.path = moved;
-    if (entry.document !== void 0) entry.document.stable_path = moved;
+    if (moved !== void 0) {
+      entry.path = moved;
+      if (entry.document !== void 0) entry.document.stable_path = moved;
+    }
+    if (entry.document?.digest?.value !== void 0 && rewrittenPaths.has(entry.path)) {
+      entry.document.digest.value = await rebindDigest(entry.path);
+    }
   }
   await writeFile6(bundlePath, import_yaml6.default.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
   return { moves: moves.size, removed: removals.length };
@@ -25536,6 +25592,20 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
       await writeFile6(target, bytes);
     }
     const bundlePath = path6.join(candidate, ".nourd/knowledge/bundle.yaml");
+    {
+      const seededBundle = import_yaml6.default.parse(await readFile6(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      let seededChanged = false;
+      for (const artifact of seededBundle.governed_artifacts ?? []) {
+        if (typeof artifact?.path !== "string" || artifact?.digest?.algorithm !== "sha-256") continue;
+        const seeded = workingSeed.get(artifact.path);
+        if (seeded === void 0 || artifact.digest.value === digest(seeded)) continue;
+        artifact.digest.value = digest(seeded);
+        seededChanged = true;
+      }
+      if (seededChanged) {
+        await writeFile6(bundlePath, import_yaml6.default.stringify(seededBundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+      }
+    }
     const bundle = import_yaml6.default.parse(await readFile6(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
     const knowledgeRoot = bundle.knowledge_root;
     const onboarding = bundle.nkf_version === "0.7";
@@ -26021,13 +26091,21 @@ async function adopt(options) {
   }
   const rule = compatibility.get(bundle.nkf_version);
   if (rule === void 0) {
+    const outOfWindow = ["0.1", "0.2", "0.3", "0.4", "0.5"].includes(bundle.nkf_version);
     throw new OnboardingError(
       "NKF-ADOPT-UNSUPPORTED-PREDECESSOR",
-      `The recommended release does not declare compatibility from NKF ${bundle.nkf_version}.`,
+      outOfWindow ? `This repository declares an out-of-window NKF version. Migrate through the exact stepping-stone release first: ${STEPPING_STONE_0_6.repository} NKF ${STEPPING_STONE_0_6.nkf_version} archive sha256 ${STEPPING_STONE_0_6.archive_sha256}.` : `The recommended release does not declare compatibility from NKF ${bundle.nkf_version}.`,
       {
         from_nkf_version: bundle.nkf_version,
         target_nkf_version: catalog.nkf_version,
-        target_archive_sha256: catalog.archive.sha256
+        target_archive_sha256: catalog.archive.sha256,
+        ...outOfWindow ? {
+          stepping_stone: {
+            repository: STEPPING_STONE_0_6.repository,
+            nkf_version: STEPPING_STONE_0_6.nkf_version,
+            archive_sha256: STEPPING_STONE_0_6.archive_sha256
+          }
+        } : {}
       }
     );
   }

@@ -347,9 +347,10 @@ function deepLinkChecks(
   maps: ReferenceMaps | null,
   emitter: RuleEmitter,
   recordId?: string,
+  historical = false,
 ): void {
   if (maps === null) return;
-  for (const violation of findUnlinkedReferences(model.body, maps)) {
+  for (const violation of findUnlinkedReferences(model.body, maps, historical)) {
     emitter.emit(
       "markdown.reference.deep-link.required",
       violation.reason === "unlinked"
@@ -579,7 +580,14 @@ function recordFrontMatterChecks(
       if (!valid) emitter.emit("markdown.frontmatter.legacy-lock.invalid", "The prepublication Specification supersession lock does not exactly preserve and bind the ADR 0116 authority pair and correction Decision.", { artifact, record_id: recordId });
     }
     identityBulletChecks(model, artifact, emitter, recordId);
-    deepLinkChecks(model, artifact, referenceMaps, emitter, recordId);
+    deepLinkChecks(
+      model,
+      artifact,
+      referenceMaps,
+      emitter,
+      recordId,
+      lock !== null || bootstrap !== null || prepublicationSupersession !== null,
+    );
     return;
   }
 
@@ -944,7 +952,7 @@ function nonRecordSourceChecks(
     }
     rejectUnsupportedFrontMatterKeys(frontMatter, allowed, artifact, emitter);
     identityBulletChecks(model, artifact, emitter);
-    deepLinkChecks(model, artifact, referenceMaps, emitter);
+    deepLinkChecks(model, artifact, referenceMaps, emitter, undefined, lock !== null);
     if (nonRecord.declaration.kind === "task") {
       validateDecisionApplicabilityGate({
         artifact,

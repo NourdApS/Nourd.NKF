@@ -15,7 +15,8 @@ const schemaPath = path.join(repositoryRoot, "contracts/nkf/0.7/schemas/release-
 async function compiled() {
   const AjvConstructor = Ajv2020 as unknown as new (options: Record<string, unknown>) => any;
   const ajv = new AjvConstructor({ allErrors: true, strict: true, validateFormats: true });
-  addFormats(ajv);
+  const addFormatSupport = addFormats as unknown as (instance: any) => void;
+  addFormatSupport(ajv);
   ajv.addKeyword({ keyword: "x-nkf-source" });
   return ajv.compile(JSON.parse((await readFile(schemaPath)).toString("utf8")));
 }

@@ -881,8 +881,6 @@ function rootScaffold(plan, kind) {
     title,
     summary: `Provides the initial Draft ${kind === "product" ? "Product" : "Technology"} orientation for ${title} without inventing accepted meaning.`,
     created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
   };
   if (kind === "product") {
     const headings = [
@@ -918,10 +916,6 @@ function realizationScaffold(plan) {
     title,
     summary: `Provides the initial unconfirmed current-system view for ${plan.project.root.title} without reconstructing implementation from source.`,
     created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
-    task: plan.project.task.id,
-    confirmation_status: "unconfirmed",
   };
   const sections = [
     ["Realization Identity And Kind", `This is the initial consolidated current-system Realization for ${plan.project.root.title}.`],
@@ -943,9 +937,6 @@ function specificationScaffold(plan) {
     title,
     summary: `Makes the required Draft Specification boundary visible for ${plan.project.root.title} without inventing accepted normative meaning.`,
     created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
-    task: plan.project.task.id,
   };
   const sections = [
     ["Specification Definition", "This Draft reserves the initial Technology Specification boundary. No normative contract is accepted by this scaffold."],
@@ -1506,7 +1497,7 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
   rootDeclaration.scope.root = plan.project.root.id;
   const realizationId = `${plan.project.root.id}-current-system`;
   const realizationDeclaration = generatedDeclaration({
-    extra: { confirmation_status: "unconfirmed" },
+    extra: { confirmation_status: "unconfirmed", task: plan.project.task.id },
     id: realizationId,
     type: "realization",
     title: `${plan.project.root.title} Current System`,
@@ -1525,6 +1516,7 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
   if (specificationBytes !== null) {
     const specificationDeclaration = selectedSpecificationDeclaration === undefined
       ? generatedDeclaration({
+        extra: { task: plan.project.task.id },
         id: `${plan.project.root.id}-initial-specification`,
         type: "specification",
         title: `${plan.project.root.title} Initial Specification`,

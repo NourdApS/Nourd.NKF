@@ -84,7 +84,7 @@ import {
 } from "../freshness/retrospective-gates-0-5.mjs";
 
 const CURRENT_NKF_VERSION = "0.7";
-const MODERN_NKF_VERSIONS = new Set(["0.5", "0.6"]);
+const MODERN_NKF_VERSIONS = new Set(["0.5", "0.6", "0.7"]);
 const RELATIONSHIP_TYPES = new Set([
   "part-of", "defines", "governs", "applies-to", "depends-on", "extends",
   "supersedes", "rationale-for", "realizes", "evidences", "references",
@@ -428,7 +428,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
       `Recommended compatibility[${index}]`,
     );
     if (
-      !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(entry.from_nkf_version) ||
+      !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(entry.from_nkf_version) ||
       !["breaking", "non-breaking"].includes(entry.classification) ||
       typeof entry.migration_required !== "boolean" ||
       typeof entry.summary !== "string" ||
@@ -486,18 +486,14 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     !/^[0-9a-f]{64}$/.test(value.authority.executable_sha256 ?? "") ||
     JSON.stringify(value.supported_root_profiles) !==
       JSON.stringify(["nkf.profile.product", "nkf.profile.technology"]) ||
-    compatibility.get("0.1")?.classification !== "breaking" ||
-    compatibility.get("0.1")?.migration_required !== true ||
-    compatibility.get("0.2")?.classification !== "breaking" ||
-    compatibility.get("0.2")?.migration_required !== true ||
-    compatibility.get("0.3")?.classification !== "breaking" ||
-    compatibility.get("0.3")?.migration_required !== true ||
-    compatibility.get("0.4")?.classification !== "breaking" ||
-    compatibility.get("0.4")?.migration_required !== true ||
-    compatibility.get("0.5")?.classification !== "non-breaking" ||
-    compatibility.get("0.5")?.migration_required !== false ||
-    compatibility.get("0.6")?.classification !== "non-breaking" ||
-    compatibility.get("0.6")?.migration_required !== false
+    // The live support window is the current version plus one predecessor;
+    // out-of-window repositories migrate through published stepping-stone
+    // releases instead of a declared compatibility rule.
+    compatibility.size !== 2 ||
+    compatibility.get("0.6")?.classification !== "breaking" ||
+    compatibility.get("0.6")?.migration_required !== true ||
+    compatibility.get("0.7")?.classification !== "non-breaking" ||
+    compatibility.get("0.7")?.migration_required !== false
   ) {
     fail("The recommended release catalog is invalid or inconsistent.");
   }
@@ -1760,7 +1756,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
   if (
-    ["0.2", "0.3", "0.4", "0.5", "0.6"].includes(verification.manifest.nkf_version) &&
+    ["0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(verification.manifest.nkf_version) &&
     (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
   ) {
     fail("The predecessor adopter is not bound by its release archive.");
@@ -2641,7 +2637,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(value?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -2851,14 +2847,6 @@ async function onboard(options) {
   for (const [relative, bytes] of integration) {
     candidate.files.set(relative, bytes);
   }
-  await stage0_5To0_6CarryForward(
-    projectRoot,
-    knowledge.plan.project,
-    null,
-    verification,
-    candidate.files,
-    true,
-  );
   const bundlePath = ".nourd/knowledge/bundle.yaml";
   candidate.files.set(
     bundlePath,
@@ -2877,7 +2865,7 @@ async function onboard(options) {
   receipt.created_paths = createdPaths;
   receipt.changed_paths = changedPaths;
   candidate.files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_6Ready);
+  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_7Ready);
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
@@ -2885,7 +2873,7 @@ async function onboard(options) {
       if (process.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
         fail("Injected onboarding transaction failure.");
       }
-      return verifyInstalled0_6Ready(projectRoot);
+      return verifyInstalled0_7Ready(projectRoot);
     },
   );
   return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
@@ -3314,7 +3302,7 @@ async function planRepinGoverned(projectRoot, sourceOverrides = new Map()) {
     let updated = declarationText;
     if (declaration.source.digest.value !== observed) {
       if (declaration.legacy_lock !== undefined) {
-        if (context.bundle.nkf_version !== "0.6") {
+        if (!["0.6", "0.7"].includes(context.bundle.nkf_version)) {
           fail(`Legacy-locked record ${record.declarationFile} cannot change before native NKF 0.6 adoption.`);
         }
         requireNativeRecordEnvelope(sourceBytes, declaration, record.declarationFile);
@@ -3365,7 +3353,7 @@ async function planRepinGoverned(projectRoot, sourceOverrides = new Map()) {
       const observed = digest(bytes);
       if (item.document.digest.value !== observed) {
         if (item.document.legacy_lock !== undefined) {
-          if (context.bundle.nkf_version !== "0.6") {
+          if (!["0.6", "0.7"].includes(context.bundle.nkf_version)) {
             fail(`Legacy-locked document ${item.path} cannot change before native NKF 0.6 adoption.`);
           }
           if (item.kind !== "evidence") requireNativeDocumentEnvelope(bytes, item.path);
@@ -3544,7 +3532,7 @@ async function exportReferences(projectRoot) {
 async function exportVersionedSet(projectRoot) {
   const { bundle } = await requireBundle(projectRoot);
   const declared = bundle.nkf_version;
-  const releaseSet = ["0.3", "0.4", "0.5", "0.6"].includes(declared)
+  const releaseSet = ["0.3", "0.4", "0.5", "0.6", "0.7"].includes(declared)
     ? await readReleaseSet(projectRoot, declared)
     : undefined;
   if (releaseSet !== undefined) {
@@ -4412,6 +4400,38 @@ const NEUTRALIZATION_SOURCES = Object.freeze([
 
 async function neutralizeStatePaths(candidate, knowledgeRoot) {
   const knowledgeAbsolute = path.join(candidate, ...knowledgeRoot.split("/"));
+  // Predecessor-only locks bind exact source bytes; locked sources are moved
+  // without any rewrite so the locks remain byte-exact.
+  const lockedSources = new Set();
+  {
+    const lockedRecordsDirectory = path.join(candidate, ".nourd/knowledge/records");
+    for (const name of (await readdir(lockedRecordsDirectory).catch(() => []))
+      .filter((item) => item.endsWith(".yaml"))) {
+      const declaration = YAML.parse(
+        await readFile(path.join(lockedRecordsDirectory, name), "utf8"),
+        { schema: "core", strict: true, uniqueKeys: true },
+      );
+      if (
+        declaration?.legacy_lock !== undefined ||
+        declaration?.accepted_bootstrap_lock !== undefined ||
+        declaration?.prepublication_supersession_lock !== undefined
+      ) {
+        if (typeof declaration?.source?.path === "string") lockedSources.add(declaration.source.path);
+      }
+    }
+    const lockedBundle = YAML.parse(
+      await readFile(path.join(candidate, ".nourd/knowledge/bundle.yaml"), "utf8"),
+      { schema: "core", strict: true, uniqueKeys: true },
+    );
+    for (const entry of lockedBundle.non_records ?? []) {
+      if (
+        entry?.document?.legacy_lock !== undefined ||
+        entry?.document?.historical_acceptance_attempt_lock !== undefined
+      ) {
+        if (typeof entry.path === "string") lockedSources.add(entry.path);
+      }
+    }
+  }
   const markdownFiles = [];
   const walk = async (directory, prefix = "") => {
     for (const entry of (await readdir(directory, { withFileTypes: true }))) {
@@ -4441,13 +4461,16 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
     moves.set(relative, destination);
   }
   const movedTo = new Map([...moves.entries()].map(([from, to]) => [from, to]));
+  const rewrittenPaths = new Set();
   // Move sources, rebasing their own outbound links.
   for (const [from, to] of moves) {
     const source = path.join(knowledgeAbsolute, ...from.split("/"));
     const target = path.join(knowledgeAbsolute, ...to.split("/"));
     await mkdir(path.dirname(target), { recursive: true });
     const text = (await readFile(source, "utf8"));
-    await writeFile(target, rewriteOutboundLinks(text, from, to));
+    const rebased = lockedSources.has(from) ? text : rewriteOutboundLinks(text, from, to);
+    if (rebased !== text) rewrittenPaths.add(to);
+    await writeFile(target, rebased);
     await unlink(source);
   }
   // Remove the emptied legacy index files.
@@ -4469,7 +4492,11 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
   };
   await rewalk(knowledgeAbsolute);
   const removedSet = new Set(removals);
+  const lockedCurrent = new Set(
+    [...lockedSources].map((locked) => movedTo.get(locked) ?? locked),
+  );
   for (const relative of remaining) {
+    if (lockedCurrent.has(relative)) continue;
     const file = path.join(knowledgeAbsolute, ...relative.split("/"));
     const directory = relative.split("/").slice(0, -1);
     let fenced = false;
@@ -4498,17 +4525,54 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
       if (dropLine) { changed = true; return null; }
       return rewritten;
     }).filter((line) => line !== null);
-    if (changed) await writeFile(file, lines.join("\n"));
+    if (changed) {
+      await writeFile(file, lines.join("\n"));
+      rewrittenPaths.add(relative);
+    }
   }
-  // Update record declarations and non-record document paths.
+  // Regenerate the realizations map: the removed lifecycle index carried the
+  // supporting-Realization links that neutral topology requires on the map.
+  const realizationsIndex = "realizations/README.md";
+  const movedRealizations = [...moves.values()].filter((destination) =>
+    destination.startsWith("realizations/items/"));
+  if (movedRealizations.length > 0) {
+    const indexFile = path.join(knowledgeAbsolute, ...realizationsIndex.split("/"));
+    const indexStat = await lstat(indexFile).catch(() => null);
+    if (indexStat !== null && indexStat.isFile()) {
+      let indexText = await readFile(indexFile, "utf8");
+      const appended = [];
+      for (const destination of movedRealizations) {
+        const link = destination.slice("realizations/".length);
+        if (indexText.includes(`](${link})`)) continue;
+        const movedText = await readFile(path.join(knowledgeAbsolute, ...destination.split("/")), "utf8");
+        const title = /^#\s+(.+)$/m.exec(movedText)?.[1] ?? path.basename(destination, ".md");
+        appended.push(`- [${title}](${link})`);
+      }
+      if (appended.length > 0) {
+        if (!indexText.endsWith("\n")) indexText += "\n";
+        indexText += `\n## Migrated Supporting Realizations\n\n${appended.join("\n")}\n`;
+        await writeFile(indexFile, indexText);
+        rewrittenPaths.add(realizationsIndex);
+      }
+    }
+  }
+  // Update record declarations and non-record document paths, and rebind the
+  // digests of sources whose links were rewritten mechanically above.
+  const rebindDigest = async (relative) =>
+    digest(await readFile(path.join(knowledgeAbsolute, ...relative.split("/"))));
   const recordsDirectory = path.join(candidate, ".nourd/knowledge/records");
   for (const name of (await readdir(recordsDirectory)).filter((item) => item.endsWith(".yaml"))) {
     const file = path.join(recordsDirectory, name);
     const record = YAML.parse(await readFile(file, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
     const moved = movedTo.get(record.source?.path);
-    if (moved === undefined) continue;
-    record.source.path = moved;
-    record.source.stable_path = moved;
+    const currentPath = moved ?? record.source?.path;
+    const rebound = typeof currentPath === "string" && rewrittenPaths.has(currentPath);
+    if (moved === undefined && !rebound) continue;
+    if (moved !== undefined) {
+      record.source.path = moved;
+      record.source.stable_path = moved;
+    }
+    if (rebound) record.source.digest.value = await rebindDigest(currentPath);
     await writeFile(file, YAML.stringify(record, { lineWidth: 0, aliasDuplicateObjects: false }));
   }
   const bundlePath = path.join(candidate, ".nourd/knowledge/bundle.yaml");
@@ -4516,9 +4580,13 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
   bundle.non_records = (bundle.non_records ?? []).filter((entry) => !removedSet.has(entry.path));
   for (const entry of bundle.non_records) {
     const moved = movedTo.get(entry.path);
-    if (moved === undefined) continue;
-    entry.path = moved;
-    if (entry.document !== undefined) entry.document.stable_path = moved;
+    if (moved !== undefined) {
+      entry.path = moved;
+      if (entry.document !== undefined) entry.document.stable_path = moved;
+    }
+    if (entry.document?.digest?.value !== undefined && rewrittenPaths.has(entry.path)) {
+      entry.document.digest.value = await rebindDigest(entry.path);
+    }
   }
   await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
   return { moves: moves.size, removed: removals.length };
@@ -4571,6 +4639,22 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
       await writeFile(target, bytes);
     }
     const bundlePath = path.join(candidate, ".nourd/knowledge/bundle.yaml");
+    {
+      // Rebind governed-artifact digests for the exact seeded integration
+      // files so the pre-review candidate validates its own staged bytes.
+      const seededBundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      let seededChanged = false;
+      for (const artifact of seededBundle.governed_artifacts ?? []) {
+        if (typeof artifact?.path !== "string" || artifact?.digest?.algorithm !== "sha-256") continue;
+        const seeded = workingSeed.get(artifact.path);
+        if (seeded === undefined || artifact.digest.value === digest(seeded)) continue;
+        artifact.digest.value = digest(seeded);
+        seededChanged = true;
+      }
+      if (seededChanged) {
+        await writeFile(bundlePath, YAML.stringify(seededBundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+      }
+    }
     const bundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
     const knowledgeRoot = bundle.knowledge_root;
     const onboarding = bundle.nkf_version === "0.7";
@@ -5094,13 +5178,26 @@ async function adopt(options) {
   }
   const rule = compatibility.get(bundle.nkf_version);
   if (rule === undefined) {
+    const outOfWindow = ["0.1", "0.2", "0.3", "0.4", "0.5"].includes(bundle.nkf_version);
     throw new OnboardingError(
       "NKF-ADOPT-UNSUPPORTED-PREDECESSOR",
-      `The recommended release does not declare compatibility from NKF ${bundle.nkf_version}.`,
+      outOfWindow
+        ? "This repository declares an out-of-window NKF version. Migrate through the exact stepping-stone release first: "
+          + `${STEPPING_STONE_0_6.repository} NKF ${STEPPING_STONE_0_6.nkf_version} archive sha256 ${STEPPING_STONE_0_6.archive_sha256}.`
+        : `The recommended release does not declare compatibility from NKF ${bundle.nkf_version}.`,
       {
         from_nkf_version: bundle.nkf_version,
         target_nkf_version: catalog.nkf_version,
         target_archive_sha256: catalog.archive.sha256,
+        ...(outOfWindow
+          ? {
+              stepping_stone: {
+                repository: STEPPING_STONE_0_6.repository,
+                nkf_version: STEPPING_STONE_0_6.nkf_version,
+                archive_sha256: STEPPING_STONE_0_6.archive_sha256,
+              },
+            }
+          : {}),
       },
     );
   }

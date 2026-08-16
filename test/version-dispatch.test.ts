@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import YAML from "yaml";
 import { createHash } from "node:crypto";
 import { validateProject } from "../src/checker/checker.js";
-import { options, repositoryRoot, validFixture } from "./helpers.js";
+import { options, validFixture } from "./helpers.js";
 
 const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const taskPath = "knowledge/tasks/active/task.md";

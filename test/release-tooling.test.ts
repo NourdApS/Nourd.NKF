@@ -4,10 +4,6 @@ import { describe, expect, it } from "vitest";
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
 const {
-  FIXTURE_FILES,
-  HOST_ADAPTER_FILES,
-  PUBLIC_DOCUMENTATION_FILES,
-  RELEASE_ENTRIES,
   constructReleaseManifest,
   createUstar,
   inspectUstar,

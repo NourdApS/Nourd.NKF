@@ -849,7 +849,10 @@ a lifecycle, disposition, or currency segment — the legacy `tasks/active`,
 the corresponding neutral `tasks/items/`, `designs/items/`, or
 `realizations/items/` path, with declarations, navigation, and same-bundle
 links rewritten mechanically in the same transaction and immutable record
-meaning untouched. This is a deliberate governed migration act, not a
+meaning untouched. Sources carrying a predecessor-only lock are moved without
+any byte rewrite — their locks bind exact predecessor bytes — and their
+historical links resolve through the closed legacy mapping defined by this
+neutralization instead of being retargeted. This is a deliberate governed migration act, not a
 lifecycle transition. After it, stable paths never move again: a lifecycle
 transition changes only the declaration state and generated navigation and
 MUST NOT move or rewrite the canonical Markdown source. New Task, Design, and
@@ -1248,6 +1251,15 @@ a text or code-span token equal to a same-bundle Task identifier. A
 document never links to itself, and an unlinked or mistargeted reference
 emits `markdown.reference.deep-link.required`. Only these grammars are
 detected; other prose mentions remain a human-review concern.
+
+A source carrying a predecessor-only lock keeps its exact predecessor bytes
+through the 0.7 stable-path neutralization, so its links are never rewritten.
+Inside such a source, a link destination that resolves to the referenced
+document's exact source path after applying the closed legacy stable-path
+mapping of the 0.7 neutralization is not mistargeted; the reference remains
+correct historical fact. This historical resolution applies only to sources
+whose lock the checker has verified and is unavailable to new 0.7-native
+sources, which never carry these locks.
 
 Evidence bodies remain exempt from ordinary identity and deep-link scanning
 except that the one document carrying the exact
