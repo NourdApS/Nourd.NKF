@@ -77,7 +77,17 @@ describe("NKF 0.7 version dispatch", () => {
   it("blocks completion with an unexcepted unsupported capability", async () => {
     const project = await copyFixture();
     await edit(project, taskPath, (text) =>
-      text.replace("| proven | data-validity | none |", "| unsupported | none | none |"),
+      text.replace(
+        "No mandatory capability is implicated by this Task.",
+        [
+          "| Capability | Finding | Verification | Exception |",
+          "| --- | --- | --- | --- |",
+          "| Custom terrain | unsupported | none | none |",
+        ].join("\n"),
+      ).replace(
+        "\n## Decision Applicability\n",
+        "\n## Completion Result\n\nCompletion attempted despite the unexcepted finding.\n\n## Decision Applicability\n",
+      ),
     );
     await repinTask(project);
     const bundleFile = path.join(project, ".nourd/knowledge/bundle.yaml");
