@@ -5,16 +5,21 @@
 // provenance-attachment additions. The generator derives structure from the
 // accepted authority pair; it supplies no meaning of its own.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const sha256 = async (relative) =>
+  createHash("sha256").update(await readFile(path.join(root, relative))).digest("hex");
+// The embedded digests bind the exact authority bytes present at generation
+// time; regenerating after any authority edit is part of the freeze order.
 const source = Object.freeze({
   nkf_version: "0.7",
   markdown_path: "knowledge/specifications/nkf-0.7.md",
-  markdown_digest: { algorithm: "sha-256", value: "MARKDOWN_DIGEST_PLACEHOLDER" },
+  markdown_digest: { algorithm: "sha-256", value: await sha256("knowledge/specifications/nkf-0.7.md") },
   executable_path: "contracts/nkf/0.7/nkf.yaml",
-  executable_digest: { algorithm: "sha-256", value: "EXECUTABLE_DIGEST_PLACEHOLDER" },
+  executable_digest: { algorithm: "sha-256", value: await sha256("contracts/nkf/0.7/nkf.yaml") },
 });
 
 const baseRoot = path.join(root, "contracts/nkf/0.6/schemas");

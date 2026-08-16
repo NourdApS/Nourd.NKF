@@ -2,6 +2,7 @@ export interface CoreBindings {
   readonly specification: { readonly path: string; readonly sha256: string };
   readonly executable: { readonly path: string; readonly sha256: string };
   readonly freshnessPolicy?: { readonly path: string; readonly sha256: string };
+  readonly versionDelta?: { readonly path: string; readonly sha256: string };
   readonly schemas: readonly {
     readonly identity: string;
     readonly file: string;
@@ -160,6 +161,32 @@ export const VERSION_BINDINGS = {
       { identity: "urn:nkf:0.6:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "819685c152751aca279284a0f6ce8b565f45c985af40d006b5d81463a20421fb" },
       { identity: "urn:nkf:0.6:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "a1b21747d9cbd72416599224a9a9dcb80d1fca7b8f50bc2fa9f411dc77277b2f" },
       { identity: "urn:nkf:0.6:schema:validation-result", file: "validation-result.schema.json", sha256: "8d751bb013dc87d9ebf3287b85e8589f628e7369eca67902d503b12595a6d743" },
+    ],
+  },
+  "0.7": {
+    specification: {
+      path: "knowledge/specifications/nkf-0.7.md",
+      sha256: "1ad25a10519645c99e14069248533838e0c8b005d56598d849b906169457d5b7",
+    },
+    executable: {
+      path: "contracts/nkf/0.7/nkf.yaml",
+      sha256: "e5f951067cebebef0ced92042a4110f64d417b7e5c9e945ce3adac99c9d3ae3e",
+    },
+    freshnessPolicy: {
+      path: "contracts/nkf/0.7/freshness-policy.yaml",
+      sha256: "9d7ff664a0a0ce788a096f32e1cd74197c10a48523286ea58f04c4c9496077d4",
+    },
+    versionDelta: {
+      path: "contracts/nkf/0.7/version-delta.yaml",
+      sha256: "595afe8d5517f005644807e4cfa2cca9c45ceca0cc895b3de10bd0e333af9eab",
+    },
+    schemas: [
+      { identity: "urn:nkf:0.7:schema:bundle", file: "bundle.schema.json", sha256: "f763c1c1c14985d178b7efb186d0aa4780097535bd489340ecff1bb0f9fccf24" },
+      { identity: "urn:nkf:0.7:schema:record", file: "record.schema.json", sha256: "993e4eff2f463aee955d957fd9e68a7ab9c6cc220245ec03a5435c978a572ab3" },
+      { identity: "urn:nkf:0.7:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "74676cb9822e29878ce7a2f6a17bf3fbcad6fff223b2ea3f5f4d26f5221d812e" },
+      { identity: "urn:nkf:0.7:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "80e04e58b632d90c3e62e419642bac791c42aa448d7654b3a2e7be4b5c950835" },
+      { identity: "urn:nkf:0.7:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "1fd6739bda19d50348c0df96fd27983d0705f85d113ea3c7a16b5ce80bca9f0c" },
+      { identity: "urn:nkf:0.7:schema:validation-result", file: "validation-result.schema.json", sha256: "a2d0866f656dc6dcd8b15ab28d379d1915c426f8b475fb1e36dbf9d59bdaee86" },
     ],
   },
 } as const satisfies Record<string, CoreBindings>;
