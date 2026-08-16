@@ -2853,7 +2853,7 @@ governed_artifacts:
     path: src/checker/checker.ts
     digest:
       algorithm: sha-256
-      value: "79123cb7d25edf65ed3ebba7cd1475d37100894004aad9a93c1c8fe0521aee56"
+      value: "025bec67e5a018126cece4a7612a16d5b3c250baa7fb84f4a005a8421f9c85f5"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-contracts-ts
@@ -3029,7 +3029,7 @@ governed_artifacts:
     path: test/checker.test.ts
     digest:
       algorithm: sha-256
-      value: "fe52b4d0c6d795f7c148cc70449f1ad7ad2fd08426146d0c21bcdc7fc8dfc8df"
+      value: "16873fa084b8ea00d1e491acf02d361712df1e0f375abfcae8bab24b77db1e80"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-contracts-test-ts

@@ -1092,8 +1092,10 @@ function frontMatterReferenceChecks(
   for (const [taskId, group] of taskGroups) {
     if (group.length <= 1) continue;
     for (const nonRecord of group) {
+      // Modern versions own duplicate node identity in the graph phase; the
+      // legacy frontmatter rule id does not exist in their registries.
       emitter.emit(
-        "markdown.frontmatter.task.invalid",
+        isModernNkfVersion(nkfVersion) ? "document.id.duplicate" : "markdown.frontmatter.task.invalid",
         `The Task identity ${taskId} is duplicated.`,
         frontMatterContext(nonRecord.observation.entry.path, undefined, "task_id"),
       );
@@ -1149,10 +1151,13 @@ function frontMatterReferenceChecks(
 
   for (const record of records) {
     const declaration = record.value;
-    const frontMatter = record.markdown?.frontMatter;
-    if (declaration === null || declaration.type === "evidence" || frontMatter === null || frontMatter === undefined) {
+    const rawFrontMatter = record.markdown?.frontMatter;
+    if (declaration === null || declaration.type === "evidence" || rawFrontMatter === null || rawFrontMatter === undefined) {
       continue;
     }
+    // Native versions declare lifecycle provenance in the declaration; the
+    // legacy path read it from source frontmatter.
+    const frontMatter = isModernNkfVersion(nkfVersion) ? declaration : rawFrontMatter;
     const type = String(declaration.type);
     if (LIFECYCLE_RECORD_TYPES.has(type) && orientationString(frontMatter.task)) {
       if (!taskResolves(frontMatter.task)) {
