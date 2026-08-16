@@ -1382,7 +1382,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const started = (options.now ?? (() => new Date()))();
   const executionId = (options.executionId ?? randomUUID)().toLowerCase();
   const declaredVersion = await peekBundleNkfVersion(projectRoot);
-  const nkfVersion = declaredVersion ?? "0.2";
+  const nkfVersion = declaredVersion ?? "0.7";
   const requestedContractRoot = path.resolve(options.contractRoot);
   const requestedBase = path.basename(requestedContractRoot);
   const versionContractRoot =

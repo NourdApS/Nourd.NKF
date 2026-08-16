@@ -22,21 +22,25 @@ async function copyAuthority(): Promise<string> {
   return path.join(root, "contracts/nkf/0.6");
 }
 
-describe("accepted NKF 0.2 contract realization", () => {
-  it("strictly loads the exact accepted authority and schema bindings", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.6"], "0.2");
+describe("prospective NKF 0.7 contract realization", () => {
+  it("strictly loads the exact candidate authority and schema bindings", async () => {
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.7"], "0.7");
     expect(loaded.diagnostics).toEqual([]);
     expect(loaded.executable.contract).toBe("nkf.contract-set");
-    expect(loaded.executable.nkf_version).toBe("0.2");
+    expect(loaded.executable.nkf_version).toBe("0.7");
     expect(loaded.artifacts.core.specification.binding).toBe("verified");
     expect(loaded.artifacts.core.executable.binding).toBe("verified");
+    expect(loaded.artifacts.core.version_delta?.binding).toBe("verified");
     expect(loaded.artifacts.core.schemas.map((schema) => schema.binding)).toEqual([
+      "verified",
+      "verified",
+      "verified",
       "verified",
       "verified",
       "verified",
     ]);
     expect(loaded.artifacts.core.executable.expected_sha256).toBe(
-      VERSION_BINDINGS["0.6"].executable.sha256,
+      VERSION_BINDINGS["0.7"].executable.sha256,
     );
   });
 
