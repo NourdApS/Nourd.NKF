@@ -2064,8 +2064,9 @@ evidence.
 A checker validates shape, resolution, exact revisions, digests, carry
 preconditions, closure containment, coverage, and binding; it does not
 establish semantic completeness or reviewer authority. A missing, outdated,
-disputed, ambiguous, or unsupported baseline yields `unknown` and blocks
-readiness. Recovery is a new whole-root semantic review. Updating the
+disputed, ambiguous, coverage-incomplete, or unsupported baseline yields
+`unknown` and blocks readiness; incomplete judgment or classification
+coverage reports the distinct `coverage-incomplete` state. Recovery is a new whole-root semantic review. Updating the
 baseline never rewrites canonical Markdown or the historical predecessor
 baseline.
 

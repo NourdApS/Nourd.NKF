@@ -180,11 +180,24 @@ async function graphBaselineSchema() {
 }
 
 async function freshnessReceiptSchema() {
-  return readBase("freshness-receipt.schema.json");
+  return withCoverageIncompleteState(await readBase("freshness-receipt.schema.json"));
 }
 
 async function freshnessPolicySchema() {
   return readBase("freshness-policy.schema.json");
+}
+
+// Incomplete judgment coverage is its own reportable baseline state under
+// the 0.7 digest-bound baseline contract.
+function withCoverageIncompleteState(node) {
+  if (Array.isArray(node)) { node.forEach(withCoverageIncompleteState); return node; }
+  if (node === null || typeof node !== "object") return node;
+  const enumeration = node.properties?.baseline_state?.enum;
+  if (Array.isArray(enumeration) && enumeration.includes("ambiguous") && !enumeration.includes("coverage-incomplete")) {
+    enumeration.splice(enumeration.indexOf("unsupported") + 1, 0, "coverage-incomplete");
+  }
+  Object.values(node).forEach(withCoverageIncompleteState);
+  return node;
 }
 
 async function validationResultSchema() {
@@ -192,7 +205,7 @@ async function validationResultSchema() {
   const core = schema.$defs.coreArtifacts;
   core.required.splice(core.required.indexOf("schemas"), 0, "version_delta");
   core.properties.version_delta = { $ref: "#/$defs/artifactBinding" };
-  return schema;
+  return withCoverageIncompleteState(schema);
 }
 
 async function releaseManifestSchema() {

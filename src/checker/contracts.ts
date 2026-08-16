@@ -288,8 +288,10 @@ export async function loadContracts(
     }
     const declaredRules = asObject(versionDelta?.rules) ?? {};
     const classifications = new Set(["identical", "mechanically-transformable", "semantically-new"]);
-    const registryIds = Object.keys(asObject(executable.diagnostics)?.rules ?? {});
-    for (const [ruleId, entry] of Object.entries(declaredRules)) {
+    const registryIds = executableBinding.binding === "verified"
+      ? Object.keys(asObject(executable.diagnostics)?.rules ?? {})
+      : [];
+    for (const [ruleId, entry] of registryIds.length === 0 ? [] : Object.entries(declaredRules)) {
       const classification = asObject(entry)?.classification;
       if (typeof classification !== "string" || !classifications.has(classification) || !registryIds.includes(ruleId)) {
         diagnostics.push({

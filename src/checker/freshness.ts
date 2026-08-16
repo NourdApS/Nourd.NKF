@@ -43,7 +43,7 @@ export interface KnowledgeGraphResult {
     };
     candidate_graph_revision: DigestValue;
     baseline_graph_revision: DigestValue | null;
-    baseline_state: "confirmed" | "missing" | "outdated" | "disputed" | "ambiguous" | "unsupported" | "not-evaluated";
+    baseline_state: "confirmed" | "missing" | "outdated" | "disputed" | "ambiguous" | "coverage-incomplete" | "unsupported" | "not-evaluated";
     node_count: number;
     authored_edge_count: number;
     projection_counts: { full: number; applicable: number; current: number };
@@ -224,7 +224,7 @@ function completenessState(
   edges: NormalizedEdge[],
   relationships: string[],
   decisions: string[],
-): "confirmed" | "ambiguous" | "unsupported" {
+): "confirmed" | "ambiguous" | "unsupported" | "coverage-incomplete" {
   const nodeEntries = values<Record<string, any>>(baseline.node_revisions);
   const nodeKeys = nodeEntries.map((entry) => nodeKey(entry.node as NodeReference));
   if (new Set(nodeKeys).size !== nodeKeys.length) return "ambiguous";
@@ -236,10 +236,10 @@ function completenessState(
   const purposes = ["change-impact", "whole-root-readiness", "consequential-use"];
   const expectedApplicability = nodeRevisions.length * purposes.length;
   const applicabilityKeys = applicability.map((entry) => `${nodeKey(entry.node as NodeReference)}\u0000${entry.purpose}`);
-  if (applicability.length !== expectedApplicability || new Set(applicabilityKeys).size !== expectedApplicability) return "unsupported";
+  if (applicability.length !== expectedApplicability || new Set(applicabilityKeys).size !== expectedApplicability) return "coverage-incomplete";
   const classifications = values<Record<string, any>>(baseline.decision_classifications);
   const classificationKeys = classifications.map((entry) => `${entry.decision}\u0000${entry.purpose}`);
-  if (classifications.length !== decisions.length * purposes.length || new Set(classificationKeys).size !== classifications.length) return "unsupported";
+  if (classifications.length !== decisions.length * purposes.length || new Set(classificationKeys).size !== classifications.length) return "coverage-incomplete";
   if (baseline.confirmation?.disputed !== false) return "ambiguous";
   return "confirmed";
 }
@@ -533,7 +533,7 @@ function verifyDigestBoundBaseline(
   }
   for (const entry of values<Record<string, any>>(baseline.promotion_reconciliation)) {
     const subject = asNodeReference(entry.node);
-    if (subject === null || !["pending", "resolved"].includes(String(entry.state))) {
+    if (subject === null || !revisionByNode.has(nodeKey(subject)) || !["pending", "resolved"].includes(String(entry.state))) {
       emitter.emit("freshness.reconciliation.invalid", "A promotion-reconciliation entry does not name one node with one closed state.", { artifact });
       return "unsupported";
     }
@@ -673,10 +673,14 @@ export function evaluateKnowledgeGraph(args: {
   }
   edges.sort((left, right) => utf16Compare(jcs(left), jcs(right)));
   const seenEdges = new Set<string>();
+  const seenFacts = new Set<string>();
+  const factKey = (source: NodeReference, relationship: string, target: NodeReference) =>
+    `${nodeKey(source)}\u0000${relationship}\u0000${nodeKey(target)}`;
   for (const edge of edges) {
     const key = jcs(edge);
     if (seenEdges.has(key)) emitter.emit("graph.relationship.duplicate", "An exact normalized authored graph edge is duplicated.", { node_id: nodeKey(edge.source) });
     seenEdges.add(key);
+    seenFacts.add(factKey(edge.source, edge.relationship, edge.target));
     if (!nodeKeys.has(nodeKey(edge.source)) || !nodeKeys.has(nodeKey(edge.target))) {
       emitter.emit("graph.node.unresolved", "A normalized authored graph edge endpoint does not resolve.", { node_id: nodeKey(edge.source) });
     }
@@ -703,8 +707,9 @@ export function evaluateKnowledgeGraph(args: {
     if (edge.relationship === "evidences" && sourceInfo?.record?.declaration.body_contract !== "nkf.evidence" && sourceInfo?.documentKind !== "evidence") {
       emitter.emit("graph.relationship.authority-invalid", "Only Evidence meaning may author an evidences edge.", { node_id: nodeKey(edge.source) });
     }
-    const reverse = { ...edge, source: edge.target, target: edge.source };
-    if (seenEdges.has(jcs(reverse))) emitter.emit("graph.relationship.inverse-authored", "An inverse of the same authored relationship fact is also authored.", { node_id: nodeKey(edge.source) });
+    if (nodeKey(edge.source) !== nodeKey(edge.target) && seenFacts.has(factKey(edge.target, edge.relationship, edge.source))) {
+      emitter.emit("graph.relationship.inverse-authored", "An inverse of the same authored relationship fact is also authored.", { node_id: nodeKey(edge.source) });
+    }
   }
   for (const [relationship, entry] of Object.entries<Record<string, any>>(executable.vocabularies?.graph_relationship_types ?? {})) {
     if (entry.cycles === "forbidden" && relationshipCycle(edges, relationship)) {
@@ -770,6 +775,7 @@ export function evaluateKnowledgeGraph(args: {
   const baselineRule: Partial<Record<typeof baselineState, string>> = {
     missing: "freshness.baseline.missing", outdated: "freshness.baseline.outdated", disputed: "freshness.baseline.disputed",
     ambiguous: "freshness.baseline.ambiguous", unsupported: "freshness.baseline.unsupported",
+    "coverage-incomplete": "freshness.baseline.coverage-incomplete",
   };
   if (request.purpose !== null && request.purpose !== undefined) {
     if (!args.baselinePresent) baselineState = "missing";

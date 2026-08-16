@@ -846,7 +846,7 @@ non_records:
       stable_path: specifications/nkf-0.7.md
       digest:
         algorithm: sha-256
-        value: f8ce1a512103ee387b204bd899be700d9b83dcf717ec6c57e4659998bb98821b
+        value: "872338ec36143262afe62f87e13eade079a1bcd8e4e7ee951d2c48b4fd10063e"
       relationships: []
   - path: tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -2765,7 +2765,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: b8661b764b62a1fd955bbdf5061c30274fad928d4b46677d533f6bc64c7c8535
+      value: "41cb5cc0790bd2fde23290dd73fbda41265a68e1a04349b0764d48e1286371e1"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -2781,7 +2781,7 @@ governed_artifacts:
     path: src/checker/contracts.ts
     digest:
       algorithm: sha-256
-      value: "250cde311edc908a9bc6f6dce554b8033cc53577457ef5002c91560af357cd3f"
+      value: "6d710edd9f0fd02b69cb6636d8d1b24a605a1ad0c17606616857290a64f070ef"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-diagnostics-ts
