@@ -17,7 +17,6 @@ import {
 import { sha256 } from "../src/checker/util.js";
 import {
   copyValidFixture,
-  copyValidTechnologyFixture,
   options,
   repositoryRoot,
 } from "./helpers.js";
@@ -78,43 +77,6 @@ async function rules(project: string): Promise<string[]> {
   );
 }
 
-async function installRepositoryRecord(
-  project: string,
-  sourcePath: string,
-  declarationFile: string,
-  targetPath: string,
-): Promise<void> {
-  const source = await readFile(path.join(repositoryRoot, "knowledge", sourcePath));
-  const declaration = YAML.parse(
-    await readFile(
-      path.join(repositoryRoot, ".nourd/knowledge/records", declarationFile),
-      "utf8",
-    ),
-  );
-  const predecessorDeclaration = {
-    contract: declaration.contract,
-    id: declaration.id,
-    type: declaration.type,
-    body_contract: declaration.body_contract,
-    title: declaration.title,
-    source: {
-      path: targetPath,
-      digest: declaration.source.digest,
-    },
-    governance: declaration.governance,
-    scope: declaration.scope,
-    sections: declaration.sections,
-    relationships: declaration.relationships,
-  };
-  const target = path.join(project, "knowledge", targetPath);
-  await mkdir(path.dirname(target), { recursive: true });
-  await writeFile(target, source);
-  await writeFile(
-    path.join(project, ".nourd/knowledge/records", declarationFile),
-    YAML.stringify(predecessorDeclaration),
-    "utf8",
-  );
-}
 
 describe("project and representation boundary", () => {
   it("fails before validation when project-root .nourd is absent without creating it", async () => {
