@@ -1877,7 +1877,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "1e87f2eed7e39c5e969234c7b58eb7d78f8255ac12494fb9599a5641f64d2fdc"
+      value: "981c3d234d381b7e056373340d26548edac4d1fc6ae6284c379ffab6b2923edb"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-bundle-yaml
@@ -2669,7 +2669,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "1e87f2eed7e39c5e969234c7b58eb7d78f8255ac12494fb9599a5641f64d2fdc"
+      value: "981c3d234d381b7e056373340d26548edac4d1fc6ae6284c379ffab6b2923edb"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -2693,7 +2693,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "1688dd9a3a7bb328e1a1e5665f229c12feb5128cd496596b62f2b9f470a8f374"
+      value: "41efa7ac04ba267dd37dc9b150ef70ceb918362d2f3b9dabb78c13d98050673a"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
@@ -2845,7 +2845,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: "661bdf02253e426d04497d9de217b5270eac8ef39919eeead3544377b98c5a90"
+      value: "5b05f91353bd69eb3bd72c5d23d0b9fd19977406437f521c38d98e4397cc47e8"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -2941,7 +2941,7 @@ governed_artifacts:
     path: src/checker/topology.ts
     digest:
       algorithm: sha-256
-      value: "cb15cfd98b6b4a70939db4a44db82f74a2a07c80baab52630ccc2c6910cbd5a1"
+      value: "cf4643385e698bcdbfb69baf773e386f12893a5c2f7cde800651d6edb4cb7cd6"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-types-ts

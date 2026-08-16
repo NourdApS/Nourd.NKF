@@ -357,15 +357,28 @@ export function validatePortableTopology(input: TopologyInput): void {
   }
   requireIndexTargets("specifications/README.md", specificationPaths);
 
-  requireIndexTargets("realizations/README.md", [
-    "realizations/current-system.md",
-    "realizations/current/README.md",
-  ]);
-  const supportingRealizations = records
-    .filter((record) => record.value?.type === "realization")
-    .map(sourcePath)
-    .filter((value): value is string => value !== null && value.startsWith("realizations/current/"));
-  requireIndexTargets("realizations/current/README.md", supportingRealizations);
+  if (version === "0.7") {
+    // Neutral topology: supporting Realizations live under realizations/items/
+    // and are indexed by the realizations map directly.
+    const supportingRealizations = records
+      .filter((record) => record.value?.type === "realization")
+      .map(sourcePath)
+      .filter((value): value is string => value !== null && value.startsWith("realizations/items/"));
+    requireIndexTargets("realizations/README.md", [
+      "realizations/current-system.md",
+      ...supportingRealizations,
+    ]);
+  } else {
+    requireIndexTargets("realizations/README.md", [
+      "realizations/current-system.md",
+      "realizations/current/README.md",
+    ]);
+    const supportingRealizations = records
+      .filter((record) => record.value?.type === "realization")
+      .map(sourcePath)
+      .filter((value): value is string => value !== null && value.startsWith("realizations/current/"));
+    requireIndexTargets("realizations/current/README.md", supportingRealizations);
+  }
 
   const evidenceAreas = new Set<string>();
   for (const record of records.filter((candidate) => candidate.value?.type === "evidence")) {

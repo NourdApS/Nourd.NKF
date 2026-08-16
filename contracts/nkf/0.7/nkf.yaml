@@ -946,7 +946,6 @@ portable_topology:
     - {path: specifications/README.md, representation: non-record, kind: navigation, frontmatter: required}
     - {path: realizations/README.md, representation: non-record, kind: navigation, frontmatter: required}
     - {path: realizations/current-system.md, representation: record, type: realization, body_contract: nkf.realization, count: 1}
-    - {path: realizations/current/README.md, representation: non-record, kind: navigation, frontmatter: required}
     - {path: evidence/README.md, representation: non-record, kind: evidence, frontmatter: evidence-exempt}
   path_safety:
     file_kind: regular-file
@@ -1049,10 +1048,10 @@ portable_topology:
         path: realizations/current-system.md
         count: 1
       supporting_current_placement: realizations/current/
-      supporting_current_index: realizations/current/README.md
+      supporting_realizations_directory: realizations/items/
       matching_supporting_items: exactly-once
       parent_index: realizations/README.md
-      parent_targets: [realizations/current-system.md, realizations/current/README.md]
+      parent_targets: [realizations/current-system.md]
     evidence:
       index: evidence/README.md
       exhaustive_file_links_required: false

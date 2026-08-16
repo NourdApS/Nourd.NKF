@@ -40,7 +40,7 @@ export const VERSION_BINDINGS = {
     },
     executable: {
       path: "contracts/nkf/0.7/nkf.yaml",
-      sha256: "123c14973f983243cfda23bd2ce2ae78cc6d10978beb0a1d1329fbf1293a5a7e",
+      sha256: "c0a5b8f83e15d635ca522b0b125f75a0647b5707627efbd7d8fefad56ddedd5f",
     },
     freshnessPolicy: {
       path: "contracts/nkf/0.7/freshness-policy.yaml",
@@ -51,12 +51,12 @@ export const VERSION_BINDINGS = {
       sha256: "595afe8d5517f005644807e4cfa2cca9c45ceca0cc895b3de10bd0e333af9eab",
     },
     schemas: [
-      { identity: "urn:nkf:0.7:schema:bundle", file: "bundle.schema.json", sha256: "04f35bd99dd0a200a0cecc768d6f04154fec9f06769b22b5849f7dcbb4488f32" },
-      { identity: "urn:nkf:0.7:schema:record", file: "record.schema.json", sha256: "9d05cbe407582a84d61095a0ec4a9fdd61de430620aab5b73488776050e68b02" },
-      { identity: "urn:nkf:0.7:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "105736998d4169879cdd3ad5b302a443b9995f2eac599eaad5be825f0a597a02" },
-      { identity: "urn:nkf:0.7:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "63b8360f1264a501209a2b5d8c56b0f16626c85faf27e1eeff47a82a80599180" },
-      { identity: "urn:nkf:0.7:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "595bfbb3509429f2c7d05eaa1fda2571756a3989597c4c9a2384c16f8a1b3388" },
-      { identity: "urn:nkf:0.7:schema:validation-result", file: "validation-result.schema.json", sha256: "006e5bff9682abecd48677cbd197506be8df66a5b8a43edba53e8f4053d250e7" },
+      { identity: "urn:nkf:0.7:schema:bundle", file: "bundle.schema.json", sha256: "d4f75a664879548a8ac846e609929567f1d831e7caa70d561f36935904acb179" },
+      { identity: "urn:nkf:0.7:schema:record", file: "record.schema.json", sha256: "eda642a8b3f5ef10eaa0aa24245eb73b1634e67f70b48c5f5f9e68565ee4a37e" },
+      { identity: "urn:nkf:0.7:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "752c3e3d786247a7fb036b9ca42c999b5d36e1160e80f3ee7c209a2c45e2ffa2" },
+      { identity: "urn:nkf:0.7:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "60cc77d6d83a407c053493e4671bd66b13d204cf7ad01514e5a1a2d14b753ab5" },
+      { identity: "urn:nkf:0.7:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "0267e45801fba9985ba0596eadf199f166f992a430f1c41e01ba6b63824e8361" },
+      { identity: "urn:nkf:0.7:schema:validation-result", file: "validation-result.schema.json", sha256: "7a60d0a3ff7b07dbb3a73ba15005ab00d87dcfdb82407121105311052d235ed2" },
     ],
   },
 } as const satisfies Record<string, CoreBindings>;

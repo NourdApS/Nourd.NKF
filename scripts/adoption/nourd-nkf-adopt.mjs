@@ -20,13 +20,13 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import * as commonmark from "commonmark";
-import neutralProtocol from "../../distribution/nkf/0.6/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill from "../../distribution/nkf/0.6/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol from "../../distribution/nkf/0.6/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill from "../../distribution/nkf/0.6/.agents/skills/nkf-onboarding/SKILL.md";
-import rootAdapter from "../../distribution/nkf/0.6/host-adapters/AGENTS.adapter.md";
-import importAdapter from "../../distribution/nkf/0.6/host-adapters/CLAUDE.adapter.md";
-import copilotAdapter from "../../distribution/nkf/0.6/host-adapters/copilot-instructions.adapter.md";
+import neutralProtocol from "../../distribution/nkf/0.7/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill from "../../distribution/nkf/0.7/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol from "../../distribution/nkf/0.7/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill from "../../distribution/nkf/0.7/.agents/skills/nkf-onboarding/SKILL.md";
+import rootAdapter from "../../distribution/nkf/0.7/host-adapters/AGENTS.adapter.md";
+import importAdapter from "../../distribution/nkf/0.7/host-adapters/CLAUDE.adapter.md";
+import copilotAdapter from "../../distribution/nkf/0.7/host-adapters/copilot-instructions.adapter.md";
 import freshnessPolicy0_6 from "../../contracts/nkf/0.6/freshness-policy.yaml";
 import predecessorContract0_6 from "nkf:predecessor-0.6";
 import neutralProtocol0_4 from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
@@ -67,6 +67,7 @@ function migrateProjectTo0_5() {
   );
 }
 import {
+  convertBaselineShape0_7,
   sealBaseline0_7,
   writeReviewTemplate0_7,
 } from "../freshness/seal-baseline-0-7.mjs";
@@ -82,7 +83,7 @@ import {
   writePredecessorGateReviewTemplate0_5,
 } from "../freshness/retrospective-gates-0-5.mjs";
 
-const CURRENT_NKF_VERSION = "0.6";
+const CURRENT_NKF_VERSION = "0.7";
 const MODERN_NKF_VERSIONS = new Set(["0.5", "0.6"]);
 const RELATIONSHIP_TYPES = new Set([
   "part-of", "defines", "governs", "applies-to", "depends-on", "extends",
@@ -604,7 +605,7 @@ async function requireBundle(projectRoot) {
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+  if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
     fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
@@ -1531,8 +1532,8 @@ function requirePinShape(pin) {
     !pin.integration.scripts.host.includes(HOST_SCRIPT_NAME);
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"].includes(pin?.nkf_version) ||
-    (pin?.nkf_version === "0.6"
+    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(pin?.nkf_version) ||
+    (["0.6", "0.7"].includes(pin?.nkf_version)
       ? pin?.repository !== CURRENT_REPOSITORY
       : ![LEGACY_REPOSITORY, CURRENT_REPOSITORY].includes(pin?.repository)) ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
@@ -2436,6 +2437,16 @@ async function verifyInstalled0_6Ready(projectRoot) {
     "0.6",
   );
   await requireProducer0_6TerminalState(projectRoot);
+  return { ...installed, readiness };
+}
+
+async function verifyInstalled0_7Ready(projectRoot) {
+  const installed = await verifyInstalled(projectRoot, true);
+  const readiness = await requireModernReadiness(
+    projectRoot,
+    installed.verification,
+    "0.7",
+  );
   return { ...installed, readiness };
 }
 
@@ -4380,17 +4391,257 @@ async function migrateLegacyTo0_4(options, prepared = undefined) {
   };
 }
 
+
+// The one deliberate 0.6-to-0.7 stable-path neutralization. Every Task,
+// Design, and Realization source under a lifecycle, disposition, or currency
+// directory moves exactly once to its neutral items/ location, links and
+// declarations are rewritten mechanically, and the emptied legacy index
+// files leave the tree. Immutable record meaning never changes.
+const NEUTRALIZATION_SOURCES = Object.freeze([
+  { prefix: "tasks/active/", destination: "tasks/items/" },
+  { prefix: "tasks/completed/", destination: "tasks/items/" },
+  { prefix: "tasks/deferred/", destination: "tasks/items/" },
+  { prefix: "tasks/cancelled/", destination: "tasks/items/" },
+  { prefix: "designs/active/", destination: "designs/items/" },
+  { prefix: "designs/adopted/", destination: "designs/items/" },
+  { prefix: "designs/rejected/", destination: "designs/items/" },
+  { prefix: "designs/superseded/", destination: "designs/items/" },
+  { prefix: "designs/withdrawn/", destination: "designs/items/" },
+  { prefix: "realizations/current/", destination: "realizations/items/" },
+]);
+
+async function neutralizeStatePaths(candidate, knowledgeRoot) {
+  const knowledgeAbsolute = path.join(candidate, ...knowledgeRoot.split("/"));
+  const markdownFiles = [];
+  const walk = async (directory, prefix = "") => {
+    for (const entry of (await readdir(directory, { withFileTypes: true }))) {
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) await walk(absolute, relative);
+      else if (entry.isFile() && entry.name.endsWith(".md")) markdownFiles.push(relative);
+    }
+  };
+  await walk(knowledgeAbsolute);
+  const moves = new Map();
+  const removals = [];
+  for (const relative of markdownFiles) {
+    const rule = NEUTRALIZATION_SOURCES.find((entry) => relative.startsWith(entry.prefix));
+    if (rule === undefined) continue;
+    const name = relative.slice(rule.prefix.length);
+    if (name.includes("/")) fail(`The stable-path neutralization does not support nested legacy sources: ${relative}`);
+    if (name === "README.md") {
+      removals.push(relative);
+      continue;
+    }
+    const destination = `${rule.destination}${name}`;
+    if (moves.has(destination) || markdownFiles.includes(destination)) {
+      fail(`The stable-path neutralization destination collides: ${destination}`);
+    }
+    moves.set(relative, destination);
+  }
+  const movedTo = new Map([...moves.entries()].map(([from, to]) => [from, to]));
+  // Move sources, rebasing their own outbound links.
+  for (const [from, to] of moves) {
+    const source = path.join(knowledgeAbsolute, ...from.split("/"));
+    const target = path.join(knowledgeAbsolute, ...to.split("/"));
+    await mkdir(path.dirname(target), { recursive: true });
+    const text = (await readFile(source, "utf8"));
+    await writeFile(target, rewriteOutboundLinks(text, from, to));
+    await unlink(source);
+  }
+  // Remove the emptied legacy index files.
+  for (const relative of removals) {
+    await unlink(path.join(knowledgeAbsolute, ...relative.split("/"))).catch(() => {});
+  }
+  // Rewrite inbound links across every remaining Markdown file, and drop
+  // whole list lines that pointed at a removed legacy index.
+  const remaining = [];
+  await walk(knowledgeAbsolute).catch(() => {});
+  const rewalk = async (directory, prefix = "") => {
+    for (const entry of (await readdir(directory, { withFileTypes: true }))) {
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) await rewalk(absolute, relative);
+      else if (entry.isFile() && entry.name.endsWith(".md")) remaining.push(relative);
+    }
+  };
+  await rewalk(knowledgeAbsolute);
+  const removedSet = new Set(removals);
+  for (const relative of remaining) {
+    const file = path.join(knowledgeAbsolute, ...relative.split("/"));
+    const directory = relative.split("/").slice(0, -1);
+    let fenced = false;
+    let changed = false;
+    const lines = (await readFile(file, "utf8")).split("\n").map((line) => {
+      if (line.trim().startsWith("```")) { fenced = !fenced; return line; }
+      if (fenced) return line;
+      let dropLine = false;
+      const rewritten = line.replace(/\]\(([^()\s]+)\)/g, (whole, destination) => {
+        if (/^[a-z][a-z0-9+.-]*:/i.test(destination) || destination.startsWith("#")) return whole;
+        const [target, fragment] = destination.split("#");
+        if (target === undefined || target === "") return whole;
+        const segments = [...directory];
+        for (const part of target.split("/")) {
+          if (part === "" || part === ".") continue;
+          if (part === "..") { if (segments.length === 0) return whole; segments.pop(); continue; }
+          segments.push(part);
+        }
+        const resolved = segments.join("/");
+        if (removedSet.has(resolved)) { dropLine = true; return whole; }
+        const moved = movedTo.get(resolved);
+        if (moved === undefined) return whole;
+        changed = true;
+        return `](${relativeLink(relative, moved)}${fragment === undefined ? "" : `#${fragment}`})`;
+      });
+      if (dropLine) { changed = true; return null; }
+      return rewritten;
+    }).filter((line) => line !== null);
+    if (changed) await writeFile(file, lines.join("\n"));
+  }
+  // Update record declarations and non-record document paths.
+  const recordsDirectory = path.join(candidate, ".nourd/knowledge/records");
+  for (const name of (await readdir(recordsDirectory)).filter((item) => item.endsWith(".yaml"))) {
+    const file = path.join(recordsDirectory, name);
+    const record = YAML.parse(await readFile(file, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    const moved = movedTo.get(record.source?.path);
+    if (moved === undefined) continue;
+    record.source.path = moved;
+    record.source.stable_path = moved;
+    await writeFile(file, YAML.stringify(record, { lineWidth: 0, aliasDuplicateObjects: false }));
+  }
+  const bundlePath = path.join(candidate, ".nourd/knowledge/bundle.yaml");
+  const bundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  bundle.non_records = (bundle.non_records ?? []).filter((entry) => !removedSet.has(entry.path));
+  for (const entry of bundle.non_records) {
+    const moved = movedTo.get(entry.path);
+    if (moved === undefined) continue;
+    entry.path = moved;
+    if (entry.document !== undefined) entry.document.stable_path = moved;
+  }
+  await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+  return { moves: moves.size, removed: removals.length };
+}
+
+async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = []) {
+  if (reviewPath === undefined) {
+    throw new OnboardingError(
+      "NKF-ADOPT-REVIEW-PATH-REQUIRED",
+      "The NKF 0.7 migration requires --review with a writable path for the exact semantic graph review.",
+      { next_action: "rerun-adopt-with-review-path" },
+    );
+  }
+  const review = path.resolve(reviewPath);
+  const reviewStat = await lstat(review).catch(() => null);
+  if (reviewStat !== null && (!reviewStat.isFile() || reviewStat.isSymbolicLink())) {
+    fail("--review must identify one regular semantic graph review file or one absent file to create as a review template.");
+  }
+  const versionDeltaBytes = verification.entries.get("contracts/nkf/0.7/version-delta.yaml");
+  if (!Buffer.isBuffer(versionDeltaBytes)) fail("The verified NKF 0.7 archive omits the accepted version-delta declaration.");
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-7-adopt-"));
+  const candidate = path.join(temporary, "project");
+  try {
+    await cp(projectRoot, candidate, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(projectRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0];
+        return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
+      },
+    });
+    const workingSeed = new Map(seedFiles);
+    workingSeed.set(PROTOCOL_PATH, Buffer.from(neutralProtocol, "utf8"));
+    for (const skillPath of SKILL_PATHS) workingSeed.set(skillPath, Buffer.from(portableSkill, "utf8"));
+    workingSeed.set(ONBOARDING_PROTOCOL_PATH, Buffer.from(onboardingProtocol, "utf8"));
+    for (const skillPath of ONBOARDING_SKILL_PATHS) workingSeed.set(skillPath, Buffer.from(onboardingSkill, "utf8"));
+    await ensureWritableParents(candidate, workingSeed.keys());
+    for (const relative of seedRemovals) {
+      const target = path.join(candidate, ...safeRelative(relative, "Candidate removed path").split("/"));
+      const stat = await lstat(target).catch(() => null);
+      if (stat === null || !stat.isFile() || stat.isSymbolicLink()) {
+        fail(`The migration removal is not one regular project file: ${relative}`);
+      }
+      await unlink(target);
+    }
+    for (const [relative, bytes] of workingSeed) {
+      const target = path.join(candidate, ...safeRelative(relative, "Candidate seed path").split("/"));
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, bytes);
+    }
+    const bundlePath = path.join(candidate, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    const knowledgeRoot = bundle.knowledge_root;
+    const neutralization = await neutralizeStatePaths(candidate, knowledgeRoot);
+    const migratedBundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    migratedBundle.nkf_version = "0.7";
+    if (migratedBundle.knowledge_graph?.policy !== undefined) {
+      migratedBundle.knowledge_graph.policy = "nkf.freshness-policy.0.7";
+    }
+    await writeFile(bundlePath, YAML.stringify(migratedBundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+    const policyBytes = verification.entries.get("contracts/nkf/0.7/freshness-policy.yaml");
+    if (!Buffer.isBuffer(policyBytes)) fail("The verified NKF 0.7 archive omits the accepted evaluation policy.");
+    await convertBaselineShape0_7({
+      projectRoot: candidate,
+      versionDeltaDigest: digest(versionDeltaBytes),
+      policyDigest: digest(policyBytes),
+    });
+    const checker = await verified0_5Checker(temporary, verification);
+    if (reviewStat === null) {
+      const template = await writeReviewTemplate0_7({ projectRoot: candidate, checker, reviewPath: review, stage: "delta" });
+      throw new OnboardingError(
+        "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
+        "Adopt created the exact migration review with carried judgments prefilled and stopped before project mutation. A named reviewer must complete the computed required set and rerun the same Adopt command.",
+        {
+          review_template: template.path,
+          review_stage: template.stage,
+          carried: template.carried,
+          required_fresh: template.fresh,
+          next_action: "complete-review-and-rerun-adopt",
+        },
+      );
+    }
+    const baseline = await sealBaseline0_7({
+      projectRoot: candidate,
+      checker,
+      reviewPath: review,
+      versionDeltaDigest: digest(versionDeltaBytes),
+    });
+    await requireModernReadiness(candidate, verification, "0.7");
+    const before = await regularFileInventory(projectRoot);
+    const after = await regularFileInventory(candidate);
+    const files = new Map();
+    const removedPaths = [];
+    for (const [relative, bytes] of after) {
+      const current = before.get(relative);
+      if (current === undefined || !current.equals(bytes)) files.set(relative, bytes);
+    }
+    for (const relative of before.keys()) {
+      if (!after.has(relative)) removedPaths.push(relative);
+    }
+    removedPaths.sort((left, right) => left.localeCompare(right, "en"));
+    return { files, removedPaths, neutralization, baseline };
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+}
+
 async function migrateToCurrent(options, prepared = undefined) {
   const input = prepared ?? await resolveMigrationInput(options);
-  const { projectRoot, bundle, knowledgeRoot, archiveBytes, verification } = input;
-  if (!["0.1", "0.2", "0.3", "0.4"].includes(bundle.nkf_version)) {
-    fail("migrate requires a project that declares a supported NKF 0.1 through 0.4 predecessor.");
+  const { projectRoot, bundle, archiveBytes, verification } = input;
+  if (["0.1", "0.2", "0.3", "0.4", "0.5"].includes(bundle.nkf_version)) {
+    fail(
+      "This repository declares an out-of-window NKF version. Migrate through the exact stepping-stone release first: "
+      + `${STEPPING_STONE_0_6.repository} NKF ${STEPPING_STONE_0_6.nkf_version} archive sha256 ${STEPPING_STONE_0_6.archive_sha256}.`,
+    );
   }
-  const predecessorVersion = bundle.nkf_version;
+  if (bundle.nkf_version !== "0.6") {
+    fail("migrate requires a project that declares the supported NKF 0.6 predecessor.");
+  }
   if (verification.manifest.nkf_version !== CURRENT_NKF_VERSION) {
     fail(`migrate requires an NKF ${CURRENT_NKF_VERSION} release archive.`);
   }
-
   const targetIntegration = await targetFiles(
     projectRoot,
     archiveBytes,
@@ -4399,49 +4650,15 @@ async function migrateToCurrent(options, prepared = undefined) {
   );
   const seedFiles = new Map(targetIntegration);
   await stageVerifiedHostRegistryMigration(projectRoot, seedFiles);
-  const seedRemovals = [];
-  if (["0.1", "0.2"].includes(predecessorVersion)) {
-    const requiredTopology = [
-      "tasks/README.md", "tasks/active/README.md", "tasks/deferred/README.md",
-      "tasks/completed/README.md", "tasks/cancelled/README.md", "designs/README.md",
-      "designs/active/README.md", "designs/adopted/README.md", "designs/rejected/README.md",
-      "designs/superseded/README.md", "designs/withdrawn/README.md", "decisions/README.md",
-      "specifications/README.md", "realizations/README.md", "realizations/current/README.md",
-      "evidence/README.md",
-    ];
-    const incomplete = (
-      await Promise.all(requiredTopology.map((relative) =>
-        readRegularInside(projectRoot, `${knowledgeRoot}/${relative}`, false)))
-    ).some((bytes) => bytes === null);
-    if (incomplete) {
-      const receipt = requirePredecessorOnboardingReceipt(
-        parseStrictJson(await readRegularInside(projectRoot, ONBOARDING_RECEIPT_PATH)),
-      );
-      const topology = await buildPortableTopologyRepair(projectRoot, receipt);
-      for (const [relative, bytes] of topology.files) seedFiles.set(relative, bytes);
-      seedRemovals.push(...topology.removals);
-    }
-  }
-  const originalBundleBytes = await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml");
-  const candidate = await prepare0_5Candidate(
+  const candidate = await prepare0_7Candidate(
     projectRoot,
     seedFiles,
     options.review,
     verification,
-    originalBundleBytes,
-    seedRemovals,
   );
   for (const [relative, bytes] of targetIntegration) {
     candidate.files.set(relative, bytes);
   }
-  const carryForward = await stage0_5To0_6CarryForward(
-    projectRoot,
-    bundle,
-    null,
-    verification,
-    candidate.files,
-    true,
-  );
   const bundlePath = ".nourd/knowledge/bundle.yaml";
   candidate.files.set(
     bundlePath,
@@ -4451,22 +4668,21 @@ async function migrateToCurrent(options, prepared = undefined) {
     projectRoot,
     candidate.files,
     candidate.removedPaths,
-    verifyInstalled0_6Ready,
+    verifyInstalled0_7Ready,
   );
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
-    () => verifyInstalled0_6Ready(projectRoot),
+    () => verifyInstalled0_7Ready(projectRoot),
     candidate.removedPaths,
   );
   return {
     state: "migrated",
     nkf_version: CURRENT_NKF_VERSION,
-    predecessor_version: predecessorVersion,
-    records_migrated: candidate.migration.records,
-    documents_migrated: candidate.migration.documents,
+    predecessor_version: "0.6",
+    neutralized_paths: candidate.neutralization.moves,
+    removed_legacy_indexes: candidate.neutralization.removed,
     baseline: candidate.baseline,
-    carry_forward: carryForward,
     validation: {
       conformance: installed.report?.conformance ?? "passed",
       readiness: installed.readiness?.readiness?.state ?? "ready",

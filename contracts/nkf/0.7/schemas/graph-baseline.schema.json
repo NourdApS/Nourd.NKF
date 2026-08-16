@@ -12,7 +12,7 @@
     "executable_path": "contracts/nkf/0.7/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "123c14973f983243cfda23bd2ce2ae78cc6d10978beb0a1d1329fbf1293a5a7e"
+      "value": "c0a5b8f83e15d635ca522b0b125f75a0647b5707627efbd7d8fefad56ddedd5f"
     }
   },
   "type": "object",

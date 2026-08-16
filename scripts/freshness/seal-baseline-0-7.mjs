@@ -160,6 +160,10 @@ async function candidateGraph07(project, checkerPath) {
 }
 
 function priorJudgments(predecessorBaseline) {
+  const revisions = new Map();
+  for (const entry of predecessorBaseline?.node_revisions ?? []) {
+    revisions.set(nodeKey07(entry.node), entry.revision?.value);
+  }
   const nodes = new Map();
   for (const entry of predecessorBaseline?.applicability_coverage ?? []) {
     if (entry.purpose === "change-impact") nodes.set(nodeKey07(entry.node), entry);
@@ -168,7 +172,13 @@ function priorJudgments(predecessorBaseline) {
   for (const entry of predecessorBaseline?.decision_classifications ?? []) {
     decisions.set(`${entry.decision} ${entry.purpose}`, entry);
   }
-  return { nodes, decisions };
+  return { nodes, decisions, revisions };
+}
+
+// A 0.6-shaped predecessor judgment carries no per-judgment revision; the
+// predecessor's digested node revision is its exact judged revision.
+function priorRevision(prior, entry, node) {
+  return entry?.revision?.value ?? prior.revisions.get(nodeKey07(node));
 }
 
 function carriedProvenance(priorEntry, predecessorBaseline) {
@@ -224,7 +234,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
     const priorEntry = prior.nodes.get(nodeKey07(entry.node));
     const carriable = predecessorBaseline !== null
       && priorEntry !== undefined
-      && priorEntry.revision?.value === entry.revision.value;
+      && priorRevision(prior, priorEntry, entry.node) === entry.revision.value;
     if (carriable) {
       carried += 1;
       nodes.push({
@@ -249,6 +259,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
       provenance: { performed: true },
     });
   }
+  const currentRevisionByNode = new Map(result.nodes.map((entry) => [nodeKey07(entry.node), entry.revision.value]));
   const acceptedDecisions = records
     .filter((record) => record.type === "decision" && record.governance?.status === "accepted")
     .map((record) => record.id)
@@ -258,9 +269,13 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
     const digest = { algorithm: "sha-256", value: decisionDeclarationDigest(recordsById.get(decision)) };
     for (const purpose of PURPOSES) {
       const priorEntry = prior.decisions.get(`${decision} ${purpose}`);
+      const priorNodeEntry = prior.nodes.get(nodeKey07({ kind: "record", id: decision }));
+      const nodeRevisionUnchanged = priorNodeEntry !== undefined
+        && priorRevision(prior, priorNodeEntry, { kind: "record", id: decision })
+          === currentRevisionByNode.get(nodeKey07({ kind: "record", id: decision }));
       const carriable = predecessorBaseline !== null
         && priorEntry !== undefined
-        && priorEntry.decision_digest?.value === digest.value;
+        && (priorEntry.decision_digest?.value === digest.value || nodeRevisionUnchanged);
       if (carriable) {
         classifications.push({
           decision,
@@ -367,7 +382,7 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
     const carriable = predecessorBaseline !== null
       && entry.provenance?.carried !== undefined
       && priorEntry !== undefined
-      && priorEntry.revision?.value === entry.revision?.value
+      && priorRevision(prior, priorEntry, entry.node) === entry.revision?.value
       && jcs({ state: priorEntry.state, role: priorEntry.role, basis: priorEntry.basis })
         === jcs({ state: entry.state, role: entry.role, basis: entry.basis });
     if (!carriable) fail(`Review node ${index} carries a judgment whose carry preconditions do not hold.`);
@@ -380,9 +395,13 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
     }
     if (entry.provenance?.performed === true) continue;
     const priorEntry = prior.decisions.get(`${entry.decision} ${entry.purpose}`);
+    const priorNodeEntry = prior.nodes.get(nodeKey07({ kind: "record", id: entry.decision }));
+    const nodeRevisionUnchanged = priorNodeEntry !== undefined
+      && priorRevision(prior, priorNodeEntry, { kind: "record", id: entry.decision })
+        === revisionByNode.get(nodeKey07({ kind: "record", id: entry.decision }));
     const carriable = predecessorBaseline !== null
       && priorEntry !== undefined
-      && priorEntry.decision_digest?.value === entry.decision_digest?.value
+      && (priorEntry.decision_digest?.value === entry.decision_digest?.value || nodeRevisionUnchanged)
       && priorEntry.classification === entry.classification;
     if (!carriable) fail(`Review Decision classification ${index} carries a judgment whose carry preconditions do not hold.`);
   }
@@ -393,7 +412,7 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
       const priorEntry = prior.nodes.get(nodeKey07(entry.node));
       const carriable = predecessorBaseline !== null
         && priorEntry !== undefined
-        && priorEntry.revision?.value === entry.revision?.value;
+        && priorRevision(prior, priorEntry, entry.node) === entry.revision?.value;
       if (!carriable) closure.add(nodeKey07(entry.node));
     }
     for (const entry of pendingReconciliation) closure.add(nodeKey07(entry.node));
@@ -464,4 +483,47 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
     reviewer: review.reviewer,
     reviewed_at: review.reviewed_at,
   };
+}
+
+// Mechanical 0.6-to-0.7 baseline shape conversion. It rewrites structure
+// only: every predecessor judgment gains its judged node revision from the
+// predecessor's digested node-revision map, carried provenance naming the
+// predecessor reviewer, and the accepted version-delta binding. It changes
+// no judgment value; the following review and seal compute real
+// carry-forward against the candidate.
+export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest, policyDigest }) {
+  const project = await realpath(path.resolve(projectRoot));
+  const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
+  const baseline = YAML.parse(await readFile(baselinePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  if (baseline.nkf_version === "0.7") return { state: "already-0.7" };
+  if (baseline.nkf_version !== "0.6") fail("Baseline shape conversion supports exactly the NKF 0.6 predecessor.");
+  const revisions = new Map(
+    (baseline.node_revisions ?? []).map((entry) => [nodeKey07(entry.node), entry.revision]),
+  );
+  const carried = {
+    carried: {
+      performed_in_graph_revision: baseline.graph_revision,
+      performing_reviewer: baseline.confirmation.reviewer,
+    },
+  };
+  for (const entry of baseline.applicability_coverage ?? []) {
+    const revision = revisions.get(nodeKey07(entry.node));
+    if (revision === undefined) fail(`The predecessor baseline judges an unrevisioned node: ${nodeKey07(entry.node)}`);
+    entry.revision = revision;
+    entry.basis_digest = revision;
+    entry.provenance = structuredClone(carried);
+  }
+  for (const entry of baseline.decision_classifications ?? []) {
+    const revision = revisions.get(nodeKey07({ kind: "record", id: entry.decision }));
+    if (revision === undefined) fail(`The predecessor baseline classifies an unrevisioned Decision: ${entry.decision}`);
+    entry.decision_digest = revision;
+    entry.basis_digest = revision;
+    entry.provenance = structuredClone(carried);
+  }
+  baseline.nkf_version = "0.7";
+  baseline.policy = { id: "nkf.freshness-policy.0.7", digest: { algorithm: "sha-256", value: policyDigest } };
+  baseline.version_delta = { contract: "nkf.version-delta", digest: { algorithm: "sha-256", value: versionDeltaDigest } };
+  baseline.promotion_reconciliation = [];
+  await writeFile(baselinePath, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
+  return { state: "converted", judgments: (baseline.applicability_coverage ?? []).length };
 }
