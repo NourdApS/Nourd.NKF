@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import YAML from "yaml";
-import { repositoryRoot } from "./helpers.js";
+import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
@@ -20,6 +20,8 @@ function run(command: string, project: string, extra: string[] = []) {
   const result = spawnSync(process.execPath, [adopter, command, "--project", project, ...extra], {
     encoding: "utf8",
     maxBuffer: 64 * 1024 * 1024,
+    timeout: scaledTimeout(120_000),
+    killSignal: "SIGKILL",
   });
   return { ...result, json: result.stdout ? JSON.parse(result.stdout) : null };
 }

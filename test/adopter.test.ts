@@ -31,9 +31,7 @@ const { readReleaseSet } = releaseSetTooling;
 // @ts-expect-error Repository freshness tooling is directly executable ESM.
 const freshnessTooling = await import("../scripts/freshness/seal-baseline-0-5.mjs");
 const { sealBaselineModern, writeReviewTemplateModern } = freshnessTooling;
-import {
-  repositoryRoot,
-} from "./helpers.js";
+import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 let archivePath: string;
@@ -142,7 +140,7 @@ function runAdopt(
   return spawnSync(
     process.execPath,
     [adopter, "--project", project, "--recommendation", recommendationPath, ...extra],
-    { encoding: "utf8", env: { ...process.env, ...env } },
+    { encoding: "utf8", env: { ...process.env, ...env }, timeout: scaledTimeout(240_000), killSignal: "SIGKILL" },
   );
 }
 
@@ -153,10 +151,11 @@ function runWith(
   extra: string[] = [],
   env: NodeJS.ProcessEnv = {},
 ) {
+  // A hung child is killed rather than outliving the suite budget.
   return spawnSync(
     process.execPath,
     [executable, command, "--project", project, ...extra],
-    { encoding: "utf8", env: { ...process.env, ...env } },
+    { encoding: "utf8", env: { ...process.env, ...env }, timeout: scaledTimeout(240_000), killSignal: "SIGKILL" },
   );
 }
 
@@ -436,7 +435,7 @@ beforeAll(async () => {
 
   // Historical predecessor releases left the live window; out-of-window
   // behavior is asserted through the stepping-stone refusal instead.
-}, 480_000);
+}, scaledTimeout(480_000));
 
 describe("NKF consumer adopter", () => {
   it("exposes one no-subcommand Adopt operation for initial and current repositories", async () => {
@@ -481,7 +480,7 @@ describe("NKF consumer adopter", () => {
     const conformingNotReadyCurrent = runAdopt(native, ["--archive", archivePath]);
     expect(conformingNotReadyCurrent.status, conformingNotReadyCurrent.stderr).toBe(0);
     expect(JSON.parse(conformingNotReadyCurrent.stdout).state).toBe("current");
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("migrates NKF 0.6 to 0.7 with explicit approval and a verifiable delta baseline", async () => {
     const project = await createProject(
@@ -528,7 +527,7 @@ describe("NKF consumer adopter", () => {
     const current = runAdopt(project, ["--archive", archivePath]);
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("rebinds an exact producer host registry during breaking 0.6-to-0.7 adoption", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
@@ -587,7 +586,7 @@ describe("NKF consumer adopter", () => {
         sha256(await readFile(path.join(project, relative))),
       );
     }
-  }, 120_000);
+  }, scaledTimeout(120_000));
 
   it("promotes the exact producer candidate to one native 0.6 Specification only at the authorized public stage", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-promotion-test-"));
@@ -890,7 +889,7 @@ describe("NKF consumer adopter", () => {
     expect(await readFile(realizationPath)).toEqual(realizationCurrent);
     expect(await readFile(realizationDeclarationPath)).toEqual(declarationCurrent);
     expect(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"))).toEqual(bundleCurrent);
-  }, 300_000);
+  }, scaledTimeout(300_000));
 
   it("fails closed before mutation when initial planning is absent", async () => {
     const { project } = await createEmptyProject();
@@ -946,7 +945,7 @@ describe("NKF consumer adopter", () => {
       expect(result.diagnostics[0].message).toContain("stepping-stone");
       expectTreeEqual(await snapshotTree(project), before);
     }
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("onboards empty Product and Technology repositories without native assembly", async () => {
     for (const profile of ["product", "technology"] as const) {
@@ -998,7 +997,7 @@ describe("NKF consumer adopter", () => {
       expect(repeat.status, repeat.stderr).toBe(0);
       expect(JSON.parse(repeat.stdout).state).toBe("no-update");
     }
-  }, 60_000);
+  }, scaledTimeout(60_000));
 
   it("keeps .nourd at the project root while onboarding a safe non-default knowledge root", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -1016,7 +1015,7 @@ describe("NKF consumer adopter", () => {
     await expect(lstat(path.join(project, "knowledge"))).rejects.toMatchObject({
       code: "ENOENT",
     });
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("preserves and explicitly represents nested small-document corpora for both profiles", async () => {
     for (const profile of ["product", "technology"] as const) {
@@ -1055,7 +1054,7 @@ describe("NKF consumer adopter", () => {
         kind: "navigation",
       });
     }
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("preserves unresolved flat Task and Design material without inferring lifecycle state", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -1860,7 +1859,7 @@ describe("NKF consumer adopter", () => {
     expect(await readFile(path.join(project, "src", "index.ts"))).toEqual(
       sourceBytes,
     );
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("rejects an existing owned workflow before project mutation", async () => {
     const { project, workspace } = await createEmptyProject();
@@ -1884,7 +1883,7 @@ describe("NKF consumer adopter", () => {
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("would overwrite an existing owned path");
     expectTreeEqual(await snapshotTree(project), before);
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("migrates 0.6 through the declared general host-superset chain and verifies current", async () => {
     const project = await createProject(
@@ -2015,7 +2014,7 @@ describe("NKF consumer adopter", () => {
     const current = runAdopt(project, ["--archive", archivePath]);
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
-  }, 80_000);
+  }, scaledTimeout(80_000));
 
   it("installs and validates an already structured Product repository", async () => {
     const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"));

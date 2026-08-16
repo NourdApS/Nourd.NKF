@@ -1,4 +1,5 @@
 import { cp, mkdtemp } from "node:fs/promises";
+import { readdirSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -43,4 +44,33 @@ export function options(
     executionId: () => "00000000-0000-4000-8000-000000000001",
     ...overrides,
   };
+}
+
+// Knowledge-proportional test bounds: heavy suites exercise the complete
+// producer knowledge graph, so their budgets scale with the governed source
+// count instead of a hardware guess. NKF_TEST_TIME_SCALE still multiplies on
+// top for slow hosts.
+function governedSourceCount(knowledgeRootParent: string): number {
+  let count = 0;
+  const walk = (directory: string) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (entry.isDirectory()) walk(path.join(directory, entry.name));
+      else if (entry.name.endsWith(".md")) count += 1;
+    }
+  };
+  try {
+    walk(path.join(knowledgeRootParent, "knowledge"));
+  } catch {
+    count = 300;
+  }
+  return count;
+}
+
+export const timeoutScale = Math.max(
+  1,
+  Math.ceil(governedSourceCount(repositoryRoot) / 150),
+) * Number(process.env.NKF_TEST_TIME_SCALE ?? "1");
+
+export function scaledTimeout(base: number): number {
+  return base * timeoutScale;
 }
