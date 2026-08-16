@@ -2842,7 +2842,7 @@ async function onboard(options) {
     preserved_paths: knowledge.preserved_documents,
   };
   files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  const candidate = await prepare0_5Candidate(
+  const candidate = await prepare0_7Candidate(
     projectRoot,
     files,
     options.review,
@@ -4573,23 +4573,29 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
     const bundlePath = path.join(candidate, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
     const knowledgeRoot = bundle.knowledge_root;
-    const neutralization = await neutralizeStatePaths(candidate, knowledgeRoot);
-    const migratedBundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
-    migratedBundle.nkf_version = "0.7";
-    if (migratedBundle.knowledge_graph?.policy !== undefined) {
-      migratedBundle.knowledge_graph.policy = "nkf.freshness-policy.0.7";
+    const onboarding = bundle.nkf_version === "0.7";
+    const neutralization = onboarding
+      ? { moves: 0, removed: 0 }
+      : await neutralizeStatePaths(candidate, knowledgeRoot);
+    if (!onboarding) {
+      const migratedBundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      migratedBundle.nkf_version = "0.7";
+      if (migratedBundle.knowledge_graph?.policy !== undefined) {
+        migratedBundle.knowledge_graph.policy = "nkf.freshness-policy.0.7";
+      }
+      await writeFile(bundlePath, YAML.stringify(migratedBundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+      const policyBytes = verification.entries.get("contracts/nkf/0.7/freshness-policy.yaml");
+      if (!Buffer.isBuffer(policyBytes)) fail("The verified NKF 0.7 archive omits the accepted evaluation policy.");
+      await convertBaselineShape0_7({
+        projectRoot: candidate,
+        versionDeltaDigest: digest(versionDeltaBytes),
+        policyDigest: digest(policyBytes),
+      });
     }
-    await writeFile(bundlePath, YAML.stringify(migratedBundle, { lineWidth: 0, aliasDuplicateObjects: false }));
-    const policyBytes = verification.entries.get("contracts/nkf/0.7/freshness-policy.yaml");
-    if (!Buffer.isBuffer(policyBytes)) fail("The verified NKF 0.7 archive omits the accepted evaluation policy.");
-    await convertBaselineShape0_7({
-      projectRoot: candidate,
-      versionDeltaDigest: digest(versionDeltaBytes),
-      policyDigest: digest(policyBytes),
-    });
+    const reviewStage = onboarding ? "whole-root" : "delta";
     const checker = await verified0_5Checker(temporary, verification);
     if (reviewStat === null) {
-      const template = await writeReviewTemplate0_7({ projectRoot: candidate, checker, reviewPath: review, stage: "delta" });
+      const template = await writeReviewTemplate0_7({ projectRoot: candidate, checker, reviewPath: review, stage: reviewStage });
       throw new OnboardingError(
         "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
         "Adopt created the exact migration review with carried judgments prefilled and stopped before project mutation. A named reviewer must complete the computed required set and rerun the same Adopt command.",

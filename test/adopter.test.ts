@@ -482,13 +482,13 @@ async function buildPredecessorRelease(
 }
 
 beforeAll(async () => {
-  const releaseSet = await readReleaseSet(repositoryRoot, "0.6");
-  const memberEntries = releaseEntriesForVersion("0.6", releaseSet);
+  const releaseSet = await readReleaseSet(repositoryRoot, "0.7");
+  const memberEntries = releaseEntriesForVersion("0.7", releaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
     entries,
-    nkfVersion: "0.6",
+    nkfVersion: "0.7",
     releaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
@@ -504,43 +504,19 @@ beforeAll(async () => {
     await readFile(path.join(repositoryRoot, "release/recommended.json"), "utf8"),
   );
   recommendation.contract = "nkf.recommended-release";
-  recommendation.nkf_version = "0.6";
+  recommendation.nkf_version = "0.7";
   recommendation.compatibility = [
     {
-      from_nkf_version: "0.1",
-      classification: "breaking",
-      migration_required: true,
-      summary: "NKF 0.1 requires explicit approved migration to NKF 0.6.",
-    },
-    {
-      from_nkf_version: "0.2",
-      classification: "breaking",
-      migration_required: true,
-      summary: "NKF 0.2 requires explicit approved migration to NKF 0.6.",
-    },
-    {
-      from_nkf_version: "0.3",
-      classification: "breaking",
-      migration_required: true,
-      summary: "NKF 0.3 requires explicit approved migration to NKF 0.6.",
-    },
-    {
-      from_nkf_version: "0.4",
-      classification: "breaking",
-      migration_required: true,
-      summary: "NKF 0.4 requires explicit approved migration to NKF 0.6.",
-    },
-    {
-      from_nkf_version: "0.5",
-      classification: "non-breaking",
-      migration_required: false,
-      summary: "NKF 0.5 refreshes the exact release and integration.",
-    },
-    {
       from_nkf_version: "0.6",
+      classification: "breaking",
+      migration_required: true,
+      summary: "NKF 0.6 requires explicit approved migration to NKF 0.7.",
+    },
+    {
+      from_nkf_version: "0.7",
       classification: "non-breaking",
       migration_required: false,
-      summary: "NKF 0.6 refreshes the exact release and integration.",
+      summary: "NKF 0.7 refreshes the exact release and integration.",
     },
   ];
   const { assetName, tag } = {
@@ -565,65 +541,8 @@ beforeAll(async () => {
   recommendationPath = path.join(directory, "recommended.json");
   await writeFile(recommendationPath, `${JSON.stringify(recommendation, null, 2)}\n`);
 
-  const predecessorCommit = "53ae5217f68731d953f3bf616a578adeb033bb03";
-  const predecessorRoot = await mkdtemp(path.join(os.tmpdir(), "nkf-predecessor-source-"));
-  const archivedSource = spawnSync("git", ["archive", predecessorCommit], {
-    cwd: repositoryRoot,
-    encoding: null,
-    maxBuffer: 64 * 1024 * 1024,
-  });
-  if (archivedSource.status !== 0 || archivedSource.stdout === null) {
-    throw new Error(archivedSource.stderr?.toString() || "Cannot read predecessor source.");
-  }
-  const extracted = spawnSync("tar", ["-x", "-C", predecessorRoot], {
-    input: archivedSource.stdout,
-    encoding: null,
-    maxBuffer: 64 * 1024 * 1024,
-  });
-  if (extracted.status !== 0) throw new Error(extracted.stderr?.toString() || "Cannot extract predecessor source.");
-  predecessorAdopter = path.join(predecessorRoot, "dist/nourd-nkf-adopt.mjs");
-  buildHistoricalDistribution(predecessorRoot);
-  expect(sha256(await readFile(predecessorAdopter))).toBe(
-    "c33766982d3354a01558bf1f0903314eb98537e38c50585c9cd94c7c24aae387",
-  );
-  const predecessorEntries = new Map<string, Buffer>();
-  for (const entry of releaseEntriesForVersion("0.1")) {
-    if (entry.path === "release-manifest.json") continue;
-    predecessorEntries.set(entry.path, await readFile(path.join(predecessorRoot, entry.path)));
-  }
-  const predecessorDecisionPath = "knowledge/decisions/0065-confirm-current-release-bound-checker.md";
-  const predecessorManifest = constructReleaseManifest({
-    releaseCommit: predecessorCommit,
-    checkerConfirmation: {
-      decision: "ADR-0065",
-      path: predecessorDecisionPath,
-      bytes: await readFile(path.join(predecessorRoot, predecessorDecisionPath)),
-      checkerSourceCommit: "57b3410dfccd8ff4f5c7b7995a32cab18c32e7fc",
-    },
-    entries: predecessorEntries,
-    nkfVersion: "0.1",
-  });
-  predecessorEntries.set("release-manifest.json", serializeReleaseManifest(predecessorManifest));
-  const predecessorArchive = createUstar(predecessorEntries, releaseEntriesForVersion("0.1"));
-  predecessorArchiveSha256 = sha256(predecessorArchive);
-  predecessorArchivePath = path.join(predecessorRoot, `nourd-nkf-sha256-${predecessorArchiveSha256}.tar`);
-  await writeFile(predecessorArchivePath, predecessorArchive);
-
-  const predecessor13 = await buildPredecessorRelease(
-    "b50493ddb42c87ed426eeb3bb11d3568652d8130",
-    "7533a029053beaccd8f6fec939c2198c5909fd8b5a37a4ba9b5bc0c205bbc7c8",
-  );
-  predecessor13Adopter = predecessor13.adopterPath;
-  predecessor13ArchivePath = predecessor13.archivePath;
-  predecessor13ArchiveSha256 = predecessor13.archiveSha256;
-
-  const lastZeroOne = await buildPredecessorRelease(
-    "aca9bade923b529fb3e60f781c6dcfcbdb46e001",
-    null,
-  );
-  repairAdopter = lastZeroOne.adopterPath;
-  repairArchivePath = lastZeroOne.archivePath;
-  repairArchiveSha256 = lastZeroOne.archiveSha256;
+  // Historical predecessor releases left the live window; out-of-window
+  // behavior is asserted through the stepping-stone refusal instead.
 }, 480_000);
 
 describe("NKF consumer adopter", () => {
