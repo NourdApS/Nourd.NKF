@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 9b90636d6d2f5b42e1cc07ad17df31e598b28bc9f3a259ecd2577e784198b35c
+  value: a3855f2a721392d3392806c625537b291cd8db3fec5a5f0b4b69c06c5695537a
 policy:
   id: nkf.freshness-policy.0.6
   digest:
@@ -1648,7 +1648,7 @@ node_revisions:
       id: document-nkf-0-7-specification
     revision:
       algorithm: sha-256
-      value: e8db87e6cbe2b8dbc06ade3d3ea2c3e42ca7c8360b4e7ce697a2f2271d4a5948
+      value: 58b84995eeb31e3c48dc648173ad38198a13df16207fcdc171d47e6b51de4d5d
   - node:
       kind: record
       id: nkf
@@ -18113,38 +18113,21 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-14T21:55:09.000Z
+  reviewed_at: 2026-08-16T14:04:27.000Z
   claim: semantically-reviewed-whole-root
   observations:
-    - id: nkf-0-7-candidate-authority-authored
+    - id: window-cut-implementation-in-progress
       subject:
-        kind: document
-        id: document-nkf-0-7-specification
+        kind: record
+        id: nkf-portable-knowledge-topology
       basis:
         node:
-          kind: document
-          id: document-nkf-0-7-specification
+          kind: record
+          id: nkf-portable-knowledge-topology
         source:
-          heading:
-            heading_path:
-              - NKF 0.7 — Product And Technology Knowledge Format
-            occurrence: 1
-      finding: "The candidate NKF 0.7 normative Specification was derived from the immutable 0.6 revision 3 predecessor under the adopted ADR 0126 direction and is represented as non-authoritative candidate Evidence at its exact future canonical path, as the prepublication sequence requires. Its executable companion, evaluation policy, and seeded-and-judged version-delta declaration are carried as prospective repository sources outside the knowledge root. Nothing is accepted: the candidate carries placeholder authority digests, the delta declaration classifications await the independent authority audit, and only a later acceptance Decision can bind exact bytes."
-    - id: task-design-and-evidence-figures-corrected
-      subject:
-        kind: document
-        id: NKF-028
-      basis:
-        node:
-          kind: document
-          id: NKF-028
-        source:
-          heading:
-            heading_path:
-              - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
-            occurrence: 1
-      finding: The predecessor rule-registry size stated in the owning Task, the adopted Design, and the assessment Evidence was corrected from 503 to the parsed-registry figure of 194 after the deterministic version-delta seed exposed the earlier unbounded-scan measurement error; the Evidence records the correction explicitly. The seeded declaration classifies 185 rules identical and 28 semantically-new, including the reviewer's deliberate downgrade of nine registry-identical rules whose 0.7 meaning changed. No other Task, Design, or Evidence meaning changed.
+          section: durable-mapping
+      finding: Under the adopted ADR 0126 support-window direction, the live 0.2-through-0.5 contract sets, fixtures, and migration tooling were removed from the working tree and the governed fixture artifacts were rebound from the deleted minimal-0-2 exemplar to the new native minimal-0-7 exemplar, which passes full-bundle conformance and whole-root readiness under the drafted 0.7 authority. Published predecessor archives remain the immutable authority for every removed version. This is Task-branch implementation state toward the 0.7 candidate; no 0.7 authority is accepted and no release exists.
   limitations:
-    - This is a delta re-affirmation of the previously sealed review. Only the new candidate 0.7 Specification Evidence, the corrected registry figures in the owning Task, adopted Design, and assessment Evidence, and their declarations were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
-    - The review covers knowledge semantics only. It accepts no record, accepts no candidate authority, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
+    - This is a delta re-affirmation of the previously sealed review. Only the rebound governed fixture artifacts of the portable-knowledge-topology Realization and the owning Task's implementation state were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
+    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
   disputed: false
