@@ -60,6 +60,7 @@ export interface ContractArtifacts {
     specification: ArtifactBinding;
     executable: ArtifactBinding;
     freshness_policy?: ArtifactBinding;
+    version_delta?: ArtifactBinding;
     schemas: SchemaBinding[];
   };
   extensions: Array<{

@@ -3657,13 +3657,15 @@ validation_result:
     fields:
       core:
         closed: true
-        required_fields: [specification, executable, freshness_policy, schemas]
+        required_fields: [specification, executable, freshness_policy, version_delta, schemas]
         fields:
           specification:
             ref: validation_result.artifact_binding
           executable:
             ref: validation_result.artifact_binding
           freshness_policy:
+            ref: validation_result.artifact_binding
+          version_delta:
             ref: validation_result.artifact_binding
           schemas:
             type: array

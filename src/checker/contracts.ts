@@ -86,6 +86,13 @@ export async function loadContracts(
   const freshnessPolicyBinding = bindings.freshnessPolicy === undefined
     ? undefined
     : binding(bindings.freshnessPolicy.sha256, freshnessPolicyRead?.observed ?? null);
+  const versionDeltaPath = bindings.versionDelta === undefined
+    ? null
+    : path.join(repositoryRoot, bindings.versionDelta.path);
+  const versionDeltaRead = versionDeltaPath === null ? null : await readArtifact(versionDeltaPath);
+  const versionDeltaBinding = bindings.versionDelta === undefined
+    ? undefined
+    : binding(bindings.versionDelta.sha256, versionDeltaRead?.observed ?? null);
 
   if (specificationBinding.binding !== "verified" || executableBinding.binding !== "verified") {
     const unavailable =
@@ -96,6 +103,17 @@ export async function loadContracts(
         unavailable
           ? `The accepted NKF ${nkfVersion} authority pair is unavailable.`
           : `The observed NKF ${nkfVersion} authority pair does not match its accepted digests.`,
+      ),
+    );
+  }
+  if (versionDeltaBinding !== undefined && versionDeltaBinding.binding !== "verified") {
+    diagnostics.push(
+      contractDiagnostic(
+        versionDeltaBinding.binding === "unavailable" ? "version-delta.unavailable" : "version-delta.binding-mismatch",
+        versionDeltaBinding.binding === "unavailable"
+          ? "The accepted version-delta declaration is unavailable."
+          : "The version-delta declaration does not match its accepted digest.",
+        bindings.versionDelta?.path,
       ),
     );
   }
@@ -255,6 +273,7 @@ export async function loadContracts(
       specification: specificationBinding,
       executable: executableBinding,
       ...(freshnessPolicyBinding === undefined ? {} : { freshness_policy: freshnessPolicyBinding }),
+      ...(versionDeltaBinding === undefined ? {} : { version_delta: versionDeltaBinding }),
       schemas: schemaBindings,
     },
     extensions: [],

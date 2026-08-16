@@ -81,7 +81,7 @@ interface ParsedNonRecord {
   markdown?: MarkdownModel;
 }
 
-type ModernNkfVersion = "0.5" | "0.6";
+type ModernNkfVersion = "0.5" | "0.6" | "0.7";
 const isModernNkfVersion = (version: SupportedNkfVersion): version is ModernNkfVersion =>
   version === "0.5" || version === "0.6";
 
@@ -1986,6 +1986,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       executable: loaded.executable,
       policy: loaded.freshnessPolicy,
       policyBinding: loaded.artifacts.core.freshness_policy,
+      versionDeltaDigest: loaded.artifacts.core.version_delta?.expected_sha256 ?? null,
       baseline: graphBaseline,
       baselinePresent: graphBaselinePresent,
       request: {

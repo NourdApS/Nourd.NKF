@@ -178,7 +178,11 @@ async function freshnessPolicySchema() {
 }
 
 async function validationResultSchema() {
-  return readBase("validation-result.schema.json");
+  const schema = await readBase("validation-result.schema.json");
+  const core = schema.$defs.coreArtifacts;
+  core.required.splice(core.required.indexOf("schemas"), 0, "version_delta");
+  core.properties.version_delta = { $ref: "#/$defs/artifactBinding" };
+  return schema;
 }
 
 async function releaseManifestSchema() {

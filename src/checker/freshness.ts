@@ -37,7 +37,7 @@ interface NormalizedEdge {
 export interface KnowledgeGraphResult {
   summary: {
     policy: {
-      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6";
+      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7";
       digest: DigestValue;
       binding: "verified" | "unavailable" | "mismatched";
     };
@@ -462,8 +462,80 @@ function detectedCycles(edges: NormalizedEdge[]): Array<Record<string, unknown>>
   return [...cycles.values()].sort((left, right) => utf16Compare(jcs(left), jcs(right)));
 }
 
+function verifyDigestBoundBaseline(
+  baseline: Record<string, any>,
+  nodeRevisions: NodeRevision[],
+  recordById: Map<string, RecordUnit>,
+  emitter: RuleEmitter,
+  versionDeltaDigest: string | null,
+  bundle: Record<string, any>,
+): "confirmed" | "outdated" | "unsupported" {
+  const artifact = String(bundle.knowledge_graph?.baseline);
+  // The accepted version-delta declaration is digest-bound into the baseline.
+  if (versionDeltaDigest === null || baseline.version_delta?.digest?.value !== versionDeltaDigest) {
+    emitter.emit("version-delta.binding-mismatch", "The baseline does not bind the exact accepted version-delta declaration.", { artifact });
+    return "unsupported";
+  }
+  const revisionByNode = new Map(nodeRevisions.map((entry) => [nodeKey(entry.node), entry.revision.value]));
+  let stale = false;
+  const verifyProvenance = (entry: Record<string, any>, label: string): boolean => {
+    const provenance = asObject(entry.provenance);
+    const performed = provenance?.performed === true && provenance.carried === undefined;
+    const carried = asObject(provenance?.carried);
+    const carriedValid = carried !== null
+      && typeof carried.performed_in_graph_revision?.value === "string"
+      && typeof carried.performing_reviewer?.id === "string";
+    if (!performed && !carriedValid) {
+      emitter.emit("freshness.baseline.provenance-invalid", `A ${label} judgment carries no valid performed or carried provenance.`, { artifact });
+      return false;
+    }
+    return true;
+  };
+  for (const entry of values<Record<string, any>>(baseline.applicability_coverage)) {
+    if (!verifyProvenance(entry, "node applicability")) return "unsupported";
+    const current = revisionByNode.get(nodeKey(entry.node as NodeReference));
+    if (entry.revision?.value !== current) stale = true;
+  }
+  for (const entry of values<Record<string, any>>(baseline.decision_classifications)) {
+    if (!verifyProvenance(entry, "Decision classification")) return "unsupported";
+    const record = recordById.get(String(entry.decision));
+    const declared = record === null || record === undefined ? undefined : sha256(Buffer.from(jcs(normalizedProjection(record.declaration)), "utf8"));
+    if (entry.decision_digest?.value !== declared) stale = true;
+  }
+  if (stale) {
+    emitter.emit("freshness.baseline.judgment-digest-mismatch", "A baseline judgment binds a node revision or Decision digest that no longer matches the candidate.", { artifact });
+    return "outdated";
+  }
+  const confirmation = asObject(baseline.confirmation) ?? {};
+  if (confirmation.claim === "semantically-reviewed-delta") {
+    const performedSet = new Set(values<NodeReference>(confirmation.performed_set).map(nodeKey));
+    const closure = values<NodeReference>(confirmation.computed_closure).map(nodeKey);
+    const markedPerformed = new Set(
+      values<Record<string, any>>(baseline.applicability_coverage)
+        .filter((entry) => asObject(entry.provenance)?.performed === true)
+        .map((entry) => nodeKey(entry.node as NodeReference)),
+    );
+    for (const key of performedSet) {
+      if (!markedPerformed.has(key)) {
+        emitter.emit("freshness.claim.computed-closure-mismatch", "The delta claim performed set disagrees with the judgment provenance markers.", { artifact });
+        return "unsupported";
+      }
+    }
+    const missing = closure.filter((key) => !performedSet.has(key));
+    if (missing.length > 0) {
+      emitter.emit("freshness.claim.delta-closure-not-contained", `The delta claim performed set does not contain the computed closure: ${missing.slice(0, 5).join(", ")}${missing.length > 5 ? ", …" : ""}.`, { artifact });
+      return "unsupported";
+    }
+  }
+  const pending = values<Record<string, any>>(baseline.promotion_reconciliation).filter((entry) => entry.state === "pending");
+  for (const entry of pending) {
+    emitter.emit("freshness.reconciliation.pending", `A promotion-reconciliation entry is pending for ${nodeKey(entry.node as NodeReference)}.`, { artifact });
+  }
+  return "confirmed";
+}
+
 export function evaluateKnowledgeGraph(args: {
-  nkfVersion: "0.5" | "0.6";
+  nkfVersion: "0.5" | "0.6" | "0.7";
   bundle: Record<string, any>;
   records: RecordUnit[];
   documents: DocumentUnit[];
@@ -476,6 +548,7 @@ export function evaluateKnowledgeGraph(args: {
   diagnostics: Diagnostic[];
   emitter: RuleEmitter;
   selectedReceipt?: Record<string, any> | null;
+  versionDeltaDigest?: string | null;
 }): KnowledgeGraphResult {
   const { nkfVersion, bundle, records, documents, executable, policy, policyBinding, baseline, request, diagnostics, emitter } = args;
   const policyId = `nkf.freshness-policy.${nkfVersion}` as const;
@@ -621,6 +694,9 @@ export function evaluateKnowledgeGraph(args: {
       baselineState = completenessState(baseline, nodeRevisions, edges, relationshipNames, decisions);
       if (baselineState === "confirmed" && baseline.graph_revision?.value !== candidateRevision.value) baselineState = "outdated";
       if (baseline.confirmation?.disputed === true) baselineState = "disputed";
+      if (nkfVersion === "0.7" && baselineState === "confirmed") {
+        baselineState = verifyDigestBoundBaseline(baseline, nodeRevisions, recordById, emitter, args.versionDeltaDigest ?? null, bundle);
+      }
     }
   }
 
