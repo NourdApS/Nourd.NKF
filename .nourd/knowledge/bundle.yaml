@@ -1773,6 +1773,15 @@ non_records:
         algorithm: sha-256
         value: afd411e37976f7543ef132a48ccebe5a948dcae7f7377295a09d860c8ab7fc84
       relationships: []
+  - path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-0-7-independent-authority-audit
+      stable_path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
+      digest:
+        algorithm: sha-256
+        value: 8e23de762f31217e5814a9a0229e97c8b0f63f335c93c1e2566f5b6ba9e5c06c
+      relationships: []
 canonical_terms:
   - ADR
   - AI
