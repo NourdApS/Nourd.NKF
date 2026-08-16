@@ -19,6 +19,8 @@ const markdownDigest = await digest("knowledge/specifications/nkf-0.7.md");
 const yamlPath = path.join(root, "contracts/nkf/0.7/nkf.yaml");
 let yaml = await readFile(yamlPath, "utf8");
 yaml = yaml.replace(/(markdown_digest:\n    algorithm: sha-256\n    value: )\S+/, `$1${markdownDigest}`);
+yaml = yaml.replace(/(freshness_policy_digest:\n    algorithm: sha-256\n    value: )\S+/, `$1${await digest("contracts/nkf/0.7/freshness-policy.yaml")}`);
+yaml = yaml.replace(/(version_delta_digest:\n    algorithm: sha-256\n    value: )\S+/, `$1${await digest("contracts/nkf/0.7/version-delta.yaml")}`);
 await writeFile(yamlPath, yaml);
 
 // 2. Regenerate the schemas so x-nkf-source binds both exact digests.

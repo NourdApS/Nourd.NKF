@@ -94,9 +94,9 @@ community-conduct policies remain separate matters.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.5 Specification](knowledge/specifications/nkf-0.5-revision-2.md) |
-| Inspect the executable companion | [NKF 0.5 YAML Contract](contracts/nkf/0.5/revision-2/nkf.yaml) |
-| Inspect the closed structural contracts | [NKF 0.5 Schemas](contracts/nkf/0.5/schemas/) |
+| Read the normative format | [NKF 0.6 Specification](knowledge/specifications/nkf-0.6-revision-3.md) |
+| Inspect the executable companion | [NKF 0.6 YAML Contract](contracts/nkf/0.6/revision-3/nkf.yaml) |
+| Inspect the closed structural contracts | [NKF 0.6 Schemas](contracts/nkf/0.6/schemas/) |
 | Adopt a released version | [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |

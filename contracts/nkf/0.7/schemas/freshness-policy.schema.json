@@ -7,12 +7,12 @@
     "markdown_path": "knowledge/specifications/nkf-0.7.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "4a939020db1bcc084363025f9fd3ddbcb190a9aad82709181f71eb62cc3559fa"
+      "value": "5fb91a603982de9741400a95809d359b79aa2883d08d7b4e36d150c9ff204ef0"
     },
     "executable_path": "contracts/nkf/0.7/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "6573e1cb1be3e6009708ce4f2a6c4ce2a2b87f6f8c673c431dc80655a6dd96b3"
+      "value": "936c1795fe2facc83cb4c80c82d37fa6622293b24b4e10a70174baf56f86fe9a"
     }
   },
   "type": "object",
@@ -211,6 +211,7 @@
         "node_applicability": {
           "type": "array",
           "minItems": 1,
+          "uniqueItems": true,
           "items": {
             "type": "string",
             "minLength": 1
@@ -219,6 +220,7 @@
         "relationship_review": {
           "type": "array",
           "minItems": 1,
+          "uniqueItems": true,
           "items": {
             "type": "string",
             "minLength": 1
@@ -227,6 +229,7 @@
         "decision_classification": {
           "type": "array",
           "minItems": 1,
+          "uniqueItems": true,
           "items": {
             "type": "string",
             "minLength": 1

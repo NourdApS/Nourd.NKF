@@ -947,8 +947,8 @@ review. Before the migrated candidate may be sealed or applied, the required
 fresh-review set computed by the delta rules — or the whole root, when
 completeness is missing or disputed — is reviewed by a named human or agent
 who supplies exact review evidence, and the baseline is sealed from it.
-Missing, outdated, disputed, or ambiguous baseline evidence produces
-`unknown` and blocks adoption. The repository-owner breaking approval and the
+Missing, outdated, disputed, ambiguous, coverage-incomplete, or otherwise
+unsupported baseline evidence produces `unknown` and blocks adoption. The repository-owner breaking approval and the
 semantic reviewer may be different actors; neither act implies acceptance of
 canonical Product or Technology meaning. The updater never invents, carries,
 or discards a judgment outside the computed rules.

@@ -187,7 +187,7 @@ async function freshnessPolicySchema() {
   const schema = await readBase("freshness-policy.schema.json");
   // The policy declares the closed judgment dependency function the delta
   // carry precondition and closure computation consume.
-  const ruleList = { type: "array", minItems: 1, items: { type: "string", minLength: 1 } };
+  const ruleList = { type: "array", minItems: 1, uniqueItems: true, items: { type: "string", minLength: 1 } };
   schema.required.splice(schema.required.indexOf("mappings"), 0, "judgment_dependencies");
   schema.properties.judgment_dependencies = object(
     ["node_applicability", "relationship_review", "decision_classification"],
@@ -207,7 +207,7 @@ function withCoverageIncompleteState(node) {
   if (node === null || typeof node !== "object") return node;
   const enumeration = node.properties?.baseline_state?.enum;
   if (Array.isArray(enumeration) && enumeration.includes("ambiguous") && !enumeration.includes("coverage-incomplete")) {
-    enumeration.splice(enumeration.indexOf("unsupported") + 1, 0, "coverage-incomplete");
+    enumeration.splice(enumeration.indexOf("unsupported"), 0, "coverage-incomplete");
   }
   Object.values(node).forEach(withCoverageIncompleteState);
   return node;
