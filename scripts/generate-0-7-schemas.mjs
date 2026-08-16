@@ -107,7 +107,14 @@ async function bundleSchema() {
   notDocument.if.properties.kind.enum = ["generated", "redirect", "provenance-attachment"];
   nonRecord.allOf.push({
     if: { properties: { kind: { not: { const: "provenance-attachment" } } }, required: ["kind"] },
-    then: { not: { anyOf: [{ required: ["selection"] }, { required: ["digest"] }] } },
+    then: {
+      not: {
+        anyOf: [
+          { properties: { selection: true }, required: ["selection"] },
+          { properties: { digest: true }, required: ["digest"] },
+        ],
+      },
+    },
   });
   const document = schema.$defs.document;
   document.properties.identity_succession = identitySuccession;
@@ -162,7 +169,10 @@ async function graphBaselineSchema() {
   confirmation.allOf = [
     {
       if: { properties: { claim: { const: "semantically-reviewed-delta" } }, required: ["claim"] },
-      then: { required: ["computed_closure", "performed_set"] },
+      then: {
+        properties: { computed_closure: structuredClone(nodeSet), performed_set: structuredClone(nodeSet) },
+        required: ["computed_closure", "performed_set"],
+      },
       else: { not: { anyOf: [{ required: ["computed_closure"] }, { required: ["performed_set"] }] } },
     },
   ];

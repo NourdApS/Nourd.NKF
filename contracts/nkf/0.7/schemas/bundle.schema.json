@@ -735,11 +735,17 @@
             "not": {
               "anyOf": [
                 {
+                  "properties": {
+                    "selection": true
+                  },
                   "required": [
                     "selection"
                   ]
                 },
                 {
+                  "properties": {
+                    "digest": true
+                  },
                   "required": [
                     "digest"
                   ]

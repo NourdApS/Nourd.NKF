@@ -181,9 +181,9 @@ export const VERSION_BINDINGS = {
       sha256: "595afe8d5517f005644807e4cfa2cca9c45ceca0cc895b3de10bd0e333af9eab",
     },
     schemas: [
-      { identity: "urn:nkf:0.7:schema:bundle", file: "bundle.schema.json", sha256: "afd6ddc442fd9ef595a57ec215d8bbc0a45c06b9b682cda7fa592a18f42079bf" },
+      { identity: "urn:nkf:0.7:schema:bundle", file: "bundle.schema.json", sha256: "8c20d5939de375079ba46ddb1f22b3d87776d7dadf0258a7be9aa2cb54048e51" },
       { identity: "urn:nkf:0.7:schema:record", file: "record.schema.json", sha256: "df0a41a2701a86f14f9388c60c7746d4629f194bc00a0f9f3ffe445f02fd00ad" },
-      { identity: "urn:nkf:0.7:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "de11b5fa111568f8f1eab55d173f59190567f6bf62fa218e4b869defa77824ba" },
+      { identity: "urn:nkf:0.7:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "f7e46109bdb9eec38d3760dc37905c557069c86cfa4d96b960c8060241e1aa52" },
       { identity: "urn:nkf:0.7:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "991f4f6245879ace41f3574cedfe71727eb9abe656a547a74afe4324a786712e" },
       { identity: "urn:nkf:0.7:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "90d28addd8d1828c53a334e88d8c9468cf68f92842fabe25155bac54308214c5" },
       { identity: "urn:nkf:0.7:schema:validation-result", file: "validation-result.schema.json", sha256: "53acad76519827fe780a72eed68c1dd34f89a1bca7c8c2cd892f6e5ec5f49409" },

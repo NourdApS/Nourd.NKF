@@ -83,7 +83,7 @@ interface ParsedNonRecord {
 
 type ModernNkfVersion = "0.5" | "0.6" | "0.7";
 const isModernNkfVersion = (version: SupportedNkfVersion): version is ModernNkfVersion =>
-  version === "0.5" || version === "0.6";
+  version === "0.5" || version === "0.6" || version === "0.7";
 
 export class ProjectNotInitializedError extends Error {
   readonly code = "NKF_PROJECT_NOT_INITIALIZED";
