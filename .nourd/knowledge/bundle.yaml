@@ -2757,7 +2757,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: 463b0fac9270fe170fb61f14944b6bb3b36f60078cad159ee6e5fd4697e0109b
+      value: "616e494b6a3c6424cf3f4566934110aa8794fa30199f451bbff4ee2b72d1c989"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -2861,7 +2861,7 @@ governed_artifacts:
     path: src/checker/types.ts
     digest:
       algorithm: sha-256
-      value: 36eed903d2c109a204ed4b0c982f2e50e194c779c2d568669999f124219b7922
+      value: "0490b9bdfa3647b04e33f2d7dbdee63e50b3ef757cf1d61ab5fda49d8e3cbade"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-src-checker-util-ts
