@@ -222,7 +222,7 @@ rules:
   knowledge.markdown.unrepresented:
     classification: identical
   knowledge.path.stability.invalid:
-    classification: identical
+    classification: semantically-new
   knowledge.root.inside-nourd:
     classification: identical
   knowledge.root.invalid:
@@ -276,7 +276,7 @@ rules:
   markdown.h1-count.invalid:
     classification: identical
   markdown.reference.deep-link.required:
-    classification: identical
+    classification: semantically-new
   markdown.utf8.invalid:
     classification: identical
   non-record.conflict:

@@ -9,7 +9,7 @@ authority:
   version_delta_path: contracts/nkf/0.7/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 872338ec36143262afe62f87e13eade079a1bcd8e4e7ee951d2c48b4fd10063e
+    value: 4a939020db1bcc084363025f9fd3ddbcb190a9aad82709181f71eb62cc3559fa
   freshness_policy_digest:
     algorithm: sha-256
     value: 9d7ff664a0a0ce788a096f32e1cd74197c10a48523286ea58f04c4c9496077d4
@@ -1148,6 +1148,7 @@ portable_topology:
         - basis-digest-unchanged
         - every-depended-rule-identical
         - decision-declaration-digest-unchanged-for-decision-classifications
+      depended_rules: policy-declared-judgment-dependencies-by-judgment-kind
       reviewer_asserted_carry: forbidden
       required_fresh_review: computed-closure
     out_of_window_predecessor:
@@ -2632,7 +2633,7 @@ freshness:
       participation_roles: [governs, proposes, realizes, evidences, context, history]
       source_bound_basis: required
     semantic_completeness_from_checker: false
-    invalid_states: [missing, outdated, disputed, ambiguous, unsupported]
+    invalid_states: [missing, outdated, disputed, ambiguous, coverage-incomplete, unsupported]
     invalid_result: unknown
     recovery: whole-root-semantic-review
     excluded_from_graph_revision: true
@@ -2732,6 +2733,7 @@ freshness:
       - basis-digest-unchanged
       - every-depended-rule-identical-under-accepted-version-delta-declaration
       - decision-declaration-digest-unchanged-for-decision-classifications
+    depended_rules: policy-declared-judgment-dependencies-by-judgment-kind
     computed_by: tool-only
     reviewer_asserted_carry: forbidden
     failed_precondition: refuse
@@ -2801,7 +2803,7 @@ freshness:
       changed_inputs: {type: array, unique_items: true, order: stable-input-reference-order, items: {ref: freshness.changed_input}}
       targets: {type: array, unique_items: true, order: stable-node-reference-order, items: {ref: common.node_reference}}
       observations: {type: array, unique_by: id, order: id-rfc8785-unsigned-utf16, items: {ref: freshness.observation}}
-      baseline_state: {enum: [confirmed, missing, outdated, disputed, ambiguous, unsupported, not-evaluated]}
+      baseline_state: {enum: [confirmed, missing, outdated, disputed, ambiguous, coverage-incomplete, unsupported, not-evaluated]}
       evaluation_time: {ref: common.utc_millisecond_timestamp}
       historical_receipt: {type: string, pattern: "^freshness-[0-9a-f]{64}$"}
     constraints:
@@ -3804,7 +3806,7 @@ validation_result:
           binding: {enum: [verified, unavailable, mismatched]}
       candidate_graph_revision: {type: [common.digest, "null"]}
       baseline_graph_revision: {type: [common.digest, "null"]}
-      baseline_state: {enum: [confirmed, missing, outdated, disputed, ambiguous, unsupported, not-evaluated]}
+      baseline_state: {enum: [confirmed, missing, outdated, disputed, ambiguous, coverage-incomplete, unsupported, not-evaluated]}
       node_count: {type: integer, minimum: 0}
       authored_edge_count: {type: integer, minimum: 0}
       projection_counts:
@@ -4640,6 +4642,11 @@ release_distribution:
       substitutes_for_archive_digest: false
 
 compatibility:
+  accepted_identity_successions:
+    - predecessor_id: nkf-0.1-native-realization
+      successor_id: nkf-current-system
+      subject: exact-nkf-producer-repository-only
+      recorded_by: repository-owner
   supported_predecessors:
     - from_nkf_version: "0.6"
       to_nkf_version: "0.7"
@@ -4690,6 +4697,7 @@ compatibility:
         - basis-digest-unchanged
         - every-depended-rule-identical
         - decision-declaration-digest-unchanged-for-decision-classifications
+      depended_rules: policy-declared-judgment-dependencies-by-judgment-kind
       carried_judgment_records: [performed_in_graph_revision, performing_reviewer]
       reviewer_asserted_carry: forbidden
       required_fresh_review: computed-closure

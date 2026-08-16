@@ -20977,7 +20977,20 @@ function carriedProvenance(priorEntry, predecessorBaseline) {
     }
   };
 }
-async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage = "delta" }) {
+function carryAllowedByKind(versionDelta, policy) {
+  if (versionDelta === null || versionDelta === void 0) {
+    return { node_applicability: true, relationship_review: true, decision_classification: true };
+  }
+  const rules = versionDelta.rules ?? {};
+  const declared = policy?.judgment_dependencies ?? {};
+  const allIdentical = (list2) => (list2 ?? []).every((rule) => rules[rule]?.classification === "identical");
+  return {
+    node_applicability: allIdentical(declared.node_applicability),
+    relationship_review: allIdentical(declared.relationship_review),
+    decision_classification: allIdentical(declared.decision_classification)
+  };
+}
+async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage = "delta", versionDelta = null, policy = null }) {
   const project = await realpath2(path4.resolve(projectRoot));
   const checkerPath = path4.resolve(checker);
   const target = path4.resolve(reviewPath);
@@ -20995,6 +21008,7 @@ async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage 
     fail4("A delta review requires the predecessor reviewed baseline; whole-root review is the recovery path.");
   }
   const prior = priorJudgments(predecessorBaseline);
+  const carryByKind = carryAllowedByKind(versionDelta, policy);
   const basisFor = async (node) => {
     if (node.kind === "record" || node.kind === "entity") {
       const record = recordsById.get(node.kind === "record" ? node.id : node.record);
@@ -21014,7 +21028,7 @@ async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage 
   const fresh = [];
   for (const entry of result.nodes) {
     const priorEntry = prior.nodes.get(nodeKey07(entry.node));
-    const carriable = predecessorBaseline !== null && priorEntry !== void 0 && priorRevision(prior, priorEntry, entry.node) === entry.revision.value;
+    const carriable = predecessorBaseline !== null && carryByKind.node_applicability && priorEntry !== void 0 && priorRevision(prior, priorEntry, entry.node) === entry.revision.value;
     if (carriable) {
       carried += 1;
       nodes.push({
@@ -21048,7 +21062,7 @@ async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage 
       const priorEntry = prior.decisions.get(`${decision} ${purpose}`);
       const priorNodeEntry = prior.nodes.get(nodeKey07({ kind: "record", id: decision }));
       const nodeRevisionUnchanged = priorNodeEntry !== void 0 && priorRevision(prior, priorNodeEntry, { kind: "record", id: decision }) === currentRevisionByNode.get(nodeKey07({ kind: "record", id: decision }));
-      const carriable = predecessorBaseline !== null && priorEntry !== void 0 && (priorEntry.decision_digest?.value === digest2.value || nodeRevisionUnchanged);
+      const carriable = predecessorBaseline !== null && carryByKind.decision_classification && priorEntry !== void 0 && (priorEntry.decision_digest?.value === digest2.value || nodeRevisionUnchanged);
       if (carriable) {
         classifications.push({
           decision,
@@ -21075,7 +21089,7 @@ async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage 
   const pendingReconciliation = (predecessorBaseline?.promotion_reconciliation ?? []).filter((entry) => entry.state === "pending").map((entry) => entry.node);
   const closureKeys = new Set([...fresh, ...pendingReconciliation].map(nodeKey07));
   const computedClosure = result.nodes.map((entry) => entry.node).filter((node) => closureKeys.has(nodeKey07(node)));
-  const relationships = predecessorBaseline !== null ? predecessorBaseline.relationship_coverage : RELATIONSHIPS.map((relationship) => ({
+  const relationships = predecessorBaseline !== null && carryByKind.relationship_review ? predecessorBaseline.relationship_coverage : RELATIONSHIPS.map((relationship) => ({
     relationship,
     state: "REVIEW_REQUIRED",
     basis: {
@@ -25767,7 +25781,17 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
     const reviewStage = onboarding ? "whole-root" : "delta";
     const checker = await verified0_5Checker(temporary, verification);
     if (reviewStat === null) {
-      const template = await writeReviewTemplate0_7({ projectRoot: candidate, checker, reviewPath: review, stage: reviewStage });
+      const template = await writeReviewTemplate0_7({
+        projectRoot: candidate,
+        checker,
+        reviewPath: review,
+        stage: reviewStage,
+        versionDelta: onboarding ? null : import_yaml6.default.parse(versionDeltaBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true }),
+        policy: onboarding ? null : import_yaml6.default.parse(
+          verification.entries.get("contracts/nkf/0.7/freshness-policy.yaml").toString("utf8"),
+          { schema: "core", strict: true, uniqueKeys: true }
+        )
+      });
       throw new OnboardingError(
         "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
         "Adopt created the exact migration review with carried judgments prefilled and stopped before project mutation. A named reviewer must complete the computed required set and rerun the same Adopt command.",

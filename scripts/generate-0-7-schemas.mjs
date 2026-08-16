@@ -184,7 +184,20 @@ async function freshnessReceiptSchema() {
 }
 
 async function freshnessPolicySchema() {
-  return readBase("freshness-policy.schema.json");
+  const schema = await readBase("freshness-policy.schema.json");
+  // The policy declares the closed judgment dependency function the delta
+  // carry precondition and closure computation consume.
+  const ruleList = { type: "array", minItems: 1, items: { type: "string", minLength: 1 } };
+  schema.required.splice(schema.required.indexOf("mappings"), 0, "judgment_dependencies");
+  schema.properties.judgment_dependencies = object(
+    ["node_applicability", "relationship_review", "decision_classification"],
+    {
+      node_applicability: ruleList,
+      relationship_review: ruleList,
+      decision_classification: ruleList,
+    },
+  );
+  return schema;
 }
 
 // Incomplete judgment coverage is its own reportable baseline state under

@@ -4,12 +4,12 @@ bundle: example-technology
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 76de0df6ac080796f6a0b226473cde40737c2333b0877094de71fc6cf995a170
+  value: 6908fc7572a41281b2f0ce1085fb8950a59e67fcd37b9b77b32659f59c6be9bf
 policy:
   id: nkf.freshness-policy.0.7
   digest:
     algorithm: sha-256
-    value: 9d7ff664a0a0ce788a096f32e1cd74197c10a48523286ea58f04c4c9496077d4
+    value: 7bee48aac0fef1b1cc968efa25f2a6fb2205c77a0ec3fcf6c82ec17cdd5eeee0
 node_revisions:
   - node:
       kind: document
@@ -515,5 +515,5 @@ version_delta:
   contract: nkf.version-delta
   digest:
     algorithm: sha-256
-    value: 595afe8d5517f005644807e4cfa2cca9c45ceca0cc895b3de10bd0e333af9eab
+    value: dcc65c82512c73a204223a3bac990c951f44e995d5859426479042dbef8fcb37
 promotion_reconciliation: []

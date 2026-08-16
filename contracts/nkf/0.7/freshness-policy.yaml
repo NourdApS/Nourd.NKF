@@ -11,6 +11,23 @@ purposes:
   - whole-root-readiness
   - consequential-use
   - historical-reproduction
+judgment_dependencies:
+  node_applicability:
+    - task.applicability.missing
+    - task.applicability.structure.invalid
+    - task.applicability.value.unsupported
+    - task.applicability.reference.unresolved
+    - task.applicability.completion.blocked
+  relationship_review:
+    - graph.relationship.duplicate
+    - graph.relationship.inverse-authored
+    - graph.relationship.section-unresolved
+    - graph.relationship.authority-invalid
+    - graph.relationship.endpoint-invalid
+    - graph.relationship.cycle-invalid
+    - graph.relationship.policy-unsupported
+  decision_classification:
+    - freshness.decision.conflict
 hard_events:
   - exact-revision-binding-mismatch
   - governed-artifact-binding-mismatch

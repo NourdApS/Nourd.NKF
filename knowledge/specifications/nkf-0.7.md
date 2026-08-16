@@ -162,8 +162,10 @@ succession and stable-path migration declared by this revision, exactly once,
 transactionally, with complete rollback. A separate reviewer-completed
 `nkf.semantic-review-input` for the exact post-promotion candidate is
 required at execution time and produces the native 0.7 confirmed baseline.
-That review is the deliberate last whole-root review this lineage requires by
-construction: it seals the first fully digest-bound baseline, and every later
+Those stage reviews are the deliberate last whole-root reviews this lineage
+requires by construction — one for each authorized stage's exact
+post-promotion graph, the public stage's sealing the first fully digest-bound
+live baseline — and every later
 promotion in this lineage MUST be provable through the delta claim defined by
 this revision, with whole-root review remaining the recovery path. No
 ordinary consumer update can invoke this producer-only promotion. Validation,
@@ -424,7 +426,12 @@ attachments. Baseline conversion computes carry-forward per judgment: a
 judgment carries only when the judged node revision, its basis digest, and
 every rule it depends on are `identical` under the accepted 0.6-to-0.7
 version-delta declaration; everything else enters the required fresh-review
-set of the promotion review. The updater never invents, discards, or
+set of the promotion review. The rules a judgment depends on are not
+inferred: the accepted evaluation policy declares the closed
+`judgment_dependencies` lists — one list of registry rule identifiers for
+node-applicability judgments, one for relationship-category reviews, and one
+for Decision classifications — and the dependency function is exactly
+membership in the declaring judgment kind's list. The updater never invents, discards, or
 reinterprets semantic review; a repository whose 0.6 baseline is missing,
 outdated, disputed, ambiguous, or otherwise not ready is ineligible for
 migration until a separate governed 0.6 knowledge-maintenance operation
@@ -853,7 +860,12 @@ meaning untouched. Sources carrying a predecessor-only lock are moved without
 any byte rewrite — their locks bind exact predecessor bytes — and their
 historical links resolve through the closed legacy mapping defined by this
 neutralization instead of being retargeted. This is a deliberate governed migration act, not a
-lifecycle transition. After it, stable paths never move again: a lifecycle
+lifecycle transition. This revision declares exactly one accepted identity
+succession, applicable only to the exact NKF producer repository: the
+consolidated current-system Realization's living identifier
+`nkf-0.1-native-realization` is succeeded by the version-free identifier
+`nkf-current-system`, recorded with succession provenance in the same
+governed act. No consumer succession is declared by this revision. After it, stable paths never move again: a lifecycle
 transition changes only the declaration state and generated navigation and
 MUST NOT move or rewrite the canonical Markdown source. New Task, Design, and
 Realization sources use the neutral `tasks/items/`, `designs/items/`, and
@@ -1259,7 +1271,11 @@ document's exact source path after applying the closed legacy stable-path
 mapping of the 0.7 neutralization is not mistargeted; the reference remains
 correct historical fact. This historical resolution applies only to sources
 whose lock the checker has verified and is unavailable to new 0.7-native
-sources, which never carry these locks.
+sources, which never carry these locks. Because the closed mapping collapses
+sibling lifecycle directories into one neutral location, a locked link that
+historically named the wrong sibling lifecycle directory also resolves; this
+is a deliberate, narrowly confined consequence of preserving locked bytes and
+extends no further than checker-verified predecessor locks.
 
 Evidence bodies remain exempt from ordinary identity and deep-link scanning
 except that the one document carrying the exact
@@ -2090,9 +2106,12 @@ predecessor and current rule registries:
   only one registry is `semantically-new` unless an explicit `renamed_from`
   identity mapping binds it to a predecessor rule.
 
-A deterministic registry diff MAY seed the declaration; the named reviewer
-judges every non-identical classification, and acceptance of the authority
-pair accepts the declaration with it. The updater derives what it may do
+A deterministic registry diff MAY seed the declaration, but the seed
+compares only declared attributes and cannot detect a semantic change with
+unchanged attributes. The named reviewer therefore judges every non-identical
+classification, confirms every `identical` classification against the
+predecessor rule's governing prose rather than the seed diff alone, and
+acceptance of the authority pair accepts the declaration with it. The updater derives what it may do
 mechanically from this declaration alone and MUST refuse to act where the
 declaration is absent, incomplete, ambiguous, or unsupported. The declaration
 never classifies knowledge semantics; it classifies rules.
@@ -2103,7 +2122,9 @@ For a `semantically-reviewed-delta` claim the checker computes the required
 review closure deterministically from: every node whose revision differs from
 the predecessor baseline; every judgment whose basis digest differs; every
 node absent from the predecessor baseline; every judgment depending on a rule
-classified `semantically-new`; every Decision classification whose Decision
+classified `semantically-new`, with dependency meaning membership in the
+evaluation policy's closed `judgment_dependencies` list for the judgment's
+kind; every Decision classification whose Decision
 declaration digest differs or whose Decision is new; every node reached from
 those inputs by the evaluation policy's impact propagation; and every pending
 promotion-reconciliation subject. The closure computation is reproducible
@@ -3441,7 +3462,7 @@ warning is non-blocking.
 | `extension.required.contract-digest-mismatch` | error | conformance |
 | `extension.required.contract-identity-mismatch` | error | conformance |
 | `extension.required.unsupported` | error | conformance |
-| `extension.payload.invalid` | error | conformance when supported |
+| `extension.payload.invalid` | error | conformance |
 | `extension.core-conflict` | error | conformance |
 | `extension.optional.unvalidated` | warning | none |
 | `security.secret-pattern` | error | conformance |
@@ -3568,7 +3589,8 @@ result.
 
 `knowledge_graph` contains the exact policy binding, nullable candidate graph
 revision, nullable baseline graph revision, baseline state `confirmed`, `missing`,
-`outdated`, `disputed`, `ambiguous`, `unsupported`, or `not-evaluated`, node
+`outdated`, `disputed`, `ambiguous`, `coverage-incomplete`, `unsupported`, or
+`not-evaluated`, node
 and authored-edge counts, and
 projection counts. It contains no canonical Markdown or review prose.
 
@@ -4078,8 +4100,8 @@ The following remain deliberately unresolved in NKF 0.7:
   rights evidence, and public distribution policy;
 - an NKF extension registry and compatibility policy;
 - a future NKP runtime protocol;
-- standardized acceptance-event storage; and
-- attested-computation profiles;
+- standardized acceptance-event storage;
+- attested-computation profiles; and
 - the future optional presentation-guidance extension.
 
 These omissions MUST be visible to consumers. A profile MAY resolve one for

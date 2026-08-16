@@ -191,7 +191,25 @@ function carriedProvenance(priorEntry, predecessorBaseline) {
   };
 }
 
-export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage = "delta" }) {
+// The policy-declared judgment dependency function: a judgment kind carries
+// across a version delta only when every rule in its closed list is
+// classified identical. Within one version the lists are trivially identical.
+function carryAllowedByKind(versionDelta, policy) {
+  if (versionDelta === null || versionDelta === undefined) {
+    return { node_applicability: true, relationship_review: true, decision_classification: true };
+  }
+  const rules = versionDelta.rules ?? {};
+  const declared = policy?.judgment_dependencies ?? {};
+  const allIdentical = (list) =>
+    (list ?? []).every((rule) => rules[rule]?.classification === "identical");
+  return {
+    node_applicability: allIdentical(declared.node_applicability),
+    relationship_review: allIdentical(declared.relationship_review),
+    decision_classification: allIdentical(declared.decision_classification),
+  };
+}
+
+export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage = "delta", versionDelta = null, policy = null }) {
   const project = await realpath(path.resolve(projectRoot));
   const checkerPath = path.resolve(checker);
   const target = path.resolve(reviewPath);
@@ -211,6 +229,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
     fail("A delta review requires the predecessor reviewed baseline; whole-root review is the recovery path.");
   }
   const prior = priorJudgments(predecessorBaseline);
+  const carryByKind = carryAllowedByKind(versionDelta, policy);
   const basisFor = async (node) => {
     if (node.kind === "record" || node.kind === "entity") {
       const record = recordsById.get(node.kind === "record" ? node.id : node.record);
@@ -233,6 +252,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
   for (const entry of result.nodes) {
     const priorEntry = prior.nodes.get(nodeKey07(entry.node));
     const carriable = predecessorBaseline !== null
+      && carryByKind.node_applicability
       && priorEntry !== undefined
       && priorRevision(prior, priorEntry, entry.node) === entry.revision.value;
     if (carriable) {
@@ -274,6 +294,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
         && priorRevision(prior, priorNodeEntry, { kind: "record", id: decision })
           === currentRevisionByNode.get(nodeKey07({ kind: "record", id: decision }));
       const carriable = predecessorBaseline !== null
+        && carryByKind.decision_classification
         && priorEntry !== undefined
         && (priorEntry.decision_digest?.value === digest.value || nodeRevisionUnchanged);
       if (carriable) {
@@ -304,7 +325,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
     .map((entry) => entry.node);
   const closureKeys = new Set([...fresh, ...pendingReconciliation].map(nodeKey07));
   const computedClosure = result.nodes.map((entry) => entry.node).filter((node) => closureKeys.has(nodeKey07(node)));
-  const relationships = predecessorBaseline !== null
+  const relationships = predecessorBaseline !== null && carryByKind.relationship_review
     ? predecessorBaseline.relationship_coverage
     : RELATIONSHIPS.map((relationship) => ({
         relationship,

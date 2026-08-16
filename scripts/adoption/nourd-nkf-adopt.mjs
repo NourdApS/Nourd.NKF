@@ -4827,7 +4827,17 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
     const reviewStage = onboarding ? "whole-root" : "delta";
     const checker = await verified0_5Checker(temporary, verification);
     if (reviewStat === null) {
-      const template = await writeReviewTemplate0_7({ projectRoot: candidate, checker, reviewPath: review, stage: reviewStage });
+      const template = await writeReviewTemplate0_7({
+        projectRoot: candidate,
+        checker,
+        reviewPath: review,
+        stage: reviewStage,
+        versionDelta: onboarding ? null : YAML.parse(versionDeltaBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true }),
+        policy: onboarding ? null : YAML.parse(
+          verification.entries.get("contracts/nkf/0.7/freshness-policy.yaml").toString("utf8"),
+          { schema: "core", strict: true, uniqueKeys: true },
+        ),
+      });
       throw new OnboardingError(
         "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
         "Adopt created the exact migration review with carried judgments prefilled and stopped before project mutation. A named reviewer must complete the computed required set and rerun the same Adopt command.",
