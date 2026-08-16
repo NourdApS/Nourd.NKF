@@ -25545,6 +25545,112 @@ ${appended.join("\n")}
   await writeFile6(bundlePath, import_yaml6.default.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
   return { moves: moves.size, removed: removals.length };
 }
+var ACCEPTED_SUCCESSIONS_0_7 = Object.freeze([
+  Object.freeze({ predecessor: "nkf-0.1-native-realization", successor: "nkf-current-system" })
+]);
+async function applyAcceptedSuccessions0_7(candidate, knowledgeRoot) {
+  const recordsDirectory = path6.join(candidate, ".nourd/knowledge/records");
+  const baselineBytes = await readFile6(
+    path6.join(candidate, ".nourd/knowledge/freshness/baseline.yaml")
+  ).catch(() => null);
+  const predecessorGraphRevision = baselineBytes === null ? null : import_yaml6.default.parse(baselineBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true })?.graph_revision?.value;
+  let applied = 0;
+  for (const succession of ACCEPTED_SUCCESSIONS_0_7) {
+    const predecessorFile = path6.join(recordsDirectory, `${succession.predecessor}.yaml`);
+    const stat = await lstat5(predecessorFile).catch(() => null);
+    if (stat === null || !stat.isFile()) continue;
+    if (typeof predecessorGraphRevision !== "string") {
+      fail6("The accepted identity succession requires the predecessor reviewed baseline graph revision.");
+    }
+    const declaration = import_yaml6.default.parse(await readFile6(predecessorFile, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    declaration.id = succession.successor;
+    declaration.identity_succession = {
+      predecessor_id: succession.predecessor,
+      graph_revision: { algorithm: "sha-256", value: predecessorGraphRevision },
+      recorded_by: "repository-owner"
+    };
+    const sourceRelative = declaration.source?.path;
+    if (typeof sourceRelative === "string") {
+      const sourceFile = path6.join(candidate, ...knowledgeRoot.split("/"), ...sourceRelative.split("/"));
+      const sourceText = await readFile6(sourceFile, "utf8");
+      const renamed = sourceText.replace(`
+id: ${succession.predecessor}
+`, `
+id: ${succession.successor}
+`);
+      if (renamed === sourceText) fail6("The succession source does not declare the exact predecessor identity.");
+      await writeFile6(sourceFile, renamed);
+      declaration.source.digest.value = digest(Buffer.from(renamed, "utf8"));
+    }
+    await writeFile6(
+      path6.join(recordsDirectory, `${succession.successor}.yaml`),
+      import_yaml6.default.stringify(declaration, { lineWidth: 0, aliasDuplicateObjects: false })
+    );
+    await unlink(predecessorFile);
+    const bundleFile = path6.join(candidate, ".nourd/knowledge/bundle.yaml");
+    const bundle = import_yaml6.default.parse(await readFile6(bundleFile, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    for (const artifact of bundle.governed_artifacts ?? []) {
+      if (artifact.record === succession.predecessor) artifact.record = succession.successor;
+    }
+    await writeFile6(bundleFile, import_yaml6.default.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+    for (const name of (await readdir5(recordsDirectory)).filter((item2) => item2.endsWith(".yaml"))) {
+      const file = path6.join(recordsDirectory, name);
+      const sibling = import_yaml6.default.parse(await readFile6(file, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      let changed = false;
+      for (const relationship of sibling.relationships ?? []) {
+        if (relationship.target === succession.predecessor) {
+          relationship.target = succession.successor;
+          changed = true;
+        }
+      }
+      for (const binding of sibling.bindings ?? []) {
+        if (binding.realization === succession.predecessor) {
+          binding.realization = succession.successor;
+          changed = true;
+        }
+      }
+      if (changed) await writeFile6(file, import_yaml6.default.stringify(sibling, { lineWidth: 0, aliasDuplicateObjects: false }));
+    }
+    applied += 1;
+  }
+  return applied;
+}
+async function classifyProvenanceAttachments0_7(candidate, knowledgeRoot) {
+  const knowledgeAbsolute = path6.join(candidate, ...knowledgeRoot.split("/"));
+  const regulars = [];
+  const walk = async (directory, prefix = "") => {
+    for (const entry of await readdir5(directory, { withFileTypes: true })) {
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) await walk(path6.join(directory, entry.name), relative);
+      else if (entry.isFile() && !entry.name.endsWith(".md")) regulars.push(relative);
+    }
+  };
+  await walk(knowledgeAbsolute);
+  const bundleFile = path6.join(candidate, ".nourd/knowledge/bundle.yaml");
+  const bundle = import_yaml6.default.parse(await readFile6(bundleFile, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const declared = new Set((bundle.non_records ?? []).map((entry) => entry.path));
+  const recordsDirectory = path6.join(candidate, ".nourd/knowledge/records");
+  for (const name of (await readdir5(recordsDirectory).catch(() => [])).filter((item2) => item2.endsWith(".yaml"))) {
+    const declaration = import_yaml6.default.parse(await readFile6(path6.join(recordsDirectory, name), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    if (typeof declaration?.source?.path === "string") declared.add(declaration.source.path);
+  }
+  let classified = 0;
+  for (const relative of regulars.sort((left, right) => left.localeCompare(right, "en"))) {
+    if (declared.has(relative)) continue;
+    bundle.non_records = bundle.non_records ?? [];
+    bundle.non_records.push({
+      path: relative,
+      kind: "provenance-attachment",
+      digest: { algorithm: "sha-256", value: digest(await readFile6(path6.join(knowledgeAbsolute, ...relative.split("/")))) }
+    });
+    classified += 1;
+  }
+  if (classified > 0) {
+    await writeFile6(bundleFile, import_yaml6.default.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+  }
+  return classified;
+}
 async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = []) {
   if (reviewPath === void 0) {
     throw new OnboardingError(
@@ -25610,6 +25716,10 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
     const knowledgeRoot = bundle.knowledge_root;
     const onboarding = bundle.nkf_version === "0.7";
     const neutralization = onboarding ? { moves: 0, removed: 0 } : await neutralizeStatePaths(candidate, knowledgeRoot);
+    if (!onboarding) {
+      await applyAcceptedSuccessions0_7(candidate, knowledgeRoot);
+      await classifyProvenanceAttachments0_7(candidate, knowledgeRoot);
+    }
     if (!onboarding) {
       const migratedBundle = import_yaml6.default.parse(await readFile6(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
       migratedBundle.nkf_version = "0.7";

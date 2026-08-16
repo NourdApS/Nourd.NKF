@@ -425,8 +425,9 @@ describe("project and representation boundary", () => {
 
   it("binds Task placement and Evidence-area navigation to represented metadata", async () => {
     const misplaced = await copyValidFixture();
+    await mkdir(path.join(misplaced, "knowledge/tasks/deferred"), { recursive: true });
     await rename(
-      path.join(misplaced, "knowledge/tasks/active/task.md"),
+      path.join(misplaced, "knowledge/tasks/items/task.md"),
       path.join(misplaced, "knowledge/tasks/deferred/task.md"),
     );
     const misplacedBundle = await readBundle(misplaced);
@@ -436,10 +437,10 @@ describe("project and representation boundary", () => {
     task.path = "tasks/deferred/task.md";
     await writeBundle(misplaced, misplacedBundle);
     // Modern stable paths never move; the surviving deterministic signal is
-    // the navigation-index disagreement.
+    // the generated-navigation disagreement.
     expect(await rules(misplaced)).toEqual(
       expect.arrayContaining([
-        "knowledge.topology.index.invalid",
+        "knowledge.topology.lifecycle-index.invalid",
       ]),
     );
 

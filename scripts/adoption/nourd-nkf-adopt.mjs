@@ -4592,6 +4592,115 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
   return { moves: moves.size, removed: removals.length };
 }
 
+// The one accepted identity succession this revision declares: the producer's
+// consolidated current-system Realization receives its version-free
+// identifier. Consumers declare no succession.
+const ACCEPTED_SUCCESSIONS_0_7 = Object.freeze([
+  Object.freeze({ predecessor: "nkf-0.1-native-realization", successor: "nkf-current-system" }),
+]);
+
+async function applyAcceptedSuccessions0_7(candidate, knowledgeRoot) {
+  const recordsDirectory = path.join(candidate, ".nourd/knowledge/records");
+  const baselineBytes = await readFile(
+    path.join(candidate, ".nourd/knowledge/freshness/baseline.yaml"),
+  ).catch(() => null);
+  const predecessorGraphRevision = baselineBytes === null
+    ? null
+    : YAML.parse(baselineBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true })
+        ?.graph_revision?.value;
+  let applied = 0;
+  for (const succession of ACCEPTED_SUCCESSIONS_0_7) {
+    const predecessorFile = path.join(recordsDirectory, `${succession.predecessor}.yaml`);
+    const stat = await lstat(predecessorFile).catch(() => null);
+    if (stat === null || !stat.isFile()) continue;
+    if (typeof predecessorGraphRevision !== "string") {
+      fail("The accepted identity succession requires the predecessor reviewed baseline graph revision.");
+    }
+    const declaration = YAML.parse(await readFile(predecessorFile, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    declaration.id = succession.successor;
+    declaration.identity_succession = {
+      predecessor_id: succession.predecessor,
+      graph_revision: { algorithm: "sha-256", value: predecessorGraphRevision },
+      recorded_by: "repository-owner",
+    };
+    // The living source keeps its stable path; only its identity line follows.
+    const sourceRelative = declaration.source?.path;
+    if (typeof sourceRelative === "string") {
+      const sourceFile = path.join(candidate, ...knowledgeRoot.split("/"), ...sourceRelative.split("/"));
+      const sourceText = await readFile(sourceFile, "utf8");
+      const renamed = sourceText.replace(`\nid: ${succession.predecessor}\n`, `\nid: ${succession.successor}\n`);
+      if (renamed === sourceText) fail("The succession source does not declare the exact predecessor identity.");
+      await writeFile(sourceFile, renamed);
+      declaration.source.digest.value = digest(Buffer.from(renamed, "utf8"));
+    }
+    await writeFile(
+      path.join(recordsDirectory, `${succession.successor}.yaml`),
+      YAML.stringify(declaration, { lineWidth: 0, aliasDuplicateObjects: false }),
+    );
+    await unlink(predecessorFile);
+    // Rewrite exact identity references in the bundle and sibling declarations.
+    const bundleFile = path.join(candidate, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(bundleFile, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    for (const artifact of bundle.governed_artifacts ?? []) {
+      if (artifact.record === succession.predecessor) artifact.record = succession.successor;
+    }
+    await writeFile(bundleFile, YAML.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+    for (const name of (await readdir(recordsDirectory)).filter((item) => item.endsWith(".yaml"))) {
+      const file = path.join(recordsDirectory, name);
+      const sibling = YAML.parse(await readFile(file, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      let changed = false;
+      for (const relationship of sibling.relationships ?? []) {
+        if (relationship.target === succession.predecessor) { relationship.target = succession.successor; changed = true; }
+      }
+      for (const binding of sibling.bindings ?? []) {
+        if (binding.realization === succession.predecessor) { binding.realization = succession.successor; changed = true; }
+      }
+      if (changed) await writeFile(file, YAML.stringify(sibling, { lineWidth: 0, aliasDuplicateObjects: false }));
+    }
+    applied += 1;
+  }
+  return applied;
+}
+
+// The migration classifies every undeclared non-Markdown regular file under
+// the knowledge root as an inert provenance attachment, exactly once.
+async function classifyProvenanceAttachments0_7(candidate, knowledgeRoot) {
+  const knowledgeAbsolute = path.join(candidate, ...knowledgeRoot.split("/"));
+  const regulars = [];
+  const walk = async (directory, prefix = "") => {
+    for (const entry of (await readdir(directory, { withFileTypes: true }))) {
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      if (entry.isSymbolicLink()) continue;
+      if (entry.isDirectory()) await walk(path.join(directory, entry.name), relative);
+      else if (entry.isFile() && !entry.name.endsWith(".md")) regulars.push(relative);
+    }
+  };
+  await walk(knowledgeAbsolute);
+  const bundleFile = path.join(candidate, ".nourd/knowledge/bundle.yaml");
+  const bundle = YAML.parse(await readFile(bundleFile, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const declared = new Set((bundle.non_records ?? []).map((entry) => entry.path));
+  const recordsDirectory = path.join(candidate, ".nourd/knowledge/records");
+  for (const name of (await readdir(recordsDirectory).catch(() => [])).filter((item) => item.endsWith(".yaml"))) {
+    const declaration = YAML.parse(await readFile(path.join(recordsDirectory, name), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+    if (typeof declaration?.source?.path === "string") declared.add(declaration.source.path);
+  }
+  let classified = 0;
+  for (const relative of regulars.sort((left, right) => left.localeCompare(right, "en"))) {
+    if (declared.has(relative)) continue;
+    bundle.non_records = bundle.non_records ?? [];
+    bundle.non_records.push({
+      path: relative,
+      kind: "provenance-attachment",
+      digest: { algorithm: "sha-256", value: digest(await readFile(path.join(knowledgeAbsolute, ...relative.split("/")))) },
+    });
+    classified += 1;
+  }
+  if (classified > 0) {
+    await writeFile(bundleFile, YAML.stringify(bundle, { lineWidth: 0, aliasDuplicateObjects: false }));
+  }
+  return classified;
+}
+
 async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = []) {
   if (reviewPath === undefined) {
     throw new OnboardingError(
@@ -4661,6 +4770,10 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
     const neutralization = onboarding
       ? { moves: 0, removed: 0 }
       : await neutralizeStatePaths(candidate, knowledgeRoot);
+    if (!onboarding) {
+      await applyAcceptedSuccessions0_7(candidate, knowledgeRoot);
+      await classifyProvenanceAttachments0_7(candidate, knowledgeRoot);
+    }
     if (!onboarding) {
       const migratedBundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
       migratedBundle.nkf_version = "0.7";

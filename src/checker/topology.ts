@@ -95,6 +95,12 @@ function parseManagedBlock(model: MarkdownModel): {
   };
 }
 
+// Generated lifecycle navigation (by-state and by-disposition indexes) has
+// its own agreement rule; every other required index keeps the general rule.
+function isLifecycleIndex(indexPath: string): boolean {
+  return indexPath.startsWith("tasks/by-state/") || indexPath.startsWith("designs/by-disposition/");
+}
+
 function emitIndexMismatch(
   emitter: RuleEmitter,
   knowledgeRoot: string,
@@ -103,7 +109,7 @@ function emitIndexMismatch(
   observedCount: number,
 ): void {
   emitter.emit(
-    "knowledge.topology.index.invalid",
+    isLifecycleIndex(indexPath) ? "knowledge.topology.lifecycle-index.invalid" : "knowledge.topology.index.invalid",
     `The lifecycle index must link ${target} exactly once; observed ${observedCount}.`,
     { artifact: artifact(knowledgeRoot, indexPath) },
   );

@@ -345,9 +345,11 @@ describe("bundle-aware checker", () => {
 
   it("requires governed frontmatter on Markdown non-records", async () => {
     const project = await copyValidFixture();
+    const navigationFile = path.join(project, "knowledge/tasks/README.md");
+    const navigationText = await readFile(navigationFile, "utf8");
     await writeFile(
-      path.join(project, "knowledge/tasks/deferred/README.md"),
-      "# Deferred Tasks\n\nThe frontmatter is missing.\n",
+      navigationFile,
+      navigationText.slice(navigationText.indexOf("\n---\n", 4) + 5),
       "utf8",
     );
     const result = await validateProject(options(project));
@@ -355,7 +357,7 @@ describe("bundle-aware checker", () => {
       expect.arrayContaining([
         expect.objectContaining({
           rule_id: "markdown.frontmatter.required",
-          artifact: "knowledge/tasks/deferred/README.md",
+          artifact: "knowledge/tasks/README.md",
         }),
       ]),
     );
@@ -382,11 +384,11 @@ describe("bundle-aware checker", () => {
 
   it("validates required keys, scalar shape, UTC creation time, title equality, and H1 count", async () => {
     const missing = await copyValidFixture();
-    const missingFile = path.join(missing, "knowledge/tasks/deferred/README.md");
+    const missingFile = path.join(missing, "knowledge/tasks/README.md");
     await writeFile(
       missingFile,
       (await readFile(missingFile, "utf8")).replace(
-        'summary: "Provides the required NKF navigation index for Deferred Tasks."\n',
+        'summary: "Indexes Tasks by their current lifecycle state."\n',
         "",
       ),
       "utf8",
@@ -396,13 +398,13 @@ describe("bundle-aware checker", () => {
     ).toContain("markdown.frontmatter.key.missing");
 
     const invalid = await copyValidFixture();
-    const invalidFile = path.join(invalid, "knowledge/tasks/deferred/README.md");
+    const invalidFile = path.join(invalid, "knowledge/tasks/README.md");
     await writeFile(
       invalidFile,
       (await readFile(invalidFile, "utf8"))
         .replace(/^title: .*$/m, 'title: "Wrong Navigation"')
         .replace(
-          'summary: "Provides the required NKF navigation index for Deferred Tasks."',
+          'summary: "Indexes Tasks by their current lifecycle state."',
           'summary: " invalid orientation "',
         )
         .replace("2026-07-30T07:53:41Z", "2026-02-30T07:53:41Z"),
@@ -420,7 +422,7 @@ describe("bundle-aware checker", () => {
     );
 
     const h1 = await copyValidFixture();
-    const h1File = path.join(h1, "knowledge/tasks/deferred/README.md");
+    const h1File = path.join(h1, "knowledge/tasks/README.md");
     await writeFile(
       h1File,
       `${await readFile(h1File, "utf8")}\n# Second Navigation\n`,
@@ -435,7 +437,7 @@ describe("bundle-aware checker", () => {
     // Native 0.7 sources carry orientation only; Task state, Design
     // disposition, and confirmation status live in declarations.
     const task = await copyValidFixture();
-    const taskFile = path.join(task, "knowledge/tasks/active/task.md");
+    const taskFile = path.join(task, "knowledge/tasks/items/task.md");
     await writeFile(
       taskFile,
       (await readFile(taskFile, "utf8")).replace(

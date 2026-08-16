@@ -8,7 +8,7 @@ import { validateProject } from "../src/checker/checker.js";
 import { options, validFixture } from "./helpers.js";
 
 const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
-const taskPath = "knowledge/tasks/active/task.md";
+const taskPath = "knowledge/tasks/items/task.md";
 
 async function copyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-7-dispatch-"));

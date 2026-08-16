@@ -197,12 +197,6 @@ members:
   - path: fixtures/valid/minimal-0-7/knowledge/designs/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/designs/active/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/designs/adopted/README.md
-    class: product-fixture
-    mode: "0644"
   - path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/active.md
     class: product-fixture
     mode: "0644"
@@ -218,15 +212,6 @@ members:
   - path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/withdrawn.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/designs/rejected/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/designs/superseded/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/designs/withdrawn/README.md
-    class: product-fixture
-    mode: "0644"
   - path: fixtures/valid/minimal-0-7/knowledge/evidence/README.md
     class: product-fixture
     mode: "0644"
@@ -239,19 +224,10 @@ members:
   - path: fixtures/valid/minimal-0-7/knowledge/realizations/current-system.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/realizations/current/README.md
-    class: product-fixture
-    mode: "0644"
   - path: fixtures/valid/minimal-0-7/knowledge/specifications/README.md
     class: product-fixture
     mode: "0644"
   - path: fixtures/valid/minimal-0-7/knowledge/tasks/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/tasks/active/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/tasks/active/task.md
     class: product-fixture
     mode: "0644"
   - path: fixtures/valid/minimal-0-7/knowledge/tasks/by-state/active.md
@@ -266,13 +242,7 @@ members:
   - path: fixtures/valid/minimal-0-7/knowledge/tasks/by-state/deferred.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/tasks/cancelled/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/tasks/completed/README.md
-    class: product-fixture
-    mode: "0644"
-  - path: fixtures/valid/minimal-0-7/knowledge/tasks/deferred/README.md
+  - path: fixtures/valid/minimal-0-7/knowledge/tasks/items/task.md
     class: product-fixture
     mode: "0644"
   - path: fixtures/valid/technology-0-7/.nourd/knowledge/bundle.yaml
@@ -299,12 +269,6 @@ members:
   - path: fixtures/valid/technology-0-7/knowledge/designs/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/designs/active/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/designs/adopted/README.md
-    class: technology-fixture
-    mode: "0644"
   - path: fixtures/valid/technology-0-7/knowledge/designs/by-disposition/active.md
     class: technology-fixture
     mode: "0644"
@@ -320,15 +284,6 @@ members:
   - path: fixtures/valid/technology-0-7/knowledge/designs/by-disposition/withdrawn.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/designs/rejected/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/designs/superseded/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/designs/withdrawn/README.md
-    class: technology-fixture
-    mode: "0644"
   - path: fixtures/valid/technology-0-7/knowledge/evidence/README.md
     class: technology-fixture
     mode: "0644"
@@ -338,9 +293,6 @@ members:
   - path: fixtures/valid/technology-0-7/knowledge/realizations/current-system.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/realizations/current/README.md
-    class: technology-fixture
-    mode: "0644"
   - path: fixtures/valid/technology-0-7/knowledge/specifications/README.md
     class: technology-fixture
     mode: "0644"
@@ -348,12 +300,6 @@ members:
     class: technology-fixture
     mode: "0644"
   - path: fixtures/valid/technology-0-7/knowledge/tasks/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/tasks/active/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/tasks/active/task.md
     class: technology-fixture
     mode: "0644"
   - path: fixtures/valid/technology-0-7/knowledge/tasks/by-state/active.md
@@ -368,13 +314,7 @@ members:
   - path: fixtures/valid/technology-0-7/knowledge/tasks/by-state/deferred.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/tasks/cancelled/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/tasks/completed/README.md
-    class: technology-fixture
-    mode: "0644"
-  - path: fixtures/valid/technology-0-7/knowledge/tasks/deferred/README.md
+  - path: fixtures/valid/technology-0-7/knowledge/tasks/items/task.md
     class: technology-fixture
     mode: "0644"
   - path: fixtures/valid/technology-0-7/knowledge/technology.md

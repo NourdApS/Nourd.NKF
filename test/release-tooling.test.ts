@@ -51,7 +51,7 @@ async function releaseFixture() {
 describe("NKF release tooling", () => {
   it("defines the exact complete 0.7 archive membership", () => {
     const paths = releaseSet.members.map((entry: { path: string }) => entry.path);
-    expect(paths).toHaveLength(185);
+    expect(paths).toHaveLength(165);
     expect(new Set(paths).size).toBe(paths.length);
     expect(paths).toContain("release-manifest.json");
     expect(paths).toContain("dist/nourd-nkf-adopt.mjs");

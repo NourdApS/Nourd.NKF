@@ -8,10 +8,6 @@ knowledge_root: knowledge
 non_records:
   - path: decisions/README.md
     kind: navigation
-  - path: designs/active/README.md
-    kind: navigation
-  - path: designs/adopted/README.md
-    kind: navigation
   - path: designs/by-disposition/active.md
     kind: generated
   - path: designs/by-disposition/adopted.md
@@ -24,12 +20,6 @@ non_records:
     kind: generated
   - path: designs/README.md
     kind: navigation
-  - path: designs/rejected/README.md
-    kind: navigation
-  - path: designs/superseded/README.md
-    kind: navigation
-  - path: designs/withdrawn/README.md
-    kind: navigation
   - path: evidence/README.md
     kind: evidence
     document:
@@ -41,19 +31,15 @@ non_records:
       relationships: []
   - path: README.md
     kind: navigation
-  - path: realizations/current/README.md
-    kind: navigation
   - path: realizations/README.md
     kind: navigation
   - path: specifications/README.md
     kind: navigation
-  - path: tasks/active/README.md
-    kind: navigation
-  - path: tasks/active/task.md
+  - path: tasks/items/task.md
     kind: task
     document:
       id: TEST-001
-      stable_path: tasks/active/task.md
+      stable_path: tasks/items/task.md
       digest:
         algorithm: sha-256
         value: 625ab44d1c502b5e2a433ead44cc631ac6e32faf0637df6c73b5b4ddcc5be124
@@ -69,12 +55,6 @@ non_records:
     kind: generated
   - path: tasks/by-state/deferred.md
     kind: generated
-  - path: tasks/cancelled/README.md
-    kind: navigation
-  - path: tasks/completed/README.md
-    kind: navigation
-  - path: tasks/deferred/README.md
-    kind: navigation
   - path: tasks/README.md
     kind: navigation
 knowledge_graph:

@@ -1827,6 +1827,155 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           });
         }
       }
+      if (String(resultVersion) === "0.7") {
+        // Provenance attachments: inert non-Markdown byte sets, and the
+        // declared coverage for every other regular knowledge-root file.
+        const attachmentExact = new Set<string>();
+        const attachmentTrees: string[] = [];
+        for (const [index, nonRecord] of values<Record<string, any>>(bundle.non_records).entries()) {
+          if (nonRecord.kind !== "provenance-attachment") continue;
+          const attachmentPath = String(nonRecord.path);
+          const selection = nonRecord.selection;
+          const invalid =
+            nonRecord.document !== undefined ||
+            (selection !== undefined && selection !== "recursive-regular-files") ||
+            (selection === undefined && attachmentPath.endsWith(".md"));
+          if (invalid) {
+            emitter.emit("bundle.provenance-attachment.invalid", "A provenance attachment is one inert non-Markdown byte binding without a document node.", {
+              artifact: ".nourd/knowledge/bundle.yaml",
+              instance_pointer: `/non_records/${index}`,
+            });
+            continue;
+          }
+          if (selection === "recursive-regular-files") attachmentTrees.push(`${attachmentPath}/`);
+          else {
+            attachmentExact.add(attachmentPath);
+            if (nonRecord.digest?.value !== undefined) {
+              const observed = await collector.observe(
+                path.posix.join(String(bundle.knowledge_root), attachmentPath),
+                { content: true, knowledgeRoot: knowledgeRootAbsolute },
+              );
+              if (observed.bytes !== null && sha256(observed.bytes) !== nonRecord.digest.value) {
+                emitter.emit("bundle.provenance-attachment.invalid", "The provenance attachment bytes do not match the declared digest.", {
+                  artifact: path.posix.join(String(bundle.knowledge_root), attachmentPath),
+                  instance_pointer: `/non_records/${index}/digest/value`,
+                });
+              }
+            }
+          }
+        }
+        for (const otherFile of markdownDiscovery?.otherFiles ?? []) {
+          const covered = attachmentExact.has(otherFile) ||
+            attachmentTrees.some((tree) => otherFile.startsWith(tree));
+          if (covered) continue;
+          // A physical file backing a declared source through a contained
+          // symbolic link is already represented by that declaration.
+          const absolute = path.resolve(projectRoot, String(bundle.knowledge_root), ...otherFile.split("/"));
+          const resolved = await realpath(absolute).catch(() => absolute);
+          if (physicalSources.has(resolved) || nonRecordPhysical.has(resolved)) continue;
+          emitter.emit("project.knowledge-root-file.undeclared", "A regular knowledge-root file is neither a record source, a declared non-record, nor a declared provenance attachment.", {
+            artifact: path.posix.join(String(bundle.knowledge_root), otherFile),
+          });
+        }
+        // Stable paths allocated under 0.7 never assert lifecycle, disposition,
+        // or currency; the ten legacy trees moved in the one deliberate act.
+        const legacyStatePrefixes = [
+          "tasks/active/", "tasks/completed/", "tasks/deferred/", "tasks/cancelled/",
+          "designs/active/", "designs/adopted/", "designs/rejected/", "designs/superseded/", "designs/withdrawn/",
+          "realizations/current/",
+        ];
+        const emitStateAssertingPath = (stablePath: unknown, artifactPath: string, pointer: string, recordId?: string) => {
+          if (typeof stablePath !== "string") return;
+          if (legacyStatePrefixes.some((prefix) => stablePath.startsWith(prefix))) {
+            emitter.emit("paths.stable-path.state-asserting", "A stable path must not assert lifecycle state, disposition, or currency.", {
+              artifact: artifactPath,
+              instance_pointer: pointer,
+              ...(recordId === undefined ? {} : { record_id: recordId }),
+            });
+          }
+        };
+        for (const record of uniqueRecords) {
+          const declaration = record.value as Record<string, any> | null;
+          if (declaration === null) continue;
+          emitStateAssertingPath(declaration.source?.stable_path, record.artifact, "/source/stable_path", String(declaration.id));
+        }
+        for (const nonRecord of parsedNonRecords) {
+          const document = asObject(nonRecord.declaration.document);
+          if (document === null) continue;
+          emitStateAssertingPath(document.stable_path, ".nourd/knowledge/bundle.yaml", `/non_records/${nonRecord.index}/document/stable_path`);
+        }
+        // Identity succession: one governed rename act per living record, with
+        // the predecessor identifier permanently and unambiguously resolvable.
+        const liveIds = new Set(uniqueRecords.map((record) => String(record.value?.id)));
+        const predecessorClaims = new Map<string, string[]>();
+        for (const record of uniqueRecords) {
+          const declaration = record.value as Record<string, any> | null;
+          if (declaration === null) continue;
+          const succession = asObject(declaration.identity_succession);
+          if (succession === null) continue;
+          const id = String(declaration.id);
+          const predecessor = String(succession.predecessor_id);
+          if (
+            declaration.governance?.lifecycle !== "living" ||
+            predecessor === id ||
+            liveIds.has(predecessor)
+          ) {
+            emitter.emit("record.identity-succession.invalid", "An identity succession applies to one living record, never reuses a live identifier, and never succeeds itself.", {
+              artifact: record.artifact,
+              record_id: id,
+              instance_pointer: "/identity_succession",
+            });
+          }
+          predecessorClaims.set(predecessor, [...(predecessorClaims.get(predecessor) ?? []), id]);
+        }
+        for (const [predecessor, claimants] of predecessorClaims) {
+          if (claimants.length > 1) {
+            for (const claimant of claimants) {
+              emitter.emit("record.identity-succession.chain-unresolved", `The predecessor identifier ${predecessor} does not resolve to exactly one successor.`, {
+                artifact: ".nourd/knowledge/records",
+                record_id: claimant,
+              });
+            }
+          }
+        }
+        // Living identifiers allocated under 0.7 never assert a version,
+        // lifecycle state, or disposition; immutable version-scoped snapshots
+        // keep their version-bearing identifiers.
+        const stateTokens = new Set([
+          "active", "completed", "deferred", "cancelled",
+          "adopted", "rejected", "superseded", "withdrawn",
+        ]);
+        for (const record of uniqueRecords) {
+          const declaration = record.value as Record<string, any> | null;
+          if (declaration === null || declaration.governance?.lifecycle !== "living") continue;
+          const id = String(declaration.id);
+          const versionAsserting = /\d+[._-]\d+/.test(id) || /(^|-)v\d+($|-)/.test(id);
+          const stateAsserting = id.split("-").some((segment) => stateTokens.has(segment));
+          if (versionAsserting || stateAsserting) {
+            emitter.emit("record.identity.state-asserting", "A living record identifier must not assert a version, lifecycle state, or disposition.", {
+              artifact: record.artifact,
+              record_id: id,
+              instance_pointer: "/id",
+            });
+          }
+        }
+        // Operational-fact dependencies bind one closed coordinate to one
+        // resolvable source section of the declaring record.
+        for (const record of uniqueRecords) {
+          const declaration = record.value as Record<string, any> | null;
+          if (declaration === null) continue;
+          const sections = new Set(values<Record<string, any>>(declaration.sections).map((section) => String(section.id)));
+          values<Record<string, any>>(declaration.operational_dependencies).forEach((dependency, index) => {
+            if (!sections.has(String(dependency.source_section))) {
+              emitter.emit("record.operational-dependency.invalid", "An operational dependency must bind one declared source section of its record.", {
+                artifact: record.artifact,
+                record_id: String(declaration.id),
+                instance_pointer: `/operational_dependencies/${index}/source_section`,
+              });
+            }
+          });
+        }
+      }
     }
     if (knowledgeRootAbsolute !== null) {
       validatePortableTopology({

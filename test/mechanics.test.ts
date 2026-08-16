@@ -41,7 +41,7 @@ async function copyFixture0_6(): Promise<string> {
 // Authors the transition-result section the native transition requires in the
 // stable Task source, then re-pins the represented document digest.
 async function authorTaskResult(project: string, heading: string, body: string) {
-  const source = path.join(project, "knowledge/tasks/active/task.md");
+  const source = path.join(project, "knowledge/tasks/items/task.md");
   await writeFile(source, (await readFile(source, "utf8")).replace(
     "\n## Decision Applicability\n",
     `\n${heading}\n\n${body}\n\n## Decision Applicability\n`,
@@ -78,8 +78,8 @@ describe("deterministic governed mechanics", () => {
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("exported");
     expect(result.json.records.product).toBe("product.md");
-    expect(result.json.documents["TEST-001"]).toBe("tasks/active/task.md");
-    expect(result.json.tasks["TEST-001"]).toBe("tasks/active/task.md");
+    expect(result.json.documents["TEST-001"]).toBe("tasks/items/task.md");
+    expect(result.json.tasks["TEST-001"]).toBe("tasks/items/task.md");
     expect(result.json.relationships).toEqual([{
       source: { kind: "entity", record: "product", entity: "source-entity" },
       relationship: "depends-on",
@@ -198,7 +198,7 @@ describe("deterministic governed mechanics", () => {
     const representedSet = run("set", representationProject);
     expect(representedSet.status, representedSet.stderr).toBe(0);
     expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.7" });
-    expect(representedSet.json.members).toHaveLength(185);
+    expect(representedSet.json.members).toHaveLength(165);
   });
 
   it("re-pins record digests after an edit", async () => {
@@ -307,7 +307,7 @@ describe("deterministic governed mechanics", () => {
     const first = run("linkify", project, ["--checker", checker]);
     expect(first.status, first.stderr).toBe(0);
     expect(first.json.changed).toBe(1);
-    expect(await readFile(map, "utf8")).toContain("[TEST-001](tasks/active/task.md)");
+    expect(await readFile(map, "utf8")).toContain("[TEST-001](tasks/items/task.md)");
     const second = run("linkify", project, ["--checker", checker]);
     expect(second.json.changed).toBe(0);
   });
@@ -347,7 +347,7 @@ describe("deterministic governed mechanics", () => {
       "## Completion Result",
       "The fixture work completed with all criteria satisfied.",
     );
-    const source = path.join(project, "knowledge/tasks/active/task.md");
+    const source = path.join(project, "knowledge/tasks/items/task.md");
     const sourceBytes = await readFile(source);
     const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
 
@@ -371,7 +371,7 @@ describe("deterministic governed mechanics", () => {
     await expect(lstat(path.join(project, "knowledge/tasks/completed/task.md"))).rejects.toThrow();
     expect(await taskState(project)).toBe("completed");
     expect(await readFile(path.join(project, "knowledge/tasks/by-state/active.md"), "utf8")).not.toContain("TEST-001");
-    expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../active/task.md)");
+    expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../items/task.md)");
     void bundlePath;
 
     const current = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
@@ -409,7 +409,7 @@ describe("deterministic governed mechanics", () => {
 
   it("blocks closing when the gate carries unexcepted findings", async () => {
     const project = await copyFixture();
-    const task = path.join(project, "knowledge/tasks/active/task.md");
+    const task = path.join(project, "knowledge/tasks/items/task.md");
     await writeFile(task, (await readFile(task, "utf8")).replace(
       "No mandatory capability is implicated by this Task.",
       [
@@ -440,7 +440,7 @@ describe("deterministic governed mechanics", () => {
 
   it("cancels a task with a recorded rationale and no completion gate", async () => {
     const project = await copyFixture();
-    const task = path.join(project, "knowledge/tasks/active/task.md");
+    const task = path.join(project, "knowledge/tasks/items/task.md");
     await writeFile(task, (await readFile(task, "utf8")).replace(
       "No mandatory capability is implicated by this Task.",
       [

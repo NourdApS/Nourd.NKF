@@ -193,6 +193,13 @@ function validateDocument(
     });
   }
   values<Record<string, any>>(document.relationships).forEach((relationship, index) => {
+    const keys = Object.keys(asObject(relationship) ?? {}).sort(utf16Compare);
+    if (jcs(keys) !== jcs(["source_heading", "target", "type"]) || typeof relationship.type !== "string" || relationship.type === "") {
+      emitter.emit("document.relationship.invalid", "A document relationship requires exactly type, target, and source_heading.", {
+        artifact: ".nourd/knowledge/bundle.yaml", node_id: nodeKey(node), instance_pointer: `/non_records/${unit.index}/document/relationships/${index}`,
+      });
+      return;
+    }
     const target = asNodeReference(relationship.target);
     if (target === null || !knownNodeKeys.has(nodeKey(target))) {
       emitter.emit("graph.node.unresolved", "The document relationship target does not resolve exactly once.", {
@@ -491,8 +498,22 @@ function verifyDigestBoundBaseline(
     }
     return true;
   };
+  // A carried judgment must be internally consistent with the sealed graph it
+  // claims to carry into: its judged revision equals the baseline's own bound
+  // node revision. Later candidate edits are a readiness concern instead.
+  const sealedRevisionByNode = new Map(
+    values<Record<string, any>>(baseline.node_revisions)
+      .map((entry) => [nodeKey(entry.node as NodeReference), entry.revision?.value]),
+  );
+  let carryViolated = false;
   for (const entry of values<Record<string, any>>(baseline.applicability_coverage)) {
     if (!verifyProvenance(entry, "node applicability")) return "unsupported";
+    if (
+      asObject(asObject(entry.provenance)?.carried) !== null &&
+      entry.revision?.value !== sealedRevisionByNode.get(nodeKey(entry.node as NodeReference))
+    ) {
+      carryViolated = true;
+    }
     const current = revisionByNode.get(nodeKey(entry.node as NodeReference));
     if (entry.revision?.value !== current) stale = true;
   }
@@ -502,12 +523,33 @@ function verifyDigestBoundBaseline(
     const declared = record === null || record === undefined ? undefined : sha256(Buffer.from(jcs(normalizedProjection(record.declaration)), "utf8"));
     if (entry.decision_digest?.value !== declared) stale = true;
   }
+  if (carryViolated) {
+    emitter.emit("freshness.baseline.carry-precondition-violated", "A carried judgment does not satisfy its digest-bound carry precondition against the sealed graph.", { artifact });
+    return "unsupported";
+  }
   if (stale) {
     emitter.emit("freshness.baseline.judgment-digest-mismatch", "A baseline judgment binds a node revision or Decision digest that no longer matches the candidate.", { artifact });
     return "outdated";
   }
+  for (const entry of values<Record<string, any>>(baseline.promotion_reconciliation)) {
+    const subject = asNodeReference(entry.node);
+    if (subject === null || !["pending", "resolved"].includes(String(entry.state))) {
+      emitter.emit("freshness.reconciliation.invalid", "A promotion-reconciliation entry does not name one node with one closed state.", { artifact });
+      return "unsupported";
+    }
+  }
   const confirmation = asObject(baseline.confirmation) ?? {};
   if (confirmation.claim === "semantically-reviewed-delta") {
+    if (!Array.isArray(confirmation.computed_closure) || !Array.isArray(confirmation.performed_set)) {
+      emitter.emit("freshness.claim.delta-completeness-unprovable", "The delta claim carries no reproducible computed closure and performed set.", { artifact });
+      return "unsupported";
+    }
+    const unresolvedClosure = values<NodeReference>(confirmation.computed_closure)
+      .filter((node) => !revisionByNode.has(nodeKey(node)));
+    if (unresolvedClosure.length > 0) {
+      emitter.emit("freshness.claim.delta-completeness-unprovable", "The delta claim closure references nodes the candidate graph cannot resolve.", { artifact });
+      return "unsupported";
+    }
     const performedSet = new Set(values<NodeReference>(confirmation.performed_set).map(nodeKey));
     const closure = values<NodeReference>(confirmation.computed_closure).map(nodeKey);
     const markedPerformed = new Set(
@@ -670,6 +712,31 @@ export function evaluateKnowledgeGraph(args: {
     }
   }
 
+  // Declared external dependencies and authority inputs must bind resolvable
+  // graph nodes and unique identities beyond their schema shape.
+  const dependencyIds = new Set<string>();
+  values<Record<string, any>>(bundle.external_dependencies).forEach((dependency, index) => {
+    const dependent = asNodeReference(dependency.dependent);
+    const id = String(dependency.id);
+    if (dependent === null || !nodeKeys.has(nodeKey(dependent)) || dependencyIds.has(id)) {
+      emitter.emit("external-dependency.invalid", "An external dependency must bind one unique identity and one resolvable dependent node.", {
+        artifact: ".nourd/knowledge/bundle.yaml", instance_pointer: `/external_dependencies/${index}`,
+      });
+    }
+    dependencyIds.add(id);
+  });
+  const authorityIds = new Set<string>();
+  values<Record<string, any>>(bundle.authority_inputs).forEach((authority, index) => {
+    const subject = asNodeReference(authority.subject);
+    const id = String(authority.id);
+    if (subject === null || !nodeKeys.has(nodeKey(subject)) || authorityIds.has(id)) {
+      emitter.emit("authority-input.invalid", "An authority input must bind one unique identity and one resolvable subject node.", {
+        artifact: ".nourd/knowledge/bundle.yaml", instance_pointer: `/authority_inputs/${index}`,
+      });
+    }
+    authorityIds.add(id);
+  });
+
   const graphInput = {
     contract: "nkf.graph-revision", nkf_version: nkfVersion, bundle: bundle.id,
     profile: bundle.root?.profile, nodes: nodeRevisions, edges,
@@ -776,6 +843,35 @@ export function evaluateKnowledgeGraph(args: {
   const baselineNodes = new Map(values<Record<string, any>>(baseline?.node_revisions).map((entry) => [nodeKey(entry.node as NodeReference), entry.revision?.value]));
   const nodeResults: KnowledgeGraphResult["nodes"] = [];
   const blockingRules = new Set<string>();
+  if (request.purpose !== null && request.purpose !== undefined && request.purpose !== "historical-reproduction" && baseline !== null) {
+    const confirmation = asObject(baseline.confirmation);
+    if (typeof confirmation?.reviewer?.id !== "string" || typeof confirmation?.claim !== "string") {
+      emitter.emit("freshness.review.missing", "The reviewed baseline carries no named reviewer with an explicit review claim.", { artifact: String(bundle.knowledge_graph?.baseline) });
+      blockingRules.add("freshness.review.missing");
+    }
+    const classified = new Set(
+      values<Record<string, any>>(baseline.decision_classifications)
+        .filter((entry) => entry.purpose === request.purpose)
+        .map((entry) => String(entry.decision)),
+    );
+    for (const decision of decisions) {
+      if (!classified.has(decision)) {
+        emitter.emit("freshness.decision.unclassified", "An accepted Decision has no semantic classification for this evaluation purpose.", { record_id: decision });
+        blockingRules.add("freshness.decision.unclassified");
+      }
+    }
+  }
+  if (request.purpose === "change-impact") {
+    // The policy may narrow propagation but never a changed node itself; a
+    // selection that omits one is a false negative and fails closed.
+    const changed = changedNodeKeys(request, baseline, nodeRevisions, bundle);
+    const missed = [...changed].filter((key) => !selected.has(key));
+    const missedKey = missed[0];
+    if (missedKey !== undefined) {
+      emitter.emit("freshness.policy.false-negative", "The evaluation policy excluded a changed node from its own impact selection.", { node_id: missedKey });
+      blockingRules.add("freshness.policy.false-negative");
+    }
+  }
   if (
     nkfVersion === "0.7" &&
     baseline !== null &&
