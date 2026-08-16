@@ -2853,7 +2853,7 @@ governed_artifacts:
     path: src/checker/topology.ts
     digest:
       algorithm: sha-256
-      value: c80d71a66711a00666c30e6fbf194c769471992a1b2a1410e1699546a9bdd70e
+      value: "cb15cfd98b6b4a70939db4a44db82f74a2a07c80baab52630ccc2c6910cbd5a1"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-types-ts

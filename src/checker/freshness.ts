@@ -776,6 +776,14 @@ export function evaluateKnowledgeGraph(args: {
   const baselineNodes = new Map(values<Record<string, any>>(baseline?.node_revisions).map((entry) => [nodeKey(entry.node as NodeReference), entry.revision?.value]));
   const nodeResults: KnowledgeGraphResult["nodes"] = [];
   const blockingRules = new Set<string>();
+  if (
+    nkfVersion === "0.7" &&
+    baseline !== null &&
+    request.purpose !== null && request.purpose !== undefined && request.purpose !== "historical-reproduction" &&
+    values<Record<string, any>>(baseline.promotion_reconciliation).some((entry) => entry.state === "pending")
+  ) {
+    blockingRules.add("freshness.reconciliation.pending");
+  }
   const blockingNodeKeys = new Set<string>();
   for (const entry of nodeRevisions) {
     const key = nodeKey(entry.node);

@@ -249,7 +249,7 @@ export function validatePortableTopology(input: TopologyInput): void {
   };
 
   const version = String(bundle.nkf_version ?? "0.1");
-  const modernTopology = version === "0.5" || version === "0.6";
+  const modernTopology = version === "0.5" || version === "0.6" || version === "0.7";
   const taskIndexPaths = modernTopology
     ? {
         active: "tasks/by-state/active.md",
