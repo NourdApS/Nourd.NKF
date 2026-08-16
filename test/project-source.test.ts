@@ -18,7 +18,6 @@ import { sha256 } from "../src/checker/util.js";
 import {
   copyValidFixture,
   options,
-  repositoryRoot,
 } from "./helpers.js";
 
 async function readBundle(project: string): Promise<Record<string, any>> {
