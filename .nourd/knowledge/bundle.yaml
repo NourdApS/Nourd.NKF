@@ -3093,7 +3093,7 @@ governed_artifacts:
     path: test/project-source.test.ts
     digest:
       algorithm: sha-256
-      value: 266f1352e2757d6905b9f4be7fde48fa4bab71202987d3c1590b70767e9799c5
+      value: "122e6dfb1e89f8cef7365c0370b4e1af94317d9321fa7e599f1588cccb6f68df"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-public-docs-test-ts
