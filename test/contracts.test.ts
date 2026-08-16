@@ -15,16 +15,16 @@ async function copyAuthority(): Promise<string> {
     path.join(root, "knowledge/specifications/nkf-0.2.md"),
   );
   await cp(
-    path.join(repositoryRoot, "contracts/nkf/0.2"),
-    path.join(root, "contracts/nkf/0.2"),
+    path.join(repositoryRoot, "contracts/nkf/0.6"),
+    path.join(root, "contracts/nkf/0.6"),
     { recursive: true },
   );
-  return path.join(root, "contracts/nkf/0.2");
+  return path.join(root, "contracts/nkf/0.6");
 }
 
 describe("accepted NKF 0.2 contract realization", () => {
   it("strictly loads the exact accepted authority and schema bindings", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.6"], "0.2");
     expect(loaded.diagnostics).toEqual([]);
     expect(loaded.executable.contract).toBe("nkf.contract-set");
     expect(loaded.executable.nkf_version).toBe("0.2");
@@ -36,7 +36,7 @@ describe("accepted NKF 0.2 contract realization", () => {
       "verified",
     ]);
     expect(loaded.artifacts.core.executable.expected_sha256).toBe(
-      VERSION_BINDINGS["0.2"].executable.sha256,
+      VERSION_BINDINGS["0.6"].executable.sha256,
     );
   });
 
@@ -46,7 +46,7 @@ describe("accepted NKF 0.2 contract realization", () => {
       path.resolve(unavailableRoot, "../../../knowledge/specifications/nkf-0.2.md"),
     );
     expect(
-      (await loadContracts(unavailableRoot, VERSION_BINDINGS["0.2"], "0.2")).diagnostics.map(
+      (await loadContracts(unavailableRoot, VERSION_BINDINGS["0.6"], "0.2")).diagnostics.map(
         (diagnostic) => diagnostic.rule_id,
       ),
     ).toContain("contract-set.unavailable");
@@ -58,7 +58,7 @@ describe("accepted NKF 0.2 contract realization", () => {
       "utf8",
     );
     expect(
-      (await loadContracts(mismatchedRoot, VERSION_BINDINGS["0.2"], "0.2")).diagnostics.map(
+      (await loadContracts(mismatchedRoot, VERSION_BINDINGS["0.6"], "0.2")).diagnostics.map(
         (diagnostic) => diagnostic.rule_id,
       ),
     ).toContain("contract-set.binding-mismatch");
@@ -68,7 +68,7 @@ describe("accepted NKF 0.2 contract realization", () => {
     const unavailableRoot = await copyAuthority();
     await unlink(path.join(unavailableRoot, "schemas/bundle.schema.json"));
     expect(
-      (await loadContracts(unavailableRoot, VERSION_BINDINGS["0.2"], "0.2")).diagnostics.map(
+      (await loadContracts(unavailableRoot, VERSION_BINDINGS["0.6"], "0.2")).diagnostics.map(
         (diagnostic) => diagnostic.rule_id,
       ),
     ).toContain("schema.unavailable");
@@ -80,7 +80,7 @@ describe("accepted NKF 0.2 contract realization", () => {
       "utf8",
     );
     expect(
-      (await loadContracts(mismatchedRoot, VERSION_BINDINGS["0.2"], "0.2")).diagnostics.map(
+      (await loadContracts(mismatchedRoot, VERSION_BINDINGS["0.6"], "0.2")).diagnostics.map(
         (diagnostic) => diagnostic.rule_id,
       ),
     ).toContain("schema.binding-mismatch");

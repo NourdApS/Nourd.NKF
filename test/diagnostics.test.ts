@@ -10,7 +10,7 @@ import { contractRoot, repositoryRoot } from "./helpers.js";
 
 describe("stable native diagnostic implementation", () => {
   it("binds every accepted rule to exact registry metadata", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.6"], "0.2");
     const registry = loaded.executable.diagnostics.rules as Record<
       string,
       Pick<Diagnostic, "severity" | "blocking" | "phase">
@@ -31,7 +31,7 @@ describe("stable native diagnostic implementation", () => {
   });
 
   it("has an implementation reference for every accepted rule identity", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.6"], "0.2");
     const registry = Object.keys(
       loaded.executable.diagnostics.rules as Record<string, unknown>,
     );
@@ -50,7 +50,7 @@ describe("stable native diagnostic implementation", () => {
   });
 
   it("has a fixture assertion reference for every accepted rule identity", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.2"], "0.2");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.6"], "0.2");
     const registry = Object.keys(
       loaded.executable.diagnostics.rules as Record<string, unknown>,
     );
