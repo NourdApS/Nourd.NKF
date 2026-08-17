@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Layered Contract Enforcement
 source:
-  path: realizations/current/layered-contract-enforcement.md
-  stable_path: realizations/current/layered-contract-enforcement.md
+  path: realizations/items/layered-contract-enforcement.md
+  stable_path: realizations/items/layered-contract-enforcement.md
   digest:
     algorithm: sha-256
     value: 720dbdd1552c9b7f0810f52e8ff31cdbb82f4813dbe7d1d4f6d6aa8203efa092

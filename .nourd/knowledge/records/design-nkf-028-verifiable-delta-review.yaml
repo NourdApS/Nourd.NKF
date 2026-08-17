@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/nkf-0-7-verifiable-delta-review.md
   digest:
     algorithm: sha-256
-    value: "2ea26678210defe3e72d2ac7fd9d004deeedcd2dc03c99ac300c4d5555cfb6d6"
+    value: 533d6d8a7ef31b4dc61ae9465a757ca277592387ecd558bd70ffc7faa78f64e0
 governance:
   lifecycle: living
   status: draft

@@ -45,39 +45,39 @@ establishes it.
 
 [Active Design Index](by-disposition/active.md)
 
-- [NKF Task Scope Gate](active/task-scope-gate.md)
+- [NKF Task Scope Gate](items/task-scope-gate.md)
 
 ## Adopted
 
 [Adopted Design Index](by-disposition/adopted.md)
 
-- [Acceptance Provenance](adopted/acceptance-provenance.md)
-- [Agent-Led Initial Onboarding](adopted/agent-led-initial-onboarding.md)
-- [Common And Root Profiles](adopted/common-and-root-profiles.md)
-- [Complete Portable Onboarding Topology](adopted/complete-portable-onboarding-topology.md)
-- [Decision Applicability Gate](adopted/decision-applicability-gate.md)
-- [Enforcement And Diagnostics](adopted/enforcement-and-diagnostics.md)
-- [Extension Declaration And Resolution](adopted/extension-declaration-and-resolution.md)
-- [Governed Frontmatter](adopted/governed-frontmatter.md)
-- [Initial Release Distribution](adopted/initial-release-distribution.md)
-- [Initial Greenfield Onboarding](adopted/initial-greenfield-onboarding.md)
-- [Knowledge Architecture](adopted/knowledge-architecture.md)
-- [Layered Contract Enforcement](adopted/layered-contract-enforcement.md)
-- [Native Bundle Serialization](adopted/native-bundle-serialization.md)
-- [Native Record Serialization](adopted/native-record-serialization.md)
+- [Acceptance Provenance](items/acceptance-provenance.md)
+- [Agent-Led Initial Onboarding](items/agent-led-initial-onboarding.md)
+- [Common And Root Profiles](items/common-and-root-profiles.md)
+- [Complete Portable Onboarding Topology](items/complete-portable-onboarding-topology.md)
+- [Decision Applicability Gate](items/decision-applicability-gate.md)
+- [Enforcement And Diagnostics](items/enforcement-and-diagnostics.md)
+- [Extension Declaration And Resolution](items/extension-declaration-and-resolution.md)
+- [Governed Frontmatter](items/governed-frontmatter.md)
+- [Initial Release Distribution](items/initial-release-distribution.md)
+- [Initial Greenfield Onboarding](items/initial-greenfield-onboarding.md)
+- [Knowledge Architecture](items/knowledge-architecture.md)
+- [Layered Contract Enforcement](items/layered-contract-enforcement.md)
+- [Native Bundle Serialization](items/native-bundle-serialization.md)
+- [Native Record Serialization](items/native-record-serialization.md)
 - [NKF 0.6 Corrective Release And Open-Source Licensing](items/nkf-0-6-corrective-release-and-open-source-licensing.md)
 - [NKF 0.7 Verifiable Delta Review](items/nkf-0-7-verifiable-delta-review.md)
-- [NKF Freshness And Deterministic Knowledge Graph](adopted/freshness-and-deterministic-knowledge-graph.md)
-- [NKF 0.3 Immutable Freeze And Proven Self-Adoption](adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
-- [Presentation Guidance](adopted/presentation-guidance.md)
-- [Product Responsibility Identifiers](adopted/product-responsibility-identifiers.md)
-- [Product Technology Common Allocation](adopted/product-technology-common-allocation.md)
-- [Project Path And Knowledge Coverage](adopted/project-path-and-knowledge-coverage.md)
-- [Release Documentation And Adoption](adopted/release-documentation-and-adoption.md)
-- [Section Role Vocabularies](adopted/section-role-vocabularies.md)
-- [Semantic Topology And Bindings](adopted/semantic-topology-and-bindings.md)
-- [Single-Version Artifact Authority](adopted/single-version-artifact-authority.md)
-- [Technology Root Profile](adopted/technology-root-profile.md)
+- [NKF Freshness And Deterministic Knowledge Graph](items/freshness-and-deterministic-knowledge-graph.md)
+- [NKF 0.3 Immutable Freeze And Proven Self-Adoption](items/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
+- [Presentation Guidance](items/presentation-guidance.md)
+- [Product Responsibility Identifiers](items/product-responsibility-identifiers.md)
+- [Product Technology Common Allocation](items/product-technology-common-allocation.md)
+- [Project Path And Knowledge Coverage](items/project-path-and-knowledge-coverage.md)
+- [Release Documentation And Adoption](items/release-documentation-and-adoption.md)
+- [Section Role Vocabularies](items/section-role-vocabularies.md)
+- [Semantic Topology And Bindings](items/semantic-topology-and-bindings.md)
+- [Single-Version Artifact Authority](items/single-version-artifact-authority.md)
+- [Technology Root Profile](items/technology-root-profile.md)
 
 ## Rejected
 
@@ -89,10 +89,10 @@ No Design is currently classified as Rejected.
 
 [Superseded Design Index](by-disposition/superseded.md)
 
-- [Artifact Identities And Contract Versioning](superseded/artifact-identities-and-contract-versioning.md)
-- [Initial JSON Schema Realization](superseded/initial-json-schema-realization.md)
-- [Record V2 Responsibility Bindings](superseded/record-v2-responsibility-bindings.md)
-- [Replacement JSON Schema Realization](superseded/replacement-json-schema-realization.md)
+- [Artifact Identities And Contract Versioning](items/artifact-identities-and-contract-versioning.md)
+- [Initial JSON Schema Realization](items/initial-json-schema-realization.md)
+- [Record V2 Responsibility Bindings](items/record-v2-responsibility-bindings.md)
+- [Replacement JSON Schema Realization](items/replacement-json-schema-realization.md)
 
 ## Withdrawn
 

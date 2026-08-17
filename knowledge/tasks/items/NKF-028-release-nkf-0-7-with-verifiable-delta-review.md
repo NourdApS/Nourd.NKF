@@ -36,8 +36,8 @@ conversation:
 5. The test-harness corrections (knowledge-proportional bounds for
    repository-scaled exercises, child-process reaping on test timeout, and
    release-verifier generalization) are in scope.
-6. The stale [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
-   and [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+6. The stale [NKF-025](NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+   and [NKF-026](NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
    conclusions are performed under this Task using the corrected mechanics.
 7. Large-monolith onboarding is explicitly deferred as a future-version
    headline and is not pinned to any version number.
@@ -136,8 +136,8 @@ Deliver one immutable NKF 0.7 release in which:
 - the test harness bounds repository-scaled exercises proportionally to
   knowledge size, reaps timed-out child processes, and verifies the
   recommended release without hand-edited version literals; and
-- [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md) and
-  [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+- [NKF-025](NKF-025-validate-freshness-and-knowledge-graph-direction.md) and
+  [NKF-026](NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
   conclude truthfully under the corrected mechanics.
 
 ## Fixed Product Boundaries
@@ -217,8 +217,8 @@ compatibility returns to the Human Product Owner.
 11. Classification of the undeclared non-Markdown provenance boundary under
     the knowledge root: a closed provenance class or an explicit exemption
     in the authority.
-12. Conclude [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
-    and [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+12. Conclude [NKF-025](NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+    and [NKF-026](NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
     truthfully under this Task, including the explicit recorded Human
     Product Owner exception for the never-performed NKF 0.5 post-adoption
     audit and the factual record of the historical pull-request-readiness
@@ -236,10 +236,10 @@ compatibility returns to the Human Product Owner.
 - repository visibility changes, trademark, governance, contribution, or
   community policy;
 - protected-branch enforcement, which remains owned by
-  [NKF-012](../deferred/NKF-012-activate-protected-merge-gate.md);
+  [NKF-012](NKF-012-activate-protected-merge-gate.md);
 - the deferred investigations owned by
-  [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md)
-  and [NKF-021](../deferred/NKF-021-task-scope-gate.md) beyond preserving
+  [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md)
+  and [NKF-021](NKF-021-task-scope-gate.md) beyond preserving
   their deferred authority; and
 - making AI semantic review deterministic proof, or letting any scaffold,
   diff, or carry-forward mechanism supply a semantic judgment.
@@ -282,8 +282,8 @@ compatibility returns to the Human Product Owner.
    post-audit ordering, and stop for the separately authorized publication,
    recommendation, and producer promotion, performing the one last
    whole-root review at that promotion.
-10. Conclude [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md),
-    [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md),
+10. Conclude [NKF-025](NKF-025-validate-freshness-and-knowledge-graph-direction.md),
+    [NKF-026](NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md),
     and this Task truthfully, mark the single pull request ready, and leave
     the Human Product Owner one merge to `master`.
 
@@ -326,8 +326,8 @@ compatibility returns to the Human Product Owner.
   verifier carries no hand-edited version literal.
 - The undeclared provenance boundary is explicitly classified in the
   authority.
-- [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md) and
-  [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+- [NKF-025](NKF-025-validate-freshness-and-knowledge-graph-direction.md) and
+  [NKF-026](NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
   are concluded truthfully with the recorded Human Product Owner exception
   and the historical ordering violation stated as fact.
 - `npm run nkf:check` passes every handoff, and one pull request delivers
@@ -477,4 +477,4 @@ still verifies.
 | The reconciled confirmation ordering is satisfiable and exercised without exception on this release | proven | runtime-behaviour | none |
 | Stepping-stone migration through published archives works and is explicitly signaled under the shrunken window | proven | runtime-behaviour | none |
 | Repository-scaled test bounds derive from knowledge size and timed-out exercises leave no live child process | proven | runtime-behaviour | none |
-| [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md) and [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md) conclude truthfully under the corrected mechanics | proven | runtime-behaviour | none |
+| [NKF-025](NKF-025-validate-freshness-and-knowledge-graph-direction.md) and [NKF-026](NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md) conclude truthfully under the corrected mechanics | proven | runtime-behaviour | none |

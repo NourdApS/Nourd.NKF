@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Unified Adopt Operation
 source:
-  path: designs/adopted/unified-adopt-operation.md
-  stable_path: designs/adopted/unified-adopt-operation.md
+  path: designs/items/unified-adopt-operation.md
+  stable_path: designs/items/unified-adopt-operation.md
   digest:
     algorithm: sha-256
     value: c1e6708944751489d21cc8a44f70173db8323da093d88a8ce5006f29a9c62ce2

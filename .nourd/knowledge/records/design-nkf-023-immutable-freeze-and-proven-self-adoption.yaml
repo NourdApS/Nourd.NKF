@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.3 Immutable Freeze And Proven Self-Adoption
 source:
-  path: designs/adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md
-  stable_path: designs/adopted/nkf-0-3-immutable-freeze-and-proven-self-adoption.md
+  path: designs/items/nkf-0-3-immutable-freeze-and-proven-self-adoption.md
+  stable_path: designs/items/nkf-0-3-immutable-freeze-and-proven-self-adoption.md
   digest:
     algorithm: sha-256
     value: 5a187ca79b49d86031cbcf8913c6eb26c84fa8b35780de924c8b014743a01174

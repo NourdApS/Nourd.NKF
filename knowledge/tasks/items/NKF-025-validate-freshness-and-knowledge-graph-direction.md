@@ -200,7 +200,7 @@ format meaning.
 ## Scope
 
 - reconcile the confirmed direction with current accepted NKF Decisions,
-  deferred [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md),
+  deferred [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md),
   current 0.4 authority, and the consolidated Realization;
 - inventory every NKF knowledge and declaration surface that can currently
   become stale, invalidated, contradictory, superseded, or unverifiable;
@@ -232,9 +232,9 @@ format meaning.
 - treating AI semantic review as deterministic proof or letting validation
   accept knowledge;
 - implementing deferred
-  [NKF-021](../deferred/NKF-021-task-scope-gate.md) or absorbing its scope into this Task;
+  [NKF-021](NKF-021-task-scope-gate.md) or absorbing its scope into this Task;
 - replacing the authority-freshness investigation owned by
-  [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md); and
+  [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md); and
 - automatic cross-repository discovery, external polling, or a public graph
   registry.
 
@@ -329,7 +329,7 @@ format meaning.
   impact-policy, relationship-completeness, external-observability, or
   targeted-review contract.
 - The adopted
-  [NKF Freshness And Deterministic Knowledge Graph](../../designs/adopted/freshness-and-deterministic-knowledge-graph.md)
+  [NKF Freshness And Deterministic Knowledge Graph](../../designs/items/freshness-and-deterministic-knowledge-graph.md)
   Design consolidates the confirmed direction. Exact serialization,
   relationship-policy mapping, baseline-confirmation mechanics and evidence,
   receipt operations and storage, migration, and broader consumer proof remain
@@ -434,7 +434,7 @@ into normative meaning by
 [ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md),
 implemented and released as NKF 0.5, corrected and re-released as NKF 0.6,
 and carried forward into the digest-bound NKF 0.7 successor under
-[NKF-028](../items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md),
+[NKF-028](NKF-028-release-nkf-0-7-with-verifiable-delta-review.md),
 which made the reviewed baseline's carry-forward verifiable — the exact
 follow-on this validation recommended. As recorded history: the Human
 Product Owner explicitly directed that the NKF 0.6 pull request merge while

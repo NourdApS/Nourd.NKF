@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Freshness And Deterministic Knowledge Graph
 source:
-  path: designs/adopted/freshness-and-deterministic-knowledge-graph.md
-  stable_path: designs/adopted/freshness-and-deterministic-knowledge-graph.md
+  path: designs/items/freshness-and-deterministic-knowledge-graph.md
+  stable_path: designs/items/freshness-and-deterministic-knowledge-graph.md
   digest:
     algorithm: sha-256
     value: b1f47ce3e3ffbfb74c453696989358e3020269a7f6ee22b5caf55fd01fa00d8a

@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Initial Release Distribution
 source:
-  path: designs/adopted/initial-release-distribution.md
-  stable_path: designs/adopted/initial-release-distribution.md
+  path: designs/items/initial-release-distribution.md
+  stable_path: designs/items/initial-release-distribution.md
   digest:
     algorithm: sha-256
     value: 8b10d884bc78ab8b665c028a68cc5fc91c6052720bcf163ac392542b27f98862

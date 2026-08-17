@@ -170,10 +170,10 @@ stops at that boundary and returns to the Human Product Owner.
 - automatic unbounded cross-repository discovery, public graph registries, or
   hidden external polling;
 - implementing the deferred
-  [NKF-021 Task Scope Gate](../deferred/NKF-021-task-scope-gate.md) beyond the
+  [NKF-021 Task Scope Gate](NKF-021-task-scope-gate.md) beyond the
   minimal non-overlap needed to preserve its deferred authority;
 - completing the separate authority-freshness investigation owned by
-  [NKF-005](../deferred/NKF-005-validation-expiry-and-authority-freshness.md)
+  [NKF-005](NKF-005-validation-expiry-and-authority-freshness.md)
   except where its current accepted constraints directly apply;
 - protected-branch enforcement, general acceptance-binding verification, or
   a claim of Governing Use readiness; and
@@ -453,7 +453,7 @@ NKF 0.5 was derived from the direction adopted by
 implemented, released, and self-adopted. Its first ordinary authoring act
 then exposed the published repin defect, and the corrective NKF 0.6 release
 under
-[NKF-027](../items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
+[NKF-027](NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 superseded the installed 0.5 state before the planned 0.5 post-adoption audit
 could run. The Human Product Owner accepts that the NKF 0.5 post-adoption
 audit was never performed and can no longer be performed, because the first
@@ -466,7 +466,7 @@ that the NKF 0.6 pull request merge while this Task remained active; this
 close concludes the Task after that merge, with the delivered freshness and
 knowledge-graph implementation carried forward through NKF 0.6 into the
 digest-bound NKF 0.7 successor under
-[NKF-028](../items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md).
+[NKF-028](NKF-028-release-nkf-0-7-with-verifiable-delta-review.md).
 
 ## Decision Applicability
 

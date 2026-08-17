@@ -1,6 +1,6 @@
 # NKF Authoring Protocol
 
-NKF Version: 0.6
+NKF Version: 0.7
 
 This is the complete vendor-neutral procedure for creating, changing,
 classifying, migrating, auditing, or validating NKF-governed knowledge in an
@@ -113,7 +113,7 @@ Before Git-backed work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under native NKF 0.6 frontmatter, a record carries only common orientation plus
+Under native NKF 0.7 frontmatter, a record carries only common orientation plus
 `id` and `type`; Task state, ownership, relationships, Design disposition,
 governance, freshness, and confirmation live in YAML declarations. Preserved
 predecessor sources may retain inert mutable keys only through an exact
@@ -121,7 +121,10 @@ predecessor sources may retain inert mutable keys only through an exact
 same-bundle reference to another governed document — an `ADR NNNN` decision
 mention, a record identifier code span, or a Task identifier — must be a
 deep link resolving to the referenced document's exact source path,
-including the gate's Reference and Exception cells.
+including the gate's Reference and Exception cells. Predecessor-locked
+sources, immutable record sources, and Evidence byte sets keep their exact
+historical bytes: they are never retargeted, and their references resolve as
+history under the accepted Specification's closed rules.
 
 ## Transition A Task Deliberately
 
@@ -153,10 +156,17 @@ transition.
 Task state changes update the stable YAML document declaration and regenerate
 `tasks/by-state/*.md`; they never move canonical Task Markdown or rewrite
 inbound links. Design disposition changes behave the same way through
-`designs/by-disposition/*.md`. Repository Git and review mechanics remain
-project-owned operational state. If a repository uses a task branch and merge
-request, those systems carry review state; NKF does not infer or serialize it
-as document lifecycle truth.
+`designs/by-disposition/*.md`. In a Git repository the deterministic
+transition also performs the Git act: it refuses a dirty work tree before
+mutation; activation creates the `task/<task_id>` branch and its working
+tree from the clean, up-to-date default branch, materializes gitignored
+governed artifacts there, and opens the draft merge request; conclusion —
+close, defer, or cancel — commits, pushes, marks the request ready, and
+releases the working tree. A failed Git step is reported as one truthful
+`incomplete` operational result without touching the applied knowledge
+change. Git remains operational output: no branch, request, or remote is
+ever a conformance input, a repository without Git or a remote stays fully
+conformant, and merging stays the repository's human review act.
 
 ## Perform Governed Mechanics Deterministically
 
@@ -167,13 +177,22 @@ substitutes for the other.
 
 Use the internal deterministic adopter commands for governed mechanics instead of
 hand-editing: `task` updates stable Task declaration state, regenerates
-lifecycle navigation, and applies result and digest consequences without a
-source move or inbound-link rewrite; `repin` recomputes record and governed-artifact
+lifecycle navigation, applies result and digest consequences without a
+source move or inbound-link rewrite, and performs the Git transition act
+with truthful reporting; `repin` recomputes record and governed-artifact
 digests after edits; `linkify` rewrites plain same-bundle references into
 verified deep links; `refs` exports the identifier-to-path reference map;
 `set` exports the exact accepted release-set member paths, classes, and modes;
-and `migrate` performs a declared prior-version migration beneath the one
-public Adopt operation. Every command
+`review --scaffold` emits the exact review-input skeleton with carried
+judgments prefilled and the computed required fresh set left to the named
+reviewer; `record --scaffold` emits a declaration skeleton with exact digests
+and section heading paths and no semantic values; and `migrate` performs the
+declared 0.6-to-0.7 migration beneath the one public Adopt operation. A
+judgment carries forward only by digest identity under the accepted
+version-delta declaration and the evaluation policy's declared judgment
+dependencies; a delta review claim is admitted only when the
+performed set contains the computed closure, and whole-root review remains
+the recovery path. Every command
 validates its staged result and rolls back on failure. Prose, gate
 truthfulness, classification, and acceptance stay with the author: a command
 supplies no meaning and accepts nothing.

@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Task Scope Gate
 source:
-  path: designs/active/task-scope-gate.md
-  stable_path: designs/active/task-scope-gate.md
+  path: designs/items/task-scope-gate.md
+  stable_path: designs/items/task-scope-gate.md
   digest:
     algorithm: sha-256
     value: 37fdc75dd8c353967f49cee515bbad144b179dba0f2fae2d53a980e63c73fe1d

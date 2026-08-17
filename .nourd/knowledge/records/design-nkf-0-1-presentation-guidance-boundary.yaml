@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Presentation-Guidance Boundary
 source:
-  path: designs/adopted/presentation-guidance.md
-  stable_path: designs/adopted/presentation-guidance.md
+  path: designs/items/presentation-guidance.md
+  stable_path: designs/items/presentation-guidance.md
   digest:
     algorithm: sha-256
     value: 9daa8de9dd8f92a638c91112cb2de11a8bc42d77855595bde725e834a646750d

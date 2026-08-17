@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Layered Contract Enforcement
 source:
-  path: designs/adopted/layered-contract-enforcement.md
-  stable_path: designs/adopted/layered-contract-enforcement.md
+  path: designs/items/layered-contract-enforcement.md
+  stable_path: designs/items/layered-contract-enforcement.md
   digest:
     algorithm: sha-256
     value: 8b432f055fdc6773b3f7a9aa2cd8923b277aa70d4113f6b3c6cac7c4ac578dce

@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Enforcement And Diagnostics
 source:
-  path: designs/adopted/enforcement-and-diagnostics.md
-  stable_path: designs/adopted/enforcement-and-diagnostics.md
+  path: designs/items/enforcement-and-diagnostics.md
+  stable_path: designs/items/enforcement-and-diagnostics.md
   digest:
     algorithm: sha-256
     value: e7367480316a58bcd166d15cdb7e8b68a34e9d40e41bfdb650948890a3631a7d

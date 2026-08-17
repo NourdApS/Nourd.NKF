@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Common And Root Profile Proposal
 source:
-  path: designs/adopted/common-and-root-profiles.md
-  stable_path: designs/adopted/common-and-root-profiles.md
+  path: designs/items/common-and-root-profiles.md
+  stable_path: designs/items/common-and-root-profiles.md
   digest:
     algorithm: sha-256
     value: 471a798ddb83878d2ae02e68581140645e6068b80c22c71e80abded88b171591

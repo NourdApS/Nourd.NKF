@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Decision Applicability Gate
 source:
-  path: designs/adopted/decision-applicability-gate.md
-  stable_path: designs/adopted/decision-applicability-gate.md
+  path: designs/items/decision-applicability-gate.md
+  stable_path: designs/items/decision-applicability-gate.md
   digest:
     algorithm: sha-256
     value: 596ca01321b1f084c6d9dd90c4cd86904ffd71f863b2af803884cb6782c0fca8

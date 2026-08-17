@@ -9,7 +9,7 @@ created_at: 2026-07-28T22:01:17Z
 Specifications own current accepted normative NKF meaning.
 
 [NKF 0.2](nkf-0.2.md) is the accepted successor specification produced under
-[NKF-019](../tasks/completed/NKF-019-decision-applicability-gate.md): it adds the Decision Applicability Gate, the versioned-set
+[NKF-019](../tasks/items/NKF-019-decision-applicability-gate.md): it adds the Decision Applicability Gate, the versioned-set
 evolution rules, and the title-free dynamic frontmatter, with its
 digest-bound executable companion at `contracts/nkf/0.2/nkf.yaml`. [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md)
 accepts the exact pair. It governs repositories that declare NKF 0.2;
@@ -19,7 +19,7 @@ sources live in Git history and the 0.1 release archives rather than in
 this working tree.
 
 [NKF 0.3](nkf-0.3.md) is the immutable published predecessor Specification under
-[NKF-023](../tasks/completed/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
+[NKF-023](../tasks/items/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md).
 [ADR 0110](../decisions/0110-accept-the-nkf-0-3-authority-pair.md) accepts its
 exact normative Markdown and digest-bound executable companion. It establishes
 publication-triggered freeze, one deterministic complete release-set contract,
@@ -30,7 +30,7 @@ immutable.
 
 [NKF 0.4](nkf-0.4.md) is the accepted non-breaking dependency-security
 successor under
-[NKF-024](../tasks/completed/NKF-024-release-nkf-0-4-dependency-security-maintenance.md).
+[NKF-024](../tasks/items/NKF-024-release-nkf-0-4-dependency-security-maintenance.md).
 [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md) accepts its
 exact normative Markdown and digest-bound executable companion under the
 maintenance delegation in
@@ -40,7 +40,7 @@ repository adoption remain separate later boundaries.
 
 [NKF 0.5 revision 2](nkf-0.5-revision-2.md) is the immutable accepted,
 published, recommended, and producer-adopted predecessor under
-[NKF-026](../tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+[NKF-026](../tasks/items/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
 and
 [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md).
 Its digest-bound executable companion lives at
@@ -85,3 +85,7 @@ select Product or Technology; General is not a selectable root.
 Earlier authority pairs and derived artifacts remain immutable historical
 provenance under Decisions, Evidence, Git, and source snapshots. Realizations
 describe the current implementation but cannot override this Specification.
+
+## NKF 0.7
+
+- [NKF 0.7 — Product And Technology Knowledge Format](nkf-0.7.md)

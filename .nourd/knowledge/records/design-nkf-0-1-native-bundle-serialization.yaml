@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Native Bundle Serialization
 source:
-  path: designs/adopted/native-bundle-serialization.md
-  stable_path: designs/adopted/native-bundle-serialization.md
+  path: designs/items/native-bundle-serialization.md
+  stable_path: designs/items/native-bundle-serialization.md
   digest:
     algorithm: sha-256
     value: dfe342d0a684273cd6fd7b8f3207581279dd1da6c414a1caa4bcda0e59df1ad4

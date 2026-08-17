@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: Reconcile Single-Version Artifact Authority
 source:
-  path: designs/adopted/single-version-artifact-authority.md
-  stable_path: designs/adopted/single-version-artifact-authority.md
+  path: designs/items/single-version-artifact-authority.md
+  stable_path: designs/items/single-version-artifact-authority.md
   digest:
     algorithm: sha-256
     value: 73fd03ef9fdc8d6ff189b43ce508c47e4ee1b3b59f1e0bab9d98862d5f3841ad

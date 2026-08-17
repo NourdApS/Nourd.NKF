@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF-007 Knowledge Architecture
 source:
-  path: designs/adopted/knowledge-architecture.md
-  stable_path: designs/adopted/knowledge-architecture.md
+  path: designs/items/knowledge-architecture.md
+  stable_path: designs/items/knowledge-architecture.md
   digest:
     algorithm: sha-256
     value: 1fa3d64dfd50d38498caf180176d51b193a0a9c7fb402e843df0eb8037e4bd99

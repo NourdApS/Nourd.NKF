@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Agent-Led Initial Onboarding
 source:
-  path: realizations/current/agent-led-initial-onboarding.md
-  stable_path: realizations/current/agent-led-initial-onboarding.md
+  path: realizations/items/agent-led-initial-onboarding.md
+  stable_path: realizations/items/agent-led-initial-onboarding.md
   digest:
     algorithm: sha-256
     value: b0a3e4af23f82f3f033a1d4cd419c1cf0b65f7d078a368adde1afc54ed58f603

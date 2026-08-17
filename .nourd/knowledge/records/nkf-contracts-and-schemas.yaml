@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Contracts And Schemas
 source:
-  path: realizations/current/contracts-and-schemas.md
-  stable_path: realizations/current/contracts-and-schemas.md
+  path: realizations/items/contracts-and-schemas.md
+  stable_path: realizations/items/contracts-and-schemas.md
   digest:
     algorithm: sha-256
     value: 1bfeda91ca2e8cfc82187985fafd905d1f89ffc627039d7ccc5736ebe7e219ae

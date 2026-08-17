@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Checker And Validation
 source:
-  path: realizations/current/checker-and-validation.md
-  stable_path: realizations/current/checker-and-validation.md
+  path: realizations/items/checker-and-validation.md
+  stable_path: realizations/items/checker-and-validation.md
   digest:
     algorithm: sha-256
     value: 06b5259ddf9e0870972256971177b018236d291d801dbcdebde95342f75e3d5b
