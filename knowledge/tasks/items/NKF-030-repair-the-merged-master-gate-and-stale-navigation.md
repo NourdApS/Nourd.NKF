@@ -114,6 +114,34 @@ defects is preserved as governed Evidence.
 Created and begun on `2026-08-17` under the Human Direction above,
 immediately after the audit report was received.
 
+## Completion Result
+
+The merged default branch's defects are repaired and the audit that found
+them is preserved as the
+[whole-NKF master audit Evidence](../../evidence/audits/nkf-030-whole-nkf-master-audit.md).
+The producer-rehearsal test materializes the exact ordinary 0.6 producer
+from an immutable historical commit — never the merge base and never the
+candidate-carrying pre-promotion tree — so it passes identically on task
+branches and on the merged default branch, and the complete gate and full
+suite of two hundred twenty-eight tests pass. The baseline is resealed over
+the [NKF-029](NKF-029-adopt-the-producer-to-published-nkf-0-7.md) close
+delta and over this Task's own authoring through ordinary digest-bound
+delta reviews, and the delivered tip carries equal baseline and candidate
+graph revisions, restored after the deterministic close by the final
+mechanical reseal commit this Task's scope declares. Every audited
+navigation and currency surface states the promoted reality: Start Here
+names the 0.7 authority and the shipped 0.7 adoption protocol, the
+specifications index records 0.7 as the current adopted authority and its
+predecessors as history, the Tasks front page agrees with the declared
+states, the Evidence index covers the complete 0.7 release evidence, and
+the current-system Realization names the frozen 0.2 process roots as
+history. The corrected adoption-Task close carries its correction
+paragraph. The accepted-specification findings — the topology self-contradiction, the version-label
+errors, the close-and-seal ordering gap, and the predecessor-era public
+documentation projection — remain explicitly deferred to the separately
+directed NKF 0.71 successor. One pull request delivers this Task; merging
+remains the Human Product Owner's act.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -132,7 +160,7 @@ immediately after the audit report was received.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The producer-rehearsal test passes on the merged default branch and on task branches | unknown | none | none |
-| The delivered tip's baseline graph revision equals its candidate graph revision | unknown | none | none |
-| The complete gate and full suite pass on the delivered tip | unknown | none | none |
-| No navigation or currency surface asserts a superseded producer state | unknown | none | none |
+| The producer-rehearsal test passes on the merged default branch and on task branches | proven | runtime-behaviour | none |
+| The delivered tip's baseline graph revision equals its candidate graph revision | proven | runtime-behaviour | none |
+| The complete gate and full suite pass on the delivered tip | proven | runtime-behaviour | none |
+| No navigation or currency surface asserts a superseded producer state | proven | data-validity | none |

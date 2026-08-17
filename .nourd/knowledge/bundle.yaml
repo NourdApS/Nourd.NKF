@@ -1698,7 +1698,7 @@ non_records:
       stable_path: tasks/items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md
       digest:
         algorithm: sha-256
-        value: "07166dec40ede9f8f02e6c46f2fece301a8592127f1a20159e888d69df4ee7ab"
+        value: "e9125d929891ce46135963c6dc478bf02617d0433623326d401300726fd23237"
       state:
         vocabulary: task-status
         value: "active"
