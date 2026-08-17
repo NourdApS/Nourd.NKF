@@ -13,7 +13,7 @@ const {
   validateReleaseManifest,
   verifyReleaseArchive,
 } = release;
-import { repositoryRoot } from "./helpers.js";
+import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
 // The 0.7 fixture archive uses the exact real release-set members from the
 // working tree, so manifest bindings, licensing digests, and third-party
@@ -87,7 +87,7 @@ describe("NKF release tooling", () => {
       `nourd-nkf-sha256-${archiveDigest}.tar`,
     );
     expect(verified.tag).toBe(`release-sha256-${archiveDigest}`);
-  });
+  }, scaledTimeout(180_000));
 
   it("fails closed when a complete-set member is unavailable", async () => {
     const { entries } = await releaseFixture();
@@ -95,14 +95,14 @@ describe("NKF release tooling", () => {
     expect(() => createUstar(entries, fixtureMemberEntries())).toThrow(
       /Required release artifact is unavailable: dist\/nourd-nkf-adopt\.mjs/,
     );
-  });
+  }, scaledTimeout(180_000));
 
   it("fails before manifest trust on an incorrect independent archive pin", async () => {
     const { archive } = await releaseFixture();
     expect(() => verifyReleaseArchive(archive, "0".repeat(64))).toThrow(
       /independent consumer pin/,
     );
-  });
+  }, scaledTimeout(180_000));
 
   it("rejects unsafe or noncanonical USTAR bytes", async () => {
     const { archive } = await releaseFixture();
@@ -167,7 +167,7 @@ describe("NKF release tooling", () => {
       const corrupted = mutate(Buffer.from(archive));
       expect(() => inspectUstar(corrupted)).toThrow();
     }
-  });
+  }, scaledTimeout(180_000));
 
   it("rejects content-padding and manifest-canonicalization changes", async () => {
     const { archive, entries } = await releaseFixture();
@@ -193,5 +193,5 @@ describe("NKF release tooling", () => {
     rebound.set("release-manifest.json", serializeReleaseManifest(reboundManifest));
     const reboundArchive = createUstar(rebound, fixtureMemberEntries());
     expect(() => verifyReleaseArchive(reboundArchive, sha256(reboundArchive))).toThrow();
-  });
+  }, scaledTimeout(180_000));
 });

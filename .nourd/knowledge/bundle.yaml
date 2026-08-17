@@ -3064,7 +3064,7 @@ governed_artifacts:
     path: test/release-tooling.test.ts
     digest:
       algorithm: sha-256
-      value: c7906a71a8a4352408e356037d8bae8e701ee02de3926db0e2c2d6e1673282c9
+      value: "75e8c35bcfb5a28cfb48f36a2325399c4baaafe2662b5b24d53ab2db613b4970"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-result-test-ts
