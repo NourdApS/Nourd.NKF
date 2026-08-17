@@ -3079,7 +3079,7 @@ governed_artifacts:
     path: test/self-hosting.test.ts
     digest:
       algorithm: sha-256
-      value: 9cd4b906234f588a2a24916697249ee967a76543a97c8dbc12a2f1866bb917d2
+      value: "ddb20649ebe21f5030968fe8d1be210354dd50c68d89fe5e0e89acfbed33738a"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-test-semantic-test-ts
