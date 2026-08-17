@@ -1,7 +1,5 @@
 # Completed Tasks
 
-- [NKF-025](../items/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
-- [NKF-026](../items/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
 - [NKF-003](../items/NKF-003-independent-nkf-authority.md)
 - [NKF-007](../items/NKF-007-knowledge-structure-and-confirmation.md)
 - [NKF-008](../items/NKF-008-publish-and-onboard-consumers.md)
@@ -14,5 +12,8 @@
 - [NKF-020](../items/NKF-020-version-release-adoption-and-compatibility-process.md)
 - [NKF-023](../items/NKF-023-release-nkf-0-3-with-immutable-freeze-and-proven-self-adoption.md)
 - [NKF-024](../items/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
+- [NKF-025](../items/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+- [NKF-026](../items/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
 - [NKF-027](../items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 - [NKF-028](../items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md)
+- [NKF-029](../items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md)
