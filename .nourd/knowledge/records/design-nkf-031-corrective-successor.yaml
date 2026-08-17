@@ -1,0 +1,199 @@
+contract: nkf.record
+id: design-nkf-031-corrective-successor
+type: design
+body_contract: nkf.design
+title: NKF 0.71 Corrective Successor
+source:
+  path: designs/items/nkf-0-71-corrective-successor.md
+  stable_path: designs/items/nkf-0-71-corrective-successor.md
+  digest:
+    algorithm: sha-256
+    value: 686b9bfaffaee468766664f7d838420c30ea975e731a65579b1555f784172da4
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: reconciled-topology
+    heading_path:
+      - Proposed Direction
+      - Reconciled Topology
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: true-version-labels
+    heading_path:
+      - Proposed Direction
+      - True Version Labels
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: seal-completing-conclusion
+    heading_path:
+      - Proposed Direction
+      - Seal-Completing Conclusion
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: version-coordinate-and-window
+    heading_path:
+      - Proposed Direction
+      - Version Coordinate And Window
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: delta-only-producer-upgrade
+    heading_path:
+      - Proposed Direction
+      - Delta-Only Producer Upgrade
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: fail-closed-version-gates
+    heading_path:
+      - Proposed Direction
+      - Fail-Closed Version Gates
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: public-documentation-projection
+    heading_path:
+      - Proposed Direction
+      - Public Documentation Projection
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: predecessor-working-tree-cleanup
+    heading_path:
+      - Proposed Direction
+      - Predecessor Working-Tree Cleanup
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: consumer-applicability-and-fixtures
+    heading_path:
+      - Proposed Direction
+      - Consumer Applicability And Fixtures
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: make-task-state-declarations-graph-neutral
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Make Task-State Declarations Graph-Neutral
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: keep-the-hand-orchestrated-post-close-reseal-as-procedure
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep The Hand-Orchestrated Post-Close Reseal As Procedure
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: restore-the-supporting-current-tree-instead-of-reconciling-to-items
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Restore The Supporting-Current Tree Instead Of Reconciling To Items
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: correct-the-0-7-authority-in-place-as-a-revision
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Correct The 0.7 Authority In Place As A Revision
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: fold-in-review-quality-measurement
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Fold In Review-Quality Measurement
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships:
+  - type: depends-on
+    target: adr-0128
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0096
+    source_section: seal-completing-conclusion
+  - type: depends-on
+    target: adr-0107
+    source_section: version-coordinate-and-window
+  - type: depends-on
+    target: adr-0125
+    source_section: version-coordinate-and-window
+task: NKF-031
+design_disposition: adopted
+design_decisions:
+  - adr-0130
+proposal_authority_effect: Adopted by ADR 0130 as the NKF 0.71 corrective-successor direction; normative NKF 0.71 meaning still requires the separate exact authority acceptance after its independent audit and the mandatory audit-bound confirmation Decision.
