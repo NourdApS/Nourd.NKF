@@ -27021,7 +27021,13 @@ applicability_coverage:
       algorithm: sha-256
       value: e16372d8bdf09783f7b08f502ab537d0efabc31af7a1817e70cbec1f3b3be650
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-producer-promotion
@@ -27041,7 +27047,13 @@ applicability_coverage:
       algorithm: sha-256
       value: e16372d8bdf09783f7b08f502ab537d0efabc31af7a1817e70cbec1f3b3be650
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-producer-promotion
@@ -27061,7 +27073,13 @@ applicability_coverage:
       algorithm: sha-256
       value: e16372d8bdf09783f7b08f502ab537d0efabc31af7a1817e70cbec1f3b3be650
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-specification
@@ -27084,7 +27102,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 1ab34680d5229493cd23d83dd1de90a6bc31f242430362d5af5597f8cbff4209
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-specification
@@ -27107,7 +27131,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 1ab34680d5229493cd23d83dd1de90a6bc31f242430362d5af5597f8cbff4209
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-specification
@@ -27130,7 +27160,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 1ab34680d5229493cd23d83dd1de90a6bc31f242430362d5af5597f8cbff4209
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-030-whole-nkf-master-audit
@@ -37547,33 +37583,25 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-17T17:47:44.369Z
+  reviewed_at: 2026-08-17T18:14:32.258Z
   claim: semantically-reviewed-delta
-  computed_closure:
-    - kind: document
-      id: document-nkf-0-71-producer-promotion
-    - kind: document
-      id: document-nkf-0-71-specification
-  performed_set:
-    - kind: document
-      id: document-nkf-0-71-producer-promotion
-    - kind: document
-      id: document-nkf-0-71-specification
+  computed_closure: []
+  performed_set: []
   observations:
     - id: review-observation
       subject:
         kind: document
-        id: document-nkf-0-71-specification
+        id: document-nkf-0-71-producer-promotion
       basis:
         node:
           kind: document
-          id: document-nkf-0-71-specification
+          id: document-nkf-0-71-producer-promotion
         source:
           heading:
             heading_path:
-              - NKF 0.71 — Product And Technology Knowledge Format
+              - "contract: nkf.producer-candidate-promotion"
             occurrence: 1
-      finding: "Fresh semantic review of the two candidate Evidence documents this delta created: the candidate NKF 0.71 successor Specification carries exactly the corrective scope ADR 0130 adopted — the reconciled topology, the corrected version labels, the seal-completing conclusion with the mechanically-concluded claim, and the window slide — with its label pass adjudicated in full, and the producer promotion input binds the exact four candidate authority digests and the complete future native record declaration mirroring the accepted 0.7 section map. Both remain non-authoritative candidate Evidence; no acceptance is claimed or performed, and no other node's meaning changed in this delta."
+      finding: "Semantic re-review of the repaired producer promotion input performed despite the empty computed closure: the independent authority audit's six blocking findings were repaired in the candidate executable companion, its digest was rebound into the promotion input and the candidate Evidence registration, and the repaired bytes were re-read in full. The computed closure is empty because, under the accepted 0.7 revision semantics, a non-Markdown evidence document's node revision projects only its declaration fields and carries no content digest, so a YAML evidence content change is invisible to the graph revision — recorded here as a format observation for later governed treatment alongside the deferred review-quality measurement."
   limitations:
-    - "This is an ordinary digest-bound delta review over the authority-candidate registration delta: the two fresh judgments cover the computed closure exactly, every other judgment is carried by digest identity from the sealed predecessor baseline, and no whole-root re-reading was performed or claimed. The candidate authority set itself still awaits its fresh independent audit before any acceptance."
+    - This delta review carries every judgment by digest identity with zero fresh judgments required by the computed closure; the promotion-input repair was nonetheless semantically re-reviewed as recorded in the observation, and no whole-root re-reading was performed or claimed.
   disputed: false

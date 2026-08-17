@@ -2651,6 +2651,7 @@ freshness:
       mechanically_concluded_judgments: all-carried-zero-performed
       mechanically_concluded_producer: deterministic-task-transition-only
       mechanically_concluded_semantic_provenance: nearest-predecessor-baseline-with-semantic-claim
+      mechanically_concluded_reviewer: transition-operator
       observations_min_items: 1
       observations_exact_source_bound: true
       limitations_required: true
@@ -4055,9 +4056,9 @@ governed_mechanics:
         closed: true
         mutation_owner: task-state-transaction
         semantic_input: reviewer-authored-target-state-and-required-result
-        subjects: [exact-task-document, declared-task-state, completion-or-cancellation-result, generated-state-navigation, affected-source-digests, governed-references]
-        postconditions: [knowledge-transaction-current, git-or-host-orchestration-reported-separately]
-        success_result: {state: transitioned, exact_fields: [task, prior_task_status, task_status, generated_navigation, changed_subjects]}
+        subjects: [exact-task-document, declared-task-state, completion-or-cancellation-result, generated-state-navigation, affected-source-digests, governed-references, seal-completed-successor-baseline]
+        postconditions: [knowledge-transaction-current, successor-baseline-sealed-in-the-same-transaction, transition-graph-delta-is-exactly-the-closed-transition-vocabulary, excess-transition-delta-fails-before-mutation, git-or-host-orchestration-reported-separately]
+        success_result: {state: transitioned, exact_fields: [task, prior_task_status, task_status, generated_navigation, changed_subjects, graph_revision]}
         no_change_result: {state: current, permitted_only_when: exact-task-already-in-requested-state-and-required-result-current}
         failure_result: {state: failed, exact_knowledge_or_operational_stage_and_diagnostic: required}
       refs:
@@ -4117,9 +4118,9 @@ governed_mechanics:
       reviewed-baseline-seal:
         closed: true
         mutation_owner: baseline-seal-transaction
-        semantic_input: named-reviewer-completed-whole-root-or-delta-review
+        semantic_input: named-reviewer-completed-whole-root-or-delta-review-or-transition-produced-conclusion-input
         subjects: [exact-candidate-node-universe, exact-authored-edges, external-dependencies, authority-inputs, relationship-coverage, applicability-coverage, decision-classifications, promotion-reconciliation, observations, limitations, disputed-state, graph-baseline]
-        postconditions: [review-input-exact-coverage-and-bases-resolve, checker-candidate-graph-exactly-matches-review, every-carried-judgment-precondition-proven, delta-performed-set-contains-exact-computed-closure, resulting-baseline-schema-valid-and-confirmed]
+        postconditions: [review-input-exact-coverage-and-bases-resolve, checker-candidate-graph-exactly-matches-review, every-carried-judgment-precondition-proven, delta-performed-set-contains-exact-computed-closure, conclusion-input-delta-is-exactly-the-closed-transition-vocabulary-with-zero-performed-judgments, resulting-baseline-schema-valid-and-confirmed]
         success_result: {state: sealed, exact_fields: [graph_revision, nodes, reviewer, reviewed_at]}
         no_change_result: {state: current, permitted_only_when: existing-confirmed-baseline-is-byte-identical-to-derived-result}
         failure_result: {state: failed, exact_stage_and-diagnostic: required, baseline-mutation: forbidden}
@@ -4134,20 +4135,20 @@ governed_mechanics:
         subjects:
           common-installation: [version-declaration, release-pin, installed-checker, installed-adopter, host-integration, complete-gate]
           onboard-or-install-additional: [reviewed-onboarding-plan, complete-portable-topology, initial-native-declarations, generated-navigation, candidate-graph, confirmed-baseline]
-          breaking-migrate-additional: [neutralized-stable-paths, applied-identity-successions, classified-provenance-attachments, removed-completed-legacy-locks, migrated-record-and-document-declarations, converted-digest-bound-baseline, generated-navigation, post-migration-graph, post-migration-confirmed-baseline]
+          non-breaking-upgrade-additional: [rebound-contract-set, converted-digest-bound-baseline, post-upgrade-graph, post-upgrade-confirmed-baseline]
           current: [exact-complete-installed-integration]
-          producer-promotion-additional: [candidate-evidence-document-representation, supplied-native-specification-declaration-destination, supplied-native-specification-declaration-content, applied-path-neutralization-and-successions, written-promotion-reconciliation-entries, generated-navigation, post-promotion-graph, post-promotion-confirmed-baseline]
+          producer-promotion-additional: [candidate-evidence-document-representation, supplied-native-specification-declaration-destination, supplied-native-specification-declaration-content, written-promotion-reconciliation-entries, generated-navigation, post-promotion-graph, post-promotion-confirmed-baseline]
         postconditions:
           common: [complete-owned-rollback, requested-version-current]
           onboard-or-install: [reviewed-plan-applied-exactly, complete-topology-and-native-declarations-valid, confirmed-baseline-matches-exact-candidate-graph]
-          breaking-migrate: [repository-owner-approval-bound, all-canonical-markdown-bytes-preserved, stable-path-neutralization-applied-exactly-once, every-accepted-succession-applied-exactly-once, every-knowledge-root-file-classified, every-carried-judgment-precondition-proven, computed-required-set-reviewed-before-seal, migrated-declarations-and-navigation-valid, confirmed-baseline-matches-exact-post-migration-graph]
+          non-breaking-upgrade: [all-canonical-markdown-bytes-preserved, contract-set-rebound-mechanically, every-carried-judgment-precondition-proven, computed-required-set-reviewed-before-seal, confirmed-baseline-matches-exact-post-upgrade-graph]
           current: [no-governed-byte-change, exact-selected-release-and-complete-integration-current]
-          producer-promotion: [exact-candidate-evidence-representation-removed, exact-native-declaration-created-once-at-supplied-destination, accepted-input-and-decision-bindings-exact, source-executable-policy-and-version-delta-bytes-preserved, path-neutralization-and-successions-applied-exactly-once, promotion-reconciliation-entries-written, generated-navigation-current, post-promotion-graph-and-baseline-match-separate-completed-review]
-        internal_modes: [onboard, install, migrate, producer-promotion, current]
+          producer-promotion: [exact-candidate-evidence-representation-removed, exact-native-declaration-created-once-at-supplied-destination, accepted-input-and-decision-bindings-exact, source-executable-policy-and-version-delta-bytes-preserved, promotion-reconciliation-entries-written, generated-navigation-current, post-promotion-graph-and-baseline-match-separate-completed-review]
+        internal_modes: [onboard, install, upgrade, producer-promotion, current]
         producer-promotion-availability:
           stages: [prepublication-isolated-exact-producer, postpublication-exact-live-producer]
           ordinary-non-producer: forbidden
-        success_result_states: [onboarded, updated, migrated, current]
+        success_result_states: [onboarded, updated, current]
         producer-promotion-success-result: {state: updated, exact_fields: [stage, removed_evidence_document, created_declaration, graph_revision, baseline, changed_subjects]}
         no_change_result: {state: current, permitted_only_when: exact-selected-release-and-complete-integration-already-current}
         failure_result: {state: failed, exact_stage_and_diagnostic: required}
@@ -4693,6 +4694,8 @@ compatibility:
       successor_id: nkf-current-system
       subject: exact-nkf-producer-repository-only
       recorded_by: repository-owner
+      applied_by: nkf-0.7-predecessor-promotion
+      retained_role: succession-chain-resolution-only
   supported_predecessors:
     - from_nkf_version: "0.7"
       to_nkf_version: "0.71"
@@ -4832,11 +4835,11 @@ compatibility:
         authority: exact-accepting-decision
         decision_must_explicitly_accept: [specification, executable, freshness_policy, version_delta, serialized-input-digest]
         predecessor_release_authority:
-          decision: adr-0125
+          decision: adr-0128
           preservation: exact-unchanged-governed-graph-visible-accepted-history
         decision_must_explicitly_supersede:
-          decision: adr-0125
-          exact_subject: adr-0125-revision-3-release-authority-selection
+          decision: adr-0128
+          exact_subject: adr-0128-release-authority-selection
           other-historical-acceptance-and-conclusions: preserved
         validation_or-input-proves-acceptance: false
     required_exact_inputs:
@@ -4921,7 +4924,6 @@ compatibility:
         - bundle-declares-0.71
         - candidate-evidence-document-is-absent
         - exact-native-0.71-specification-declaration-resolves-once-and-is-current
-        - exact-applied-path-neutralization-and-successions-are-current
         - exact-generated-navigation-and-host-integration-are-current
         - exact-candidate-graph-and-confirmed-baseline-are-current
         - no-pending-promotion-reconciliation-entry-remains-unresolved-at-readiness-claim
