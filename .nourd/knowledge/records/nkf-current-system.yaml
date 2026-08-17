@@ -8,7 +8,7 @@ source:
   stable_path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: "d34604ecd62874d7695fcaf57bb67fafbea163f556caf8b65c72aa4d561b1022"
+    value: "31edae0f06c9b3d3b80073c3614d8fb6fe8c2a9654c4db520397334e97a87c22"
 governance:
   lifecycle: living
   status: draft

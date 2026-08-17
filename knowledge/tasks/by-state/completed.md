@@ -17,3 +17,4 @@
 - [NKF-027](../items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 - [NKF-028](../items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md)
 - [NKF-029](../items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md)
+- [NKF-030](../items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md)

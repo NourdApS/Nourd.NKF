@@ -14,7 +14,7 @@ status; it does not establish that status.
 
 [Active Task Index](by-state/active.md)
 
-- [NKF-029: Adopt The Producer To Published NKF 0.7](items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md)
+- [NKF-030: Repair The Merged Master Gate And Stale Navigation](items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md)
 
 ## Deferred
 
@@ -49,6 +49,7 @@ status; it does not establish that status.
 - [NKF-024: Release NKF 0.4 Dependency Security Maintenance](items/NKF-024-release-nkf-0-4-dependency-security-maintenance.md)
 - [NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing](items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 - [NKF-028: Release NKF 0.7 With Verifiable Delta Review](items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md)
+- [NKF-029: Adopt The Producer To Published NKF 0.7](items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md)
 
 ## Cancelled
 

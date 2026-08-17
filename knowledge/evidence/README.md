@@ -141,11 +141,32 @@ the exact authority pins, section and policy closure, command matrix, producer
 promotion, fixture and real-producer results, rollback and tamper rejection,
 and canonical producer gate before exact technical acceptance.
 
+The NKF-028 source-grounded assessment and the NKF-028 NKF 0.7 independent
+authority audit record the pre-acceptance state review and the three-round
+adversarial audit of the exact candidate authority set — every finding, fix,
+and the final clean digest-chain verification — that the Human Product
+Owner's independent-audit condition required before delegated acceptance.
+
+The NKF-028 NKF 0.7 whole-line completion audit records the Human Product
+Owner-directed final audit over the complete 0.7 line after technical
+confirmation, its one repaired should-fix finding, and its three
+note-severity observations.
+
+The NKF-030 whole-NKF master audit records the post-merge audit of the
+complete repository at the merged default branch — adoption completeness,
+documentation currency, plan conformance, readiness for use, and the fitness
+of the accepted NKF 0.7 Specification — whose repository-side findings the
+NKF-030 repair Task resolves and whose specification findings defer to the
+NKF 0.71 successor.
+
 ## Release
 
 [`release/`](release/) preserves the serialized producer-promotion inputs the
-accepted authority binds and the release-protocol review evidence, including
-the complete NKF 0.7 guidance review with every correction it made.
+accepted authority binds and the release-protocol review evidence: the
+complete NKF 0.7 guidance review with every correction it made, the clean
+independent NKF 0.7 release audit the technical confirmation binds, the
+prepared NKF 0.7 release notes, and the NKF 0.7 publication Evidence with
+its re-download verification.
 
 ## Decision Inputs
 
