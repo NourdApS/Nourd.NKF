@@ -79,3 +79,112 @@ export const ACCEPTED_0_7_ARTIFACT_DIGESTS = Object.freeze({
   "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
 });
+
+export const RELEASE_REPOSITORY = "NourdApS/Nourd.NKF";
+
+// Every pre-stable recommendation publishes under the same channel terms;
+// these are policy constants shared by all versions, not per-version data.
+export const PRE_STABLE_PUBLICATION = Object.freeze({
+  channel: "internal-private-github-prerelease",
+  prerelease: true,
+  visibility: "private",
+});
+
+// One entry per NKF version a recommended-release catalog may declare, each
+// bound to its accepting Decision. The recommended-release verifier derives
+// every expectation from this registry, so recommending a newly accepted
+// release changes governed data here and never changes verifier logic.
+export const RECOMMENDED_RELEASE_BINDINGS = Object.freeze({
+  "0.6": Object.freeze({
+    acceptingDecisionPath:
+      "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md",
+    archiveSha256:
+      "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+    sourceCommit: "96652985ab7749d6f58677dbf0947af4c9ff4e63",
+    checkerSha256:
+      "9a019c4cfb1c9515cbefa76f3b0513328b9a910d8675b8c17d8b9018542bb376",
+    adopterSha256:
+      "d552e7c251bf38da574d2d950c5d3497d3ee5415e3e3de44ce1e64f7f564eb50",
+    authorityMarkdownSha256:
+      "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
+    authorityExecutableSha256:
+      "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
+    compatibility: Object.freeze([
+      Object.freeze({
+        from_nkf_version: "0.1",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.1 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.2",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.2 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.3",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.3 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.4",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.4 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.5",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.5 advances non-breakingly to NKF 0.6 only under the accepted exact policy and baseline-carry-forward preconditions.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.6",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.6 refreshes the exact recommended release and integration without semantic migration.",
+      }),
+    ]),
+  }),
+  "0.7": Object.freeze({
+    acceptingDecisionPath:
+      "knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md",
+    confirmingDecisionPath:
+      "knowledge/decisions/0129-confirm-the-nkf-0-7-release-candidate.md",
+    archiveSha256:
+      "c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f",
+    sourceCommit: "e5b265e87da6c12b73b4749f8d24b41b996cc77a",
+    checkerSha256:
+      "64751e77af081ae795e60ebd7f68132548e0c71b101ba78ac9e2e9d7fd1ce70a",
+    adopterSha256:
+      "e565978a73f625bc43992291a43d253966ec67168312b2571deff1822c88a360",
+    authorityMarkdownSha256:
+      ACCEPTED_0_7_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.7.md"],
+    authorityExecutableSha256:
+      ACCEPTED_0_7_ARTIFACT_DIGESTS["contracts/nkf/0.7/nkf.yaml"],
+    compatibility: Object.freeze([
+      Object.freeze({
+        from_nkf_version: "0.6",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.6 requires explicit repository-owner approval for the governed breaking migration to NKF 0.7.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.7",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.7 refreshes the exact recommended release and integration without semantic migration.",
+      }),
+    ]),
+  }),
+});

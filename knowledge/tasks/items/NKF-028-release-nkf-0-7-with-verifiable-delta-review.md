@@ -408,6 +408,28 @@ prepared
 [release notes](../../evidence/release/nkf-0.7-release-notes.md) ready for
 the publication.
 
+Correction after close: the Human Product Owner-directed
+[whole-line completion audit](../../evidence/audits/nkf-028-nkf-0-7-whole-line-completion-audit.md)
+found that one acceptance criterion — the recommended-release verifier
+carries no hand-edited version literal — was not delivered at close and had
+no recorded exception, so the close overstated completion on that point. The
+criterion is delivered late in this same Task: the verifier now derives every
+expectation from the per-version, Decision-bound recommended-release binding
+registry in the governed release-constants module, fails closed on an
+unregistered version, and pre-registers the confirmed 0.7 binding so the
+separately authorized publication requires no code edit. The audit's three
+note-severity observations — release-audit-level verification of the narrow
+revision accepted by
+[ADR 0128](../../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md),
+the sealed baseline predating the post-confirmation
+commits until the live promotion's whole-root review, and the two criteria
+satisfied only in the promoted producer state by design — are recorded in
+the same Evidence for the Human Product Owner's disposition. The confirmed
+candidate bytes are unaffected: the verifier is not an archive member, and
+every digest bound by
+[ADR 0129](../../decisions/0129-confirm-the-nkf-0-7-release-candidate.md)
+still verifies.
+
 ## Decision Applicability
 
 ### Applicable Decisions

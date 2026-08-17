@@ -1690,7 +1690,7 @@ non_records:
       stable_path: tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md
       digest:
         algorithm: sha-256
-        value: "782db02b9c0923a7007846a9c67a8e87069d09129d70d2b5210aafb83e6efdee"
+        value: "9354914416b78c4d70dc02f59b72d8d5d646b4222a6e2bf783fa5b4e149f8c2f"
       state:
         vocabulary: task-status
         value: "completed"
@@ -1782,6 +1782,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 5ee4e085d303e9278f31be30b47c29f2eabad08e5912d5cdc8a570de650140f3
+      relationships: []
+  - path: evidence/audits/nkf-028-nkf-0-7-whole-line-completion-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-0-7-whole-line-completion-audit
+      stable_path: evidence/audits/nkf-028-nkf-0-7-whole-line-completion-audit.md
+      digest:
+        algorithm: sha-256
+        value: "ce6a9ee3080a5b754cad646c469fbc9cac1369530e7422aff67172141c516a41"
       relationships: []
 canonical_terms:
   - ADR
@@ -2696,7 +2705,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: 649af244c65454b8aa7567c8d4011544f2555a31234f957f4d0c3cb4170b530b
+      value: "75c4d3947742e642a54f284aa243746f204a8dd5f883d7d3edb64695549a26e0"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
@@ -2768,7 +2777,7 @@ governed_artifacts:
     path: scripts/verify-recommended-release.mjs
     digest:
       algorithm: sha-256
-      value: b68bb498ce0ffcc2cb921c269a3139ddc823553e0050b291931c4ed929539882
+      value: "d71e68981a232d6c32e00c36475e483548b7e430694bb431a687beefde3aa7e5"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-release-mjs
