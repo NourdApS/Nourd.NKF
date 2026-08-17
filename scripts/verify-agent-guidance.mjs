@@ -378,10 +378,17 @@ export async function verifyAgentGuidance(projectRootInput) {
   if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(bundle?.nkf_version)) {
     fail("The producer guidance verifier requires an NKF 0.2 through 0.7 bundle.");
   }
-  const expectedSkill = expectedSkill0_2.replace(
-    "NKF Version: 0.2",
-    `NKF Version: ${bundle.nkf_version}`,
-  );
+  // From 0.7 the version's own accepted distribution skill is the expected
+  // cross-host bootstrap; earlier versions share the embedded 0.2 lineage.
+  const expectedSkill = bundle.nkf_version === "0.7"
+    ? await readFile(
+        path.join(projectRoot, "distribution/nkf/0.7/.claude/skills/nkf-authoring/SKILL.md"),
+        "utf8",
+      )
+    : expectedSkill0_2.replace(
+        "NKF Version: 0.2",
+        `NKF Version: ${bundle.nkf_version}`,
+      );
   const registryBytes = await readRegularProjectFile(projectRoot, registryPath, "registry path");
   const registry = YAML.parse(registryBytes.toString("utf8"));
   exactKeys(registry, rootKeys, "registry");
