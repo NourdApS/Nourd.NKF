@@ -4,7 +4,7 @@ NKF Version: 0.7
 
 This is the complete vendor-neutral procedure for preparing an Empty
 Repository or a Tiny Knowledge, No Source Or Configuration repository for
-initial NKF 0.6 adoption. It applies before the project has a project-root
+initial NKF 0.7 adoption. It applies before the project has a project-root
 `.nourd` directory.
 
 The participating agent owns complete repository review, semantic assessment,
@@ -256,7 +256,7 @@ project directly to pass.
 
 Run the public subcommand-free Adopt operation with the sealed plan and a
 writable `--review` path. If that file is absent, Adopt constructs the exact
-isolated 0.6 candidate, writes a complete candidate-specific review template,
+isolated 0.7 candidate, writes a complete candidate-specific review template,
 and stops before project mutation. A named human or agent reviews the actual
 candidate and replaces every `REVIEW_REQUIRED` value and placeholder with
 source-bound node applicability and roles, relationship coverage, accepted-

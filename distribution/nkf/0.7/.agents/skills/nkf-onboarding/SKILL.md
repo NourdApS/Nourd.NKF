@@ -1,6 +1,6 @@
 ---
 name: nkf-onboarding
-description: Inspect and assess an unadopted Empty or Tiny Knowledge Product or Technology repository, obtain required category confirmation, prepare its NKF 0.6 candidate, and complete deterministic sealing, onboarding, and validation. Use before a project has .nourd; defer unsupported or uncertain later categories instead of improvising them.
+description: Inspect and assess an unadopted Empty or Tiny Knowledge Product or Technology repository, obtain required category confirmation, prepare its NKF 0.7 candidate, and complete deterministic sealing, onboarding, and validation. Use before a project has .nourd; defer unsupported or uncertain later categories instead of improvising them.
 ---
 
 # NKF Onboarding

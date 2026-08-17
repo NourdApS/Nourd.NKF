@@ -712,7 +712,7 @@ non_records:
       stable_path: evidence/README.md
       digest:
         algorithm: sha-256
-        value: e5681e963ccb9bb81010bb20b3592e7852c03297c6d3b23953cb7cd6c422e874
+        value: "4c0feef461d662a35179152f4ea3788c5d002d5a3e8bbfe036ed644828877cb5"
       relationships: []
   - path: evidence/release/nkf-0.6-producer-promotion.yaml
     kind: evidence
@@ -1782,6 +1782,15 @@ non_records:
         algorithm: sha-256
         value: 8e23de762f31217e5814a9a0229e97c8b0f63f335c93c1e2566f5b6ba9e5c06c
       relationships: []
+  - path: evidence/release/nkf-028-nkf-0-7-guidance-review.md
+    kind: evidence
+    document:
+      id: document-nkf-0-7-guidance-review
+      stable_path: evidence/release/nkf-028-nkf-0-7-guidance-review.md
+      digest:
+        algorithm: sha-256
+        value: a3db3e6149d9a4a76fe00f2f1ea8e00ce38753990b010b3629ee09289fd6982f
+      relationships: []
 canonical_terms:
   - ADR
   - AI
@@ -1895,7 +1904,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "14bce4e3795178c43d80e25d2d6d4afbbf7b1e30a3e49cc95a101db30958c781"
+      value: e565978a73f625bc43992291a43d253966ec67168312b2571deff1822c88a360
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-bundle-yaml
@@ -2607,7 +2616,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "14bce4e3795178c43d80e25d2d6d4afbbf7b1e30a3e49cc95a101db30958c781"
+      value: e565978a73f625bc43992291a43d253966ec67168312b2571deff1822c88a360
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -2631,7 +2640,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "ba43b669158d5e5ff97a33f61121e7d147d83d7b1786af76f29366e36bdbfdf1"
+      value: ba43b669158d5e5ff97a33f61121e7d147d83d7b1786af76f29366e36bdbfdf1
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
