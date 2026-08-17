@@ -712,7 +712,7 @@ non_records:
       stable_path: evidence/README.md
       digest:
         algorithm: sha-256
-        value: "4c0feef461d662a35179152f4ea3788c5d002d5a3e8bbfe036ed644828877cb5"
+        value: 4c0feef461d662a35179152f4ea3788c5d002d5a3e8bbfe036ed644828877cb5
       relationships: []
   - path: evidence/release/nkf-0.6-producer-promotion.yaml
     kind: evidence
@@ -855,10 +855,10 @@ non_records:
       stable_path: tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md
       digest:
         algorithm: sha-256
-        value: c091722116884e668d1216d8d535423c419c4ffae6409740d8e69a7cdcc3bf46
+        value: ae68b32053d7ad098aa833149f13fe51efad30555f4bdfe541bc2880d5e3ee85
       state:
         vocabulary: task-status
-        value: active
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner, Nourd ApS
       related_tasks:
@@ -867,32 +867,6 @@ non_records:
         - NKF-021
         - NKF-024
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: c091722116884e668d1216d8d535423c419c4ffae6409740d8e69a7cdcc3bf46
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-025
-          task_status: active
-          owner: Nourd ApS
-          related_tasks:
-            - NKF-005
-            - NKF-019
-            - NKF-021
-            - NKF-024
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: active
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
-          related_tasks:
-            - NKF-005
-            - NKF-019
-            - NKF-021
-            - NKF-024
   - path: tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md
     kind: task
     document:
@@ -900,10 +874,10 @@ non_records:
       stable_path: tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md
       digest:
         algorithm: sha-256
-        value: 73719537d31306d7c8ac0825d271a816f54062f7f0b45ea298dc24ef905a27cd
+        value: 6fa87d290d14f647f893c011ba1e192ead9d94993a4202335215cd978df009cf
       state:
         vocabulary: task-status
-        value: active
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner for Product meaning; Codex technical reviewer under explicit delegation for exact technical derivation, implementation, audit reconciliation, and confirmation within ADR 0115
       related_tasks:
@@ -1716,7 +1690,7 @@ non_records:
       stable_path: tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md
       digest:
         algorithm: sha-256
-        value: 6f752dfd874b95e21a748c73bb375345ae3d982323f10a68f623d538870b1466
+        value: cedcab72ade3d2c5e83a930470d80a00b2dbd620a8c5d20bf612e609ba71f4a3
       state:
         vocabulary: task-status
         value: active
@@ -1790,6 +1764,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: a3db3e6149d9a4a76fe00f2f1ea8e00ce38753990b010b3629ee09289fd6982f
+      relationships: []
+  - path: evidence/release/nkf-0.7-release-notes.md
+    kind: evidence
+    document:
+      id: document-nkf-0-7-release-notes
+      stable_path: evidence/release/nkf-0.7-release-notes.md
+      digest:
+        algorithm: sha-256
+        value: 3ae6f4e39c8fb6aa66135cfa678c8d41c7afb44b20234ca9b38af8263e77051d
       relationships: []
 canonical_terms:
   - ADR
@@ -2624,7 +2607,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: e76335989ede28a23a4819237d02b4d8fab0ef30a65f7baa64e88eeaaa854da4
+      value: "357e2fc06d27f099ae03a96f7514cb7d1227e852daf2a0bbb67d6215d90ead89"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -2680,7 +2663,7 @@ governed_artifacts:
     path: scripts/exercise-release-candidate.mjs
     digest:
       algorithm: sha-256
-      value: 2d83976102fc4c2bcf5b3a0c34231526c2fa753a83d64c4fb5b41e1dc2dbca4d
+      value: "6a52a20df5837abdb5cd4501a2c56ba9253d33eb55377448238bd408d6c3112f"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
@@ -2696,7 +2679,7 @@ governed_artifacts:
     path: scripts/package-release.mjs
     digest:
       algorithm: sha-256
-      value: 6de13c0da50431468ee46b74d39fc233ebce9945b301538f3ad8973acb4fd362
+      value: "8a4ef18d36653f1e8f8d791b81a0d3123544fdefdb150eb695d045a753d7e7a9"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-config-mjs
@@ -2704,7 +2687,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: f93b9feec6c833a14b1d607f2e2b8ae9929012e44959948a3946448d2804c0e7
+      value: "649af244c65454b8aa7567c8d4011544f2555a31234f957f4d0c3cb4170b530b"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
@@ -2776,7 +2759,7 @@ governed_artifacts:
     path: scripts/verify-recommended-release.mjs
     digest:
       algorithm: sha-256
-      value: bfff921d6b0546a3a33e5aa02d04efbe83cc84b251c093bbc1a0bcc4978799a9
+      value: "b68bb498ce0ffcc2cb921c269a3139ddc823553e0050b291931c4ed929539882"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-release-mjs

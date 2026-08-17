@@ -1,5 +1,7 @@
 # Completed Tasks
 
+- [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+- [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
 - [NKF-003](../completed/NKF-003-independent-nkf-authority.md)
 - [NKF-007](../completed/NKF-007-knowledge-structure-and-confirmation.md)
 - [NKF-008](../completed/NKF-008-publish-and-onboard-consumers.md)

@@ -2,15 +2,6 @@
 title: "NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction"
 summary: Test the confirmed NKF 0.5 freshness and knowledge-graph direction against controlled Product and Technology evidence before accepting or implementing normative format meaning.
 created_at: 2026-08-12T16:49:56Z
-task_id: NKF-025
-task_status: active
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
-related_tasks:
-  - NKF-005
-  - NKF-019
-  - NKF-021
-  - NKF-024
 ---
 
 # NKF-025: Validate Freshness And Deterministic Knowledge-Graph Direction
@@ -430,6 +421,26 @@ authorizing implementation. Exact Schema, policy mapping,
 baseline-confirmation and receipt operations, migration, implementation,
 publication, and actual self-adoption remain later work, not Product decisions
 silently delegated to this investigation.
+
+## Completion Result
+
+The confirmed freshness and deterministic knowledge-graph direction was
+validated against the complete controlled evidence this Task required: the
+twenty-five controlled experimental cases with versioned semantic oracles and
+the exact detached NKF self-consumer exercise at commit `1628e2c`, with every
+mandatory capability proven at the recorded verification level and the
+bounded limitations stated in Evidence. The validated direction was accepted
+into normative meaning by
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md),
+implemented and released as NKF 0.5, corrected and re-released as NKF 0.6,
+and carried forward into the digest-bound NKF 0.7 successor under
+[NKF-028](../items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md),
+which made the reviewed baseline's carry-forward verifiable — the exact
+follow-on this validation recommended. As recorded history: the Human
+Product Owner explicitly directed that the NKF 0.6 pull request merge while
+this Task remained active; this close concludes the Task after that merge,
+and the direction it validated has been production reality since the 0.6
+release.
 
 ## Decision Applicability
 

@@ -13,7 +13,7 @@ import {
   validateReleaseManifest,
   verifyReleaseArchive,
 } from "./release/core.mjs";
-import { ACCEPTED_0_6_ARTIFACT_DIGESTS } from "./release/config.mjs";
+import { ACCEPTED_0_7_ARTIFACT_DIGESTS } from "./release/config.mjs";
 import {
   readReleaseSet,
   reproduceReleaseMembers,
@@ -76,7 +76,7 @@ const memberEntries = releaseEntriesForVersion("0.7", releaseSet);
 const entries = await readReleaseEntries(repositoryRoot, memberEntries);
 entries.set("dist/nourd-nkf-checker.mjs", checkerSecond);
 for (const [artifactPath, expected] of Object.entries(
-  ACCEPTED_0_6_ARTIFACT_DIGESTS,
+  ACCEPTED_0_7_ARTIFACT_DIGESTS,
 )) {
   if (sha256(entries.get(artifactPath)) !== expected) {
     throw new Error(`Accepted release artifact digest mismatch: ${artifactPath}`);
@@ -99,7 +99,7 @@ const manifestBytes = serializeReleaseManifest(manifest);
 validateReleaseManifest(
   manifest,
   entries.get(
-    "contracts/nkf/0.6/schemas/release-manifest.schema.json",
+    "contracts/nkf/0.7/schemas/release-manifest.schema.json",
   ),
 );
 entries.set("release-manifest.json", manifestBytes);
@@ -115,7 +115,7 @@ const verification = verifyReleaseArchive(archiveSecond, archiveSha256, {
 });
 await invokeVerifiedChecker(verification, [
   "--project",
-  path.join(repositoryRoot, "fixtures/valid/minimal-0-6"),
+  path.join(repositoryRoot, "fixtures/valid/minimal-0-7"),
   "--level",
   "full-bundle",
   "--runner",

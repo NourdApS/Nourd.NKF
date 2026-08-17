@@ -3,7 +3,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseStrictJson } from "./release/core.mjs";
-import { ACCEPTED_0_6_ARTIFACT_DIGESTS } from "./release/config.mjs";
+// The live recommendation remains the published 0.6 catalog until the
+// separately authorized 0.7 publication; its authority digests stay pinned
+// here as accepted history.
+const ACCEPTED_0_6_AUTHORITY = Object.freeze({
+  markdown: "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
+  executable: "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
+});
 
 const EXPECTED_REPOSITORY = "NourdApS/Nourd.NKF";
 const EXPECTED_ARCHIVE_SHA256 =
@@ -151,9 +157,9 @@ if (
   catalog.source_commit !== EXPECTED_SOURCE_COMMIT ||
   catalog.checker_sha256 !== EXPECTED_CHECKER_SHA256 ||
   catalog.authority.markdown_sha256 !==
-    ACCEPTED_0_6_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.6-revision-3.md"] ||
+    ACCEPTED_0_6_AUTHORITY.markdown ||
   catalog.authority.executable_sha256 !==
-    ACCEPTED_0_6_ARTIFACT_DIGESTS["contracts/nkf/0.6/revision-3/nkf.yaml"] ||
+    ACCEPTED_0_6_AUTHORITY.executable ||
   catalog.release.url !==
     `https://github.com/${EXPECTED_REPOSITORY}/releases/tag/${tag}` ||
   !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(
@@ -166,8 +172,11 @@ if (
 ) {
   fail("The recommended release catalog is invalid or inconsistent.");
 }
+// The recommendation binds the published adopter; the installed pinned copy
+// is its local artifact. The working-tree dist may legitimately hold a
+// successor build during successor development, so the pin is the anchor.
 const adopterSha256 = sha256(
-  await readFile(path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs")),
+  await readFile(path.join(repositoryRoot, ".nourd/tools/nkf/nourd-nkf-adopt.mjs")),
 );
 if (
   catalog.adopter_sha256 !== EXPECTED_ADOPTER_SHA256 ||

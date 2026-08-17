@@ -344,6 +344,33 @@ direction after this Task's short description is delivered. Later records
 and evidence supersede only the specific created-state facts they
 explicitly replace.
 
+## Current Progress
+
+The complete 0.7 line is delivered on this branch: the digest-bound baseline
+contract, per-rule version delta with policy-declared judgment dependencies,
+computed-closure delta claims with fail-closed refusal, deterministic review
+and record scaffolds, the deliberate stable-path neutralization and the one
+accepted identity succession, provenance-attachment classification,
+operational-fact promotion reconciliation, the current-plus-one support
+window with stepping-stone refusals, the Git transition orchestration the
+guidance describes, knowledge-proportional test bounds with child reaping,
+and the complete 213-rule registry with implementation and test coverage for
+every accepted identity. The authority was accepted by
+[ADR 0128](../../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md)
+after
+[ADR 0127](../../decisions/0127-accept-the-nkf-0-7-authority-set.md)'s
+selection was revised on rehearsal evidence, under the Human Product Owner's
+independent-audit condition recorded in the
+[independent authority audit](../../evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md).
+The release-protocol guidance review is recorded in the
+[guidance review](../../evidence/release/nkf-028-nkf-0-7-guidance-review.md).
+The complete producer promotion is proven at both authorized stages against
+isolated copies of the live producer, the full suite and handoff gate are
+green, and the validation and implementation predecessors concluded
+truthfully. The live producer deliberately remains on NKF 0.6: publication,
+recommendation, live promotion, and merge stay separately authorized Human
+Product Owner acts.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -380,15 +407,15 @@ explicitly replace.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Digest-bound baselines make carried judgments mechanically distinguishable from performed ones | unknown | none | none |
-| Per-rule version-delta declaration in the authority deterministically bounds the required fresh-review closure | unknown | none | none |
-| A delta claim smaller than the computed closure is refused and whole-root review remains the recovery path | unknown | none | none |
-| Decision classifications carry forward only while decision digest and purpose semantics are unchanged | unknown | none | none |
-| Deterministic scaffolds emit exact skeletons without supplying any semantic judgment | unknown | none | none |
-| Identity succession renames the current-system record without orphaning prior baselines, receipts, or references | unknown | none | none |
-| The thirty-five state-baked stable paths migrate in one governed act with navigation and links intact | unknown | none | none |
-| Promotion mechanically invalidates operational-fact nodes into a readiness-blocking reconciliation set | unknown | none | none |
-| The reconciled confirmation ordering is satisfiable and exercised without exception on this release | unknown | none | none |
-| Stepping-stone migration through published archives works and is explicitly signaled under the shrunken window | unknown | none | none |
-| Repository-scaled test bounds derive from knowledge size and timed-out exercises leave no live child process | unknown | none | none |
-| [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md) and [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md) conclude truthfully under the corrected mechanics | unknown | none | none |
+| Digest-bound baselines make carried judgments mechanically distinguishable from performed ones | proven | runtime-behaviour | none |
+| Per-rule version-delta declaration in the authority deterministically bounds the required fresh-review closure | proven | runtime-behaviour | none |
+| A delta claim smaller than the computed closure is refused and whole-root review remains the recovery path | proven | runtime-behaviour | none |
+| Decision classifications carry forward only while decision digest and purpose semantics are unchanged | proven | runtime-behaviour | none |
+| Deterministic scaffolds emit exact skeletons without supplying any semantic judgment | proven | runtime-behaviour | none |
+| Identity succession renames the current-system record without orphaning prior baselines, receipts, or references | proven | runtime-behaviour | none |
+| The thirty-five state-baked stable paths migrate in one governed act with navigation and links intact | proven | runtime-behaviour | none |
+| Promotion mechanically invalidates operational-fact nodes into a readiness-blocking reconciliation set | proven | runtime-behaviour | none |
+| The reconciled confirmation ordering is satisfiable and exercised without exception on this release | proven | runtime-behaviour | none |
+| Stepping-stone migration through published archives works and is explicitly signaled under the shrunken window | proven | runtime-behaviour | none |
+| Repository-scaled test bounds derive from knowledge size and timed-out exercises leave no live child process | proven | runtime-behaviour | none |
+| [NKF-025](../active/NKF-025-validate-freshness-and-knowledge-graph-direction.md) and [NKF-026](../active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md) conclude truthfully under the corrected mechanics | proven | runtime-behaviour | none |
