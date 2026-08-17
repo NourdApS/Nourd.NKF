@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Record V2 Responsibility Bindings
 source:
-  path: designs/superseded/record-v2-responsibility-bindings.md
-  stable_path: designs/superseded/record-v2-responsibility-bindings.md
+  path: designs/items/record-v2-responsibility-bindings.md
+  stable_path: designs/items/record-v2-responsibility-bindings.md
   digest:
     algorithm: sha-256
     value: bd53b4ff1dbaeae57661533871d7419c9774865ea4aaecb59a9b787c0108b3a6

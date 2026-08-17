@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Self-Hosting
 source:
-  path: realizations/current/self-hosting.md
-  stable_path: realizations/current/self-hosting.md
+  path: realizations/items/self-hosting.md
+  stable_path: realizations/items/self-hosting.md
   digest:
     algorithm: sha-256
     value: 9315bb1093cbb8e7d13be9d2b7d4c611881cbb86838ca1e1e612da2eaa28ec96

@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Section-Role Vocabularies
 source:
-  path: designs/adopted/section-role-vocabularies.md
-  stable_path: designs/adopted/section-role-vocabularies.md
+  path: designs/items/section-role-vocabularies.md
+  stable_path: designs/items/section-role-vocabularies.md
   digest:
     algorithm: sha-256
     value: 568ace967706d8bceb01bb5d336545696c40e49210d17efd49cb3790173039b8

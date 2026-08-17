@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Release Documentation And Adoption
 source:
-  path: realizations/current/release-documentation-and-adoption.md
-  stable_path: realizations/current/release-documentation-and-adoption.md
+  path: realizations/items/release-documentation-and-adoption.md
+  stable_path: realizations/items/release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
     value: 875796c9c84d17f2821974e96b7ee8d8080779d60ad541bad83a8be834159bb5

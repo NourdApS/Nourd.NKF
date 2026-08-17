@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Complete Portable Onboarding Topology
 source:
-  path: designs/adopted/complete-portable-onboarding-topology.md
-  stable_path: designs/adopted/complete-portable-onboarding-topology.md
+  path: designs/items/complete-portable-onboarding-topology.md
+  stable_path: designs/items/complete-portable-onboarding-topology.md
   digest:
     algorithm: sha-256
     value: 6a4a0513489d2568dbb9316ec9b8a815e96ecc3d2be301cfd3a0663dff6221e6

@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Release Documentation And Adoption
 source:
-  path: designs/adopted/release-documentation-and-adoption.md
-  stable_path: designs/adopted/release-documentation-and-adoption.md
+  path: designs/items/release-documentation-and-adoption.md
+  stable_path: designs/items/release-documentation-and-adoption.md
   digest:
     algorithm: sha-256
     value: b97374b70313c0e66926677189f0ff1ae334aaf3cc8cf6de7d959faa386a76d1

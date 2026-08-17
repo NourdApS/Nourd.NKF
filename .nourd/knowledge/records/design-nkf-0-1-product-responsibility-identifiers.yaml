@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Product Responsibility Identifiers
 source:
-  path: designs/adopted/product-responsibility-identifiers.md
-  stable_path: designs/adopted/product-responsibility-identifiers.md
+  path: designs/items/product-responsibility-identifiers.md
+  stable_path: designs/items/product-responsibility-identifiers.md
   digest:
     algorithm: sha-256
     value: 7c423a00e95c136f5cb7d75e18b5bfdd83cd80e80d8303ec76243219114174a0

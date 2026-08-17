@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Authoritative Artifacts
 source:
-  path: designs/superseded/artifact-identities-and-contract-versioning.md
-  stable_path: designs/superseded/artifact-identities-and-contract-versioning.md
+  path: designs/items/artifact-identities-and-contract-versioning.md
+  stable_path: designs/items/artifact-identities-and-contract-versioning.md
   digest:
     algorithm: sha-256
     value: c41cad5a101004bceca02be36eb44f1db8548717f39c4397ed54f41213150bf0

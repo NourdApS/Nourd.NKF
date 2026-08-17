@@ -39,7 +39,7 @@ test-harness defects.
 This Design does not add large-monolith onboarding, does not declare NKF 1.0,
 does not change repository visibility, and does not touch the protected merge
 gate owned by
-[NKF-012](../../tasks/deferred/NKF-012-activate-protected-merge-gate.md).
+[NKF-012](../../tasks/items/NKF-012-activate-protected-merge-gate.md).
 
 ## Governing Inputs And Constraints
 
@@ -215,8 +215,8 @@ the release inputs instead of hand-edited literals, generalizing the
 per-version script accumulation. The undeclared non-Markdown provenance
 files under the knowledge root are classified explicitly as a closed
 provenance-attachment class visible to the graph as inert attachments. The
-stale [NKF-025](../../tasks/active/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
-and [NKF-026](../../tasks/active/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
+stale [NKF-025](../../tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md)
+and [NKF-026](../../tasks/items/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
 conclusions are performed under the owning Task with the corrected
 mechanics, the explicit Human Product Owner exception for the
 never-performed 0.5 post-adoption audit, and the historical pull-request

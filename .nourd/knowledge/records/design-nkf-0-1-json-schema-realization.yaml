@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 JSON Schema Realization
 source:
-  path: designs/superseded/initial-json-schema-realization.md
-  stable_path: designs/superseded/initial-json-schema-realization.md
+  path: designs/items/initial-json-schema-realization.md
+  stable_path: designs/items/initial-json-schema-realization.md
   digest:
     algorithm: sha-256
     value: 07a9e4b6e97fba6a8c0946f51e153578e1b0720654e1ac107c4ac5c8c10aef52

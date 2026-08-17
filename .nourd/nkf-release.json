@@ -1,18 +1,18 @@
 {
   "contract": "nkf.consumer-release-pin",
-  "nkf_version": "0.6",
+  "nkf_version": "0.7",
   "repository": "NourdApS/Nourd.NKF",
   "archive": {
-    "sha256": "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
-    "tag": "release-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
-    "asset_name": "nourd-nkf-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95.tar",
-    "project_path": ".nourd/tools/nkf/releases/nourd-nkf-sha256-b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95.tar"
+    "sha256": "c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f",
+    "tag": "release-sha256-c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f",
+    "asset_name": "nourd-nkf-sha256-c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f.tar",
+    "project_path": ".nourd/tools/nkf/releases/nourd-nkf-sha256-c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f.tar"
   },
-  "source_commit": "96652985ab7749d6f58677dbf0947af4c9ff4e63",
-  "checker_sha256": "9a019c4cfb1c9515cbefa76f3b0513328b9a910d8675b8c17d8b9018542bb376",
+  "source_commit": "e5b265e87da6c12b73b4749f8d24b41b996cc77a",
+  "checker_sha256": "64751e77af081ae795e60ebd7f68132548e0c71b101ba78ac9e2e9d7fd1ce70a",
   "adopter": {
     "path": ".nourd/tools/nkf/nourd-nkf-adopt.mjs",
-    "sha256": "d552e7c251bf38da574d2d950c5d3497d3ee5415e3e3de44ce1e64f7f564eb50"
+    "sha256": "e565978a73f625bc43992291a43d253966ec67168312b2571deff1822c88a360"
   },
   "integration_revision": 3,
   "integration": {

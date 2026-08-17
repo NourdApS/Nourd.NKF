@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Native Record Serialization
 source:
-  path: designs/adopted/native-record-serialization.md
-  stable_path: designs/adopted/native-record-serialization.md
+  path: designs/items/native-record-serialization.md
+  stable_path: designs/items/native-record-serialization.md
   digest:
     algorithm: sha-256
     value: 320f2e98576decc6a99edd04b49587e6706341112796a20f268961c5c3036103

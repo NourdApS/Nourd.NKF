@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Project Path And Knowledge Coverage
 source:
-  path: designs/adopted/project-path-and-knowledge-coverage.md
-  stable_path: designs/adopted/project-path-and-knowledge-coverage.md
+  path: designs/items/project-path-and-knowledge-coverage.md
+  stable_path: designs/items/project-path-and-knowledge-coverage.md
   digest:
     algorithm: sha-256
     value: 7bf2c8917a0b57ef3dc84067ac37a0497ad36f454d68f01634d67585e8ebd227

@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Initial Greenfield Onboarding
 source:
-  path: realizations/current/initial-greenfield-onboarding.md
-  stable_path: realizations/current/initial-greenfield-onboarding.md
+  path: realizations/items/initial-greenfield-onboarding.md
+  stable_path: realizations/items/initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
     value: 60b09cb92061104c8fd205661a534b1fb6a3be965bb4d1804963e31589c1d466

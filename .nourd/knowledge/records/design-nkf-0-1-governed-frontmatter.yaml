@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Governed Frontmatter
 source:
-  path: designs/adopted/governed-frontmatter.md
-  stable_path: designs/adopted/governed-frontmatter.md
+  path: designs/items/governed-frontmatter.md
+  stable_path: designs/items/governed-frontmatter.md
   digest:
     algorithm: sha-256
     value: 676fbd4126372a765fe82047773db16ac702c2371a06ea3349768014add6c8ef

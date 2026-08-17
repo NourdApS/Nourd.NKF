@@ -4,8 +4,8 @@ type: realization
 body_contract: nkf.realization
 title: NKF Portable Knowledge Topology
 source:
-  path: realizations/current/portable-knowledge-topology.md
-  stable_path: realizations/current/portable-knowledge-topology.md
+  path: realizations/items/portable-knowledge-topology.md
+  stable_path: realizations/items/portable-knowledge-topology.md
   digest:
     algorithm: sha-256
     value: 58c6305cef15a4388458456ce93ab9b39b7dbc84466bddead851d0b8ecfa718b

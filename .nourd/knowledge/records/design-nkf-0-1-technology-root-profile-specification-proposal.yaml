@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Technology Root Profile Specification Proposal
 source:
-  path: designs/adopted/technology-root-profile.md
-  stable_path: designs/adopted/technology-root-profile.md
+  path: designs/items/technology-root-profile.md
+  stable_path: designs/items/technology-root-profile.md
   digest:
     algorithm: sha-256
     value: 5dcd7d4bbce4459fcc5a8ed10292b3d520e7d69c65f66502312230f4bfdbd785

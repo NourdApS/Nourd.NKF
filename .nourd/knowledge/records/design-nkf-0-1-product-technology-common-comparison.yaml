@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Product–Technology Common Comparison
 source:
-  path: designs/adopted/product-technology-common-allocation.md
-  stable_path: designs/adopted/product-technology-common-allocation.md
+  path: designs/items/product-technology-common-allocation.md
+  stable_path: designs/items/product-technology-common-allocation.md
   digest:
     algorithm: sha-256
     value: ec430c566a1c5e5f983984b6156c3713a7333b1e33ac1a2449358ec74be952c1

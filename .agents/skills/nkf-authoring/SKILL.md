@@ -5,7 +5,7 @@ description: Author, change, classify, migrate, audit, or validate NKF-governed 
 
 # NKF Authoring
 
-NKF Version: 0.6
+NKF Version: 0.7
 
 From the project root, read and follow
 `integrations/ai/nkf-authoring-protocol.md` before editing governed knowledge.
@@ -35,7 +35,8 @@ commits, pushes, marks the request ready, and releases the working tree. A
 Task branch merges only concluded, and merging stays the human review act.
 
 Perform governed mechanics through the internal deterministic adopter commands —
-`task`, `repin`, `linkify`, `refs`, `set`, and `migrate` — supplying only the
+`task`, `repin`, `linkify`, `refs`, `set`, `review --scaffold`,
+`record --scaffold`, and `migrate` — supplying only the
 prose; never hand-edit what a command performs. Public consumer adoption uses
 the subcommand-free Adopt operation.
 

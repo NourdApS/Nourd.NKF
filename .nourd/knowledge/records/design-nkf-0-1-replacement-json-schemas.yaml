@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF 0.1 Replacement JSON Schemas
 source:
-  path: designs/superseded/replacement-json-schema-realization.md
-  stable_path: designs/superseded/replacement-json-schema-realization.md
+  path: designs/items/replacement-json-schema-realization.md
+  stable_path: designs/items/replacement-json-schema-realization.md
   digest:
     algorithm: sha-256
     value: 0a107ebacd2857193aa5c2282ac949c6b0d8023632e3010b9821dfd61dcd01b5

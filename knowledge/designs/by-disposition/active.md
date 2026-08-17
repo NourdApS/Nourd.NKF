@@ -1,3 +1,3 @@
 # Active Designs
 
-- [NKF Task Scope Gate](../active/task-scope-gate.md)
+- [NKF Task Scope Gate](../items/task-scope-gate.md)

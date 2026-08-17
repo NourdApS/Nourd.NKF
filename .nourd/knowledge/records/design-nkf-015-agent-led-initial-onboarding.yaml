@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Agent-Led Initial Onboarding
 source:
-  path: designs/adopted/agent-led-initial-onboarding.md
-  stable_path: designs/adopted/agent-led-initial-onboarding.md
+  path: designs/items/agent-led-initial-onboarding.md
+  stable_path: designs/items/agent-led-initial-onboarding.md
   digest:
     algorithm: sha-256
     value: 51ab780fc89bb87f8bbe43cc6aa0abf0ed095c57b20f4710d45ea180221829f3

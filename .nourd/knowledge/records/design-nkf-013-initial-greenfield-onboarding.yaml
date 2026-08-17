@@ -4,8 +4,8 @@ type: design
 body_contract: nkf.design
 title: NKF Initial Greenfield Onboarding
 source:
-  path: designs/adopted/initial-greenfield-onboarding.md
-  stable_path: designs/adopted/initial-greenfield-onboarding.md
+  path: designs/items/initial-greenfield-onboarding.md
+  stable_path: designs/items/initial-greenfield-onboarding.md
   digest:
     algorithm: sha-256
     value: b08526b68e47e8cd4380309a15566b4d5e6f3bdf40c71d534ba0026b9d8274d3

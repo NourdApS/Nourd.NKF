@@ -28,33 +28,34 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.6 revision 3 is the current accepted, released, and recommended
-version. Its content-addressed archive and release tag are identified by
-SHA-256
-`b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95`, published
-as an immutable private prerelease. This producer repository declares and
-pins that exact recommendation: the producer publicly self-adopted 0.6, the
-promotion created the native accepted 0.6 Specification record, and repeat
-public invocations return `current`.
+NKF 0.7 is the current accepted, published, and recommended version. Its
+content-addressed archive and release tag are identified by SHA-256
+`c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f`, published
+as an immutable private prerelease at the technically confirmed release
+commit. This producer repository declares and pins that exact
+recommendation: the producer publicly self-adopted 0.7 through the ordinary
+Adopt operation, the promotion created the native accepted 0.7 Specification
+record and performed the deliberate last whole-root review this lineage
+requires, and repeat public invocations return `current`.
 
-NKF 0.7 is the accepted successor prepared on the release branch: it makes
-semantic review carry-forward digest-bound and computable, confines fresh
-review to a declared per-rule semantic delta with a fail-closed delta claim,
-adds deterministic review and record scaffolds, neutralizes state-baked
-identity and stable paths through explicit succession, adds operational-fact
-promotion triggers, makes the post-audit technical-confirmation Decision
-mandatory and audit-bound, performs the Git transition orchestration the
-authoring guidance describes, and cuts live support to the current version
-plus one predecessor. Its authority is accepted by
+NKF 0.7 makes semantic review carry-forward digest-bound and computable,
+confines fresh review to a declared per-rule semantic delta with a
+fail-closed delta claim, adds deterministic review and record scaffolds,
+neutralizes state-baked identity and stable paths through explicit
+succession, adds operational-fact promotion triggers, makes the post-audit
+technical-confirmation Decision mandatory and audit-bound, performs the Git
+transition orchestration the authoring guidance describes, and cuts live
+support to the current version plus one predecessor. Its authority is
+accepted by
 [ADR 0128](knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md)
-after three independent audit rounds and a rehearsal-driven revision, and its
-complete producer promotion is proven at both authorized stages against
-isolated copies of this repository. Migration from NKF 0.6 is breaking and
-requires explicit repository-owner approval with a computed delta review;
-repositories declaring NKF 0.1 through 0.5 migrate through their immutable
-published archives as stepping stones. Publication, recommendation, and the
-live producer promotion of 0.7 remain separately authorized Human Product
-Owner acts; until they complete, this repository remains on NKF 0.6.
+and its exact release candidate is confirmed by
+[ADR 0129](knowledge/decisions/0129-confirm-the-nkf-0-7-release-candidate.md)
+against a clean independent release audit. Migration from NKF 0.6 is
+breaking and requires explicit repository-owner approval with a computed
+review; NKF 0.6 remains the one live-supported predecessor, and repositories
+declaring NKF 0.1 through 0.5 migrate through their immutable published
+archives as stepping stones. Merging the release and adoption pull requests
+remains the Human Product Owner's act.
 
 The 0.3 archive carries its complete public-documentation projection and exact
 public adopter. Publication of those bytes to the separate
@@ -64,7 +65,7 @@ yet moved from its last independently observed 0.2 state.
 
 The `NKF Contracts` workflow validates every push and pull request with the
 canonical command. The protected merge gate remains deferred to
-[Task NKF-012](knowledge/tasks/deferred/NKF-012-activate-protected-merge-gate.md).
+[Task NKF-012](knowledge/tasks/items/NKF-012-activate-protected-merge-gate.md).
 The
 [Current System Realization](knowledge/realizations/current-system.md) records
 the exact implementation, confirmation, and enforcement boundaries.
