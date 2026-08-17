@@ -7,6 +7,7 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 
 const registryPath = "integrations/ai/agent-hosts.yaml";
@@ -380,9 +381,12 @@ export async function verifyAgentGuidance(projectRootInput) {
   }
   // From 0.7 the version's own accepted distribution skill is the expected
   // cross-host bootstrap; earlier versions share the embedded 0.2 lineage.
+  // The accepted 0.7 skill bytes ship with this producer tooling itself, so
+  // verification does not depend on the verified project carrying them.
+  const toolingRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
   const expectedSkill = bundle.nkf_version === "0.7"
     ? await readFile(
-        path.join(projectRoot, "distribution/nkf/0.7/.claude/skills/nkf-authoring/SKILL.md"),
+        path.join(toolingRoot, "distribution/nkf/0.7/.claude/skills/nkf-authoring/SKILL.md"),
         "utf8",
       )
     : expectedSkill0_2.replace(
