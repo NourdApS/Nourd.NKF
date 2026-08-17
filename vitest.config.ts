@@ -4,12 +4,19 @@ export default defineConfig({
   test: {
     include: ["test/**/*.test.ts"],
     // These bounds guard against hangs; they do not assert performance. The
-    // governed exercises drive real adopter processes over the whole
-    // repository, so their cost tracks machine speed: hosted CI runners
-    // measured about 2.6 times slower than the development machine and timed
-    // out ten otherwise passing exercises. The bounds are therefore generous
-    // rather than tight. Making them proportional to knowledge size is
-    // deliberately deferred to a later NKF version.
+    // suite budgets scale with the governed knowledge size in the tests
+    // themselves; the base timeout here stays generous rather than tight.
     testTimeout: 60_000,
+    // The governed exercises load complete producer graphs per worker.
+    // Unbounded fork parallelism exhausts worker heaps on hosted runners,
+    // so concurrency is bounded and each worker gets explicit headroom.
+    maxWorkers: 2,
+    minWorkers: 1,
+    pool: "forks",
+    poolOptions: {
+      forks: {
+        execArgv: ["--max-old-space-size=4096"],
+      },
+    },
   },
 });

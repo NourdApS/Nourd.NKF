@@ -1864,7 +1864,7 @@ governed_artifacts:
     path: .github/workflows/nkf-contracts.yml
     digest:
       algorithm: sha-256
-      value: 9ee7c20f80a59eabbc809ff6325ca3c2834800d412ba61ed65f843deec07d7ea
+      value: "adee94d771626a585e04cd58e7e206f0672b9a2d44288306162cf2a97fb817b2"
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-gitignore
@@ -2096,7 +2096,7 @@ governed_artifacts:
     path: integrations/ai/agent-hosts.yaml
     digest:
       algorithm: sha-256
-      value: 98253a869ab59ebe76ff9f447e0154bad6afea9b9112c0d251471204bd2a8b46
+      value: "2e71780b5410a3ff9233d93b6a4b12ff80dce2f272b4081b1001e186155213e0"
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-integrations-ai-nkf-authoring-protocol-md
@@ -2736,7 +2736,7 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: fd3ad7919b9c4eb8242b98bf7bd16e61b2d697f440f7fe7ab56985925983f4f8
+      value: "8c92a045255bd82daac79ae0e307e5ad9302dbf786a01792cb04a08ff7afb146"
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-scripts-verify-build-mjs
@@ -3128,7 +3128,7 @@ governed_artifacts:
     path: vitest.config.ts
     digest:
       algorithm: sha-256
-      value: 344d08728977e0e63bd8eaa0daf4699447f2ae192770e016f155d630c9c8dcd2
+      value: "3f077e883ac0c4b30dcca5565611a26d378bba25bc900b5ffd21b69b78ff458b"
     record: nkf-0.1-native-realization
     source_section: durable-mapping
 knowledge_graph:

@@ -335,7 +335,7 @@ function validateWorkflow(workflow, registry) {
     fail("The workflow must contain the required Validate job.");
   }
   exactKeys(job, ["name", "runs-on", "steps", "timeout-minutes"], "workflow.jobs.validate");
-  if (job["runs-on"] !== "ubuntu-latest" || job["timeout-minutes"] !== 15) {
+  if (job["runs-on"] !== "ubuntu-latest" || job["timeout-minutes"] !== 45) {
     fail("The Validate job runner or timeout does not match the reviewed workflow.");
   }
   const steps = array(job.steps, "workflow jobs.validate.steps");
