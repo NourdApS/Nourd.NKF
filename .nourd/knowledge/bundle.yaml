@@ -1682,7 +1682,7 @@ non_records:
       stable_path: tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md
       digest:
         algorithm: sha-256
-        value: 7ad414f425c4e8dfe2438eea616fba8f2fe9bcdc30cac10f75657ec1dbe6b921
+        value: "c75317e634956a3ce0fb5e387f469beab6b058e29ec3c1b56c4bca1177c6e7e8"
       state:
         vocabulary: task-status
         value: active

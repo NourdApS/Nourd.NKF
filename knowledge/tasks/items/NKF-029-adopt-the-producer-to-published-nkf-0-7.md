@@ -124,6 +124,38 @@ notes as the publication body. The re-downloaded asset verified byte-exact
 against the confirmed digest. This Task records that act as Evidence and
 performs everything after it.
 
+## Completion Result
+
+NKF is adopted to published NKF 0.7. The publication from the concluded
+release branch is recorded with re-download verification in the
+[publication Evidence](../../evidence/release/nkf-029-nkf-0-7-publication.md):
+the published asset hashes to exactly the archive digest bound by
+[ADR 0129](../../decisions/0129-confirm-the-nkf-0-7-release-candidate.md) at
+exactly the confirmed release commit, and `master` was deliberately not
+merged first. The governed recommendation selects the published release and
+the registry-driven recommended-release verification passes with no code
+edit — the criterion delivered by the whole-line audit correction proved
+itself at this publication. The live promotion ran the ordinary public Adopt
+of the published release with explicit repository-owner breaking approval:
+it verified the downloaded archive, applied the governed identity succession
+and the one deliberate stable-path neutralization, created the native
+accepted [0.7 Specification record](../../specifications/nkf-0.7.md),
+performed the deliberate last whole-root review this lineage requires — two
+hundred ninety-one re-affirmed roles and twelve fresh judgments under the
+recorded delegation — returned `updated`, and returned `current` on repeat
+with the host-superset integration preserved. The root record, front page,
+and [current-system Realization](../../realizations/current-system.md) state
+the promoted reality, with the root record gaining its native envelope on
+its first native edit. The reconciliation's two-record graph delta was
+sealed through the first ordinary live delta review: three hundred one
+judgments carried by digest identity under the accepted version delta and
+declared judgment dependencies, exactly two performed fresh — the delivered
+0.7 headline mechanism operating on its own producer. The complete gate
+passes with empty diagnostics and equal baseline and candidate graph
+revisions, and the full suite passes two hundred twenty-eight tests. The
+stacked pull request is ready for review; merging it and its base remains
+the Human Product Owner's act.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -146,7 +178,7 @@ performs everything after it.
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
 | The published asset re-downloads to the confirmed archive digest at the confirmed release commit | proven | data-validity | none |
-| The recommendation catalog passes the fail-closed registry-driven verification | unknown | none | none |
-| The live promotion reaches its verified terminal state with the complete gate green | unknown | none | none |
-| A repeat public Adopt returns `current` with the host-superset integration preserved | unknown | none | none |
-| The governed record states the promoted reality truthfully | unknown | none | none |
+| The recommendation catalog passes the fail-closed registry-driven verification | proven | runtime-behaviour | none |
+| The live promotion reaches its verified terminal state with the complete gate green | proven | runtime-behaviour | none |
+| A repeat public Adopt returns `current` with the host-superset integration preserved | proven | runtime-behaviour | none |
+| The governed record states the promoted reality truthfully | proven | data-validity | none |
