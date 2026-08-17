@@ -827,6 +827,15 @@ non_records:
         algorithm: sha-256
         value: 6cda03da38ebf5f68fa5565805ea720acf8edff1598a3a43c91f1bf839934f12
       relationships: []
+  - path: specifications/nkf-0.71.md
+    kind: evidence
+    document:
+      id: document-nkf-0-71-specification
+      stable_path: specifications/nkf-0.71.md
+      digest:
+        algorithm: sha-256
+        value: "ec6d7fd733a989eb86580bd3a9d77405d3c02d5402429190ad8d171c4414ae98"
+      relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
     document:
@@ -1768,6 +1777,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 3fe6b72a54c39a111b984fbcf01a214996e8aa6a2d1a96fb38d9d17b7eb0ee52
+      relationships: []
+  - path: evidence/release/nkf-0.71-producer-promotion.yaml
+    kind: evidence
+    document:
+      id: document-nkf-0-71-producer-promotion
+      stable_path: evidence/release/nkf-0.71-producer-promotion.yaml
+      digest:
+        algorithm: sha-256
+        value: "13c57b2917bdc3d157378178d6123544003a1f3dfebf7a6530b773c06bc88498"
       relationships: []
   - path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
     kind: evidence
