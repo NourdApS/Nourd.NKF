@@ -29,7 +29,7 @@ function run(command, argumentsValue, options = {}) {
 }
 
 export async function evaluateReleaseSourceProvenance(sourceRoot, verification) {
-  if (!["0.3", "0.4", "0.5", "0.6"].includes(verification.manifest.nkf_version)) {
+  if (!["0.3", "0.4", "0.5", "0.6", "0.7"].includes(verification.manifest.nkf_version)) {
     fail("Exact source-provenance reproduction requires a complete release-set version.");
   }
   const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-release-source-"));
