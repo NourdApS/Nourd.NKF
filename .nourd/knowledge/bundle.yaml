@@ -1704,6 +1704,22 @@ non_records:
         - NKF-026
         - NKF-027
       relationships: []
+  - path: tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md
+    kind: task
+    document:
+      id: NKF-029
+      stable_path: tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md
+      digest:
+        algorithm: sha-256
+        value: "7ad414f425c4e8dfe2438eea616fba8f2fe9bcdc30cac10f75657ec1dbe6b921"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary, publication authorization, and both merges; Claude technical reviewer under explicit delegation for the publication mechanics, evidence recording, recommendation promotion, live promotion, reconciliations, tests, and audits within the confirmed boundaries
+      related_tasks:
+        - NKF-028
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md
@@ -1791,6 +1807,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: "ce6a9ee3080a5b754cad646c469fbc9cac1369530e7422aff67172141c516a41"
+      relationships: []
+  - path: evidence/release/nkf-029-nkf-0-7-publication.md
+    kind: evidence
+    document:
+      id: document-nkf-0-7-publication
+      stable_path: evidence/release/nkf-029-nkf-0-7-publication.md
+      digest:
+        algorithm: sha-256
+        value: "801b09082a4ad47cb1f7f452e99ffb336215bf934636327375fd4d352c640307"
       relationships: []
 canonical_terms:
   - ADR
