@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 7619349e5cf0276e8bec97f32ed12936a36141ff66b115d043531abfc921bfdb
+  value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -954,6 +954,12 @@ node_revisions:
       value: 9555afc6c0e8591a9ccb59a244e3f0758b426adb498cce9066bf863ea73460b4
   - node:
       kind: record
+      id: adr-0131
+    revision:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     revision:
       algorithm: sha-256
@@ -1740,6 +1746,12 @@ node_revisions:
       value: 8b07515729bd89d01a58b557cd0a42efd62dd031efd81eda23aede6307a93a6e
   - node:
       kind: document
+      id: document-nkf-0-71-independent-authority-audit
+    revision:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+  - node:
+      kind: document
       id: document-nkf-0-71-producer-promotion
     revision:
       algorithm: sha-256
@@ -1941,6 +1953,19 @@ authored_edges:
       node:
         kind: record
         id: adr-0130
+      section: decision
+  - source:
+      kind: record
+      id: adr-0131
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0128
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0131
       section: decision
   - source:
       kind: record
@@ -2864,6 +2889,19 @@ authored_edges:
       node:
         kind: record
         id: adr-0130
+      section: decision
+  - source:
+      kind: record
+      id: adr-0131
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0130
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0131
       section: decision
   - source:
       kind: record
@@ -15958,6 +15996,66 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: record
+      id: adr-0131
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0131
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+    basis_digest:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0131
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0131
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+    basis_digest:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0131
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0131
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+    basis_digest:
+      algorithm: sha-256
+      value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
+    provenance:
+      performed: true
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     purpose: change-impact
     state: eligible
@@ -27002,6 +27100,75 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: document-nkf-0-71-independent-authority-audit
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-71-independent-authority-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-031 NKF 0.71 Independent Authority Auditsummary: Records the two-round fresh independent audit of the exact candidate NKF 0.71 authority set — the successor Specification, executable companion, evaluation policy, version-delta declaration, derived schemas, and producer-promotion input — that the Human Product Owner's standing acceptance condition requires before any acceptance under delegation, with every finding, its repair, and the final verdict.created_at: 2026-08-17T18:45:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+    basis_digest:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-71-independent-authority-audit
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-71-independent-authority-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-031 NKF 0.71 Independent Authority Auditsummary: Records the two-round fresh independent audit of the exact candidate NKF 0.71 authority set — the successor Specification, executable companion, evaluation policy, version-delta declaration, derived schemas, and producer-promotion input — that the Human Product Owner's standing acceptance condition requires before any acceptance under delegation, with every finding, its repair, and the final verdict.created_at: 2026-08-17T18:45:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+    basis_digest:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-71-independent-authority-audit
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-71-independent-authority-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-031 NKF 0.71 Independent Authority Auditsummary: Records the two-round fresh independent audit of the exact candidate NKF 0.71 authority set — the successor Specification, executable companion, evaluation policy, version-delta declaration, derived schemas, and producer-promotion input — that the Human Product Owner's standing acceptance condition requires before any acceptance under delegation, with every finding, its repair, and the final verdict.created_at: 2026-08-17T18:45:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+    basis_digest:
+      algorithm: sha-256
+      value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
+    provenance:
+      performed: true
   - node:
       kind: document
       id: document-nkf-0-71-producer-promotion
@@ -37578,30 +37745,86 @@ decision_classifications:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+  - decision: adr-0131
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0131
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
+    basis_digest:
+      algorithm: sha-256
+      value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
+    provenance:
+      performed: true
+  - decision: adr-0131
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0131
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
+    basis_digest:
+      algorithm: sha-256
+      value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
+    provenance:
+      performed: true
+  - decision: adr-0131
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0131
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
+    basis_digest:
+      algorithm: sha-256
+      value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
+    provenance:
+      performed: true
 promotion_reconciliation: []
 confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-17T18:14:32.258Z
+  reviewed_at: 2026-08-17T19:52:07.884Z
   claim: semantically-reviewed-delta
-  computed_closure: []
-  performed_set: []
+  computed_closure:
+    - kind: record
+      id: adr-0131
+    - kind: document
+      id: document-nkf-0-71-independent-authority-audit
+  performed_set:
+    - kind: record
+      id: adr-0131
+    - kind: document
+      id: document-nkf-0-71-independent-authority-audit
   observations:
     - id: review-observation
       subject:
-        kind: document
-        id: document-nkf-0-71-producer-promotion
+        kind: record
+        id: adr-0131
       basis:
         node:
-          kind: document
-          id: document-nkf-0-71-producer-promotion
+          kind: record
+          id: adr-0131
         source:
-          heading:
-            heading_path:
-              - "contract: nkf.producer-candidate-promotion"
-            occurrence: 1
-      finding: "Semantic re-review of the repaired producer promotion input performed despite the empty computed closure: the independent authority audit's six blocking findings were repaired in the candidate executable companion, its digest was rebound into the promotion input and the candidate Evidence registration, and the repaired bytes were re-read in full. The computed closure is empty because, under the accepted 0.7 revision semantics, a non-Markdown evidence document's node revision projects only its declaration fields and carries no content digest, so a YAML evidence content change is invisible to the graph revision — recorded here as a format observation for later governed treatment alongside the deferred review-quality measurement."
+          section: decision
+      finding: "Fresh semantic review of the two nodes this delta created: the independent authority audit Evidence records both audit rounds, every finding, the repairs, the final clean verdict, and the two non-blocking notes with their deliberate dispositions truthfully; and ADR 0131 accepts exactly the audited five-artifact digest set under the recorded delegation with the Human Product Owner's independent-audit condition satisfied, deferring the ADR 0128 release-authority supersession to the separately authorized publication and promotion. Its three decision classifications are performed as extends. No other node's meaning changed in this delta."
   limitations:
-    - This delta review carries every judgment by digest identity with zero fresh judgments required by the computed closure; the promotion-input repair was nonetheless semantically re-reviewed as recorded in the observation, and no whole-root re-reading was performed or claimed.
+    - "This is an ordinary digest-bound delta review over the acceptance delta: the two fresh node judgments and three fresh decision classifications cover the computed closure exactly, every other judgment is carried by digest identity from the sealed predecessor baseline, and no whole-root re-reading was performed or claimed."
   disputed: false
