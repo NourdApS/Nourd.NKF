@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: ec8c647498bde9530cb610ebc7bae8181bf0da5639eade250943294799f7b7e0
+  value: ee11caae3a2e17694ac5a2180f02c78e51bf6681c00c5f586a6c6bf67645d6f0
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -184,6 +184,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
+  - node:
+      kind: document
+      id: NKF-031
+    revision:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
   - node:
       kind: record
       id: adr-0001
@@ -5764,7 +5770,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: ec8c647498bde9530cb610ebc7bae8181bf0da5639eade250943294799f7b7e0
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: NKF-030
@@ -5787,7 +5799,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: ec8c647498bde9530cb610ebc7bae8181bf0da5639eade250943294799f7b7e0
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: NKF-030
@@ -5809,6 +5827,81 @@ applicability_coverage:
     basis_digest:
       algorithm: sha-256
       value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: ec8c647498bde9530cb610ebc7bae8181bf0da5639eade250943294799f7b7e0
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: NKF-031
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-031
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-031: Release The Corrective NKF 0.71\"summary: Deliver NKF 0.71, the deliberately small corrective successor to published and producer-adopted NKF 0.7 — reconciling the accepted specification's topology self-contradiction and version-label errors, closing the close-and-seal ordering hole with the seal-completing conclusion, regenerating the public documentation projection, and sliding the live window to exactly 0.71 plus 0.7 — proven by the first delta-only producer upgrade and delivered through the full accepted release order as one pull request.created_at: 2026-08-17T17:01:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
+    basis_digest:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-031
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-031
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-031: Release The Corrective NKF 0.71\"summary: Deliver NKF 0.71, the deliberately small corrective successor to published and producer-adopted NKF 0.7 — reconciling the accepted specification's topology self-contradiction and version-label errors, closing the close-and-seal ordering hole with the seal-completing conclusion, regenerating the public documentation projection, and sliding the live window to exactly 0.71 plus 0.7 — proven by the first delta-only producer upgrade and delivered through the full accepted release order as one pull request.created_at: 2026-08-17T17:01:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
+    basis_digest:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-031
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-031
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-031: Release The Corrective NKF 0.71\"summary: Deliver NKF 0.71, the deliberately small corrective successor to published and producer-adopted NKF 0.7 — reconciling the accepted specification's topology self-contradiction and version-label errors, closing the close-and-seal ordering hole with the seal-completing conclusion, regenerating the public documentation projection, and sliding the live window to exactly 0.71 plus 0.7 — proven by the first delta-only producer upgrade and delivered through the full accepted release order as one pull request.created_at: 2026-08-17T17:01:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
+    basis_digest:
+      algorithm: sha-256
+      value: 71cb76be5d06438632cda367f0d3828f626226bbf658f4df62612100bc48a9bb
     provenance:
       performed: true
   - node:
@@ -36954,29 +37047,29 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-17T13:05:34.000Z
+  reviewed_at: 2026-08-17T17:06:53.337Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
-      id: NKF-030
+      id: NKF-031
   performed_set:
     - kind: document
-      id: NKF-030
+      id: NKF-031
   observations:
     - id: review-observation
       subject:
         kind: document
-        id: NKF-003
+        id: NKF-031
       basis:
         node:
           kind: document
-          id: NKF-003
+          id: NKF-031
         source:
           heading:
             heading_path:
-              - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+              - "title: \"NKF-031: Release The Corrective NKF 0.71\"summary: Deliver NKF 0.71, the deliberately small corrective successor to published and producer-adopted NKF 0.7 — reconciling the accepted specification's topology self-contradiction and version-label errors, closing the close-and-seal ordering hole with the seal-completing conclusion, regenerating the public documentation projection, and sliding the live window to exactly 0.71 plus 0.7 — proven by the first delta-only producer upgrade and delivered through the full accepted release order as one pull request.created_at: 2026-08-17T17:01:00Z"
             occurrence: 1
-      finding: The computed fresh set contains exactly the repair Task whose declared state the deterministic close transitioned to completed with no source-byte change beyond the mechanical consequence; re-read and re-affirmed by the named delegated reviewer. This is the final mechanical reseal the Task's scope declares so the delivered tip carries equal baseline and candidate graph revisions.
+      finding: "Fresh semantic review of the newly created NKF-031 Task document: the recorded Human Direction, confirmed boundaries, scope, execution plan, acceptance criteria, and Decision Applicability gate state the directed NKF 0.71 corrective-successor work truthfully against the current promoted 0.7 producer state; no other node's meaning changed in this delta."
   limitations:
-    - This delta review covers exactly the computed closure of the deterministic close transition; the underlying close-and-seal ordering gap defers to the NKF 0.71 successor.
+    - "This is an ordinary digest-bound delta review over the NKF-031 creation delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity from the sealed predecessor baseline, and no whole-root re-reading was performed or claimed."
   disputed: false
