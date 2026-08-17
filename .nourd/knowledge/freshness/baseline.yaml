@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 247249599e87731d85a6a9304064f7844092db24d6f996ecfa4e33856bca7a94
+  value: ec8c647498bde9530cb610ebc7bae8181bf0da5639eade250943294799f7b7e0
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -183,7 +183,7 @@ node_revisions:
       id: NKF-030
     revision:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
   - node:
       kind: record
       id: adr-0001
@@ -5759,10 +5759,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     basis_digest:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     provenance:
       performed: true
   - node:
@@ -5782,10 +5782,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     basis_digest:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     provenance:
       performed: true
   - node:
@@ -5805,10 +5805,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     basis_digest:
       algorithm: sha-256
-      value: dc1130717098208dce91b772d6033bade9932fd516d5333f84508d84287385d8
+      value: 347f6055f8c84bd8b810496a397566ced416d0780cac2399274092302d143f3e
     provenance:
       performed: true
   - node:
@@ -36954,7 +36954,7 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-17T13:02:00.000Z
+  reviewed_at: 2026-08-17T13:05:34.000Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
@@ -36976,7 +36976,7 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: The computed fresh set contains exactly the repair Task whose Completion Result and re-extracted all-proven gate were authored by the named delegated reviewer; every other judgment carries forward by digest identity from the immediately preceding sealed delta review.
+      finding: The computed fresh set contains exactly the repair Task whose declared state the deterministic close transitioned to completed with no source-byte change beyond the mechanical consequence; re-read and re-affirmed by the named delegated reviewer. This is the final mechanical reseal the Task's scope declares so the delivered tip carries equal baseline and candidate graph revisions.
   limitations:
-    - This delta review covers exactly the computed closure of the Task-close authoring; it does not confirm the Completion Result account.
+    - This delta review covers exactly the computed closure of the deterministic close transition; the underlying close-and-seal ordering gap defers to the NKF 0.71 successor.
   disputed: false
