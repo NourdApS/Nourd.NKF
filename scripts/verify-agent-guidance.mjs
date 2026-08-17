@@ -375,8 +375,8 @@ export async function verifyAgentGuidance(projectRootInput) {
   const bundle = YAML.parse(
     await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
   );
-  if (!["0.2", "0.3", "0.4", "0.5", "0.6"].includes(bundle?.nkf_version)) {
-    fail("The producer guidance verifier requires an NKF 0.2, 0.3, 0.4, 0.5, or 0.6 bundle.");
+  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 through 0.7 bundle.");
   }
   const expectedSkill = expectedSkill0_2.replace(
     "NKF Version: 0.2",
