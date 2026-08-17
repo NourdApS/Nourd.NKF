@@ -41,6 +41,32 @@ function relativeDestinations(text) {
   return destinations;
 }
 
+const LEGACY_STABLE_PATH_SEGMENTS = [
+  ["tasks/active/", "tasks/items/"],
+  ["tasks/completed/", "tasks/items/"],
+  ["tasks/deferred/", "tasks/items/"],
+  ["tasks/cancelled/", "tasks/items/"],
+  ["designs/active/", "designs/items/"],
+  ["designs/adopted/", "designs/items/"],
+  ["designs/rejected/", "designs/items/"],
+  ["designs/superseded/", "designs/items/"],
+  ["designs/withdrawn/", "designs/items/"],
+  ["realizations/current/", "realizations/items/"],
+];
+
+function legacyStablePathResolution(resolved) {
+  const normalized = resolved.split(path.sep).join("/");
+  for (const [from, to] of LEGACY_STABLE_PATH_SEGMENTS) {
+    const index = normalized.indexOf(`/${from}`);
+    if (index >= 0) {
+      return path.join(
+        ...`${normalized.slice(0, index + 1)}${to}${normalized.slice(index + 1 + from.length)}`.split("/"),
+      ).replace(/^([A-Za-z]:)?/, resolved.startsWith(path.sep) ? path.sep : "$1");
+    }
+  }
+  return resolved;
+}
+
 async function checkFiles(projectRoot, files) {
   let checked = 0;
   const dead = [];
@@ -57,7 +83,15 @@ async function checkFiles(projectRoot, files) {
         dead.push({ file: relative, destination });
         continue;
       }
-      const stat = await lstat(resolved).catch(() => null);
+      let stat = await lstat(resolved).catch(() => null);
+      if (stat === null) {
+        // Historical resolution: byte-frozen sources (predecessor-locked,
+        // immutable, Evidence) and out-of-bundle front-page files keep links
+        // to the legacy state-baked trees; the accepted 0.7 neutralization
+        // resolves them through its closed mapping.
+        const mapped = legacyStablePathResolution(resolved);
+        if (mapped !== resolved) stat = await lstat(mapped).catch(() => null);
+      }
       if (stat === null) dead.push({ file: relative, destination });
     }
   }
