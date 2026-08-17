@@ -1,0 +1,71 @@
+nkf_version: "0.71"
+contract: nkf.bundle
+id: example-technology
+root:
+  record: technology
+  profile: nkf.profile.technology
+knowledge_root: knowledge
+non_records:
+  - path: decisions/README.md
+    kind: navigation
+  - path: designs/by-disposition/active.md
+    kind: generated
+  - path: designs/by-disposition/adopted.md
+    kind: generated
+  - path: designs/by-disposition/rejected.md
+    kind: generated
+  - path: designs/by-disposition/superseded.md
+    kind: generated
+  - path: designs/by-disposition/withdrawn.md
+    kind: generated
+  - path: designs/README.md
+    kind: navigation
+  - path: evidence/README.md
+    kind: evidence
+    document:
+      id: document-a8a61d6c89b3af9e74192589ca956288bb83091a98d4054a04f437069ab2cb4a
+      stable_path: evidence/README.md
+      digest:
+        algorithm: sha-256
+        value: 71f3af76de314579ce9c4d739619bf8f32c9b3ebe1a87da17e025f24e8837067
+      relationships: []
+  - path: README.md
+    kind: navigation
+  - path: realizations/README.md
+    kind: navigation
+  - path: specifications/README.md
+    kind: navigation
+  - path: tasks/items/task.md
+    kind: task
+    document:
+      id: TEST-TECH-001
+      stable_path: tasks/items/task.md
+      digest:
+        algorithm: sha-256
+        value: 69242bdfdff6260031920fdcfe69d502c4072516df7d8f384252438f64a24bc6
+      state:
+        vocabulary: task-status
+        value: active
+      relationships: []
+  - path: tasks/by-state/active.md
+    kind: generated
+  - path: tasks/by-state/cancelled.md
+    kind: generated
+  - path: tasks/by-state/completed.md
+    kind: generated
+  - path: tasks/by-state/deferred.md
+    kind: generated
+  - path: tasks/README.md
+    kind: navigation
+governed_artifacts:
+  - id: example-source
+    kind: checker-source
+    path: src/example.ts
+    digest:
+      algorithm: sha-256
+      value: 5d8f65d2774e206bc9f7a7a4ad39ca2dc563b5c31e46ab57ef4874961237ce29
+    record: realization
+    source_section: durable-mapping
+knowledge_graph:
+  policy: nkf.freshness-policy.0.71
+  baseline: .nourd/knowledge/freshness/baseline.yaml

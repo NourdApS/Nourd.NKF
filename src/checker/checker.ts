@@ -12,7 +12,7 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import { validateDecisionApplicabilityGate } from "./applicability.js";
-import { bindingsForVersion, unsupportedVersionBindings, type SupportedNkfVersion } from "./bindings.js";
+import { bindingsForVersion, unsupportedVersionBindings, type SupportedNkfVersion, VERSION_CAPABILITIES } from "./bindings.js";
 import { loadContracts } from "./contracts.js";
 import { RuleEmitter } from "./diagnostics.js";
 import { validateExtensions } from "./extensions.js";
@@ -81,9 +81,12 @@ interface ParsedNonRecord {
   markdown?: MarkdownModel;
 }
 
-type ModernNkfVersion = "0.6" | "0.7";
+type ModernNkfVersion = SupportedNkfVersion;
+// Every registered version carries the modern envelope; the capability table
+// keeps this a compile-time-exhaustive dispatch instead of a silent
+// predecessor fall-through for an unregistered version.
 const isModernNkfVersion = (version: SupportedNkfVersion): version is ModernNkfVersion =>
-  version === "0.6" || version === "0.7";
+  VERSION_CAPABILITIES[version].modernEnvelope;
 
 export class ProjectNotInitializedError extends Error {
   readonly code = "NKF_PROJECT_NOT_INITIALIZED";
@@ -362,69 +365,7 @@ function deepLinkChecks(
   }
 }
 
-const ADR_0122_HISTORICAL_LOCK = {
-  record_id: "adr-0122",
-  record_declaration: {
-    path: ".nourd/knowledge/records/adr-0122.yaml",
-    digest: { algorithm: "sha-256", value: "dac8ccfe377138d45c5720eeb4d3f0fbdc2b2504224eb50a6a85888c44aaf3b9" },
-  },
-  source: {
-    path: "knowledge/decisions/0122-accept-the-nkf-0-6-authority-set.md",
-    digest: { algorithm: "sha-256", value: "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547" },
-  },
-  violations: [
-    { diagnostic: "markdown.reference.deep-link.required", section: "scope-and-applicability", token: "NKF-027", occurrence: 1 },
-    { diagnostic: "markdown.reference.deep-link.required", section: "alternatives-considered", token: "ADR 0121", occurrence: 1 },
-  ],
-  historical_effect: "accepted-history-not-current-release-authority",
-  correction_decision: "adr-0125",
-};
 
-function historicalEvidenceDeepLinkChecks(
-  nonRecord: ParsedNonRecord,
-  model: MarkdownModel,
-  maps: ReferenceMaps | null,
-  emitter: RuleEmitter,
-): void {
-  const artifact = nonRecord.observation.entry.path;
-  const document = asObject(nonRecord.declaration.document);
-  const lock = asObject(document?.historical_acceptance_attempt_lock);
-  if (lock === null) return;
-  const exactDeclaration =
-    nonRecord.declaration.kind === "evidence" &&
-    nonRecord.declaration.path === "decisions/0122-accept-the-nkf-0-6-authority-set.md" &&
-    document?.id === "document-cddf78f71eac865b267a0b88c15600cf61383285d6d3b2558ff2e07d7bceda95" &&
-    document?.stable_path === "decisions/0122-accept-the-nkf-0-6-authority-set.md" &&
-    document?.digest?.value === "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547" &&
-    nonRecord.observation.entry.content_sha256 === document?.digest?.value &&
-    jcs(lock) === jcs(ADR_0122_HISTORICAL_LOCK);
-  if (!exactDeclaration || maps === null) {
-    emitter.emit("markdown.reference.deep-link.required", "The historical acceptance containment does not exactly bind its one authorized Evidence document.", { artifact });
-    return;
-  }
-  const actual = findUnlinkedReferences(model.body, maps);
-  const headings = model.headings.filter((heading) => heading.level === 2);
-  const sectionAt = (line: number): string | null =>
-    headings.filter((heading) => heading.line < line).at(-1)?.text ?? null;
-  const projected = actual.map((violation) => ({
-    diagnostic: "markdown.reference.deep-link.required",
-    section: sectionAt(violation.line)?.toLowerCase().replaceAll(" ", "-") ?? "",
-    token: violation.token,
-    occurrence: 1,
-    reason: violation.reason,
-  }));
-  const exact = projected.length === 2 && projected.every((value, index) => {
-    const expected = ADR_0122_HISTORICAL_LOCK.violations[index];
-    return value.reason === "unlinked" &&
-      value.diagnostic === expected?.diagnostic &&
-      value.section === expected?.section &&
-      value.token === expected?.token &&
-      value.occurrence === expected?.occurrence;
-  });
-  if (!exact) {
-    emitter.emit("markdown.reference.deep-link.required", "The historical acceptance source differs from its exact two authorized deep-link diagnostics.", { artifact });
-  }
-}
 
 function identityBulletChecks(
   model: MarkdownModel,
@@ -446,7 +387,7 @@ function commonFrontMatterChecks(
   artifact: string,
   emitter: RuleEmitter,
   recordId?: string,
-    nkfVersion: SupportedNkfVersion = "0.6",
+    nkfVersion: SupportedNkfVersion = "0.7",
 ): Record<string, unknown> | null {
   if (!model.frontMatterPresent || model.frontMatter === null) {
     emitter.emit(
@@ -499,7 +440,7 @@ function recordFrontMatterChecks(
   record: ParsedRecord,
   model: MarkdownModel,
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.6",
+  nkfVersion: SupportedNkfVersion = "0.7",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -774,7 +715,7 @@ function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.6",
+  nkfVersion: SupportedNkfVersion = "0.7",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -891,7 +832,7 @@ function sourceChecks(
 function nonRecordSourceChecks(
   nonRecord: ParsedNonRecord,
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.6",
+  nkfVersion: SupportedNkfVersion = "0.7",
   acceptedDecisionIds: ReadonlySet<string> = new Set(),
   referenceMaps: ReferenceMaps | null = null,
   acceptedDecisionPaths: ReadonlyMap<string, string> = new Map(),
@@ -919,9 +860,6 @@ function nonRecordSourceChecks(
     return;
   }
   if (nonRecord.declaration.kind === "evidence") {
-    if (nkfVersion === "0.6") {
-      historicalEvidenceDeepLinkChecks(nonRecord, model, referenceMaps, emitter);
-    }
     return;
   }
   if (nonRecord.declaration.kind === "generated") return;
@@ -1087,7 +1025,7 @@ function frontMatterReferenceChecks(
   records: ParsedRecord[],
   nonRecords: ParsedNonRecord[],
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.6",
+  nkfVersion: SupportedNkfVersion = "0.7",
 ): void {
   const taskGroups = new Map<string, ParsedNonRecord[]>();
   for (const nonRecord of nonRecords) {
@@ -1393,7 +1331,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const started = (options.now ?? (() => new Date()))();
   const executionId = (options.executionId ?? randomUUID)().toLowerCase();
   const declaredVersion = await peekBundleNkfVersion(projectRoot);
-  const nkfVersion = declaredVersion ?? "0.7";
+  const nkfVersion = declaredVersion ?? "0.71";
   const requestedContractRoot = path.resolve(options.contractRoot);
   const requestedBase = path.basename(requestedContractRoot);
   const versionContractRoot =
@@ -1407,7 +1345,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   );
   const resultVersion: SupportedNkfVersion =
     bindingsForVersion(nkfVersion) === undefined
-      ? "0.7"
+      ? "0.71"
       : (nkfVersion as SupportedNkfVersion);
   const emitter = new RuleEmitter(loaded.executable);
   const diagnostics: Diagnostic[] = [...loaded.diagnostics];
@@ -1830,7 +1768,10 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
           });
         }
       }
-      if (String(resultVersion) === "0.7") {
+      // Neutral-path, succession, and provenance-attachment rules apply to
+      // every registered modern version; the capability table keeps this
+      // exhaustive instead of a silent predecessor fall-through.
+      if (VERSION_CAPABILITIES[resultVersion].neutralTopology) {
         // Provenance attachments: inert non-Markdown byte sets, and the
         // declared coverage for every other regular knowledge-root file.
         const attachmentExact = new Set<string>();

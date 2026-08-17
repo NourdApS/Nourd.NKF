@@ -91,7 +91,12 @@ async function graphBaselineSchema() {
   );
   confirmation.allOf.push({
     if: { properties: { claim: { const: "mechanically-concluded" } }, required: ["claim"] },
-    then: { required: ["transition"] },
+    // ajv strictRequired demands the required property be defined in the
+    // same subschema, mirroring the delta-claim entry's inline pattern.
+    then: {
+      properties: { transition: structuredClone(confirmation.properties.transition) },
+      required: ["transition"],
+    },
     else: { not: { required: ["transition"] } },
   });
   // Conclusion-carried judgments additionally bind the exact transition.

@@ -44,11 +44,11 @@ const verification = verifyReleaseArchive(archiveBytes, expectedSha256, {
   sourceRoot,
 });
 const nkfVersion = verification.manifest.nkf_version;
-if (!["0.4", "0.5", "0.6", "0.7"].includes(nkfVersion)) {
-  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, 0.6, or 0.7 archive.");
+if (!["0.4", "0.5", "0.6", "0.7", "0.71"].includes(nkfVersion)) {
+  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, 0.6, 0.7, or 0.71 archive.");
 }
-if (["0.5", "0.6", "0.7"].includes(nkfVersion) && reviewPath === undefined) {
-  fail(`The NKF ${nkfVersion} exact-candidate exercise requires --review with one external whole-root semantic-review path.`);
+if (["0.5", "0.6", "0.7", "0.71"].includes(nkfVersion) && reviewPath === undefined) {
+  fail(`The NKF ${nkfVersion} exact-candidate exercise requires --review with one external semantic-review path.`);
 }
 if (nkfVersion === "0.4" && reviewPath !== undefined) {
   fail("The NKF 0.4 exact-candidate exercise does not accept --review.");
@@ -86,7 +86,22 @@ try {
   await chmod(adopter, 0o755);
 
   const manifest = verification.manifest;
-  const compatibility = nkfVersion === "0.7"
+  const compatibility = nkfVersion === "0.71"
+    ? [
+        {
+          from_nkf_version: "0.7",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.7 upgrades to NKF 0.71 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry.",
+        },
+        {
+          from_nkf_version: "0.71",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.71 refreshes the exact release and integration.",
+        },
+      ]
+    : nkfVersion === "0.7"
     ? [
         {
           from_nkf_version: "0.6",
@@ -183,7 +198,7 @@ try {
     flag: "wx",
   });
   const producerPrepromotionRoot = path.join(temporary, "producer-prepromotion");
-  if (nkfVersion === "0.6" || nkfVersion === "0.7") {
+  if (["0.6", "0.7", "0.71"].includes(nkfVersion)) {
     await cp(project, producerPrepromotionRoot, {
       recursive: true,
       filter(sourcePath) {
@@ -208,7 +223,14 @@ try {
   ];
   const firstArguments = [
     ...commonArguments,
-    ...(nkfVersion === "0.7"
+    ...(nkfVersion === "0.71"
+      ? [
+          "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml"),
+          "--accepting-decision", path.join(project, "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md"),
+          "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+          "--review", reviewPath,
+        ]
+      : nkfVersion === "0.7"
       ? [
           "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.7-producer-promotion.yaml"),
           "--accepting-decision", path.join(project, "knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md"),
@@ -246,7 +268,7 @@ try {
     cwd: project,
     env: {
       ...process.env,
-      ...(nkfVersion === "0.6" || nkfVersion === "0.7"
+      ...(["0.6", "0.7", "0.71"].includes(nkfVersion)
         ? { NKF_PRODUCER_PREPROMOTION_ROOT: producerPrepromotionRoot }
         : {}),
     },

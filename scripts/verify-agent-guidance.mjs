@@ -376,17 +376,17 @@ export async function verifyAgentGuidance(projectRootInput) {
   const bundle = YAML.parse(
     await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
   );
-  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(bundle?.nkf_version)) {
-    fail("The producer guidance verifier requires an NKF 0.2 through 0.7 bundle.");
+  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 through 0.71 bundle.");
   }
   // From 0.7 the version's own accepted distribution skill is the expected
   // cross-host bootstrap; earlier versions share the embedded 0.2 lineage.
   // The accepted 0.7 skill bytes ship with this producer tooling itself, so
   // verification does not depend on the verified project carrying them.
   const toolingRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-  const expectedSkill = bundle.nkf_version === "0.7"
+  const expectedSkill = ["0.7", "0.71"].includes(bundle.nkf_version)
     ? await readFile(
-        path.join(toolingRoot, "distribution/nkf/0.7/.claude/skills/nkf-authoring/SKILL.md"),
+        path.join(toolingRoot, `distribution/nkf/${bundle.nkf_version}/.claude/skills/nkf-authoring/SKILL.md`),
         "utf8",
       )
     : expectedSkill0_2.replace(

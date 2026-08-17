@@ -16013,7 +16013,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: adr-0131
@@ -16033,7 +16039,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: adr-0131
@@ -16053,7 +16065,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 4cdc6f6179a53231f3a9beca0fbf0f9ea9f3333f2cd2968343e7d211b8051592
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
@@ -27122,7 +27140,13 @@ applicability_coverage:
       algorithm: sha-256
       value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-independent-authority-audit
@@ -27145,7 +27169,13 @@ applicability_coverage:
       algorithm: sha-256
       value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-independent-authority-audit
@@ -27168,7 +27198,13 @@ applicability_coverage:
       algorithm: sha-256
       value: f4d5ce5fb11a6ae871795fde433478156e6189f0d98479e73e0ab58948cfc4ec
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-producer-promotion
@@ -37761,7 +37797,13 @@ decision_classifications:
       algorithm: sha-256
       value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - decision: adr-0131
     purpose: whole-root-readiness
     classification: extends
@@ -37778,7 +37820,13 @@ decision_classifications:
       algorithm: sha-256
       value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - decision: adr-0131
     purpose: consequential-use
     classification: extends
@@ -37795,36 +37843,37 @@ decision_classifications:
       algorithm: sha-256
       value: 010d93ea98d3011da252ee64475641a75d00e9abd69d5d86aa806c4121a7968e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 9a32e61013984b534664c54f542901e94902912df415294527beb6e347d7c42a
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
 promotion_reconciliation: []
 confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-17T19:52:07.884Z
+  reviewed_at: 2026-08-17T21:29:03.828Z
   claim: semantically-reviewed-delta
-  computed_closure:
-    - kind: record
-      id: adr-0131
-    - kind: document
-      id: document-nkf-0-71-independent-authority-audit
-  performed_set:
-    - kind: record
-      id: adr-0131
-    - kind: document
-      id: document-nkf-0-71-independent-authority-audit
+  computed_closure: []
+  performed_set: []
   observations:
     - id: review-observation
       subject:
-        kind: record
-        id: adr-0131
+        kind: document
+        id: NKF-031
       basis:
         node:
-          kind: record
-          id: adr-0131
+          kind: document
+          id: NKF-031
         source:
-          section: decision
-      finding: "Fresh semantic review of the two nodes this delta created: the independent authority audit Evidence records both audit rounds, every finding, the repairs, the final clean verdict, and the two non-blocking notes with their deliberate dispositions truthfully; and ADR 0131 accepts exactly the audited five-artifact digest set under the recorded delegation with the Human Product Owner's independent-audit condition satisfied, deferring the ADR 0128 release-authority supersession to the separately authorized publication and promotion. Its three decision classifications are performed as extends. No other node's meaning changed in this delta."
+          heading:
+            heading_path:
+              - "NKF-031: Release The Corrective NKF 0.71"
+            occurrence: 1
+      finding: "Semantic review of the implementation delta: the accepted 0.71 authority was implemented across the checker, adopter, seal tooling, onboarding, release tooling, fixtures, and the full test suite, changing twenty-eight governed artifact digests and no knowledge-node meaning. Two implementation defects were found by the test-driven verification and fixed before this seal: the generated graph-baseline schema violated the checker's strict compilation, and one five-rule checker gate silently skipped 0.71 — both instances of the silent-degrade class the release eliminates, caught by its own verification nets. The full suite passes with two hundred forty tests."
   limitations:
-    - "This is an ordinary digest-bound delta review over the acceptance delta: the two fresh node judgments and three fresh decision classifications cover the computed closure exactly, every other judgment is carried by digest identity from the sealed predecessor baseline, and no whole-root re-reading was performed or claimed."
+    - "This is an ordinary digest-bound delta review over the implementation delta: the computed closure is empty because governed-artifact digest changes bind as hard verification rather than semantic review triggers, every judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
   disputed: false

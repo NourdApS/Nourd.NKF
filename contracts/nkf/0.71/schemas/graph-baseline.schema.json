@@ -2519,6 +2519,57 @@
             ]
           },
           "then": {
+            "properties": {
+              "transition": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "task",
+                  "from_state",
+                  "to_state",
+                  "predecessor_graph_revision"
+                ],
+                "properties": {
+                  "task": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "from_state": {
+                    "enum": [
+                      "active",
+                      "deferred",
+                      "completed",
+                      "cancelled"
+                    ]
+                  },
+                  "to_state": {
+                    "enum": [
+                      "active",
+                      "deferred",
+                      "completed",
+                      "cancelled"
+                    ]
+                  },
+                  "predecessor_graph_revision": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "algorithm",
+                      "value"
+                    ],
+                    "properties": {
+                      "algorithm": {
+                        "const": "sha-256"
+                      },
+                      "value": {
+                        "type": "string",
+                        "pattern": "^[0-9a-f]{64}$"
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "required": [
               "transition"
             ]

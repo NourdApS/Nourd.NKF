@@ -11,28 +11,6 @@ export interface CoreBindings {
 }
 
 export const VERSION_BINDINGS = {
-  "0.6": {
-    specification: {
-      path: "knowledge/specifications/nkf-0.6-revision-3.md",
-      sha256: "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
-    },
-    executable: {
-      path: "contracts/nkf/0.6/revision-3/nkf.yaml",
-      sha256: "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
-    },
-    freshnessPolicy: {
-      path: "contracts/nkf/0.6/freshness-policy.yaml",
-      sha256: "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4",
-    },
-    schemas: [
-      { identity: "urn:nkf:0.6:schema:bundle", file: "bundle.schema.json", sha256: "f146dd0e04d4ee8aff5d013abf476620f458d03328f758684ea4019b564a9290" },
-      { identity: "urn:nkf:0.6:schema:record", file: "record.schema.json", sha256: "a3e799112ff0d6af1111c2d574ebc31d783bd00a8193f10721437cc5ed40cd8a" },
-      { identity: "urn:nkf:0.6:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "9edb4c488577635059c7a4545aaba8a318a625811a93078e76a8d5621f1dd77b" },
-      { identity: "urn:nkf:0.6:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "819685c152751aca279284a0f6ce8b565f45c985af40d006b5d81463a20421fb" },
-      { identity: "urn:nkf:0.6:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "a1b21747d9cbd72416599224a9a9dcb80d1fca7b8f50bc2fa9f411dc77277b2f" },
-      { identity: "urn:nkf:0.6:schema:validation-result", file: "validation-result.schema.json", sha256: "8d751bb013dc87d9ebf3287b85e8589f628e7369eca67902d503b12595a6d743" },
-    ],
-  },
   "0.7": {
     specification: {
       path: "knowledge/specifications/nkf-0.7.md",
@@ -59,6 +37,32 @@ export const VERSION_BINDINGS = {
       { identity: "urn:nkf:0.7:schema:validation-result", file: "validation-result.schema.json", sha256: "d58aa9f0755e06d27de5b0ea79108855503df1b109106a21254ac5f8258bde4e" },
     ],
   },
+  "0.71": {
+    specification: {
+      path: "knowledge/specifications/nkf-0.71.md",
+      sha256: "ec6d7fd733a989eb86580bd3a9d77405d3c02d5402429190ad8d171c4414ae98",
+    },
+    executable: {
+      path: "contracts/nkf/0.71/nkf.yaml",
+      sha256: "65b5bec3dd16cd1872216b2dc17acbe77f1a363e76112f675a271e337cf6ec1a",
+    },
+    freshnessPolicy: {
+      path: "contracts/nkf/0.71/freshness-policy.yaml",
+      sha256: "20c7b5f4e34f88da6c8365a59cee913020263c2c4ab36796602a2a7cb0ab1ae4",
+    },
+    versionDelta: {
+      path: "contracts/nkf/0.71/version-delta.yaml",
+      sha256: "21089afc8155a98410960e2fa7cf19344e1e5ca010095a0f7975dc783d730c01",
+    },
+    schemas: [
+      { identity: "urn:nkf:0.71:schema:bundle", file: "bundle.schema.json", sha256: "30370bcfadd8c77dbf1b31ccd5a6d91d30c2df20115690a7ddac5c0ebcd1e0f4" },
+      { identity: "urn:nkf:0.71:schema:record", file: "record.schema.json", sha256: "bbb6f49efb345a1999a37b673974728c3b083d3d9172ccd34e3eb13c59b5bf8a" },
+      { identity: "urn:nkf:0.71:schema:graph-baseline", file: "graph-baseline.schema.json", sha256: "6c9f77452153d90fd49d17140675ac7d7b78ba05ee48854a3c42fd297aeab220" },
+      { identity: "urn:nkf:0.71:schema:freshness-receipt", file: "freshness-receipt.schema.json", sha256: "02e67f321dd8570812e7ed6fd372bcc7e7c8dbe357f5aa4cbe54bf36ecdcd99f" },
+      { identity: "urn:nkf:0.71:schema:freshness-policy", file: "freshness-policy.schema.json", sha256: "b2b0a8940da40cf4e3408a36c62bd624277f76ebfd49a853c24b268c6beb8db6" },
+      { identity: "urn:nkf:0.71:schema:validation-result", file: "validation-result.schema.json", sha256: "61e0f57ec073f42eca91e1037603c0d6e71eb5af543a58599b6f93b7c5fc194a" },
+    ],
+  },
 } as const satisfies Record<string, CoreBindings>;
 
 export type SupportedNkfVersion = keyof typeof VERSION_BINDINGS;
@@ -67,7 +71,40 @@ export function bindingsForVersion(version: string): CoreBindings | undefined {
   return (VERSION_BINDINGS as Record<string, CoreBindings | undefined>)[version];
 }
 
-export const CORE_BINDINGS: CoreBindings = VERSION_BINDINGS["0.7"];
+// Closed per-version capability table. Every version-conditional checker
+// behavior dispatches through these exhaustive fields so an unregistered
+// version is a compile-time hole, never a silent fall-through to
+// predecessor semantics.
+export interface VersionCapabilities {
+  readonly modernEnvelope: true;
+  readonly neutralTopology: true;
+  readonly digestBoundBaseline: true;
+  readonly promotionReconciliation: true;
+  readonly conclusionClaim: boolean;
+}
+
+export const VERSION_CAPABILITIES: Record<SupportedNkfVersion, VersionCapabilities> = {
+  "0.7": {
+    modernEnvelope: true,
+    neutralTopology: true,
+    digestBoundBaseline: true,
+    promotionReconciliation: true,
+    conclusionClaim: false,
+  },
+  "0.71": {
+    modernEnvelope: true,
+    neutralTopology: true,
+    digestBoundBaseline: true,
+    promotionReconciliation: true,
+    conclusionClaim: true,
+  },
+};
+
+export function capabilitiesForVersion(version: string): VersionCapabilities | undefined {
+  return (VERSION_CAPABILITIES as Record<string, VersionCapabilities | undefined>)[version];
+}
+
+export const CORE_BINDINGS: CoreBindings = VERSION_BINDINGS["0.71"];
 
 export function unsupportedVersionBindings(version: string): CoreBindings {
   const missing = `contracts/nkf/${version}/nkf.yaml`;

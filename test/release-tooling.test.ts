@@ -15,9 +15,11 @@ const {
 } = release;
 import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
-// The 0.7 fixture archive uses the exact real release-set members from the
-// working tree, so manifest bindings, licensing digests, and third-party
-// coverage verify against genuine bytes.
+// The predecessor 0.7 fixture archive uses the exact real release-set
+// members from the working tree, so manifest bindings, licensing digests,
+// and third-party coverage verify against genuine bytes; the 0.71 release
+// set arrives with the later release task, and the substituted 0.71
+// candidate archive is exercised by the adopter suite.
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const releaseSetModule = await import("../scripts/release/release-set.mjs");
 const releaseSet = await releaseSetModule.readReleaseSet(repositoryRoot, "0.7");

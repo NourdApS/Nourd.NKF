@@ -37,7 +37,7 @@ interface NormalizedEdge {
 export interface KnowledgeGraphResult {
   summary: {
     policy: {
-      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7";
+      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7" | "nkf.freshness-policy.0.71";
       digest: DigestValue;
       binding: "verified" | "unavailable" | "mismatched";
     };
@@ -569,6 +569,50 @@ function verifyDigestBoundBaseline(
       return "unsupported";
     }
   }
+  if (confirmation.claim === "mechanically-concluded") {
+    // Static admission of the seal-completing conclusion: every judgment is
+    // carried, the transition binding names one supported Task state change
+    // matching the declared state, and conclusion-carried marks exist for
+    // exactly the transitioned Task. The strong delta-exactness proof runs
+    // inside the deterministic transition, which holds both graphs.
+    const transition = asObject(confirmation.transition);
+    const taskId = String(transition?.task ?? "");
+    const taskNodeKey = nodeKey({ kind: "document", id: taskId });
+    const performedJudgments = [
+      ...values<Record<string, any>>(baseline.applicability_coverage),
+      ...values<Record<string, any>>(baseline.decision_classifications),
+    ].filter((entry) => asObject(entry.provenance)?.performed === true);
+    if (performedJudgments.length > 0) {
+      emitter.emit("freshness.baseline.conclusion.delta-exceeded", "A mechanically-concluded baseline records performed judgments; a conclusion carries every judgment and performs none.", { artifact });
+      return "unsupported";
+    }
+    const fromState = String(transition?.from_state ?? "");
+    const toState = String(transition?.to_state ?? "");
+    const declaredState = values<Record<string, any>>(bundle.non_records)
+      .find((entry) => entry?.kind === "task" && asObject(entry.document)?.id === taskId)?.document?.state?.value;
+    if (taskId === "" || fromState === toState || declaredState !== toState) {
+      emitter.emit("freshness.baseline.conclusion.carry-invalid", "The mechanically-concluded transition binding does not match one supported Task state change.", { artifact });
+      return "unsupported";
+    }
+    for (const entry of values<Record<string, any>>(baseline.decision_classifications)) {
+      if (asObject(asObject(entry.provenance)?.transition) !== null) {
+        emitter.emit("freshness.baseline.conclusion.delta-exceeded", "A conclusion-carried mark appears on a Decision classification instead of the transitioned Task.", { artifact });
+        return "unsupported";
+      }
+    }
+    for (const entry of values<Record<string, any>>(baseline.applicability_coverage)) {
+      const mark = asObject(asObject(entry.provenance)?.transition);
+      const isTaskNode = nodeKey(entry.node as NodeReference) === taskNodeKey;
+      if (mark !== null && !isTaskNode) {
+        emitter.emit("freshness.baseline.conclusion.delta-exceeded", "A conclusion-carried judgment marks a node other than the transitioned Task.", { artifact });
+        return "unsupported";
+      }
+      if (isTaskNode && (mark === null || String(mark.task) !== taskId || String(mark.from_state) !== fromState || String(mark.to_state) !== toState)) {
+        emitter.emit("freshness.baseline.conclusion.carry-invalid", "A transitioned-Task judgment does not carry the exact conclusion transition binding.", { artifact });
+        return "unsupported";
+      }
+    }
+  }
   const pending = values<Record<string, any>>(baseline.promotion_reconciliation).filter((entry) => entry.state === "pending");
   for (const entry of pending) {
     emitter.emit("freshness.reconciliation.pending", `A promotion-reconciliation entry is pending for ${nodeKey(entry.node as NodeReference)}.`, { artifact });
@@ -577,7 +621,7 @@ function verifyDigestBoundBaseline(
 }
 
 export function evaluateKnowledgeGraph(args: {
-  nkfVersion: "0.5" | "0.6" | "0.7";
+  nkfVersion: "0.5" | "0.6" | "0.7" | "0.71";
   bundle: Record<string, any>;
   records: RecordUnit[];
   documents: DocumentUnit[];
@@ -766,7 +810,7 @@ export function evaluateKnowledgeGraph(args: {
       baselineState = completenessState(baseline, nodeRevisions, edges, relationshipNames, decisions);
       if (baselineState === "confirmed" && baseline.graph_revision?.value !== candidateRevision.value) baselineState = "outdated";
       if (baseline.confirmation?.disputed === true) baselineState = "disputed";
-      if (nkfVersion === "0.7" && baselineState === "confirmed") {
+      if ((nkfVersion === "0.7" || nkfVersion === "0.71") && baselineState === "confirmed") {
         baselineState = verifyDigestBoundBaseline(baseline, nodeRevisions, recordById, emitter, args.versionDeltaDigest ?? null, bundle);
       }
     }
@@ -879,7 +923,7 @@ export function evaluateKnowledgeGraph(args: {
     }
   }
   if (
-    nkfVersion === "0.7" &&
+    (nkfVersion === "0.7" || nkfVersion === "0.71") &&
     baseline !== null &&
     request.purpose !== null && request.purpose !== undefined && request.purpose !== "historical-reproduction" &&
     values<Record<string, any>>(baseline.promotion_reconciliation).some((entry) => entry.state === "pending")
