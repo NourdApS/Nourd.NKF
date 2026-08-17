@@ -371,6 +371,43 @@ truthfully. The live producer deliberately remains on NKF 0.6: publication,
 recommendation, live promotion, and merge stay separately authorized Human
 Product Owner acts.
 
+## Completion Result
+
+NKF 0.7 is delivered, accepted, exercised, audited, and technically
+confirmed. The accepted authority —
+[ADR 0128](../../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md)
+after the rehearsal-driven revision of
+[ADR 0127](../../decisions/0127-accept-the-nkf-0-7-authority-set.md) under
+the Human Product Owner's independent-audit condition — carries the
+digest-bound baseline contract, the per-rule version delta with
+policy-declared judgment dependencies, the fail-closed delta claim with
+whole-root recovery, the deterministic scaffolds, the one deliberate
+stable-path neutralization and identity succession, provenance-attachment
+classification, operational-fact promotion reconciliation, the
+current-plus-one support window with stepping-stone refusals, and the
+mandatory audit-bound confirmation ordering. Every one of the two hundred
+thirteen accepted rules has an implementation and test coverage; the Git
+transition orchestration the guidance describes is built and proven; the
+harness carries knowledge-proportional bounds with child reaping. The
+complete producer promotion is proven at both authorized stages against
+isolated copies of the live producer, with the deliberate last whole-root
+review performed at the prepublication stage. The exact release candidate —
+archive
+`c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f` at
+release commit `e5b265e87da6c12b73b4749f8d24b41b996cc77a` — passed the
+isolated candidate exercise and the clean independent
+[release audit](../../evidence/release/nkf-028-nkf-0-7-release-audit.md),
+and is technically confirmed by
+[ADR 0129](../../decisions/0129-confirm-the-nkf-0-7-release-candidate.md).
+The validation and implementation predecessors concluded truthfully with
+their recorded exceptions. The live producer deliberately remains on NKF
+0.6: publication of the confirmed bytes, the recommendation, the live
+post-publication producer promotion, and the merge of this Task's single
+pull request remain separately authorized Human Product Owner acts, with the
+prepared
+[release notes](../../evidence/release/nkf-0.7-release-notes.md) ready for
+the publication.
+
 ## Decision Applicability
 
 ### Applicable Decisions

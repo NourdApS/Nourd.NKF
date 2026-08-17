@@ -1690,10 +1690,10 @@ non_records:
       stable_path: tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md
       digest:
         algorithm: sha-256
-        value: cedcab72ade3d2c5e83a930470d80a00b2dbd620a8c5d20bf612e609ba71f4a3
+        value: "782db02b9c0923a7007846a9c67a8e87069d09129d70d2b5210aafb83e6efdee"
       state:
         vocabulary: task-status
-        value: active
+        value: "completed"
       owner: Nourd ApS
       decision_authority: Human Product Owner for every Product boundary; Claude technical reviewer under explicit delegation for exact technical derivation, implementation, inventories, tests, audits, and technical confirmation within the confirmed NKF 0.7 boundaries
       related_tasks:
