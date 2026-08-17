@@ -348,9 +348,10 @@ function deepLinkChecks(
   emitter: RuleEmitter,
   recordId?: string,
   historical = false,
+  immutableSource = false,
 ): void {
   if (maps === null) return;
-  for (const violation of findUnlinkedReferences(model.body, maps, historical)) {
+  for (const violation of findUnlinkedReferences(model.body, maps, historical, immutableSource)) {
     emitter.emit(
       "markdown.reference.deep-link.required",
       violation.reason === "unlinked"
@@ -586,7 +587,9 @@ function recordFrontMatterChecks(
       referenceMaps,
       emitter,
       recordId,
-      lock !== null || bootstrap !== null || prepublicationSupersession !== null,
+      lock !== null || bootstrap !== null || prepublicationSupersession !== null ||
+        declaration.governance?.lifecycle === "immutable",
+      declaration.governance?.lifecycle === "immutable",
     );
     return;
   }
@@ -2035,10 +2038,16 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         taskIdToPath.set(taskId, String(nonRecord.declaration.path));
       }
     }
+    const successionSuccessorIds = new Set(
+      uniqueRecords
+        .filter((record) => asObject((record.value as Record<string, any> | null)?.identity_succession) !== null)
+        .map((record) => String(record.value?.id)),
+    );
     const referenceMapsFor = (selfPath: string): ReferenceMaps => ({
       decisionsByNumber,
       recordIdToPath,
       taskIdToPath,
+      successionSuccessorIds,
       selfPath,
     });
     for (const record of uniqueRecords) {

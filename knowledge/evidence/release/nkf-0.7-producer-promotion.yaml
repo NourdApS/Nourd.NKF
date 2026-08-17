@@ -6,12 +6,12 @@ specification:
   path: knowledge/specifications/nkf-0.7.md
   digest:
     algorithm: sha-256
-    value: 5fb91a603982de9741400a95809d359b79aa2883d08d7b4e36d150c9ff204ef0
+    value: 6d1c904608f57446939f9442d46aa3b735e34fce75ddfba24fabbea8416f0992
 executable:
   path: contracts/nkf/0.7/nkf.yaml
   digest:
     algorithm: sha-256
-    value: 936c1795fe2facc83cb4c80c82d37fa6622293b24b4e10a70174baf56f86fe9a
+    value: 9175c86b82100b84e983afbc06f89ff79c666bd8cd0626ee7892688e6551cc49
 freshness_policy:
   path: contracts/nkf/0.7/freshness-policy.yaml
   digest:
@@ -37,7 +37,7 @@ record_declaration:
     stable_path: specifications/nkf-0.7.md
     digest:
       algorithm: sha-256
-      value: 5fb91a603982de9741400a95809d359b79aa2883d08d7b4e36d150c9ff204ef0
+      value: 6d1c904608f57446939f9442d46aa3b735e34fce75ddfba24fabbea8416f0992
   governance:
     lifecycle: immutable
     status: accepted
@@ -51,7 +51,8 @@ record_declaration:
       authority: accepted-meaning
       role: governing
       responsibilities:
-        - purpose
+        - specification-definition
+        - requirements-constraints-and-interfaces
     - id: normative-status
       heading_path:
         - Normative Status
@@ -59,15 +60,13 @@ record_declaration:
       authority: accepted-meaning
       role: governing
       responsibilities:
-        - normative-status
+        - authority-and-normative-status
     - id: source-drafting-provenance
       heading_path:
         - Source Drafting Provenance
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - source-drafting-provenance
     - id: scope
       heading_path:
         - Scope
@@ -75,7 +74,7 @@ record_declaration:
       authority: accepted-meaning
       role: applicability
       responsibilities:
-        - scope
+        - scope-and-applicability
     - id: core-model
       heading_path:
         - Core Model
@@ -83,7 +82,7 @@ record_declaration:
       authority: accepted-meaning
       role: governing
       responsibilities:
-        - core-model
+        - model-vocabulary-and-semantics
     - id: versioning
       heading_path:
         - Versioning
@@ -91,15 +90,13 @@ record_declaration:
       authority: accepted-meaning
       role: evolution
       responsibilities:
-        - versioning
+        - versioning-compatibility-and-migration
     - id: bundle-contract
       heading_path:
         - Bundle Contract
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - bundle-contract
     - id: bundle-contract-portable-knowledge-topology
       heading_path:
         - Bundle Contract
@@ -107,8 +104,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - bundle-contract-portable-knowledge-topology
     - id: bundle-contract-portable-topology-onboarding-and-migration
       heading_path:
         - Bundle Contract
@@ -116,16 +111,12 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - bundle-contract-portable-topology-onboarding-and-migration
     - id: record-contract
       heading_path:
         - Record Contract
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - record-contract
     - id: record-contract-markdown-source-envelope
       heading_path:
         - Record Contract
@@ -133,8 +124,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - record-contract-markdown-source-envelope
     - id: record-contract-deterministic-markdown-structure
       heading_path:
         - Record Contract
@@ -142,8 +131,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - record-contract-deterministic-markdown-structure
     - id: record-contract-native-record-serialization
       heading_path:
         - Record Contract
@@ -151,24 +138,18 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - record-contract-native-record-serialization
     - id: identity
       heading_path:
         - Identity
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - identity
     - id: root-profiles
       heading_path:
         - Root Profiles
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - root-profiles
     - id: section-authority
       heading_path:
         - Section Authority
@@ -176,7 +157,7 @@ record_declaration:
       authority: accepted-meaning
       role: boundary
       responsibilities:
-        - section-authority
+        - security-authority-and-operational-boundaries
     - id: section-authority-section-role-vocabulary
       heading_path:
         - Section Authority
@@ -184,24 +165,18 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - section-authority-section-role-vocabulary
     - id: relationships
       heading_path:
         - Relationships
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - relationships
     - id: deterministic-knowledge-graph-and-freshness
       heading_path:
         - Deterministic Knowledge Graph And Freshness
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness
     - id: deterministic-knowledge-graph-and-freshness-node-kinds-and-references
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -209,8 +184,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-node-kinds-and-references
     - id: deterministic-knowledge-graph-and-freshness-node-and-graph-revisions
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -218,8 +191,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-node-and-graph-revisions
     - id: deterministic-knowledge-graph-and-freshness-evaluation-policy
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -227,8 +198,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-evaluation-policy
     - id: deterministic-knowledge-graph-and-freshness-evaluation-context-and-purposes
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -236,8 +205,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-evaluation-context-and-purposes
     - id: deterministic-knowledge-graph-and-freshness-applicability-axes-and-projections
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -245,8 +212,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-applicability-axes-and-projections
     - id: deterministic-knowledge-graph-and-freshness-impact-closure-and-decision-reconciliation
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -254,8 +219,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-impact-closure-and-decision-reconciliation
     - id: deterministic-knowledge-graph-and-freshness-freshness-results-and-claim-rules
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -263,8 +226,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-freshness-results-and-claim-rules
     - id: deterministic-knowledge-graph-and-freshness-reviewed-baseline
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -272,8 +233,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-reviewed-baseline
     - id: deterministic-knowledge-graph-and-freshness-version-delta-declaration
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -281,8 +240,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-version-delta-declaration
     - id: deterministic-knowledge-graph-and-freshness-delta-review-claim-and-computed-closure
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -290,8 +247,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-delta-review-claim-and-computed-closure
     - id: deterministic-knowledge-graph-and-freshness-operational-fact-dependencies-and-promotion-reconciliation
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -299,8 +254,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-operational-fact-dependencies-and-promotion-reconciliation
     - id: deterministic-knowledge-graph-and-freshness-operational-receipts
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -308,8 +261,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-operational-receipts
     - id: deterministic-knowledge-graph-and-freshness-completeness-and-external-boundary
       heading_path:
         - Deterministic Knowledge Graph And Freshness
@@ -317,16 +268,12 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-knowledge-graph-and-freshness-completeness-and-external-boundary
     - id: provenance-and-roles
       heading_path:
         - Provenance And Roles
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - provenance-and-roles
     - id: provenance-and-roles-acceptance-provenance
       heading_path:
         - Provenance And Roles
@@ -334,32 +281,24 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - provenance-and-roles-acceptance-provenance
     - id: semantic-entities-and-bindings
       heading_path:
         - Semantic Entities And Bindings
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - semantic-entities-and-bindings
     - id: body-contracts
       heading_path:
         - Body Contracts
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - body-contracts
     - id: decision-applicability-gate
       heading_path:
         - Decision Applicability Gate
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - decision-applicability-gate
     - id: decision-applicability-gate-gate-structure
       heading_path:
         - Decision Applicability Gate
@@ -367,8 +306,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - decision-applicability-gate-gate-structure
     - id: decision-applicability-gate-gate-vocabularies
       heading_path:
         - Decision Applicability Gate
@@ -376,8 +313,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - decision-applicability-gate-gate-vocabularies
     - id: decision-applicability-gate-gate-presence-and-completion
       heading_path:
         - Decision Applicability Gate
@@ -385,8 +320,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - decision-applicability-gate-gate-presence-and-completion
     - id: decision-applicability-gate-gate-claim-rules
       heading_path:
         - Decision Applicability Gate
@@ -394,8 +327,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - decision-applicability-gate-gate-claim-rules
     - id: decision-applicability-gate-gate-conformance-boundary
       heading_path:
         - Decision Applicability Gate
@@ -403,32 +334,24 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - decision-applicability-gate-gate-conformance-boundary
     - id: extension-contract
       heading_path:
         - Extension Contract
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - extension-contract
     - id: native-project-organization
       heading_path:
         - Native Project Organization
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - native-project-organization
     - id: okf-0-2-interoperability
       heading_path:
         - Okf 0.2 Interoperability
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - okf-0-2-interoperability
     - id: conformance
       heading_path:
         - Conformance
@@ -436,7 +359,7 @@ record_declaration:
       authority: accepted-meaning
       role: validation
       responsibilities:
-        - conformance
+        - validation-and-conformance
     - id: conformance-yaml-parse-boundary
       heading_path:
         - Conformance
@@ -444,8 +367,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-yaml-parse-boundary
     - id: conformance-enforcement-layers
       heading_path:
         - Conformance
@@ -453,8 +374,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-enforcement-layers
     - id: conformance-validation-phases
       heading_path:
         - Conformance
@@ -462,8 +381,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-validation-phases
     - id: conformance-conformance-levels
       heading_path:
         - Conformance
@@ -471,8 +388,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-conformance-levels
     - id: conformance-diagnostic-contract
       heading_path:
         - Conformance
@@ -480,8 +395,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-diagnostic-contract
     - id: conformance-stable-native-rule-registry
       heading_path:
         - Conformance
@@ -489,8 +402,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-stable-native-rule-registry
     - id: conformance-validation-result
       heading_path:
         - Conformance
@@ -498,24 +409,18 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - conformance-validation-result
     - id: deterministic-governed-mechanics-and-prepublication-proof
       heading_path:
         - Deterministic Governed Mechanics And Prepublication Proof
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - deterministic-governed-mechanics-and-prepublication-proof
     - id: release-distribution
       heading_path:
         - Release Distribution
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution
     - id: release-distribution-release-manifest
       heading_path:
         - Release Distribution
@@ -523,8 +428,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution-release-manifest
     - id: release-distribution-release-set
       heading_path:
         - Release Distribution
@@ -532,8 +435,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution-release-set
     - id: release-distribution-release-manifest-schema
       heading_path:
         - Release Distribution
@@ -541,8 +442,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution-release-manifest-schema
     - id: release-distribution-deterministic-archive
       heading_path:
         - Release Distribution
@@ -550,8 +449,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution-deterministic-archive
     - id: release-distribution-consumer-pin-and-verification
       heading_path:
         - Release Distribution
@@ -559,8 +456,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution-consumer-pin-and-verification
     - id: release-distribution-github-release
       heading_path:
         - Release Distribution
@@ -568,16 +463,12 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - release-distribution-github-release
     - id: security-and-privacy
       heading_path:
         - Security And Privacy
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - security-and-privacy
     - id: security-and-privacy-native-secret-pattern-registry
       heading_path:
         - Security And Privacy
@@ -585,8 +476,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - security-and-privacy-native-secret-pattern-registry
     - id: unresolved-matters
       heading_path:
         - Unresolved Matters
@@ -594,21 +483,17 @@ record_declaration:
       authority: unresolved
       role: unresolved
       responsibilities:
-        - unresolved-matters
+        - unresolved-and-deferred-matters
     - id: minimal-example
       heading_path:
         - Minimal Example
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - minimal-example
     - id: pre-mortem
       heading_path:
         - Pre-Mortem
       occurrence: 1
       authority: accepted-meaning
       role: governing
-      responsibilities:
-        - pre-mortem
   relationships: []

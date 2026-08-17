@@ -259,6 +259,8 @@ export interface ReferenceMaps {
   decisionsByNumber: ReadonlyMap<string, string>;
   recordIdToPath: ReadonlyMap<string, string>;
   taskIdToPath: ReadonlyMap<string, string>;
+  /** Identifiers that became live through an identity succession. */
+  successionSuccessorIds?: ReadonlySet<string>;
   selfPath: string;
 }
 
@@ -309,7 +311,7 @@ function legacyStablePathResolution(resolved: string): string {
   return resolved;
 }
 
-export function findUnlinkedReferences(body: string, maps: ReferenceMaps, historical = false): ReferenceViolation[] {
+export function findUnlinkedReferences(body: string, maps: ReferenceMaps, historical = false, immutableSource = false): ReferenceViolation[] {
   const parser = new commonmark.Parser();
   const document = parser.parse(body);
   const violations: ReferenceViolation[] = [];
@@ -365,7 +367,9 @@ export function findUnlinkedReferences(body: string, maps: ReferenceMaps, histor
     const literal = String(node.literal ?? "");
     if (node.type === "code") {
       const target = targetFor(literal.trim());
-      if (target !== undefined && target !== maps.selfPath) {
+      const successionExempt = immutableSource &&
+        (maps.successionSuccessorIds?.has(literal.trim()) ?? false);
+      if (target !== undefined && target !== maps.selfPath && !successionExempt) {
         violations.push({ token: literal.trim(), line: lineOf(node), reason: "unlinked" });
       }
       continue;

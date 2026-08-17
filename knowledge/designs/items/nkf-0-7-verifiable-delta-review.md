@@ -131,7 +131,8 @@ and immutable records keep the old identifier as correct historical fact,
 and the checker resolves the succession chain when verifying carried
 judgments. Under that rule the consolidated current-system record's
 version-baked identifier is renamed to the Human-Product-Owner-confirmed
-version-free identifier `nkf-current-system`. One deliberate
+version-free identifier
+[`nkf-current-system`](../../realizations/current-system.md). One deliberate
 governed migration moves the thirty-five state- and currency-baked stable
 paths — the legacy `tasks/active`, `tasks/completed`, `tasks/deferred`,
 `tasks/cancelled`, `designs/active`, and `realizations/current` trees — to
@@ -331,7 +332,8 @@ before adoption, and the resolutions are recorded in the sections above:
 the support window stays current plus one predecessor until further explicit
 Human Product Owner notice, with no widening by adoption event; the
 consolidated current-system record's successor identifier is
-`nkf-current-system`; the neutral directories extend the `tasks/items`
+[`nkf-current-system`](../../realizations/current-system.md); the neutral
+directories extend the `tasks/items`
 pattern as `designs/items` and `realizations/items`; and the post-audit
 technical-confirmation Decision is mandatory for every future release, with
 no waiver, and is invalid without the bound fresh independent audit of the

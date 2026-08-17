@@ -856,15 +856,16 @@ a lifecycle, disposition, or currency segment — the legacy `tasks/active`,
 the corresponding neutral `tasks/items/`, `designs/items/`, or
 `realizations/items/` path, with declarations, navigation, and same-bundle
 links rewritten mechanically in the same transaction and immutable record
-meaning untouched. Sources carrying a predecessor-only lock are moved without
-any byte rewrite — their locks bind exact predecessor bytes — and their
-historical links resolve through the closed legacy mapping defined by this
-neutralization instead of being retargeted. This is a deliberate governed migration act, not a
+meaning untouched. Sources carrying a predecessor-only lock, immutable record
+sources, and Evidence byte sets are moved without any byte rewrite — their
+bytes are history — and their links resolve through the closed legacy
+mapping defined by this neutralization instead of being retargeted. This is a deliberate governed migration act, not a
 lifecycle transition. This revision declares exactly one accepted identity
 succession, applicable only to the exact NKF producer repository: the
 consolidated current-system Realization's living identifier
 `nkf-0.1-native-realization` is succeeded by the version-free identifier
-`nkf-current-system`, recorded with succession provenance in the same
+[`nkf-current-system`](../realizations/current-system.md), recorded with
+succession provenance in the same
 governed act. No consumer succession is declared by this revision. After it, stable paths never move again: a lifecycle
 transition changes only the declaration state and generated navigation and
 MUST NOT move or rewrite the canonical Markdown source. New Task, Design, and
@@ -1264,14 +1265,22 @@ document never links to itself, and an unlinked or mistargeted reference
 emits `markdown.reference.deep-link.required`. Only these grammars are
 detected; other prose mentions remain a human-review concern.
 
-A source carrying a predecessor-only lock keeps its exact predecessor bytes
-through the 0.7 stable-path neutralization, so its links are never rewritten.
-Inside such a source, a link destination that resolves to the referenced
-document's exact source path after applying the closed legacy stable-path
-mapping of the 0.7 neutralization is not mistargeted; the reference remains
-correct historical fact. This historical resolution applies only to sources
-whose lock the checker has verified and is unavailable to new 0.7-native
-sources, which never carry these locks. Because the closed mapping collapses
+A record identifier that became live through an identity succession is
+required to be a deep link only inside living sources. An immutable record
+source keeps its exact pre-succession bytes, so a token equal to the
+successor identifier inside it remains correct historical fact and is exempt
+from the unlinked-reference requirement; every living source must link it.
+
+A source carrying a predecessor-only lock, an immutable record source, and
+an Evidence byte set keep their exact pre-migration bytes through the 0.7
+stable-path neutralization, so their links are never rewritten. Inside such
+a source, a link destination that resolves to the referenced document's
+exact source path after applying the closed legacy stable-path mapping of
+the 0.7 neutralization is not mistargeted; the reference remains correct
+historical fact. This historical resolution applies only to checker-verified
+locks, records whose declared lifecycle is immutable, and Evidence, and is
+unavailable to living non-Evidence sources, whose links the one deliberate
+migration rewrites. Because the closed mapping collapses
 sibling lifecycle directories into one neutral location, a locked link that
 historically named the wrong sibling lifecycle directory also resolves; this
 is a deliberate, narrowly confined consequence of preserving locked bytes and

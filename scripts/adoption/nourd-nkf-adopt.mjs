@@ -113,21 +113,15 @@ const ONBOARDING_SKILL_PATHS = [
   ".claude/skills/nkf-onboarding/SKILL.md",
 ];
 const PRODUCER_PROMOTION_INPUT_PATH =
-  "knowledge/evidence/release/nkf-0.6-revision-3-producer-promotion.yaml";
+  "knowledge/evidence/release/nkf-0.7-producer-promotion.yaml";
 const PRODUCER_PROMOTION_INPUT_SHA256 =
-  "d9f2f36e81a380f0862619093ddfdb45da0352d108e0a525104a4b399007a043";
+  "3fe6b72a54c39a111b984fbcf01a214996e8aa6a2d1a96fb38d9d17b7eb0ee52";
 const PRODUCER_ACCEPTING_DECISION_PATH =
-  "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md";
+  "knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md";
 const PRODUCER_ACCEPTING_DECISION_SHA256 =
-  "1f50640755184fe1fd117295ffb5056d55e2a23c78d2f8b3ab56533df5e72ac6";
-const PRODUCER_HISTORICAL_DECLARATION_PATH =
-  ".nourd/knowledge/records/adr-0122.yaml";
-const PRODUCER_HISTORICAL_DECLARATION_SHA256 =
-  "dac8ccfe377138d45c5720eeb4d3f0fbdc2b2504224eb50a6a85888c44aaf3b9";
-const PRODUCER_HISTORICAL_SOURCE_PATH =
-  "knowledge/decisions/0122-accept-the-nkf-0-6-authority-set.md";
-const PRODUCER_HISTORICAL_SOURCE_SHA256 =
-  "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547";
+  "b8e46f2ea6bb48b8b45b7e181f8b67d4feeca6df3c52c38767a96cb49e7a2677";
+const PRODUCER_CANDIDATE_EVIDENCE_PATH = "specifications/nkf-0.7.md";
+const PRODUCER_SPECIFICATION_ID = "nkf-0.7-specification";
 const PRODUCER_PROMOTION_STAGES = new Set([
   "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
   "postpublication-ordinary-public-self-adopt-by-exact-live-producer",
@@ -2004,45 +1998,6 @@ async function stage0_5To0_6CarryForward(
   return { predecessorRevision, successorRevision };
 }
 
-async function stageProducerPromotionBaseline(projectRoot, files) {
-  const baselinePath = ".nourd/knowledge/freshness/baseline.yaml";
-  const baselineText = (await readRegularInside(projectRoot, baselinePath)).toString("utf8");
-  const baseline = YAML.parse(baselineText, {
-    schema: "core",
-    strict: true,
-    uniqueKeys: true,
-  });
-  const oldPolicyId = "nkf.freshness-policy.0.5";
-  const oldPolicyDigest = "5789b935e8df4fa39462846481f3302d072c722fa106da5d136952cb9c993cdd";
-  const newPolicyId = "nkf.freshness-policy.0.6";
-  const newPolicyDigest = "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4";
-  if (
-    baseline?.contract !== "nkf.graph-baseline" ||
-    baseline?.nkf_version !== "0.5" ||
-    baseline?.policy?.id !== oldPolicyId ||
-    baseline?.policy?.digest?.value !== oldPolicyDigest ||
-    baseline?.graph_revision?.value !==
-      graphRevision(baseline, "0.5", oldPolicyId, oldPolicyDigest)
-  ) {
-    fail("Producer promotion requires one internally consistent native NKF 0.5 predecessor baseline.");
-  }
-  const successorRevision = graphRevision(
-    baseline,
-    "0.6",
-    newPolicyId,
-    newPolicyDigest,
-  );
-  files.set(
-    baselinePath,
-    Buffer.from(replaceYamlScalars(baselineText, [
-      { field: ["nkf_version"], value: "0.6" },
-      { field: ["graph_revision", "value"], value: successorRevision },
-      { field: ["policy", "id"], value: newPolicyId },
-      { field: ["policy", "digest", "value"], value: newPolicyDigest },
-    ], baselinePath), "utf8"),
-  );
-}
-
 async function isExactProducer(projectRoot, bundle) {
   const packageBytes = await readRegularInside(projectRoot, "package.json", false);
   const packageManifest = packageBytes === null ? null : parseStrictJson(packageBytes);
@@ -2059,17 +2014,17 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
   const requested = ["promotion-input", "promotion-stage", "accepting-decision"]
     .some((name) => options[name] !== undefined);
   const candidateEntry = (bundle.non_records ?? []).filter(
-    (entry) => entry?.path === "specifications/nkf-0.6-revision-3.md" &&
+    (entry) => entry?.path === PRODUCER_CANDIDATE_EVIDENCE_PATH &&
       entry?.kind === "evidence" && entry?.document !== undefined,
   );
   const producerIdentity = await isExactProducer(projectRoot, bundle);
 
-  if (!requested && (!producerIdentity || candidateEntry.length === 0)) return null;
+  if (!requested) return null;
   if (!producerIdentity) {
     fail("Producer promotion is forbidden outside the exact NourdApS/Nourd.NKF producer.");
   }
   if (candidateEntry.length !== 1) {
-    fail("Producer promotion requires exactly one candidate Evidence representation of NKF 0.6.");
+    fail("Producer promotion requires exactly one candidate Evidence representation of NKF 0.7.");
   }
   if (
     options["promotion-input"] === undefined ||
@@ -2081,6 +2036,9 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
   }
   if (!PRODUCER_PROMOTION_STAGES.has(options["promotion-stage"])) {
     fail("The producer promotion stage is not one of the two accepted stages.");
+  }
+  if (options["accept-breaking"] !== "repository-owner") {
+    fail("The breaking 0.6-to-0.7 producer promotion requires --accept-breaking repository-owner.");
   }
   const requireCanonicalInput = async (option, relative, expectedDigest, label) => {
     const supplied = await realpath(path.resolve(option)).catch(() => null);
@@ -2111,22 +2069,23 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
   });
   requireExactKeys(input, [
     "contract", "nkf_version", "repository", "task", "specification",
-    "executable", "freshness_policy", "declaration_path", "record_declaration",
-    "historical_containment",
+    "executable", "freshness_policy", "version_delta", "declaration_path",
+    "record_declaration",
   ], "Producer promotion input");
   if (
     input.contract !== "nkf.producer-candidate-promotion" ||
-    input.nkf_version !== "0.6" ||
+    input.nkf_version !== "0.7" ||
     input.repository !== CURRENT_REPOSITORY ||
-    input.task !== "NKF-027" ||
-    input.declaration_path !== ".nourd/knowledge/records/nkf-0.6-specification-revision-3.yaml"
+    input.task !== "NKF-028" ||
+    input.declaration_path !== `.nourd/knowledge/records/${PRODUCER_SPECIFICATION_ID}.yaml`
   ) {
     fail("The producer promotion input has the wrong contract identity or destination.");
   }
   for (const [key, expectedPath] of [
-    ["specification", "knowledge/specifications/nkf-0.6-revision-3.md"],
-    ["executable", "contracts/nkf/0.6/revision-3/nkf.yaml"],
-    ["freshness_policy", "contracts/nkf/0.6/freshness-policy.yaml"],
+    ["specification", "knowledge/specifications/nkf-0.7.md"],
+    ["executable", "contracts/nkf/0.7/nkf.yaml"],
+    ["freshness_policy", "contracts/nkf/0.7/freshness-policy.yaml"],
+    ["version_delta", "contracts/nkf/0.7/version-delta.yaml"],
   ]) {
     const binding = input[key];
     requireExactKeys(binding, ["path", "digest"], `Promotion ${key} binding`);
@@ -2138,27 +2097,16 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
       fail(`The producer promotion ${key} binding does not resolve exactly.`);
     }
   }
+  // The Decision binds the input digest; the input carries no Decision digest.
   if (!decisionBytes.toString("utf8").includes(PRODUCER_PROMOTION_INPUT_SHA256)) {
     fail("The accepting Decision does not bind the exact producer-promotion input digest.");
   }
-  const expectedContainment = expectedProducerHistoricalContainment();
-  if (jcs(input.historical_containment) !== jcs(expectedContainment)) {
-    fail("The producer promotion historical containment is not the exact accepted two-occurrence input.");
-  }
-  const historicalSource = await readRegularInside(projectRoot, PRODUCER_HISTORICAL_SOURCE_PATH);
-  const historicalDeclaration = await readRegularInside(projectRoot, PRODUCER_HISTORICAL_DECLARATION_PATH);
-  if (
-    digest(historicalSource) !== PRODUCER_HISTORICAL_SOURCE_SHA256 ||
-    digest(historicalDeclaration) !== PRODUCER_HISTORICAL_DECLARATION_SHA256
-  ) {
-    fail("The exact ADR 0122 source or predecessor declaration differs from the accepted historical containment.");
-  }
   const decisionDeclaration = YAML.parse(
-    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0125.yaml")).toString("utf8"),
+    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0128.yaml")).toString("utf8"),
     { schema: "core", strict: true, uniqueKeys: true },
   );
   if (
-    decisionDeclaration.id !== "adr-0125" ||
+    decisionDeclaration.id !== "adr-0128" ||
     decisionDeclaration.type !== "decision" ||
     decisionDeclaration.governance?.lifecycle !== "immutable" ||
     decisionDeclaration.governance?.status !== "accepted" ||
@@ -2174,10 +2122,10 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
       schema: "core", strict: true, uniqueKeys: true,
     });
     if (
-      declaration.id === "nkf-0.6-specification-revision-3" ||
-      declaration.source?.path === "specifications/nkf-0.6-revision-3.md"
+      declaration.id === PRODUCER_SPECIFICATION_ID ||
+      declaration.source?.path === PRODUCER_CANDIDATE_EVIDENCE_PATH
     ) {
-      fail("The native NKF 0.6 Specification declaration already exists or collides.");
+      fail("The native NKF 0.7 Specification declaration already exists or collides.");
     }
   }
   if (await readRegularInside(projectRoot, input.declaration_path, false) !== null) {
@@ -2355,17 +2303,17 @@ function expectedProducerHistoricalContainment() {
     document: {
       id: "document-cddf78f71eac865b267a0b88c15600cf61383285d6d3b2558ff2e07d7bceda95",
       stable_path: "decisions/0122-accept-the-nkf-0-6-authority-set.md",
-      digest: { algorithm: "sha-256", value: PRODUCER_HISTORICAL_SOURCE_SHA256 },
+      digest: { algorithm: "sha-256", value: "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547" },
       relationships: [],
       historical_acceptance_attempt_lock: {
         record_id: "adr-0122",
         record_declaration: {
-          path: PRODUCER_HISTORICAL_DECLARATION_PATH,
-          digest: { algorithm: "sha-256", value: PRODUCER_HISTORICAL_DECLARATION_SHA256 },
+          path: ".nourd/knowledge/records/adr-0122.yaml",
+          digest: { algorithm: "sha-256", value: "dac8ccfe377138d45c5720eeb4d3f0fbdc2b2504224eb50a6a85888c44aaf3b9" },
         },
         source: {
-          path: PRODUCER_HISTORICAL_SOURCE_PATH,
-          digest: { algorithm: "sha-256", value: PRODUCER_HISTORICAL_SOURCE_SHA256 },
+          path: "knowledge/decisions/0122-accept-the-nkf-0-6-authority-set.md",
+          digest: { algorithm: "sha-256", value: "d81ba0ca97e5229c26fa7aca9a67c34a757c59ca32b67b2892e5a4785b995547" },
         },
         violations: [
           { diagnostic: "markdown.reference.deep-link.required", section: "scope-and-applicability", token: "NKF-027", occurrence: 1 },
@@ -2395,11 +2343,11 @@ async function requireProducer0_6TerminalState(projectRoot) {
       jcs(historical[0]) !== jcs(expectedContainment)) {
     fail("The native NKF 0.6 producer does not carry the exact terminal Evidence containment state.");
   }
-  if (await readRegularInside(projectRoot, PRODUCER_HISTORICAL_DECLARATION_PATH, false) !== null) {
+  if (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0122.yaml", false) !== null) {
     fail("The native NKF 0.6 producer still carries the superseded ADR 0122 record declaration.");
   }
   const promotion = YAML.parse(
-    (await readRegularInside(projectRoot, PRODUCER_PROMOTION_INPUT_PATH)).toString("utf8"),
+    (await readRegularInside(projectRoot, "knowledge/evidence/release/nkf-0.6-revision-3-producer-promotion.yaml")).toString("utf8"),
     { schema: "core", strict: true, uniqueKeys: true },
   );
   const nativeDeclaration = YAML.parse(
@@ -2413,7 +2361,7 @@ async function requireProducer0_6TerminalState(projectRoot) {
     (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0125.yaml")).toString("utf8"),
     { schema: "core", strict: true, uniqueKeys: true },
   );
-  if (acceptingDecision.source?.digest?.value !== PRODUCER_ACCEPTING_DECISION_SHA256) {
+  if (acceptingDecision.source?.digest?.value !== "1f50640755184fe1fd117295ffb5056d55e2a23c78d2f8b3ab56533df5e72ac6") {
     fail("The native NKF 0.6 producer no longer binds the exact accepting Decision.");
   }
   const decisionIndex = (await readRegularInside(projectRoot, "knowledge/decisions/README.md")).toString("utf8");
@@ -2436,6 +2384,40 @@ async function verifyInstalled0_6Ready(projectRoot) {
   return { ...installed, readiness };
 }
 
+async function requireProducer0_7TerminalState(projectRoot) {
+  const { bundle } = await requireBundle(projectRoot);
+  const producer =
+    bundle.nkf_version === "0.7" &&
+    await isExactProducer(projectRoot, bundle);
+  if (!producer) return;
+  const inputBytes = await readRegularInside(projectRoot, PRODUCER_PROMOTION_INPUT_PATH, false);
+  if (inputBytes === null) return;
+  if (digest(inputBytes) !== PRODUCER_PROMOTION_INPUT_SHA256) {
+    fail("The native NKF 0.7 producer promotion input differs from its accepted exact bytes.");
+  }
+  const candidateEvidence = (bundle.non_records ?? []).filter(
+    (entry) => entry?.path === PRODUCER_CANDIDATE_EVIDENCE_PATH,
+  );
+  if (candidateEvidence.length !== 0) {
+    fail("The native NKF 0.7 producer still carries the candidate Evidence representation.");
+  }
+  const promotion = YAML.parse(inputBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const nativeDeclaration = YAML.parse(
+    (await readRegularInside(projectRoot, promotion.declaration_path)).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (jcs(nativeDeclaration) !== jcs(promotion.record_declaration)) {
+    fail("The native NKF 0.7 producer Specification declaration differs from the exact accepted promotion input.");
+  }
+  const acceptingDecision = YAML.parse(
+    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0128.yaml")).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (acceptingDecision.source?.digest?.value !== PRODUCER_ACCEPTING_DECISION_SHA256) {
+    fail("The native NKF 0.7 producer no longer binds the exact accepting Decision.");
+  }
+}
+
 async function verifyInstalled0_7Ready(projectRoot) {
   const installed = await verifyInstalled(projectRoot, true);
   const readiness = await requireModernReadiness(
@@ -2443,6 +2425,7 @@ async function verifyInstalled0_7Ready(projectRoot) {
     installed.verification,
     "0.7",
   );
+  await requireProducer0_7TerminalState(projectRoot);
   return { ...installed, readiness };
 }
 
@@ -4449,7 +4432,8 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
       if (
         declaration?.legacy_lock !== undefined ||
         declaration?.accepted_bootstrap_lock !== undefined ||
-        declaration?.prepublication_supersession_lock !== undefined
+        declaration?.prepublication_supersession_lock !== undefined ||
+        declaration?.governance?.lifecycle === "immutable"
       ) {
         if (typeof declaration?.source?.path === "string") lockedSources.add(declaration.source.path);
       }
@@ -4461,7 +4445,10 @@ async function neutralizeStatePaths(candidate, knowledgeRoot) {
     for (const entry of lockedBundle.non_records ?? []) {
       if (
         entry?.document?.legacy_lock !== undefined ||
-        entry?.document?.historical_acceptance_attempt_lock !== undefined
+        entry?.document?.historical_acceptance_attempt_lock !== undefined ||
+        // Evidence is an exact historical byte set and is exempt from
+        // deep-link scanning; the migration never rewrites its bytes.
+        entry?.kind === "evidence"
       ) {
         if (typeof entry.path === "string") lockedSources.add(entry.path);
       }
@@ -4736,7 +4723,7 @@ async function classifyProvenanceAttachments0_7(candidate, knowledgeRoot) {
   return classified;
 }
 
-async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = []) {
+async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = [], promotion = null) {
   if (reviewPath === undefined) {
     throw new OnboardingError(
       "NKF-ADOPT-REVIEW-PATH-REQUIRED",
@@ -4824,7 +4811,7 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
         policyDigest: digest(policyBytes),
       });
     }
-    const reviewStage = onboarding ? "whole-root" : "delta";
+    const reviewStage = promotion !== null ? "whole-root" : onboarding ? "whole-root" : "delta";
     const checker = await verified0_5Checker(temporary, verification);
     if (reviewStat === null) {
       const template = await writeReviewTemplate0_7({
@@ -4839,14 +4826,16 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
         ),
       });
       throw new OnboardingError(
-        "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
-        "Adopt created the exact migration review with carried judgments prefilled and stopped before project mutation. A named reviewer must complete the computed required set and rerun the same Adopt command.",
+        promotion !== null ? "NKF-ADOPT-PRODUCER-PROMOTION-REVIEW-REQUIRED" : "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
+        promotion !== null
+          ? "Adopt created the exact post-promotion whole-root review template and stopped before producer mutation."
+          : "Adopt created the exact migration review with carried judgments prefilled and stopped before project mutation. A named reviewer must complete the computed required set and rerun the same Adopt command.",
         {
           review_template: template.path,
           review_stage: template.stage,
           carried: template.carried,
           required_fresh: template.fresh,
-          next_action: "complete-review-and-rerun-adopt",
+          next_action: promotion !== null ? "complete-review-and-rerun-producer-adopt" : "complete-review-and-rerun-adopt",
         },
       );
     }
@@ -4856,6 +4845,33 @@ async function prepare0_7Candidate(projectRoot, seedFiles, reviewPath, verificat
       reviewPath: review,
       versionDeltaDigest: digest(versionDeltaBytes),
     });
+    if (promotion !== null) {
+      // A version promotion writes one pending reconciliation entry for every
+      // operational-fact declaring node, mechanically and exactly once.
+      const recordsDirectory = path.join(candidate, ".nourd/knowledge/records");
+      const declaring = [];
+      for (const name of (await readdir(recordsDirectory)).filter((item) => item.endsWith(".yaml"))) {
+        const declaration = YAML.parse(await readFile(path.join(recordsDirectory, name), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+        for (const dependency of declaration.operational_dependencies ?? []) {
+          declaring.push({ node: { kind: "record", id: String(declaration.id) }, coordinate: dependency.kind });
+        }
+      }
+      const candidateBundle = YAML.parse(await readFile(path.join(candidate, ".nourd/knowledge/bundle.yaml"), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+      for (const entry of candidateBundle.non_records ?? []) {
+        for (const dependency of entry.document?.operational_dependencies ?? []) {
+          declaring.push({ node: { kind: "document", id: String(entry.document.id) }, coordinate: dependency.kind });
+        }
+      }
+      if (declaring.length > 0) {
+        // Pending reconciliation blocks readiness; a promotion over declared
+        // operational facts must carry its governed reconciliation edits.
+        fail(
+          "Producer promotion found operational-fact declaring nodes without reconciled edits: "
+          + declaring.map((entry) => JSON.stringify(entry.node)).join(", ")
+          + ". Reconcile the declaring nodes in the same governed act or before promotion.",
+        );
+      }
+    }
     await requireModernReadiness(candidate, verification, "0.7");
     const before = await regularFileInventory(projectRoot);
     const after = await regularFileInventory(candidate);
@@ -5059,7 +5075,7 @@ function adoptResult(state, projectRoot, catalog, compatibility, operation) {
   };
 }
 
-async function promoteProducerTo0_6(
+async function promoteProducerTo0_7(
   projectRoot,
   bundle,
   options,
@@ -5067,8 +5083,8 @@ async function promoteProducerTo0_6(
   catalog,
   promotion,
 ) {
-  if (bundle.nkf_version !== "0.5") {
-    fail("Producer promotion requires the exact NKF producer still declaring NKF 0.5.");
+  if (bundle.nkf_version !== "0.6") {
+    fail("Producer promotion requires the exact NKF producer still declaring NKF 0.6.");
   }
   const prepublication = promotion.stage ===
     "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy";
@@ -5077,8 +5093,8 @@ async function promoteProducerTo0_6(
   }
   const archiveBytes = await acquireArchive(releaseOptions, catalog.archive.sha256);
   const verification = verifyReleaseArchive(archiveBytes, catalog.archive.sha256);
-  if (verification.manifest.nkf_version !== "0.6") {
-    fail("Producer promotion requires one exact NKF 0.6 release candidate or published archive.");
+  if (verification.manifest.nkf_version !== "0.7") {
+    fail("Producer promotion requires one exact NKF 0.7 release candidate or published archive.");
   }
   const targetIntegration = await targetFiles(
     projectRoot,
@@ -5091,25 +5107,8 @@ async function promoteProducerTo0_6(
   for (const [relative, bytes] of targetIntegration) files.set(relative, bytes);
   await stageVerifiedHostRegistryMigration(projectRoot, files);
 
-  const decisionIndexPath = "knowledge/decisions/README.md";
-  const decisionIndexBytes = await readRegularInside(projectRoot, decisionIndexPath);
-  const decisionLink =
-    "- [ADR 0122: Accept The NKF 0.6 Authority Set](0122-accept-the-nkf-0-6-authority-set.md)";
-  const historicalEvidenceEntry =
-    "- ADR 0122 is retained as non-record historical Evidence because its exact\n" +
-    "  acceptance attempt failed the inherited deep-link conformance rule.";
-  const decisionIndexText = decisionIndexBytes.toString("utf8");
-  if (
-    decisionIndexText.split(decisionLink).length !== 2 ||
-    decisionIndexText.includes(historicalEvidenceEntry)
-  ) {
-    fail("Producer promotion requires exactly one current ADR 0122 Decision index entry.");
-  }
-  files.set(
-    decisionIndexPath,
-    Buffer.from(decisionIndexText.replace(decisionLink, historicalEvidenceEntry), "utf8"),
-  );
-
+  // Remove exactly the candidate Evidence representation and create the
+  // native accepted Specification declaration at the exact destination.
   const bundlePath = ".nourd/knowledge/bundle.yaml";
   const originalBundleBytes = await readRegularInside(projectRoot, bundlePath);
   const promotedBundle = YAML.parse(
@@ -5117,141 +5116,91 @@ async function promoteProducerTo0_6(
     schema: "core", strict: true, uniqueKeys: true,
     },
   );
-  promotedBundle.nkf_version = "0.6";
-  promotedBundle.knowledge_graph.policy = "nkf.freshness-policy.0.6";
   const originalNonRecords = promotedBundle.non_records ?? [];
   promotedBundle.non_records = originalNonRecords.filter(
-    (entry) => entry?.path !== "specifications/nkf-0.6-revision-3.md",
+    (entry) => entry?.path !== PRODUCER_CANDIDATE_EVIDENCE_PATH,
   );
   if (promotedBundle.non_records.length !== originalNonRecords.length - 1) {
     fail("Producer promotion did not remove exactly one candidate Evidence representation.");
   }
-  if (promotedBundle.non_records.some(
-    (entry) => entry?.document?.historical_acceptance_attempt_lock !== undefined,
-  )) {
-    fail("Producer promotion found a pre-existing historical acceptance containment.");
+  // Regenerate navigation: the new Specification record enters its required
+  // index exactly once, mechanically.
+  const specificationsIndexRelative = `${bundle.knowledge_root}/specifications/README.md`;
+  const specificationsIndexText = (
+    files.get(specificationsIndexRelative) ??
+    await readRegularInside(projectRoot, specificationsIndexRelative)
+  ).toString("utf8");
+  const specificationFileName = PRODUCER_CANDIDATE_EVIDENCE_PATH.slice("specifications/".length);
+  if (!specificationsIndexText.includes(`](${specificationFileName})`)) {
+    const indexBytes = Buffer.from(
+      `${specificationsIndexText.trimEnd()}\n\n## NKF 0.7\n\n- [${promotion.input.record_declaration.title}](${specificationFileName})\n`,
+      "utf8",
+    );
+    files.set(specificationsIndexRelative, indexBytes);
+    for (const entry of promotedBundle.non_records) {
+      if (entry?.path === "specifications/README.md" && entry.document !== undefined) {
+        entry.document.digest.value = digest(indexBytes);
+      }
+    }
   }
-  promotedBundle.non_records.push(promotion.input.historical_containment);
   files.set(bundlePath, serializeYaml(promotedBundle));
   files.set(
     promotion.input.declaration_path,
     serializeYaml(promotion.input.record_declaration),
   );
-  await stageProducerPromotionBaseline(projectRoot, files);
-  files.set(
-    bundlePath,
-    updatePreparedStagedArtifactBindings(files.get(bundlePath), files),
-  );
 
-  const review = path.resolve(options.review);
-  const reviewStat = await lstat(review).catch(() => null);
-  if (reviewStat !== null && (!reviewStat.isFile() || reviewStat.isSymbolicLink())) {
-    fail("--review must identify one regular semantic graph review file or one absent file to create as a review template.");
+  const specificationSourceBefore = await readRegularInside(
+    projectRoot,
+    `${bundle.knowledge_root}/${PRODUCER_CANDIDATE_EVIDENCE_PATH}`,
+  );
+  const candidate = await prepare0_7Candidate(
+    projectRoot,
+    files,
+    options.review,
+    verification,
+    [],
+    { stage: promotion.stage },
+  );
+  for (const [relative, bytes] of targetIntegration) {
+    candidate.files.set(relative, bytes);
   }
-  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-6-producer-promotion-"));
-  const candidate = path.join(temporary, "project");
-  try {
-    await cp(projectRoot, candidate, {
-      recursive: true,
-      filter(source) {
-        const relative = path.relative(projectRoot, source);
-        if (relative === "") return true;
-        const first = relative.split(path.sep)[0];
-        return first !== ".git" && first !== "node_modules" && !first.startsWith(".nkf-transaction-");
-      },
-    });
-    await ensureWritableParents(candidate, files.keys());
-    for (const [relative, bytes] of files) {
-      const target = path.join(candidate, ...safeRelative(relative, "Promotion target").split("/"));
-      await mkdir(path.dirname(target), { recursive: true });
-      await writeFile(target, bytes);
-    }
-    const historicalDeclaration = path.join(
-      candidate,
-      ...PRODUCER_HISTORICAL_DECLARATION_PATH.split("/"),
-    );
-    const historicalStat = await lstat(historicalDeclaration).catch(() => null);
-    if (historicalStat === null || !historicalStat.isFile() || historicalStat.isSymbolicLink()) {
-      fail("Producer promotion cannot remove the exact ADR 0122 predecessor declaration.");
-    }
-    await unlink(historicalDeclaration);
-    const checker = await verified0_5Checker(temporary, verification);
-    if (reviewStat === null) {
-      const template = await writeReviewTemplateModern({
-        projectRoot: candidate,
-        checker,
-        reviewPath: review,
-        nkfVersion: "0.6",
-        preferredSpecificationId: "nkf-0.6-specification-revision-3",
-      });
-      throw new OnboardingError(
-        "NKF-ADOPT-PRODUCER-PROMOTION-REVIEW-REQUIRED",
-        "Adopt created the exact post-promotion whole-root review template and stopped before producer mutation.",
-        {
-          review_template: template.path,
-          candidate_nodes: template.nodes,
-          accepted_decisions: template.decisions,
-          promotion_stage: promotion.stage,
-          next_action: "complete-review-and-rerun-producer-adopt",
-        },
-      );
-    }
-    const baseline = await sealBaselineModern({
-      projectRoot: candidate,
-      checker,
-      reviewPath: review,
-      nkfVersion: "0.6",
-    });
-    await requireModernReadiness(candidate, verification, "0.6");
-    const before = await regularFileInventory(projectRoot);
-    const after = await regularFileInventory(candidate);
-    const transactionFiles = new Map();
-    for (const [relative, bytes] of after) {
-      const current = before.get(relative);
-      if (current === undefined || !current.equals(bytes)) {
-        transactionFiles.set(relative, bytes);
-      }
-    }
-    const removedPaths = [PRODUCER_HISTORICAL_DECLARATION_PATH];
-    for (const relative of before.keys()) {
-      if (!after.has(relative)) {
-        if (!removedPaths.includes(relative)) {
-          fail(`Producer promotion attempted to remove a project source file: ${relative}`);
-        }
-      }
-    }
-    if (
-      !after.get("knowledge/specifications/nkf-0.6-revision-3.md")?.equals(
-        before.get("knowledge/specifications/nkf-0.6-revision-3.md"),
-      )
-    ) {
-      fail("Producer promotion changed the accepted NKF 0.6 Markdown bytes.");
-    }
-    await validateCompleteCandidate(
-      projectRoot,
-      transactionFiles,
-      removedPaths,
-      verifyInstalled0_6Ready,
-    );
-    const installed = await writeTransaction(
-      projectRoot,
-      transactionFiles,
-      () => verifyInstalled0_6Ready(projectRoot),
-      removedPaths,
-    );
-    return {
-      state: "updated",
-      stage: promotion.stage,
-      removed_evidence_document: promotion.candidateEntry.document.id,
-      created_declaration: promotion.input.declaration_path,
-      graph_revision: baseline.graph_revision,
-      baseline,
-      changed_subjects: [...transactionFiles.keys()].sort((left, right) =>
-        left.localeCompare(right, "en")),
-    };
-  } finally {
-    await rm(temporary, { recursive: true, force: true });
+  candidate.files.set(
+    bundlePath,
+    updatePreparedStagedArtifactBindings(candidate.files.get(bundlePath), candidate.files),
+  );
+  const specificationRelative = `${bundle.knowledge_root}/${PRODUCER_CANDIDATE_EVIDENCE_PATH}`;
+  const stagedSpecification = candidate.files.get(specificationRelative);
+  if (stagedSpecification !== undefined && !stagedSpecification.equals(specificationSourceBefore)) {
+    fail("Producer promotion changed the accepted NKF 0.7 Markdown bytes.");
   }
+  await validateCompleteCandidate(
+    projectRoot,
+    candidate.files,
+    candidate.removedPaths,
+    verifyInstalled0_7Ready,
+  );
+  const installed = await writeTransaction(
+    projectRoot,
+    candidate.files,
+    () => verifyInstalled0_7Ready(projectRoot),
+    candidate.removedPaths,
+  );
+  return {
+    state: "updated",
+    stage: promotion.stage,
+    removed_evidence_document: promotion.candidateEntry.document.id,
+    created_declaration: promotion.input.declaration_path,
+    graph_revision: candidate.baseline.graph_revision,
+    baseline: candidate.baseline,
+    neutralized_paths: candidate.neutralization.moves,
+    removed_legacy_indexes: candidate.neutralization.removed,
+    validation: {
+      conformance: installed.report?.conformance ?? "passed",
+      readiness: installed.readiness?.readiness?.state ?? "ready",
+    },
+    changed_subjects: [...candidate.files.keys()].sort((left, right) =>
+      left.localeCompare(right, "en")),
+  };
 }
 
 async function adopt(options) {
@@ -5319,7 +5268,7 @@ async function adopt(options) {
   const { bundle } = await requireBundle(projectRoot);
   const promotion = await requireProducerPromotionInput(projectRoot, options, bundle);
   if (promotion !== null) {
-    const result = await promoteProducerTo0_6(
+    const result = await promoteProducerTo0_7(
       projectRoot,
       bundle,
       options,
@@ -5328,10 +5277,11 @@ async function adopt(options) {
       promotion,
     );
     return adoptResult("updated", projectRoot, catalog, {
-      from_nkf_version: "0.5",
-      classification: "non-breaking",
-      migration_required: false,
-      summary: "The exact NKF producer promotion applies the accepted native 0.6 declaration and separately reviewed graph.",
+      from_nkf_version: "0.6",
+      classification: "breaking",
+      migration_required: true,
+      approved_by: "repository-owner",
+      summary: "The exact NKF producer promotion applies the accepted native 0.7 declaration, the deliberate migration, and the separately reviewed whole-root graph.",
     }, result);
   }
   const rule = compatibility.get(bundle.nkf_version);
