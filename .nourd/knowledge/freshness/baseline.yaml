@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: d2faa616b26c01cc3b89e51a2e1e05fe6bc3d1287876aef777612904798d9b9b
+  value: a3855f2a721392d3392806c625537b291cd8db3fec5a5f0b4b69c06c5695537a
 policy:
   id: nkf.freshness-policy.0.6
   digest:
@@ -160,7 +160,13 @@ node_revisions:
       id: NKF-027
     revision:
       algorithm: sha-256
-      value: 9980958f9ae61eb1dbfc5b0a4552ebefe882b755165a8d25af9d56bdfaa735fd
+      value: 283a5054c83d416a82e5761613cb3be492e19d351bb128631b7254d4b7f8eacb
+  - node:
+      kind: document
+      id: NKF-028
+    revision:
+      algorithm: sha-256
+      value: 5cfce897f4bb564273a87ceb5c5ab61cf68994e0d1c3f3fddcee35082e7064a1
   - node:
       kind: record
       id: adr-0001
@@ -895,6 +901,12 @@ node_revisions:
       value: 5143303cf7cb25ae777cb59272ed91a7412bcfc2c2ec20811031ce0b1971444e
   - node:
       kind: record
+      id: adr-0126
+    revision:
+      algorithm: sha-256
+      value: 4dd4043a8ca4d6d43aae3e849e1c4622a206328a7b310e7c1ba84c4f8f02b72a
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     revision:
       algorithm: sha-256
@@ -1073,6 +1085,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 415c98c72d5e96f78b10e6bb9d81f909e4d7a0b925b103a152638a5732eb3050
+  - node:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    revision:
+      algorithm: sha-256
+      value: dddf634b2a383e7ca243d8954bf7eab5bab806c49e02dc271e976537251494f6
   - node:
       kind: record
       id: design-nkf-record-v2-responsibility-bindings
@@ -1603,6 +1621,12 @@ node_revisions:
       value: 2f9480082ca0f930b9c56b3d93abe8b54e2d202749a26fbe30e1229dc9afe080
   - node:
       kind: document
+      id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+    revision:
+      algorithm: sha-256
+      value: e84e186bb5f3e71220a43441941b456e9aa2b109bf95d2e72c237443c6a243b0
+  - node:
+      kind: document
       id: document-f8e5e7110f4dfeb75c39dc67c7aec9379776d2759866ef47dc49fc9e89049b7e
     revision:
       algorithm: sha-256
@@ -1619,6 +1643,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 083e7fd6678087713f269918daf3be5c560390eabf9a39b01a2b30f4e52f7b4a
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    revision:
+      algorithm: sha-256
+      value: 58b84995eeb31e3c48dc648173ad38198a13df16207fcdc171d47e6b51de4d5d
   - node:
       kind: record
       id: nkf
@@ -1762,6 +1792,19 @@ authored_edges:
       section: decision
   - source:
       kind: record
+      id: adr-0126
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0125
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
+      section: decision
+  - source:
+      kind: record
       id: design-nkf-025-freshness-and-deterministic-knowledge-graph
     relationship: depends-on
     target:
@@ -1799,6 +1842,45 @@ authored_edges:
         kind: record
         id: design-nkf-027-corrective-release-and-open-source-licensing
       section: structural-governed-mutation
+  - source:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0125
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
+      section: compatibility-and-versioning
+  - source:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0096
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
+      section: deterministic-scaffolds
+  - source:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0115
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
+      section: governing-inputs-and-constraints
   - source:
       kind: record
       id: adr-0072
@@ -2516,6 +2598,32 @@ authored_edges:
       section: decision
   - source:
       kind: record
+      id: adr-0126
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0109
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
+      section: decision
+  - source:
+      kind: record
+      id: adr-0126
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0115
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
+      section: decision
+  - source:
+      kind: record
       id: design-nkf-025-freshness-and-deterministic-knowledge-graph
     relationship: extends
     target:
@@ -2553,6 +2661,19 @@ authored_edges:
         kind: record
         id: design-nkf-027-corrective-release-and-open-source-licensing
       section: prepublication-producer-rehearsal
+  - source:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0109
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
+      section: release-confirmation-ordering
   - source:
       kind: record
       id: nkf-0.2-specification
@@ -2721,6 +2842,19 @@ authored_edges:
       node:
         kind: record
         id: adr-0121
+      section: decision
+  - source:
+      kind: record
+      id: adr-0126
+    relationship: rationale-for
+    target:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0126
       section: decision
   - source:
       kind: record
@@ -4250,6 +4384,51 @@ applicability_coverage:
             - "NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing"
           occurrence: 1
   - node:
+      kind: document
+      id: NKF-028
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-028
+      source:
+        heading:
+          heading_path:
+            - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+          occurrence: 1
+  - node:
+      kind: document
+      id: NKF-028
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-028
+      source:
+        heading:
+          heading_path:
+            - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+          occurrence: 1
+  - node:
+      kind: document
+      id: NKF-028
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-028
+      source:
+        heading:
+          heading_path:
+            - "NKF-028: Release NKF 0.7 With Verifiable Delta Review"
+          occurrence: 1
+  - node:
       kind: record
       id: adr-0001
     purpose: change-impact
@@ -8643,6 +8822,42 @@ applicability_coverage:
         section: context-and-problem
   - node:
       kind: record
+      id: adr-0126
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: context-and-problem
+  - node:
+      kind: record
+      id: adr-0126
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: context-and-problem
+  - node:
+      kind: record
+      id: adr-0126
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: context-and-problem
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     purpose: change-impact
     state: eligible
@@ -9719,6 +9934,42 @@ applicability_coverage:
       node:
         kind: record
         id: design-nkf-027-corrective-release-and-open-source-licensing
+      source:
+        section: design-kind-problem-and-scope
+  - node:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    purpose: change-impact
+    state: eligible
+    role: proposes
+    basis:
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
+      source:
+        section: design-kind-problem-and-scope
+  - node:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    purpose: whole-root-readiness
+    state: eligible
+    role: proposes
+    basis:
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
+      source:
+        section: design-kind-problem-and-scope
+  - node:
+      kind: record
+      id: design-nkf-028-verifiable-delta-review
+    purpose: consequential-use
+    state: eligible
+    role: proposes
+    basis:
+      node:
+        kind: record
+        id: design-nkf-028-verifiable-delta-review
       source:
         section: design-kind-problem-and-scope
   - node:
@@ -13638,6 +13889,51 @@ applicability_coverage:
           occurrence: 1
   - node:
       kind: document
+      id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+      source:
+        heading:
+          heading_path:
+            - NKF-028 NKF 0.7 Source-Grounded Assessment
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+      source:
+        heading:
+          heading_path:
+            - NKF-028 NKF 0.7 Source-Grounded Assessment
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-eed306f4f893627a088ec7272bd26707e21518c628f158a2ac9a5a5dbac5aadc
+      source:
+        heading:
+          heading_path:
+            - NKF-028 NKF 0.7 Source-Grounded Assessment
+          occurrence: 1
+  - node:
+      kind: document
       id: document-f8e5e7110f4dfeb75c39dc67c7aec9379776d2759866ef47dc49fc9e89049b7e
     purpose: change-impact
     state: eligible
@@ -13762,6 +14058,51 @@ applicability_coverage:
         id: nkf-0.6-specification-revision-3
       source:
         section: conformance
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-7-specification
+      source:
+        heading:
+          heading_path:
+            - NKF 0.7 — Product And Technology Knowledge Format
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-7-specification
+      source:
+        heading:
+          heading_path:
+            - NKF 0.7 — Product And Technology Knowledge Format
+          occurrence: 1
+  - node:
+      kind: document
+      id: document-nkf-0-7-specification
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-7-specification
+      source:
+        heading:
+          heading_path:
+            - NKF 0.7 — Product And Technology Knowledge Format
+          occurrence: 1
   - node:
       kind: record
       id: nkf
@@ -17741,61 +18082,52 @@ decision_classifications:
         id: adr-0125
       source:
         section: context-and-problem
+  - decision: adr-0126
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: decision
+  - decision: adr-0126
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: decision
+  - decision: adr-0126
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0126
+      source:
+        section: decision
 confirmation:
   reviewer:
     kind: agent
-    id: codex-technical-reviewer
-  reviewed_at: 2026-08-14T12:56:55.000Z
+    id: claude-technical-reviewer
+  reviewed_at: 2026-08-16T14:04:27.000Z
   claim: semantically-reviewed-whole-root
   observations:
-    - id: whole-root-universe-reaffirmed
+    - id: window-cut-implementation-in-progress
       subject:
         kind: record
-        id: nkf-0.6-specification-revision-3
+        id: nkf-portable-knowledge-topology
       basis:
         node:
           kind: record
-          id: nkf-0.6-specification-revision-3
+          id: nkf-portable-knowledge-topology
         source:
-          section: deterministic-knowledge-graph-and-freshness-impact-closure-and-decision-reconciliation
-      finding: "The candidate node universe is identical to the 287-node universe reviewed and sealed at source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63: no node was added or removed. Every node applicability, all 14 relationship categories, and all 122 accepted Decisions across all three non-historical purposes are carried forward unchanged from that review, and no carried classification was found to conflict with the authored delta."
-    - id: realization-reconciled-to-nkf-0-6
-      subject:
-        kind: record
-        id: nkf-0.1-native-realization
-      basis:
-        node:
-          kind: record
-          id: nkf-0.1-native-realization
-        source:
-          section: realization-identity-and-kind
-      finding: The prior review recorded the consolidated current-system Realization as semantically stale by design because it still described the producer before ordinary NKF 0.6 adoption. That finding is now resolved. Under the Human Product Owner's 2026-08-14 confirmation the record was converted from immutable to living with its stable identity, stable path, draft status, prior confirmation history, and explicitly unconfirmed scope retained, its legacy-locked predecessor frontmatter was replaced by a native 0.6 envelope, and its content now describes the accepted, published, recommended, and producer-adopted NKF 0.6 state. It remains partially-confirmed draft knowledge and confirms nothing by being current.
-    - id: task-gate-re-extracted-at-end-state
-      subject:
-        kind: document
-        id: NKF-027
-      basis:
-        node:
-          kind: document
-          id: NKF-027
-        source:
-          heading:
-            heading_path:
-              - "NKF-027: Correct And Release NKF 0.6 With Open-Source Licensing"
-            occurrence: 1
-      finding: The owning Task records the delivered end state, its Completion Result, and a re-extracted Decision Applicability gate. Six capabilities are reclassified proven at runtime-behaviour on directly observed outcomes and two licensing capabilities at data-validity, deliberately claiming no production-suitability. One mandatory capability remains unsupported under an explicit non-reusable Human Product Owner exception.
-    - id: nkf-0-6-published-without-a-confirming-decision
-      subject:
-        kind: record
-        id: nkf-0.6-specification-revision-3
-      basis:
-        node:
-          kind: record
-          id: nkf-0.6-specification-revision-3
-        source:
-          section: release-distribution
-      finding: The accepted release protocol requires a technical-confirmation Decision before publication, while the prepublication lock makes authoring any governed record impossible before promotion. NKF 0.6 was published under an explicit Human Product Owner exception and no confirming Decision exists. The graph therefore carries an accepted, implemented, published, recommended, and producer-adopted release that is not technically confirmed, and the ordering conflict is recorded for a successor NKF version rather than repaired here.
+          section: durable-mapping
+      finding: Under the adopted ADR 0126 support-window direction, the live 0.2-through-0.5 contract sets, fixtures, and migration tooling were removed from the working tree and the governed fixture artifacts were rebound from the deleted minimal-0-2 exemplar to the new native minimal-0-7 exemplar, which passes full-bundle conformance and whole-root readiness under the drafted 0.7 authority. Published predecessor archives remain the immutable authority for every removed version. This is Task-branch implementation state toward the 0.7 candidate; no 0.7 authority is accepted and no release exists.
   limitations:
-    - This is a delta re-affirmation of the whole-root review sealed earlier the same day at source commit 96652985ab7749d6f58677dbf0947af4c9ff4e63. Only the knowledge authored under NKF-027 since that seal was re-read in full; every other node carries its prior reviewed classification rather than an independent fresh re-reading.
-    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, licensing readiness, publication, recommendation, adoption, repository visibility, or Governing Use.
+    - This is a delta re-affirmation of the previously sealed review. Only the rebound governed fixture artifacts of the portable-knowledge-topology Realization and the owning Task's implementation state were read fresh; every other node, relationship classification, and Decision classification carries its prior reviewed value rather than an independent fresh re-reading.
+    - The review covers knowledge semantics only. It accepts no record, confirms no Realization, and establishes no conformance, publication, adoption, or Governing Use.
   disputed: false

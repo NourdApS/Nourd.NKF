@@ -59,20 +59,19 @@ const PROJECT_SURFACES = [
 const REQUIRED_TOPOLOGY_NON_RECORDS = [
   { path: "README.md", kind: "navigation", title: "Knowledge" },
   { path: "tasks/README.md", kind: "navigation", title: "Tasks" },
-  { path: "tasks/active/README.md", kind: "navigation", title: "Active Tasks" },
-  { path: "tasks/deferred/README.md", kind: "navigation", title: "Deferred Tasks" },
-  { path: "tasks/completed/README.md", kind: "navigation", title: "Completed Tasks" },
-  { path: "tasks/cancelled/README.md", kind: "navigation", title: "Cancelled Tasks" },
+  { path: "tasks/by-state/active.md", kind: "generated", title: "Active Tasks" },
+  { path: "tasks/by-state/deferred.md", kind: "generated", title: "Deferred Tasks" },
+  { path: "tasks/by-state/completed.md", kind: "generated", title: "Completed Tasks" },
+  { path: "tasks/by-state/cancelled.md", kind: "generated", title: "Cancelled Tasks" },
   { path: "designs/README.md", kind: "navigation", title: "Designs" },
-  { path: "designs/active/README.md", kind: "navigation", title: "Active Designs" },
-  { path: "designs/adopted/README.md", kind: "navigation", title: "Adopted Designs" },
-  { path: "designs/rejected/README.md", kind: "navigation", title: "Rejected Designs" },
-  { path: "designs/superseded/README.md", kind: "navigation", title: "Superseded Designs" },
-  { path: "designs/withdrawn/README.md", kind: "navigation", title: "Withdrawn Designs" },
+  { path: "designs/by-disposition/active.md", kind: "generated", title: "Active Designs" },
+  { path: "designs/by-disposition/adopted.md", kind: "generated", title: "Adopted Designs" },
+  { path: "designs/by-disposition/rejected.md", kind: "generated", title: "Rejected Designs" },
+  { path: "designs/by-disposition/superseded.md", kind: "generated", title: "Superseded Designs" },
+  { path: "designs/by-disposition/withdrawn.md", kind: "generated", title: "Withdrawn Designs" },
   { path: "decisions/README.md", kind: "navigation", title: "Decisions" },
   { path: "specifications/README.md", kind: "navigation", title: "Specifications" },
   { path: "realizations/README.md", kind: "navigation", title: "Realizations" },
-  { path: "realizations/current/README.md", kind: "navigation", title: "Current Realizations" },
   { path: "evidence/README.md", kind: "evidence", title: "Evidence" },
 ];
 
@@ -501,7 +500,7 @@ export async function inspectOnboardingProject(projectRootInput, knowledgeRootIn
   );
   return {
     contract: "nkf.onboarding-inspection",
-    nkf_version: "0.4",
+    nkf_version: "0.7",
     mechanically_ready: diagnostics.length === 0,
     knowledge_root: knowledgeRoot,
     observed: {
@@ -594,7 +593,7 @@ export async function createOnboardingWorkspace(options) {
     );
   }
   occupied.add(realizationPath);
-  const taskPath = unusedPath(`tasks/active/${slug(taskId)}-onboard-nkf.md`, occupied);
+  const taskPath = unusedPath(`tasks/items/${slug(taskId)}-onboard-nkf.md`, occupied);
   occupied.add(taskPath);
   const specificationPath = kind === "technology"
     ? unusedPath("specifications/initial-specification.md", occupied)
@@ -612,7 +611,7 @@ export async function createOnboardingWorkspace(options) {
   }
   const plan = {
     contract: "nkf.onboarding-plan",
-    nkf_version: "0.4",
+    nkf_version: "0.7",
     inspection: {
       knowledge_root: inspection.knowledge_root,
       snapshot_sha256: inspection.snapshot_sha256,
@@ -669,7 +668,7 @@ function validatePlanEnvelope(plan) {
     ["contract", "nkf_version", "inspection", "assessment", "project", "scaffold", "documents"],
     "plan",
   );
-  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.4") {
+  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.7") {
     fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.4 onboarding plan.");
   }
   requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
@@ -852,7 +851,7 @@ export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   await writeFile(loaded.planPath, sealed);
   return {
     contract: "nkf.onboarding-plan-seal-result",
-    nkf_version: "0.4",
+    nkf_version: "0.7",
     state: "sealed",
     plan_sha256: sha256(sealed),
     documents: loaded.plan.documents.length,
@@ -882,8 +881,6 @@ function rootScaffold(plan, kind) {
     title,
     summary: `Provides the initial Draft ${kind === "product" ? "Product" : "Technology"} orientation for ${title} without inventing accepted meaning.`,
     created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
   };
   if (kind === "product") {
     const headings = [
@@ -919,10 +916,6 @@ function realizationScaffold(plan) {
     title,
     summary: `Provides the initial unconfirmed current-system view for ${plan.project.root.title} without reconstructing implementation from source.`,
     created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
-    task: plan.project.task.id,
-    confirmation_status: "unconfirmed",
   };
   const sections = [
     ["Realization Identity And Kind", `This is the initial consolidated current-system Realization for ${plan.project.root.title}.`],
@@ -944,9 +937,6 @@ function specificationScaffold(plan) {
     title,
     summary: `Makes the required Draft Specification boundary visible for ${plan.project.root.title} without inventing accepted normative meaning.`,
     created_at: plan.project.created_at,
-    record_lifecycle: "living",
-    record_status: "draft",
-    task: plan.project.task.id,
   };
   const sections = [
     ["Specification Definition", "This Draft reserves the initial Technology Specification boundary. No normative contract is accepted by this scaffold."],
@@ -967,8 +957,6 @@ function taskScaffold(plan) {
     title: plan.project.task.title,
     summary: `Tracks project-authority review and completion of the initial NKF onboarding candidate for ${plan.project.root.title}.`,
     created_at: plan.project.created_at,
-    task_id: plan.project.task.id,
-    task_status: "active",
   };
   return Buffer.from(`${frontmatter(values)}# ${plan.project.task.title}\n\nThis Task owns review of the Draft root, unresolved meaning, current-system\nRealization, and the exact candidate produced by onboarding.\n\n## Acceptance Criteria\n\n- Project authority reviews every Draft and unresolved statement.\n- Later accepted meaning follows the governed NKF lifecycle.\n- Validation remains separate from acceptance and Realization confirmation.\n\n## Decision Applicability\n\n### Applicable Decisions\n\nNo accepted decision applies to this Task.\n\n### Mandatory Capabilities\n\nNo mandatory capability is implicated by this Task.\n`, "utf8");
 }
@@ -1000,7 +988,7 @@ function validateOnboardingTopologyPlan(plan) {
   if (
     plan.scaffold.knowledge_map !== "README.md" ||
     plan.scaffold.current_system_realization !== "realizations/current-system.md" ||
-    !plan.scaffold.onboarding_task.startsWith("tasks/active/")
+    !plan.scaffold.onboarding_task.startsWith("tasks/items/")
   ) {
     fail("NKF-ONBOARDING-PLAN-INVALID", "The plan does not select the required portable topology paths.");
   }
@@ -1168,15 +1156,15 @@ function topologyIndexTargets(declarations, nonRecords, sourceBytes) {
   const uniqueSorted = (values) => [...new Set(values)].sort(utf16Compare);
   const tasksByStatus = { active: [], deferred: [], completed: [], cancelled: [] };
   for (const item of nonRecords.filter((entry) => entry.kind === "task")) {
-    const bytes = sourceBytes(item.path);
-    const status = bytes === undefined ? undefined : sourceFrontmatter(bytes, item.path)?.task_status;
+    const status = item.document?.state?.value;
     if (Object.hasOwn(tasksByStatus, status)) tasksByStatus[status].push(item.path);
   }
   const designsByDisposition = { active: [], adopted: [], rejected: [], superseded: [], withdrawn: [] };
   for (const declaration of declarations.filter((item) => item.type === "design")) {
     const sourcePath = declaration.source?.path;
     const bytes = typeof sourcePath === "string" ? sourceBytes(sourcePath) : undefined;
-    const disposition = bytes === undefined ? undefined : sourceFrontmatter(bytes, sourcePath)?.design_disposition;
+    const disposition = declaration.design_disposition
+      ?? (bytes === undefined ? undefined : sourceFrontmatter(bytes, sourcePath)?.design_disposition);
     if (Object.hasOwn(designsByDisposition, disposition)) designsByDisposition[disposition].push(sourcePath);
   }
   const evidenceAreas = [];
@@ -1190,27 +1178,27 @@ function topologyIndexTargets(declarations, nonRecords, sourceBytes) {
     if (segments.length > 2) evidenceAreas.push(`evidence/${segments[1]}`);
   }
   return new Map([
-    ["tasks/README.md", ["tasks/active/README.md", "tasks/deferred/README.md", "tasks/completed/README.md", "tasks/cancelled/README.md"]],
-    ["tasks/active/README.md", uniqueSorted(tasksByStatus.active)],
-    ["tasks/deferred/README.md", uniqueSorted(tasksByStatus.deferred)],
-    ["tasks/completed/README.md", uniqueSorted(tasksByStatus.completed)],
-    ["tasks/cancelled/README.md", uniqueSorted(tasksByStatus.cancelled)],
-    ["designs/README.md", ["designs/active/README.md", "designs/adopted/README.md", "designs/rejected/README.md", "designs/superseded/README.md", "designs/withdrawn/README.md"]],
-    ["designs/active/README.md", uniqueSorted(designsByDisposition.active)],
-    ["designs/adopted/README.md", uniqueSorted(designsByDisposition.adopted)],
-    ["designs/rejected/README.md", uniqueSorted(designsByDisposition.rejected)],
-    ["designs/superseded/README.md", uniqueSorted(designsByDisposition.superseded)],
-    ["designs/withdrawn/README.md", uniqueSorted(designsByDisposition.withdrawn)],
+    ["tasks/README.md", ["tasks/by-state/active.md", "tasks/by-state/deferred.md", "tasks/by-state/completed.md", "tasks/by-state/cancelled.md"]],
+    ["tasks/by-state/active.md", uniqueSorted(tasksByStatus.active)],
+    ["tasks/by-state/deferred.md", uniqueSorted(tasksByStatus.deferred)],
+    ["tasks/by-state/completed.md", uniqueSorted(tasksByStatus.completed)],
+    ["tasks/by-state/cancelled.md", uniqueSorted(tasksByStatus.cancelled)],
+    ["designs/README.md", ["designs/by-disposition/active.md", "designs/by-disposition/adopted.md", "designs/by-disposition/rejected.md", "designs/by-disposition/superseded.md", "designs/by-disposition/withdrawn.md"]],
+    ["designs/by-disposition/active.md", uniqueSorted(designsByDisposition.active)],
+    ["designs/by-disposition/adopted.md", uniqueSorted(designsByDisposition.adopted)],
+    ["designs/by-disposition/rejected.md", uniqueSorted(designsByDisposition.rejected)],
+    ["designs/by-disposition/superseded.md", uniqueSorted(designsByDisposition.superseded)],
+    ["designs/by-disposition/withdrawn.md", uniqueSorted(designsByDisposition.withdrawn)],
     ["decisions/README.md", uniqueSorted(declarations.filter((item) => item.type === "decision").map((item) => item.source.path))],
     ["specifications/README.md", uniqueSorted(declarations.filter((item) => item.type === "specification").map((item) => item.source.path))],
-    ["realizations/README.md", ["realizations/current-system.md", "realizations/current/README.md"]],
-    ["realizations/current/README.md", uniqueSorted(declarations.filter((item) => item.type === "realization" && item.source.path.startsWith("realizations/current/")).map((item) => item.source.path))],
+    ["realizations/README.md", uniqueSorted(["realizations/current-system.md", ...declarations.filter((item) => item.type === "realization" && item.source.path.startsWith("realizations/items/")).map((item) => item.source.path)])],
     ["evidence/README.md", uniqueSorted(evidenceAreas)],
   ]);
 }
 
-function generatedDeclaration({ id, type, title, sourcePath, sourceBytes, authority, sections, relationships = [] }) {
+function generatedDeclaration({ id, type, title, sourcePath, sourceBytes, authority, sections, relationships = [], extra = {} }) {
   return {
+    ...extra,
     contract: "nkf.record",
     id,
     type,
@@ -1218,6 +1206,7 @@ function generatedDeclaration({ id, type, title, sourcePath, sourceBytes, author
     title,
     source: {
       path: sourcePath,
+      stable_path: sourcePath,
       digest: { algorithm: "sha-256", value: sha256(sourceBytes) },
     },
     governance: { lifecycle: "living", status: "draft", authority: [authority] },
@@ -1376,6 +1365,7 @@ async function validateLoadedPlan(projectRoot, loaded, observedInspection = null
       seenRecordIds.add(declaration.id);
       declaration.source = {
         path: documentPath,
+        stable_path: documentPath,
         digest: { algorithm: "sha-256", value: sha256(bytes) },
       };
       declarations.push(declaration);
@@ -1507,6 +1497,7 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
   rootDeclaration.scope.root = plan.project.root.id;
   const realizationId = `${plan.project.root.id}-current-system`;
   const realizationDeclaration = generatedDeclaration({
+    extra: { confirmation_status: "unconfirmed", task: plan.project.task.id },
     id: realizationId,
     type: "realization",
     title: `${plan.project.root.title} Current System`,
@@ -1525,6 +1516,7 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
   if (specificationBytes !== null) {
     const specificationDeclaration = selectedSpecificationDeclaration === undefined
       ? generatedDeclaration({
+        extra: { task: plan.project.task.id },
         id: `${plan.project.root.id}-initial-specification`,
         type: "specification",
         title: `${plan.project.root.title} Initial Specification`,
@@ -1567,6 +1559,20 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
   const nonRecords = [...nonRecordByPath.values()].sort((left, right) => utf16Compare(left.path, right.path));
 
   const sourceBytes = (sourcePath) => files.get(`${knowledgeRoot}/${sourcePath}`);
+  for (const entry of nonRecords) {
+    if (entry.kind !== "task") continue;
+    const bytes = sourceBytes(entry.path);
+    if (bytes === undefined) fail("NKF-ONBOARDING-PLAN-INCOMPLETE", `Represented Task has no candidate bytes: ${entry.path}`);
+    entry.document = {
+      id: entry.path === plan.scaffold.onboarding_task
+        ? plan.project.task.id
+        : `document-${sha256(Buffer.from(`${plan.project.root.id}\u0000${entry.path}`, "utf8"))}`,
+      stable_path: entry.path,
+      digest: { algorithm: "sha-256", value: sha256(bytes) },
+      state: { vocabulary: "task-status", value: "active" },
+      relationships: [],
+    };
+  }
   const indexTargets = topologyIndexTargets(declarations, nonRecords, sourceBytes);
   for (const definition of REQUIRED_TOPOLOGY_NON_RECORDS) {
     if (definition.path === "README.md") continue;
@@ -1579,12 +1585,27 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
         : reconcileIndex(existing, definition.path, expectedTargets),
     );
   }
+  for (const entry of nonRecords) {
+    if (entry.kind !== "evidence" || entry.document !== undefined) continue;
+    const bytes = sourceBytes(entry.path);
+    if (bytes === undefined) fail("NKF-ONBOARDING-PLAN-INCOMPLETE", `Represented Evidence has no candidate bytes: ${entry.path}`);
+    entry.document = {
+      id: `document-${sha256(Buffer.from(`${plan.project.root.id}\u0000${entry.path}`, "utf8"))}`,
+      stable_path: entry.path,
+      digest: { algorithm: "sha-256", value: sha256(bytes) },
+      relationships: [],
+    };
+  }
   const bundle = {
-    nkf_version: "0.4",
+    nkf_version: "0.7",
     contract: "nkf.bundle",
     id: plan.project.root.id,
     root: { record: plan.project.root.id, profile: plan.project.profile },
     knowledge_root: knowledgeRoot,
+    knowledge_graph: {
+      baseline: ".nourd/knowledge/freshness/baseline.yaml",
+      policy: "nkf.freshness-policy.0.7",
+    },
     non_records: nonRecords,
   };
   if (plan.project.canonical_terms.length > 0) {

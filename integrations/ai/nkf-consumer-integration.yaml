@@ -42,5 +42,5 @@ verifier:
   sha256: 9b22d2641b5b271edef658dca919719f0b521d1a74af2c2c22ef0dc5831117b9
 workflow:
   path: .github/workflows/nkf-contracts.yml
-  sha256: 9ee7c20f80a59eabbc809ff6325ca3c2834800d412ba61ed65f843deec07d7ea
-  branch: task/NKF-025
+  sha256: adee94d771626a585e04cd58e7e206f0672b9a2d44288306162cf2a97fb817b2
+  branch: task/NKF-028

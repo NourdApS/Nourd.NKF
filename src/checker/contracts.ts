@@ -86,6 +86,13 @@ export async function loadContracts(
   const freshnessPolicyBinding = bindings.freshnessPolicy === undefined
     ? undefined
     : binding(bindings.freshnessPolicy.sha256, freshnessPolicyRead?.observed ?? null);
+  const versionDeltaPath = bindings.versionDelta === undefined
+    ? null
+    : path.join(repositoryRoot, bindings.versionDelta.path);
+  const versionDeltaRead = versionDeltaPath === null ? null : await readArtifact(versionDeltaPath);
+  const versionDeltaBinding = bindings.versionDelta === undefined
+    ? undefined
+    : binding(bindings.versionDelta.sha256, versionDeltaRead?.observed ?? null);
 
   if (specificationBinding.binding !== "verified" || executableBinding.binding !== "verified") {
     const unavailable =
@@ -96,6 +103,17 @@ export async function loadContracts(
         unavailable
           ? `The accepted NKF ${nkfVersion} authority pair is unavailable.`
           : `The observed NKF ${nkfVersion} authority pair does not match its accepted digests.`,
+      ),
+    );
+  }
+  if (versionDeltaBinding !== undefined && versionDeltaBinding.binding !== "verified") {
+    diagnostics.push(
+      contractDiagnostic(
+        versionDeltaBinding.binding === "unavailable" ? "version-delta.unavailable" : "version-delta.binding-mismatch",
+        versionDeltaBinding.binding === "unavailable"
+          ? "The accepted version-delta declaration is unavailable."
+          : "The version-delta declaration does not match its accepted digest.",
+        bindings.versionDelta?.path,
       ),
     );
   }
@@ -241,13 +259,62 @@ export async function loadContracts(
   const validatePolicy = compile(policySchema);
   const validateResult = compile(resultSchema);
   if (freshnessPolicy !== null && !validatePolicy(freshnessPolicy)) {
-    diagnostics.push(
-      contractDiagnostic(
-        "contract-set.binding-mismatch",
-        "The accepted freshness policy violates its derived Schema.",
-        bindings.freshnessPolicy?.path,
-      ),
-    );
+    diagnostics.push({
+      rule_id: "schema.freshness-policy.invalid",
+      severity: "error",
+      blocking: "conformance",
+      phase: "schema",
+      message: "The accepted freshness policy violates its derived Schema.",
+      ...(bindings.freshnessPolicy?.path === undefined ? {} : { artifact: bindings.freshnessPolicy.path }),
+    });
+  }
+
+  // The accepted per-rule version delta must classify the complete current
+  // registry with the closed classification vocabulary.
+  if (
+    bindings.versionDelta !== undefined &&
+    versionDeltaBinding?.binding === "verified" &&
+    versionDeltaRead?.bytes !== null &&
+    versionDeltaRead?.bytes !== undefined
+  ) {
+    let versionDelta: Record<string, any> | null = null;
+    try {
+      versionDelta = asObject(YAML.parse(
+        new TextDecoder("utf-8", { fatal: true }).decode(versionDeltaRead.bytes),
+        { schema: "core", strict: true, uniqueKeys: true },
+      ));
+    } catch {
+      versionDelta = null;
+    }
+    const declaredRules = asObject(versionDelta?.rules) ?? {};
+    const classifications = new Set(["identical", "mechanically-transformable", "semantically-new"]);
+    const registryIds = executableBinding.binding === "verified"
+      ? Object.keys(asObject(executable.diagnostics)?.rules ?? {})
+      : [];
+    for (const [ruleId, entry] of registryIds.length === 0 ? [] : Object.entries(declaredRules)) {
+      const classification = asObject(entry)?.classification;
+      if (typeof classification !== "string" || !classifications.has(classification) || !registryIds.includes(ruleId)) {
+        diagnostics.push({
+          rule_id: "version-delta.classification-invalid",
+          severity: "error",
+          blocking: "conformance",
+          phase: "contracts",
+          message: `The version-delta classification for ${ruleId} is not one closed classification of one accepted rule.`,
+          ...(bindings.versionDelta?.path === undefined ? {} : { artifact: bindings.versionDelta.path }),
+        });
+      }
+    }
+    const missingRules = registryIds.filter((ruleId) => declaredRules[ruleId] === undefined);
+    if (registryIds.length > 0 && missingRules.length > 0) {
+      diagnostics.push({
+        rule_id: "version-delta.coverage-incomplete",
+        severity: "error",
+        blocking: "conformance",
+        phase: "contracts",
+        message: `The version-delta declaration does not classify every accepted rule: ${missingRules.slice(0, 5).join(", ")}${missingRules.length > 5 ? ", …" : ""}.`,
+        ...(bindings.versionDelta?.path === undefined ? {} : { artifact: bindings.versionDelta.path }),
+      });
+    }
   }
 
   const artifacts: ContractArtifacts = {
@@ -255,6 +322,7 @@ export async function loadContracts(
       specification: specificationBinding,
       executable: executableBinding,
       ...(freshnessPolicyBinding === undefined ? {} : { freshness_policy: freshnessPolicyBinding }),
+      ...(versionDeltaBinding === undefined ? {} : { version_delta: versionDeltaBinding }),
       schemas: schemaBindings,
     },
     extensions: [],

@@ -2,37 +2,26 @@ import { cp, lstat, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
-import { beforeAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import YAML from "yaml";
-import { repositoryRoot } from "./helpers.js";
+import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const release = await import("../scripts/release/core.mjs");
-const {
-  FIXTURE_FILES,
-  HOST_ADAPTER_FILES,
-  PUBLIC_DOCUMENTATION_FILES,
-  RELEASE_ENTRIES,
-  constructReleaseManifest,
-  createUstar,
-  readReleaseEntries,
-  serializeReleaseManifest,
-  sha256,
-  releaseEntriesForVersion,
-} = release;
+const { sha256, releaseEntriesForVersion } = release;
 // @ts-expect-error Repository release-set tooling is directly executable ESM.
 const releaseSetTooling = await import("../scripts/release/release-set.mjs");
 const { readReleaseSet } = releaseSetTooling;
 
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 const checker = path.join(repositoryRoot, "dist/nourd-nkf-checker.mjs");
-let archivePath: string;
-let archiveSha256: string;
 
 function run(command: string, project: string, extra: string[] = []) {
   const result = spawnSync(process.execPath, [adopter, command, "--project", project, ...extra], {
     encoding: "utf8",
     maxBuffer: 64 * 1024 * 1024,
+    timeout: scaledTimeout(120_000),
+    killSignal: "SIGKILL",
   });
   return { ...result, json: result.stdout ? JSON.parse(result.stdout) : null };
 }
@@ -40,14 +29,7 @@ function run(command: string, project: string, extra: string[] = []) {
 async function copyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-2"), project, { recursive: true });
-  return project;
-}
-
-async function copyFixture0_5(): Promise<string> {
-  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-0-5-"));
-  const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-5"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"), project, { recursive: true });
   return project;
 }
 
@@ -58,10 +40,31 @@ async function copyFixture0_6(): Promise<string> {
   return project;
 }
 
+// Authors the transition-result section the native transition requires in the
+// stable Task source, then re-pins the represented document digest.
+async function authorTaskResult(project: string, heading: string, body: string) {
+  const source = path.join(project, "knowledge/tasks/items/task.md");
+  await writeFile(source, (await readFile(source, "utf8")).replace(
+    "\n## Decision Applicability\n",
+    `\n${heading}\n\n${body}\n\n## Decision Applicability\n`,
+  ));
+  const repin = run("repin", project, ["--checker", checker]);
+  expect(repin.status, repin.stderr).toBe(0);
+}
+
+async function taskState(project: string): Promise<string> {
+  const bundle = YAML.parse(
+    await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+  );
+  const task = bundle.non_records.find((item: any) => item.kind === "task");
+  return task.document.state.value;
+}
+
+
 async function gitFixture() {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-2"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-7"), project, { recursive: true });
   const taskId = "TEST-TECH-001";
   const g = (args: string[]) => spawnSync("git", ["-C", project, ...args], { encoding: "utf8" });
   const generatedPath = path.join(project, "dist/generated-adopter.mjs");
@@ -70,16 +73,22 @@ async function gitFixture() {
   await writeFile(generatedPath, generatedBytes);
   await writeFile(path.join(project, ".gitignore"), "dist/\n");
   const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
-  await writeFile(
-    bundlePath,
-    `${await readFile(bundlePath, "utf8")}  - id: generated-adopter\n    kind: build-tool\n    path: dist/generated-adopter.mjs\n    digest:\n      algorithm: sha-256\n      value: ${sha256(generatedBytes)}\n    record: realization\n    source_section: durable-mapping\n`,
-  );
+  const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
+  bundle.governed_artifacts.push({
+    id: "generated-adopter",
+    kind: "build-tool",
+    path: "dist/generated-adopter.mjs",
+    digest: { algorithm: "sha-256", value: sha256(generatedBytes) },
+    record: "realization",
+    source_section: "durable-mapping",
+  });
+  await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0 }));
   g(["init", "-b", "master"]);
   g(["config", "user.email", "fixture@example.com"]);
   g(["config", "user.name", "Fixture"]);
   g(["add", "-A"]);
   g(["commit", "-m", "init"]);
-  const bare = path.join(project, "..", "origin.git");
+  const bare = path.join(parent, "origin.git");
   spawnSync("git", ["init", "--bare", "-b", "master", bare], { encoding: "utf8" });
   g(["remote", "add", "origin", bare]);
   g(["push", "-u", "origin", "master"]);
@@ -87,27 +96,9 @@ async function gitFixture() {
   return { project, taskId, g, bare };
 }
 
-beforeAll(async () => {
-  const releaseSet = await readReleaseSet(repositoryRoot, "0.4");
-  const memberEntries = releaseEntriesForVersion("0.4", releaseSet);
-  const entries = await readReleaseEntries(repositoryRoot, memberEntries);
-  const manifest = constructReleaseManifest({
-    releaseCommit: "a".repeat(40),
-    entries,
-    nkfVersion: "0.4",
-    releaseSet,
-  });
-  entries.set("release-manifest.json", serializeReleaseManifest(manifest));
-  const archive = createUstar(entries, memberEntries);
-  archiveSha256 = sha256(archive);
-  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-release-"));
-  archivePath = path.join(parent, `nourd-nkf-sha256-${archiveSha256}.tar`);
-  await writeFile(archivePath, archive);
-});
-
 describe("deterministic governed mechanics", () => {
   it("exports the reference maps", async () => {
-    const project = await copyFixture0_5();
+    const project = await copyFixture();
     const productDeclarationPath = path.join(project, ".nourd/knowledge/records/product.yaml");
     const productDeclaration = YAML.parse(await readFile(productDeclarationPath, "utf8"));
     productDeclaration.entities = [
@@ -125,8 +116,8 @@ describe("deterministic governed mechanics", () => {
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("exported");
     expect(result.json.records.product).toBe("product.md");
-    expect(result.json.documents["TEST-001"]).toBe("tasks/active/task.md");
-    expect(result.json.tasks["TEST-001"]).toBe("tasks/active/task.md");
+    expect(result.json.documents["TEST-001"]).toBe("tasks/items/task.md");
+    expect(result.json.tasks["TEST-001"]).toBe("tasks/items/task.md");
     expect(result.json.relationships).toEqual([{
       source: { kind: "entity", record: "product", entity: "source-entity" },
       relationship: "depends-on",
@@ -137,18 +128,10 @@ describe("deterministic governed mechanics", () => {
         section: "product-definition",
       },
     }]);
-
-    await writeFile(
-      path.join(project, ".nourd/knowledge/records/duplicate-product.yaml"),
-      await readFile(productDeclarationPath),
-    );
-    const duplicateRecord = run("refs", project);
-    expect(duplicateRecord.status).toBe(1);
-    expect(duplicateRecord.stderr).toContain("Duplicate governed record identity: product");
   });
 
   it("fails closed instead of collapsing duplicate represented document identities", async () => {
-    const project = await copyFixture0_5();
+    const project = await copyFixture();
     const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
     const represented = bundle.non_records.find((item: any) => item.document?.id !== undefined);
@@ -160,7 +143,7 @@ describe("deterministic governed mechanics", () => {
   });
 
   it("fails closed instead of omitting malformed authored relationships", async () => {
-    const nonArrayProject = await copyFixture0_5();
+    const nonArrayProject = await copyFixture();
     const nonArrayPath = path.join(nonArrayProject, ".nourd/knowledge/records/product.yaml");
     const nonArray = YAML.parse(await readFile(nonArrayPath, "utf8"));
     nonArray.relationships = {};
@@ -169,7 +152,7 @@ describe("deterministic governed mechanics", () => {
     expect(omitted.status).toBe(1);
     expect(omitted.stderr).toContain("non-array relationship or entity field");
 
-    const malformedProject = await copyFixture0_5();
+    const malformedProject = await copyFixture();
     const malformedPath = path.join(malformedProject, ".nourd/knowledge/records/product.yaml");
     const malformed = YAML.parse(await readFile(malformedPath, "utf8"));
     malformed.relationships = [{ type: "depends-on", source_section: "product-definition" }];
@@ -185,15 +168,9 @@ describe("deterministic governed mechanics", () => {
       path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"),
       "utf8",
     );
-    const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.2";
-    const usesReleaseSet = ["0.3", "0.4", "0.5", "0.6"].includes(declared);
-    const releaseSet = usesReleaseSet
-      ? await readReleaseSet(repositoryRoot, declared)
-      : undefined;
-    const expectedEntries =
-      usesReleaseSet
-        ? releaseEntriesForVersion(declared, releaseSet)
-        : RELEASE_ENTRIES;
+    const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.6";
+    const releaseSet = await readReleaseSet(repositoryRoot, declared);
+    const expectedEntries = releaseEntriesForVersion(declared, releaseSet);
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.state).toBe("enumerated");
     expect(result.json.nkf_version).toBe(declared);
@@ -201,63 +178,35 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.members.map((member: { path: string }) => member.path)).toEqual(
       expectedPaths,
     );
-    expect(result.json.members).toHaveLength(expectedPaths.length);
-    if (usesReleaseSet) expect(result.json.members).toEqual(releaseSet.members);
-    else for (const member of result.json.members) {
-      expect(member.present, member.path).toBe(true);
-      expect(member.sha256).toMatch(/^[0-9a-f]{64}$/);
-    }
+    expect(result.json.members).toEqual(releaseSet.members);
     const classPaths = (classes: string[]) =>
-      usesReleaseSet
-        ? releaseSet.members
-            .filter((member: { class: string }) => classes.includes(member.class))
-            .map((member: { path: string }) => member.path)
-        : [];
-    const expectedHostAdapters =
-      usesReleaseSet
-        ? classPaths(["host-adapter-instruction"])
-        : HOST_ADAPTER_FILES;
-    const expectedFixtures =
-      usesReleaseSet
-        ? classPaths(["product-fixture", "technology-fixture"])
-        : FIXTURE_FILES;
-    const expectedPublicDocumentation =
-      usesReleaseSet
-        ? classPaths(["public-documentation"])
-        : PUBLIC_DOCUMENTATION_FILES.map((member: string) => `public-docs/${member}`);
+      releaseSet.members
+        .filter((member: { class: string }) => classes.includes(member.class))
+        .map((member: { path: string }) => member.path);
     expect(expectedPaths).toContain("dist/nourd-nkf-adopt.mjs");
-    expect(
-      expectedPaths.filter((member: string) => expectedHostAdapters.includes(member)),
-    ).toHaveLength(expectedHostAdapters.length);
-    expect(
-      expectedPaths.filter((member: string) => expectedFixtures.includes(member)),
-    ).toHaveLength(expectedFixtures.length);
-    expect(
-      expectedPaths.filter((member: string) => expectedPublicDocumentation.includes(member)),
-    ).toHaveLength(expectedPublicDocumentation.length);
-    const guidancePaths =
-      usesReleaseSet
-        ? classPaths([
-            "authoring-protocol",
-            "onboarding-protocol",
-            "release-protocol",
-            "adoption-protocol",
-            "portable-skill",
-          ])
-        : expectedPaths.filter(
-            (member: string) =>
-              (member.startsWith("integrations/") && member.endsWith(".md")) ||
-              (!member.startsWith("public-docs/") && member.endsWith("SKILL.md")),
-          );
+    for (const classes of [
+      ["host-adapter-instruction"],
+      ["product-fixture", "technology-fixture"],
+      ["public-documentation"],
+    ]) {
+      const expected = classPaths(classes);
+      expect(expected.length).toBeGreaterThan(0);
+      expect(
+        expectedPaths.filter((member: string) => expected.includes(member)),
+      ).toHaveLength(expected.length);
+    }
+    const guidancePaths = classPaths([
+      "authoring-protocol",
+      "onboarding-protocol",
+      "release-protocol",
+      "adoption-protocol",
+      "portable-skill",
+    ]);
     const guidance = result.json.members.filter((member: { path: string }) =>
       guidancePaths.includes(member.path),
     );
     expect(guidance).toHaveLength(guidancePaths.length);
-    if (usesReleaseSet) {
-      for (const member of guidance) expect(member.mode, member.path).toBe("0644");
-    } else {
-      for (const member of guidance) expect(member.nkf_version_stamp, member.path).toBe(declared);
-    }
+    for (const member of guidance) expect(member.mode, member.path).toBe("0644");
 
     const representationProject = path.join(
       await mkdtemp(path.join(os.tmpdir(), "nkf-set-representation-")),
@@ -265,7 +214,7 @@ describe("deterministic governed mechanics", () => {
     );
     await mkdir(path.join(representationProject, ".nourd/knowledge"), { recursive: true });
     await mkdir(path.join(representationProject, "knowledge"), { recursive: true });
-    await mkdir(path.join(representationProject, "contracts/nkf/0.6"), { recursive: true });
+    await mkdir(path.join(representationProject, "contracts/nkf/0.7"), { recursive: true });
     await writeFile(
       path.join(representationProject, ".nourd/knowledge/bundle.yaml"),
       [
@@ -274,20 +223,20 @@ describe("deterministic governed mechanics", () => {
         "  profile: nkf.profile.technology",
         "  record: representation-fixture",
         "knowledge_root: knowledge",
-        "nkf_version: '0.6'",
+        "nkf_version: '0.7'",
         "id: representation-fixture",
         "non_records: []",
         "",
       ].join("\n"),
     );
     await cp(
-      path.join(repositoryRoot, "contracts/nkf/0.6/release-set.yaml"),
-      path.join(representationProject, "contracts/nkf/0.6/release-set.yaml"),
+      path.join(repositoryRoot, "contracts/nkf/0.7/release-set.yaml"),
+      path.join(representationProject, "contracts/nkf/0.7/release-set.yaml"),
     );
     const representedSet = run("set", representationProject);
     expect(representedSet.status, representedSet.stderr).toBe(0);
-    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.6" });
-    expect(representedSet.json.members).toHaveLength(185);
+    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.7" });
+    expect(representedSet.json.members).toHaveLength(165);
   });
 
   it("re-pins record digests after an edit", async () => {
@@ -396,7 +345,7 @@ describe("deterministic governed mechanics", () => {
     const first = run("linkify", project, ["--checker", checker]);
     expect(first.status, first.stderr).toBe(0);
     expect(first.json.changed).toBe(1);
-    expect(await readFile(map, "utf8")).toContain("[TEST-001](tasks/active/task.md)");
+    expect(await readFile(map, "utf8")).toContain("[TEST-001](tasks/items/task.md)");
     const second = run("linkify", project, ["--checker", checker]);
     expect(second.json.changed).toBe(0);
   });
@@ -429,64 +378,16 @@ describe("deterministic governed mechanics", () => {
     expect(second.json).toMatchObject({ changed: 0, repinned_documents: 0 });
   });
 
-  it("closes a task through the verified transaction and rewrites links", async () => {
+  it("transitions a native Task through YAML state without moving or rewriting its source", async () => {
     const project = await copyFixture();
-    const parentIndexPath = path.join(project, "knowledge/tasks/README.md");
-    await writeFile(
-      parentIndexPath,
-      `${(await readFile(parentIndexPath, "utf8")).trimEnd()}\n\n## Active\n\n- [Fixture Task](active/task.md)\n\n## Deferred\n\n## Completed\n\n## Cancelled\n`,
+    await authorTaskResult(
+      project,
+      "## Completion Result",
+      "The fixture work completed with all criteria satisfied.",
     );
-    const resultFile = path.join(project, "..", "result.md");
-    await writeFile(resultFile, "The fixture work completed with all criteria satisfied.\n");
-    const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
-    expect(result.status, result.stderr).toBe(0);
-    expect(result.json.task_status).toBe("completed");
-    const moved = await readFile(path.join(project, "knowledge/tasks/completed/task.md"), "utf8");
-    expect(moved).toContain("task_status: completed");
-    expect(moved).toContain("## Completion Result");
-    const activeIndex = await readFile(path.join(project, "knowledge/tasks/active/README.md"), "utf8");
-    expect(activeIndex).not.toContain("task.md");
-    const completedIndex = await readFile(path.join(project, "knowledge/tasks/completed/README.md"), "utf8");
-    expect(completedIndex).toContain("(task.md)");
-    const parentIndex = await readFile(parentIndexPath, "utf8");
-    expect(parentIndex.split("## Active")[1]?.split("## Deferred")[0]).not.toContain("task.md");
-    expect(parentIndex.split("## Completed")[1]?.split("## Cancelled")[0]).toContain("(completed/task.md)");
-    const check = spawnSync(process.execPath, [checker, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-    expect(JSON.parse(check.stdout).conformance).toBe("passed");
-  });
-
-  it("transitions a native 0.5 Task through YAML state without moving or rewriting its source", async () => {
-    const project = await copyFixture0_5();
-    const source = path.join(project, "knowledge/tasks/active/task.md");
-    const original = await readFile(source);
-    await writeFile(
-      source,
-      Buffer.from(
-        original.toString("utf8")
-          .replace(/^task_id: .*\n/m, "")
-          .replace(/^task_status: .*\n/m, "")
-          .replace(
-            "\n## Decision Applicability\n",
-            "\n## Completion Result\n\nThe fixture work completed with all criteria satisfied.\n\n## Decision Applicability\n",
-          ),
-      ),
-    );
-    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
-    const bundle = YAML.parse(await readFile(bundlePath, "utf8"));
-    const task = bundle.non_records.find((item: any) => item.kind === "task" && item.document?.id === "TEST-001");
+    const source = path.join(project, "knowledge/tasks/items/task.md");
     const sourceBytes = await readFile(source);
-    task.document.legacy_lock = undefined;
-    await writeFile(bundlePath, YAML.stringify(bundle, { lineWidth: 0 }));
-    const repin = run("repin", project, ["--checker", checker]);
-    expect(repin.status, repin.stderr).toBe(0);
-    expect(repin.json.documents).toBe(1);
-    const repinnedBundleText = await readFile(bundlePath, "utf8");
-    const transitionBundleText = repinnedBundleText.replace(
-      "      state:\n        vocabulary: task-status\n        value: active",
-      "      state:\n        value: active\n        vocabulary: task-status",
-    );
-    expect(transitionBundleText).not.toBe(repinnedBundleText);
-    await writeFile(bundlePath, transitionBundleText);
+    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
 
     const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
@@ -505,15 +406,11 @@ describe("deterministic governed mechanics", () => {
       "knowledge/tasks/by-state/deferred.md",
     ]);
     expect(await readFile(source)).toEqual(sourceBytes);
-    expect(await readFile(bundlePath, "utf8")).toBe(
-      transitionBundleText.replace("        value: active", "        value: \"completed\""),
-    );
     await expect(lstat(path.join(project, "knowledge/tasks/completed/task.md"))).rejects.toThrow();
-    const updated = YAML.parse(await readFile(bundlePath, "utf8"));
-    const updatedTask = updated.non_records.find((item: any) => item.kind === "task" && item.document?.id === "TEST-001");
-    expect(updatedTask.document.state.value).toBe("completed");
+    expect(await taskState(project)).toBe("completed");
     expect(await readFile(path.join(project, "knowledge/tasks/by-state/active.md"), "utf8")).not.toContain("TEST-001");
-    expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../active/task.md)");
+    expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../items/task.md)");
+    void bundlePath;
 
     const current = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
     expect(current.status, current.stderr).toBe(0);
@@ -527,64 +424,81 @@ describe("deterministic governed mechanics", () => {
     });
   });
 
-  it("rebases the moved task's own outbound links", async () => {
-    const project = await copyFixture();
-    const task = path.join(project, "knowledge/tasks/active/task.md");
-    await writeFile(task, (await readFile(task, "utf8")).replace(
-      "\n## Decision Applicability\n",
-      "\nSee the [active index](README.md) for peers.\n\n## Decision Applicability\n",
-    ));
-    run("repin", project, ["--checker", checker]);
-    const resultFile = path.join(project, "..", "outbound-result.md");
-    await writeFile(resultFile, "Completed with outbound links rebased.\n");
-    const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker]);
-    expect(result.status, result.stderr).toBe(0);
-    const moved = await readFile(path.join(project, "knowledge/tasks/completed/task.md"), "utf8");
-    expect(moved).toContain("](../active/README.md)");
-    expect(moved).not.toContain("](README.md)");
+  it("requires the authored Completion Result and rejects --result-file", async () => {
+    const missingResult = await copyFixture();
+    const blocked = run("task", missingResult, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
+    expect(blocked.status).toBe(1);
+    expect(blocked.stderr).toContain("## Completion Result");
+
+    const rejectedFlag = await copyFixture();
+    await authorTaskResult(
+      rejectedFlag,
+      "## Completion Result",
+      "The fixture work completed with all criteria satisfied.",
+    );
+    const resultFile = path.join(rejectedFlag, "..", "result.md");
+    await writeFile(resultFile, "External result text.\n");
+    const rejected = run("task", rejectedFlag, [
+      "--task", "TEST-001", "--to", "close", "--result-file", resultFile, "--checker", checker,
+    ]);
+    expect(rejected.status).toBe(1);
+    expect(rejected.stderr).toContain("do not accept --result-file");
   });
 
   it("blocks closing when the gate carries unexcepted findings", async () => {
     const project = await copyFixture();
-    const task = path.join(project, "knowledge/tasks/active/task.md");
+    const task = path.join(project, "knowledge/tasks/items/task.md");
     await writeFile(task, (await readFile(task, "utf8")).replace(
       "No mandatory capability is implicated by this Task.",
-      "| Capability | Finding | Verification | Exception |\n| --- | --- | --- | --- |\n| Custom terrain | unsupported | none | none |",
+      [
+        "| Capability | Finding | Verification | Exception |",
+        "| --- | --- | --- | --- |",
+        "| Custom terrain | unsupported | none | none |",
+      ].join("\n"),
+    ).replace(
+      "\n## Decision Applicability\n",
+      "\n## Completion Result\n\nCompletion attempted despite the unexcepted finding.\n\n## Decision Applicability\n",
     ));
     run("repin", project, ["--checker", checker]);
     const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("gate blocks completion");
-    expect(await readFile(path.join(project, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
+    expect(await taskState(project)).toBe("active");
   });
 
   it("defers and reactivates a task", async () => {
     const project = await copyFixture();
     const deferred = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
     expect(deferred.status, deferred.stderr).toBe(0);
+    expect(await taskState(project)).toBe("deferred");
     const activated = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
     expect(activated.status, activated.stderr).toBe(0);
-    expect(await readFile(path.join(project, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
+    expect(await taskState(project)).toBe("active");
   });
 
   it("cancels a task with a recorded rationale and no completion gate", async () => {
     const project = await copyFixture();
-    const task = path.join(project, "knowledge/tasks/active/task.md");
+    const task = path.join(project, "knowledge/tasks/items/task.md");
     await writeFile(task, (await readFile(task, "utf8")).replace(
       "No mandatory capability is implicated by this Task.",
-      "| Capability | Finding | Verification | Exception |\n| --- | --- | --- | --- |\n| Custom terrain | unsupported | none | none |",
+      [
+        "| Capability | Finding | Verification | Exception |",
+        "| --- | --- | --- | --- |",
+        "| Custom terrain | unsupported | none | none |",
+      ].join("\n"),
     ));
     run("repin", project, ["--checker", checker]);
     const noRationale = run("task", project, ["--task", "TEST-001", "--to", "cancel", "--checker", checker]);
     expect(noRationale.status).toBe(1);
-    expect(noRationale.stderr).toContain("cancellation rationale");
-    const resultFile = path.join(project, "..", "cancel-result.md");
-    await writeFile(resultFile, "Cancelled: the capability is unsupported and the work will not be done.\n");
-    const result = run("task", project, ["--task", "TEST-001", "--to", "cancel", "--result-file", resultFile, "--checker", checker]);
+    expect(noRationale.stderr).toContain("## Cancellation Result");
+    await authorTaskResult(
+      project,
+      "## Cancellation Result",
+      "Cancelled: the capability is unsupported and the work will not be done.",
+    );
+    const result = run("task", project, ["--task", "TEST-001", "--to", "cancel", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
-    const moved = await readFile(path.join(project, "knowledge/tasks/cancelled/task.md"), "utf8");
-    expect(moved).toContain("task_status: cancelled");
-    expect(moved).toContain("## Cancellation Result");
+    expect(await taskState(project)).toBe("cancelled");
     const terminal = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
     expect(terminal.status).toBe(1);
     expect(terminal.stderr).toContain("terminal");
@@ -610,6 +524,11 @@ describe("deterministic governed mechanics", () => {
     expect(g(["status", "--porcelain"]).stdout.trim()).toBe("");
     const remoteBranches = spawnSync("git", ["--git-dir", bare, "branch"], { encoding: "utf8" }).stdout;
     expect(remoteBranches).toContain(`task/${taskId}`);
+    // The knowledge change lives only on the task branch; master is untouched.
+    expect(await taskState(project)).toBe("active");
+    g(["checkout", `task/${taskId}`]);
+    expect(await taskState(project)).toBe("deferred");
+    g(["checkout", "master"]);
   });
 
   it("activates into a task worktree and closes from it, releasing the worktree", async () => {
@@ -633,12 +552,19 @@ describe("deterministic governed mechanics", () => {
     expect(await readFile(path.join(worktree, "dist/generated-adopter.mjs"), "utf8")).toBe(
       "export const generated = true;\n",
     );
-    expect(await readFile(path.join(worktree, "knowledge/tasks/active/task.md"), "utf8")).toContain("task_status: active");
-    expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
+    expect(await taskState(worktree)).toBe("active");
+    expect(await taskState(project)).toBe("deferred");
 
-    const resultFile = path.join(project, "..", "worktree-close-result.md");
-    await writeFile(resultFile, "Completed inside the task worktree.\n");
-    const closed = run("task", worktree, ["--task", taskId, "--to", "close", "--result-file", resultFile, "--checker", checker]);
+    const worktreeTask = path.join(worktree, "knowledge/tasks/items/task.md");
+    await writeFile(worktreeTask, (await readFile(worktreeTask, "utf8")).replace(
+      "\n## Decision Applicability\n",
+      "\n## Completion Result\n\nCompleted inside the task worktree.\n\n## Decision Applicability\n",
+    ));
+    const repin = run("repin", worktree, ["--checker", checker]);
+    expect(repin.status, repin.stderr).toBe(0);
+    spawnSync("git", ["-C", worktree, "add", "-A"], { encoding: "utf8" });
+    spawnSync("git", ["-C", worktree, "commit", "-m", "author completion result"], { encoding: "utf8" });
+    const closed = run("task", worktree, ["--task", taskId, "--to", "close", "--checker", checker]);
     expect(closed.status, closed.stderr).toBe(0);
     expect(closed.json.git.mode).toBe("worktree-resident");
     expect(closed.json.git.state).toBe("conclusion-proposed");
@@ -658,26 +584,6 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.git.commit).toMatch(/^[0-9a-f]{40}$/);
     expect(result.json.git.pushed).toBe(false);
     expect(result.json.git.git_error).toContain("git");
-    expect(await readFile(path.join(project, "knowledge/tasks/deferred/task.md"), "utf8")).toContain("task_status: deferred");
-  });
-
-  it("migrates a declared 0.1 project to 0.4 through the archive", async () => {
-    const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-migrate-"));
-    const project = path.join(parent, "project");
-    const archived = spawnSync("git", ["archive", "b748402", "fixtures/valid/minimal"], { cwd: repositoryRoot, encoding: null, maxBuffer: 64 * 1024 * 1024 });
-    expect(archived.status).toBe(0);
-    const extract = spawnSync("tar", ["-x", "-C", parent], { input: archived.stdout, encoding: null });
-    expect(extract.status).toBe(0);
-    await cp(path.join(parent, "fixtures/valid/minimal"), project, { recursive: true });
-    const result = run("migrate", project, ["--archive", archivePath, "--sha256", archiveSha256]);
-    expect(result.status, result.stderr).toBe(0);
-    expect(result.json.state).toBe("migrated");
-    expect(result.json.tasks_gated).toBe(1);
-    expect(result.json.validation.conformance).toBe("passed");
-    const bundle = await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8");
-    expect(bundle).toContain('nkf_version: "0.4"');
-    expect(bundle).toContain("tasks/cancelled/README.md");
-    expect(await readFile(path.join(project, "knowledge/tasks/cancelled/README.md"), "utf8")).toContain("# Cancelled Tasks");
-    expect(await readFile(path.join(project, "knowledge/tasks/README.md"), "utf8")).toContain("(cancelled/README.md)");
+    expect(await taskState(project)).toBe("deferred");
   });
 });

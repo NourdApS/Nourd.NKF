@@ -64,17 +64,127 @@ export const ACCEPTED_0_5_ARTIFACT_DIGESTS = Object.freeze({
   "contracts/nkf/0.5/schemas/validation-result.schema.json": "b40d45d1bc781a2203033deff7f7dc063bf890c0eeeec3f9ae2b6c3b992dabf8",
 });
 
-export const ACCEPTED_0_6_ARTIFACT_DIGESTS = Object.freeze({
-  "knowledge/specifications/nkf-0.6-revision-3.md": "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
-  "contracts/nkf/0.6/revision-3/nkf.yaml": "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
-  "contracts/nkf/0.6/freshness-policy.yaml": "a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4",
-  "contracts/nkf/0.6/schemas/bundle.schema.json": "f146dd0e04d4ee8aff5d013abf476620f458d03328f758684ea4019b564a9290",
-  "contracts/nkf/0.6/schemas/record.schema.json": "a3e799112ff0d6af1111c2d574ebc31d783bd00a8193f10721437cc5ed40cd8a",
-  "contracts/nkf/0.6/schemas/graph-baseline.schema.json": "9edb4c488577635059c7a4545aaba8a318a625811a93078e76a8d5621f1dd77b",
-  "contracts/nkf/0.6/schemas/freshness-receipt.schema.json": "819685c152751aca279284a0f6ce8b565f45c985af40d006b5d81463a20421fb",
-  "contracts/nkf/0.6/schemas/freshness-policy.schema.json": "a1b21747d9cbd72416599224a9a9dcb80d1fca7b8f50bc2fa9f411dc77277b2f",
-  "contracts/nkf/0.6/schemas/release-manifest.schema.json": "22cdf7da250d7be4017fcaaa1bfabe9f3d2dfca88d9890553a32f6d3875019dd",
-  "contracts/nkf/0.6/schemas/validation-result.schema.json": "8d751bb013dc87d9ebf3287b85e8589f628e7369eca67902d503b12595a6d743",
+export const ACCEPTED_0_7_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.7.md": "6d1c904608f57446939f9442d46aa3b735e34fce75ddfba24fabbea8416f0992",
+  "contracts/nkf/0.7/nkf.yaml": "9175c86b82100b84e983afbc06f89ff79c666bd8cd0626ee7892688e6551cc49",
+  "contracts/nkf/0.7/freshness-policy.yaml": "7bee48aac0fef1b1cc968efa25f2a6fb2205c77a0ec3fcf6c82ec17cdd5eeee0",
+  "contracts/nkf/0.7/version-delta.yaml": "dcc65c82512c73a204223a3bac990c951f44e995d5859426479042dbef8fcb37",
+  "contracts/nkf/0.7/schemas/bundle.schema.json": "5431dc2bc9ffc4e7c0ce0734fb3e893c912026b0d21907840cec097c832c367f",
+  "contracts/nkf/0.7/schemas/record.schema.json": "dadc06d895192ed6a316d528bb03a6a27aa2b6e0d5d9059d4ffa9200ad53bbbf",
+  "contracts/nkf/0.7/schemas/graph-baseline.schema.json": "6f20041380e2a051ea6016ed8308d6e94c920df6622715a11ad23a987c21d176",
+  "contracts/nkf/0.7/schemas/freshness-receipt.schema.json": "17909559b4bbf3e2185572eae08be1412f0e8f2f2bd02b06f334424934768397",
+  "contracts/nkf/0.7/schemas/freshness-policy.schema.json": "6b8d1743706f7eeee9107946154f96e7e0fcd4975bb2941d7a279639f3a5c809",
+  "contracts/nkf/0.7/schemas/release-manifest.schema.json": "b31e12aa5b05d16e6f1f825e67915848206657620457f169c822b789bb5382a3",
+  "contracts/nkf/0.7/schemas/validation-result.schema.json": "d58aa9f0755e06d27de5b0ea79108855503df1b109106a21254ac5f8258bde4e",
   "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
+});
+
+export const RELEASE_REPOSITORY = "NourdApS/Nourd.NKF";
+
+// Every pre-stable recommendation publishes under the same channel terms;
+// these are policy constants shared by all versions, not per-version data.
+export const PRE_STABLE_PUBLICATION = Object.freeze({
+  channel: "internal-private-github-prerelease",
+  prerelease: true,
+  visibility: "private",
+});
+
+// One entry per NKF version a recommended-release catalog may declare, each
+// bound to its accepting Decision. The recommended-release verifier derives
+// every expectation from this registry, so recommending a newly accepted
+// release changes governed data here and never changes verifier logic.
+export const RECOMMENDED_RELEASE_BINDINGS = Object.freeze({
+  "0.6": Object.freeze({
+    acceptingDecisionPath:
+      "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md",
+    archiveSha256:
+      "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+    sourceCommit: "96652985ab7749d6f58677dbf0947af4c9ff4e63",
+    checkerSha256:
+      "9a019c4cfb1c9515cbefa76f3b0513328b9a910d8675b8c17d8b9018542bb376",
+    adopterSha256:
+      "d552e7c251bf38da574d2d950c5d3497d3ee5415e3e3de44ce1e64f7f564eb50",
+    authorityMarkdownSha256:
+      "bb602be39dbbb5d7c4f97726ea70a46da6af41cfc5de6c25ab6bac9beddfcb6a",
+    authorityExecutableSha256:
+      "7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4",
+    compatibility: Object.freeze([
+      Object.freeze({
+        from_nkf_version: "0.1",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.1 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.2",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.2 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.3",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.3 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.4",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.4 requires explicit repository-owner approval for the governed breaking migration to NKF 0.6.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.5",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.5 advances non-breakingly to NKF 0.6 only under the accepted exact policy and baseline-carry-forward preconditions.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.6",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.6 refreshes the exact recommended release and integration without semantic migration.",
+      }),
+    ]),
+  }),
+  "0.7": Object.freeze({
+    acceptingDecisionPath:
+      "knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md",
+    confirmingDecisionPath:
+      "knowledge/decisions/0129-confirm-the-nkf-0-7-release-candidate.md",
+    archiveSha256:
+      "c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f",
+    sourceCommit: "e5b265e87da6c12b73b4749f8d24b41b996cc77a",
+    checkerSha256:
+      "64751e77af081ae795e60ebd7f68132548e0c71b101ba78ac9e2e9d7fd1ce70a",
+    adopterSha256:
+      "e565978a73f625bc43992291a43d253966ec67168312b2571deff1822c88a360",
+    authorityMarkdownSha256:
+      ACCEPTED_0_7_ARTIFACT_DIGESTS["knowledge/specifications/nkf-0.7.md"],
+    authorityExecutableSha256:
+      ACCEPTED_0_7_ARTIFACT_DIGESTS["contracts/nkf/0.7/nkf.yaml"],
+    compatibility: Object.freeze([
+      Object.freeze({
+        from_nkf_version: "0.6",
+        classification: "breaking",
+        migration_required: true,
+        summary:
+          "NKF 0.6 requires explicit repository-owner approval for the governed breaking migration to NKF 0.7.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.7",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.7 refreshes the exact recommended release and integration without semantic migration.",
+      }),
+    ]),
+  }),
 });

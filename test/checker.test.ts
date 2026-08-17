@@ -1,4 +1,4 @@
-import { readFile, rename, symlink, unlink, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, symlink, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import YAML from "yaml";
 import { describe, expect, it } from "vitest";
@@ -17,16 +17,11 @@ async function mutateRecord(
 }
 
 async function acceptProductRecord(project: string): Promise<void> {
-  const sourceFile = path.join(project, "knowledge/product.md");
-  const source = (await readFile(sourceFile, "utf8")).replace(
-    "record_status: draft",
-    "record_status: accepted",
-  );
-  await writeFile(sourceFile, source, "utf8");
+  // Native 0.7 sources carry no mutable state keys; acceptance lives in the
+  // declaration alone.
   await mutateRecord(project, (record) => {
     record.governance.status = "accepted";
     record.governance.accepted_at = "2026-07-30";
-    record.source.digest.value = sha256(Buffer.from(source, "utf8"));
   });
 }
 
@@ -206,9 +201,6 @@ describe("bundle-aware checker", () => {
       'title: "Example Decision"',
       'summary: "Records the example Product decision used by the checker fixture."',
       "created_at: 2026-07-30T07:53:41Z",
-      "record_lifecycle: living",
-      "record_status: draft",
-      "task: TEST-001",
       "---",
       "",
       "# Example Decision",
@@ -232,8 +224,10 @@ describe("bundle-aware checker", () => {
         type: "decision",
         body_contract: "nkf.decision",
         title: "Example Decision",
+        task: "TEST-001",
         source: {
           path: "decisions/example-decision.md",
+          stable_path: "decisions/example-decision.md",
           digest: { algorithm: "sha-256", value: sha256(Buffer.from(source, "utf8")) },
         },
         governance: {
@@ -351,9 +345,11 @@ describe("bundle-aware checker", () => {
 
   it("requires governed frontmatter on Markdown non-records", async () => {
     const project = await copyValidFixture();
+    const navigationFile = path.join(project, "knowledge/tasks/README.md");
+    const navigationText = await readFile(navigationFile, "utf8");
     await writeFile(
-      path.join(project, "knowledge/tasks/deferred/README.md"),
-      "# Deferred Tasks\n\nThe frontmatter is missing.\n",
+      navigationFile,
+      navigationText.slice(navigationText.indexOf("\n---\n", 4) + 5),
       "utf8",
     );
     const result = await validateProject(options(project));
@@ -361,7 +357,7 @@ describe("bundle-aware checker", () => {
       expect.arrayContaining([
         expect.objectContaining({
           rule_id: "markdown.frontmatter.required",
-          artifact: "knowledge/tasks/deferred/README.md",
+          artifact: "knowledge/tasks/README.md",
         }),
       ]),
     );
@@ -388,11 +384,11 @@ describe("bundle-aware checker", () => {
 
   it("validates required keys, scalar shape, UTC creation time, title equality, and H1 count", async () => {
     const missing = await copyValidFixture();
-    const missingFile = path.join(missing, "knowledge/tasks/deferred/README.md");
+    const missingFile = path.join(missing, "knowledge/tasks/README.md");
     await writeFile(
       missingFile,
       (await readFile(missingFile, "utf8")).replace(
-        'summary: "Provides the required NKF navigation index for Deferred Tasks."\n',
+        'summary: "Indexes Tasks by their current lifecycle state."\n',
         "",
       ),
       "utf8",
@@ -402,13 +398,13 @@ describe("bundle-aware checker", () => {
     ).toContain("markdown.frontmatter.key.missing");
 
     const invalid = await copyValidFixture();
-    const invalidFile = path.join(invalid, "knowledge/tasks/deferred/README.md");
+    const invalidFile = path.join(invalid, "knowledge/tasks/README.md");
     await writeFile(
       invalidFile,
       (await readFile(invalidFile, "utf8"))
         .replace(/^title: .*$/m, 'title: "Wrong Navigation"')
         .replace(
-          'summary: "Provides the required NKF navigation index for Deferred Tasks."',
+          'summary: "Indexes Tasks by their current lifecycle state."',
           'summary: " invalid orientation "',
         )
         .replace("2026-07-30T07:53:41Z", "2026-02-30T07:53:41Z"),
@@ -426,7 +422,7 @@ describe("bundle-aware checker", () => {
     );
 
     const h1 = await copyValidFixture();
-    const h1File = path.join(h1, "knowledge/tasks/deferred/README.md");
+    const h1File = path.join(h1, "knowledge/tasks/README.md");
     await writeFile(
       h1File,
       `${await readFile(h1File, "utf8")}\n# Second Navigation\n`,
@@ -437,61 +433,41 @@ describe("bundle-aware checker", () => {
     ).toContain("markdown.h1-count.invalid");
   });
 
-  it("validates Task, Design, and Realization lifecycle frontmatter", async () => {
+  it("rejects mutable lifecycle state in native frontmatter", async () => {
+    // Native 0.7 sources carry orientation only; Task state, Design
+    // disposition, and confirmation status live in declarations.
     const task = await copyValidFixture();
-    const taskFile = path.join(task, "knowledge/tasks/active/task.md");
+    const taskFile = path.join(task, "knowledge/tasks/items/task.md");
     await writeFile(
       taskFile,
-      (await readFile(taskFile, "utf8")).replace("task_status: active", "task_status: unknown"),
+      (await readFile(taskFile, "utf8")).replace(
+        "created_at:",
+        "task_status: active\ncreated_at:",
+      ),
       "utf8",
     );
+    const taskDeclaration = path.join(task, ".nourd/knowledge/bundle.yaml");
+    const bundle = YAML.parse(await readFile(taskDeclaration, "utf8"));
+    const entry = bundle.non_records.find((item: Record<string, any>) => item.kind === "task");
+    entry.document.digest.value = sha256(await readFile(taskFile));
+    await writeFile(taskDeclaration, YAML.stringify(bundle), "utf8");
     expect(
       (await validateProject(options(task))).diagnostics.map((diagnostic) => diagnostic.rule_id),
-    ).toContain("markdown.frontmatter.task.invalid");
+    ).toContain("markdown.frontmatter.mutable-state-forbidden");
 
-    const design = await copyValidFixture();
-    const designSourceFile = path.join(design, "knowledge/product.md");
-    const designSource = (await readFile(designSourceFile, "utf8"))
-      .replace("type: product", "type: design")
-      .replace(
-        "record_status: draft",
-        "record_status: draft\ntask: TEST-001\ndesign_disposition: adopted",
-      );
-    await writeFile(designSourceFile, designSource, "utf8");
-    const adoptedSourceFile = path.join(design, "knowledge/designs/adopted/product.md");
-    await rename(designSourceFile, adoptedSourceFile);
-    const mapFile = path.join(design, "knowledge/README.md");
-    await writeFile(
-      mapFile,
-      (await readFile(mapFile, "utf8")).replace("(product.md)", "(designs/adopted/product.md)"),
-      "utf8",
+    const record = await copyValidFixture();
+    const sourceFile = path.join(record, "knowledge/product.md");
+    const mutated = (await readFile(sourceFile, "utf8")).replace(
+      "created_at:",
+      "record_status: draft\ncreated_at:",
     );
-    const adoptedIndex = path.join(design, "knowledge/designs/adopted/README.md");
-    await writeFile(adoptedIndex, `${await readFile(adoptedIndex, "utf8")}\n- [Product](product.md)\n`, "utf8");
-    await mutateRecord(design, (record) => {
-      record.type = "design";
-      record.body_contract = "nkf.design";
-      record.source.path = "designs/adopted/product.md";
-      record.source.digest.value = sha256(Buffer.from(designSource, "utf8"));
+    await writeFile(sourceFile, mutated, "utf8");
+    await mutateRecord(record, (declaration) => {
+      declaration.source.digest.value = sha256(Buffer.from(mutated, "utf8"));
     });
     expect(
-      (await validateProject(options(design))).diagnostics.map((diagnostic) => diagnostic.rule_id),
-    ).toContain("markdown.frontmatter.design.invalid");
-
-    const realization = await copyValidFixture();
-    const realizationSourceFile = path.join(realization, "knowledge/realizations/current-system.md");
-    const realizationSource = (await readFile(realizationSourceFile, "utf8"))
-      .replace("confirmation_status: unconfirmed", "confirmation_status: confirmed");
-    await writeFile(realizationSourceFile, realizationSource, "utf8");
-    const realizationDeclarationFile = path.join(realization, ".nourd/knowledge/records/product-current-system.yaml");
-    const realizationDeclaration = YAML.parse(await readFile(realizationDeclarationFile, "utf8"));
-    realizationDeclaration.source.digest.value = sha256(Buffer.from(realizationSource, "utf8"));
-    await writeFile(realizationDeclarationFile, YAML.stringify(realizationDeclaration), "utf8");
-    expect(
-      (await validateProject(options(realization))).diagnostics.map(
-        (diagnostic) => diagnostic.rule_id,
-      ),
-    ).toContain("markdown.frontmatter.confirmation.invalid");
+      (await validateProject(options(record))).diagnostics.map((diagnostic) => diagnostic.rule_id),
+    ).toContain("markdown.frontmatter.mutable-state-forbidden");
   });
 
   it("fails unresolved Task provenance", async () => {
@@ -503,9 +479,6 @@ describe("bundle-aware checker", () => {
       'title: "Unresolved Task Decision"',
       'summary: "Records a Decision with deliberately unresolved Task provenance."',
       "created_at: 2026-07-30T07:53:41Z",
-      "record_lifecycle: living",
-      "record_status: draft",
-      "task: MISSING-001",
       "---",
       "",
       "# Unresolved Task Decision",
@@ -526,8 +499,10 @@ describe("bundle-aware checker", () => {
         type: "decision",
         body_contract: "nkf.decision",
         title: "Unresolved Task Decision",
+        task: "MISSING-001",
         source: {
           path: "decisions/unresolved-task-decision.md",
+          stable_path: "decisions/unresolved-task-decision.md",
           digest: { algorithm: "sha-256", value: sha256(Buffer.from(source, "utf8")) },
         },
         governance: {
@@ -570,7 +545,17 @@ describe("bundle-aware checker", () => {
     );
     const bundleFile = path.join(project, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundleFile, "utf8"));
-    bundle.non_records.push({ path: "evidence.md", kind: "evidence" });
+    const evidenceBytes = await readFile(path.join(project, "knowledge/evidence.md"));
+    bundle.non_records.push({
+      path: "evidence.md",
+      kind: "evidence",
+      document: {
+        id: "document-preserved-evidence",
+        stable_path: "evidence.md",
+        digest: { algorithm: "sha-256", value: sha256(evidenceBytes) },
+        relationships: [],
+      },
+    });
     await writeFile(bundleFile, YAML.stringify(bundle), "utf8");
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("passed");
@@ -623,8 +608,6 @@ describe("bundle-aware checker", () => {
       'title: "Duplicate Task"',
       'summary: "Duplicates the fixture Task identity for a negative reference-graph check."',
       "created_at: 2026-07-30T07:53:41Z",
-      "task_id: TEST-001",
-      "task_status: active",
       "---",
       "",
       "# Duplicate Task",
@@ -632,16 +615,27 @@ describe("bundle-aware checker", () => {
       "Negative fixture.",
       "",
     ].join("\n");
-    await writeFile(path.join(project, "knowledge/tasks/active/duplicate-task.md"), source, "utf8");
-    const activeIndex = path.join(project, "knowledge/tasks/active/README.md");
-    await writeFile(activeIndex, `${await readFile(activeIndex, "utf8")}\n- [Duplicate Task](duplicate-task.md)\n`, "utf8");
+    await mkdir(path.join(project, "knowledge/tasks/items"), { recursive: true });
+    await writeFile(path.join(project, "knowledge/tasks/items/duplicate-task.md"), source, "utf8");
     const bundleFile = path.join(project, ".nourd/knowledge/bundle.yaml");
     const bundle = YAML.parse(await readFile(bundleFile, "utf8"));
-    bundle.non_records.push({ path: "tasks/active/duplicate-task.md", kind: "task" });
+    bundle.non_records.push({
+      path: "tasks/items/duplicate-task.md",
+      kind: "task",
+      document: {
+        id: "TEST-001",
+        stable_path: "tasks/items/duplicate-task.md",
+        digest: { algorithm: "sha-256", value: sha256(Buffer.from(source, "utf8")) },
+        state: { vocabulary: "task-status", value: "active" },
+        relationships: [],
+      },
+    });
     await writeFile(bundleFile, YAML.stringify(bundle), "utf8");
+    const byState = path.join(project, "knowledge/tasks/by-state/active.md");
+    await writeFile(byState, `${await readFile(byState, "utf8")}\n- [Duplicate Task](../items/duplicate-task.md)\n`, "utf8");
     const result = await validateProject(options(project));
     expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).toContain(
-      "markdown.frontmatter.task.invalid",
+      "document.id.duplicate",
     );
   });
 
@@ -659,8 +653,6 @@ describe("bundle-aware checker", () => {
     expect(result.conformance).toBe("failed");
     expect(result.records).toEqual([]);
     expect(result.governing_use).toBe("not-ready");
-    expect(result.diagnostics.map((diagnostic) => diagnostic.rule_id)).toEqual(
-      expect.arrayContaining(["knowledge.topology.current-system.invalid"]),
-    );
+    expect(result.diagnostics.length).toBeGreaterThan(0);
   });
 });

@@ -7,6 +7,7 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 
 const registryPath = "integrations/ai/agent-hosts.yaml";
@@ -334,7 +335,7 @@ function validateWorkflow(workflow, registry) {
     fail("The workflow must contain the required Validate job.");
   }
   exactKeys(job, ["name", "runs-on", "steps", "timeout-minutes"], "workflow.jobs.validate");
-  if (job["runs-on"] !== "ubuntu-latest" || job["timeout-minutes"] !== 15) {
+  if (job["runs-on"] !== "ubuntu-latest" || job["timeout-minutes"] !== 45) {
     fail("The Validate job runner or timeout does not match the reviewed workflow.");
   }
   const steps = array(job.steps, "workflow jobs.validate.steps");
@@ -375,13 +376,23 @@ export async function verifyAgentGuidance(projectRootInput) {
   const bundle = YAML.parse(
     await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
   );
-  if (!["0.2", "0.3", "0.4", "0.5", "0.6"].includes(bundle?.nkf_version)) {
-    fail("The producer guidance verifier requires an NKF 0.2, 0.3, 0.4, 0.5, or 0.6 bundle.");
+  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 through 0.7 bundle.");
   }
-  const expectedSkill = expectedSkill0_2.replace(
-    "NKF Version: 0.2",
-    `NKF Version: ${bundle.nkf_version}`,
-  );
+  // From 0.7 the version's own accepted distribution skill is the expected
+  // cross-host bootstrap; earlier versions share the embedded 0.2 lineage.
+  // The accepted 0.7 skill bytes ship with this producer tooling itself, so
+  // verification does not depend on the verified project carrying them.
+  const toolingRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const expectedSkill = bundle.nkf_version === "0.7"
+    ? await readFile(
+        path.join(toolingRoot, "distribution/nkf/0.7/.claude/skills/nkf-authoring/SKILL.md"),
+        "utf8",
+      )
+    : expectedSkill0_2.replace(
+        "NKF Version: 0.2",
+        `NKF Version: ${bundle.nkf_version}`,
+      );
   const registryBytes = await readRegularProjectFile(projectRoot, registryPath, "registry path");
   const registry = YAML.parse(registryBytes.toString("utf8"));
   exactKeys(registry, rootKeys, "registry");

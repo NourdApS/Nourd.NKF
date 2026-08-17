@@ -28,34 +28,33 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.5 is the current accepted, released, and recommended version. Its one
-complete 181-member versioned set carries the canonical revision 2
-Specification, digest-bound executable companion and freshness policy, seven
-Schemas, deterministic checker and adopter, governed protocols, portable
-agent skills, host-adapter guidance, fixtures, examples, and the 85-file
-public-documentation projection.
-The content-addressed archive and release tag are identified by SHA-256
-`e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9`.
-The [GitHub release](https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-e46779333951c1bbfe262d73b45b2c2fa4dd1f0d97ca50c9cc5f60a7b79f99d9)
-is an immutable private prerelease.
+NKF 0.6 revision 3 is the current accepted, released, and recommended
+version. Its content-addressed archive and release tag are identified by
+SHA-256
+`b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95`, published
+as an immutable private prerelease. This producer repository declares and
+pins that exact recommendation: the producer publicly self-adopted 0.6, the
+promotion created the native accepted 0.6 Specification record, and repeat
+public invocations return `current`.
 
-NKF 0.5 adds stable lifecycle-neutral document nodes, declared graph and
-relationship policy, deterministic impact closure, Decision reconciliation,
-freshness evaluation, reviewed baselines, revision-bound receipts, and stable
-Task transitions. Migration from NKF 0.1 through NKF 0.4 is breaking and
-requires explicit repository-owner approval; exact 0.5 refresh is
-non-breaking. NKF 0.1 through NKF 0.4 remain immutable supported predecessors
-rather than current recommendations.
-
-This producer repository now declares and pins the exact published NKF 0.5
-recommendation. Ordinary public Adopt migrated the producer from 0.4, the
-preserved host-superset gate passed inside that transaction, and a second
-public invocation returned `current`. The post-adoption audit then proved that
-the published adopter cannot re-pin a normally serialized native record with
-the required `stable_path`. NKF 0.5 remains immutable and recommended while
-[NKF-027](knowledge/tasks/items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
-prepares a corrective NKF 0.6 successor and complete prepublication authoring
-rehearsal. No 0.6 release or recommendation exists yet.
+NKF 0.7 is the accepted successor prepared on the release branch: it makes
+semantic review carry-forward digest-bound and computable, confines fresh
+review to a declared per-rule semantic delta with a fail-closed delta claim,
+adds deterministic review and record scaffolds, neutralizes state-baked
+identity and stable paths through explicit succession, adds operational-fact
+promotion triggers, makes the post-audit technical-confirmation Decision
+mandatory and audit-bound, performs the Git transition orchestration the
+authoring guidance describes, and cuts live support to the current version
+plus one predecessor. Its authority is accepted by
+[ADR 0128](knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md)
+after three independent audit rounds and a rehearsal-driven revision, and its
+complete producer promotion is proven at both authorized stages against
+isolated copies of this repository. Migration from NKF 0.6 is breaking and
+requires explicit repository-owner approval with a computed delta review;
+repositories declaring NKF 0.1 through 0.5 migrate through their immutable
+published archives as stepping stones. Publication, recommendation, and the
+live producer promotion of 0.7 remain separately authorized Human Product
+Owner acts; until they complete, this repository remains on NKF 0.6.
 
 The 0.3 archive carries its complete public-documentation projection and exact
 public adopter. Publication of those bytes to the separate
@@ -94,9 +93,9 @@ community-conduct policies remain separate matters.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.5 Specification](knowledge/specifications/nkf-0.5-revision-2.md) |
-| Inspect the executable companion | [NKF 0.5 YAML Contract](contracts/nkf/0.5/revision-2/nkf.yaml) |
-| Inspect the closed structural contracts | [NKF 0.5 Schemas](contracts/nkf/0.5/schemas/) |
+| Read the normative format | [NKF 0.6 Specification](knowledge/specifications/nkf-0.6-revision-3.md) |
+| Inspect the executable companion | [NKF 0.6 YAML Contract](contracts/nkf/0.6/revision-3/nkf.yaml) |
+| Inspect the closed structural contracts | [NKF 0.6 Schemas](contracts/nkf/0.6/schemas/) |
 | Adopt a released version | [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |

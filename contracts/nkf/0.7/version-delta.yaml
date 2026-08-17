@@ -1,0 +1,433 @@
+contract: nkf.version-delta
+nkf_version: "0.7"
+predecessor_version: "0.6"
+predecessor_executable_digest:
+  algorithm: sha-256
+  value: 7366ea1276282990733339e5bb4464ab9d9259592d5cffb2a84b000f734fd5e4
+rules:
+  artifact.digest-mismatch:
+    classification: identical
+  artifact.file-kind.invalid:
+    classification: identical
+  artifact.id.duplicate:
+    classification: identical
+  artifact.missing:
+    classification: identical
+  artifact.path.duplicate:
+    classification: identical
+  artifact.path.invalid:
+    classification: identical
+  artifact.profile.unsupported:
+    classification: identical
+  artifact.record.invalid:
+    classification: identical
+  artifact.record.unresolved:
+    classification: identical
+  artifact.section.unresolved:
+    classification: identical
+  authority-input.invalid:
+    classification: identical
+  authority.binding.contradicted:
+    classification: identical
+  authority.binding.unavailable:
+    classification: identical
+  binding.duplicate:
+    classification: identical
+  binding.entity.unresolved:
+    classification: identical
+  binding.external-authority.unresolved:
+    classification: identical
+  binding.kind.unsupported:
+    classification: identical
+  binding.locator.missing:
+    classification: identical
+  binding.provider-authority.missing:
+    classification: identical
+  binding.realization-owner.invalid:
+    classification: identical
+  binding.realization.unresolved:
+    classification: identical
+  binding.section.unresolved:
+    classification: identical
+  body.responsibility.missing:
+    classification: identical
+  body.responsibility.unsupported:
+    classification: identical
+  body.type-mismatch:
+    classification: identical
+  body.unsupported:
+    classification: identical
+  bundle.manifest.missing:
+    classification: identical
+  bundle.provenance-attachment.invalid:
+    classification: semantically-new
+  bundle.root.invalid:
+    classification: identical
+  bundle.root.missing:
+    classification: identical
+  bundle.root.multiple:
+    classification: identical
+  canonical-term.core-conflict:
+    classification: identical
+  contract-set.binding-mismatch:
+    classification: identical
+  contract-set.unavailable:
+    classification: identical
+  document.digest-mismatch:
+    classification: identical
+  document.id.duplicate:
+    classification: identical
+  document.relationship.invalid:
+    classification: identical
+  document.state.invalid:
+    classification: identical
+  entity-reference.entity.unresolved:
+    classification: identical
+  entity-reference.record.unresolved:
+    classification: identical
+  entity-relationship.duplicate:
+    classification: identical
+  entity-relationship.part-of.cycle:
+    classification: identical
+  entity-relationship.section.unresolved:
+    classification: identical
+  entity-relationship.self:
+    classification: identical
+  entity-relationship.source-owner.invalid:
+    classification: identical
+  entity-relationship.type-constraint:
+    classification: identical
+  entity-relationship.type.unsupported:
+    classification: identical
+  entity.id.duplicate:
+    classification: identical
+  entity.kind.unsupported:
+    classification: identical
+  entity.section.unresolved:
+    classification: identical
+  evidence.provenance.missing:
+    classification: identical
+  extension.catalog-id.duplicate:
+    classification: identical
+  extension.core-conflict:
+    classification: identical
+  extension.optional.unvalidated:
+    classification: identical
+  extension.payload.invalid:
+    classification: identical
+  extension.required.contract-digest-mismatch:
+    classification: identical
+  extension.required.contract-identity-mismatch:
+    classification: identical
+  extension.required.contract-unresolved:
+    classification: identical
+  extension.required.unsupported:
+    classification: identical
+  extension.use-id.duplicate:
+    classification: identical
+  external-authority.id.duplicate:
+    classification: identical
+  external-authority.section.unresolved:
+    classification: identical
+  external-dependency.invalid:
+    classification: identical
+  freshness.baseline.ambiguous:
+    classification: semantically-new
+  freshness.baseline.carry-precondition-violated:
+    classification: semantically-new
+  freshness.baseline.coverage-incomplete:
+    classification: semantically-new
+  freshness.baseline.disputed:
+    classification: semantically-new
+  freshness.baseline.judgment-digest-mismatch:
+    classification: semantically-new
+  freshness.baseline.missing:
+    classification: semantically-new
+  freshness.baseline.outdated:
+    classification: semantically-new
+  freshness.baseline.provenance-invalid:
+    classification: semantically-new
+  freshness.baseline.unsupported:
+    classification: semantically-new
+  freshness.claim.computed-closure-mismatch:
+    classification: semantically-new
+  freshness.claim.delta-closure-not-contained:
+    classification: semantically-new
+  freshness.claim.delta-completeness-unprovable:
+    classification: semantically-new
+  freshness.decision.conflict:
+    classification: identical
+  freshness.decision.unclassified:
+    classification: semantically-new
+  freshness.observation.missing:
+    classification: identical
+  freshness.policy.false-negative:
+    classification: identical
+  freshness.receipt.binding-mismatch:
+    classification: identical
+  freshness.reconciliation.invalid:
+    classification: semantically-new
+  freshness.reconciliation.pending:
+    classification: semantically-new
+  freshness.result.noncurrent:
+    classification: identical
+  freshness.review.missing:
+    classification: semantically-new
+  governance.decision.lifecycle:
+    classification: identical
+  governance.root.lifecycle:
+    classification: identical
+  governance.specification.lifecycle:
+    classification: identical
+  graph.node.duplicate:
+    classification: identical
+  graph.node.unresolved:
+    classification: identical
+  graph.policy.binding-mismatch:
+    classification: identical
+  graph.policy.unavailable:
+    classification: identical
+  graph.relationship.authority-invalid:
+    classification: identical
+  graph.relationship.cycle-invalid:
+    classification: identical
+  graph.relationship.duplicate:
+    classification: identical
+  graph.relationship.endpoint-invalid:
+    classification: identical
+  graph.relationship.inverse-authored:
+    classification: identical
+  graph.relationship.policy-unsupported:
+    classification: identical
+  graph.relationship.section-unresolved:
+    classification: identical
+  graph.revision.mismatch:
+    classification: identical
+  guidance.version.mismatch:
+    classification: identical
+  hierarchy.capability-parent.invalid:
+    classification: identical
+  hierarchy.domain-parent.invalid:
+    classification: identical
+  hierarchy.part-of.cycle:
+    classification: identical
+  hierarchy.participation.unsupported:
+    classification: identical
+  hierarchy.product-parent.invalid:
+    classification: identical
+  hierarchy.root-unreachable:
+    classification: identical
+  knowledge.markdown.multiple-representations:
+    classification: identical
+  knowledge.markdown.unrepresented:
+    classification: identical
+  knowledge.path.stability.invalid:
+    classification: semantically-new
+  knowledge.root.inside-nourd:
+    classification: identical
+  knowledge.root.invalid:
+    classification: identical
+  knowledge.root.missing:
+    classification: identical
+  knowledge.root.outside-project:
+    classification: identical
+  knowledge.topology.current-system.invalid:
+    classification: identical
+  knowledge.topology.generated-map.conflict:
+    classification: identical
+  knowledge.topology.index.invalid:
+    classification: identical
+  knowledge.topology.lifecycle-index.invalid:
+    classification: identical
+  knowledge.topology.map-target.invalid:
+    classification: identical
+  knowledge.topology.map.invalid:
+    classification: identical
+  knowledge.topology.path.missing:
+    classification: identical
+  knowledge.topology.representation.invalid:
+    classification: identical
+  markdown.body.identity-duplication:
+    classification: identical
+  markdown.frontmatter.bootstrap-lock.invalid:
+    classification: identical
+  markdown.frontmatter.created-at.invalid:
+    classification: identical
+  markdown.frontmatter.invalid:
+    classification: identical
+  markdown.frontmatter.key.missing:
+    classification: identical
+  markdown.frontmatter.key.unsupported:
+    classification: identical
+  markdown.frontmatter.legacy-lock.invalid:
+    classification: identical
+  markdown.frontmatter.mutable-state-forbidden:
+    classification: identical
+  markdown.frontmatter.record-mismatch:
+    classification: identical
+  markdown.frontmatter.reference.unresolved:
+    classification: identical
+  markdown.frontmatter.required:
+    classification: identical
+  markdown.frontmatter.title-mismatch:
+    classification: identical
+  markdown.frontmatter.value.invalid:
+    classification: identical
+  markdown.h1-count.invalid:
+    classification: identical
+  markdown.reference.deep-link.required:
+    classification: semantically-new
+  markdown.utf8.invalid:
+    classification: identical
+  non-record.conflict:
+    classification: identical
+  non-record.duplicate:
+    classification: identical
+  non-record.missing:
+    classification: identical
+  path.file-kind.invalid:
+    classification: identical
+  path.invalid:
+    classification: identical
+  path.outside-root:
+    classification: identical
+  path.symlink.discouraged:
+    classification: identical
+  path.symlink.invalid:
+    classification: identical
+  paths.stable-path.state-asserting:
+    classification: semantically-new
+  profile.common.not-selectable:
+    classification: identical
+  profile.record.unsupported:
+    classification: identical
+  profile.specification.missing:
+    classification: identical
+  profile.unsupported:
+    classification: identical
+  project.knowledge-root-file.undeclared:
+    classification: semantically-new
+  project.records-directory.invalid:
+    classification: identical
+  project.records-directory.missing:
+    classification: identical
+  provenance.observation-section.unresolved:
+    classification: identical
+  provenance.source-id.duplicate:
+    classification: identical
+  record.declaration.non-yaml:
+    classification: identical
+  record.filename.nonconventional:
+    classification: identical
+  record.h1-count.invalid:
+    classification: identical
+  record.id.duplicate:
+    classification: identical
+  record.identity-succession.chain-unresolved:
+    classification: semantically-new
+  record.identity-succession.invalid:
+    classification: semantically-new
+  record.identity.state-asserting:
+    classification: semantically-new
+  record.operational-dependency.invalid:
+    classification: semantically-new
+  record.source.digest-mismatch:
+    classification: identical
+  record.source.duplicate:
+    classification: identical
+  record.source.missing:
+    classification: identical
+  record.source.non-markdown:
+    classification: identical
+  record.title.case-invalid:
+    classification: identical
+  record.title.mismatch:
+    classification: identical
+  relationship.duplicate:
+    classification: identical
+  relationship.section.unresolved:
+    classification: identical
+  relationship.target.unresolved:
+    classification: identical
+  relationship.type.unsupported:
+    classification: identical
+  request.record.unresolved:
+    classification: identical
+  schema.binding-mismatch:
+    classification: identical
+  schema.bundle.invalid:
+    classification: identical
+  schema.freshness-policy.invalid:
+    classification: identical
+  schema.freshness-receipt.invalid:
+    classification: identical
+  schema.graph-baseline.invalid:
+    classification: semantically-new
+  schema.record.invalid:
+    classification: identical
+  schema.unavailable:
+    classification: identical
+  scope.root.mismatch:
+    classification: identical
+  section.authority.unsupported:
+    classification: identical
+  section.content.responsibility-forbidden:
+    classification: identical
+  section.heading.case-invalid:
+    classification: identical
+  section.heading.duplicate-mapping:
+    classification: identical
+  section.heading.hierarchy-invalid:
+    classification: identical
+  section.heading.unrepresented:
+    classification: identical
+  section.heading.unresolved:
+    classification: identical
+  section.id.duplicate:
+    classification: identical
+  section.role.unsupported:
+    classification: identical
+  section.unresolved.authority-mismatch:
+    classification: identical
+  security.secret-pattern:
+    classification: identical
+  task.applicability.completion.blocked:
+    classification: identical
+  task.applicability.missing:
+    classification: identical
+  task.applicability.reference.unresolved:
+    classification: identical
+  task.applicability.structure.invalid:
+    classification: identical
+  task.applicability.value.unsupported:
+    classification: identical
+  version-delta.binding-mismatch:
+    classification: semantically-new
+  version-delta.classification-invalid:
+    classification: semantically-new
+  version-delta.coverage-incomplete:
+    classification: semantically-new
+  version-delta.unavailable:
+    classification: semantically-new
+  yaml.alias.unsupported:
+    classification: identical
+  yaml.anchor.unsupported:
+    classification: identical
+  yaml.document-count.invalid:
+    classification: identical
+  yaml.key.duplicate:
+    classification: identical
+  yaml.key.non-string:
+    classification: identical
+  yaml.merge-key.unsupported:
+    classification: identical
+  yaml.parse.invalid:
+    classification: identical
+  yaml.root.invalid:
+    classification: identical
+  yaml.tag.unsupported:
+    classification: identical
+  yaml.utf8.invalid:
+    classification: identical
+  yaml.value.non-json:
+    classification: identical

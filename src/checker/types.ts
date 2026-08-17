@@ -60,6 +60,7 @@ export interface ContractArtifacts {
     specification: ArtifactBinding;
     executable: ArtifactBinding;
     freshness_policy?: ArtifactBinding;
+    version_delta?: ArtifactBinding;
     schemas: SchemaBinding[];
   };
   extensions: Array<{
@@ -134,7 +135,7 @@ export interface ValidateOptions {
 
 export interface ValidationResult {
   contract: "nkf.validation-result";
-  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6";
+  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7";
   execution: {
     id: string;
     runner: string;

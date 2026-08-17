@@ -1,0 +1,222 @@
+contract: nkf.record
+id: design-nkf-028-verifiable-delta-review
+type: design
+body_contract: nkf.design
+title: NKF 0.7 Verifiable Delta Review
+source:
+  path: designs/items/nkf-0-7-verifiable-delta-review.md
+  stable_path: designs/items/nkf-0-7-verifiable-delta-review.md
+  digest:
+    algorithm: sha-256
+    value: "2ea26678210defe3e72d2ac7fd9d004deeedcd2dc03c99ac300c4d5555cfb6d6"
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: digest-bound-review-baselines-and-computed-carry-forward
+    heading_path:
+      - Proposed Direction
+      - Digest-Bound Review Baselines And Computed Carry-Forward
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: per-rule-version-delta-declaration
+    heading_path:
+      - Proposed Direction
+      - Per-Rule Version-Delta Declaration
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: delta-review-claim-and-fail-closed-closure
+    heading_path:
+      - Proposed Direction
+      - Delta Review Claim And Fail-Closed Closure
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: deterministic-scaffolds
+    heading_path:
+      - Proposed Direction
+      - Deterministic Scaffolds
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: identity-succession-and-lifecycle-neutral-paths
+    heading_path:
+      - Proposed Direction
+      - Identity Succession And Lifecycle-Neutral Paths
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: operational-fact-triggers
+    heading_path:
+      - Proposed Direction
+      - Operational-Fact Triggers
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: release-confirmation-ordering
+    heading_path:
+      - Proposed Direction
+      - Release-Confirmation Ordering
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: support-window-and-stepping-stone-migration
+    heading_path:
+      - Proposed Direction
+      - Support Window And Stepping-Stone Migration
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: consumer-applicability-and-fixtures
+    heading_path:
+      - Proposed Direction
+      - Consumer Applicability And Fixtures
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: harness-provenance-and-predecessor-conclusions
+    heading_path:
+      - Proposed Direction
+      - Harness Provenance And Predecessor Conclusions
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: compatibility-and-versioning
+    heading_path:
+      - Proposed Direction
+      - Compatibility And Versioning
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: prove-carry-forward-on-0-7-itself
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Prove Carry-Forward On 0.7 Itself
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: ship-the-machinery-but-keep-whole-root-review-mandatory
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Ship The Machinery But Keep Whole-Root Review Mandatory
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: trust-the-reviewers-delta-statement
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Trust The Reviewer's Delta Statement
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: keep-every-version-live
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep Every Version Live
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: alias-the-stale-identifier-instead-of-succeeding-it
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Alias The Stale Identifier Instead Of Succeeding It
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: author-the-confirmation-decision-before-promotion
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Author The Confirmation Decision Before Promotion
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships:
+  - type: depends-on
+    target: adr-0115
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0096
+    source_section: deterministic-scaffolds
+  - type: extends
+    target: adr-0109
+    source_section: release-confirmation-ordering
+  - type: depends-on
+    target: adr-0125
+    source_section: compatibility-and-versioning
+task: NKF-028
+design_disposition: adopted
+design_decisions:
+  - adr-0126
+proposal_authority_effect: Adopted by ADR 0126 as the NKF 0.7 verifiable delta review direction; normative NKF 0.7 meaning still requires a separate exact authority-pair acceptance and the mandatory audit-bound confirmation Decision.
+proposal_evidence: NKF-028 source-grounded assessment and the Human Product Owner boundaries recorded in the owning Task.
+implementation_evidence: None; this is a Design proposal.

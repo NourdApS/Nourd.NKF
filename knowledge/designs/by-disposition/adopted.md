@@ -27,3 +27,4 @@
 - [Reconcile Single-Version Artifact Authority](../adopted/single-version-artifact-authority.md)
 - [NKF 0.1 Technology Root Profile Specification Proposal](../adopted/technology-root-profile.md)
 - [NKF Unified Adopt Operation](../adopted/unified-adopt-operation.md)
+- [NKF 0.7 Verifiable Delta Review](../items/nkf-0-7-verifiable-delta-review.md)

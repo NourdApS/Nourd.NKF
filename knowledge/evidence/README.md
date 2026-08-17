@@ -141,6 +141,12 @@ the exact authority pins, section and policy closure, command matrix, producer
 promotion, fixture and real-producer results, rollback and tamper rejection,
 and canonical producer gate before exact technical acceptance.
 
+## Release
+
+[`release/`](release/) preserves the serialized producer-promotion inputs the
+accepted authority binds and the release-protocol review evidence, including
+the complete NKF 0.7 guidance review with every correction it made.
+
 ## Decision Inputs
 
 [`decision-inputs/`](decision-inputs/) preserves historical Specification

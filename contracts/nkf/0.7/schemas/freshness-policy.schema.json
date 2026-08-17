@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nkf:0.7:schema:freshness-policy",
+  "title": "NKF 0.7 freshness policy",
+  "x-nkf-source": {
+    "nkf_version": "0.7",
+    "markdown_path": "knowledge/specifications/nkf-0.7.md",
+    "markdown_digest": {
+      "algorithm": "sha-256",
+      "value": "6d1c904608f57446939f9442d46aa3b735e34fce75ddfba24fabbea8416f0992"
+    },
+    "executable_path": "contracts/nkf/0.7/nkf.yaml",
+    "executable_digest": {
+      "algorithm": "sha-256",
+      "value": "9175c86b82100b84e983afbc06f89ff79c666bd8cd0626ee7892688e6551cc49"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "nkf_version",
+    "id",
+    "classes",
+    "purposes",
+    "judgment_dependencies",
+    "mappings"
+  ],
+  "properties": {
+    "contract": {
+      "const": "nkf.freshness-policy"
+    },
+    "nkf_version": {
+      "const": "0.7"
+    },
+    "id": {
+      "const": "nkf.freshness-policy.0.7"
+    },
+    "classes": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "hard"
+        },
+        {
+          "const": "review"
+        },
+        {
+          "const": "context"
+        },
+        {
+          "const": "historical"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "purposes": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "const": "change-impact"
+        },
+        {
+          "const": "whole-root-readiness"
+        },
+        {
+          "const": "consequential-use"
+        },
+        {
+          "const": "historical-reproduction"
+        }
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "hard_events": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "exact-revision-binding-mismatch",
+          "governed-artifact-binding-mismatch"
+        ]
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relationship",
+          "source_kinds",
+          "target_kinds",
+          "propagation",
+          "class",
+          "purposes"
+        ],
+        "properties": {
+          "relationship": {
+            "enum": [
+              "part-of",
+              "defines",
+              "governs",
+              "applies-to",
+              "depends-on",
+              "extends",
+              "supersedes",
+              "rationale-for",
+              "realizes",
+              "evidences",
+              "references",
+              "flows-to",
+              "transitions-to",
+              "observes"
+            ]
+          },
+          "source_kinds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "record",
+                "document",
+                "entity"
+              ]
+            }
+          },
+          "target_kinds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "record",
+                "document",
+                "entity"
+              ]
+            }
+          },
+          "propagation": {
+            "enum": [
+              "source-to-target",
+              "target-to-source",
+              "both",
+              "none"
+            ]
+          },
+          "class": {
+            "enum": [
+              "review",
+              "context"
+            ]
+          },
+          "purposes": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "change-impact",
+                "whole-root-readiness",
+                "consequential-use",
+                "historical-reproduction"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "historical_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "includes_all_authored_relationships",
+        "impact_expansion"
+      ],
+      "properties": {
+        "includes_all_authored_relationships": {
+          "const": true
+        },
+        "impact_expansion": {
+          "const": false
+        }
+      }
+    },
+    "unknown_mapping": {
+      "const": "fail-closed"
+    },
+    "repository_overrides": {
+      "const": "forbidden"
+    },
+    "implementation_heuristics": {
+      "const": "forbidden"
+    },
+    "judgment_dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_applicability",
+        "relationship_review",
+        "decision_classification"
+      ],
+      "properties": {
+        "node_applicability": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "relationship_review": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "decision_classification": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "$defs": {}
+}

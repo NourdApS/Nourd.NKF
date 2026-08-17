@@ -147,6 +147,8 @@ export interface MarkdownDiscovery {
   paths: string[];
   observations: Map<string, Observation>;
   diagnostics: Diagnostic[];
+  /** Knowledge-relative non-Markdown regular files, for declaration coverage. */
+  otherFiles: string[];
 }
 
 export async function discoverMarkdown(
@@ -155,6 +157,7 @@ export async function discoverMarkdown(
   collector: SnapshotCollector,
 ): Promise<MarkdownDiscovery> {
   const paths: string[] = [];
+  const otherFiles: string[] = [];
   const observations = new Map<string, Observation>();
   const diagnostics: Diagnostic[] = [];
   const knowledgeRoot = path.resolve(projectRoot, knowledgeRootRelative);
@@ -199,13 +202,15 @@ export async function discoverMarkdown(
         observations.set(relative, observed);
       } else {
         void absolute;
+        otherFiles.push(logical.slice(knowledgeRootRelative.length + 1));
       }
     }
   }
 
   await walk(knowledgeRootRelative);
   paths.sort(utf16Compare);
-  return { paths, observations, diagnostics };
+  otherFiles.sort(utf16Compare);
+  return { paths, observations, diagnostics, otherFiles };
 }
 
 export function pathDiagnostic(

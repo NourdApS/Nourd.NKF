@@ -446,6 +446,28 @@ conformance, publish a release, migrate a consumer, prove self-adoption, or
 make pull request 9 ready. Later records and evidence supersede only the
 specific created-state facts they explicitly replace.
 
+## Completion Result
+
+NKF 0.5 was derived from the direction adopted by
+[ADR 0115](../../decisions/0115-adopt-freshness-and-deterministic-knowledge-graph-direction.md),
+implemented, released, and self-adopted. Its first ordinary authoring act
+then exposed the published repin defect, and the corrective NKF 0.6 release
+under
+[NKF-027](../items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
+superseded the installed 0.5 state before the planned 0.5 post-adoption audit
+could run. The Human Product Owner accepts that the NKF 0.5 post-adoption
+audit was never performed and can no longer be performed, because the first
+ordinary authoring act after adoption exposed the published repin defect and
+the corrective NKF 0.6 release superseded the installed state. The audit
+obligation is discharged by the 0.6 evidence chain instead. This exception
+applies only to this close of the implement-and-release Task and is not
+reusable. As recorded history: the Human Product Owner explicitly directed
+that the NKF 0.6 pull request merge while this Task remained active; this
+close concludes the Task after that merge, with the delivered freshness and
+knowledge-graph implementation carried forward through NKF 0.6 into the
+digest-bound NKF 0.7 successor under
+[NKF-028](../items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md).
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -489,7 +511,7 @@ specific created-state facts they explicitly replace.
 | Missing completeness, relationships, Decision reconciliation, external observation, or baseline review fails closed with whole-root recovery | proven | runtime-behaviour | none |
 | Product, Technology, and actual NKF exercises match reviewed semantic oracles without hidden false negatives | proven | runtime-behaviour | none |
 | One public Adopt operation safely onboards 0.5 and deliberately migrates all supported predecessors with preservation, rollback, and idempotence | proven | runtime-behaviour | none |
-| Current-system Realization remains exact through candidate, publication, producer adoption, and final merge | unsupported | none | none |
+| Current-system Realization remains exact through candidate, publication, producer adoption, and final merge | unsupported | none | The Human Product Owner accepts that the NKF 0.5 post-adoption audit was never performed and can no longer be performed, because the first ordinary authoring act after adoption exposed the published repin defect and the corrective NKF 0.6 release superseded the installed state. The audit obligation is discharged by the 0.6 evidence chain instead. This exception applies only to this NKF-026 close and is not reusable. |
 | Complete release membership, source reproduction, builds, archive bytes, modes, digests, and recommendation are deterministic and exact | proven | data-validity | none |
-| Prepublication candidate-Adopt and post-publication ordinary producer self-adoption each pass their complete gate and independent audit | unknown | none | none |
-| Both active Tasks can conclude without changing accepted immutable record bytes or weakening deep-link validation | unknown | none | none |
+| Prepublication candidate-Adopt and post-publication ordinary producer self-adoption each pass their complete gate and independent audit | unknown | none | The Human Product Owner accepts that the NKF 0.5 post-adoption audit was never performed and can no longer be performed, because the first ordinary authoring act after adoption exposed the published repin defect and the corrective NKF 0.6 release superseded the installed state. The audit obligation is discharged by the 0.6 evidence chain instead. This exception applies only to this NKF-026 close and is not reusable. |
+| Both active Tasks can conclude without changing accepted immutable record bytes or weakening deep-link validation | unknown | none | Resolved by this close and the parallel close of the validation Task: both conclude through native state transitions that change no accepted immutable record byte and weaken no validation rule; the finding predates those closes and is retained as authored history under the same Human Product Owner exception recorded in the Completion Result. |

@@ -95,6 +95,12 @@ function parseManagedBlock(model: MarkdownModel): {
   };
 }
 
+// Generated lifecycle navigation (by-state and by-disposition indexes) has
+// its own agreement rule; every other required index keeps the general rule.
+function isLifecycleIndex(indexPath: string): boolean {
+  return indexPath.startsWith("tasks/by-state/") || indexPath.startsWith("designs/by-disposition/");
+}
+
 function emitIndexMismatch(
   emitter: RuleEmitter,
   knowledgeRoot: string,
@@ -103,7 +109,7 @@ function emitIndexMismatch(
   observedCount: number,
 ): void {
   emitter.emit(
-    "knowledge.topology.index.invalid",
+    isLifecycleIndex(indexPath) ? "knowledge.topology.lifecycle-index.invalid" : "knowledge.topology.index.invalid",
     `The lifecycle index must link ${target} exactly once; observed ${observedCount}.`,
     { artifact: artifact(knowledgeRoot, indexPath) },
   );
@@ -249,7 +255,7 @@ export function validatePortableTopology(input: TopologyInput): void {
   };
 
   const version = String(bundle.nkf_version ?? "0.1");
-  const modernTopology = version === "0.5" || version === "0.6";
+  const modernTopology = version === "0.5" || version === "0.6" || version === "0.7";
   const taskIndexPaths = modernTopology
     ? {
         active: "tasks/by-state/active.md",
@@ -357,15 +363,28 @@ export function validatePortableTopology(input: TopologyInput): void {
   }
   requireIndexTargets("specifications/README.md", specificationPaths);
 
-  requireIndexTargets("realizations/README.md", [
-    "realizations/current-system.md",
-    "realizations/current/README.md",
-  ]);
-  const supportingRealizations = records
-    .filter((record) => record.value?.type === "realization")
-    .map(sourcePath)
-    .filter((value): value is string => value !== null && value.startsWith("realizations/current/"));
-  requireIndexTargets("realizations/current/README.md", supportingRealizations);
+  if (version === "0.7") {
+    // Neutral topology: supporting Realizations live under realizations/items/
+    // and are indexed by the realizations map directly.
+    const supportingRealizations = records
+      .filter((record) => record.value?.type === "realization")
+      .map(sourcePath)
+      .filter((value): value is string => value !== null && value.startsWith("realizations/items/"));
+    requireIndexTargets("realizations/README.md", [
+      "realizations/current-system.md",
+      ...supportingRealizations,
+    ]);
+  } else {
+    requireIndexTargets("realizations/README.md", [
+      "realizations/current-system.md",
+      "realizations/current/README.md",
+    ]);
+    const supportingRealizations = records
+      .filter((record) => record.value?.type === "realization")
+      .map(sourcePath)
+      .filter((value): value is string => value !== null && value.startsWith("realizations/current/"));
+    requireIndexTargets("realizations/current/README.md", supportingRealizations);
+  }
 
   const evidenceAreas = new Set<string>();
   for (const record of records.filter((candidate) => candidate.value?.type === "evidence")) {

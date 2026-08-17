@@ -17,9 +17,7 @@ import {
 import { sha256 } from "../src/checker/util.js";
 import {
   copyValidFixture,
-  copyValidTechnologyFixture,
   options,
-  repositoryRoot,
 } from "./helpers.js";
 
 async function readBundle(project: string): Promise<Record<string, any>> {
@@ -78,43 +76,6 @@ async function rules(project: string): Promise<string[]> {
   );
 }
 
-async function installRepositoryRecord(
-  project: string,
-  sourcePath: string,
-  declarationFile: string,
-  targetPath: string,
-): Promise<void> {
-  const source = await readFile(path.join(repositoryRoot, "knowledge", sourcePath));
-  const declaration = YAML.parse(
-    await readFile(
-      path.join(repositoryRoot, ".nourd/knowledge/records", declarationFile),
-      "utf8",
-    ),
-  );
-  const predecessorDeclaration = {
-    contract: declaration.contract,
-    id: declaration.id,
-    type: declaration.type,
-    body_contract: declaration.body_contract,
-    title: declaration.title,
-    source: {
-      path: targetPath,
-      digest: declaration.source.digest,
-    },
-    governance: declaration.governance,
-    scope: declaration.scope,
-    sections: declaration.sections,
-    relationships: declaration.relationships,
-  };
-  const target = path.join(project, "knowledge", targetPath);
-  await mkdir(path.dirname(target), { recursive: true });
-  await writeFile(target, source);
-  await writeFile(
-    path.join(project, ".nourd/knowledge/records", declarationFile),
-    YAML.stringify(predecessorDeclaration),
-    "utf8",
-  );
-}
 
 describe("project and representation boundary", () => {
   it("fails before validation when project-root .nourd is absent without creating it", async () => {
@@ -418,7 +379,7 @@ describe("project and representation boundary", () => {
 
   it("enforces the required portable topology and prohibits competing generated maps", async () => {
     const missing = await copyValidFixture();
-    await unlink(path.join(missing, "knowledge/tasks/deferred/README.md"));
+    await unlink(path.join(missing, "knowledge/tasks/by-state/deferred.md"));
     expect(await rules(missing)).toEqual(
       expect.arrayContaining([
         "non-record.missing",
@@ -464,8 +425,9 @@ describe("project and representation boundary", () => {
 
   it("binds Task placement and Evidence-area navigation to represented metadata", async () => {
     const misplaced = await copyValidFixture();
+    await mkdir(path.join(misplaced, "knowledge/tasks/deferred"), { recursive: true });
     await rename(
-      path.join(misplaced, "knowledge/tasks/active/task.md"),
+      path.join(misplaced, "knowledge/tasks/items/task.md"),
       path.join(misplaced, "knowledge/tasks/deferred/task.md"),
     );
     const misplacedBundle = await readBundle(misplaced);
@@ -474,10 +436,11 @@ describe("project and representation boundary", () => {
     );
     task.path = "tasks/deferred/task.md";
     await writeBundle(misplaced, misplacedBundle);
+    // Modern stable paths never move; the surviving deterministic signal is
+    // the generated-navigation disagreement.
     expect(await rules(misplaced)).toEqual(
       expect.arrayContaining([
-        "knowledge.topology.lifecycle-path.invalid",
-        "knowledge.topology.index.invalid",
+        "knowledge.topology.lifecycle-index.invalid",
       ]),
     );
 
@@ -489,93 +452,71 @@ describe("project and representation boundary", () => {
       "utf8",
     );
     const evidenceBundle = await readBundle(evidence);
+    const auditBytes = await readFile(path.join(evidence, "knowledge/evidence/audits/audit.md"));
     evidenceBundle.non_records.push({
       path: "evidence/audits/audit.md",
       kind: "evidence",
+      document: {
+        id: "document-audit-evidence",
+        stable_path: "evidence/audits/audit.md",
+        digest: { algorithm: "sha-256", value: sha256(auditBytes) },
+        relationships: [],
+      },
     });
     await writeBundle(evidence, evidenceBundle);
     expect(await rules(evidence)).toContain("knowledge.topology.index.invalid");
   });
 
-  it("fails closed for Design, Decision, Specification, and supporting-current placement or index drift", async () => {
-    const design = await copyValidFixture();
-    await installRepositoryRecord(
-      design,
-      "designs/adopted/acceptance-provenance.md",
-      "design-nkf-0-1-acceptance-provenance-boundary.yaml",
-      "notes/misplaced-design.md",
-    );
-    expect(await rules(design)).toEqual(
-      expect.arrayContaining([
-        "knowledge.topology.lifecycle-path.invalid",
-        "knowledge.topology.index.invalid",
-      ]),
-    );
-
-    const decision = await copyValidFixture();
-    await installRepositoryRecord(
-      decision,
-      "decisions/0001-independent-nkf-authority.md",
-      "adr-0001.yaml",
-      "notes/misplaced-decision.md",
-    );
-    expect(await rules(decision)).toEqual(
-      expect.arrayContaining([
-        "knowledge.topology.lifecycle-path.invalid",
-        "knowledge.topology.index.invalid",
-      ]),
-    );
-
-    const specification = await copyValidTechnologyFixture();
-    const specificationSource = path.join(
-      specification,
-      "knowledge/specifications/specification.md",
-    );
-    const misplacedSpecification = path.join(
-      specification,
-      "knowledge/notes/specification.md",
-    );
-    await mkdir(path.dirname(misplacedSpecification), { recursive: true });
-    await rename(specificationSource, misplacedSpecification);
-    const specificationDeclarationPath = path.join(
-      specification,
-      ".nourd/knowledge/records/specification.yaml",
-    );
-    const specificationDeclaration = YAML.parse(
-      await readFile(specificationDeclarationPath, "utf8"),
-    );
-    specificationDeclaration.source.path = "notes/specification.md";
-    await writeFile(
-      specificationDeclarationPath,
-      YAML.stringify(specificationDeclaration),
-      "utf8",
-    );
-    expect(await rules(specification)).toEqual(
-      expect.arrayContaining([
-        "knowledge.topology.lifecycle-path.invalid",
-        "knowledge.topology.index.invalid",
-      ]),
-    );
-
-    const supportingCurrent = await copyValidFixture();
-    await installRepositoryRecord(
-      supportingCurrent,
-      "realizations/current/checker-and-validation.md",
-      "nkf-checker-and-validation.yaml",
-      "realizations/current/checker-and-validation.md",
-    );
-    expect(await rules(supportingCurrent)).toContain(
-      "knowledge.topology.index.invalid",
-    );
+  it("fails index agreement when a Decision is unlisted", async () => {
+    // Modern topology derives placement from declarations; the checker's
+    // deterministic navigation signal is index agreement.
+    const project = await copyValidFixture();
+    const source = [
+      "---",
+      "id: adr-0001",
+      "type: decision",
+      'title: "Example Decision"',
+      'summary: "Records an example Decision left out of the Decisions index."',
+      "created_at: 2026-07-30T07:53:41Z",
+      "---",
+      "",
+      "# Example Decision",
+      "",
+      "## Decision",
+      "",
+      "The example holds.",
+      "",
+    ].join("\n");
+    await writeFile(path.join(project, "knowledge/decisions/0001-example-decision.md"), source, "utf8");
+    await writeRecord(project, {
+      contract: "nkf.record",
+      id: "adr-0001",
+      type: "decision",
+      body_contract: "nkf.decision",
+      title: "Example Decision",
+      task: "TEST-001",
+      source: {
+        path: "decisions/0001-example-decision.md",
+        stable_path: "decisions/0001-example-decision.md",
+        digest: { algorithm: "sha-256", value: sha256(Buffer.from(source, "utf8")) },
+      },
+      governance: { lifecycle: "immutable", status: "accepted", authority: ["human-product-owner"] },
+      scope: { root: "product" },
+      sections: [{ id: "decision", heading_path: ["Decision"], occurrence: 1, authority: "accepted-meaning", role: "governing",
+        responsibilities: ["context-and-problem", "decision", "scope-and-applicability", "rationale", "alternatives-considered", "consequences-and-trade-offs"] }],
+      relationships: [],
+    }, "adr-0001.yaml");
+    expect(await rules(project)).toContain("knowledge.topology.index.invalid");
   });
 
   it("rejects a misclassified required index and a competing NKF Navigation heading", async () => {
     const misclassified = await copyValidFixture();
     const misclassifiedBundle = await readBundle(misclassified);
     const deferredIndex = misclassifiedBundle.non_records.find(
-      (entry: Record<string, unknown>) => entry.path === "tasks/deferred/README.md",
+      (entry: Record<string, unknown>) => entry.path === "tasks/by-state/deferred.md",
     );
-    deferredIndex.kind = "evidence";
+    deferredIndex.kind = "other";
+    deferredIndex.reason = "misclassified index";
     await writeBundle(misclassified, misclassifiedBundle);
     expect(await rules(misclassified)).toContain(
       "knowledge.topology.representation.invalid",
@@ -595,8 +536,8 @@ describe("project and representation boundary", () => {
 
   it("prohibits symbolic links at required topology paths even when contained", async () => {
     const project = await copyValidFixture();
-    const required = path.join(project, "knowledge/tasks/deferred/README.md");
-    const target = path.join(project, "knowledge/tasks/deferred/index-source.md");
+    const required = path.join(project, "knowledge/tasks/by-state/deferred.md");
+    const target = path.join(project, "knowledge/tasks/by-state/index-source.md");
     await rename(required, target);
     await symlink("index-source.md", required);
     expect(await rules(project)).toContain(

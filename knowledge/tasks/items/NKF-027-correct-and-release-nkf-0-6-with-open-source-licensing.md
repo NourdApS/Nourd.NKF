@@ -559,7 +559,7 @@ Deliver one immutable NKF 0.6 successor that:
   release URLs, and it was re-pinned as a governed artifact.
 - Two deliverables were deliberately dropped as non-minimal by explicit Human
   Product Owner direction: a separate NKF 0.6 technical-confirmation Decision
-  (which would have been ADR 0126), and separate audit, publication, and
+  (which would have been [ADR 0126](../../decisions/0126-adopt-the-nkf-0-7-verifiable-delta-review-direction.md)), and separate audit, publication, and
   producer-adoption Evidence documents for 0.6. The consequence is recorded
   plainly rather than hidden: NKF 0.6 is accepted, implemented, published,
   recommended, and producer-adopted, but it is **not** technically confirmed by

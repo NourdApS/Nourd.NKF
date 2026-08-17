@@ -259,6 +259,8 @@ export interface ReferenceMaps {
   decisionsByNumber: ReadonlyMap<string, string>;
   recordIdToPath: ReadonlyMap<string, string>;
   taskIdToPath: ReadonlyMap<string, string>;
+  /** Identifiers that became live through an identity succession. */
+  successionSuccessorIds?: ReadonlySet<string>;
   selfPath: string;
 }
 
@@ -286,7 +288,30 @@ function normalizeRelative(fromPath: string, destination: string): string | null
   return segments.join("/");
 }
 
-export function findUnlinkedReferences(body: string, maps: ReferenceMaps): ReferenceViolation[] {
+// The closed legacy stable-path mapping of the 0.7 neutralization. A source
+// carrying a predecessor-only lock keeps its exact bytes, so its historical
+// links resolve through this mapping instead of being rewritten.
+const LEGACY_STABLE_PATH_PREFIXES: readonly (readonly [string, string])[] = [
+  ["tasks/active/", "tasks/items/"],
+  ["tasks/completed/", "tasks/items/"],
+  ["tasks/deferred/", "tasks/items/"],
+  ["tasks/cancelled/", "tasks/items/"],
+  ["designs/active/", "designs/items/"],
+  ["designs/adopted/", "designs/items/"],
+  ["designs/rejected/", "designs/items/"],
+  ["designs/superseded/", "designs/items/"],
+  ["designs/withdrawn/", "designs/items/"],
+  ["realizations/current/", "realizations/items/"],
+];
+
+function legacyStablePathResolution(resolved: string): string {
+  for (const [prefix, destination] of LEGACY_STABLE_PATH_PREFIXES) {
+    if (resolved.startsWith(prefix)) return `${destination}${resolved.slice(prefix.length)}`;
+  }
+  return resolved;
+}
+
+export function findUnlinkedReferences(body: string, maps: ReferenceMaps, historical = false, immutableSource = false): ReferenceViolation[] {
   const parser = new commonmark.Parser();
   const document = parser.parse(body);
   const violations: ReferenceViolation[] = [];
@@ -329,7 +354,9 @@ export function findUnlinkedReferences(body: string, maps: ReferenceMaps): Refer
       const target = targetFor(text);
       if (target !== undefined && target !== maps.selfPath) {
         const resolved = normalizeRelative(maps.selfPath, String(node.destination ?? ""));
-        if (resolved !== target) {
+        const historicallyResolved = historical && resolved !== null &&
+          legacyStablePathResolution(resolved) === target;
+        if (resolved !== target && !historicallyResolved) {
           violations.push({ token: text, line: lineOf(node), reason: "mistargeted" });
         }
       }
@@ -340,7 +367,9 @@ export function findUnlinkedReferences(body: string, maps: ReferenceMaps): Refer
     const literal = String(node.literal ?? "");
     if (node.type === "code") {
       const target = targetFor(literal.trim());
-      if (target !== undefined && target !== maps.selfPath) {
+      const successionExempt = immutableSource &&
+        (maps.successionSuccessorIds?.has(literal.trim()) ?? false);
+      if (target !== undefined && target !== maps.selfPath && !successionExempt) {
         violations.push({ token: literal.trim(), line: lineOf(node), reason: "unlinked" });
       }
       continue;
