@@ -156,6 +156,19 @@ revisions, and the full suite passes two hundred twenty-eight tests. The
 stacked pull request is ready for review; merging it and its base remains
 the Human Product Owner's act.
 
+Correction after close: the
+[whole-NKF master audit](../../evidence/audits/nkf-030-whole-nkf-master-audit.md)
+found that two Completion Result claims, true at the commits where written,
+do not hold on the merged default branch: the producer-rehearsal test's
+merge-base materialization self-invalidates after the merges, so the
+complete gate and suite were red on `master`, and the deterministic close
+itself changed the knowledge graph after this Task's final seal, so the
+delivered baseline was one mechanical step behind. Both are repaired under
+[NKF-030](NKF-030-repair-the-merged-master-gate-and-stale-navigation.md);
+the close-and-seal ordering gap the second finding exposes defers to the
+NKF 0.71 successor. The published, confirmed, and adopted bytes are
+unaffected.
+
 ## Decision Applicability
 
 ### Applicable Decisions

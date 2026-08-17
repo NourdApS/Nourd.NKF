@@ -100,16 +100,24 @@ async function createProject(fixture: string) {
 // Once this repository has adopted 0.6 that state no longer exists in the
 // working tree, so materialize it from the exact release commit the installed
 // pin already binds instead of weakening the exercise.
-async function materializePinnedPrepromotionRoot(parent: string) {
-  const pinnedCommit = JSON.parse(
-    readFileSync(path.join(repositoryRoot, ".nourd/nkf-release.json"), "utf8"),
-  ).source_commit;
-  const root = path.join(parent, "prepromotion");
-  const tarball = path.join(parent, "prepromotion.tar");
+// The last ordinary NKF 0.6 producer on the default branch: the exact
+// merged 0.6 state before any 0.7 candidate material entered the tree. A
+// historical commit is an immutable coordinate, so the rehearsal input
+// cannot drift with later merge topology.
+const LAST_ORDINARY_0_6_PRODUCER_COMMIT =
+  "265095d698c06d41d5f6ba4ec92195cc6a3cae9b";
+
+async function materializeCommitTree(
+  parent: string,
+  name: string,
+  commit: string,
+) {
+  const root = path.join(parent, name);
+  const tarball = path.join(parent, `${name}.tar`);
   await mkdir(root, { recursive: true });
   const exported = spawnSync(
     "git",
-    ["-C", repositoryRoot, "archive", "-o", tarball, pinnedCommit],
+    ["-C", repositoryRoot, "archive", "-o", tarball, commit],
     { encoding: "utf8" },
   );
   expect(exported.status, exported.stderr).toBe(0);
@@ -118,6 +126,13 @@ async function materializePinnedPrepromotionRoot(parent: string) {
   });
   expect(extracted.status, extracted.stderr).toBe(0);
   return root;
+}
+
+async function materializePinnedPrepromotionRoot(parent: string) {
+  const pinnedCommit = JSON.parse(
+    readFileSync(path.join(repositoryRoot, ".nourd/nkf-release.json"), "utf8"),
+  ).source_commit;
+  return materializeCommitTree(parent, "prepromotion", pinnedCommit);
 }
 
 function run(
@@ -530,29 +545,45 @@ describe("NKF consumer adopter", () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
     const project = path.join(parent, "project");
     await mkdir(project);
-    // The exact live NKF 0.6 producer is the branch point on master;
-    // migrating an isolated copy is the real producer-upgrade rehearsal.
-    const base = spawnSync(
-      "git",
-      ["-C", repositoryRoot, "merge-base", "master", "HEAD"],
-      { encoding: "utf8" },
-    );
-    if (base.status !== 0) {
-      // The rehearsal needs the live pre-promotion producer; a detached
-      // release-candidate clone has no master and skips it.
-      return;
+    // The exact ordinary NKF 0.6 producer for the plain breaking-adoption
+    // rehearsal: the working tree while it is still one, and otherwise the
+    // immutable last ordinary 0.6 commit — never the pre-promotion candidate
+    // tree, whose carried candidate Evidence correctly demands the promotion
+    // path instead of a plain migration.
+    const ordinary0_6Producer = (root: string) => {
+      const bundle = readFileSync(
+        path.join(root, ".nourd/knowledge/bundle.yaml"),
+        "utf8",
+      );
+      return (
+        /^nkf_version:\s*"0\.6"/m.test(bundle) &&
+        !bundle.includes("specifications/nkf-0.7.md")
+      );
+    };
+    let producerRoot = repositoryRoot;
+    if (!ordinary0_6Producer(producerRoot)) {
+      try {
+        producerRoot = await materializeCommitTree(
+          parent,
+          "ordinary-0-6-producer",
+          LAST_ORDINARY_0_6_PRODUCER_COMMIT,
+        );
+      } catch {
+        // A clone without that commit's history cannot rehearse.
+        return;
+      }
+      if (!ordinary0_6Producer(producerRoot)) return;
     }
-    const archived = spawnSync(
-      "git",
-      ["-C", repositoryRoot, "archive", "--format=tar", base.stdout.trim()],
-      { encoding: null, maxBuffer: 64 * 1024 * 1024 },
-    );
-    expect(archived.status, archived.stderr?.toString()).toBe(0);
-    const extracted = spawnSync("tar", ["-x", "-C", project], {
-      input: archived.stdout,
-      encoding: null,
+    await cp(producerRoot, project, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(producerRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0] ?? "";
+        return ![".git", "node_modules"].includes(first) &&
+          !first.startsWith(".nkf-transaction-");
+      },
     });
-    expect(extracted.status, extracted.stderr?.toString()).toBe(0);
 
     const reviewPath = path.join(parent, "delta-review.yaml");
     const preparation = runAdopt(project, [

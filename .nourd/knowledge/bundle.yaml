@@ -702,7 +702,7 @@ non_records:
       stable_path: evidence/README.md
       digest:
         algorithm: sha-256
-        value: 4c0feef461d662a35179152f4ea3788c5d002d5a3e8bbfe036ed644828877cb5
+        value: "dd6c325eea40006c97ef52848bf47e6a9598bd7cddd27da61459ba45a76758c5"
       relationships: []
   - path: evidence/release/nkf-0.6-producer-promotion.yaml
     kind: evidence
@@ -1682,7 +1682,7 @@ non_records:
       stable_path: tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md
       digest:
         algorithm: sha-256
-        value: "c75317e634956a3ce0fb5e387f469beab6b058e29ec3c1b56c4bca1177c6e7e8"
+        value: "2188b945c1f54ee3414ca0cde83de7f303184a410bb5e1de5834e763dce48ec8"
       state:
         vocabulary: task-status
         value: "completed"
@@ -1690,6 +1690,23 @@ non_records:
       decision_authority: Human Product Owner for every Product boundary, publication authorization, and both merges; Claude technical reviewer under explicit delegation for the publication mechanics, evidence recording, recommendation promotion, live promotion, reconciliations, tests, and audits within the confirmed boundaries
       related_tasks:
         - NKF-028
+      relationships: []
+  - path: tasks/items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md
+    kind: task
+    document:
+      id: NKF-030
+      stable_path: tasks/items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md
+      digest:
+        algorithm: sha-256
+        value: "07166dec40ede9f8f02e6c46f2fece301a8592127f1a20159e888d69df4ee7ab"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary and the merge; Claude technical reviewer under explicit delegation for the audit Evidence, repairs, reconciliations, reviews, and tests within the confirmed boundaries
+      related_tasks:
+        - NKF-028
+        - NKF-029
       relationships: []
   - path: tasks/README.md
     kind: navigation
@@ -1787,6 +1804,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 801b09082a4ad47cb1f7f452e99ffb336215bf934636327375fd4d352c640307
+      relationships: []
+  - path: evidence/audits/nkf-030-whole-nkf-master-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-030-whole-nkf-master-audit
+      stable_path: evidence/audits/nkf-030-whole-nkf-master-audit.md
+      digest:
+        algorithm: sha-256
+        value: "d20dfbd95178d77f2e8863ad4ed5b84c137588665d203d198e540f1f9ef3afd1"
       relationships: []
   - path: evidence/decision-inputs/adr-0022-0023/nkf-0.1-bundle-schema-proposal.json
     kind: provenance-attachment
@@ -2891,7 +2917,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "9f981b62b1c6d2b4534d13b6074f85253c63fb1d35deea89295021398795bfdb"
+      value: "407ce2d54737f764c70060bc33b54d672f338a7bff8e20ded49c4d0d19efc399"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -3219,7 +3245,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: dbb295282167b3ed17f526bed24b95d16a5cf56e1125ee954833e71e711456c4
+      value: "bb58a66e05ab07a1215323603da01496531d34b5f74d32e4b378433f6db9d211"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts

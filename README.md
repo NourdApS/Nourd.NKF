@@ -57,8 +57,8 @@ declaring NKF 0.1 through 0.5 migrate through their immutable published
 archives as stepping stones. Merging the release and adoption pull requests
 remains the Human Product Owner's act.
 
-The 0.3 archive carries its complete public-documentation projection and exact
-public adopter. Publication of those bytes to the separate
+Every published archive carries its complete public-documentation projection
+and exact public adopter. Publication of those bytes to the separate
 [NKF Public Documentation repository](https://github.com/kaveh6202/Nourd.NKF.Docs)
 is a separate remote operation; this repository does not claim that mirror has
 yet moved from its last independently observed 0.2 state.
@@ -94,10 +94,10 @@ community-conduct policies remain separate matters.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.6 Specification](knowledge/specifications/nkf-0.6-revision-3.md) |
-| Inspect the executable companion | [NKF 0.6 YAML Contract](contracts/nkf/0.6/revision-3/nkf.yaml) |
-| Inspect the closed structural contracts | [NKF 0.6 Schemas](contracts/nkf/0.6/schemas/) |
-| Adopt a released version | [NKF Adoption Protocol](integrations/adoption/nkf-adoption-protocol.md) |
+| Read the normative format | [NKF 0.7 Specification](knowledge/specifications/nkf-0.7.md) |
+| Inspect the executable companion | [NKF 0.7 YAML Contract](contracts/nkf/0.7/nkf.yaml) |
+| Inspect the closed structural contracts | [NKF 0.7 Schemas](contracts/nkf/0.7/schemas/) |
+| Adopt the released version | [NKF 0.7 Adoption Protocol](distribution/nkf/0.7/integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |
 

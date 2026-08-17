@@ -1,3 +1,3 @@
 # Active Tasks
 
-No applicable item is currently represented.
+- [NKF-030](../items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md)

@@ -45,9 +45,10 @@ and
 [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md).
 Its digest-bound executable companion lives at
 `contracts/nkf/0.5/revision-2/nkf.yaml`; the accepted freshness policy remains
-at `contracts/nkf/0.5/freshness-policy.yaml`. The producer now declares and
-pins 0.5, while the released record-repin defect remains immutable and is
-allocated to the distinct 0.6 successor.
+at `contracts/nkf/0.5/freshness-policy.yaml`. Its released record-repin
+defect remains immutable and was corrected by the distinct 0.6 successor;
+0.5 is out of the live support window and migrates through its published
+stepping-stone archive.
 
 The original [NKF 0.5 prepublication source](nkf-0.5.md) and executable pair
 accepted by [ADR 0116](../decisions/0116-accept-the-nkf-0-5-authority-pair.md)
@@ -55,8 +56,8 @@ remain immutable historical provenance.
 [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md)
 supersedes that pair only as the authority selected for 0.5 publication.
 
-[NKF 0.6 revision 3](nkf-0.6-revision-3.md) is the current exact technically
-accepted corrective and licensing-preparation successor under
+[NKF 0.6 revision 3](nkf-0.6-revision-3.md) is the accepted corrective and
+licensing-preparation predecessor under
 [NKF-027](../tasks/items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md)
 and [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md).
 It supersedes only [ADR 0124](../decisions/0124-accept-the-nkf-0-6-revision-2-authority-set.md)'s
@@ -64,12 +65,11 @@ revision 2 four-file release-authority selection. [ADR 0122](../decisions/0122-a
 remains immutable historical Evidence under the exact two-occurrence
 containment accepted by
 [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md).
-While the producer still declares 0.5, the
-revision 3 Markdown and promotion input are represented as candidate Evidence;
-the executable and policy are accepted prospective authority artifacts.
-Derived Schemas, checker, adopter,
-Realization, candidate exercise, release, publication, recommendation, and
-public producer adoption remain separate and unconfirmed.
+NKF 0.6 was accepted, published, recommended, and producer-adopted without a
+separate technical-confirmation Decision — the recorded ordering exception
+the 0.7 successor reconciles — and is now the one live-supported
+predecessor: migration from 0.6 to 0.7 is breaking and requires explicit
+repository-owner approval.
 
 The exact [NKF 0.6 revision 2](nkf-0.6-revision-2.md) authority remains
 immutable historical provenance. [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md)
@@ -88,4 +88,19 @@ describe the current implementation but cannot override this Specification.
 
 ## NKF 0.7
 
-- [NKF 0.7 — Product And Technology Knowledge Format](nkf-0.7.md)
+[NKF 0.7](nkf-0.7.md) is the current accepted, technically confirmed,
+published, recommended, and producer-adopted normative authority under
+[NKF-028](../tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md)
+and
+[ADR 0128](../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md),
+with its exact release candidate confirmed by
+[ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md). Its
+digest-bound executable companion lives at `contracts/nkf/0.7/nkf.yaml`,
+its evaluation policy at `contracts/nkf/0.7/freshness-policy.yaml`, and its
+per-rule version delta at `contracts/nkf/0.7/version-delta.yaml`. The
+producer declares, pins, and installs the published 0.7 release, and its
+native accepted record was created by the live promotion under
+[NKF-029](../tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md).
+The superseded acceptance at
+[ADR 0127](../decisions/0127-accept-the-nkf-0-7-authority-set.md) remains
+immutable historical provenance.
