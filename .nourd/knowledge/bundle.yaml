@@ -1724,7 +1724,7 @@ non_records:
       stable_path: tasks/items/NKF-031-release-the-corrective-nkf-0-71.md
       digest:
         algorithm: sha-256
-        value: "c5eedde75e2c390fba38c40730349f23dd3af649235441a9f115e1f26de9d072"
+        value: "162adf429bb16adb6abd03dd72c0745003fe6ac5a4c0642b35f0370b26cc26b8"
       state:
         vocabulary: task-status
         value: "active"

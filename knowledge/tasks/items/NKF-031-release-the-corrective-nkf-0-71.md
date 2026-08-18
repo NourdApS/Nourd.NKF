@@ -381,6 +381,63 @@ with its disposition:
    deep-links into them and their removal requires a link-history rule this
    deliberately small release does not introduce.
 
+## Completion Result
+
+NKF 0.71 is delivered, accepted, exercised, independently audited, and
+technically confirmed. The corrective successor closes every sixth-audit
+specification finding: the accepted successor Specification and its
+executable companion state one reconciled realizations topology explicitly
+with no silent divergence and no vestigial supporting-current key; every
+copy-forward version label states its true version, including two further
+predecessor-era label defects found during derivation; the deterministic
+Task conclusion is seal-completing through the `mechanically-concluded`
+claim, so a concluded tip carries equal baseline and candidate graph
+revisions with zero fresh review and fails closed on any excess delta; and
+the public-documentation projection teaches exactly NKF 0.71 and the
+neutral layout. The live window is exactly NKF 0.71 plus NKF 0.7 as the
+Human Product Owner explicitly confirmed, with fail-closed stepping-stone
+signaling, and the 0.7-to-0.71 upgrade is non-breaking through the ordinary
+reviewed delta update. Every version-comparing tooling surface handles the
+exact string `0.71`, with the five identified structural hazards eliminated
+fail-closed and the silent-degrade gate family dispatching through one
+exhaustive per-version capability table. The governed predecessor cleanup
+removed the 0.6 contract tree, the 0.3 through 0.6 distribution trees, and
+the 0.6 fixtures, while the frozen NKF 0.2 process roots deliberately
+remain for the recorded link-history reason.
+
+The authority was accepted by
+[ADR 0131](../../decisions/0131-accept-the-nkf-0-71-authority-set.md) after
+the two-round
+[independent authority audit](../../evidence/audits/nkf-031-nkf-0-71-independent-authority-audit.md)
+repaired six blocking copy-forward findings, and the exact release
+candidate — archive
+`3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13` at
+release commit `8727ac6ebedc61482bf8f90c546f9bf179d9f463` — passed the
+isolated exact-candidate exercise and the clean independent
+[release audit](../../evidence/release/nkf-031-nkf-0-71-release-audit.md),
+and is technically confirmed by
+[ADR 0132](../../decisions/0132-confirm-the-nkf-0-71-release-candidate.md).
+The bootstrap acceptance test is discharged and independently reproduced:
+the producer promotion ran on the digest-bound delta claim alone, carrying
+every judgment by digest identity with exactly one fresh judgment — the
+promotion-created native Specification record — and no whole-root review.
+The complete gate and the full suite of two hundred forty-three tests pass
+at the delivered tip, with the
+[guidance review](../../evidence/release/nkf-031-nkf-0-71-guidance-review.md)
+and prepared
+[release notes](../../evidence/release/nkf-0.71-release-notes.md) recorded
+for the publisher. Every finding recorded in Current Progress carries its
+delivered disposition. Because the live producer remains on NKF 0.7 until
+the separately authorized publication and promotion, this Task's own
+deterministic close runs under the pinned 0.7 adopter and is the last to
+require the hand-orchestrated post-close reseal commit on the same branch;
+the seal-completing conclusion this release delivers retires that
+workaround from the live 0.71 promotion onward. Publication of the
+confirmed bytes, the recommendation, the live producer promotion, and the
+merge of this Task's single pull request remain separately authorized Human
+Product Owner acts, with the producer adoption separately directed as its
+own Task on a stacked pull request.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -416,13 +473,13 @@ with its disposition:
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The accepted 0.71 successor Specification reconciles the topology contradiction with prose and executable in explicit agreement | unknown | none | none |
-| Every copy-forward version label in the accepted 0.71 authority states its true version | unknown | none | none |
-| Under 0.71 mechanics, a concluded Task's delivered tip carries equal baseline and candidate graph revisions with no hand-orchestrated post-close act | unknown | none | none |
-| The 0.7-to-0.71 producer upgrade is proven through the digest-bound delta claim alone, with no whole-root review | unknown | none | none |
-| The live window is exactly 0.71 plus 0.7 with truthful stepping-stone signaling for out-of-window repositories | unknown | none | none |
-| Every version-comparing or windowing tooling surface handles the exact string `0.71`, with the five identified structural hazards eliminated fail-closed | unknown | none | none |
-| The public documentation projection teaches exactly the 0.71 format and the neutral layout | unknown | none | none |
-| The frozen predecessor process and distribution trees are removed with the release-tooling review agreeing | unknown | none | none |
-| The full accepted release order is performed with independent audits preceding acceptance and confirmation | unknown | none | none |
-| The complete gate and full suite pass at every handoff on the delivered branch | unknown | none | none |
+| The accepted 0.71 successor Specification reconciles the topology contradiction with prose and executable in explicit agreement | proven | data-validity | none |
+| Every copy-forward version label in the accepted 0.71 authority states its true version | proven | data-validity | none |
+| Under 0.71 mechanics, a concluded Task's delivered tip carries equal baseline and candidate graph revisions with no hand-orchestrated post-close act | proven | runtime-behaviour | none |
+| The 0.7-to-0.71 producer upgrade is proven through the digest-bound delta claim alone, with no whole-root review | proven | runtime-behaviour | none |
+| The live window is exactly 0.71 plus 0.7 with truthful stepping-stone signaling for out-of-window repositories | proven | runtime-behaviour | none |
+| Every version-comparing or windowing tooling surface handles the exact string `0.71`, with the five identified structural hazards eliminated fail-closed | proven | runtime-behaviour | none |
+| The public documentation projection teaches exactly the 0.71 format and the neutral layout | proven | runtime-behaviour | none |
+| The frozen predecessor process and distribution trees are removed with the release-tooling review agreeing | proven | data-validity | none |
+| The full accepted release order is performed with independent audits preceding acceptance and confirmation | proven | data-validity | none |
+| The complete gate and full suite pass at every handoff on the delivered branch | proven | runtime-behaviour | none |
