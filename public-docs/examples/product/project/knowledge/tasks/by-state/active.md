@@ -1,3 +1,3 @@
 # Active Tasks
 
-- [TEST-001](../active/task.md)
+- [TEST-001](../items/task.md)

@@ -8,7 +8,7 @@ source:
   stable_path: technology.md
   digest:
     algorithm: sha-256
-    value: d658ee33a768810f285cd4b961f1e9e0f098e13064a765346e124adc29850ae2
+    value: b2f48be3655f286c27c4fb2c7374de9abd0e24ba7b58411a58540b810ab34bea
 governance:
   lifecycle: living
   status: draft
@@ -90,17 +90,3 @@ sections:
     responsibilities:
       - evolution-and-retirement
 relationships: []
-legacy_lock:
-  predecessor_version: "0.4"
-  source_digest:
-    algorithm: sha-256
-    value: d658ee33a768810f285cd4b961f1e9e0f098e13064a765346e124adc29850ae2
-  predecessor_state:
-    record_lifecycle: living
-    record_status: draft
-  initial_declaration_state:
-    governance:
-      lifecycle: living
-      status: draft
-      authority:
-        - human-product-owner

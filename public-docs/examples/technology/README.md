@@ -9,6 +9,8 @@ project/
 ├── .nourd/
 │   └── knowledge/
 │       ├── bundle.yaml
+│       ├── freshness/
+│       │   └── baseline.yaml
 │       └── records/
 │           ├── realization.yaml
 │           ├── specification.yaml
@@ -34,8 +36,9 @@ Start with the actual
 The other declarations bind the
 [Technology](project/knowledge/technology.md) and
 [Specification](project/knowledge/specifications/specification.md) sources. The
-[Task](project/knowledge/tasks/active/task.md) is a stable document node whose
-lifecycle is declared in YAML and projected under `tasks/by-state/`.
+[Task](project/knowledge/tasks/items/task.md) is a stable document node at a
+neutral `tasks/items/` path whose lifecycle is declared in YAML and projected
+under `tasks/by-state/`.
 
 The Technology record defines purpose, consumers, contracts, boundaries, and
 evolution. The Specification owns current normative meaning. The Realization
@@ -44,7 +47,10 @@ describes the implementation and maps `src/example.ts` through its
 
 The exact source artifact participates in Governed Validation Inputs because
 the Technology Profile permits `governed_artifacts`. Changing `example.ts`
-without updating and reviewing its binding causes validation to fail.
+without updating and reviewing its binding causes validation to fail. The
+[reviewed baseline](project/.nourd/knowledge/freshness/baseline.yaml) binds
+the exact graph revision and carries one
+`semantically-reviewed-whole-root` confirmation.
 
 The equivalent Product bundle cannot add `governed_artifacts` by implication.
 That distinction keeps Common rules shared while preserving the concrete

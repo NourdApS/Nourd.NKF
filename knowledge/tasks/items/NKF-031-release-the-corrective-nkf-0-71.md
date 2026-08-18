@@ -335,6 +335,52 @@ generated state indexes instead of duplicating it — a live instance of the
 close-time staleness family this Task's seal-completing conclusion design
 addresses.
 
+The direction was adopted by
+[ADR 0130](../../decisions/0130-adopt-the-nkf-0-71-corrective-successor-direction.md),
+and the derived candidate authority set was accepted by
+[ADR 0131](../../decisions/0131-accept-the-nkf-0-71-authority-set.md) after
+the two-round
+[independent authority audit](../../evidence/audits/nkf-031-nkf-0-71-independent-authority-audit.md)
+whose first round found six blocking predecessor copy-forward findings in
+the candidate executable — all repaired before the clean second round. The
+accepted authority is implemented across the checker, adopter, seal
+tooling, fixtures, and suite. Findings recorded during implementation, each
+with its disposition:
+
+1. The generated 0.71 graph-baseline schema violated the checker's strict
+   compilation (a conditional requirement without an inline property
+   definition); found by the test-driven verification, fixed in the
+   generator, and the derived digest re-pinned — no accepted byte changed.
+2. One remaining checker gate applied five neutral-path, succession, and
+   provenance rules only to the literal predecessor version, silently
+   skipping 0.71; found by the rule-coverage tests and fixed through the
+   exhaustive per-version capability table.
+3. A format finding: under the deployed 0.7 checker a non-Markdown evidence
+   document's node revision carries no content digest, so a YAML evidence
+   content change is invisible to the graph revision while the accepted
+   prose expects source participation. The 0.71 checker deliberately keeps
+   the deployed behavior, because the accepted 0.7-to-0.71 version delta
+   declares every graph rule identical and a recomputation change would
+   falsify it or break exact-conformant 0.7 repositories under the windowed
+   checker; the divergence is recorded for a future version with an honest
+   semantically-new classification.
+4. A process finding against this Task's own execution: one implementation
+   commit landed while the handoff gate was red, because a shell pipeline
+   masked the gate's exit code and the failing step — the public-documentation
+   verifier reading the not-yet-generated 0.71 release set — was truncated
+   out of the captured output. The gate practice now records an explicit
+   pass or fail marker, the release set was generated, and the repair is
+   part of the release-surfaces work.
+5. The release-tooling review resolved the deferred predecessor cleanup:
+   the 0.6 contract tree, the 0.3 through 0.6 distribution trees, and the
+   0.6 fixtures left the working tree — every removed byte remains in its
+   published archive and version-control history — while the frozen NKF 0.2
+   process roots at `integrations/release/` and `integrations/adoption/`
+   deliberately remain, because the immutable accepted
+   [ADR 0080](../../decisions/0080-release-and-adoption-process.md) source
+   deep-links into them and their removal requires a link-history rule this
+   deliberately small release does not introduce.
+
 ## Decision Applicability
 
 ### Applicable Decisions

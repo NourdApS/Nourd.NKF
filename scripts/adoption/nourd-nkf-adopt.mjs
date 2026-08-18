@@ -28,14 +28,6 @@ import rootAdapter from "../../distribution/nkf/0.71/host-adapters/AGENTS.adapte
 import importAdapter from "../../distribution/nkf/0.71/host-adapters/CLAUDE.adapter.md";
 import copilotAdapter from "../../distribution/nkf/0.71/host-adapters/copilot-instructions.adapter.md";
 import predecessorContract0_7 from "nkf:predecessor-0.7";
-import neutralProtocol0_4 from "../../distribution/nkf/0.4/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol0_4 from "../../distribution/nkf/0.4/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill0_4 from "../../distribution/nkf/0.4/.agents/skills/nkf-onboarding/SKILL.md";
-import neutralProtocol0_5 from "../../distribution/nkf/0.5/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill0_5 from "../../distribution/nkf/0.5/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol0_5 from "../../distribution/nkf/0.5/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill0_5 from "../../distribution/nkf/0.5/.agents/skills/nkf-onboarding/SKILL.md";
 import {
   buildOnboardingKnowledge,
   buildPortableTopologyRepair,
@@ -162,21 +154,11 @@ state, and remote enforcement state separate.
 `, "utf8");
 
 function guidanceForVersion(nkfVersion) {
-  return nkfVersion === "0.4"
-    ? {
-        neutralProtocol: neutralProtocol0_4,
-        portableSkill: portableSkill0_4,
-        onboardingProtocol: onboardingProtocol0_4,
-        onboardingSkill: onboardingSkill0_4,
-      }
-    : nkfVersion === "0.5"
-      ? {
-          neutralProtocol: neutralProtocol0_5,
-          portableSkill: portableSkill0_5,
-          onboardingProtocol: onboardingProtocol0_5,
-          onboardingSkill: onboardingSkill0_5,
-        }
-      : { neutralProtocol, portableSkill, onboardingProtocol, onboardingSkill };
+  // Every reachable install or update target inside the 0.71-plus-0.7
+  // window seeds the current embedded guidance; out-of-window versions
+  // fail closed before any guidance seeding.
+  void nkfVersion;
+  return { neutralProtocol, portableSkill, onboardingProtocol, onboardingSkill };
 }
 const VERIFIER_SOURCE = `import { spawnSync } from "node:child_process";
 import path from "node:path";

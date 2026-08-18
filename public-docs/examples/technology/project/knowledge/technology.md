@@ -2,10 +2,8 @@
 title: Example Technology
 id: technology
 type: technology
-summary: "Defines the purpose, contracts, boundaries, and evolution of Example Technology."
+summary: Defines the purpose, contracts, boundaries, and evolution of Example Technology.
 created_at: 2026-07-30T15:59:54Z
-record_lifecycle: living
-record_status: draft
 ---
 
 # Example Technology

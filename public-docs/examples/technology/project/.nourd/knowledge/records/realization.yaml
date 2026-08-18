@@ -8,7 +8,7 @@ source:
   stable_path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: 28a0d63208953dc63549756f23fcbc9dbc5f5167272c563790620e4fb8f53580
+    value: 6de2e55397fd900de15054b1d031d31510eb1d85304b96dfc58ca379f8e06039
 governance:
   lifecycle: living
   status: draft
@@ -79,21 +79,3 @@ relationships:
     source_section: governed-meaning-realized
 task: TEST-TECH-001
 confirmation_status: unconfirmed
-legacy_lock:
-  predecessor_version: "0.4"
-  source_digest:
-    algorithm: sha-256
-    value: 28a0d63208953dc63549756f23fcbc9dbc5f5167272c563790620e4fb8f53580
-  predecessor_state:
-    record_lifecycle: living
-    record_status: draft
-    task: TEST-TECH-001
-    confirmation_status: unconfirmed
-  initial_declaration_state:
-    governance:
-      lifecycle: living
-      status: draft
-      authority:
-        - human-product-owner
-    task: TEST-TECH-001
-    confirmation_status: unconfirmed

@@ -10,43 +10,48 @@ node nourd-nkf-adopt.mjs --project /absolute/path/to/project
 
 An exact-current repository returns `current` only after its installed pin,
 adopter, integration, archive, manifest, knowledge, and checker result pass.
-An NKF 0.1-through-0.4 repository takes a deliberate breaking migration to
-0.6 because the modern format adds stable document nodes, YAML-owned lifecycle
-and graph state, and a reviewed freshness baseline. An exact native 0.5
-repository uses the non-breaking reviewed-baseline carry-forward; a native 0.6
-repository receives the exact integration refresh.
+An exact conformant NKF 0.7 repository takes the non-breaking reviewed-delta
+upgrade to 0.71. A native 0.71 repository receives the exact integration
+refresh. A repository declaring NKF 0.1 through 0.6 is outside the support
+window and fails closed with the exact next stepping-stone archive named.
 
-## Review A Breaking Migration
+## Complete The 0.7 Upgrade Review
 
-For NKF 0.1 through NKF 0.4, the first run shows the exact 0.6 target, declares the
-predecessor-relative path breaking and migration-required, and exits without
-mutation. Review that target and the consumer repository's migration
-implications. After explicit repository-owner approval, rerun with:
+For NKF 0.7, the first run writes the exact upgrade review template and exits
+without mutation. Judgments whose node revision, basis digest, and depended-on
+rules are `identical` under the accepted 0.7-to-0.71 version-delta declaration
+arrive prefilled as carried; the computed required fresh set is left for a
+named human or agent to review with source-bound findings. Rerun the same
+command with the completed review:
 
 ```text
---review /absolute/path/to/whole-root-review.yaml
---accept-breaking repository-owner
+--review /absolute/path/to/upgrade-review.yaml
 ```
 
-The first approved run may name an absent review file. Adopt writes an exact
-candidate-specific review template there and stops before project mutation.
-A named human or agent completes its source-bound node, relationship, Decision,
-observation, and limitation review, then reruns the same command. Adopt rejects
-placeholder, incomplete, stale, or mismatched review coverage.
+Adopt rejects placeholder, incomplete, stale, or mismatched review coverage,
+and admits the delta review claim only when the performed set contains the
+computed closure. Whole-root review remains valid at any time and is the
+recovery path when completeness is missing or disputed. The upgrade performs
+the contract rebind, digest-bound baseline conversion, and integration
+refresh inside one validated rollback-capable transaction. Do not edit
+generated paths or change the bundle version manually.
 
-Adopt performs any trusted topology repair, stable-node migration, reviewed
-baseline sealing, and version migration inside one
-validated rollback-capable transaction. Do not edit generated repair paths or
-change the bundle version manually.
+## Migrate An Out-Of-Window Version
 
-## Refresh NKF 0.5 Before Updating
+NKF 0.6 and older versions are immutable published history, not live targets.
+The 0.71 adopter refuses them and names the exact next stepping-stone release
+archive; each hop uses that archive's own bundled adopter with an explicit
+archive and digest:
 
-The 0.5-to-0.6 update carries reviewed meaning forward only when the installed
-0.5 checker proves the predecessor graph and baseline are exact and ready.
-If that precheck is stale, disputed, incomplete, or not ready, Adopt changes no
-project byte. Complete the normal 0.5 whole-root review and baseline sealing,
-then rerun the same Adopt operation. Do not manually change version or policy
-fields.
+| Declared version | Next stepping-stone archive |
+| --- | --- |
+| NKF 0.6 | The published NKF 0.7 archive, SHA-256 `c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f` |
+| NKF 0.1 through 0.5 | The published NKF 0.6 archive, SHA-256 `b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95` |
+
+Each stepping-stone hop follows that archive's own documented migration
+rules, including any breaking approval and review that release requires.
+Nothing migrates silently, and the current adopter never reinterprets an
+older contract.
 
 ## Offline And Exact Recovery
 
@@ -71,7 +76,9 @@ compatibility and migration rules; there is no moving rollback label.
 | --- | --- |
 | Recommendation unavailable | Confirm `gh auth status` and private repository authorization |
 | Recommendation or archive mismatch | Confirm the reviewed catalog and exact content-addressed bytes |
-| Breaking approval required | Review the displayed target and obtain real repository-authority approval |
+| Out-of-window version refused | Follow the named stepping-stone archive; do not force the current adopter |
+| Upgrade review required | Complete the written template's computed fresh set with a named reviewer |
+| Predecessor 0.7 baseline not ready | Restore it through a governed 0.7 knowledge-maintenance operation first |
 | Initial plan required | Complete agent assessment and seal the exact candidate |
 | Predecessor pin or adopter mismatch | Restore reviewed installed bytes before migration |
 | Adapter conflict | Reconcile project-owned instructions without deleting unrelated policy |

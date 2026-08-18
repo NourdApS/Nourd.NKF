@@ -31,7 +31,9 @@ transition, which enforces only the machine-checkable parts and performs
 the Git transition mechanics: activation creates the `task/<task_id>`
 branch and its working tree from the clean, up-to-date default branch and
 opens the draft merge request; conclusion — close, defer, or cancel —
-commits, pushes, marks the request ready, and releases the working tree. A
+seals the mechanically-concluded successor baseline over its own closed
+transition delta in the same transaction, then commits, pushes, marks the
+request ready, and releases the working tree. A
 Task branch merges only concluded, and merging stays the human review act.
 
 Perform governed mechanics through the internal deterministic adopter commands —

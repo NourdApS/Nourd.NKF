@@ -8,7 +8,7 @@ source:
   stable_path: specifications/specification.md
   digest:
     algorithm: sha-256
-    value: 11414043012c0b2b97dfcda4bf509086a706f7da4f0309029ed7f84a50fe522e
+    value: 50094a2327b35fcc4aafb0d917930cd8756a7bc48787fb4299903e2f6811eff9
 governance:
   lifecycle: immutable
   status: accepted
@@ -92,20 +92,3 @@ sections:
       - unresolved-and-deferred-matters
 relationships: []
 task: TEST-TECH-001
-legacy_lock:
-  predecessor_version: "0.4"
-  source_digest:
-    algorithm: sha-256
-    value: 11414043012c0b2b97dfcda4bf509086a706f7da4f0309029ed7f84a50fe522e
-  predecessor_state:
-    record_lifecycle: immutable
-    record_status: accepted
-    task: TEST-TECH-001
-  initial_declaration_state:
-    governance:
-      lifecycle: immutable
-      status: accepted
-      authority:
-        - human-product-owner
-      accepted_at: 2026-07-30
-    task: TEST-TECH-001

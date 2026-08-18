@@ -1,8 +1,8 @@
 # Initial Onboarding
 
 Initial onboarding takes an unadopted Empty Repository or Tiny Knowledge, No
-Source Or Configuration repository to a complete checked and reviewed NKF 0.6 candidate
-without requiring manual native YAML or integration assembly.
+Source Or Configuration repository to a complete checked and reviewed NKF 0.71
+candidate without requiring manual native YAML or integration assembly.
 
 It supports Product and Technology roots. Common rules apply to both but are
 not a selectable profile.
@@ -26,7 +26,8 @@ proceed without a separate confirmation after an explained effectively-empty
 finding.
 
 If neither category is supportable, the agent stops without guessing a later
-category and refers future work to deferred NKF-014. A human may deliberately
+category and reports that initial onboarding is not recommended; later
+repository categories remain deliberately deferred. A human may deliberately
 override a negative or indeterminate Category 2 recommendation; mechanical
 safety failures cannot be overridden.
 
@@ -205,7 +206,7 @@ node nourd-nkf-adopt.mjs seal \
 Sealing verifies the assessment and applicable confirmation, recreates the
 complete mechanical snapshot, requires every Markdown representation, and
 refreshes exact candidate digests. It does not change the project, construct
-the later 0.6 graph candidate, prove the semantic category, or establish
+the later 0.71 graph candidate, prove the semantic category, or establish
 conformance.
 
 ## Apply The Complete Candidate With Adopt
@@ -220,7 +221,7 @@ node nourd-nkf-adopt.mjs \
 ```
 
 On the first run, use an absent `--review` file. Adopt constructs the exact
-isolated 0.6 candidate, writes its complete review template to that path, and
+isolated 0.71 candidate, writes its complete review template to that path, and
 stops before mutation. A named human or agent reviews the actual candidate,
 replaces every placeholder with source-bound classifications and observations,
 then reruns the same Adopt command. The adopter validates exact node,
@@ -262,10 +263,15 @@ Every successful initial onboarding creates the complete portable topology:
 ├── specifications/README.md
 ├── realizations/
 │   ├── README.md
-│   ├── current-system.md
-│   └── current/README.md
+│   └── current-system.md
 └── evidence/README.md
 ```
+
+Task and Design sources live below the neutral `tasks/items/` and
+`designs/items/` directories. The generated `tasks/by-state/*.md` and
+`designs/by-disposition/*.md` indexes carry no governed frontmatter and derive
+entirely from declared YAML state; a later lifecycle change never moves a
+canonical source.
 
 The canonical `README.md` contains one managed `NKF Navigation` block. If the
 file already exists, the onboarder reconciles that block in the same document

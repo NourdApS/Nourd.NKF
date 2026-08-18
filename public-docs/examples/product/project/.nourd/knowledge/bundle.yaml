@@ -1,4 +1,4 @@
-nkf_version: "0.6"
+nkf_version: "0.71"
 contract: nkf.bundle
 id: example-product
 root:
@@ -7,10 +7,6 @@ root:
 knowledge_root: knowledge
 non_records:
   - path: decisions/README.md
-    kind: navigation
-  - path: designs/active/README.md
-    kind: navigation
-  - path: designs/adopted/README.md
     kind: navigation
   - path: designs/by-disposition/active.md
     kind: generated
@@ -24,12 +20,6 @@ non_records:
     kind: generated
   - path: designs/README.md
     kind: navigation
-  - path: designs/rejected/README.md
-    kind: navigation
-  - path: designs/superseded/README.md
-    kind: navigation
-  - path: designs/withdrawn/README.md
-    kind: navigation
   - path: evidence/README.md
     kind: evidence
     document:
@@ -41,38 +31,22 @@ non_records:
       relationships: []
   - path: README.md
     kind: navigation
-  - path: realizations/current/README.md
-    kind: navigation
   - path: realizations/README.md
     kind: navigation
   - path: specifications/README.md
     kind: navigation
-  - path: tasks/active/README.md
-    kind: navigation
-  - path: tasks/active/task.md
+  - path: tasks/items/task.md
     kind: task
     document:
       id: TEST-001
-      stable_path: tasks/active/task.md
+      stable_path: tasks/items/task.md
       digest:
         algorithm: sha-256
-        value: 2788da4f4a11cbd51fae22c15b817d7d25421c93aedbfa6953c9393a230c774c
+        value: 625ab44d1c502b5e2a433ead44cc631ac6e32faf0637df6c73b5b4ddcc5be124
       state:
         vocabulary: task-status
         value: active
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 2788da4f4a11cbd51fae22c15b817d7d25421c93aedbfa6953c9393a230c774c
-        predecessor_state:
-          task_id: TEST-001
-          task_status: active
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: active
   - path: tasks/by-state/active.md
     kind: generated
   - path: tasks/by-state/cancelled.md
@@ -81,14 +55,8 @@ non_records:
     kind: generated
   - path: tasks/by-state/deferred.md
     kind: generated
-  - path: tasks/cancelled/README.md
-    kind: navigation
-  - path: tasks/completed/README.md
-    kind: navigation
-  - path: tasks/deferred/README.md
-    kind: navigation
   - path: tasks/README.md
     kind: navigation
 knowledge_graph:
-  policy: "nkf.freshness-policy.0.6"
+  policy: nkf.freshness-policy.0.71
   baseline: .nourd/knowledge/freshness/baseline.yaml

@@ -2,7 +2,7 @@
 id: nkf-current-system
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, now reconciled to the accepted, technically confirmed, published, recommended, and ordinarily producer-adopted NKF 0.7 release under its governed identity succession.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, reconciled to the accepted, technically confirmed, published, recommended, and ordinarily producer-adopted NKF 0.7 release under its governed identity succession, and carrying the accepted NKF 0.71 corrective-successor candidate whose publication and promotion remain separately authorized.
 created_at: 2026-07-30T15:59:54Z
 ---
 
@@ -38,15 +38,26 @@ confirmation status remains `partially-confirmed`.
 ## Governed Meaning Realized
 
 The producer declares, pins, and installs published NKF 0.7, and the governed
-recommendation selects the same NKF 0.7 release. The derived implementation
-dispatches the accepted NKF 0.7 contract and the one live-supported NKF 0.6
-predecessor for the same Product and Technology Root Profiles; NKF 0.1
-through 0.5 remain immutable history reachable through their published
-stepping-stone archives rather than live checker dispatch. Markdown remains
+recommendation selects the same NKF 0.7 release, while the working tree
+carries the accepted NKF 0.71 corrective-successor candidate delivered under
+[NKF-031](../tasks/items/NKF-031-release-the-corrective-nkf-0-71.md). The
+derived implementation dispatches the accepted NKF 0.71 contract and the one
+live-supported NKF 0.7 predecessor for the same Product and Technology Root
+Profiles; NKF 0.1 through 0.6 remain immutable history reachable through
+their published stepping-stone archives rather than live checker dispatch. Markdown remains
 normative human authority and each executable YAML remains its
 version-specific digest-bound companion.
 
-The current exact authority set is accepted through
+The NKF 0.71 candidate authority set is accepted through
+[ADR 0131](../decisions/0131-accept-the-nkf-0-71-authority-set.md) after its
+two-round independent audit: normative Markdown
+`knowledge/specifications/nkf-0.71.md`, executable companion
+`contracts/nkf/0.71/nkf.yaml`, evaluation policy
+`contracts/nkf/0.71/freshness-policy.yaml` with unchanged judgment
+dependencies, the per-rule 0.7-to-0.71 version delta declaring two hundred
+thirteen identical rules and two new conclusion rules, and the exact
+producer-promotion input; the live release authority remains accepted
+through
 [ADR 0128](../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md):
 normative Markdown `knowledge/specifications/nkf-0.7.md` at SHA-256
 `6d1c9046...0992`, executable companion `contracts/nkf/0.7/nkf.yaml` at
@@ -427,16 +438,17 @@ Complete Product Or Technology Topology
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| NKF 0.7 authority | `knowledge/specifications/nkf-0.7.md`, `contracts/nkf/0.7/nkf.yaml`, `contracts/nkf/0.7/freshness-policy.yaml`, `contracts/nkf/0.7/version-delta.yaml` | Exact accepted current authority for digest-bound reviewed baselines with computable carry-forward, per-rule version delta and fail-closed delta claims, deterministic review and record scaffolds, lifecycle-neutral identity and stable paths with governed succession, operational-fact promotion reconciliation, the current-plus-one support window, mandatory audit-bound technical confirmation, and Git transition orchestration as operational output | Accepted by [ADR 0128](../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md) after three independent audit rounds and a rehearsal-driven revision; the exact release candidate is technically confirmed by [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md) bound to the clean independent release audit |
-| NKF 0.7 derived implementation | `contracts/nkf/0.7/schemas/`, `src/checker/`, `scripts/freshness/`, `scripts/adoption/`, `fixtures/valid/*-0-7/`, `test/` | Exact published implementation at release commit `e5b265e8...`; all two hundred thirteen accepted rules implemented with test coverage, version-dispatching 0.7 and 0.6 validation, digest-bound baseline verification, delta-claim closure computation, carried-judgment preconditions, succession and neutralization migration, promotion reconciliation, scaffolds, and tamper and symlink containment | Independently audited before confirmation and reproduced by the producer gate; acceptance, conformance, and Governing Use remain separate |
+| NKF 0.7 authority (live release authority) | `knowledge/specifications/nkf-0.7.md`, `contracts/nkf/0.7/nkf.yaml`, `contracts/nkf/0.7/freshness-policy.yaml`, `contracts/nkf/0.7/version-delta.yaml` | Exact accepted current authority for digest-bound reviewed baselines with computable carry-forward, per-rule version delta and fail-closed delta claims, deterministic review and record scaffolds, lifecycle-neutral identity and stable paths with governed succession, operational-fact promotion reconciliation, the current-plus-one support window, mandatory audit-bound technical confirmation, and Git transition orchestration as operational output | Accepted by [ADR 0128](../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md) after three independent audit rounds and a rehearsal-driven revision; the exact release candidate is technically confirmed by [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md) bound to the clean independent release audit |
+| NKF 0.71 candidate authority | `knowledge/specifications/nkf-0.71.md`, `contracts/nkf/0.71/nkf.yaml`, `contracts/nkf/0.71/freshness-policy.yaml`, `contracts/nkf/0.71/version-delta.yaml` | Exact accepted corrective-successor authority: the reconciled realizations topology stated in prose and executable explicitly, corrected version labels, the seal-completing conclusion through the `mechanically-concluded` claim with its closed transition vocabulary and conclusion carry, the live window of exactly 0.71 plus 0.7, and the non-breaking 0.7-to-0.71 upgrade | Accepted by [ADR 0131](../decisions/0131-accept-the-nkf-0-71-authority-set.md) under the recorded delegation after the two-round [independent authority audit](../evidence/audits/nkf-031-nkf-0-71-independent-authority-audit.md); publication, recommendation, and live promotion remain separately authorized |
+| Derived implementation | `contracts/nkf/0.71/schemas/`, `src/checker/`, `scripts/freshness/`, `scripts/adoption/`, `fixtures/valid/*-0-71/`, `fixtures/valid/*-0-7/`, `test/` | Exact published implementation at release commit `e5b265e8...`; all accepted rules implemented with test coverage — two hundred fifteen under the 0.71 candidate including the two conclusion rules — version-dispatching 0.71 and 0.7 validation, digest-bound baseline verification, delta-claim closure computation, carried-judgment preconditions, succession and neutralization migration, promotion reconciliation, scaffolds, and tamper and symlink containment | Independently audited before confirmation and reproduced by the producer gate; acceptance, conformance, and Governing Use remain separate |
 | NKF 0.7 release realization | `contracts/nkf/0.7/release-set.yaml`, `distribution/nkf/0.7/`, `public-docs/`, `scripts/release/` | Published and recommended exact 165-member private archive `c5ee783c...3df94f` including the repository licensing classes, seven 0.7 Schemas, the complete public projection, checker `64751e77...e70a`, and adopter `e565978a...b360` | Archive reproduced byte-identically from the enumerated set, confirmed by [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md), and re-downloaded byte-identically after publication as recorded in the [publication Evidence](../evidence/release/nkf-029-nkf-0-7-publication.md); publication and recommendation are observed operational facts, not confirmation |
-| NKF 0.6 authority and distribution | `knowledge/specifications/nkf-0.6-revision-3.md`, `contracts/nkf/0.6/`, `distribution/nkf/0.6/` | Live-supported immutable predecessor under the current-plus-one window with its unchanged published 185-member archive `b0822199...dd4c95`; migration to 0.7 is breaking and requires explicit repository-owner approval | Accepted by [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md); no separate 0.6 technical-confirmation Decision was recorded, the ordering exception 0.7 reconciles |
+| NKF 0.6 authority and distribution | `knowledge/specifications/nkf-0.6-revision-3.md` | Immutable stepping-stone history under the confirmed 0.71-plus-0.7 window: its unchanged published 185-member archive `b0822199...dd4c95` remains the complete authority for repositories that declare it, its working-tree contract and distribution copies were removed by the governed predecessor cleanup, and a 0.6 repository steps to the published 0.7 archive | Accepted by [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md); no separate 0.6 technical-confirmation Decision was recorded, the ordering exception 0.7 reconciles |
 | Repository licensing set | `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, `package.json` | Unmodified official Apache License 2.0, the exact approved informational NOTICE attribution, compatible third-party notices reproduced from the exact bundled checker and adopter build graphs, and SPDX identifier `Apache-2.0` with the current repository URL | Licensing preparation is repository content verified by `npm run verify:third-party-notices` and the clean licensing audit; it establishes no public visibility, no commercial or legal suitability, and no Governing Use |
 | NKF 0.1 through 0.5 history | Git history and their immutable published release archives | Out-of-window immutable history: the live tooling refuses their migration fail-closed and names the exact published stepping-stone archive for the next hop | Their accepting and confirming Decisions remain immutable provenance; [ADR 0120](../decisions/0120-confirm-the-nkf-0-5-release-candidate.md) confirms the 0.5 stepping stone the 0.6 window relies on |
-| Version release and adoption protocols | `distribution/nkf/0.7/integrations/` | The frozen published 0.7 operational process copies — the current process sources — for candidate proof, guidance review, isolated exact-candidate exercise, independent audit, mandatory audit-bound confirmation, publication, one public Adopt operation, compatibility preflight, approval, rollback, recommendation, and post-action audit; the root `integrations/release/` and `integrations/adoption/` copies are frozen NKF 0.2 history, not current process sources | Direction adopted by [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md), strengthened by [ADR 0121](../decisions/0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md), and reordered by the accepted 0.7 authority; the historical 0.6 publication-order exception is recorded above |
-| Core JSON Schemas | `contracts/nkf/0.6/schemas/`, `contracts/nkf/0.7/schemas/` | Seven closed source-bound Schemas per live-supported version | Exact digests are bound by the accepted release sets and reproduced by the build verifier |
-| Checker library and CLI | `src/checker/`, `src/cli.ts`, `dist/nourd-nkf-checker.mjs` | Version-dispatching checker with exact 0.6 and 0.7 bindings; published and installed 0.7 checker SHA-256 `64751e77...e70a` | Reproduced deterministically by `npm run verify:build`, bound by [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md), and installed through ordinary public Adopt |
-| Fixtures and tests | `fixtures/`, `test/` | Product and Technology topology, lifecycle, onboarding, delta migration, stepping-stone refusal, release membership, graph, freshness, digest-bound baselines, delta claims, scaffolds, succession, Git transition orchestration, security, recovery, structural mutation, rollback, idempotence, and tamper coverage; the current branch passes 25 test files and 228 tests | 0.7 rule-coverage and promotion exercises and predecessor Evidence; passing tests are conformance evidence only |
+| Version release and adoption protocols | `distribution/nkf/0.71/integrations/`, `distribution/nkf/0.7/integrations/` | The 0.71 candidate process copies — reviewed under this release's guidance review — beside the frozen published 0.7 predecessor copies, for candidate proof, guidance review, isolated exact-candidate exercise, independent audit, mandatory audit-bound confirmation, publication, one public Adopt operation, compatibility preflight, rollback, recommendation, and post-action audit; the root `integrations/release/` and `integrations/adoption/` copies remain frozen NKF 0.2 history because the immutable accepted [ADR 0080](../decisions/0080-release-and-adoption-process.md) source deep-links into them, and the 0.3 through 0.6 predecessor distribution trees were removed by the governed cleanup | Direction adopted by [ADR 0109](../decisions/0109-publication-freeze-and-proven-self-adoption.md), strengthened by [ADR 0121](../decisions/0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md), and reordered by the accepted 0.7 authority; the historical 0.6 publication-order exception is recorded above |
+| Core JSON Schemas | `contracts/nkf/0.7/schemas/`, `contracts/nkf/0.71/schemas/` | Seven closed source-bound Schemas per live-supported version | Exact digests are bound by the accepted release sets and reproduced by the build verifier |
+| Checker library and CLI | `src/checker/`, `src/cli.ts`, `dist/nourd-nkf-checker.mjs` | Version-dispatching checker with exact 0.7 and 0.71 bindings behind one exhaustive per-version capability table; published and installed 0.7 checker SHA-256 `64751e77...e70a` | Reproduced deterministically by `npm run verify:build`, bound by [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md), and installed through ordinary public Adopt |
+| Fixtures and tests | `fixtures/`, `test/` | Product and Technology topology, lifecycle, onboarding, delta migration, stepping-stone refusal, release membership, graph, freshness, digest-bound baselines, delta claims, scaffolds, succession, Git transition orchestration, security, recovery, structural mutation, rollback, idempotence, and tamper coverage; the current branch passes 26 test files and 240 tests | 0.7 rule-coverage and promotion exercises and predecessor Evidence; passing tests are conformance evidence only |
 | Self-host declaration and release pin | `.nourd/knowledge/`, `.nourd/nkf-release.json`, `.nourd/tools/nkf/` | Adopted 0.7 Technology bundle promoted through the ordinary public Adopt of the published release, pinned to archive `c5ee783c...3df94f` under repository `NourdApS/Nourd.NKF` with the preserved host-superset integration and the native accepted 0.7 Specification record | Ordinary public Adopt returned `updated` and then `current`; this consolidated account remains partially confirmed |
 | Reviewed graph baseline | `.nourd/knowledge/freshness/baseline.yaml` | Digest-bound whole-root reviewed baseline bound to evaluation policy `nkf.freshness-policy.0.7`, sealed by the live promotion's whole-root review — the deliberate last whole-root review this lineage requires | Sealing verifies conformance and exact ready graph revision; it records semantic review, and it does not confirm this Realization |
 | Neutral authoring and onboarding procedures | `integrations/ai/`, `integrations/onboarding/`, portable skills | Installed 0.7 vendor-neutral protocols and portable skills | Bytes carried by the published archive; repository installation verified by the guidance verifiers |
@@ -768,14 +780,17 @@ Machine-independent hang bounds were subsequently scaled so that the governed
 multi-process exercises fail on genuine hangs rather than on slower hardware.
 That change alters no assertion and no format meaning.
 
-The current NKF 0.7 gate passes 25 test files and 228 tests, deterministic
+The current gate passes 26 test files and 240 tests, deterministic
 checker and adopter reproduction, third-party notice reproduction, the
 complete public projection, and full-bundle self-validation with zero
 diagnostics, with knowledge-proportional test bounds and child-process
-reaping. Its coverage additionally exercises every accepted 0.7 rule
-identifier, the digest-bound baseline with forged-carry refusal, the
-delta-claim closure computation with fail-closed refusals, the 0.6-to-0.7
-delta migration and stepping-stone refusals, both authorized producer
+reaping. Its coverage additionally exercises every accepted 0.71 rule
+identifier including the two conclusion rules, the digest-bound baseline
+with forged-carry refusal, the delta-claim closure computation with
+fail-closed refusals and the tampered-claim refusal, the seal-completing
+conclusion with its excess-delta refusal, the non-breaking 0.7-to-0.71
+upgrade from the exact published archive, stepping-stone refusals naming
+the exact next archives, both authorized producer
 promotion stages against isolated copies of this repository, the review and
 record scaffolds, and the Git transition orchestration as operational
 output. The live promotion that produced this account ran the ordinary

@@ -113,7 +113,7 @@ Before Git-backed work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under native NKF 0.7 frontmatter, a record carries only common orientation plus
+Under native NKF 0.71 frontmatter, a record carries only common orientation plus
 `id` and `type`; Task state, ownership, relationships, Design disposition,
 governance, freshness, and confirmation live in YAML declarations. Preserved
 predecessor sources may retain inert mutable keys only through an exact
@@ -161,7 +161,10 @@ transition also performs the Git act: it refuses a dirty work tree before
 mutation; activation creates the `task/<task_id>` branch and its working
 tree from the clean, up-to-date default branch, materializes gitignored
 governed artifacts there, and opens the draft merge request; conclusion —
-close, defer, or cancel — commits, pushes, marks the request ready, and
+close, defer, or cancel — seals the mechanically-concluded successor
+baseline over its own closed transition delta in the same transaction,
+refusing any excess delta before mutation with the ordinary review-and-seal
+path as recovery, then commits, pushes, marks the request ready, and
 releases the working tree. A failed Git step is reported as one truthful
 `incomplete` operational result without touching the applied knowledge
 change. Git remains operational output: no branch, request, or remote is
@@ -178,8 +181,9 @@ substitutes for the other.
 Use the internal deterministic adopter commands for governed mechanics instead of
 hand-editing: `task` updates stable Task declaration state, regenerates
 lifecycle navigation, applies result and digest consequences without a
-source move or inbound-link rewrite, and performs the Git transition act
-with truthful reporting; `repin` recomputes record and governed-artifact
+source move or inbound-link rewrite, seals the mechanically-concluded
+successor baseline over its own closed transition delta, and performs the
+Git transition act with truthful reporting; `repin` recomputes record and governed-artifact
 digests after edits; `linkify` rewrites plain same-bundle references into
 verified deep links; `refs` exports the identifier-to-path reference map;
 `set` exports the exact accepted release-set member paths, classes, and modes;
@@ -187,7 +191,7 @@ verified deep links; `refs` exports the identifier-to-path reference map;
 judgments prefilled and the computed required fresh set left to the named
 reviewer; `record --scaffold` emits a declaration skeleton with exact digests
 and section heading paths and no semantic values; and `migrate` performs the
-declared 0.6-to-0.7 migration beneath the one public Adopt operation. A
+declared 0.7-to-0.71 upgrade beneath the one public Adopt operation. A
 judgment carries forward only by digest identity under the accepted
 version-delta declaration and the evaluation policy's declared judgment
 dependencies; a delta review claim is admitted only when the

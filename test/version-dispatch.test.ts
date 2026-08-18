@@ -67,8 +67,9 @@ describe("NKF 0.71 version dispatch", () => {
   });
 
   it("fails closed for a 0.6 declaration now that 0.6 left the window", async () => {
-    // contracts/nkf/0.6 still exists on disk, but the checker registers
-    // exactly the {0.7, 0.71} window; 0.6 must fail closed as unsupported.
+    // The 0.6 contract set was removed from the working tree, and the checker
+    // registers exactly the {0.7, 0.71} window; 0.6 must fail closed as
+    // unsupported.
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
       text.replace('nkf_version: "0.71"', 'nkf_version: "0.6"'),
