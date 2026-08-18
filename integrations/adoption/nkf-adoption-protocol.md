@@ -3,12 +3,12 @@
 NKF Version: 0.71
 
 This is the governed procedure by which a repository adopts the current
-recommended NKF release.
-It is process accepted through
-[ADR 0107](../../knowledge/decisions/0107-unified-adopt-operation-and-compatibility-signaling.md).
-It is derived process, not format meaning; the
+recommended NKF release. It is derived process, not format meaning; the
 accepted NKF 0.71 Specification remains the authority when any derived
 instruction conflicts. It is part of the complete versioned set it serves.
+
+This in-repository copy records that the process is accepted through
+[ADR 0107](../../knowledge/decisions/0107-unified-adopt-operation-and-compatibility-signaling.md).
 
 Adoption is separate from release. A release obligates no repository. Each
 repository remains authoritative for its own meaning and compatibility
@@ -54,9 +54,9 @@ NKF 0.7. Adopt observes the repository and selects one internal path:
 An out-of-window repository migrates through immutable published archives as
 stepping stones, each hop using that archive's own bundled adopter with an
 explicit archive and digest: a repository one step below the window steps
-through the published NKF 0.7 archive, and older repositories
-step through their next published archive in turn. The refusal names the exact next stepping-stone
-release; nothing migrates silently.
+through the published NKF 0.7 archive, and older
+repositories step through their next published archive in turn. The refusal
+names the exact next stepping-stone release; nothing migrates silently.
 
 Internal capture, seal, installation, refresh, and upgrade mechanics are not
 public choices. The public outcome remains Adopt.

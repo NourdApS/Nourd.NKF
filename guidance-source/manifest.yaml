@@ -37,3 +37,21 @@ members:
     targets:
       - { path: "integrations/release/nkf-release-protocol.md", stamp: adopted }
       - { path: "distribution/nkf/{version}/integrations/release/nkf-release-protocol.md", stamp: release }
+  - source: integrations/ai/nkf-authoring-protocol.md
+    targets:
+      - { path: "distribution/nkf/{version}/integrations/ai/nkf-authoring-protocol.md", stamp: release }
+  - source: integrations/onboarding/nkf-onboarding-protocol.md
+    targets:
+      - { path: "distribution/nkf/{version}/integrations/onboarding/nkf-onboarding-protocol.md", stamp: release }
+  - source: host-adapters/AGENTS.adapter.md
+    targets:
+      - { path: "distribution/nkf/{version}/host-adapters/AGENTS.adapter.md", stamp: release }
+  - source: host-adapters/CLAUDE.adapter.md
+    targets:
+      - { path: "distribution/nkf/{version}/host-adapters/CLAUDE.adapter.md", stamp: release }
+  - source: host-adapters/GEMINI.adapter.md
+    targets:
+      - { path: "distribution/nkf/{version}/host-adapters/GEMINI.adapter.md", stamp: release }
+  - source: host-adapters/copilot-instructions.adapter.md
+    targets:
+      - { path: "distribution/nkf/{version}/host-adapters/copilot-instructions.adapter.md", stamp: release }

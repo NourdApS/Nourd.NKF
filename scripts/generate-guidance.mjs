@@ -95,7 +95,7 @@ async function frozenVersions(root) {
 // window of the version this repository runs, whose predecessor is the
 // non-self entry in the recommendation's compatibility list. A release
 // emission supersedes the currently published version.
-async function resolvePredecessors(root) {
+async function resolvePredecessors(root, releaseVersion) {
   const raw = await readFile(path.join(root, "release/recommended.json"), "utf8").catch(() => null);
   if (raw === null) return { adopted: null, release: null };
   let recommended;
@@ -104,7 +104,13 @@ async function resolvePredecessors(root) {
   const inWindow = (recommended.compatibility ?? [])
     .map((entry) => entry.from_nkf_version)
     .filter((version) => version !== published);
-  return { adopted: inWindow[inWindow.length - 1] ?? null, release: published ?? null };
+  const priorToPublished = inWindow[inWindow.length - 1] ?? null;
+  // Re-emitting the published version is a faithfulness check, not a new cut:
+  // its predecessor is the one below it, not itself.
+  return {
+    adopted: priorToPublished,
+    release: releaseVersion === published ? priorToPublished : (published ?? null),
+  };
 }
 
 export async function generateGuidance({ projectRoot, releaseVersion, check }) {
@@ -123,7 +129,7 @@ export async function generateGuidance({ projectRoot, releaseVersion, check }) {
   if (manifest?.contract !== "nkf.guidance-source") fail("Unsupported guidance source manifest contract.");
 
   const frozen = await frozenVersions(root);
-  const predecessors = await resolvePredecessors(root);
+  const predecessors = await resolvePredecessors(root, releaseVersion);
   const written = [];
   const mismatched = [];
   for (const member of manifest.members ?? []) {
