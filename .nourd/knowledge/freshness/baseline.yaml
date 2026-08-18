@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: f8919f827252649fb3dd77700d0d2418df554c75c83ee74263d0fda764617092
+  value: aae874cc9dc41faaa049668ffb7a624481552d002bf83b8d6c8e3483611ab200
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -1762,6 +1762,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: e16372d8bdf09783f7b08f502ab537d0efabc31af7a1817e70cbec1f3b3be650
+  - node:
+      kind: document
+      id: document-nkf-0-71-release-notes
+    revision:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
   - node:
       kind: document
       id: document-nkf-0-71-specification
@@ -27378,6 +27384,75 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: document
+      id: document-nkf-0-71-release-notes
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-71-release-notes
+      source:
+        heading:
+          heading_path:
+            - "title: NKF 0.71 Release Notessummary: The publication-ready migration meaning for NKF 0.71, the deliberately small corrective successor to NKF 0.7 — what is new, what breaks, how to adopt, and how to verify — authored as governed Evidence for the publisher to carry into the release body.created_at: 2026-08-18T02:10:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
+    basis_digest:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-71-release-notes
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-71-release-notes
+      source:
+        heading:
+          heading_path:
+            - "title: NKF 0.71 Release Notessummary: The publication-ready migration meaning for NKF 0.71, the deliberately small corrective successor to NKF 0.7 — what is new, what breaks, how to adopt, and how to verify — authored as governed Evidence for the publisher to carry into the release body.created_at: 2026-08-18T02:10:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
+    basis_digest:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-71-release-notes
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-71-release-notes
+      source:
+        heading:
+          heading_path:
+            - "title: NKF 0.71 Release Notessummary: The publication-ready migration meaning for NKF 0.71, the deliberately small corrective successor to NKF 0.7 — what is new, what breaks, how to adopt, and how to verify — authored as governed Evidence for the publisher to carry into the release body.created_at: 2026-08-18T02:10:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
+    basis_digest:
+      algorithm: sha-256
+      value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
+    provenance:
+      performed: true
+  - node:
+      kind: document
       id: document-nkf-0-71-specification
     purpose: change-impact
     state: eligible
@@ -37948,25 +38023,29 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-18T01:19:05.721Z
+  reviewed_at: 2026-08-18T01:24:38.594Z
   claim: semantically-reviewed-delta
-  computed_closure: []
-  performed_set: []
+  computed_closure:
+    - kind: document
+      id: document-nkf-0-71-release-notes
+  performed_set:
+    - kind: document
+      id: document-nkf-0-71-release-notes
   observations:
     - id: review-observation
       subject:
         kind: document
-        id: NKF-031
+        id: document-nkf-0-71-release-notes
       basis:
         node:
           kind: document
-          id: NKF-031
+          id: document-nkf-0-71-release-notes
         source:
           heading:
             heading_path:
-              - "NKF-031: Release The Corrective NKF 0.71"
+              - NKF 0.71 Release Notes
             occurrence: 1
-      finding: "Semantic review of the test-repair delta: the three test files that sourced predecessor member bytes from working-tree paths now build the current archive from the real generated 0.71 release set and take every predecessor byte from the exact published 0.7 archive, and the rebuilt governed test digests were repinned. No knowledge node's meaning changed in this delta."
+      finding: "Fresh semantic review of the release-notes Evidence this delta created: the publication-ready migration meaning states what is new, what breaks, how to adopt, and how to verify truthfully against the accepted 0.71 authority — the non-breaking upgrade, the window slide with exact stepping-stone digests, and the delta-proven promotion — and the repository front page now states the candidate reality beside the published 0.7 facts. No other node's meaning changed in this delta."
   limitations:
-    - "This is an ordinary digest-bound delta review over a governed-artifact-only delta: the computed closure is empty, every judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
+    - "This is an ordinary digest-bound delta review over the release-notes delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
   disputed: false
