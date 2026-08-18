@@ -1787,6 +1787,15 @@ non_records:
         algorithm: sha-256
         value: ac0147c5fe2c613005480811ee1586365787ecb3d9b6c0fe90539536262239f8
       relationships: []
+  - path: evidence/release/nkf-031-nkf-0-71-release-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-0-71-release-audit
+      stable_path: evidence/release/nkf-031-nkf-0-71-release-audit.md
+      digest:
+        algorithm: sha-256
+        value: 3a8307b9a42b15392e73fc5c826402ea694ef6a8e7a6985511473effd534598f
+      relationships: []
   - path: evidence/release/nkf-0.71-release-notes.md
     kind: evidence
     document:
@@ -3076,7 +3085,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: "974cd8189e2f6f51801ffb1b1b693e12d00e7323571d6aa9ea169e53cc844acf"
+      value: "70ca54e6b706cf03a57d1daa1bc72920795852e41dec4c0385e13c73fb56b5fe"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
