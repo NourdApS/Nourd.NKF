@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: ed8db476d7be0450ac0b0eacd7c390eb7c55785fa4d24c9a658bc58dbf0abab9
+  value: 5d788386fc8590222dab52ce159f43c8669880ef1b7da9463941276b0c5b3e3b
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -190,6 +190,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
+  - node:
+      kind: document
+      id: NKF-032
+    revision:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
   - node:
       kind: record
       id: adr-0001
@@ -6060,7 +6066,13 @@ applicability_coverage:
       algorithm: sha-256
       value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: ed8db476d7be0450ac0b0eacd7c390eb7c55785fa4d24c9a658bc58dbf0abab9
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: NKF-031
@@ -6083,7 +6095,13 @@ applicability_coverage:
       algorithm: sha-256
       value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: ed8db476d7be0450ac0b0eacd7c390eb7c55785fa4d24c9a658bc58dbf0abab9
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: NKF-031
@@ -6105,6 +6123,81 @@ applicability_coverage:
     basis_digest:
       algorithm: sha-256
       value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: ed8db476d7be0450ac0b0eacd7c390eb7c55785fa4d24c9a658bc58dbf0abab9
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: NKF-032
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-032
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-032: Adopt The Producer To Published NKF 0.71\"summary: Publish the technically confirmed NKF 0.71 release from the concluded release branch, record the publication as evidence with re-download verification, promote the governed recommendation to it, perform the live post-publication producer promotion through the ordinary public Adopt — the first live promotion proven through the digest-bound delta claim alone — and reconcile the governed record to the promoted reality, delivered as one stacked pull request while both merges remain the Human Product Owner's acts.created_at: 2026-08-18T03:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
+    basis_digest:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-032
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-032
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-032: Adopt The Producer To Published NKF 0.71\"summary: Publish the technically confirmed NKF 0.71 release from the concluded release branch, record the publication as evidence with re-download verification, promote the governed recommendation to it, perform the live post-publication producer promotion through the ordinary public Adopt — the first live promotion proven through the digest-bound delta claim alone — and reconcile the governed record to the promoted reality, delivered as one stacked pull request while both merges remain the Human Product Owner's acts.created_at: 2026-08-18T03:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
+    basis_digest:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-032
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-032
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-032: Adopt The Producer To Published NKF 0.71\"summary: Publish the technically confirmed NKF 0.71 release from the concluded release branch, record the publication as evidence with re-download verification, promote the governed recommendation to it, perform the live post-publication producer promotion through the ordinary public Adopt — the first live promotion proven through the digest-bound delta claim alone — and reconcile the governed record to the promoted reality, delivered as one stacked pull request while both merges remain the Human Product Owner's acts.created_at: 2026-08-18T03:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
+    basis_digest:
+      algorithm: sha-256
+      value: 458f2a053ef5c4c44c6c4896cc3945537a0c77ea68702dd6f62aa6148179ae46
     provenance:
       performed: true
   - node:
@@ -38282,29 +38375,29 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-18T02:15:32.236Z
+  reviewed_at: 2026-08-18T02:21:53.500Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
-      id: NKF-031
+      id: NKF-032
   performed_set:
     - kind: document
-      id: NKF-031
+      id: NKF-032
   observations:
     - id: review-observation
       subject:
         kind: document
-        id: NKF-031
+        id: NKF-032
       basis:
         node:
           kind: document
-          id: NKF-031
+          id: NKF-032
         source:
           heading:
             heading_path:
-              - "NKF-031: Release The Corrective NKF 0.71"
+              - "NKF-032: Adopt The Producer To Published NKF 0.71"
             occurrence: 1
-      finding: "Fresh semantic re-affirmation of the concluded Task over the deterministic close delta: only the declared task-status value changed to completed under the pinned 0.7 adopter's conclusion, the Completion Result and gate were authored and verified before the transition, and this is the final hand-orchestrated post-close reseal this lineage requires — the delivered seal-completing conclusion retires it from the live 0.71 promotion onward. No other node's meaning changed in this delta."
+      finding: "Fresh semantic review of the newly created NKF-032 Task document: the standing Human Direction is recorded verbatim with both of its stated conditions satisfied on the record, the boundaries mirror the referenced adoption precedent, and the scope, plan, criteria, and gate state the directed publication, recommendation, live promotion, reconciliation, and seal-completing close truthfully. No other node's meaning changed in this delta."
   limitations:
-    - "This is an ordinary digest-bound delta review over the deterministic close delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
+    - "This is an ordinary digest-bound delta review over the NKF-032 creation delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
   disputed: false
