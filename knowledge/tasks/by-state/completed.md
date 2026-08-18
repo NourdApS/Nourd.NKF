@@ -19,3 +19,4 @@
 - [NKF-029](../items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md)
 - [NKF-030](../items/NKF-030-repair-the-merged-master-gate-and-stale-navigation.md)
 - [NKF-031](../items/NKF-031-release-the-corrective-nkf-0-71.md)
+- [NKF-032](../items/NKF-032-adopt-the-producer-to-published-nkf-0-71.md)
