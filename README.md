@@ -28,15 +28,16 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.7 is the current accepted, published, and recommended version. Its
+NKF 0.71 is the current accepted, published, recommended, and producer-adopted version. Its
 content-addressed archive and release tag are identified by SHA-256
-`c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f`, published
+`3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13`, published
 as an immutable private prerelease at the technically confirmed release
 commit. This producer repository declares and pins that exact
-recommendation: the producer publicly self-adopted 0.7 through the ordinary
-Adopt operation, the promotion created the native accepted 0.7 Specification
-record and performed the deliberate last whole-root review this lineage
-requires, and repeat public invocations return `current`.
+recommendation: the producer publicly self-adopted 0.71 through the ordinary
+Adopt operation, the promotion created the native accepted 0.71
+Specification record through the first live promotion proven on the
+digest-bound delta claim alone, and repeat public invocations return
+`current`.
 
 NKF 0.7 makes semantic review carry-forward digest-bound and computable,
 confines fresh review to a declared per-rule semantic delta with a
@@ -52,8 +53,8 @@ and its exact release candidate is confirmed by
 [ADR 0129](knowledge/decisions/0129-confirm-the-nkf-0-7-release-candidate.md)
 against a clean independent release audit.
 
-NKF 0.71, the deliberately small corrective successor, is the accepted
-release candidate on this repository: its authority is accepted by
+NKF 0.71 is the deliberately small corrective successor to NKF 0.7, its
+authority accepted by
 [ADR 0131](knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md)
 after a two-round independent audit. It reconciles the 0.7 Specification's
 topology self-contradiction in prose and executable explicitly, corrects
@@ -105,10 +106,10 @@ community-conduct policies remain separate matters.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) (accepted candidate); [NKF 0.7 Specification](knowledge/specifications/nkf-0.7.md) (published) |
+| Read the normative format | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) |
 | Inspect the executable companion | [NKF 0.71 YAML Contract](contracts/nkf/0.71/nkf.yaml) |
 | Inspect the closed structural contracts | [NKF 0.71 Schemas](contracts/nkf/0.71/schemas/) |
-| Adopt the released version | [NKF 0.7 Adoption Protocol](distribution/nkf/0.7/integrations/adoption/nkf-adoption-protocol.md) |
+| Adopt the released version | [NKF 0.71 Adoption Protocol](distribution/nkf/0.71/integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |
 

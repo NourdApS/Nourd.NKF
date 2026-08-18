@@ -104,3 +104,7 @@ native accepted record was created by the live promotion under
 The superseded acceptance at
 [ADR 0127](../decisions/0127-accept-the-nkf-0-7-authority-set.md) remains
 immutable historical provenance.
+
+## NKF 0.71
+
+- [NKF 0.71 — Product And Technology Knowledge Format](nkf-0.71.md)
