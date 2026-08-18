@@ -1,0 +1,28 @@
+# Version-neutral guidance source.
+#
+# No file under guidance-source/ may contain a literal NKF version. Every
+# version reference is the {{nkf_version}} placeholder, resolved once per
+# emission. That is the whole point: an author edits meaning, the generator
+# owns every version, and a stale version label becomes impossible rather
+# than merely unlikely.
+#
+# No emitted tree is ever an input. Each target is written from the source and
+# the target's own version, never by reading a previous version's output.
+#
+# stamp: adopted -> the version this repository has adopted (bundle.nkf_version)
+# stamp: release -> the version being emitted (--version)
+contract: nkf.guidance-source
+version: 1
+members:
+  - source: skills/nkf-authoring/SKILL.md
+    targets:
+      - { path: ".claude/skills/nkf-authoring/SKILL.md", stamp: adopted }
+      - { path: ".agents/skills/nkf-authoring/SKILL.md", stamp: adopted }
+      - { path: "distribution/nkf/{version}/.claude/skills/nkf-authoring/SKILL.md", stamp: release }
+      - { path: "distribution/nkf/{version}/.agents/skills/nkf-authoring/SKILL.md", stamp: release }
+  - source: skills/nkf-onboarding/SKILL.md
+    targets:
+      - { path: ".claude/skills/nkf-onboarding/SKILL.md", stamp: adopted }
+      - { path: ".agents/skills/nkf-onboarding/SKILL.md", stamp: adopted }
+      - { path: "distribution/nkf/{version}/.claude/skills/nkf-onboarding/SKILL.md", stamp: release }
+      - { path: "distribution/nkf/{version}/.agents/skills/nkf-onboarding/SKILL.md", stamp: release }
