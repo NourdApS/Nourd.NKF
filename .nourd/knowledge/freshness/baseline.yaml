@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 6d270662ac47c3cf631723a80a19d9ba8b46283fe8d0f2fb24ab7f08bac694fd
+  value: ed8db476d7be0450ac0b0eacd7c390eb7c55785fa4d24c9a658bc58dbf0abab9
 policy:
   id: nkf.freshness-policy.0.7
   digest:
@@ -189,7 +189,7 @@ node_revisions:
       id: NKF-031
     revision:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
   - node:
       kind: record
       id: adr-0001
@@ -6055,10 +6055,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     basis_digest:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     provenance:
       performed: true
   - node:
@@ -6078,10 +6078,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     basis_digest:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     provenance:
       performed: true
   - node:
@@ -6101,10 +6101,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     basis_digest:
       algorithm: sha-256
-      value: 2eb69179f3f20735ad701d31d1e3b5e72fa85f1c0b3729f295f447726508d102
+      value: ffc2b6bad2e7ec419b41684078fc012a38b2aec61ce059b796879afa4fa0f725
     provenance:
       performed: true
   - node:
@@ -38282,7 +38282,7 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-18T02:10:54.727Z
+  reviewed_at: 2026-08-18T02:15:32.236Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
@@ -38304,7 +38304,7 @@ confirmation:
             heading_path:
               - "NKF-031: Release The Corrective NKF 0.71"
             occurrence: 1
-      finding: "Fresh semantic review of the concluded Task source: the Completion Result states the delivered, exercised, audited, and confirmed 0.71 reality truthfully against every acceptance criterion, and the re-extracted gate classifies all ten mandatory capabilities as proven at their exact verification levels — the topology reconciliation and label pass at data-validity through the two-round authority audit, and the conclusion sealing, delta-only promotion, window signaling, version surfaces, projection verification, and gate at runtime-behaviour through the suite, the isolated exercise, and the independently reproduced acceptance test. No other node's meaning changed in this delta."
+      finding: "Fresh semantic re-affirmation of the concluded Task over the deterministic close delta: only the declared task-status value changed to completed under the pinned 0.7 adopter's conclusion, the Completion Result and gate were authored and verified before the transition, and this is the final hand-orchestrated post-close reseal this lineage requires — the delivered seal-completing conclusion retires it from the live 0.71 promotion onward. No other node's meaning changed in this delta."
   limitations:
-    - "This is an ordinary digest-bound delta review over the completion-authoring delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
+    - "This is an ordinary digest-bound delta review over the deterministic close delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
   disputed: false
