@@ -243,6 +243,44 @@ than as accepted meaning:
   derived-artifact defect, not a specification defect: the accepted meaning is
   already correct.
 
+Four surfaces were found to be byte-locked by the installed NKF 0.71 pin, each
+established by attempting the correction and being refused rather than by
+reading the contract:
+
+| Surface | Refusal |
+| --- | --- |
+| The installed onboarding skill | `repin` fails with "The installed onboarding skill differs". |
+| The `nkf:check:host` chain | The pinned check fails with "The project NKF script chain differs from the exact installed integration". |
+| The `check` chain | `verify-agent-guidance` fails with "package.json script check does not match the accepted command". |
+| Published distribution and generated `public-docs` bytes | Frozen by publication under [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) and [`adr-0132`](../../decisions/0132-confirm-the-nkf-0-71-release-candidate.md). |
+
+This materially sharpens the Problem. The stale label is not merely
+uncorrected: correcting it is actively rejected. The pin makes the shipped
+bytes mandatory for the producer, so a published mistake must be reproduced
+until a successor release replaces it, and the pin also locks the entire
+verification chain, so the producer cannot add the check that would have
+caught it. Both halves of this Task's remedy are therefore only reachable
+through a successor version, which is what NKF 0.8 is for.
+
+Delivered on the `task/NKF-033` branch so far, with the complete gate green at
+each handoff: release-protocol step six corrected to verify whole-set coverage
+with no surviving rule-diff instruction; a new
+[`scripts/verify-version-labels.mjs`](../../../scripts/verify-version-labels.mjs)
+that fails a version literal in a file's own frontmatter description when it
+contradicts that file's declared marker, exempting bytes identical to a frozen
+published member under one stated rule; and
+[`test/version-labels.test.ts`](../../../test/version-labels.test.ts) proving
+the check against the exact NKF 0.71 defect, against a 0.8 tree being cut,
+and against legitimate predecessor mentions in body prose.
+
+Two honest limits are recorded rather than presented as complete. The verifier
+is not wired into `npm run nkf:check`, because the 0.71 pin forbids changing
+the accepted chain; its tests run inside the existing `test` stage, and the
+wiring belongs to the accepted 0.8 integration. And the verifier currently
+checks zero live files, because every description-bearing guidance member is
+frozen-identical today; its activation on a version being cut is proven by
+fixture, not by the live tree.
+
 ## Completion Result
 
 Not concluded.

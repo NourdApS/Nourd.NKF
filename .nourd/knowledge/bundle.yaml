@@ -1749,7 +1749,7 @@ non_records:
       stable_path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
       digest:
         algorithm: sha-256
-        value: "36037460c2c868c3a14cbdfdb22ed4b70f223f2f66f04651eee8085fb16ac6dd"
+        value: "f4e57e54003c23418eb63f6b45d7cc4de6c59a256ea08a674edb1687a75b4c59"
       state:
         vocabulary: task-status
         value: "active"
@@ -2534,7 +2534,7 @@ governed_artifacts:
     path: package.json
     digest:
       algorithm: sha-256
-      value: 522e65de62c21b48deca7fb3b3c220456004a6c4532bcdede43888f32707f597
+      value: "522e65de62c21b48deca7fb3b3c220456004a6c4532bcdede43888f32707f597"
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-public-docs-agents-skills-nkf-onboarding-skill-md

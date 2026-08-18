@@ -49,10 +49,13 @@ substitutes for those two facts.
    validate against that version's frozen checker; that is correct, because
    the repository has not adopted the new version yet.
 6. Obtain an independent audit of the exact set, including verification
-   that the guidance review of step four was performed against the actual
-   rule diff, repair material findings, and obtain the separate Human
-   Product Owner confirmation that the exact implementation realizes the
-   accepted authority pair.
+   that the guidance review of step four covered the whole versioned set —
+   the enumerated member list is present, each member carries a reviewed
+   digest, and every correction is recorded — repair material findings, and
+   obtain the separate Human Product Owner confirmation that the exact
+   implementation realizes the accepted authority pair. A review recording
+   only the version's rule diff does not satisfy step four and the audit
+   rejects it.
 7. Produce one content-addressed release archive and manifest for the exact
    confirmed set, verify it by re-download and digest comparison, and retain
    the verification as Evidence. The version is released when this step
