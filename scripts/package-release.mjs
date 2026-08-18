@@ -13,7 +13,7 @@ import {
   validateReleaseManifest,
   verifyReleaseArchive,
 } from "./release/core.mjs";
-import { ACCEPTED_0_7_ARTIFACT_DIGESTS } from "./release/config.mjs";
+import { ACCEPTED_0_71_ARTIFACT_DIGESTS } from "./release/config.mjs";
 import {
   readReleaseSet,
   reproduceReleaseMembers,
@@ -76,7 +76,7 @@ const memberEntries = releaseEntriesForVersion("0.71", releaseSet);
 const entries = await readReleaseEntries(repositoryRoot, memberEntries);
 entries.set("dist/nourd-nkf-checker.mjs", checkerSecond);
 for (const [artifactPath, expected] of Object.entries(
-  ACCEPTED_0_7_ARTIFACT_DIGESTS,
+  ACCEPTED_0_71_ARTIFACT_DIGESTS,
 )) {
   if (sha256(entries.get(artifactPath)) !== expected) {
     throw new Error(`Accepted release artifact digest mismatch: ${artifactPath}`);

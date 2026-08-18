@@ -27404,7 +27404,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: aae874cc9dc41faaa049668ffb7a624481552d002bf83b8d6c8e3483611ab200
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-release-notes
@@ -27427,7 +27433,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: aae874cc9dc41faaa049668ffb7a624481552d002bf83b8d6c8e3483611ab200
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-release-notes
@@ -27450,7 +27462,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 49dda0c5d9472a8d47c474b1897001898bb9a4daf437659f83b6f6dcf2fabc83
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: aae874cc9dc41faaa049668ffb7a624481552d002bf83b8d6c8e3483611ab200
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-71-specification
@@ -38023,29 +38041,25 @@ confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-08-18T01:24:38.594Z
+  reviewed_at: 2026-08-18T01:31:34.613Z
   claim: semantically-reviewed-delta
-  computed_closure:
-    - kind: document
-      id: document-nkf-0-71-release-notes
-  performed_set:
-    - kind: document
-      id: document-nkf-0-71-release-notes
+  computed_closure: []
+  performed_set: []
   observations:
     - id: review-observation
       subject:
         kind: document
-        id: document-nkf-0-71-release-notes
+        id: NKF-031
       basis:
         node:
           kind: document
-          id: document-nkf-0-71-release-notes
+          id: NKF-031
         source:
           heading:
             heading_path:
-              - NKF 0.71 Release Notes
+              - "NKF-031: Release The Corrective NKF 0.71"
             occurrence: 1
-      finding: "Fresh semantic review of the release-notes Evidence this delta created: the publication-ready migration meaning states what is new, what breaks, how to adopt, and how to verify truthfully against the accepted 0.71 authority — the non-breaking upgrade, the window slide with exact stepping-stone digests, and the delta-proven promotion — and the repository front page now states the candidate reality beside the published 0.7 facts. No other node's meaning changed in this delta."
+      finding: "Semantic review of the packager-repair delta: the release packager's accepted-artifact validation was retargeted from the predecessor digest map to the 0.71 map — the missed fifth literal of the packaging surface — and the governed script digest repinned. No knowledge node's meaning changed in this delta."
   limitations:
-    - "This is an ordinary digest-bound delta review over the release-notes delta: the single fresh judgment covers the computed closure exactly, every other judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
+    - "This is an ordinary digest-bound delta review over a governed-artifact-only delta: the computed closure is empty, every judgment is carried by digest identity, and no whole-root re-reading was performed or claimed."
   disputed: false
