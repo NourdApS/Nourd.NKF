@@ -1759,6 +1759,22 @@ non_records:
         - NKF-031
         - NKF-032
       relationships: []
+  - path: tasks/items/NKF-034-qualify-accepted-records-with-later-findings.md
+    kind: task
+    document:
+      id: NKF-034
+      stable_path: tasks/items/NKF-034-qualify-accepted-records-with-later-findings.md
+      digest:
+        algorithm: sha-256
+        value: "34844c1f75b3d881d186a798d45087cc4d6cbffa49188319ef039ecca3ac96d4"
+      state:
+        vocabulary: task-status
+        value: "deferred"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for the mechanism's Product meaning and the authority boundary between observation and consequence; Claude technical reviewer under explicit delegation for contract derivation, checker support, fixtures, and migration within the confirmed boundaries
+      related_tasks:
+        - NKF-033
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md

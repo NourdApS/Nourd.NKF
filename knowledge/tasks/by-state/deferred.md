@@ -9,3 +9,4 @@
 - [NKF-016](../items/NKF-016-deliver-acceptance-binding-verification.md)
 - [NKF-018](../items/NKF-018-stabilize-volatile-onboarding-inputs.md)
 - [NKF-021](../items/NKF-021-task-scope-gate.md)
+- [NKF-034](../items/NKF-034-qualify-accepted-records-with-later-findings.md)
