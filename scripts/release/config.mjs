@@ -80,6 +80,22 @@ export const ACCEPTED_0_7_ARTIFACT_DIGESTS = Object.freeze({
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
 });
 
+export const ACCEPTED_0_71_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.71.md": "ec6d7fd733a989eb86580bd3a9d77405d3c02d5402429190ad8d171c4414ae98",
+  "contracts/nkf/0.71/nkf.yaml": "65b5bec3dd16cd1872216b2dc17acbe77f1a363e76112f675a271e337cf6ec1a",
+  "contracts/nkf/0.71/freshness-policy.yaml": "20c7b5f4e34f88da6c8365a59cee913020263c2c4ab36796602a2a7cb0ab1ae4",
+  "contracts/nkf/0.71/version-delta.yaml": "21089afc8155a98410960e2fa7cf19344e1e5ca010095a0f7975dc783d730c01",
+  "contracts/nkf/0.71/schemas/bundle.schema.json": "30370bcfadd8c77dbf1b31ccd5a6d91d30c2df20115690a7ddac5c0ebcd1e0f4",
+  "contracts/nkf/0.71/schemas/record.schema.json": "bbb6f49efb345a1999a37b673974728c3b083d3d9172ccd34e3eb13c59b5bf8a",
+  "contracts/nkf/0.71/schemas/graph-baseline.schema.json": "6c9f77452153d90fd49d17140675ac7d7b78ba05ee48854a3c42fd297aeab220",
+  "contracts/nkf/0.71/schemas/freshness-receipt.schema.json": "02e67f321dd8570812e7ed6fd372bcc7e7c8dbe357f5aa4cbe54bf36ecdcd99f",
+  "contracts/nkf/0.71/schemas/freshness-policy.schema.json": "b2b0a8940da40cf4e3408a36c62bd624277f76ebfd49a853c24b268c6beb8db6",
+  "contracts/nkf/0.71/schemas/release-manifest.schema.json": "c55cbb7d5b726a0520f2c362f0dc4ea18f72c3287fe7e7a9d5baff6d3d47503b",
+  "contracts/nkf/0.71/schemas/validation-result.schema.json": "61e0f57ec073f42eca91e1037603c0d6e71eb5af543a58599b6f93b7c5fc194a",
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
+});
+
 export const RELEASE_REPOSITORY = "NourdApS/Nourd.NKF";
 
 // Every pre-stable recommendation publishes under the same channel terms;
@@ -151,6 +167,37 @@ export const RECOMMENDED_RELEASE_BINDINGS = Object.freeze({
         migration_required: false,
         summary:
           "NKF 0.6 refreshes the exact recommended release and integration without semantic migration.",
+      }),
+    ]),
+  }),
+  "0.71": Object.freeze({
+    acceptingDecisionPath:
+      "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md",
+    archiveSha256:
+      "3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13",
+    sourceCommit: "8727ac6ebedc61482bf8f90c546f9bf179d9f463",
+    checkerSha256:
+      "7f84501e47072f12e48c0f0222425f9027cdb9a4387b77f53c40f7a71cfde4a6",
+    adopterSha256:
+      "fe8945e2edfc5492f4f1cbbc4c2ca6ec8bc02626ea86a92d311edfd0d10e243d",
+    authorityMarkdownSha256:
+      "ec6d7fd733a989eb86580bd3a9d77405d3c02d5402429190ad8d171c4414ae98",
+    authorityExecutableSha256:
+      "65b5bec3dd16cd1872216b2dc17acbe77f1a363e76112f675a271e337cf6ec1a",
+    compatibility: Object.freeze([
+      Object.freeze({
+        from_nkf_version: "0.7",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.7 upgrades to NKF 0.71 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.71",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.71 refreshes the exact recommended release and integration without semantic migration.",
       }),
     ]),
   }),

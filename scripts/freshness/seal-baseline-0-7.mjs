@@ -1,10 +1,11 @@
-// NKF 0.7 digest-bound review and seal.
+// NKF 0.7 and 0.71 digest-bound review and seal.
 //
 // Carry-forward is computed here from digest identity alone; the reviewer
 // receives carried judgments prefilled with provenance and performs only the
 // computed required set. The seal refuses a delta claim whose performed set
 // does not contain the recomputed closure. This module also powers the
-// adopter's `review --scaffold` operation.
+// adopter's `review --scaffold` operation and the deterministic
+// Task-transition conclusion seal.
 import { spawnSync } from "node:child_process";
 import { lstat, mkdir, readFile, readdir, realpath, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -149,12 +150,20 @@ const nodeKey07 = (node) => jcs(node);
 const decisionDeclarationDigest = (declaration) =>
   sha256Hex(Buffer.from(jcs(normalizedProjectionValue(declaration)), "utf8"));
 
-async function candidateGraph07(project, checkerPath) {
+async function projectSealVersion(project) {
+  const bundle = YAML.parse(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  if (!["0.7", "0.71"].includes(bundle?.nkf_version)) {
+    fail(`The digest-bound review and seal support exactly NKF 0.7 and NKF 0.71; the bundle declares ${bundle?.nkf_version}.`);
+  }
+  return { bundle, nkfVersion: bundle.nkf_version };
+}
+
+async function candidateGraph07(project, checkerPath, expectedVersion) {
   const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8" });
   if (run.status !== 0) fail(`The pre-review candidate does not conform: ${run.stderr || run.stdout}`);
   const result = JSON.parse(run.stdout);
-  if (result.nkf_version !== "0.7" || result.conformance !== "passed" || result.knowledge_graph?.policy?.binding !== "verified") {
-    fail("The checker did not produce a conformant, policy-bound NKF 0.7 candidate graph.");
+  if (result.nkf_version !== expectedVersion || result.conformance !== "passed" || result.knowledge_graph?.policy?.binding !== "verified") {
+    fail(`The checker did not produce a conformant, policy-bound NKF ${expectedVersion} candidate graph.`);
   }
   return result;
 }
@@ -213,8 +222,8 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
   const project = await realpath(path.resolve(projectRoot));
   const checkerPath = path.resolve(checker);
   const target = path.resolve(reviewPath);
-  const result = await candidateGraph07(project, checkerPath);
-  const bundle = YAML.parse(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const { bundle, nkfVersion } = await projectSealVersion(project);
+  const result = await candidateGraph07(project, checkerPath, nkfVersion);
   const records = await declarations(project);
   const recordsById = new Map(records.map((record) => [record.id, record]));
   const documentsById = new Map(
@@ -337,7 +346,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
       }));
   const review = {
     contract: "nkf.semantic-review-input",
-    nkf_version: "0.7",
+    nkf_version: nkfVersion,
     stage,
     reviewer: { kind: "agent", id: "REVIEWER_ID_REQUIRED" },
     reviewed_at: "REVIEWED_AT_UTC_MILLISECOND_REQUIRED",
@@ -363,6 +372,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
 export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versionDeltaDigest }) {
   const project = await realpath(path.resolve(projectRoot));
   const checkerPath = path.resolve(checker);
+  const { bundle, nkfVersion } = await projectSealVersion(project);
   const review = YAML.parse(await readFile(path.resolve(reviewPath), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
   const expected = [
     "contract", "nkf_version", "stage", "reviewer", "reviewed_at", "claim", "disputed",
@@ -372,12 +382,11 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   exactObject(review, expected, "review");
   const deltaStage = review.stage === "delta";
   if (
-    review.contract !== "nkf.semantic-review-input" || review.nkf_version !== "0.7" ||
+    review.contract !== "nkf.semantic-review-input" || review.nkf_version !== nkfVersion ||
     (deltaStage ? review.claim !== "semantically-reviewed-delta" : review.stage !== "whole-root" || review.claim !== "semantically-reviewed-whole-root") ||
     review.disputed !== false
   ) fail("The completed review has the wrong contract, version, stage, claim, or dispute state.");
-  const result = await candidateGraph07(project, checkerPath);
-  const bundle = YAML.parse(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const result = await candidateGraph07(project, checkerPath, nkfVersion);
   const records = await declarations(project);
   const recordsById = new Map(records.map((record) => [record.id, record]));
   const revisionByNode = new Map(result.nodes.map((entry) => [nodeKey07(entry.node), entry.revision.value]));
@@ -451,7 +460,7 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   }));
   const baseline = {
     contract: "nkf.graph-baseline",
-    nkf_version: "0.7",
+    nkf_version: nkfVersion,
     bundle: bundle.id,
     profile: bundle.root.profile,
     graph_revision: result.knowledge_graph.summary?.candidate_graph_revision ?? result.knowledge_graph.candidate_graph_revision,
@@ -506,16 +515,44 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   };
 }
 
-// Mechanical 0.6-to-0.7 baseline shape conversion. It rewrites structure
-// only: every predecessor judgment gains its judged node revision from the
-// predecessor's digested node-revision map, carried provenance naming the
-// predecessor reviewer, and the accepted version-delta binding. It changes
-// no judgment value; the following review and seal compute real
-// carry-forward against the candidate.
-export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest, policyDigest }) {
+// Mechanical baseline shape conversion. It rewrites structure only: every
+// predecessor judgment keeps or gains carried provenance naming the exact
+// performing graph revision and reviewer, and the baseline rebinds the
+// successor policy and accepted version-delta declaration. It changes no
+// judgment value; the following review and seal compute real carry-forward
+// against the candidate. The default target keeps the exact 0.6-to-0.7 mode;
+// the 0.71 target converts a confirmed 0.7 baseline to the digest-bound
+// 0.71 contract.
+export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest, policyDigest, targetVersion = "0.7" }) {
   const project = await realpath(path.resolve(projectRoot));
   const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
   const baseline = YAML.parse(await readFile(baselinePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  if (targetVersion === "0.71") {
+    if (baseline.nkf_version === "0.71") return { state: "already-0.71" };
+    if (baseline.nkf_version !== "0.7") fail("Baseline conversion to NKF 0.71 supports exactly the confirmed NKF 0.7 predecessor.");
+    const carried = {
+      carried: {
+        performed_in_graph_revision: baseline.graph_revision,
+        performing_reviewer: baseline.confirmation.reviewer,
+      },
+    };
+    for (const entry of baseline.applicability_coverage ?? []) {
+      entry.provenance = entry.provenance?.carried !== undefined
+        ? { carried: structuredClone(entry.provenance.carried) }
+        : structuredClone(carried);
+    }
+    for (const entry of baseline.decision_classifications ?? []) {
+      entry.provenance = entry.provenance?.carried !== undefined
+        ? { carried: structuredClone(entry.provenance.carried) }
+        : structuredClone(carried);
+    }
+    baseline.nkf_version = "0.71";
+    baseline.policy = { id: "nkf.freshness-policy.0.71", digest: { algorithm: "sha-256", value: policyDigest } };
+    baseline.version_delta = { contract: "nkf.version-delta", digest: { algorithm: "sha-256", value: versionDeltaDigest } };
+    await writeFile(baselinePath, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
+    return { state: "converted", judgments: (baseline.applicability_coverage ?? []).length };
+  }
+  if (targetVersion !== "0.7") fail("Baseline shape conversion supports exactly the NKF 0.7 and NKF 0.71 targets.");
   if (baseline.nkf_version === "0.7") return { state: "already-0.7" };
   if (baseline.nkf_version !== "0.6") fail("Baseline shape conversion supports exactly the NKF 0.6 predecessor.");
   const revisions = new Map(
@@ -547,4 +584,143 @@ export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest,
   baseline.promotion_reconciliation = [];
   await writeFile(baselinePath, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
   return { state: "converted", judgments: (baseline.applicability_coverage ?? []).length };
+}
+
+// The deterministic Task-transition conclusion seal (NKF 0.71). The
+// transition already staged its declared state change; this seal recomputes
+// the exact candidate graph, refuses any graph delta beyond the closed
+// transition vocabulary, carries every judgment with exact performing
+// provenance, marks the transitioned Task node's judgments with the exact
+// transition, and confirms the successor baseline with the literal
+// `mechanically-concluded` claim. It performs zero judgments and supplies no
+// semantic review.
+export async function sealConclusion0_71({ projectRoot, checker, task, fromState, toState }) {
+  const project = await realpath(path.resolve(projectRoot));
+  const checkerPath = path.resolve(checker);
+  const { bundle, nkfVersion } = await projectSealVersion(project);
+  if (nkfVersion !== "0.71") {
+    fail("The mechanical Task-transition conclusion seal supports exactly NKF 0.71; the ordinary review-and-seal path covers every other version.");
+  }
+  const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
+  const predecessorBytes = await readFile(baselinePath).catch(() => null);
+  if (predecessorBytes === null) {
+    fail("The mechanical Task-transition conclusion requires the confirmed predecessor reviewed baseline; the ordinary review-and-seal path is the recovery.");
+  }
+  const predecessorBaseline = YAML.parse(predecessorBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  if (predecessorBaseline?.contract !== "nkf.graph-baseline" || predecessorBaseline?.nkf_version !== "0.71") {
+    fail("The mechanical Task-transition conclusion requires a confirmed native NKF 0.71 predecessor baseline; the ordinary review-and-seal path is the recovery.");
+  }
+  const records = await declarations(project);
+  const result = await candidateGraph07(project, checkerPath, "0.71");
+  const taskNode = { kind: "document", id: task };
+  const taskKey = nodeKey07(taskNode);
+  const priorRevisions = new Map(
+    (predecessorBaseline.node_revisions ?? []).map((entry) => [nodeKey07(entry.node), entry.revision?.value]),
+  );
+  const candidateRevisions = new Map(result.nodes.map((entry) => [nodeKey07(entry.node), entry.revision.value]));
+  const excess = [];
+  for (const [key, revision] of candidateRevisions) {
+    if (!priorRevisions.has(key)) excess.push(`added node ${key}`);
+    else if (priorRevisions.get(key) !== revision && key !== taskKey) excess.push(`changed node ${key}`);
+  }
+  for (const key of priorRevisions.keys()) {
+    if (!candidateRevisions.has(key)) excess.push(`removed node ${key}`);
+  }
+  if (!candidateRevisions.has(taskKey)) excess.push(`missing transitioned Task node ${taskKey}`);
+  const candidateEdges = normalizedEdges(bundle, records);
+  if (jcs(candidateEdges) !== jcs(predecessorBaseline.authored_edges ?? [])) excess.push("changed authored edges");
+  if (jcs(bundle.external_dependencies ?? []) !== jcs(predecessorBaseline.external_dependencies ?? [])) {
+    excess.push("changed external dependencies");
+  }
+  if (jcs(bundle.authority_inputs ?? []) !== jcs(predecessorBaseline.authority_inputs ?? [])) {
+    excess.push("changed authority inputs");
+  }
+  if (excess.length > 0) {
+    fail(
+      "The mechanical Task-transition conclusion refuses a graph delta beyond the closed transition vocabulary: "
+      + excess.sort((left, right) => left.localeCompare(right, "en")).join(", ")
+      + ". Complete an ordinary whole-root or delta semantic review and seal instead.",
+    );
+  }
+  const transition = { task, from_state: fromState, to_state: toState };
+  const applicability = (predecessorBaseline.applicability_coverage ?? []).map((entry) => {
+    const key = nodeKey07(entry.node);
+    const revision = { algorithm: "sha-256", value: candidateRevisions.get(key) };
+    return {
+      ...structuredClone(entry),
+      revision,
+      provenance: {
+        ...carriedProvenance(entry, predecessorBaseline),
+        ...(key === taskKey ? { transition: structuredClone(transition) } : {}),
+      },
+    };
+  });
+  const taskJudgment = (predecessorBaseline.applicability_coverage ?? []).find(
+    (entry) => nodeKey07(entry.node) === taskKey,
+  );
+  if (taskJudgment === undefined) {
+    fail("The predecessor baseline carries no judgment for the transitioned Task node; the ordinary review-and-seal path is the recovery.");
+  }
+  const classifications = (predecessorBaseline.decision_classifications ?? []).map((entry) => ({
+    ...structuredClone(entry),
+    provenance: carriedProvenance(entry, predecessorBaseline),
+  }));
+  const baseline = {
+    contract: "nkf.graph-baseline",
+    nkf_version: "0.71",
+    bundle: bundle.id,
+    profile: bundle.root.profile,
+    graph_revision: result.knowledge_graph.summary?.candidate_graph_revision ?? result.knowledge_graph.candidate_graph_revision,
+    policy: { id: result.knowledge_graph.policy.identity, digest: result.knowledge_graph.policy.digest },
+    version_delta: structuredClone(predecessorBaseline.version_delta),
+    node_revisions: result.nodes.map((entry) => ({ node: entry.node, revision: entry.revision })),
+    authored_edges: candidateEdges,
+    external_dependencies: bundle.external_dependencies ?? [],
+    authority_inputs: bundle.authority_inputs ?? [],
+    relationship_coverage: structuredClone(predecessorBaseline.relationship_coverage ?? []),
+    applicability_coverage: applicability,
+    decision_classifications: classifications,
+    promotion_reconciliation: structuredClone(predecessorBaseline.promotion_reconciliation ?? []),
+    confirmation: {
+      reviewer: { kind: "agent", id: "task-transition-operator" },
+      reviewed_at: new Date().toISOString(),
+      claim: "mechanically-concluded",
+      transition: {
+        ...structuredClone(transition),
+        predecessor_graph_revision: structuredClone(predecessorBaseline.graph_revision),
+      },
+      observations: [{
+        id: "transition-conclusion-observation",
+        subject: taskNode,
+        basis: structuredClone(taskJudgment.basis),
+        finding: `The deterministic Task transition ${task} ${fromState} -> ${toState} concluded mechanically: every judgment carried, zero judgments performed.`,
+      }],
+      limitations: [
+        `This is a mechanical conclusion of the ${task} ${fromState}-to-${toState} transition carrying every prior judgment with zero fresh semantic review; any semantic doubt requires the ordinary whole-root or delta semantic review and seal.`,
+      ],
+      disputed: false,
+    },
+  };
+  await safeDirectory(project, [".nourd", "knowledge"], false);
+  await safeDirectory(project, [".nourd", "knowledge", "freshness"], true);
+  const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
+  await writeFile(baselinePath, bytes);
+  const sealed = await candidateGraph07(project, checkerPath, "0.71");
+  const sealedRevision = sealed.knowledge_graph.summary?.candidate_graph_revision ?? sealed.knowledge_graph.candidate_graph_revision;
+  if (sealedRevision?.value !== baseline.graph_revision.value) {
+    fail("The sealed conclusion baseline does not bind the exact candidate graph revision.");
+  }
+  return {
+    state: "concluded",
+    claim: "mechanically-concluded",
+    task,
+    from_state: fromState,
+    to_state: toState,
+    graph_revision: baseline.graph_revision.value,
+    predecessor_graph_revision: predecessorBaseline.graph_revision.value,
+    carried: applicability.length,
+    performed: 0,
+    reviewer: baseline.confirmation.reviewer,
+    reviewed_at: baseline.confirmation.reviewed_at,
+  };
 }

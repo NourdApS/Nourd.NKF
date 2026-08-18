@@ -15,9 +15,11 @@ const {
 } = release;
 import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
-// The 0.7 fixture archive uses the exact real release-set members from the
-// working tree, so manifest bindings, licensing digests, and third-party
-// coverage verify against genuine bytes.
+// The predecessor 0.7 fixture archive uses the exact real release-set
+// members from the working tree, so manifest bindings, licensing digests,
+// and third-party coverage verify against genuine bytes; the 0.71 release
+// set arrives with the later release task, and the substituted 0.71
+// candidate archive is exercised by the adopter suite.
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const releaseSetModule = await import("../scripts/release/release-set.mjs");
 const releaseSet = await releaseSetModule.readReleaseSet(repositoryRoot, "0.7");
@@ -30,11 +32,14 @@ function fixtureMemberEntries() {
 }
 
 async function releaseFixture() {
-  const entries = new Map<string, Buffer>();
-  for (const member of releaseSet.members) {
-    if (member.path === "release-manifest.json") continue;
-    entries.set(member.path, await readFile(path.join(repositoryRoot, member.path)));
-  }
+  // Predecessor member bytes come from the exact published 0.7 archive; the
+  // working tree no longer carries the predecessor projection bytes.
+  const archiveBytes = await readFile(path.join(
+    repositoryRoot,
+    ".nourd/tools/nkf/releases/nourd-nkf-sha256-c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f.tar",
+  ));
+  const entries = inspectUstar(archiveBytes) as Map<string, Buffer>;
+  entries.delete("release-manifest.json");
   const schema = entries.get("contracts/nkf/0.7/schemas/release-manifest.schema.json")!;
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),

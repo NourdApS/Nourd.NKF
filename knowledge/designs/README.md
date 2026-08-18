@@ -67,6 +67,7 @@ establishes it.
 - [Native Record Serialization](items/native-record-serialization.md)
 - [NKF 0.6 Corrective Release And Open-Source Licensing](items/nkf-0-6-corrective-release-and-open-source-licensing.md)
 - [NKF 0.7 Verifiable Delta Review](items/nkf-0-7-verifiable-delta-review.md)
+- [NKF 0.71 Corrective Successor](items/nkf-0-71-corrective-successor.md)
 - [NKF Freshness And Deterministic Knowledge Graph](items/freshness-and-deterministic-knowledge-graph.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](items/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](items/presentation-guidance.md)

@@ -66,9 +66,41 @@ sequenceDiagram
 ```
 
 The result binds the checker, contracts, selected profile, observed snapshot,
-phases, diagnostics, and conformance. Only the latest result is kept in
-`.nourd`; historical audit or publication evidence belongs in governed
-Evidence when the project needs to retain it.
+phases, diagnostics, and conformance. Only the latest validation result is
+kept in `.nourd`; freshness receipts are append-only operational state, and
+historical audit or publication evidence belongs in governed Evidence when
+the project needs to retain it.
+
+## Reviewed Baseline And Review Claims
+
+`.nourd/knowledge/freshness/baseline.yaml` is the committed digest-bound
+record of the last semantic review. It binds the exact graph revision, policy
+digest, the accepted version-delta declaration digest, every node revision,
+relationship-category coverage, applicability judgments, and one
+confirmation. Every judgment binds the exact SHA-256 revision of the judged
+node and the exact digest of its cited basis, and is either `performed` —
+fresh in this baseline — or `carried`. Carrying is computed, never asserted:
+a judgment carries only while the judged revision, its basis digest, and
+every rule it depends on are unchanged under the accepted version-delta
+declaration, which classifies every checker rule between two adjacent
+versions as `identical`, `mechanically-transformable`, or `semantically-new`.
+
+The confirmation makes exactly one of three claims:
+
+| Claim | Meaning | Fresh Review Performed |
+| --- | --- | --- |
+| `semantically-reviewed-whole-root` | A named reviewer judged every node and relationship category | Everything |
+| `semantically-reviewed-delta` | A named reviewer judged the exact computed required-review closure; everything else carried by digest identity | The computed closure, verifiably contained in the performed set |
+| `mechanically-concluded` | A deterministic Task state transition resealed the baseline over exactly its own closed delta | Nothing; every judgment carried |
+
+The checker refuses a delta review claim whose performed set does not contain
+the computed closure, and refuses a mechanically-concluded claim whose graph
+delta exceeds the closed transition vocabulary; the ordinary
+review-and-seal path is the recovery. A mechanically-concluded conclusion
+supplies no semantic judgment — the nearest predecessor baseline carrying a
+semantic claim remains the semantic provenance. The whole-root claim remains
+valid at any time and is the recovery path whenever completeness is missing
+or disputed.
 
 ## Acceptance Confirmation And Conformance
 

@@ -30,24 +30,30 @@ Product and Technology use the same navigable lifecycle envelope:
 
 ```mermaid
 flowchart TB
-  MAP["Canonical Knowledge Map"] --> TASKS["Tasks By State"]
-  MAP --> DESIGNS["Designs By Disposition"]
+  MAP["Canonical Knowledge Map"] --> TASKS["Task Items And By-State Indexes"]
+  MAP --> DESIGNS["Design Items And By-Disposition Indexes"]
   MAP --> DECISIONS["Decisions"]
   MAP --> SPECS["Specifications"]
   MAP --> REALIZATIONS["Realizations"]
   MAP --> CURRENT["Consolidated Current System"]
   MAP --> EVIDENCE["Evidence Areas"]
   REALIZATIONS --> CURRENT
-  REALIZATIONS --> SUPPORTING["Supporting Current Realizations"]
+  REALIZATIONS --> ITEMS["Realization Items"]
 ```
 
 `README.md` is the only canonical map. Its managed `NKF Navigation` block
 links the profile root and required lifecycle entry points exactly once;
-project-owned content outside that block remains project-owned. Tasks are
-placed and indexed by `task_status`, Designs by `design_disposition`, and
-Decisions, Specifications, and current Realizations by their native record
-declarations. The checker continuously verifies this topology; it is not only
-an onboarding template.
+project-owned content outside that block remains project-owned. Task, Design,
+and Realization sources live at neutral stable paths — `tasks/items/`,
+`designs/items/`, and `realizations/items/` beside the single consolidated
+`realizations/current-system.md`. Generated `tasks/by-state/` and
+`designs/by-disposition/` indexes project each declared `task-status` and
+`design-disposition`; Decisions, Specifications, and Realization items are
+indexed by their native record declarations. A stable path or living
+identifier never asserts a version, lifecycle state, disposition, or
+currency, and a lifecycle transition changes only declaration state and
+generated navigation — the canonical Markdown source never moves. The checker
+continuously verifies this topology; it is not only an onboarding template.
 
 ## Common And Concrete Profiles
 

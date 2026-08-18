@@ -27,10 +27,10 @@ export function adopterBuildOptions(outputPath) {
       ".yaml": "text",
     },
     plugins: [{
-      name: "embedded-nkf-0.6-contract",
+      name: "embedded-nkf-0.7-contract",
       setup(context) {
         context.onResolve(
-          { filter: /^nkf:predecessor-0\.6$/ },
+          { filter: /^nkf:predecessor-0\.7$/ },
           (argumentsValue) => ({
             path: argumentsValue.path,
             namespace: "nkf-embedded-contract",
@@ -40,15 +40,17 @@ export function adopterBuildOptions(outputPath) {
           { filter: /.*/, namespace: "nkf-embedded-contract" },
           async () => {
             const paths = [
-              "knowledge/specifications/nkf-0.6-revision-3.md",
-              "contracts/nkf/0.6/revision-3/nkf.yaml",
-              "contracts/nkf/0.6/freshness-policy.yaml",
-              "contracts/nkf/0.6/schemas/bundle.schema.json",
-              "contracts/nkf/0.6/schemas/record.schema.json",
-              "contracts/nkf/0.6/schemas/graph-baseline.schema.json",
-              "contracts/nkf/0.6/schemas/freshness-receipt.schema.json",
-              "contracts/nkf/0.6/schemas/freshness-policy.schema.json",
-              "contracts/nkf/0.6/schemas/validation-result.schema.json",
+              "knowledge/specifications/nkf-0.7.md",
+              "contracts/nkf/0.7/nkf.yaml",
+              "contracts/nkf/0.7/freshness-policy.yaml",
+              "contracts/nkf/0.7/version-delta.yaml",
+              "contracts/nkf/0.7/schemas/bundle.schema.json",
+              "contracts/nkf/0.7/schemas/record.schema.json",
+              "contracts/nkf/0.7/schemas/graph-baseline.schema.json",
+              "contracts/nkf/0.7/schemas/freshness-receipt.schema.json",
+              "contracts/nkf/0.7/schemas/freshness-policy.schema.json",
+              "contracts/nkf/0.7/schemas/validation-result.schema.json",
+              "contracts/nkf/0.7/schemas/release-manifest.schema.json",
             ];
             const entries = Object.fromEntries(
               await Promise.all(paths.map(async (relative) => [

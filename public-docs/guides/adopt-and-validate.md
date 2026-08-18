@@ -2,10 +2,10 @@
 
 NKF has one public operation: **Adopt**. The same invocation brings a supported
 repository to the current governed recommended release whether it is new to
-NKF, already on NKF 0.1 through 0.5, missing integration, behind within NKF
-0.6, or already current.
+NKF, on the supported predecessor NKF 0.7, missing integration, behind within
+NKF 0.71, or already current.
 
-NKF 0.6 is pre-stable. The checker and release archive are private to
+NKF 0.71 is pre-stable. The checker and release archive are private to
 authorized Nourd projects; this public adopter contains no checker or private
 credential.
 
@@ -46,15 +46,25 @@ before archive use.
 
 | State | Meaning |
 | --- | --- |
-| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.6 project |
-| `migrated` | A supported 0.1-through-0.4 predecessor was deliberately migrated to NKF 0.6 with a reviewed baseline |
-| `updated` | Existing native 0.5 was safely carried forward, or native 0.6 received the recommended exact release and integration |
+| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.71 project |
+| `updated` | An exact conformant NKF 0.7 repository completed the non-breaking upgrade with its reviewed delta, or a native 0.71 repository received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
+| Failed closed | A repository declaring NKF 0.1 through 0.6 is outside the support window; the refusal names the exact next stepping-stone release archive |
 
 Every result names the target archive, source commit, checker, adopter, and
 applicable compatibility signal. The consumer pin under
 `.nourd/nkf-release.json` makes the exact successful release permanent; a
 later recommendation change does not alter the repository automatically.
+
+## The Support Window
+
+Live support covers exactly the current version plus one predecessor:
+NKF 0.71 and NKF 0.7. A repository declaring an older version migrates
+through immutable published archives as stepping stones — each hop uses that
+archive's own bundled adopter with an explicit archive and digest. See
+[Update And Recover](update-and-recover.md) for the exact stepping-stone
+targets. Nothing migrates silently, and no adoption event widens the window
+by implication.
 
 ## Initial Repositories
 
@@ -69,7 +79,7 @@ node nourd-nkf-adopt.mjs \
   --review /absolute/path/to/whole-root-review.yaml
 ```
 
-If the `--review` file does not exist, Adopt builds the complete isolated 0.6
+If the `--review` file does not exist, Adopt builds the complete isolated 0.71
 candidate, writes a candidate-specific review template there, and stops before
 project mutation. A named human or agent must review the actual graph, replace
 every `REVIEW_REQUIRED` value and placeholder with source-bound findings, then
@@ -77,34 +87,32 @@ rerun the exact same Adopt command. Adopt never fills semantic roles,
 relationship completeness, or Decision compatibility by itself. Missing,
 stale, incomplete, or unsupported plans or reviews stop without mutation.
 
-## Breaking NKF 0.1 Through 0.4 Migrations
+## Non-Breaking NKF 0.7 Upgrade
 
-NKF 0.6 is declared breaking from NKF 0.1, 0.2, 0.3, and 0.4. For any such
-predecessor, Adopt first
-reports the exact predecessor-relative target and migration requirement, then
-stops before changing the repository. After the repository owner approves that
-displayed migration, rerun:
+Updating an exact conformant NKF 0.7 repository to NKF 0.71 is `non-breaking`
+and requires no repository-owner approval: no stable path moves, no identity
+succeeds, no declaration changes shape, and canonical Markdown bytes are
+preserved. The upgrade still never invents review. The first Adopt invocation
+writes the exact upgrade review template — carried judgments prefilled by
+digest identity under the accepted 0.7-to-0.71 version-delta declaration, the
+computed required fresh set left to a named reviewer — and stops. Rerun with
+the completed review:
 
 ```sh
 node nourd-nkf-adopt.mjs \
   --project /absolute/path/to/project \
-  --review /absolute/path/to/whole-root-review.yaml \
-  --accept-breaking repository-owner
+  --review /absolute/path/to/upgrade-review.yaml
 ```
 
-The approval argument is valid only for a declared breaking path. Tooling does
-not manufacture the human approval or infer compatibility. An absent review
-path follows the same template-and-rerun workflow described above.
-
-## Non-Breaking NKF 0.5 Update
-
-NKF 0.5 to 0.6 needs no repository-owner breaking approval and no new semantic
-review during the update. Adopt first proves that the exact 0.5 policy and
-reviewed baseline are current, then preserves canonical source bytes,
-declarations, nodes, edges, and review meaning while updating only authorized
-version, policy, graph-revision, release-pin, integration, and derived artifact
-coordinates. If the 0.5 baseline is stale or not ready, Adopt refuses before
-mutation; refresh and review the 0.5 baseline first.
+In one rollback-capable transaction the upgrade rebinds the contract set to
+0.71, converts the reviewed baseline to the digest-bound 0.71 contract with
+computed per-judgment carry-forward, and refreshes the integration. A delta
+review claim is admitted only when the performed set contains the computed
+closure;
+whole-root review remains the recovery path. A repository whose 0.7 baseline
+is missing, outdated, disputed, or otherwise not ready is ineligible until a
+governed 0.7 knowledge-maintenance operation restores it. The semantic
+reviewer's act does not accept canonical Product or Technology meaning.
 
 ## What Adopt Installs
 
@@ -143,3 +151,9 @@ identity never bypasses the check.
 The installed Github workflow provides continuous integration by running the
 same command against the exact candidate commit. Workflow presence and a green
 run do not by themselves prove branch protection.
+
+Between releases, a deterministic Task state transition reseals its own
+successor baseline through the `mechanically-concluded` claim, so a concluded
+repository never lands one step stale. The conclusion performs zero semantic
+judgments; a transition whose graph delta exceeds the closed vocabulary fails
+before mutation with the ordinary review-and-seal path as recovery.

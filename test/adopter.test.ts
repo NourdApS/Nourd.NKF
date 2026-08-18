@@ -34,6 +34,16 @@ const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 let archivePath: string;
 let archiveSha256: string;
 let recommendationPath: string;
+let candidateRecommendationPath: string;
+
+// The exact published NKF 0.7 predecessor release the live producer pins;
+// its archive bytes are carried in-tree by the installed pin.
+const PUBLISHED_0_7_ARCHIVE_SHA256 =
+  "c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f";
+const publishedArchive07Path = path.join(
+  repositoryRoot,
+  `.nourd/tools/nkf/releases/nourd-nkf-sha256-${PUBLISHED_0_7_ARCHIVE_SHA256}.tar`,
+);
 
 function completeGeneratedReview(reviewPath: string) {
   const review = YAML.parse(readFileSync(reviewPath, "utf8"));
@@ -96,16 +106,16 @@ async function createProject(fixture: string) {
   return project;
 }
 
-// The producer-promotion exercise requires the exact pre-promotion producer.
-// Once this repository has adopted 0.6 that state no longer exists in the
-// working tree, so materialize it from the exact release commit the installed
-// pin already binds instead of weakening the exercise.
-// The last ordinary NKF 0.6 producer on the default branch: the exact
-// merged 0.6 state before any 0.7 candidate material entered the tree. A
+// The 0.7-to-0.71 rehearsal requires the exact ordinary promoted 0.7
+// producer. Once this repository carries the 0.71 candidate material that
+// state no longer exists in the working tree, so materialize it from the
+// immutable merged promotion commit instead of weakening the exercise.
+// The last ordinary NKF 0.7 producer on the default branch: the exact merged
+// promoted 0.7 state before any 0.71 candidate material entered the tree. A
 // historical commit is an immutable coordinate, so the rehearsal input
 // cannot drift with later merge topology.
-const LAST_ORDINARY_0_6_PRODUCER_COMMIT =
-  "265095d698c06d41d5f6ba4ec92195cc6a3cae9b";
+const LAST_ORDINARY_0_7_PRODUCER_COMMIT =
+  "971b67854e16c0c09cf15aa7b42884d5049697a2";
 
 async function materializeCommitTree(
   parent: string,
@@ -128,13 +138,6 @@ async function materializeCommitTree(
   return root;
 }
 
-async function materializePinnedPrepromotionRoot(parent: string) {
-  const pinnedCommit = JSON.parse(
-    readFileSync(path.join(repositoryRoot, ".nourd/nkf-release.json"), "utf8"),
-  ).source_commit;
-  return materializeCommitTree(parent, "prepromotion", pinnedCommit);
-}
-
 function run(
   command: string,
   project: string,
@@ -153,6 +156,25 @@ function runAdopt(
     process.execPath,
     [adopter, "--project", project, "--recommendation", recommendationPath, ...extra],
     { encoding: "utf8", env: { ...process.env, ...env }, timeout: scaledTimeout(240_000), killSignal: "SIGKILL" },
+  );
+}
+
+// The prepublication producer promotion binds an exact unpublished candidate
+// archive through the internal candidate catalog.
+function runCandidateAdopt(
+  project: string,
+  extra: string[] = [],
+) {
+  return spawnSync(
+    process.execPath,
+    [
+      adopter, "--project", project,
+      "--recommendation", candidateRecommendationPath,
+      "--candidate-binding", archiveSha256,
+      "--archive", archivePath,
+      ...extra,
+    ],
+    { encoding: "utf8", timeout: scaledTimeout(240_000), killSignal: "SIGKILL" },
   );
 }
 
@@ -385,20 +407,24 @@ function expectTreeEqual(actual: Map<string, Buffer>, expected: Map<string, Buff
   expect([...actual.keys()]).toEqual([...expected.keys()]);
   for (const [key, bytes] of expected) expect(actual.get(key)).toEqual(bytes);
 }
+
 beforeAll(async () => {
-  const releaseSet = await readReleaseSet(repositoryRoot, "0.7");
-  const memberEntries = releaseEntriesForVersion("0.7", releaseSet);
+  const directory = await mkdtemp(path.join(os.tmpdir(), "nkf-adopter-release-"));
+
+  // The current NKF 0.71 candidate archive from the real generated release
+  // set; every member resolves in the working tree.
+  const currentReleaseSet = await readReleaseSet(repositoryRoot, "0.71");
+  const memberEntries = releaseEntriesForVersion("0.71", currentReleaseSet);
   const entries = await readReleaseEntries(repositoryRoot, memberEntries);
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
     entries,
-    nkfVersion: "0.7",
-    releaseSet,
+    nkfVersion: "0.71",
+    releaseSet: currentReleaseSet,
   });
   entries.set("release-manifest.json", serializeReleaseManifest(manifest));
   const archive = createUstar(entries, memberEntries);
   archiveSha256 = sha256(archive);
-  const directory = await mkdtemp(path.join(os.tmpdir(), "nkf-adopter-release-"));
   archivePath = path.join(
     directory,
     `nourd-nkf-sha256-${archiveSha256}.tar`,
@@ -408,19 +434,19 @@ beforeAll(async () => {
     await readFile(path.join(repositoryRoot, "release/recommended.json"), "utf8"),
   );
   recommendation.contract = "nkf.recommended-release";
-  recommendation.nkf_version = "0.7";
+  recommendation.nkf_version = "0.71";
   recommendation.compatibility = [
-    {
-      from_nkf_version: "0.6",
-      classification: "breaking",
-      migration_required: true,
-      summary: "NKF 0.6 requires explicit approved migration to NKF 0.7.",
-    },
     {
       from_nkf_version: "0.7",
       classification: "non-breaking",
       migration_required: false,
-      summary: "NKF 0.7 refreshes the exact release and integration.",
+      summary: "NKF 0.7 updates to NKF 0.71 through the ordinary reviewed delta update.",
+    },
+    {
+      from_nkf_version: "0.71",
+      classification: "non-breaking",
+      migration_required: false,
+      summary: "NKF 0.71 refreshes the exact release and integration.",
     },
   ];
   const { assetName, tag } = {
@@ -445,9 +471,25 @@ beforeAll(async () => {
   recommendationPath = path.join(directory, "recommended.json");
   await writeFile(recommendationPath, `${JSON.stringify(recommendation, null, 2)}\n`);
 
+  // The internal candidate binding for the prepublication promotion stage:
+  // the same exact archive before any publication coordinate exists.
+  const candidateBinding = structuredClone(recommendation);
+  candidateBinding.contract = "nkf.release-candidate-binding";
+  candidateBinding.state = "candidate";
+  candidateBinding.channel = "internal-exact-candidate";
+  candidateBinding.archive.url = null;
+  candidateBinding.release = {
+    url: null,
+    published_at: null,
+    prerelease: true,
+    visibility: "unpublished",
+  };
+  candidateRecommendationPath = path.join(directory, "candidate-binding.json");
+  await writeFile(candidateRecommendationPath, `${JSON.stringify(candidateBinding, null, 2)}\n`);
+
   // Historical predecessor releases left the live window; out-of-window
   // behavior is asserted through the stepping-stone refusal instead.
-}, scaledTimeout(480_000));
+}, scaledTimeout(600_000));
 
 describe("NKF consumer adopter", () => {
   it("exposes one no-subcommand Adopt operation for initial and current repositories", async () => {
@@ -470,14 +512,14 @@ describe("NKF consumer adopter", () => {
       });
     }
 
-    const native = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"));
+    const native = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"));
     const integrated = runAdopt(native, ["--archive", archivePath]);
     expect(integrated.status, integrated.stderr).toBe(0);
     expect(JSON.parse(integrated.stdout)).toMatchObject({
       contract: "nkf.adopt-result",
       state: "updated",
       compatibility: {
-        from_nkf_version: "0.7",
+        from_nkf_version: "0.71",
         classification: "non-breaking",
         migration_required: false,
       },
@@ -494,85 +536,261 @@ describe("NKF consumer adopter", () => {
     expect(JSON.parse(conformingNotReadyCurrent.stdout).state).toBe("current");
   }, scaledTimeout(80_000));
 
-  it("migrates NKF 0.6 to 0.7 with explicit approval and a verifiable delta baseline", async () => {
+  it("updates the installed NKF 0.7 predecessor to 0.71 through the reviewed delta", async () => {
     const project = await createProject(
-      path.join(repositoryRoot, "fixtures/valid/minimal-0-6"),
+      path.join(repositoryRoot, "fixtures/valid/minimal-0-7"),
     );
+    // A real 0.7 consumer was installed by the published 0.7 release's own
+    // adopter; rebuild exactly that state from the in-tree published archive.
+    const extracted = await mkdtemp(path.join(os.tmpdir(), "nkf-published-0-7-"));
+    const extraction = spawnSync(
+      "tar",
+      ["-x", "-f", publishedArchive07Path, "-C", extracted],
+      { encoding: "utf8" },
+    );
+    expect(extraction.status, extraction.stderr).toBe(0);
+    const installed = runWith(
+      path.join(extracted, "nourd-nkf/dist/nourd-nkf-adopt.mjs"),
+      "install",
+      project,
+      ["--archive", publishedArchive07Path, "--sha256", PUBLISHED_0_7_ARCHIVE_SHA256],
+    );
+    expect(installed.status, installed.stderr).toBe(0);
+    expect(JSON.parse(installed.stdout).state).toBe("installed");
     const beforeKnowledge = await snapshotTree(path.join(project, "knowledge"));
+    const priorBaseline = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml"), "utf8"),
+    );
 
+    // The 0.7-to-0.71 update is non-breaking, never approval-gated, and
+    // always review-gated: no review path, no mutation.
     const blocked = runAdopt(project, ["--archive", archivePath]);
     expect(blocked.status).toBe(1);
-    expect(JSON.parse(blocked.stderr).diagnostics[0]).toMatchObject({
-      code: "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
-      from_nkf_version: "0.6",
-      classification: "breaking",
-      migration_required: true,
-      required_argument: "--accept-breaking repository-owner",
-    });
+    expect(JSON.parse(blocked.stderr).diagnostics[0].code).toBe(
+      "NKF-ADOPT-REVIEW-PATH-REQUIRED",
+    );
     expectTreeEqual(await snapshotTree(path.join(project, "knowledge")), beforeKnowledge);
-
-    const reviewPath = path.join(path.dirname(project), "delta-review.yaml");
-    const result = generatedReviewAdopt(project, reviewPath, [
+    const approvalRejected = runAdopt(project, [
       "--archive", archivePath,
       "--accept-breaking", "repository-owner",
     ]);
+    expect(approvalRejected.status).toBe(1);
+    expect(approvalRejected.stderr).toContain(
+      "--accept-breaking is invalid for a non-breaking adoption",
+    );
+
+    const reviewPath = path.join(path.dirname(project), "delta-review.yaml");
+    const preparation = runAdopt(project, ["--archive", archivePath, "--review", reviewPath]);
+    expect(preparation.status, preparation.stderr).toBe(1);
+    const diagnostic = JSON.parse(preparation.stderr).diagnostics[0];
+    expect(diagnostic).toMatchObject({
+      code: "NKF-ADOPT-SEMANTIC-REVIEW-REQUIRED",
+      review_template: reviewPath,
+      review_stage: "delta",
+      required_fresh: 0,
+    });
+    expect(diagnostic.carried).toBeGreaterThan(0);
+    // The delta template arrives with every judgment carried and prefilled.
+    const template = YAML.parse(readFileSync(reviewPath, "utf8"));
+    expect(template.stage).toBe("delta");
+    for (const entry of template.nodes) {
+      expect(entry.provenance.carried, JSON.stringify(entry.node)).toBeDefined();
+    }
+    completeGeneratedReview(reviewPath);
+    const result = runAdopt(project, ["--archive", archivePath, "--review", reviewPath]);
     expect(result.status, result.stderr).toBe(0);
     expect(JSON.parse(result.stdout)).toMatchObject({
       contract: "nkf.adopt-result",
-      nkf_version: "0.7",
-      state: "migrated",
+      nkf_version: "0.71",
+      state: "updated",
       compatibility: {
-        from_nkf_version: "0.6",
-        classification: "breaking",
-        migration_required: true,
-        approved_by: "repository-owner",
+        from_nkf_version: "0.7",
+        classification: "non-breaking",
+        migration_required: false,
       },
     });
-    expect(
-      YAML.parse(
-        await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
-    ).nkf_version,
-    ).toBe("0.7");
+    const bundle = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+    );
+    expect(bundle.nkf_version).toBe("0.71");
+    expect(bundle.knowledge_graph.policy).toBe("nkf.freshness-policy.0.71");
+    // The canonical knowledge Markdown is byte-exact across the rebind.
+    expectTreeEqual(await snapshotTree(path.join(project, "knowledge")), beforeKnowledge);
+    // The successor baseline rebinds the 0.71 policy while every carried
+    // judgment keeps its exact predecessor state and role.
+    const baseline = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml"), "utf8"),
+    );
+    expect(baseline.nkf_version).toBe("0.71");
+    expect(baseline.policy.id).toBe("nkf.freshness-policy.0.71");
+    expect(baseline.confirmation.claim).toBe("semantically-reviewed-delta");
+    expect(baseline.confirmation.computed_closure).toEqual([]);
+    const priorJudgments = new Map(
+      priorBaseline.applicability_coverage.map((entry: any) => [
+        `${JSON.stringify(entry.node)} ${entry.purpose}`,
+        { state: entry.state, role: entry.role },
+      ]),
+    );
+    for (const entry of baseline.applicability_coverage) {
+      expect(entry.provenance.carried, JSON.stringify(entry.node)).toBeDefined();
+      expect(priorJudgments.get(`${JSON.stringify(entry.node)} ${entry.purpose}`)).toEqual({
+        state: entry.state,
+        role: entry.role,
+      });
+    }
     const migratedReview = YAML.parse(readFileSync(reviewPath, "utf8"));
     expect(migratedReview.stage).toBe("delta");
     expect(migratedReview.claim).toBe("semantically-reviewed-delta");
     const current = runAdopt(project, ["--archive", archivePath]);
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
-  }, scaledTimeout(80_000));
+  }, scaledTimeout(120_000));
 
-  it("rebinds an exact producer host registry during breaking 0.6-to-0.7 adoption", async () => {
+  it("updates a 0.7 host-superset consumer to 0.71 and rebinds the integration registry", async () => {
+    const project = await createProject(
+      path.join(repositoryRoot, "fixtures/valid/minimal-0-7"),
+    );
+    const hostScript = "npm run host:existing";
+    await writeFile(
+      path.join(project, "package.json"),
+      `${JSON.stringify({
+        name: "host-superset-fixture",
+        private: true,
+        nkf: {
+          integration: {
+            mode: "host-superset",
+            host_script: hostScript,
+          },
+        },
+        scripts: {
+          "nkf:check": hostScript,
+          "host:existing": "node --version",
+        },
+      }, null, 2)}\n`,
+    );
+    await writeFile(path.join(project, "CLAUDE.md"), "@AGENTS.md\n");
+    await writeFile(path.join(project, "GEMINI.md"), "@AGENTS.md\n");
+    const copilotBootstrap = await readFile(
+      path.join(repositoryRoot, ".github/copilot-instructions.md"),
+    );
+    await mkdir(path.join(project, ".github"), { recursive: true });
+    await writeFile(
+      path.join(project, ".github/copilot-instructions.md"),
+      copilotBootstrap,
+    );
+
+    const reviewPath = path.join(path.dirname(project), "delta-review.yaml");
+    const preparation = runAdopt(project, [
+      "--archive", archivePath,
+      "--review", reviewPath,
+    ]);
+    expect(preparation.status, preparation.stderr).toBe(1);
+    expect(existsSync(reviewPath), preparation.stderr).toBe(true);
+    completeGeneratedReview(reviewPath);
+    const updated = runAdopt(project, [
+      "--archive", archivePath,
+      "--review", reviewPath,
+    ]);
+    expect(updated.status, updated.stderr).toBe(0);
+    expect(JSON.parse(updated.stdout)).toMatchObject({
+      state: "updated",
+      compatibility: {
+        from_nkf_version: "0.7",
+        classification: "non-breaking",
+        migration_required: false,
+      },
+    });
+    const packageManifest = JSON.parse(
+      await readFile(path.join(project, "package.json"), "utf8"),
+    );
+    expect(packageManifest.scripts).toMatchObject({
+      "nkf:check": "npm run nkf:check:pinned && npm run nkf:check:host",
+      "nkf:check:pinned": "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .",
+      "nkf:check:host": hostScript,
+      "host:existing": "node --version",
+    });
+    expect(await readFile(path.join(project, "CLAUDE.md"), "utf8")).toBe(
+      "@AGENTS.md\n",
+    );
+    expect(await readFile(path.join(project, "GEMINI.md"), "utf8")).toBe(
+      "@AGENTS.md\n",
+    );
+    expect(
+      await readFile(path.join(project, ".github/copilot-instructions.md")),
+    ).toEqual(copilotBootstrap);
+    const integrationRegistry = YAML.parse(
+      await readFile(
+        path.join(project, "integrations/ai/nkf-consumer-integration.yaml"),
+        "utf8",
+      ),
+    );
+    expect(integrationRegistry.adapters).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ path: "CLAUDE.md", mode: "exact-import" }),
+        expect.objectContaining({ path: "GEMINI.md", mode: "exact-import" }),
+        expect.objectContaining({
+          path: ".github/copilot-instructions.md",
+          mode: "exact-bootstrap",
+        }),
+      ]),
+    );
+    const pin = JSON.parse(
+      await readFile(path.join(project, ".nourd/nkf-release.json"), "utf8"),
+    );
+    expect(pin).toMatchObject({
+      nkf_version: "0.71",
+      integration_revision: 3,
+      integration: {
+        mode: "host-superset",
+        scripts: {
+          canonical: "npm run nkf:check:pinned && npm run nkf:check:host",
+          host: hostScript,
+        },
+      },
+    });
+    expect(
+      YAML.parse(
+        await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+      ).nkf_version,
+    ).toBe("0.71");
+
+    const current = runAdopt(project, ["--archive", archivePath]);
+    expect(current.status, current.stderr).toBe(0);
+    expect(JSON.parse(current.stdout).state).toBe("current");
+  }, scaledTimeout(120_000));
+
+  it("rehearses the ordinary promoted 0.7 producer's 0.71 update with an exact host-registry rebind", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-update-test-"));
     const project = path.join(parent, "project");
     await mkdir(project);
-    // The exact ordinary NKF 0.6 producer for the plain breaking-adoption
+    // The exact ordinary promoted NKF 0.7 producer for the plain upgrade
     // rehearsal: the working tree while it is still one, and otherwise the
-    // immutable last ordinary 0.6 commit — never the pre-promotion candidate
-    // tree, whose carried candidate Evidence correctly demands the promotion
-    // path instead of a plain migration.
-    const ordinary0_6Producer = (root: string) => {
+    // immutable merged promotion commit — never the 0.71 candidate tree,
+    // whose carried candidate Evidence correctly demands the promotion path
+    // instead of a plain update.
+    const ordinary0_7Producer = (root: string) => {
       const bundle = readFileSync(
         path.join(root, ".nourd/knowledge/bundle.yaml"),
         "utf8",
       );
       return (
-        /^nkf_version:\s*"0\.6"/m.test(bundle) &&
-        !bundle.includes("specifications/nkf-0.7.md")
+        /^nkf_version:\s*"0\.7"/m.test(bundle) &&
+        !bundle.includes("specifications/nkf-0.71.md")
       );
     };
     let producerRoot = repositoryRoot;
-    if (!ordinary0_6Producer(producerRoot)) {
+    if (!ordinary0_7Producer(producerRoot)) {
       try {
         producerRoot = await materializeCommitTree(
           parent,
-          "ordinary-0-6-producer",
-          LAST_ORDINARY_0_6_PRODUCER_COMMIT,
+          "ordinary-0-7-producer",
+          LAST_ORDINARY_0_7_PRODUCER_COMMIT,
         );
       } catch {
         // A clone without that commit's history cannot rehearse.
         return;
       }
-      if (!ordinary0_6Producer(producerRoot)) return;
+      if (!ordinary0_7Producer(producerRoot)) return;
     }
     await cp(producerRoot, project, {
       recursive: true,
@@ -589,7 +807,6 @@ describe("NKF consumer adopter", () => {
     const preparation = runAdopt(project, [
       "--archive", archivePath,
       "--review", reviewPath,
-      "--accept-breaking", "repository-owner",
     ]);
     expect(preparation.status, preparation.stderr).toBe(1);
     expect(existsSync(reviewPath), preparation.stderr).toBe(true);
@@ -597,10 +814,14 @@ describe("NKF consumer adopter", () => {
     const result = runAdopt(project, [
       "--archive", archivePath,
       "--review", reviewPath,
-      "--accept-breaking", "repository-owner",
     ]);
     expect(result.status, result.stderr).toBe(0);
-    expect(JSON.parse(result.stdout).state).toBe("migrated");
+    expect(JSON.parse(result.stdout).state).toBe("updated");
+    expect(
+      YAML.parse(
+        await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
+      ).nkf_version,
+    ).toBe("0.71");
 
     const registry = YAML.parse(
       await readFile(path.join(project, "integrations/ai/agent-hosts.yaml"), "utf8"),
@@ -618,60 +839,75 @@ describe("NKF consumer adopter", () => {
         sha256(await readFile(path.join(project, relative))),
       );
     }
-  }, scaledTimeout(120_000));
+  }, scaledTimeout(300_000));
 
-  it("promotes the exact producer candidate to one native 0.7 Specification only at the authorized public stage", async () => {
+  it("promotes the exact producer candidate to one native 0.71 Specification at the prepublication stage", async () => {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-producer-promotion-test-"));
     const project = path.join(parent, "project");
-    // The exact pre-promotion producer is the live 0.6 tree carrying the
+    // The exact pre-promotion producer is the live 0.7 tree carrying the
     // accepted candidate Evidence, promotion input, and accepting Decision.
-    const producerPrepromotionRoot = process.env.NKF_PRODUCER_PREPROMOTION_ROOT !== undefined
-      ? path.resolve(process.env.NKF_PRODUCER_PREPROMOTION_ROOT)
-      : /^nkf_version:\s*"0\.6"/m.test(
-          readFileSync(path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
-        )
-      ? repositoryRoot
-      : await materializePinnedPrepromotionRoot(parent);
-    await cp(producerPrepromotionRoot, project, {
+    const prepromotionProducer = (root: string) => {
+      const bundle = readFileSync(
+        path.join(root, ".nourd/knowledge/bundle.yaml"),
+        "utf8",
+      );
+      return (
+        /^nkf_version:\s*"0\.7"/m.test(bundle) &&
+        bundle.includes("specifications/nkf-0.71.md")
+      );
+    };
+    if (!prepromotionProducer(repositoryRoot)) return;
+    await cp(repositoryRoot, project, {
       recursive: true,
       filter(source) {
-        const relative = path.relative(producerPrepromotionRoot, source);
+        const relative = path.relative(repositoryRoot, source);
         if (relative === "") return true;
         const first = relative.split(path.sep)[0] ?? "";
         return ![".git", "node_modules"].includes(first) &&
           !first.startsWith(".nkf-transaction-");
       },
     });
-    const specificationPath = path.join(project, "knowledge/specifications/nkf-0.7.md");
+    const specificationPath = path.join(project, "knowledge/specifications/nkf-0.71.md");
     const specificationBefore = await readFile(specificationPath);
     const reviewPath = path.join(parent, "promotion-review.yaml");
     const promotionArguments = [
-      "--archive", archivePath,
-      "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.7-producer-promotion.yaml"),
-      "--accepting-decision", path.join(project, "knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md"),
-      "--promotion-stage", "postpublication-ordinary-public-self-adopt-by-exact-live-producer",
+      "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml"),
+      "--accepting-decision", path.join(project, "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md"),
+      "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
       "--review", reviewPath,
-      "--accept-breaking", "repository-owner",
     ];
-    const preparation = runAdopt(project, promotionArguments);
+    const preparation = runCandidateAdopt(project, promotionArguments);
     expect(preparation.status, preparation.stderr).toBe(1);
     expect(JSON.parse(preparation.stderr).diagnostics?.[0]?.code, preparation.stderr).toBe(
       "NKF-ADOPT-PRODUCER-PROMOTION-REVIEW-REQUIRED",
     );
+    // The delta template arrives with carried judgments prefilled and a
+    // non-empty computed fresh closure for the promotion delta.
+    const template = YAML.parse(readFileSync(reviewPath, "utf8"));
+    expect(template.stage).toBe("delta");
+    expect(template.computed_closure.length).toBeGreaterThan(0);
+    expect(
+      template.nodes.some((entry: any) => entry.provenance?.carried !== undefined),
+    ).toBe(true);
     completeGeneratedReview(reviewPath);
-    const promoted = runAdopt(project, promotionArguments);
+    // The reviewer identity for the promotion delta is explicit.
+    {
+      const completed = YAML.parse(readFileSync(reviewPath, "utf8"));
+      completed.reviewer = { kind: "agent", id: "test-promotion-reviewer" };
+      writeFileSync(reviewPath, YAML.stringify(completed, { lineWidth: 0, aliasDuplicateObjects: false }));
+    }
+    const promoted = runCandidateAdopt(project, promotionArguments);
     expect(promoted.status, promoted.stderr).toBe(0);
     expect(JSON.parse(promoted.stdout)).toMatchObject({
       state: "updated",
       compatibility: {
-        from_nkf_version: "0.6",
-        classification: "breaking",
-        migration_required: true,
-        approved_by: "repository-owner",
+        from_nkf_version: "0.7",
+        classification: "non-breaking",
+        migration_required: false,
       },
       operation: {
-        stage: "postpublication-ordinary-public-self-adopt-by-exact-live-producer",
-        created_declaration: ".nourd/knowledge/records/nkf-0.7-specification.yaml",
+        stage: "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+        created_declaration: ".nourd/knowledge/records/nkf-0.71-specification.yaml",
       },
     });
     // The accepted Markdown is preserved byte for byte; the candidate
@@ -681,39 +917,29 @@ describe("NKF consumer adopter", () => {
     const promotedBundle = YAML.parse(
       await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
     );
-    expect(promotedBundle.nkf_version).toBe("0.7");
+    expect(promotedBundle.nkf_version).toBe("0.71");
     expect(
       promotedBundle.non_records.some((entry: { path?: string }) =>
-        entry.path === "specifications/nkf-0.7.md"),
+        entry.path === "specifications/nkf-0.71.md"),
     ).toBe(false);
     const promotionInput = YAML.parse(
-      await readFile(path.join(project, "knowledge/evidence/release/nkf-0.7-producer-promotion.yaml"), "utf8"),
+      await readFile(path.join(project, "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml"), "utf8"),
     );
     const declaration = YAML.parse(
       await readFile(
-        path.join(project, ".nourd/knowledge/records/nkf-0.7-specification.yaml"),
+        path.join(project, ".nourd/knowledge/records/nkf-0.71-specification.yaml"),
         "utf8",
       ),
     );
     expect(declaration).toEqual(promotionInput.record_declaration);
     expect(declaration).toMatchObject({
-      id: "nkf-0.7-specification",
+      id: "nkf-0.71-specification",
       type: "specification",
-      task: "NKF-028",
+      task: "NKF-031",
       governance: { lifecycle: "immutable", status: "accepted" },
     });
-    // The one accepted identity succession applied exactly once.
-    const succeeded = YAML.parse(
-      await readFile(path.join(project, ".nourd/knowledge/records/nkf-current-system.yaml"), "utf8"),
-    );
-    expect(succeeded.identity_succession).toMatchObject({
-      predecessor_id: "nkf-0.1-native-realization",
-    });
-    await expect(
-      readFile(path.join(project, ".nourd/knowledge/records/nkf-0.1-native-realization.yaml")),
-    ).rejects.toMatchObject({ code: "ENOENT" });
 
-    const current = runAdopt(project, ["--archive", archivePath]);
+    const current = runCandidateAdopt(project);
     expect(current.status, current.stderr).toBe(0);
     expect(JSON.parse(current.stdout).state).toBe("current");
 
@@ -729,21 +955,16 @@ describe("NKF consumer adopter", () => {
     );
     if (staleBaseline !== baselineCurrent.toString("utf8")) {
       await writeFile(baselinePath, staleBaseline);
-      const staleRepeat = runAdopt(project, ["--archive", archivePath]);
+      const staleRepeat = runCandidateAdopt(project);
       expect(staleRepeat.status).toBe(1);
       await writeFile(baselinePath, baselineCurrent);
     }
 
-    const restoredCurrent = runAdopt(project, ["--archive", archivePath]);
+    const restoredCurrent = runCandidateAdopt(project);
     expect(restoredCurrent.status, restoredCurrent.stderr).toBe(0);
     expect(JSON.parse(restoredCurrent.stdout).state).toBe("current");
-    const exportedSet = run("set", project);
-    expect(exportedSet.status, exportedSet.stderr).toBe(0);
-    expect(JSON.parse(exportedSet.stdout)).toMatchObject({
-      state: "enumerated",
-      nkf_version: "0.7",
-    });
-    expect(JSON.parse(exportedSet.stdout).members).toHaveLength(165);
+    // The 0.71 release set arrives with the later release task; the exported
+    // reference maps already serve the promoted producer.
     const exportedReferences = run("refs", project);
     expect(exportedReferences.status, exportedReferences.stderr).toBe(0);
     expect(JSON.parse(exportedReferences.stdout)).toMatchObject({
@@ -751,7 +972,73 @@ describe("NKF consumer adopter", () => {
       knowledge_root: "knowledge",
     });
     expect(Object.keys(JSON.parse(exportedReferences.stdout).documents).length).toBeGreaterThan(0);
-  }, scaledTimeout(300_000));
+    expect(JSON.parse(exportedReferences.stdout).records["nkf-0.71-specification"]).toBe(
+      "specifications/nkf-0.71.md",
+    );
+  }, scaledTimeout(600_000));
+
+  it("refuses a promotion delta claim whose performed set is smaller than the computed closure", async () => {
+    const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-promotion-refusal-test-"));
+    const project = path.join(parent, "project");
+    const prepromotionProducer = (root: string) => {
+      const bundle = readFileSync(
+        path.join(root, ".nourd/knowledge/bundle.yaml"),
+        "utf8",
+      );
+      return (
+        /^nkf_version:\s*"0\.7"/m.test(bundle) &&
+        bundle.includes("specifications/nkf-0.71.md")
+      );
+    };
+    if (!prepromotionProducer(repositoryRoot)) return;
+    await cp(repositoryRoot, project, {
+      recursive: true,
+      filter(source) {
+        const relative = path.relative(repositoryRoot, source);
+        if (relative === "") return true;
+        const first = relative.split(path.sep)[0] ?? "";
+        return ![".git", "node_modules"].includes(first) &&
+          !first.startsWith(".nkf-transaction-");
+      },
+    });
+    const reviewPath = path.join(parent, "promotion-review.yaml");
+    const promotionArguments = [
+      "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml"),
+      "--accepting-decision", path.join(project, "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md"),
+      "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+      "--review", reviewPath,
+    ];
+    const preparation = runCandidateAdopt(project, promotionArguments);
+    expect(preparation.status, preparation.stderr).toBe(1);
+    completeGeneratedReview(reviewPath);
+    // Tamper the completed review: one computed-closure judgment claims a
+    // carry instead of its performed review, shrinking the performed set
+    // below the recomputed closure.
+    const tampered = YAML.parse(readFileSync(reviewPath, "utf8"));
+    tampered.reviewer = { kind: "agent", id: "test-promotion-reviewer" };
+    const closureKeys = new Set(
+      tampered.computed_closure.map((node: unknown) => JSON.stringify(node)),
+    );
+    const performedEntry = tampered.nodes.find(
+      (entry: any) =>
+        entry.provenance?.performed === true && closureKeys.has(JSON.stringify(entry.node)),
+    );
+    expect(performedEntry).toBeDefined();
+    performedEntry.provenance = {
+      carried: {
+        performed_in_graph_revision: { algorithm: "sha-256", value: "0".repeat(64) },
+        performing_reviewer: { kind: "agent", id: "tamperer" },
+      },
+    };
+    writeFileSync(reviewPath, YAML.stringify(tampered, { lineWidth: 0, aliasDuplicateObjects: false }));
+    const before = await snapshotTree(path.join(project, ".nourd/knowledge"));
+    const refused = runCandidateAdopt(project, promotionArguments);
+    expect(refused.status).toBe(1);
+    expect(refused.stderr).toMatch(
+      /carry preconditions do not hold|performed set does not contain the computed closure|exact recomputed required-review closure/,
+    );
+    expectTreeEqual(await snapshotTree(path.join(project, ".nourd/knowledge")), before);
+  }, scaledTimeout(600_000));
 
   it("fails closed before mutation when initial planning is absent", async () => {
     const { project } = await createEmptyProject();
@@ -771,7 +1058,23 @@ describe("NKF consumer adopter", () => {
   it("refuses out-of-window predecessors with the exact stepping-stone release", async () => {
     // Live support covers the current version plus one predecessor; every
     // older repository migrates through its own immutable published archive.
-    for (const outOfWindow of ["0.1", "0.3", "0.5"]) {
+    const scenarios: Array<{ declared: string; steppingStone: { nkf_version: string; archive_sha256: string } }> = [
+      ...["0.1", "0.3", "0.5"].map((declared) => ({
+        declared,
+        steppingStone: {
+          nkf_version: "0.6",
+          archive_sha256: "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+        },
+      })),
+      {
+        declared: "0.6",
+        steppingStone: {
+          nkf_version: "0.7",
+          archive_sha256: "c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f",
+        },
+      },
+    ];
+    for (const { declared, steppingStone } of scenarios) {
       const { project } = await createEmptyProject();
       await mkdir(path.join(project, ".nourd/knowledge"), { recursive: true });
       await mkdir(path.join(project, "knowledge"), { recursive: true });
@@ -779,7 +1082,7 @@ describe("NKF consumer adopter", () => {
         path.join(project, ".nourd/knowledge/bundle.yaml"),
         [
           "contract: nkf.bundle",
-          `nkf_version: "${outOfWindow}"`,
+          `nkf_version: "${declared}"`,
           "knowledge_root: knowledge",
           "root:",
           "  profile: nkf.profile.product",
@@ -788,20 +1091,17 @@ describe("NKF consumer adopter", () => {
         ].join("\n"),
       );
       const before = await snapshotTree(project);
-      const refused = runAdopt(project, [
-        "--archive", archivePath,
-        "--accept-breaking", "repository-owner",
-      ]);
+      const refused = runAdopt(project, ["--archive", archivePath]);
       expect(refused.status).toBe(1);
       const result = JSON.parse(refused.stderr);
       expect(result.diagnostics[0]).toMatchObject({
         code: "NKF-ADOPT-UNSUPPORTED-PREDECESSOR",
-        from_nkf_version: outOfWindow,
-        target_nkf_version: "0.7",
+        from_nkf_version: declared,
+        target_nkf_version: "0.71",
         stepping_stone: {
           repository: "NourdApS/Nourd.NKF",
-          nkf_version: "0.6",
-          archive_sha256: "b0822199c1ddb4ea9de14e4c005edf77b44f9c60a6005689505ab00436dd4c95",
+          nkf_version: steppingStone.nkf_version,
+          archive_sha256: steppingStone.archive_sha256,
         },
       });
       expect(result.diagnostics[0].message).toContain("stepping-stone");
@@ -1747,139 +2047,8 @@ describe("NKF consumer adopter", () => {
     expectTreeEqual(await snapshotTree(project), before);
   }, scaledTimeout(80_000));
 
-  it("migrates 0.6 through the declared general host-superset chain and verifies current", async () => {
-    const project = await createProject(
-      path.join(repositoryRoot, "fixtures/valid/minimal-0-6"),
-    );
-    const hostScript = "npm run host:existing";
-    await writeFile(
-      path.join(project, "package.json"),
-      `${JSON.stringify({
-        name: "host-superset-fixture",
-        private: true,
-        nkf: {
-          integration: {
-            mode: "host-superset",
-            host_script: hostScript,
-          },
-        },
-        scripts: {
-          "nkf:check": hostScript,
-          "host:existing": "node --version",
-        },
-      }, null, 2)}\n`,
-    );
-    await writeFile(path.join(project, "CLAUDE.md"), "@AGENTS.md\n");
-    await writeFile(path.join(project, "GEMINI.md"), "@AGENTS.md\n");
-    const copilotBootstrap = await readFile(
-      path.join(repositoryRoot, ".github/copilot-instructions.md"),
-    );
-    await mkdir(path.join(project, ".github"), { recursive: true });
-    await writeFile(
-      path.join(project, ".github/copilot-instructions.md"),
-      copilotBootstrap,
-    );
-
-    const blocked = runAdopt(project, ["--archive", archivePath]);
-    expect(blocked.status).toBe(1);
-    const blockedResult = JSON.parse(blocked.stderr);
-    expect(blockedResult.diagnostics[0]).toMatchObject({
-      code: "NKF-ADOPT-BREAKING-APPROVAL-REQUIRED",
-      from_nkf_version: "0.6",
-      classification: "breaking",
-      migration_required: true,
-    });
-    expect(blockedResult.diagnostics[0].message).toContain(
-      "explicit repository-owner approval",
-    );
-    expect(blockedResult.diagnostics[0].message).not.toContain(
-      "Human Product Owner",
-    );
-
-    const reviewPath = path.join(path.dirname(project), "whole-root-review.yaml");
-    const preparation = runAdopt(project, [
-      "--archive", archivePath,
-      "--review", reviewPath,
-      "--accept-breaking", "repository-owner",
-    ]);
-    expect(preparation.status, preparation.stderr).toBe(1);
-    expect(existsSync(reviewPath), preparation.stderr).toBe(true);
-    completeGeneratedReview(reviewPath);
-    const migrated = runAdopt(project, [
-      "--archive", archivePath,
-      "--review", reviewPath,
-      "--accept-breaking", "repository-owner",
-    ]);
-    expect(migrated.status, migrated.stderr).toBe(0);
-    expect(JSON.parse(migrated.stdout)).toMatchObject({
-      state: "migrated",
-      compatibility: {
-        from_nkf_version: "0.6",
-        classification: "breaking",
-        approved_by: "repository-owner",
-      },
-    });
-    const packageManifest = JSON.parse(
-      await readFile(path.join(project, "package.json"), "utf8"),
-    );
-    expect(packageManifest.scripts).toMatchObject({
-      "nkf:check": "npm run nkf:check:pinned && npm run nkf:check:host",
-      "nkf:check:pinned": "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .",
-      "nkf:check:host": hostScript,
-      "host:existing": "node --version",
-    });
-    expect(await readFile(path.join(project, "CLAUDE.md"), "utf8")).toBe(
-      "@AGENTS.md\n",
-    );
-    expect(await readFile(path.join(project, "GEMINI.md"), "utf8")).toBe(
-      "@AGENTS.md\n",
-    );
-    expect(
-      await readFile(path.join(project, ".github/copilot-instructions.md")),
-    ).toEqual(copilotBootstrap);
-    const integrationRegistry = YAML.parse(
-      await readFile(
-        path.join(project, "integrations/ai/nkf-consumer-integration.yaml"),
-        "utf8",
-      ),
-    );
-    expect(integrationRegistry.adapters).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ path: "CLAUDE.md", mode: "exact-import" }),
-        expect.objectContaining({ path: "GEMINI.md", mode: "exact-import" }),
-        expect.objectContaining({
-          path: ".github/copilot-instructions.md",
-          mode: "exact-bootstrap",
-        }),
-      ]),
-    );
-    const pin = JSON.parse(
-      await readFile(path.join(project, ".nourd/nkf-release.json"), "utf8"),
-    );
-    expect(pin).toMatchObject({
-      nkf_version: "0.7",
-      integration_revision: 3,
-      integration: {
-        mode: "host-superset",
-        scripts: {
-          canonical: "npm run nkf:check:pinned && npm run nkf:check:host",
-          host: hostScript,
-        },
-      },
-    });
-    expect(
-      YAML.parse(
-        await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"),
-      ).nkf_version,
-    ).toBe("0.7");
-
-    const current = runAdopt(project, ["--archive", archivePath]);
-    expect(current.status, current.stderr).toBe(0);
-    expect(JSON.parse(current.stdout).state).toBe("current");
-  }, scaledTimeout(80_000));
-
   it("installs and validates an already structured Product repository", async () => {
-    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"));
+    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"));
     const installed = run("install", project, [
       "--archive",
       archivePath,
@@ -1893,6 +2062,7 @@ describe("NKF consumer adopter", () => {
       await readFile(path.join(project, ".nourd/nkf-release.json"), "utf8"),
     );
     expect(pin.archive.sha256).toBe(archiveSha256);
+    expect(pin.nkf_version).toBe("0.71");
     expect(pin.root_profile).toBe("nkf.profile.product");
     expect(
       await readFile(
@@ -1925,7 +2095,7 @@ describe("NKF consumer adopter", () => {
   });
 
   it("installs the same pinned experience for a Technology repository", async () => {
-    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/technology-0-7"));
+    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/technology-0-71"));
     const result = run("install", project, [
       "--archive",
       archivePath,
@@ -1941,7 +2111,7 @@ describe("NKF consumer adopter", () => {
   });
 
   it("fails closed on release, pin, integration, and knowledge tampering", async () => {
-    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"));
+    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"));
     expect(
       run("install", project, [
         "--archive",
@@ -1956,7 +2126,7 @@ describe("NKF consumer adopter", () => {
     const corrupted = Buffer.from(archive);
     corrupted[700] = corrupted[700]! ^ 1;
     await writeFile(corruptedPath, corrupted);
-    const fresh = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"));
+    const fresh = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"));
     expect(
       run("install", fresh, [
         "--archive",
@@ -1988,7 +2158,7 @@ describe("NKF consumer adopter", () => {
   });
 
   it("preserves conflicting consumer-owned integration paths", async () => {
-    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"));
+    const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"));
     const workflowPath = path.join(
       project,
       ".github/workflows/nkf-contracts.yml",

@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { VERSION_BINDINGS } from "../src/checker/bindings.js";
 
-const CORE_BINDINGS = VERSION_BINDINGS["0.7"];
+const CORE_BINDINGS = VERSION_BINDINGS["0.71"];
 import { parseMarkdown } from "../src/checker/markdown.js";
 import {
   protectedCanonicalRanges,
@@ -15,9 +15,9 @@ import { repositoryRoot } from "./helpers.js";
 
 const specificationPath = path.join(repositoryRoot, CORE_BINDINGS.specification.path);
 const executablePath = path.join(repositoryRoot, CORE_BINDINGS.executable.path);
-const schemaRoot = path.join(repositoryRoot, "contracts/nkf/0.7/schemas");
-const acceptedBindings = VERSION_BINDINGS["0.6"];
-const acceptedSchemaRoot = path.join(repositoryRoot, "contracts/nkf/0.6/schemas");
+const schemaRoot = path.join(repositoryRoot, "contracts/nkf/0.71/schemas");
+const acceptedBindings = VERSION_BINDINGS["0.7"];
+const acceptedSchemaRoot = path.join(repositoryRoot, "contracts/nkf/0.7/schemas");
 
 function markdownRules(source: string): Map<string, "error" | "warning"> {
   const rules = new Map<string, "error" | "warning">();
@@ -31,7 +31,7 @@ function markdownRules(source: string): Map<string, "error" | "warning"> {
 }
 
 describe("canonical NKF authority realization", () => {
-  it("keeps the accepted 0.6 authority pair bound to ADR 0125", async () => {
+  it("keeps the accepted 0.7 predecessor authority pair bound to ADR 0128", async () => {
     const [specification, executable, acceptanceDecision] =
       await Promise.all([
         readFile(path.join(repositoryRoot, acceptedBindings.specification.path)),
@@ -39,7 +39,7 @@ describe("canonical NKF authority realization", () => {
         readFile(
           path.join(
             repositoryRoot,
-            "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md",
+            "knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md",
           ),
           "utf8",
         ),
@@ -50,20 +50,29 @@ describe("canonical NKF authority realization", () => {
     expect(acceptanceDecision).toContain(acceptedBindings.executable.sha256);
   });
 
-  it("keeps the accepted 0.6 schemas bound to their confirmed digests", async () => {
+  it("keeps the accepted 0.7 predecessor schemas bound to their confirmed digests", async () => {
     for (const schema of acceptedBindings.schemas) {
       const canonical = await readFile(path.join(acceptedSchemaRoot, schema.file));
       expect(sha256(canonical)).toBe(schema.sha256);
     }
   });
 
-  it("keeps the prospective 0.7 pair digest-consistent before acceptance", async () => {
-    const [specification, executable] = await Promise.all([
+  it("keeps the current 0.71 authority pair bound to ADR 0131", async () => {
+    const [specification, executable, acceptanceDecision] = await Promise.all([
       readFile(specificationPath),
       readFile(executablePath),
+      readFile(
+        path.join(
+          repositoryRoot,
+          "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md",
+        ),
+        "utf8",
+      ),
     ]);
     expect(sha256(specification)).toBe(CORE_BINDINGS.specification.sha256);
     expect(sha256(executable)).toBe(CORE_BINDINGS.executable.sha256);
+    expect(acceptanceDecision).toContain(CORE_BINDINGS.specification.sha256);
+    expect(acceptanceDecision).toContain(CORE_BINDINGS.executable.sha256);
   });
 
   it("keeps all derived schemas bound to their confirmed exact digests", async () => {
@@ -73,7 +82,7 @@ describe("canonical NKF authority realization", () => {
     }
   });
 
-  it("keeps strict executable parsing, Markdown binding, and 213-rule severity parity", async () => {
+  it("keeps strict executable parsing, Markdown binding, and 215-rule severity parity", async () => {
     const [specificationBytes, executableBytes] = await Promise.all([
       readFile(specificationPath),
       readFile(executablePath),
@@ -94,7 +103,7 @@ describe("canonical NKF authority realization", () => {
       ).map(([id, rule]) => [id, rule.severity]),
     );
     const specificationRules = markdownRules(specificationBytes.toString("utf8"));
-    expect(executableRules.size).toBe(213);
+    expect(executableRules.size).toBe(215);
     expect(specificationRules).toEqual(executableRules);
   });
 
@@ -119,7 +128,7 @@ describe("canonical NKF authority realization", () => {
       );
       expect(value.$id).toBe(schema.identity);
       expect(value["x-nkf-source"]).toMatchObject({
-        nkf_version: "0.7",
+        nkf_version: "0.71",
         markdown_digest: {
           algorithm: "sha-256",
           value: CORE_BINDINGS.specification.sha256,

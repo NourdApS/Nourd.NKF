@@ -1,4 +1,4 @@
-import { cp, lstat, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, lstat, mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
@@ -26,17 +26,69 @@ function run(command: string, project: string, extra: string[] = []) {
   return { ...result, json: result.stdout ? JSON.parse(result.stdout) : null };
 }
 
+function check(project: string) {
+  const result = spawnSync(
+    process.execPath,
+    [checker, "--project", project, "--level", "full-bundle", "--no-persist"],
+    { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
+  );
+  return JSON.parse(result.stdout);
+}
+
 async function copyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-7"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"), project, { recursive: true });
   return project;
 }
 
-async function copyFixture0_6(): Promise<string> {
-  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-0-6-"));
+async function copyTechnologyFixture(): Promise<string> {
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-technology-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-6"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-71"), project, { recursive: true });
+  return project;
+}
+
+// A supported-window project carrying one legacy-locked Task document: the
+// technology fixture whose Task source still uses the pre-native frontmatter
+// and whose bundle declaration locks those exact bytes.
+async function legacyLockFixture(): Promise<string> {
+  const project = await copyTechnologyFixture();
+  const taskPath = path.join(project, "knowledge/tasks/items/task.md");
+  const legacySource = (await readFile(taskPath, "utf8")).replace(
+    "created_at: 2026-07-30T15:59:54Z\n---",
+    "created_at: 2026-07-30T15:59:54Z\ntask_id: TEST-TECH-001\ntask_status: active\n---",
+  );
+  await writeFile(taskPath, legacySource);
+  const legacyDigest = sha256(Buffer.from(legacySource, "utf8"));
+  const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
+  const bundleText = await readFile(bundlePath, "utf8");
+  const priorDigest = YAML.parse(bundleText).non_records.find(
+    (item: any) => item.kind === "task",
+  ).document.digest.value;
+  const locked = bundleText
+    .replace(priorDigest, legacyDigest)
+    .replace(
+      "\n  - path: tasks/by-state/active.md",
+      [
+        "",
+        "      legacy_lock:",
+        '        predecessor_version: "0.4"',
+        "        source_digest:",
+        "          algorithm: sha-256",
+        `          value: ${legacyDigest}`,
+        "        predecessor_state:",
+        "          task_id: TEST-TECH-001",
+        "          task_status: active",
+        "        initial_declaration_state:",
+        "          document_state:",
+        "            vocabulary: task-status",
+        "            value: active",
+        "  - path: tasks/by-state/active.md",
+      ].join("\n"),
+    );
+  expect(locked).not.toBe(bundleText);
+  await writeFile(bundlePath, locked);
   return project;
 }
 
@@ -60,6 +112,21 @@ async function taskState(project: string): Promise<string> {
   return task.document.state.value;
 }
 
+async function snapshotTree(root: string) {
+  const result = new Map<string, Buffer>();
+  const visit = async (directory: string, prefix = "") => {
+    const entries = await readdir(directory, { withFileTypes: true });
+    entries.sort((left, right) => left.name.localeCompare(right.name));
+    for (const entry of entries) {
+      const relative = prefix === "" ? entry.name : `${prefix}/${entry.name}`;
+      const absolute = path.join(directory, entry.name);
+      if (entry.isDirectory()) await visit(absolute, relative);
+      else if (entry.isFile()) result.set(relative, await readFile(absolute));
+    }
+  };
+  await visit(root);
+  return result;
+}
 
 async function gitFixture() {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
@@ -168,7 +235,7 @@ describe("deterministic governed mechanics", () => {
       path.join(repositoryRoot, ".nourd/knowledge/bundle.yaml"),
       "utf8",
     );
-    const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.6";
+    const declared = /^nkf_version: "([^"]+)"$/m.exec(bundle)?.[1] ?? "0.7";
     const releaseSet = await readReleaseSet(repositoryRoot, declared);
     const expectedEntries = releaseEntriesForVersion(declared, releaseSet);
     expect(result.status, result.stderr).toBe(0);
@@ -246,12 +313,11 @@ describe("deterministic governed mechanics", () => {
     const result = run("repin", project, ["--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.records).toBe(1);
-    const check = spawnSync(process.execPath, [checker, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
-    expect(JSON.parse(check.stdout).conformance).toBe("passed");
+    expect(check(project).conformance).toBe("passed");
   });
 
   it("re-pins a governed artifact independent of sibling order without rewriting other bundle bytes", async () => {
-    const project = await copyFixture0_6();
+    const project = await copyTechnologyFixture();
     const artifactPath = path.join(project, "src/example.ts");
     const changedArtifact = Buffer.from("export const value = 2;\n", "utf8");
     await writeFile(artifactPath, changedArtifact);
@@ -277,7 +343,7 @@ describe("deterministic governed mechanics", () => {
 
   it("rejects anchored, tagged, aliased, and merged scalar mutation targets before writing", async () => {
     for (const representation of ["anchored", "tagged", "aliased", "merged"] as const) {
-      const project = await copyFixture0_6();
+      const project = await copyTechnologyFixture();
       const artifactPath = path.join(project, "src/example.ts");
       await writeFile(artifactPath, "export const value = 3;\n");
       const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
@@ -308,13 +374,13 @@ describe("deterministic governed mechanics", () => {
   });
 
   it("converts one changed legacy-locked Task document to its native envelope transactionally", async () => {
-    const project = await copyFixture0_6();
-    const sourcePath = path.join(project, "knowledge/tasks/active/task.md");
+    const project = await legacyLockFixture();
+    const sourcePath = path.join(project, "knowledge/tasks/items/task.md");
     const originalSource = await readFile(sourcePath, "utf8");
     const nativeSource = originalSource
       .replace(/^task_id: .*\n/m, "")
       .replace(/^task_status: .*\n/m, "")
-      .replace("\n## Decision Applicability\n", "\nNative 0.6 Task edit.\n\n## Decision Applicability\n");
+      .replace("\n## Decision Applicability\n", "\nNative predecessor Task edit.\n\n## Decision Applicability\n");
     await writeFile(sourcePath, nativeSource);
     const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
     const originalBundle = await readFile(bundlePath, "utf8");
@@ -351,8 +417,8 @@ describe("deterministic governed mechanics", () => {
   });
 
   it("linkifies and natively re-pins a represented legacy Task document", async () => {
-    const project = await copyFixture0_6();
-    const taskPath = path.join(project, "knowledge/tasks/active/task.md");
+    const project = await legacyLockFixture();
+    const taskPath = path.join(project, "knowledge/tasks/items/task.md");
     const nativeTask = (await readFile(taskPath, "utf8"))
       .replace(/^task_id: .*\n/m, "")
       .replace(/^task_status: .*\n/m, "")
@@ -378,7 +444,7 @@ describe("deterministic governed mechanics", () => {
     expect(second.json).toMatchObject({ changed: 0, repinned_documents: 0 });
   });
 
-  it("transitions a native Task through YAML state without moving or rewriting its source", async () => {
+  it("transitions a native 0.71 Task and seals the mechanically-concluded baseline in the same transaction", async () => {
     const project = await copyFixture();
     await authorTaskResult(
       project,
@@ -387,7 +453,6 @@ describe("deterministic governed mechanics", () => {
     );
     const source = path.join(project, "knowledge/tasks/items/task.md");
     const sourceBytes = await readFile(source);
-    const bundlePath = path.join(project, ".nourd/knowledge/bundle.yaml");
 
     const result = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
@@ -397,9 +462,18 @@ describe("deterministic governed mechanics", () => {
       prior_task_status: "active",
       task_status: "completed",
       generated_navigation: 4,
+      baseline_conclusion: {
+        state: "concluded",
+        claim: "mechanically-concluded",
+        task: "TEST-001",
+        from_state: "active",
+        to_state: "completed",
+        performed: 0,
+      },
     });
     expect(result.json.changed_subjects).toEqual([
       ".nourd/knowledge/bundle.yaml",
+      ".nourd/knowledge/freshness/baseline.yaml",
       "knowledge/tasks/by-state/active.md",
       "knowledge/tasks/by-state/cancelled.md",
       "knowledge/tasks/by-state/completed.md",
@@ -410,7 +484,47 @@ describe("deterministic governed mechanics", () => {
     expect(await taskState(project)).toBe("completed");
     expect(await readFile(path.join(project, "knowledge/tasks/by-state/active.md"), "utf8")).not.toContain("TEST-001");
     expect(await readFile(path.join(project, "knowledge/tasks/by-state/completed.md"), "utf8")).toContain("[TEST-001](../items/task.md)");
-    void bundlePath;
+
+    // The sealed successor baseline carries every judgment, binds the exact
+    // transition, performs zero judgments, and matches the exact candidate
+    // graph revision.
+    const baseline = YAML.parse(
+      await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml"), "utf8"),
+    );
+    expect(baseline.nkf_version).toBe("0.71");
+    expect(baseline.confirmation.claim).toBe("mechanically-concluded");
+    expect(baseline.confirmation.transition).toMatchObject({
+      task: "TEST-001",
+      from_state: "active",
+      to_state: "completed",
+    });
+    expect(baseline.confirmation.transition.predecessor_graph_revision.value).toBe(
+      result.json.baseline_conclusion.predecessor_graph_revision,
+    );
+    expect(baseline.graph_revision.value).toBe(result.json.baseline_conclusion.graph_revision);
+    for (const entry of baseline.applicability_coverage) {
+      expect(entry.provenance.performed).toBeUndefined();
+      expect(entry.provenance.carried).toBeDefined();
+      const taskNode = entry.node.kind === "document" && entry.node.id === "TEST-001";
+      if (taskNode) {
+        expect(entry.provenance.transition).toEqual({
+          task: "TEST-001",
+          from_state: "active",
+          to_state: "completed",
+        });
+      } else {
+        expect(entry.provenance.transition).toBeUndefined();
+      }
+    }
+    const validated = check(project);
+    expect(validated.conformance).toBe("passed");
+    expect(validated.diagnostics).toEqual([]);
+    expect(validated.knowledge_graph.candidate_graph_revision.value).toBe(
+      validated.knowledge_graph.baseline_graph_revision.value,
+    );
+    expect(validated.knowledge_graph.baseline_graph_revision.value).toBe(
+      result.json.baseline_conclusion.graph_revision,
+    );
 
     const current = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
     expect(current.status, current.stderr).toBe(0);
@@ -422,6 +536,35 @@ describe("deterministic governed mechanics", () => {
       generated_navigation: 0,
       changed_subjects: [],
     });
+  });
+
+  it("refuses a 0.71 transition whose staged graph delta exceeds the closed transition vocabulary", async () => {
+    const project = await copyFixture();
+    await authorTaskResult(
+      project,
+      "## Completion Result",
+      "The fixture work completed with all criteria satisfied.",
+    );
+    // An excess change beyond the Task state: a governed record moved without
+    // a fresh semantic review, staged through an ordinary repin.
+    const doc = path.join(project, "knowledge/product.md");
+    await writeFile(doc, `${await readFile(doc, "utf8")}\nExcess governed change.\n`);
+    const repin = run("repin", project, ["--checker", checker]);
+    expect(repin.status, repin.stderr).toBe(0);
+    const before = await snapshotTree(project);
+
+    const refused = run("task", project, ["--task", "TEST-001", "--to", "close", "--checker", checker]);
+    expect(refused.status).toBe(1);
+    expect(refused.stderr).toContain(
+      "refuses a graph delta beyond the closed transition vocabulary",
+    );
+    expect(refused.stderr).toContain("changed node");
+
+    // Nothing mutated: the refusal happened before any project write.
+    const after = await snapshotTree(project);
+    expect([...after.keys()]).toEqual([...before.keys()]);
+    for (const [key, bytes] of before) expect(after.get(key), key).toEqual(bytes);
+    expect(await taskState(project)).toBe("active");
   });
 
   it("requires the authored Completion Result and rejects --result-file", async () => {
@@ -466,14 +609,31 @@ describe("deterministic governed mechanics", () => {
     expect(await taskState(project)).toBe("active");
   });
 
-  it("defers and reactivates a task", async () => {
+  it("defers and reactivates a 0.71 task through chained mechanical conclusions", async () => {
     const project = await copyFixture();
     const deferred = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
     expect(deferred.status, deferred.stderr).toBe(0);
+    expect(deferred.json.baseline_conclusion).toMatchObject({
+      claim: "mechanically-concluded",
+      from_state: "active",
+      to_state: "deferred",
+      performed: 0,
+    });
     expect(await taskState(project)).toBe("deferred");
     const activated = run("task", project, ["--task", "TEST-001", "--to", "activate", "--checker", checker]);
     expect(activated.status, activated.stderr).toBe(0);
+    expect(activated.json.baseline_conclusion).toMatchObject({
+      claim: "mechanically-concluded",
+      from_state: "deferred",
+      to_state: "active",
+      performed: 0,
+    });
     expect(await taskState(project)).toBe("active");
+    const validated = check(project);
+    expect(validated.conformance).toBe("passed");
+    expect(validated.knowledge_graph.candidate_graph_revision.value).toBe(
+      validated.knowledge_graph.baseline_graph_revision.value,
+    );
   });
 
   it("cancels a task with a recorded rationale and no completion gate", async () => {
@@ -516,6 +676,12 @@ describe("deterministic governed mechanics", () => {
     const { project, taskId, g, bare } = await gitFixture();
     const result = run("task", project, ["--task", taskId, "--to", "defer", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
+    // A pinned NKF 0.7 predecessor keeps its exact prior behavior: no
+    // mechanical conclusion baseline accompanies the transition.
+    expect(result.json.baseline_conclusion).toBeUndefined();
+    expect(result.json.changed_subjects).not.toContain(
+      ".nourd/knowledge/freshness/baseline.yaml",
+    );
     expect(result.json.git.branch).toBe(`task/${taskId}`);
     expect(result.json.git.pushed).toBe(true);
     expect(result.json.git.pull_request).toBe("unsupported-remote");

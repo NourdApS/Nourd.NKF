@@ -1,8 +1,8 @@
 # Nourd Knowledge Format
 
-> NKF 0.6 is pre-stable. The current checker release is internal to authorized
+> NKF 0.71 is pre-stable. The current checker release is internal to authorized
 > Nourd projects. This public documentation is explanatory; the exact
-> digest-bound [NKF 0.6 Specification](reference/nkf-0.6.md) is normative.
+> digest-bound [NKF 0.71 Specification](reference/nkf-0.71.md) is normative.
 
 Nourd Knowledge Format, or NKF, is a governed way to keep important project
 knowledge understandable to people and mechanically coherent for tools and AI
@@ -56,8 +56,11 @@ profile adds root-specific meaning and validation.
 Every Markdown file in the knowledge root has exactly one record declaration
 or one explicit document/non-record entry. Markdown remains canonical durable
 meaning; YAML owns lifecycle, graph relationships, and freshness policy.
-Generated state and disposition navigation does not move or rewrite canonical
-documents.
+Task, Design, and Realization sources live at neutral stable paths such as
+`tasks/items/`; generated `by-state` and `by-disposition` indexes project
+their declared lifecycle state. A lifecycle transition changes declaration
+state and generated navigation only — it never moves or rewrites the
+canonical document.
 
 ```mermaid
 flowchart TB
@@ -132,10 +135,12 @@ so. A passing checker never accepts knowledge.
    [Initial Onboarding](guides/initial-onboarding.md) for complete agent
    assessment and candidate sealing, then pass the sealed plan to the same
    Adopt operation.
-4. If Adopt displays a breaking migration, review its exact target and obtain
-   real repository-authority approval before rerunning with the reported
-   approval argument and the exact whole-root semantic-review file used to
-   seal the candidate graph baseline.
+4. If Adopt reports that your declared NKF version is inside the support
+   window but behind the recommendation, complete the exact upgrade review it
+   writes and rerun the same command. If it reports the version is outside
+   the support window, it names the exact published stepping-stone release
+   archive; migrate one hop at a time with each archive's own bundled
+   adopter.
 5. Author through the installed AI-neutral protocol and run
    `npm run nkf:check` before handoff.
 
@@ -153,30 +158,35 @@ evidence and stops without guessing a later brownfield category.
 - [Topology](concepts/topology.md) explains roots, profiles, records, semantic
   entities, Realizations, and external authority.
 - [Authority And Lifecycle](concepts/authority-and-lifecycle.md) explains
-  Markdown, executable contracts, Schemas, checking, and claim boundaries.
+  Markdown, executable contracts, Schemas, checking, the reviewed baseline,
+  and claim boundaries.
 - [Initial Onboarding](guides/initial-onboarding.md) covers agent-led Empty and
   Tiny Knowledge Product and Technology repositories.
 - [Adopt And Validate](guides/adopt-and-validate.md) covers the single Adopt
   operation, its results, AI-assisted authoring, and validation.
-- [Update And Recover](guides/update-and-recover.md) covers breaking approval,
-  exact recovery, diagnosis, and failure safety through the same operation.
+- [Update And Recover](guides/update-and-recover.md) covers the in-window
+  upgrade, stepping-stone migration, exact recovery, diagnosis, and failure
+  safety through the same operation.
 - [Product Example](examples/product/README.md) is a complete small Product
   bundle.
 - [Technology Example](examples/technology/README.md) is a complete small
   Technology bundle with governed artifacts.
-- [NKF 0.6 Specification](reference/nkf-0.6.md) is the exact normative
+- [NKF 0.71 Specification](reference/nkf-0.71.md) is the exact normative
   Markdown mirror.
 
 ## Current Boundaries
 
-- NKF 0.6 is pre-stable and may change through the governed change process.
+- NKF 0.71 is pre-stable and may change through the governed change process.
+- Live support covers exactly the current version plus one predecessor:
+  NKF 0.71 and NKF 0.7. NKF 0.6 and older versions are immutable published
+  history reached only through stepping-stone archives.
 - Repository licensing is Apache-2.0 with informational NOTICE and retained
   compatible third-party notices. Licensing does not imply public GitHub
   visibility or a published release.
 - The current checker release is private and available only to authorized
   users of `NourdApS/Nourd.NKF`.
 - The exact Specification mirror preserves source-relative provenance links
-  whose internal Evidence targets are intentionally absent from this public
+  whose internal targets are intentionally absent from this public
   projection.
 - The public adopter is public-safe but requires either an authenticated
   `gh` session for the private release or a locally supplied archive.
@@ -184,7 +194,7 @@ evidence and stops without guessing a later brownfield category.
   shared implementation-independent meaning, not a selectable General root.
 - Initial onboarding uses semantic agent assessment rather than file or byte
   thresholds. Category 2 requires human confirmation; unsupported or uncertain
-  later categories remain deferred to NKF-014.
+  later categories remain deferred.
 - Public presentation metadata, other future root models, validation expiry,
   broader secret scanning, and a protected merge gate remain outside the
   current delivered boundary.

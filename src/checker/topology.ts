@@ -255,7 +255,7 @@ export function validatePortableTopology(input: TopologyInput): void {
   };
 
   const version = String(bundle.nkf_version ?? "0.1");
-  const modernTopology = version === "0.5" || version === "0.6" || version === "0.7";
+  const modernTopology = version === "0.7" || version === "0.71";
   const taskIndexPaths = modernTopology
     ? {
         active: "tasks/by-state/active.md",
@@ -363,7 +363,7 @@ export function validatePortableTopology(input: TopologyInput): void {
   }
   requireIndexTargets("specifications/README.md", specificationPaths);
 
-  if (version === "0.7") {
+  if (version === "0.7" || version === "0.71") {
     // Neutral topology: supporting Realizations live under realizations/items/
     // and are indexed by the realizations map directly.
     const supportingRealizations = records
