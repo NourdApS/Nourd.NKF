@@ -11,18 +11,29 @@
 #
 # stamp: adopted -> the version this repository has adopted (bundle.nkf_version)
 # stamp: release -> the version being emitted (--version)
+#
+# Only targets the generator owns appear here. The adopter installs the skills
+# and the authoring and onboarding protocols from the published archive, so
+# those producer copies are adopter outputs and are written by the adoption
+# process, never by this generator. The adoption and release protocol roots are
+# not installed by anything, which is precisely why they rotted, so the
+# generator owns them at the adopted version.
 contract: nkf.guidance-source
 version: 1
 members:
   - source: skills/nkf-authoring/SKILL.md
     targets:
-      - { path: ".claude/skills/nkf-authoring/SKILL.md", stamp: adopted }
-      - { path: ".agents/skills/nkf-authoring/SKILL.md", stamp: adopted }
       - { path: "distribution/nkf/{version}/.claude/skills/nkf-authoring/SKILL.md", stamp: release }
       - { path: "distribution/nkf/{version}/.agents/skills/nkf-authoring/SKILL.md", stamp: release }
   - source: skills/nkf-onboarding/SKILL.md
     targets:
-      - { path: ".claude/skills/nkf-onboarding/SKILL.md", stamp: adopted }
-      - { path: ".agents/skills/nkf-onboarding/SKILL.md", stamp: adopted }
       - { path: "distribution/nkf/{version}/.claude/skills/nkf-onboarding/SKILL.md", stamp: release }
       - { path: "distribution/nkf/{version}/.agents/skills/nkf-onboarding/SKILL.md", stamp: release }
+  - source: integrations/adoption/nkf-adoption-protocol.md
+    targets:
+      - { path: "integrations/adoption/nkf-adoption-protocol.md", stamp: adopted }
+      - { path: "distribution/nkf/{version}/integrations/adoption/nkf-adoption-protocol.md", stamp: release }
+  - source: integrations/release/nkf-release-protocol.md
+    targets:
+      - { path: "integrations/release/nkf-release-protocol.md", stamp: adopted }
+      - { path: "distribution/nkf/{version}/integrations/release/nkf-release-protocol.md", stamp: release }

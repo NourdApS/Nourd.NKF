@@ -18,7 +18,19 @@ import YAML from "yaml";
 
 const SOURCE_ROOT = "guidance-source";
 const PLACEHOLDER = /\{\{nkf_version\}\}/g;
-const VERSION_LITERAL = /\bNKF (?:Version: )?\d+\.\d+/;
+// A region emitted only into targets carrying the named stamp. The in-repo
+// copy of a protocol carries provenance deep links into knowledge/decisions/
+// that the shipped copy must not: a consumer has no decisions tree, so the
+// link would be dead on arrival. One source, two truthful emissions.
+// A region whose version literals are deliberately historical — an
+// out-of-window range, a named predecessor archive. Marking it is an explicit
+// authoring act, so the neutrality check still catches every accidental one.
+const LITERAL_REGION = /<!-- nkf:literal -->[\s\S]*?<!-- nkf:end -->/g;
+const PREDECESSOR = /\{\{nkf_predecessor\}\}/g;
+const ONLY_REGION = /[ \t]*<!-- nkf:only (adopted|release) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
+// Both forms rot: "NKF 0.7" and the bare pair "0.7-to-0.71" that appears in
+// headings and delta references without the NKF prefix.
+const VERSION_LITERAL = /\bNKF (?:Version: )?\d+\.\d+|\b\d+\.\d+-[Tt]o-\d+\.\d+/;
 
 function fail(message) {
   process.stderr.write(`${message}\n`);
@@ -44,7 +56,10 @@ async function verifySourceIsVersionNeutral(projectRoot) {
   const root = path.join(projectRoot, SOURCE_ROOT);
   const findings = [];
   for (const relative of await sourceFiles(root)) {
-    const text = await readFile(path.join(root, relative), "utf8");
+    const raw = await readFile(path.join(root, relative), "utf8");
+    // Blank declared-literal regions rather than dropping them, so reported
+    // line numbers still match the file.
+    const text = raw.replace(LITERAL_REGION, (block) => block.replace(/[^\n]/g, " "));
     for (const [index, line] of text.split("\n").entries()) {
       const hit = VERSION_LITERAL.exec(line);
       if (hit !== null) {
@@ -53,6 +68,43 @@ async function verifySourceIsVersionNeutral(projectRoot) {
     }
   }
   return findings;
+}
+
+// Publication permanently freezes a release set. Generation writes new
+// versions; it may never rewrite a published one.
+async function frozenVersions(root) {
+  const raw = await readFile(path.join(root, "release/recommended.json"), "utf8").catch(() => null);
+  if (raw === null) return new Set();
+  let published;
+  try { published = JSON.parse(raw).nkf_version; } catch { return new Set(); }
+  if (typeof published !== "string") return new Set();
+  const entries = await readdir(path.join(root, "distribution/nkf"), { withFileTypes: true }).catch(() => []);
+  const rank = (v) => { const [a, b] = v.split("."); return [Number(a), b]; };
+  const [pMajor, pMinor] = rank(published);
+  const frozen = new Set();
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const [major, minor] = rank(entry.name);
+    if (major < pMajor || (major === pMajor && minor <= pMinor)) frozen.add(entry.name);
+  }
+  return frozen;
+}
+
+// The predecessor is stamp-dependent and derivable, so it is never passed in
+// and cannot be passed in wrongly. An adopted emission documents the live
+// window of the version this repository runs, whose predecessor is the
+// non-self entry in the recommendation's compatibility list. A release
+// emission supersedes the currently published version.
+async function resolvePredecessors(root) {
+  const raw = await readFile(path.join(root, "release/recommended.json"), "utf8").catch(() => null);
+  if (raw === null) return { adopted: null, release: null };
+  let recommended;
+  try { recommended = JSON.parse(raw); } catch { return { adopted: null, release: null }; }
+  const published = recommended.nkf_version;
+  const inWindow = (recommended.compatibility ?? [])
+    .map((entry) => entry.from_nkf_version)
+    .filter((version) => version !== published);
+  return { adopted: inWindow[inWindow.length - 1] ?? null, release: published ?? null };
 }
 
 export async function generateGuidance({ projectRoot, releaseVersion, check }) {
@@ -70,6 +122,8 @@ export async function generateGuidance({ projectRoot, releaseVersion, check }) {
   const manifest = YAML.parse(await readFile(path.join(root, SOURCE_ROOT, "manifest.yaml"), "utf8"));
   if (manifest?.contract !== "nkf.guidance-source") fail("Unsupported guidance source manifest contract.");
 
+  const frozen = await frozenVersions(root);
+  const predecessors = await resolvePredecessors(root);
   const written = [];
   const mismatched = [];
   for (const member of manifest.members ?? []) {
@@ -80,7 +134,14 @@ export async function generateGuidance({ projectRoot, releaseVersion, check }) {
         fail(`Target ${target.path} needs a ${target.stamp} version; pass --version for release targets.`);
       }
       const relative = target.path.replace("{version}", version);
-      const emitted = source.replace(PLACEHOLDER, version);
+      if (!check && target.stamp === "release" && frozen.has(version)) {
+        fail(`Refusing to write into the published NKF ${version} tree; publication freezes it permanently.`);
+      }
+      const emitted = source
+        .replace(ONLY_REGION, (_match, stamp, body) => (stamp === target.stamp ? body : ""))
+        .replace(LITERAL_REGION, (block) => block.replace(/<!-- nkf:(literal|end) -->\n?/g, ""))
+        .replace(PLACEHOLDER, version)
+        .replace(PREDECESSOR, predecessors[target.stamp] ?? "");
       const absolute = path.join(root, relative);
       if (check) {
         const existing = await readFile(absolute, "utf8").catch(() => null);
