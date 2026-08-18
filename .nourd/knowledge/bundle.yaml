@@ -1742,6 +1742,23 @@ non_records:
       related_tasks:
         - NKF-031
       relationships: []
+  - path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
+    kind: task
+    document:
+      id: NKF-033
+      stable_path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
+      digest:
+        algorithm: sha-256
+        value: "36037460c2c868c3a14cbdfdb22ed4b70f223f2f66f04651eee8085fb16ac6dd"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary, the version string, the window slide, publication authorization, visibility, and every merge; Claude technical reviewer under explicit delegation for contracts, serialization, compatibility, implementation, fixtures, tests, evidence, independent-audit coordination, and technical confirmation within the confirmed boundaries
+      related_tasks:
+        - NKF-031
+        - NKF-032
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md

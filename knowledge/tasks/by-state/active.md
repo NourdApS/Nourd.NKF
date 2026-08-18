@@ -1,3 +1,3 @@
 # Active Tasks
 
-No applicable item is currently represented.
+- [NKF-033](../items/NKF-033-release-nkf-0-8-with-generated-distribution.md)
