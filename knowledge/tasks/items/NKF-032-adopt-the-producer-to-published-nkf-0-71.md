@@ -138,6 +138,37 @@ immediately after
 [NKF-031](NKF-031-release-the-corrective-nkf-0-71.md) concluded with its
 pull request ready.
 
+## Completion Result
+
+The producer is the first adopter of published NKF 0.71. The publication
+from the release branch is recorded with byte-exact re-download verification
+in the [publication Evidence](../../evidence/release/nkf-032-nkf-0-71-publication.md):
+the published asset hashes to exactly the archive digest bound by
+[ADR 0132](../../decisions/0132-confirm-the-nkf-0-71-release-candidate.md)
+at exactly the confirmed release commit, and `master` was deliberately not
+merged first. The governed recommendation selects the published release and
+the registry-driven verification passes with zero code edits. The live
+promotion ran the ordinary public Adopt of the published release: it
+verified the archive, created the native accepted
+[0.71 Specification record](../../specifications/nkf-0.71.md), refreshed the
+host-superset integration and the live guidance to 0.71, and sealed the
+post-promotion baseline from the completed delta-stage review — the first
+live promotion in this lineage proven through the digest-bound delta claim
+alone, with three hundred seventeen judgments carried by digest identity and
+exactly one performed fresh, discharging the bootstrap promise on the live
+producer. A repeat public Adopt returns `current`. One transaction rollback
+during the first promotion attempt proved the fail-closed design live: the
+predecessor baseline was one node stale because the publication Evidence had
+been registered without a reseal, the promotion refused before mutation, and
+the ordinary review-and-seal path recovered exactly as specified. The root
+record, front page, and
+[current-system Realization](../../realizations/current-system.md) state the
+promoted reality, and the complete gate passes green on the promoted
+producer. This Task's deterministic close under the installed 0.71 adopter
+is the first live seal-completing conclusion; the stacked pull request
+delivers the adoption, and merging it and its base remains the Human Product
+Owner's act.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -159,9 +190,9 @@ pull request ready.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The published asset re-downloads to the confirmed archive digest at the confirmed release commit | unknown | none | none |
-| The recommendation catalog passes the fail-closed registry-driven verification without code edits | unknown | none | none |
-| The live promotion reaches its verified terminal state through the delta-stage review with the complete gate green | unknown | none | none |
-| A repeat public Adopt returns `current` with the host-superset integration preserved | unknown | none | none |
-| The governed record states the promoted reality truthfully | unknown | none | none |
-| The deterministic close under the 0.71 adopter seals the concluded tip with equal graph revisions and no post-close act | unknown | none | none |
+| The published asset re-downloads to the confirmed archive digest at the confirmed release commit | proven | data-validity | none |
+| The recommendation catalog passes the fail-closed registry-driven verification without code edits | proven | runtime-behaviour | none |
+| The live promotion reaches its verified terminal state through the delta-stage review with the complete gate green | proven | runtime-behaviour | none |
+| A repeat public Adopt returns `current` with the host-superset integration preserved | proven | runtime-behaviour | none |
+| The governed record states the promoted reality truthfully | proven | data-validity | none |
+| The deterministic close under the 0.71 adopter seals the concluded tip with equal graph revisions and no post-close act | proven | runtime-behaviour | none |
