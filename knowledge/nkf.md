@@ -32,7 +32,7 @@ Profile. Nourd Knowledge Engine may consume NKF but does not define it.
 
 ## Capabilities And Contracts
 
-NKF 0.7 supplies Common contracts plus Product and Technology Root Profiles,
+NKF 0.71 supplies Common contracts plus Product and Technology Root Profiles,
 bundle and record declarations, exact source and artifact bindings, body and
 vocabulary contracts, deterministic diagnostics, validation results,
 extensions, release and compatibility meaning, a native checker contract,
@@ -53,7 +53,7 @@ future Nourd Knowledge Protocol runtime.
 
 ## Technology Map
 
-The canonical NKF 0.7 Specification defines current normative behavior.
+The canonical NKF 0.71 Specification defines current normative behavior.
 Decisions preserve accepted choices; Designs preserve proposals and rationale;
 Realizations bind the specification to schemas, checker source, tests,
 fixtures, build tooling, and project configuration; Evidence preserves
@@ -61,7 +61,7 @@ reviewed sources and observations.
 
 ## Versioning Compatibility And Migration
 
-Each native bundle declares one exact `nkf_version`; `0.7` is the current
+Each native bundle declares one exact `nkf_version`; `0.71` is the current
 accepted, published, recommended, and producer-adopted format authority, and
 `0.6` is the one live-supported predecessor under the standing
 current-plus-one support window. `0.1` through `0.5` remain immutable

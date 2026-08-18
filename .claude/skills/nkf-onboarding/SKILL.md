@@ -5,7 +5,7 @@ description: Inspect and assess an unadopted Empty or Tiny Knowledge Product or 
 
 # NKF Onboarding
 
-NKF Version: 0.7
+NKF Version: 0.71
 
 Read and follow the complete public
 `integrations/onboarding/nkf-onboarding-protocol.md` procedure.

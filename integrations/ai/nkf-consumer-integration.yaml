@@ -8,20 +8,20 @@ scripts:
   host: npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self
 protocol:
   path: integrations/ai/nkf-authoring-protocol.md
-  sha256: 42fa8df8f370d04c2292e7b2d334a9e80f7c80d858cf7256f9833fd7878e0783
+  sha256: 883abbe9b71ac8a3349335ba256a498fb373956946cc4e37b62b6340931c2a1b
 skills:
   - path: .agents/skills/nkf-authoring/SKILL.md
-    sha256: c18b4757d1bfd0aa6950dbc8caee93b03dfbe527e3e1ed81939c3ffc869a8e5c
+    sha256: 6234b0e7f88ea025fd6048eafdab04ef506e91127d711c2639cb2083bc579e25
   - path: .claude/skills/nkf-authoring/SKILL.md
-    sha256: c18b4757d1bfd0aa6950dbc8caee93b03dfbe527e3e1ed81939c3ffc869a8e5c
+    sha256: 6234b0e7f88ea025fd6048eafdab04ef506e91127d711c2639cb2083bc579e25
 onboarding_protocol:
   path: integrations/onboarding/nkf-onboarding-protocol.md
-  sha256: 704b470e16590fe9d0c15e9d6fad7e3f0ebdb5b37155e41f8480e9133c78b1b4
+  sha256: 2dd36b5437cc98db69d39d8e47b5400e8eca189f640313115fff5d38cc161788
 onboarding_skills:
   - path: .agents/skills/nkf-onboarding/SKILL.md
-    sha256: 4277268613068411522e9f14d3fee29af5233ae4b48057fbf4b26fcd0da1c118
+    sha256: 54829acc74ee9d6323e3dfd842ab3d5c83d9fa534955de6886d517c3cdd33745
   - path: .claude/skills/nkf-onboarding/SKILL.md
-    sha256: 4277268613068411522e9f14d3fee29af5233ae4b48057fbf4b26fcd0da1c118
+    sha256: 54829acc74ee9d6323e3dfd842ab3d5c83d9fa534955de6886d517c3cdd33745
 adapters:
   - path: AGENTS.md
     mode: bounded-block
@@ -43,4 +43,4 @@ verifier:
 workflow:
   path: .github/workflows/nkf-contracts.yml
   sha256: adee94d771626a585e04cd58e7e206f0672b9a2d44288306162cf2a97fb817b2
-  branch: task/NKF-029
+  branch: task/NKF-032
