@@ -1,20 +1,20 @@
 contract: nkf.graph-baseline
-nkf_version: "0.71"
+nkf_version: "0.8"
 bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: e291e18697a86a11deba41ee0260368cd2f01117b8a88386dc93453126981b51
+  value: 759cbee2f2cbcbac17a63fb3b64b964909079c7d8e14a90271cda3e6a2ee57f8
 policy:
-  id: nkf.freshness-policy.0.71
+  id: nkf.freshness-policy.0.8
   digest:
     algorithm: sha-256
-    value: 20c7b5f4e34f88da6c8365a59cee913020263c2c4ab36796602a2a7cb0ab1ae4
+    value: 7cfb1b40a8b6f86543cb7b6016c6e9b2c1159d2a748c1915d0e9bf51bb82afd4
 version_delta:
   contract: nkf.version-delta
   digest:
     algorithm: sha-256
-    value: 21089afc8155a98410960e2fa7cf19344e1e5ca010095a0f7975dc783d730c01
+    value: cc17f23a44afcf56b107f3e76e4d761779a4225bd2f8955c51d9781193c9c8b9
 node_revisions:
   - node:
       kind: document
@@ -208,6 +208,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+  - node:
+      kind: document
+      id: NKF-035
+    revision:
+      algorithm: sha-256
+      value: 7d3ea73d3d6d65434881df17d3b829ac11ef7c3f20d071dbfeb374b034f4a2eb
   - node:
       kind: record
       id: adr-0001
@@ -1842,6 +1848,12 @@ node_revisions:
       value: d78694fd4bbdffce42a2b31aa613027d6ba0570589aabab42bda8f2fdc66ebee
   - node:
       kind: document
+      id: document-nkf-0-8-producer-adoption
+    revision:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+  - node:
+      kind: document
       id: document-nkf-0-8-producer-promotion
     revision:
       algorithm: sha-256
@@ -1858,12 +1870,6 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 71b325f96efdab2dc3640c6633c69e3bb139b3ac2e2922915e49eb4f1ab951b4
-  - node:
-      kind: document
-      id: document-nkf-0-8-specification
-    revision:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
   - node:
       kind: document
       id: document-nkf-0-8-version-surface-inventory
@@ -1944,6 +1950,12 @@ node_revisions:
       value: d5cdb1e546a7f50065ec6ac7945ff41e7a4f4bd0580446269945838b0740f3d6
   - node:
       kind: record
+      id: nkf-0.8-specification
+    revision:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+  - node:
+      kind: record
       id: nkf-003-source-reconciliation
     revision:
       algorithm: sha-256
@@ -1971,7 +1983,7 @@ node_revisions:
       id: nkf-current-system
     revision:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
   - node:
       kind: record
       id: nkf-initial-greenfield-onboarding
@@ -6506,10 +6518,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-033
-        from_state: active
-        to_state: completed
   - node:
       kind: document
       id: NKF-033
@@ -6539,10 +6547,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-033
-        from_state: active
-        to_state: completed
   - node:
       kind: document
       id: NKF-033
@@ -6572,97 +6576,192 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: NKF-034
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-034
+      source:
+        heading:
+          heading_path:
+            - 'title: "NKF-034: Qualify Accepted Records With Later Findings"summary: Give NKF a governed way to attach a later finding to an accepted immutable record whose stated basis turns out weaker than claimed, without superseding it and without letting unaccepted Evidence erode accepted authority — deferred from the NKF 0.8 release Task so that release stays scoped to the generated distribution and the guidance-review enforcement repair.created_at: 2026-08-18T20:15:00Z'
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+    basis_digest:
+      algorithm: sha-256
+      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: NKF-034
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-034
+      source:
+        heading:
+          heading_path:
+            - 'title: "NKF-034: Qualify Accepted Records With Later Findings"summary: Give NKF a governed way to attach a later finding to an accepted immutable record whose stated basis turns out weaker than claimed, without superseding it and without letting unaccepted Evidence erode accepted authority — deferred from the NKF 0.8 release Task so that release stays scoped to the generated distribution and the guidance-review enforcement repair.created_at: 2026-08-18T20:15:00Z'
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+    basis_digest:
+      algorithm: sha-256
+      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: NKF-034
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-034
+      source:
+        heading:
+          heading_path:
+            - 'title: "NKF-034: Qualify Accepted Records With Later Findings"summary: Give NKF a governed way to attach a later finding to an accepted immutable record whose stated basis turns out weaker than claimed, without superseding it and without letting unaccepted Evidence erode accepted authority — deferred from the NKF 0.8 release Task so that release stays scoped to the generated distribution and the guidance-review enforcement repair.created_at: 2026-08-18T20:15:00Z'
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+    basis_digest:
+      algorithm: sha-256
+      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: NKF-035
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-035
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-035: Adopt The Producer To Published NKF 0.8\"summary: Adopt this producer repository to the published NKF 0.8 release through the ordinary public Adopt operation, declaring and installing the exact recommended archive, activating the three deterministic guidance verifiers that NKF 0.8 keys to the declared version, restamping the version-bearing guidance the adoption changes, and reconciling the governed record to the adopted reality — delivered as one stacked pull request while merging remains the Human Product Owner's act.created_at: 2026-08-19T15:00:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 7d3ea73d3d6d65434881df17d3b829ac11ef7c3f20d071dbfeb374b034f4a2eb
+    basis_digest:
+      algorithm: sha-256
+      value: 1b0a8e7758e71379b0695d589bbe69246c501ce589c8f7f12607b54ffd67eda1
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
       transition:
-        task: NKF-033
+        task: NKF-035
         from_state: active
         to_state: completed
   - node:
       kind: document
-      id: NKF-034
-    purpose: change-impact
-    state: eligible
-    role: context
-    basis:
-      node:
-        kind: document
-        id: NKF-034
-      source:
-        heading:
-          heading_path:
-            - 'title: "NKF-034: Qualify Accepted Records With Later Findings"summary: Give NKF a governed way to attach a later finding to an accepted immutable record whose stated basis turns out weaker than claimed, without superseding it and without letting unaccepted Evidence erode accepted authority — deferred from the NKF 0.8 release Task so that release stays scoped to the generated distribution and the guidance-review enforcement repair.created_at: 2026-08-18T20:15:00Z'
-          occurrence: 1
-    revision:
-      algorithm: sha-256
-      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
-    basis_digest:
-      algorithm: sha-256
-      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: document
-      id: NKF-034
+      id: NKF-035
     purpose: whole-root-readiness
     state: eligible
     role: context
     basis:
       node:
         kind: document
-        id: NKF-034
+        id: NKF-035
       source:
         heading:
           heading_path:
-            - 'title: "NKF-034: Qualify Accepted Records With Later Findings"summary: Give NKF a governed way to attach a later finding to an accepted immutable record whose stated basis turns out weaker than claimed, without superseding it and without letting unaccepted Evidence erode accepted authority — deferred from the NKF 0.8 release Task so that release stays scoped to the generated distribution and the guidance-review enforcement repair.created_at: 2026-08-18T20:15:00Z'
+            - "title: \"NKF-035: Adopt The Producer To Published NKF 0.8\"summary: Adopt this producer repository to the published NKF 0.8 release through the ordinary public Adopt operation, declaring and installing the exact recommended archive, activating the three deterministic guidance verifiers that NKF 0.8 keys to the declared version, restamping the version-bearing guidance the adoption changes, and reconciling the governed record to the adopted reality — delivered as one stacked pull request while merging remains the Human Product Owner's act.created_at: 2026-08-19T15:00:00Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+      value: 7d3ea73d3d6d65434881df17d3b829ac11ef7c3f20d071dbfeb374b034f4a2eb
     basis_digest:
       algorithm: sha-256
-      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+      value: 1b0a8e7758e71379b0695d589bbe69246c501ce589c8f7f12607b54ffd67eda1
     provenance:
       carried:
         performed_in_graph_revision:
           algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+      transition:
+        task: NKF-035
+        from_state: active
+        to_state: completed
   - node:
       kind: document
-      id: NKF-034
+      id: NKF-035
     purpose: consequential-use
     state: eligible
     role: context
     basis:
       node:
         kind: document
-        id: NKF-034
+        id: NKF-035
       source:
         heading:
           heading_path:
-            - 'title: "NKF-034: Qualify Accepted Records With Later Findings"summary: Give NKF a governed way to attach a later finding to an accepted immutable record whose stated basis turns out weaker than claimed, without superseding it and without letting unaccepted Evidence erode accepted authority — deferred from the NKF 0.8 release Task so that release stays scoped to the generated distribution and the guidance-review enforcement repair.created_at: 2026-08-18T20:15:00Z'
+            - "title: \"NKF-035: Adopt The Producer To Published NKF 0.8\"summary: Adopt this producer repository to the published NKF 0.8 release through the ordinary public Adopt operation, declaring and installing the exact recommended archive, activating the three deterministic guidance verifiers that NKF 0.8 keys to the declared version, restamping the version-bearing guidance the adoption changes, and reconciling the governed record to the adopted reality — delivered as one stacked pull request while merging remains the Human Product Owner's act.created_at: 2026-08-19T15:00:00Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+      value: 7d3ea73d3d6d65434881df17d3b829ac11ef7c3f20d071dbfeb374b034f4a2eb
     basis_digest:
       algorithm: sha-256
-      value: 830ad44028dbf7ea2e0f7a4d578f69c912da27da5e3559546590f21ed7defddc
+      value: 1b0a8e7758e71379b0695d589bbe69246c501ce589c8f7f12607b54ffd67eda1
     provenance:
       carried:
         performed_in_graph_revision:
           algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+      transition:
+        task: NKF-035
+        from_state: active
+        to_state: completed
   - node:
       kind: record
       id: adr-0001
@@ -28772,6 +28871,93 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: document
+      id: document-nkf-0-8-producer-adoption
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-8-producer-adoption
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-035 NKF 0.8 Producer Adoptionsummary: Records the live post-publication producer self-adoption of NKF 0.8 through the ordinary public Adopt operation — the verified pin, the promotion proven on the digest-bound delta claim, the activated verifier chain, and the honest finding that two of the three activated verifiers are cut-time controls that report nothing once the version they check is published.created_at: 2026-08-19T16:30:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+    basis_digest:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: document-nkf-0-8-producer-adoption
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-8-producer-adoption
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-035 NKF 0.8 Producer Adoptionsummary: Records the live post-publication producer self-adoption of NKF 0.8 through the ordinary public Adopt operation — the verified pin, the promotion proven on the digest-bound delta claim, the activated verifier chain, and the honest finding that two of the three activated verifiers are cut-time controls that report nothing once the version they check is published.created_at: 2026-08-19T16:30:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+    basis_digest:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
+      id: document-nkf-0-8-producer-adoption
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-8-producer-adoption
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-035 NKF 0.8 Producer Adoptionsummary: Records the live post-publication producer self-adoption of NKF 0.8 through the ordinary public Adopt operation — the verified pin, the promotion proven on the digest-bound delta claim, the activated verifier chain, and the honest finding that two of the three activated verifiers are cut-time controls that report nothing once the version they check is published.created_at: 2026-08-19T16:30:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+    basis_digest:
+      algorithm: sha-256
+      value: 0f6c07ef7f9508e3b2f8d269040bd6b96ccd47c8ca439689a4bab8e692e067b4
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: document
       id: document-nkf-0-8-producer-promotion
     purpose: change-impact
     state: eligible
@@ -29014,93 +29200,6 @@ applicability_coverage:
     basis_digest:
       algorithm: sha-256
       value: 71b325f96efdab2dc3640c6633c69e3bb139b3ac2e2922915e49eb4f1ab951b4
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: document
-      id: document-nkf-0-8-specification
-    purpose: change-impact
-    state: eligible
-    role: governs
-    basis:
-      node:
-        kind: document
-        id: document-nkf-0-8-specification
-      source:
-        heading:
-          heading_path:
-            - "id: nkf-0.8-specificationtitle: NKF 0.8 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.8 is the successor to NKF 0.71 that ends the recurring stale-guidance defect class at its source. Every version-bearing guidance copy is derived from one version-neutral authored source with the version injected instead of carried forward by hand, a guidance file's own frontmatter self-description becomes a checked conformance position, the pre-cut whole-set guidance review and its independent audit are enforced against the deterministically enumerated release set, and live support slides to exactly 0.8 plus 0.71 with NKF 0.7 as stepping-stone history.created_at: 2026-08-19T01:00:00Z"
-          occurrence: 1
-    revision:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
-    basis_digest:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: document
-      id: document-nkf-0-8-specification
-    purpose: whole-root-readiness
-    state: eligible
-    role: governs
-    basis:
-      node:
-        kind: document
-        id: document-nkf-0-8-specification
-      source:
-        heading:
-          heading_path:
-            - "id: nkf-0.8-specificationtitle: NKF 0.8 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.8 is the successor to NKF 0.71 that ends the recurring stale-guidance defect class at its source. Every version-bearing guidance copy is derived from one version-neutral authored source with the version injected instead of carried forward by hand, a guidance file's own frontmatter self-description becomes a checked conformance position, the pre-cut whole-set guidance review and its independent audit are enforced against the deterministically enumerated release set, and live support slides to exactly 0.8 plus 0.71 with NKF 0.7 as stepping-stone history.created_at: 2026-08-19T01:00:00Z"
-          occurrence: 1
-    revision:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
-    basis_digest:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: document
-      id: document-nkf-0-8-specification
-    purpose: consequential-use
-    state: eligible
-    role: governs
-    basis:
-      node:
-        kind: document
-        id: document-nkf-0-8-specification
-      source:
-        heading:
-          heading_path:
-            - "id: nkf-0.8-specificationtitle: NKF 0.8 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.8 is the successor to NKF 0.71 that ends the recurring stale-guidance defect class at its source. Every version-bearing guidance copy is derived from one version-neutral authored source with the version injected instead of carried forward by hand, a guidance file's own frontmatter self-description becomes a checked conformance position, the pre-cut whole-set guidance review and its independent audit are enforced against the deterministically enumerated release set, and live support slides to exactly 0.8 plus 0.71 with NKF 0.7 as stepping-stone history.created_at: 2026-08-19T01:00:00Z"
-          occurrence: 1
-    revision:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
-    basis_digest:
-      algorithm: sha-256
-      value: 3d6cad10cb0c404c4e7cf26a981df13110f484ef3ffe130073853991385edfea
     provenance:
       carried:
         performed_in_graph_revision:
@@ -30152,6 +30251,84 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: record
+      id: nkf-0.8-specification
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: nkf-0.8-specification
+      source:
+        section: purpose
+    revision:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+    basis_digest:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: d9452008a08c5ca474dc8cbdb7134c643630cba4a994afadb4823baf91086b53
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: record
+      id: nkf-0.8-specification
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: nkf-0.8-specification
+      source:
+        section: purpose
+    revision:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+    basis_digest:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: d9452008a08c5ca474dc8cbdb7134c643630cba4a994afadb4823baf91086b53
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: record
+      id: nkf-0.8-specification
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: nkf-0.8-specification
+      source:
+        section: purpose
+    revision:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+    basis_digest:
+      algorithm: sha-256
+      value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: d9452008a08c5ca474dc8cbdb7134c643630cba4a994afadb4823baf91086b53
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: record
       id: nkf-003-source-reconciliation
     purpose: change-impact
     state: eligible
@@ -30476,15 +30653,15 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
     basis_digest:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
     provenance:
       carried:
         performed_in_graph_revision:
           algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
@@ -30502,15 +30679,15 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
     basis_digest:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
     provenance:
       carried:
         performed_in_graph_revision:
           algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
@@ -30528,15 +30705,15 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
     basis_digest:
       algorithm: sha-256
-      value: 8bcb27f9b4537804a16700efb733c5396c29f52d7a00b474811fecae39c4c630
+      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
     provenance:
       carried:
         performed_in_graph_revision:
           algorithm: sha-256
-          value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
@@ -40122,30 +40299,30 @@ confirmation:
   reviewer:
     kind: agent
     id: task-transition-operator
-  reviewed_at: 2026-08-19T10:46:43.613Z
+  reviewed_at: 2026-08-19T14:42:48.421Z
   claim: mechanically-concluded
   transition:
-    task: NKF-033
+    task: NKF-035
     from_state: active
     to_state: completed
     predecessor_graph_revision:
       algorithm: sha-256
-      value: 788ebfb7a0a5e817bb3d8d0deb411e8fb63403bcf7525b82fe74c8c04cd79968
+      value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
   observations:
     - id: transition-conclusion-observation
       subject:
         kind: document
-        id: NKF-033
+        id: NKF-035
       basis:
         node:
           kind: document
-          id: NKF-033
+          id: NKF-035
         source:
           heading:
             heading_path:
-              - 'title: "NKF-033: Release NKF 0.8 With Generated Distribution"summary: End the recurring stale-guidance defect class at its source by generating the versioned distribution tree from one source with the version injected instead of copying it forward by hand, correcting the stale audit sentence that let a diff-scoped guidance review pass an independent audit, enforcing the version positions no check covers, and sweeping every live guidance member in full — delivered as the NKF 0.8 successor with the live window sliding to exactly NKF 0.8 plus NKF 0.71.created_at: 2026-08-18T16:45:07Z'
+              - "title: \"NKF-035: Adopt The Producer To Published NKF 0.8\"summary: Adopt this producer repository to the published NKF 0.8 release through the ordinary public Adopt operation, declaring and installing the exact recommended archive, activating the three deterministic guidance verifiers that NKF 0.8 keys to the declared version, restamping the version-bearing guidance the adoption changes, and reconciling the governed record to the adopted reality — delivered as one stacked pull request while merging remains the Human Product Owner's act.created_at: 2026-08-19T15:00:00Z"
             occurrence: 1
-      finding: "The deterministic Task transition NKF-033 active -> completed concluded mechanically: every judgment carried, zero judgments performed."
+      finding: "The deterministic Task transition NKF-035 active -> completed concluded mechanically: every judgment carried, zero judgments performed."
   limitations:
-    - This is a mechanical conclusion of the NKF-033 active-to-completed transition carrying every prior judgment with zero fresh semantic review; any semantic doubt requires the ordinary whole-root or delta semantic review and seal.
+    - This is a mechanical conclusion of the NKF-035 active-to-completed transition carrying every prior judgment with zero fresh semantic review; any semantic doubt requires the ordinary whole-root or delta semantic review and seal.
   disputed: false

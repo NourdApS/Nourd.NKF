@@ -1,6 +1,6 @@
 # NKF Authoring Protocol
 
-NKF Version: 0.71
+NKF Version: 0.8
 
 This is the complete vendor-neutral procedure for creating, changing,
 classifying, migrating, auditing, or validating NKF-governed knowledge in an
@@ -113,7 +113,7 @@ Before Git-backed work under a Task:
 5. A gate added to a pre-existing Task states in an explanatory block that it
    was added retrospectively.
 
-Under native NKF 0.71 frontmatter, a record carries only common orientation plus
+Under native NKF 0.8 frontmatter, a record carries only common orientation plus
 `id` and `type`; Task state, ownership, relationships, Design disposition,
 governance, freshness, and confirmation live in YAML declarations. Preserved
 predecessor sources may retain inert mutable keys only through an exact
@@ -190,8 +190,14 @@ verified deep links; `refs` exports the identifier-to-path reference map;
 `review --scaffold` emits the exact review-input skeleton with carried
 judgments prefilled and the computed required fresh set left to the named
 reviewer; `record --scaffold` emits a declaration skeleton with exact digests
-and section heading paths and no semantic values; and `migrate` performs the
-declared 0.7-to-0.71 upgrade beneath the one public Adopt operation. A
+and section heading paths and no semantic values; and `migrate` fails closed,
+directing an in-window repository to the ordinary Adopt update and naming an
+out-of-window repository its exact stepping-stone release archive. The
+0.71-to-0.8 upgrade itself is performed by the one
+public Adopt operation, not by `migrate`.
+A versioned guidance member is emitted from the one version-neutral authored
+source and is never edited in place: correct the source and regenerate, because
+an edit to an emitted member is rejected against its own derivation. A
 judgment carries forward only by digest identity under the accepted
 version-delta declaration and the evaluation policy's declared judgment
 dependencies; a delta review claim is admitted only when the
