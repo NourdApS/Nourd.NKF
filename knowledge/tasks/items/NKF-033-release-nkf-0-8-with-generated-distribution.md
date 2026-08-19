@@ -390,17 +390,21 @@ a reviewer noticed is not.
 The version-surface capability is proven at `data-validity` through the
 recorded
 [version-surface inventory](../../evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md):
-sixty-nine surfaces enumerated, forty-five registering `0.8`, twenty-four
-adjudicated as deliberately version-specific, and three defects found in those
-surfaces — two by the inventory itself and one by an independent release audit.
+seventy surfaces enumerated, forty-six registering `0.8`,
+twenty-four adjudicated as deliberately version-specific, and three defects found in
+those surfaces — two by the inventory itself and one by an independent release
+audit. The scan counts itself, which is why the total includes the script that
+produces it.
 
 The claim is bounded by how it was reached. The inventory's scan was widened
 three times, each time because an audit found a surface outside it, and its
-counts were restated wrongly in three successive revisions. It is now derived by
-a recorded script rather than typed, which is the only reason this entry can be
-checked. `proven` here means the enumeration is complete under the stated
-method and each surface was adjudicated deliberately; it does not mean the
-method was right the first time.
+counts were restated wrongly in four successive revisions — the last time
+because the script written to end typed counts counted itself, and the recorded
+numbers predated its own existence. It is now derived by that script rather
+than typed, which is the only reason this entry can be checked. `proven` here
+means the enumeration is complete under the stated method and each surface was
+adjudicated deliberately; it does not mean the method was right, or the
+transcription of it right, at any earlier point.
 
 The release-order capability remains `unknown`. Four independent release audit
 rounds have run and none returned clean: two blocking findings, then five, then

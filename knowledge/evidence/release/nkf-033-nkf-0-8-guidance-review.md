@@ -239,12 +239,18 @@ and the accepted authority is a semantic judgment, and the deterministic check
 that accompanies this review verifies only that every enumerated guidance
 member is named by its full path with a reviewed digest equal to its bytes.
 
-Nine stale sentences survived this review across four audit rounds, and one of
-its own repairs introduced two further defects. That is the recorded
-measure of how far a review's coverage claim reaches, and it is the strongest
-evidence in this release for its own central claim: the positions a
-deterministic check can own do not go stale, and the positions only a human
-re-read can own do. Every surviving instance was body prose, which the new rule
-is scoped away from by contract, so the whole-set re-read is their only
-control. The independent release audit verifies this review; it does not
-inherit its conclusions.
+Stale sentences survived this review in the first, second, and third audit
+rounds, and repairs made in each of the first four rounds introduced further
+defects that the following round found. This document deliberately states no
+tally of either: the per-round tables in the
+[release audit](nkf-033-nkf-0-8-release-audit.md) are the record, three
+successive attempts to summarise them as a number were each wrong, and a
+hand-counted total of one's own failures is exactly the kind of claim this
+release has demonstrated a reviewer cannot be trusted to get right.
+
+What the rounds do establish, without arithmetic, is the shape. Every stale
+sentence found in shipped guidance was body prose, which the new rule is scoped
+away from by contract, so the whole-set re-read is their only control. And every
+defect found after the delivery settled was in this hand-written record rather
+than in what ships. The independent release audit verifies this review; it does
+not inherit its conclusions.

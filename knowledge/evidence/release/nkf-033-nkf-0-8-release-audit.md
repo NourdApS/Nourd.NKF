@@ -267,26 +267,73 @@ count constant.
 | `package-lock.json` dependency fragments are not NKF coordinates. | Correctly outside the inventory. |
 | The two mixed-delimiter keys in the accepted executable remain. | Unchanged disposition. |
 
+## Round Five — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `15b4287fedb4e6071ae6e4047e9ba2f023286dfc` (`task/NKF-033`, clean before and after) |
+| Audited archive | SHA-256 `b783efa23f69daae56301f46ba0ee2cfc24a7ba6d6af0e1c2c5b9d0d2330cd0a` |
+| Verdict | Delivery clean: zero blocking defects. Record not clean: one blocking finding. |
+
+The fifth round was deliberately weighted toward the delivery, because the two
+previous rounds had found their defects almost entirely in this Task's
+hand-written record. It rebuilt the archive byte-identically in a clean clone,
+reconciled all one hundred forty-one members and their modes, validated the
+manifest and every binding digest, re-derived the guidance member list by class
+and verified all twelve recorded digests against archive bytes, re-read all
+twelve guidance members in full, and — the part earlier rounds proved necessary
+— executed every command claim rather than reading it: `set`, `migrate`,
+`refs`, `record --scaffold`, `review --scaffold`, `repin`, `linkify`, and Adopt
+end to end. It found no sentence in shipped guidance describing a rule,
+boundary, command, or capability that is not the current one.
+
+It also proved the round-four adoption disclosure true in both directions on the
+same genuine NKF 0.71 consumer: the published 0.71 adopter refuses the NKF 0.8
+recommendation with an invalid-or-ambiguous compatibility message naming no
+remedy, and the shipped NKF 0.8 adopter completes the upgrade to `updated`. The
+adoption protocol's new section and the release notes' remedy are literally
+accurate.
+
+## Round Five Blocking Finding And Repair
+
+| Finding | Repair |
+| --- | --- |
+| The version-surface inventory and the Task gate both stated seventy surfaces as sixty-nine, and forty-six registering `0.8` as forty-five. The cause is the round-four repair itself: the script written to end hand-typed counts is a tracked file naming every coordinate from `0.1` to `0.8`, so it is a version surface by its own definition and counts itself, and the recorded numbers were the values from before it existed. The third consecutive round to find a false count in this record. | Both documents state the computed totals and disclose that the scan counts itself, because excluding it would be a special case that hid a real surface to make a number tidier. The guidance review's remaining self-tallies are replaced by a description of what the rounds established, with the per-round tables here as the only record of the count. |
+
+## Round Five Notes And Dispositions
+
+| Note | Disposition |
+| --- | --- |
+| Round one's record states two hundred sixty-three tests; the suite is now two hundred sixty-eight. Each round's claim is scoped to its round, so neither is false, but no section carried a current count. | The Resulting State below states the count at the audited commit. |
+| `linkify` cannot run to completion on the producer repository: it would retarget a plain reference inside an immutable Decision source and correctly refuses. Standing behaviour, undisclosed anywhere. | Recorded. The refusal is consistent with the accepted immutability rule and is not a shipped-guidance falsehood; disclosing it is carried to the next revision. |
+| Two mixed-delimiter keys in the accepted executable remain. | Unchanged disposition. |
+
 ## Resulting State
 
-Every blocking and should-fix finding from all four rounds is repaired; every
-note is repaired or recorded with an explicit disposition. Each round's repairs
+Every blocking and should-fix finding from all five rounds is repaired; every
+note is repaired or recorded with an explicit disposition. At the audited commit
+the complete gate passes all fifteen stages with two hundred sixty-eight of two
+hundred sixty-eight tests green and no diagnostic. Each round's repairs
 change release-set member bytes, so each round invalidates the prior archive,
 exercise, and audit by construction, and the candidate is re-cut, re-exercised,
 and re-audited before the technical-confirmation Decision.
 
-Four rounds is the fact worth carrying out of this release, and the shape of the
-four matters more than the count. Every round after the first found defects
+Five rounds is the fact worth carrying out of this release, and their shape
+matters more than their number. Every round after the first found defects
 created by the previous round's repairs. The delivery converged early — the
 generator, the self-description rule, and the three verifiers were correct from
-the round in which they were delivered and never regressed — while the
-hand-maintained record did not: rounds three and four found their defects almost
-entirely in this Task's own Evidence and gate, in prose and in typed counts.
+the round in which they were delivered and never regressed, and the fifth round
+found the delivery clean after executing every capability claim rather than
+reading it. The hand-maintained record did not converge: rounds three, four, and
+five found their defects almost entirely in this Task's own Evidence and gate,
+in prose and in typed counts, including one round's repair being defective
+because the script it introduced to end typed counts counted itself.
 
-The counts are now computed by recorded scripts rather than typed, which is the
-narrow lesson. The broad one is that the generated distribution ends stale
-version labels and does nothing about stale claims, and this release is its own
-best evidence for both halves of that sentence.
+The narrow lesson is mechanised: counts come from recorded scripts, and the one
+tally that cannot be computed — a reviewer's own failures — is now described
+rather than counted. The broad lesson is that the generated distribution ends
+stale version labels and does nothing about stale claims, and this release is its
+own best evidence for both halves of that sentence.
 
 This Evidence establishes what the audit found and what was repaired. It
 confirms nothing: the mandatory audit-bound technical confirmation is the

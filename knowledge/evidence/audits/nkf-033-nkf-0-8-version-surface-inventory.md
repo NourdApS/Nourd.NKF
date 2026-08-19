@@ -26,8 +26,16 @@ part of a longer version such as `0.31.2`, so a following dot ends the match,
 while in a hyphenated name a following dot is the extension separator, as in
 `seal-baseline-0-5.mjs`.
 
-Sixty-nine files carry at least one coordinate. Forty-five register `0.8`.
+Seventy files carry at least one coordinate. Forty-six register `0.8`.
 Twenty-four do not, and each of those is deliberately version-specific.
+
+The scan counts itself. It is a tracked file under `scripts/` that names every
+coordinate from `0.1` to `0.8`, so it is a version surface by the same
+definition it applies to everything else, and excluding it would be a special
+case that hid a real surface to make a number tidier. The fifth independent
+release audit found the recorded totals one short in both columns for exactly
+this reason: the script was added in the same commit as the numbers, and the
+numbers were the values from before it existed.
 
 The scan is
 [`scripts/release/version-surface-inventory.mjs`](../../../scripts/release/version-surface-inventory.mjs),

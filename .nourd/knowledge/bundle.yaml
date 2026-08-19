@@ -1758,7 +1758,7 @@ non_records:
       stable_path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
       digest:
         algorithm: sha-256
-        value: "0dae37f5151c198d8e2cad6f2bcfba54780a718784f27522282e35246e051895"
+        value: "74efe93ce740e29eede5a53d5a933d969516c6cfdd957b3739381cad4433260a"
       state:
         vocabulary: task-status
         value: "active"
@@ -1843,7 +1843,7 @@ non_records:
       stable_path: evidence/release/nkf-033-nkf-0-8-guidance-review.md
       digest:
         algorithm: sha-256
-        value: "70021f3b6837dfb8ae865af8a006c900d9431cf470b978b8ef61341f408694e6"
+        value: "b496684ac29783cdfad765e81788a552183f4c416719798df613753950bafe4b"
       relationships: []
   - path: evidence/release/nkf-033-nkf-0-8-release-audit.md
     kind: evidence
@@ -1852,7 +1852,7 @@ non_records:
       stable_path: evidence/release/nkf-033-nkf-0-8-release-audit.md
       digest:
         algorithm: sha-256
-        value: "107ae9e1372bc3cde7dcf5e96063cec2ab11faaf5f8489c7666eb6201dd826e6"
+        value: "454c1d371d0a658fce71dc0da589a96e5bc5408d6eefd464f82058e6a1e6cfc9"
       relationships: []
   - path: evidence/release/nkf-031-nkf-0-71-release-audit.md
     kind: evidence
@@ -1942,7 +1942,7 @@ non_records:
       stable_path: evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md
       digest:
         algorithm: sha-256
-        value: "de79ed2ffc21061787ffe3ff3ea3834caeed0606c3df10b01f79e31154199d4f"
+        value: "26d708c64a43fe1fb2f318877d7da8a31cdcb437622869d6dd8f1d1828a4bdd8"
       relationships: []
   - path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
     kind: evidence
