@@ -176,13 +176,65 @@ description by contract, so every surviving defect across both rounds was body
 prose that no verifier this release ships can reach. The whole-set human
 re-read is their only control, and across two rounds it missed all of them.
 
+## Round Three — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `42661606b869aee7d2d65d5439aa06eb4f2e12e0` (`task/NKF-033`, clean before and after) |
+| Audited archive | SHA-256 `e11de235669734aa580f2449626192e4fa37c80f3d8dd7b39d5b05dca3db24da` |
+| Verdict | Not clean: three blocking findings, four should-fix, four notes |
+
+The third round confirmed every round-two repair in shipped bytes — step three
+now true and internally consistent, step four's scope matching the verifier,
+both `migrate` sentences matching what the shipped adopter actually does when
+run, the projection boundaries corrected, full-path digest matching proven by
+constructing a basename collision — and judged the replacement delta review
+performed rather than manufactured, on the ground that its reasoning about
+supersession could not have been produced without reading the Decision it cites.
+
+It then found three blocking defects, two of them in the record rather than the
+delivery.
+
+## Round Three Blocking Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| `THIRD_PARTY_NOTICES.md`, a mutable release-set member, stated its inventory was "bound to the implemented NKF 0.6 checker and adopter source build-input graphs". It entered at the NKF 0.6 implementation and shipped unchanged inside the published 0.7 and 0.71 archives. No verifier reaches it: not a guidance class, no frontmatter, outside the self-description check's roots. | Bound to NKF 0.8. Step four now states three parts — enumerate every member, re-read the guidance classes in full, check every remaining member for a version literal — and requires the review to say which members received which. The review performed part three and records what it found. |
+| The round-two repairs corrected the inventory's counts and left the Task's Decision Applicability gate quoting the old ones, so a mandatory gate stated numbers its own cited Evidence contradicted. The same repairs left the gate and the Delivered and Remaining sections describing one audit round when two had run. | The gate cites the inventory's actual counts and states the real round history; Delivered and Remaining are restated. |
+| The inventory's Method and Boundary described a scan narrower than the one the audit recorded as repaired: three directories, dot-form only, no workflows or root configuration, and a Boundary promising four exclusions while listing three plus an enforcement caveat. | The scan covers `.github/` and the root configuration and matches the hyphenated form; the enumeration is re-derived at sixty-seven surfaces, forty-five registering `0.8`; the Boundary states three exclusions and separates the absence of any verifier as a limit rather than an exclusion. |
+
+## Round Three Should-Fix Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| The delta review's single observation remained bound to a carried node outside the computed closure — scaffold residue the round-two finding had named. | Bound to a judged node in the closure. |
+| The inventory's summary said two defects while its section held three, one of which the exhaustive pass had explicitly not found, and a sentence referring to "both of these" was stranded before them. | Rewritten. |
+| The guidance review said one of its own repairs introduced a further defect; two did. | Corrected. |
+| The consumer-adoption exercise still exits non-zero, now because the governed recommendation selects NKF 0.71 while the adopter requires its own version — expected before publication, but neither the inventory nor this audit disclosed that the breakage recorded as repaired is still red for a different reason. | The inventory states the distinction: the fixture defect is repaired, the exercise is not yet passing, and it turns green at publication. |
+
+## Round Three Notes And Dispositions
+
+| Note | Disposition |
+| --- | --- |
+| The public adopter copy contains a `NKF Version: 0.8` literal inside an embedded document string, so step three's projection clause is true under a marker-line reading and not under a literal-string reading. | Recorded. The clause is about the guidance marker, which is a line, and the embedded literal is a copy of a member already re-read. |
+| Ragged wrapping persists in two round-two-repaired sentences. | Recorded, consistent with the earlier disposition. |
+| The three new verifiers do not run in the producer's own gate at this commit, because they are gated on the declared version and the producer declares NKF 0.71. | Correct by design under the pin, and the reason this release exists. It means the whole-set review and the derivation are machine-gated only inside the isolated exercise until the producer adopts NKF 0.8. Recorded as a live limit. |
+| The two mixed-delimiter keys in the accepted executable remain. | Unchanged disposition: repairing them would change accepted authority bytes for a cosmetic inconsistency. |
+
 ## Resulting State
 
-Every blocking and should-fix finding from both rounds is repaired; every note
-is repaired or recorded with an explicit disposition. Each round's repairs
+Every blocking and should-fix finding from all three rounds is repaired; every
+note is repaired or recorded with an explicit disposition. Each round's repairs
 change release-set member bytes, so each round invalidates the prior archive,
-exercise, and audit by construction, and the candidate is re-cut,
-re-exercised, and re-audited before the technical-confirmation Decision.
+exercise, and audit by construction, and the candidate is re-cut, re-exercised,
+and re-audited before the technical-confirmation Decision.
+
+Three rounds is the fact worth carrying out of this release. Rounds one and two
+each produced repairs that the following round found defective, twice in
+derived guidance and twice in this Task's own record, and the defects the
+rounds found were overwhelmingly body prose that no verifier this release ships
+can reach. The generated distribution ends stale version labels. It does not
+end stale claims, and nothing here should be read as suggesting it does.
 
 This Evidence establishes what the audit found and what was repaired. It
 confirms nothing: the mandatory audit-bound technical confirmation is the

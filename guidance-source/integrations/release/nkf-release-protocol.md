@@ -43,19 +43,24 @@ substitutes for those two facts.
    copied and no emitted member is edited by hand: regenerating from that
    source and this version alone must reproduce the exact committed bytes,
    and a member that does not is invalid.
-4. Review every member of the versioned set against the complete current
-   rule set: enumerate the exact member list deterministically — the adopter
-   `set` command emits every member with its class and mode, taken from the
-   accepted release-set contract — compute each reviewed member's digest
-   from its exact bytes, and re-read every member of the six guidance
-   classes in full — the authoring, onboarding, release, and adoption
-   protocols, the portable skills, and the host-adapter instruction content
-   — against this version's accepted authority pair, not only against the
-   rules that changed, correcting any sentence that describes a rule that is
-   not the current rule, including rules reversed in any earlier round and
-   including a claim about what a command or tool does. Record the
-   enumerated member list, each reviewed digest, and every correction so the
-   independent audit can verify the review covered the whole set.
+4. Review the versioned set against the complete current rule set in three
+   parts, because the parts differ in what they can establish. Enumerate the
+   exact member list deterministically — the adopter `set` command emits
+   every member with its class and mode, taken from the accepted release-set
+   contract. Re-read every member of the six guidance classes in full — the
+   authoring, onboarding, release, and adoption protocols, the portable
+   skills, and the host-adapter instruction content — against this version's
+   accepted authority pair, not only against the rules that changed,
+   correcting any sentence that describes a rule that is not the current
+   rule, including rules reversed in any earlier round and including a claim
+   about what a command or tool does. Then check every remaining member that
+   is not derived byte-identically from one already re-read for a version
+   literal that does not state this version, and correct each one. Record
+   the enumerated member list, each reviewed digest, and every correction,
+   and state which members were re-read in full and which were checked only
+   for their version literals, so the independent audit can verify the
+   review covered the whole set and can see exactly how far the reading
+   went.
 5. Prove the set against itself: the full test suite over the version's
    fixtures, deterministic checker and adopter builds, and the guidance and
    documentation verifiers. The publishing repository's own knowledge still

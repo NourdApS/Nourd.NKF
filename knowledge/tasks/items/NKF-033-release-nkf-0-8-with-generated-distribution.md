@@ -285,7 +285,7 @@ handoff:
   accepted producer chain.
 - The pre-cut whole-set guidance review, the exhaustive version-surface
   inventory, the candidate archive, the isolated real-producer exercise, and
-  the first independent release audit with every finding repaired.
+  three independent release audit rounds with every finding of each repaired.
 
 ### Corrected Statements
 
@@ -305,10 +305,16 @@ longer:
 
 ### Remaining
 
-The re-cut candidate, its re-run isolated exercise, a clean second independent
-release audit, and the audit-bound technical-confirmation Decision. Publication,
+The re-cut candidate, its re-run isolated exercise, a clean independent release
+audit, and the audit-bound technical-confirmation Decision. Publication,
 recommendation, live promotion, the separate producer adoption, and merging
 remain separately authorized Human Product Owner acts.
+
+The audit rounds are recorded here as a fact about this delivery rather than as
+background. Each round's repairs were themselves defective in ways the next
+round caught, twice in the derived guidance and twice in this Task's own
+record. Whatever confidence the delivered mechanism earns, it was not earned by
+this Task getting its own corrections right the first time.
 
 ## Completion Result
 
@@ -380,12 +386,15 @@ a reviewer noticed is not.
 The version-surface capability is proven at `data-validity` through the
 recorded
 [version-surface inventory](../../evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md):
-sixty-five surfaces enumerated, forty-three registering `0.8`, twenty-two
-adjudicated as deliberately version-specific, and two defects found that a
-sampled pass would have missed.
+sixty-seven surfaces enumerated, forty-five registering `0.8`, twenty-two
+adjudicated as deliberately version-specific, and three defects found that a
+sampled pass would have missed. The inventory's own scan was widened twice,
+each time because an audit found a surface outside it, and the entry claims
+only what the final scan covers.
 
-The release-order capability remains `unknown` until the re-cut candidate
-passes a clean independent release audit and the audit-bound
-technical-confirmation Decision is authored. The first audit round returned
-two blocking findings, so the release order is not yet complete and this Task
-cannot be completed while the capability reads `unknown`.
+The release-order capability remains `unknown`. Three independent release audit
+rounds have run and none returned clean: two blocking findings, then five, then
+three, with repairs in each round introducing defects the next round caught.
+The release order is not complete until a round returns clean and the
+audit-bound technical-confirmation Decision is authored, and this Task cannot
+be completed while the capability reads `unknown`.

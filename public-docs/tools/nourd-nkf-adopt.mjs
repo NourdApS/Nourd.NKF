@@ -20080,7 +20080,12 @@ var PUBLIC_DOCUMENTATION_FILES = Object.freeze([
 var REPOSITORY = "https://github.com/NourdApS/Nourd.NKF.git";
 var LEGACY_REPOSITORY = "https://github.com/kaveh6202/Nourd.NKF.git";
 var ARCHIVE_ROOT = "nourd-nkf";
-var NKF_0_6_THIRD_PARTY_NOTICES_SHA256 = "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea";
+var REVIEWED_THIRD_PARTY_NOTICES_SHA256 = Object.freeze({
+  "0.6": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
+  "0.7": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
+  "0.71": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
+  "0.8": "b09f92fc26c784f42b565738d99cf0aefe58c26424afcf30ed363e3a0e11f243"
+});
 var AUTHORITY_PATHS = Object.freeze({
   "0.5": {
     markdown: "knowledge/specifications/nkf-0.5-revision-2.md",
@@ -20190,7 +20195,7 @@ function bundledDependencyNames(bytes, label) {
   const names = [...source.matchAll(/^\/\/ node_modules\/((?:@[^/]+\/)?[^/\n]+)\//gmu)].map((match2) => match2[1]);
   return [...new Set(names)].sort((left, right) => left.localeCompare(right, "en"));
 }
-function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, noticeBytes) {
+function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, noticeBytes, nkfVersion) {
   const checkerPackages = bundledDependencyNames(checkerBytes, "The release checker");
   const adopterPackages = bundledDependencyNames(adopterBytes, "The release adopter");
   if (checkerPackages.length !== 10 || adopterPackages.length !== 9) {
@@ -20209,8 +20214,12 @@ function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, noticeBytes)
   if (JSON.stringify(observed) !== JSON.stringify(expected)) {
     fail3(`Third-party notice coverage differs from the exact bundled dependency graph: expected ${expected.join(", ")}; observed ${observed.join(", ")}.`);
   }
-  if (sha2562(noticeBytes) !== NKF_0_6_THIRD_PARTY_NOTICES_SHA256) {
-    fail3("THIRD_PARTY_NOTICES.md differs from the exact reviewed NKF 0.6 license, copyright, attribution, and disclaimer text.");
+  const reviewed = REVIEWED_THIRD_PARTY_NOTICES_SHA256[nkfVersion];
+  if (reviewed === void 0) {
+    fail3(`No reviewed third-party notice text is registered for NKF ${nkfVersion}.`);
+  }
+  if (sha2562(noticeBytes) !== reviewed) {
+    fail3(`THIRD_PARTY_NOTICES.md differs from the exact reviewed NKF ${nkfVersion} license, copyright, attribution, and disclaimer text.`);
   }
   return { checker_packages: checkerPackages, adopter_packages: adopterPackages, noticed_packages: observed };
 }
@@ -20723,7 +20732,8 @@ function verifyReleaseArchive(archiveBytes, expectedArchiveSha256, { sourceRoot 
     verifyThirdPartyNoticeCoverage(
       requireBuffer(entries, "dist/nourd-nkf-checker.mjs"),
       requireBuffer(entries, "dist/nourd-nkf-adopt.mjs"),
-      requireBuffer(entries, "THIRD_PARTY_NOTICES.md")
+      requireBuffer(entries, "THIRD_PARTY_NOTICES.md"),
+      archiveVersion
     );
   }
   if (sourceRoot !== void 0) verifySourceProvenance(sourceRoot, manifest);

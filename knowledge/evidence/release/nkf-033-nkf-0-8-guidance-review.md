@@ -37,12 +37,23 @@ and modes, not digests.
 | `distribution/nkf/0.8/.agents/skills/nkf-onboarding/SKILL.md` | portable-skill | `cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837` |
 | `distribution/nkf/0.8/.claude/skills/nkf-authoring/SKILL.md` | portable-skill | `12a8da78e889f213b0e4cf159db2495f8d6087d87c8ab66c4d50ea2fc0f1097b` |
 | `distribution/nkf/0.8/.claude/skills/nkf-onboarding/SKILL.md` | portable-skill | `cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837` |
-| `distribution/nkf/0.8/integrations/release/nkf-release-protocol.md` | release-protocol | `d198b93dd5a07cda1d1344a3605db1d100182bb4999eb1e19941cda15b505f5f` |
+| `distribution/nkf/0.8/integrations/release/nkf-release-protocol.md` | release-protocol | `d4a771bfee8c5dee0fef78543f3faa3f824f1000626d38b9b84d64b31dab3129` |
 
 The twelve members are nine distinct byte sets: each portable skill is emitted
 into both host directories, and the `GEMINI` adapter is byte-identical to the
 `CLAUDE` adapter. Each byte set was read in full, not diffed against its
 predecessor.
+
+The remaining one hundred twenty-nine members were not read in full, and saying
+so is part of the record rather than a footnote to it. Four are byte-identical
+copies of members already read. The other one hundred twenty-five were checked
+for a version literal that does not state NKF 0.8. That check found the defect
+recorded below in the third-party notices; every other literal it surfaced is a
+deliberate predecessor reference — the Specification's version lineage, the
+adopter's window and stepping-stone tables, the projection's compatibility
+prose. Step four now states these three parts separately, because a review that
+enumerates one hundred forty-one members and reads twelve should say which
+twelve.
 
 ## Corrections Made
 
@@ -149,6 +160,24 @@ and the deterministic check cover all twelve. Step four now names the six
 guidance classes, and requires a claim about what a command or tool does to be
 corrected like any other stale sentence.
 
+### Found By The Third Audit
+
+**A shipped member carried a two-version-old label.**
+`THIRD_PARTY_NOTICES.md` stated that its inventory "is bound to the implemented
+NKF 0.6 checker and adopter source build-input graphs". It entered at the
+NKF 0.6 implementation and has shipped unchanged inside the published 0.7 and
+0.71 archives. It is a mutable release-set member that no verifier reaches: it
+is not a guidance class, it has no frontmatter, and the self-description check
+walks only Markdown under the guidance roots. It now states NKF 0.8.
+
+Its cause is the more important finding. Step four opened by requiring a review
+of "every member of the versioned set" and then narrowed to the guidance
+classes, and this review covered twelve of one hundred forty-one without
+disclosing the gap. The label lived in that gap for three releases. Step four
+now states three parts — enumerate every member, re-read the guidance classes
+in full, and check every remaining member for a version literal — and requires
+the review to say which members received which.
+
 ## Reviewed Without Correction
 
 The four host-adapter instruction members carry no version literal at all and
@@ -203,8 +232,8 @@ and the accepted authority is a semantic judgment, and the deterministic check
 that accompanies this review verifies only that every enumerated guidance
 member is named by its full path with a reviewed digest equal to its bytes.
 
-Seven stale sentences survived this review across two audit rounds, and one of
-this review's own repairs introduced a further defect. That is the recorded
+Eight stale sentences survived this review across three audit rounds, and two
+of this review's own repairs introduced further defects. That is the recorded
 measure of how far a review's coverage claim reaches, and it is the strongest
 evidence in this release for its own central claim: the positions a
 deterministic check can own do not go stale, and the positions only a human

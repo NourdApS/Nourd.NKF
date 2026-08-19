@@ -5,7 +5,7 @@ data from the packages listed below. Those components remain available under
 their own licenses. This file does not change their terms or license them under
 the repository's Apache License 2.0.
 
-This candidate inventory is bound to the implemented NKF 0.6 checker and
+This candidate inventory is bound to the implemented NKF 0.8 checker and
 adopter source build-input graphs. Deterministic verification currently finds
 ten bundled checker packages and nine bundled adopter packages, with the exact
 union represented below. The same verification must pass again for the exact
