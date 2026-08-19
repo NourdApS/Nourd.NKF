@@ -39,35 +39,35 @@ Specification record through the first live promotion proven on the
 digest-bound delta claim alone, and repeat public invocations return
 `current`.
 
-NKF 0.7 makes semantic review carry-forward digest-bound and computable,
-confines fresh review to a declared per-rule semantic delta with a
-fail-closed delta claim, adds deterministic review and record scaffolds,
-neutralizes state-baked identity and stable paths through explicit
-succession, adds operational-fact promotion triggers, makes the post-audit
-technical-confirmation Decision mandatory and audit-bound, performs the Git
-transition orchestration the authoring guidance describes, and cuts live
-support to the current version plus one predecessor. Its authority is
-accepted by
-[ADR 0128](knowledge/decisions/0128-accept-the-revised-nkf-0-7-authority-set.md)
-and its exact release candidate is confirmed by
-[ADR 0129](knowledge/decisions/0129-confirm-the-nkf-0-7-release-candidate.md)
-against a clean independent release audit.
-
 NKF 0.71 is the deliberately small corrective successor to NKF 0.7, its
 authority accepted by
 [ADR 0131](knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md)
-after a two-round independent audit. It reconciles the 0.7 Specification's
-topology self-contradiction in prose and executable explicitly, corrects
-the copy-forward version labels, makes the deterministic Task conclusion
-seal its own successor baseline through the `mechanically-concluded` claim,
-regenerates the public-documentation projection, and slides live support to
-exactly NKF 0.71 plus NKF 0.7 — updating an exact conformant 0.7 repository
-is non-breaking through the ordinary reviewed delta update, a 0.6
-repository steps through the published 0.7 archive, and older repositories
-step through their published archives in turn. Its producer promotion is
-the first in this lineage proven through the digest-bound delta claim
-alone. Publication, recommendation, live promotion, and merging remain the
-Human Product Owner's separately authorized acts.
+after a two-round independent audit and its exact release candidate
+confirmed by
+[ADR 0132](knowledge/decisions/0132-confirm-the-nkf-0-71-release-candidate.md).
+It reconciles the 0.7 Specification's topology self-contradiction in prose
+and executable explicitly, corrects the copy-forward version labels, makes
+the deterministic Task conclusion seal its own successor baseline through
+the `mechanically-concluded` claim, and regenerates the public-documentation
+projection.
+
+NKF 0.8 is the prepared successor candidate on the `task/NKF-033` branch. It
+derives every version-bearing guidance member from one version-neutral
+authored source with the version injected instead of copying it forward,
+makes a guidance file's own frontmatter self-description a checked
+conformance position, and binds the pre-cut whole-set guidance review and its
+independent audit to the deterministically enumerated release set. Its
+authority is accepted by
+[ADR 0134](knowledge/decisions/0134-accept-the-nkf-0-8-authority-set.md)
+after a fresh independent audit whose nine blocking findings were repaired.
+Live support slides to exactly NKF 0.8 plus NKF 0.71 — updating an exact
+conformant 0.71 repository is non-breaking through the ordinary reviewed
+delta update, a 0.7 repository steps through the published 0.71 archive, and
+older repositories step through their published archives in turn.
+
+NKF 0.8 is not published, not recommended, and not producer-adopted.
+Publication, recommendation, live promotion, and merging remain the Human
+Product Owner's separately authorized acts.
 
 Every published archive carries its complete public-documentation projection
 and exact public adopter. Publication of those bytes to the separate
@@ -106,9 +106,10 @@ community-conduct policies remain separate matters.
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
-| Read the normative format | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) |
-| Inspect the executable companion | [NKF 0.71 YAML Contract](contracts/nkf/0.71/nkf.yaml) |
-| Inspect the closed structural contracts | [NKF 0.71 Schemas](contracts/nkf/0.71/schemas/) |
+| Read the normative format this repository runs | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) |
+| Read the accepted successor authority | [NKF 0.8 Specification](knowledge/specifications/nkf-0.8.md) |
+| Inspect the executable companion | [NKF 0.8 YAML Contract](contracts/nkf/0.8/nkf.yaml) |
+| Inspect the closed structural contracts | [NKF 0.8 Schemas](contracts/nkf/0.8/schemas/) |
 | Adopt the released version | [NKF 0.71 Adoption Protocol](distribution/nkf/0.71/integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |

@@ -1881,6 +1881,15 @@ non_records:
         algorithm: sha-256
         value: 0d6b22bad89b1069aa1135e466f31bb4c2cb97baf228ec27639aabed98c69808
       relationships: []
+  - path: evidence/release/nkf-0.8-release-notes.md
+    kind: evidence
+    document:
+      id: document-nkf-0-8-release-notes
+      stable_path: evidence/release/nkf-0.8-release-notes.md
+      digest:
+        algorithm: sha-256
+        value: "a32be783641bc6f8fb0534d398f3c692012dd68cd39f2cb0f6faf1b0113e2f6e"
+      relationships: []
   - path: evidence/release/nkf-0.71-producer-promotion.yaml
     kind: evidence
     document:
@@ -3099,7 +3108,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "3e88dedddb176b2604228d40e649116c9731638450d5a4d8242f6e0eecca0de1"
+      value: "7887ff51889abad66c7d52290c3b906125834a3e7ffeabe9bbc6fecfdacebfd7"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
