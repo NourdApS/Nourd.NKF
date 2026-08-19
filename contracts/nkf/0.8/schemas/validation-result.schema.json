@@ -7,12 +7,12 @@
     "markdown_path": "knowledge/specifications/nkf-0.8.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "d8049cb2b58d158099f3127986d54cdee28e13c8b2d2c41c745783d0e1adefdf"
+      "value": "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e"
     },
     "executable_path": "contracts/nkf/0.8/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "54d9a0c5cba47081eedeafc0c93f482fe6cd1fddd642ebbffa4e84d6a637cd79"
+      "value": "6d162800ecb2a41fb9b6ead544cc0d5ecd4dc119cd72298138a4d17ccd822326"
     }
   },
   "type": "object",

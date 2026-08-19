@@ -433,8 +433,10 @@ file serves. When a governed project contains a guidance file at a native
 guidance path whose frontmatter `description` states an NKF version different
 from the bundle's `nkf_version`, the checker emits
 `guidance.self-description.version-mismatch`. The scope is exactly the
-frontmatter `description` and exactly the closed version-literal form the
-executable companion declares. The body is deliberately excluded: window
+frontmatter `description` and exactly the closed version-literal grammar the
+executable companion declares as a regular expression. Every match in the
+resolved scalar value is checked, so a `description` spanning several lines is
+matched whole rather than line by line. The body is deliberately excluded: window
 tables, compatibility prose, and stepping-stone chains name earlier versions
 on purpose, and a check that appeared to certify agreement between guidance
 prose and this contract as a whole would manufacture confidence deterministic
@@ -445,11 +447,13 @@ this rule.
 Every version-bearing member of the complete versioned set MUST be derived
 from a single version-neutral authored source with the version injected at
 emission, and no emitted member may be an input to producing another. The
-derivation is a closed mechanical act: it supplies no meaning, it is
-byte-reproducible from the source and the target version alone, and
-regenerating a published version's members reproduces its frozen bytes
-exactly. This is how a version-bearing sentence stops being carried forward by
-hand, and it is why an authored source that may state no literal NKF version
+derivation is a closed mechanical act: it supplies no meaning, and it is
+byte-reproducible from the authored source and the target version alone.
+Regenerating the members of a version published under this rule reproduces
+that version's frozen bytes exactly. Versions published before this rule were
+not derived, so no derivation reproduces them and none is claimed to; their
+bytes remain frozen history. This is how a version-bearing sentence stops
+being carried forward by hand, and it is why an authored source that may state no literal NKF version
 cannot state a stale one. Deriving members does not weaken the whole-set
 review: derivation guarantees only that every emitted copy states the same
 version truthfully, never that the sentence it carries is still the current
@@ -904,7 +908,7 @@ snapshots may preserve historical layouts. `evidence/README.md` MUST link each
 safe direct child directory of `evidence/` that contains a represented
 Evidence Markdown file at any depth. It need not link every Evidence file.
 
-The 0.7 predecessor migration performed one deliberate
+The NKF 0.7 migration performed one deliberate
 lifecycle-neutralization of stable paths: every Task, Design, and
 Realization source whose stable path contained a lifecycle, disposition, or
 currency segment — the legacy `tasks/active`, `tasks/completed`,
@@ -918,7 +922,7 @@ carrying a predecessor-only lock, immutable record sources, and Evidence
 byte sets were moved without any byte rewrite — their bytes are history —
 and their links resolve through the closed legacy mapping defined by that
 neutralization instead of being retargeted. That was a deliberate governed
-migration act, not a lifecycle transition. The 0.7 predecessor revision
+migration act, not a lifecycle transition. The NKF 0.7 revision
 declared exactly one accepted identity succession, applicable only to the
 exact NKF producer repository: the consolidated current-system
 Realization's living identifier `nkf-0.1-native-realization` was succeeded
@@ -999,7 +1003,7 @@ Preserved predecessor-only `legacy_lock`, `accepted_bootstrap_lock`,
 `historical_acceptance_attempt_lock` objects remain byte-exact where their
 subjects remain; a lock whose predecessor migration is complete and whose
 subject is rewritten to the native envelope is removed in the same governed
-act. Repositories declaring NKF 0.1 through NKF 0.6 are out of window: the
+act. Repositories declaring NKF 0.1 through NKF 0.7 are out of window: the
 0.8 tool fails closed and names the exact published stepping-stone archive
 whose bundled adopter performs the next hop.
 
@@ -3821,7 +3825,7 @@ set, postconditions, success and no-change results, and failure result:
 | Identity succession | One exact living record, its accepted successor identifier, and every affected declaration, baseline, navigation, and link binding; the predecessor identifier remains resolvable history, the succession is recorded with provenance, and immutable record bytes never change. |
 | Freshness evaluation | The exact evaluation request, candidate graph, reviewed baseline, policy, purpose, targets, changed inputs, observations, receipt, and validation result; persistence follows the accepted receipt and result transaction and never invents semantic review. |
 | Reviewed baseline seal | One exact reviewer-completed whole-root or delta input, or one exact transition-produced conclusion input, and matching candidate graph; a delta input additionally proves computed-closure containment and exact carry preconditions per judgment; it replaces only the graph baseline after exact coverage, basis and node digests, Decision reconciliation, observation, limitation, and dispute validation. |
-| `Adopt` | Ordinary modes cover the version declaration, release pin, installed checker and adopter, host integration, migrated declarations, graph and baseline inputs, and complete producer or consumer gate. The non-breaking 0.71-to-0.8 upgrade rebinds the contract set mechanically, converts the baseline with computed per-judgment carry-forward under the accepted version-delta declaration, and consumes the exact completed review of the computed required set. An out-of-window predecessor fails closed naming the exact stepping-stone archive. The producer-promotion mode additionally consumes the exact accepted promotion input and accepting Decision, removes the exact candidate Evidence representation, creates the exact supplied native declaration, regenerates navigation, writes the promotion-reconciliation entries, and seals the exact post-promotion graph from the separately completed delta review at either authorized producer stage, with whole-root review remaining the recovery path. Rollback covers every project-owned mutation; repeat after promotion returns `current`. |
+| `Adopt` | Ordinary modes cover the version declaration, release pin, installed checker and adopter, host integration, graph and baseline inputs, and complete producer or consumer gate. The non-breaking 0.71-to-0.8 upgrade rebinds the contract set mechanically, converts the baseline with computed per-judgment carry-forward under the accepted version-delta declaration, and consumes the exact completed review of the computed required set. An out-of-window predecessor fails closed naming the exact stepping-stone archive. The producer-promotion mode additionally consumes the exact accepted promotion input and accepting Decision, removes the exact candidate Evidence representation, creates the exact supplied native declaration, regenerates navigation, writes the promotion-reconciliation entries, and seals the exact post-promotion graph from the separately completed delta review at either authorized producer stage, with whole-root review remaining the recovery path. Rollback covers every project-owned mutation; repeat after promotion returns `current`. |
 | Release verification | The archive, manifest, release set, authority, policy, Schemas, checker, adopter, license, NOTICE, third-party notices, and optional source provenance; it is read-only and invokes the checker only after the complete distribution verifies. |
 
 Ordinary authoring also includes editing and re-pinning the current-system
@@ -3844,13 +3848,16 @@ fresh independent audit. The exercise MUST bind the exact source commit,
 authority bytes, policy, Schemas, release set, checker, adopter, archive,
 license, NOTICE, third-party notices, and resulting project snapshot.
 
-Before the candidate archive is cut, every member of the versioned set MUST be
+Before the candidate archive is cut, the versioned set MUST be enumerated in
+full and reviewed. Enumeration covers every member without exception, and the
+member list is not recollected: it is the exact enumeration the `set`
+operation emits. Every enumerated member that carries authored guidance prose
+— the authoring, onboarding, release, and adoption protocols, the portable
+skills, and the registered host-adapter instruction content — MUST then be
 re-read in full against this version's complete accepted rule set, not only
 against the rules that changed, and every sentence describing a rule that is
-not the current rule MUST be corrected. The member list is not recollected: it
-is the exact enumeration the `set` operation emits, and the review MUST record
-that enumerated member list, each reviewed member's digest, and every
-correction. The independent audit MUST verify that coverage — the enumerated
+not the current rule MUST be corrected. The review MUST record that enumerated
+member list, each reviewed member's digest, and every correction. The independent audit MUST verify that coverage — the enumerated
 member list is present, each member carries a reviewed digest, and every
 correction is recorded — and MUST reject a review recording only the version's
 rule diff. Deriving guidance members from one version-neutral source satisfies

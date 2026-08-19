@@ -834,7 +834,7 @@ non_records:
       stable_path: specifications/nkf-0.8.md
       digest:
         algorithm: sha-256
-        value: "d8049cb2b58d158099f3127986d54cdee28e13c8b2d2c41c745783d0e1adefdf"
+        value: "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e"
       relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -1888,7 +1888,7 @@ non_records:
       stable_path: evidence/release/nkf-0.8-producer-promotion.yaml
       digest:
         algorithm: sha-256
-        value: "8f643ea14a3714e39e5c2894fc612da60fff3edd56a127d81e5b9a37d3af2553"
+        value: "274e978941833d747ff27b7693788c9f07d92139d3c75074c9eccd0a54947d03"
       relationships: []
   - path: evidence/audits/nkf-031-nkf-0-71-independent-authority-audit.md
     kind: evidence
@@ -1898,6 +1898,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: da126dd3bd1aa64729725ee0000ce58a8977015b95d8aa69425e89193fb2e16f
+      relationships: []
+  - path: evidence/audits/nkf-033-nkf-0-8-independent-authority-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-0-8-independent-authority-audit
+      stable_path: evidence/audits/nkf-033-nkf-0-8-independent-authority-audit.md
+      digest:
+        algorithm: sha-256
+        value: "f0e94704aff4033825d296c5d79b3e4083a3d1cc0d3c78cdcf57a8c0567a4c27"
       relationships: []
   - path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
     kind: evidence
@@ -3161,7 +3170,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: "7e47666bd8eacf5d3d1494a77e2cfbf4da555325c5eb80b925199926e0c882c4"
+      value: "801fad6d9d6f0ca1bbe58a849d3beaa172f30f99ac95a9bdf1d492ee5cb34e7c"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs

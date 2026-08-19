@@ -97,17 +97,17 @@ export const ACCEPTED_0_71_ARTIFACT_DIGESTS = Object.freeze({
 });
 
 export const ACCEPTED_0_8_ARTIFACT_DIGESTS = Object.freeze({
-  "knowledge/specifications/nkf-0.8.md": "d8049cb2b58d158099f3127986d54cdee28e13c8b2d2c41c745783d0e1adefdf",
-  "contracts/nkf/0.8/nkf.yaml": "54d9a0c5cba47081eedeafc0c93f482fe6cd1fddd642ebbffa4e84d6a637cd79",
+  "knowledge/specifications/nkf-0.8.md": "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e",
+  "contracts/nkf/0.8/nkf.yaml": "6d162800ecb2a41fb9b6ead544cc0d5ecd4dc119cd72298138a4d17ccd822326",
   "contracts/nkf/0.8/freshness-policy.yaml": "7cfb1b40a8b6f86543cb7b6016c6e9b2c1159d2a748c1915d0e9bf51bb82afd4",
   "contracts/nkf/0.8/version-delta.yaml": "cc17f23a44afcf56b107f3e76e4d761779a4225bd2f8955c51d9781193c9c8b9",
-  "contracts/nkf/0.8/schemas/bundle.schema.json": "fef56a29c26ad56ec57c92c12353d51f826fa06e06c1e53317ad9cbe4b307ec9",
-  "contracts/nkf/0.8/schemas/record.schema.json": "9aa9a4500b44d520612c083f0a9c6641a5001b4d1767444ad3bfba6454278b1e",
-  "contracts/nkf/0.8/schemas/graph-baseline.schema.json": "80ce0f1456f4e583751421ecb64562e6268b96605b86af18623ad0b861fbac0d",
-  "contracts/nkf/0.8/schemas/freshness-receipt.schema.json": "efb012d1e7ce1160fd6cde303a1d7ea2f247df2b5a4928ad29f9b27df25ef950",
-  "contracts/nkf/0.8/schemas/freshness-policy.schema.json": "d380f4afd374e7aa354f43cf7fa2d3b90acc8e0f8a254b3d8351497be8482173",
-  "contracts/nkf/0.8/schemas/release-manifest.schema.json": "a07a2c773c6649c172d2a4be80a9ecdc3722b18b6db2fbd330f85e71abed1cb1",
-  "contracts/nkf/0.8/schemas/validation-result.schema.json": "8c882f1ba20d72ed797d5a9c497880918db9d27af25f8f1d94ce7a9e17d0851a",
+  "contracts/nkf/0.8/schemas/bundle.schema.json": "e9ad6d4150822d8e3190d09ea5104b5c94096b5f5d82213e963d49874b635837",
+  "contracts/nkf/0.8/schemas/record.schema.json": "b8a96b460c7735214c27fa98f23fdc756f8cf262cd9e1c039098b2163003589c",
+  "contracts/nkf/0.8/schemas/graph-baseline.schema.json": "d06edec66beb991ad7414017a2716e7ae34c252d2b80392637cd80d67cdc7685",
+  "contracts/nkf/0.8/schemas/freshness-receipt.schema.json": "ed49656906a325c5c72c2e2ae993321b5d785384468f6c643938bd32e988264a",
+  "contracts/nkf/0.8/schemas/freshness-policy.schema.json": "4060e0edb9de494bf971ad58d6502d1d8cc8b14d6f9b036ded9e53b2b2e15e76",
+  "contracts/nkf/0.8/schemas/release-manifest.schema.json": "3bd221feeece633f0b035371c04d4c6ee7ad6e03eaf737b68aeb8ca14f226624",
+  "contracts/nkf/0.8/schemas/validation-result.schema.json": "37fcde1234167449cd5dd79824296567aa8e4e74b251f9a94e66e6396e53e96d",
   "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
 });

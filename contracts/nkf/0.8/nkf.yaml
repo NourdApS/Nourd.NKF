@@ -9,7 +9,7 @@ authority:
   version_delta_path: contracts/nkf/0.8/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: d8049cb2b58d158099f3127986d54cdee28e13c8b2d2c41c745783d0e1adefdf
+    value: 6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e
   freshness_policy_digest:
     algorithm: sha-256
     value: 7cfb1b40a8b6f86543cb7b6016c6e9b2c1159d2a748c1915d0e9bf51bb82afd4
@@ -1161,7 +1161,7 @@ portable_topology:
       reviewer_asserted_carry: forbidden
       required_fresh_review: computed-closure
     out_of_window_predecessor:
-      versions: ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6"]
+      versions: ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"]
       behavior: fail-closed-naming-exact-stepping-stone-archive
     graph_candidate_generation: required
     named_human_or_agent_reviewer: required
@@ -3246,7 +3246,17 @@ guidance_versioning:
     scope: frontmatter-description-only
     frontmatter_delimiter: "---"
     key: description
-    version_literal_pattern: "NKF <major>.<minor>"
+    # A closed grammar, not a placeholder: two implementers must agree on the
+    # exact literal form without consulting a reference implementation.
+    version_literal_pattern: '\bNKF ([0-9]+\.[0-9]+)\b'
+    pattern_syntax: ecma262-unicode
+    pattern_case_sensitive: true
+    captured_group: 1
+    # The value may span lines. It is resolved by the YAML scalar the key
+    # carries, so a block scalar or a quoted continuation is one value and is
+    # matched whole; the surrounding frontmatter is never scanned.
+    multi_line_value: resolved-as-one-yaml-scalar
+    all_matches_checked: true
     must_equal_bundle: true
     body: not-checked
     absent_frontmatter: not-checked
@@ -3258,11 +3268,18 @@ guidance_versioning:
   # certifies only that the version stated is this version.
   derivation:
     source: single-version-neutral-authored-source
+    source_root: guidance-source
+    source_manifest: guidance-source/manifest.yaml
+    derived_member_classes: [authoring-protocol, onboarding-protocol, release-protocol, adoption-protocol, portable-skill, host-adapter-instruction]
     source_may_state_literal_version: false
     version_supplied_by: emission-target-only
     emitted_member_as_input: forbidden
     reproducible_from: [authored-source, target-version]
-    published_version_regeneration: reproduces-frozen-bytes-exactly
+    # Scoped to versions produced under this rule. Versions published before
+    # it are frozen bytes that no derivation reproduces, and claiming
+    # otherwise would be false against the published NKF 0.71 set.
+    regeneration_reproduces_exact_bytes_for: versions-published-under-this-contract
+    predecessor_versions_published_before_this_contract: frozen-not-derived
     committed_bytes_differ_from_derivation: invalid
     proves_current_rule_meaning: false
 
@@ -4204,6 +4221,28 @@ governed_mechanics:
       - archive-tampering
       - release-pin-tampering
       - stale-digest-result-truthfulness
+  prepublication_guidance_review:
+    performed_before: candidate-archive-cut
+    enumeration:
+      source: set-operation-output-for-this-version
+      authority: exact-release-set-members
+      recollected_or-hand-maintained-list: forbidden
+    full_reread:
+      subjects: [authoring-protocol, onboarding-protocol, release-protocol, adoption-protocol, portable-skill, host-adapter-instruction]
+      against: complete-accepted-rule-set-for-this-version
+      rules_that_changed_only: insufficient
+      correction_required_for: sentence-describing-a-rule-that-is-not-the-current-rule
+    recorded:
+      - enumerated-member-list
+      - reviewed-digest-per-member
+      - every-correction
+    independent_audit_must_verify:
+      - enumerated-member-list-present
+      - reviewed-digest-present-per-member
+      - every-correction-recorded
+    audit_rejects: review-recording-only-the-version-rule-diff
+    derivation_does_not_satisfy_this: true
+    review_proves_current_rule_meaning: human-judgment-only
   prepublication_producer_rehearsal:
     target: isolated-copy-of-exact-candidate-source-repository
     initial_operation: exact-candidate-archive-adopt
@@ -4221,6 +4260,8 @@ governed_mechanics:
       - exact-release-set-and-licensing-notice-verification
       - rollback-and-tamper-rejection
       - fresh-independent-audit
+    requires_completed_before_cut:
+      - prepublication-guidance-review
     binds_exact:
       - source-commit
       - authority-markdown
@@ -4818,7 +4859,7 @@ compatibility:
         contract: {const: nkf.producer-candidate-promotion}
         nkf_version: {const: "0.8"}
         repository: {const: NourdApS/Nourd.NKF}
-        task: {const: NKF-031}
+        task: {const: NKF-033}
         specification:
           closed: true
           required_fields: [path, digest]
@@ -4852,7 +4893,7 @@ compatibility:
             type: specification
             body_contract: nkf.specification
             title: NKF 0.8 — Product And Technology Knowledge Format
-            task: NKF-031
+            task: NKF-033
             source.path: specifications/nkf-0.8.md
             source.stable_path: specifications/nkf-0.8.md
             source.digest: exact-specification-binding
@@ -4870,21 +4911,21 @@ compatibility:
         authority: exact-accepting-decision
         decision_must_explicitly_accept: [specification, executable, freshness_policy, version_delta, serialized-input-digest]
         predecessor_release_authority:
-          decision: adr-0128
+          decision: adr-0131
           preservation: exact-unchanged-governed-graph-visible-accepted-history
         decision_must_explicitly_supersede:
-          decision: adr-0128
-          exact_subject: adr-0128-release-authority-selection
+          decision: adr-0131
+          exact_subject: adr-0131-release-authority-selection
           other-historical-acceptance-and-conclusions: preserved
         validation_or-input-proves-acceptance: false
     required_exact_inputs:
       source_repository_identity: NourdApS/Nourd.NKF
-      owning_task: NKF-031
+      owning_task: NKF-033
       specification:
         id: nkf-0.8-specification
         path: knowledge/specifications/nkf-0.8.md
         digest: exact-authority-markdown-digest
-        producer_0_6_representation: non-record-kind-evidence-at-same-exact-path
+        producer_0_71_representation: non-record-kind-evidence-at-same-exact-path
       executable:
         path: contracts/nkf/0.8/nkf.yaml
         digest: exact-accepted-executable-digest
@@ -4909,7 +4950,7 @@ compatibility:
         computed_closure_containment: required
         whole_root_recovery: permitted
         authority_or-acceptance-effect: none
-        lineage_effect: first-promotion-proven-through-the-delta-claim
+        lineage_effect: ordinary-promotion-proven-through-the-delta-claim
     preconditions:
       - all-exact-input-digests-match
       - exact-candidate-evidence-document-resolves-once
@@ -4920,10 +4961,10 @@ compatibility:
       - complete-native-record-declaration-valid-under-accepted-0.8-contract
       - declaration-source-digest-equals-exact-candidate-markdown
       - declaration-governance-is-immutable-accepted
-      - declaration-task-is-NKF-031
+      - declaration-task-is-NKF-033
       - declaration-authority-and-acceptance-binding-match-exact-accepting-decision
       - accepting-decision-binds-exact-serialized-input-digest
-      - accepting-decision-explicitly-supersedes-only-adr-0128-release-authority-selection
+      - accepting-decision-explicitly-supersedes-only-adr-0131-release-authority-selection
       - delta-review-performed-set-contains-computed-closure-for-post-promotion-candidate
     exact_transaction:
       remove:

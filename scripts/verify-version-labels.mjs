@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Verifies that a version literal appearing in a guidance file's own
-// frontmatter description states that file's declared NKF version.
+// frontmatter description states the NKF version that file serves.
 //
 // The body may legitimately name predecessor versions: compatibility prose,
 // window tables, and stepping-stone chains all reference earlier versions on
@@ -15,6 +15,8 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
 const MARKER = /^NKF Version: (\d+\.\d+)$/m;
+const BUNDLE_VERSION = /^nkf_version:\s*"?(\d+\.\d+)"?\s*$/m;
+const DISTRIBUTION_TREE = /^distribution\/nkf\/([^/]+)\//;
 const FRONTMATTER = /^---\n([\s\S]*?)\n---\n/;
 const DESCRIPTION = /^description:[ \t]*(.*(?:\n[ \t]+.*)*)$/m;
 const VERSION_LITERAL = /\bNKF (\d+\.\d+)\b/g;
@@ -102,9 +104,28 @@ async function matchesFrozenMember(root, relative, frozen, text) {
   return false;
 }
 
+// The version a guidance file serves, in the order the contract makes it
+// knowable: a file shipped inside a versioned distribution tree serves that
+// tree's version; otherwise its own marker declares it; otherwise it is an
+// installed file and the bundle's declared version governs, which is what
+// `must_equal_bundle` means. Only a file with no resolvable served version is
+// skipped, and that is reported rather than silent.
+function servedVersion(relative, text, bundleVersion) {
+  const tree = DISTRIBUTION_TREE.exec(relative);
+  if (tree !== null) return tree[1];
+  const marker = MARKER.exec(text);
+  if (marker !== null) return marker[1];
+  return bundleVersion;
+}
+
 export async function verifyVersionLabels(projectRootInput) {
   const root = path.resolve(projectRootInput);
   const frozen = await frozenDistributionVersions(root);
+  const bundleText = await readFile(
+    path.join(root, ".nourd/knowledge/bundle.yaml"),
+    "utf8",
+  ).catch(() => null);
+  const bundleVersion = bundleText === null ? null : (BUNDLE_VERSION.exec(bundleText)?.[1] ?? null);
   let checked = 0;
   let skipped = 0;
   const findings = [];
@@ -124,9 +145,8 @@ export async function verifyVersionLabels(projectRootInput) {
         skipped += 1;
         continue;
       }
-      const marker = MARKER.exec(text);
-      if (marker === null) continue;
-      const declared = marker[1];
+      const declared = servedVersion(relativeEarly, text, bundleVersion);
+      if (declared === null) continue;
 
       const frontmatter = FRONTMATTER.exec(text);
       if (frontmatter === null) continue;
@@ -138,7 +158,7 @@ export async function verifyVersionLabels(projectRootInput) {
       for (const hit of description[1].matchAll(VERSION_LITERAL)) {
         if (hit[1] !== declared) {
           findings.push(
-            `${relative}: description states "NKF ${hit[1]}" but the file declares "NKF Version: ${declared}".`,
+            `${relative}: description states "NKF ${hit[1]}" but the file serves NKF ${declared}.`,
           );
         }
       }
@@ -148,12 +168,12 @@ export async function verifyVersionLabels(projectRootInput) {
   if (findings.length > 0) {
     for (const finding of findings) fail(finding);
     fail(
-      `Stale version label in ${findings.length} guidance description(s). A description describes its own file, so its version literal must equal that file's declared version.`,
+      `Stale version label in ${findings.length} guidance description(s). A description describes its own file, so its version literal must equal the version that file serves.`,
     );
     return false;
   }
   process.stdout.write(
-    `Verified ${checked} guidance description(s); every version literal states its file's declared version. Skipped ${skipped} file(s) in frozen published distribution trees.\n`,
+    `Verified ${checked} guidance description(s); every version literal states the version its file serves. Skipped ${skipped} file(s) frozen by publication.\n`,
   );
   return true;
 }
