@@ -1758,7 +1758,7 @@ non_records:
       stable_path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
       digest:
         algorithm: sha-256
-        value: "aaf90180a6f7e5895729f915e3367ebdc6c38f991f516dad6005631049fa29cd"
+        value: "0dae37f5151c198d8e2cad6f2bcfba54780a718784f27522282e35246e051895"
       state:
         vocabulary: task-status
         value: "active"
@@ -1843,7 +1843,7 @@ non_records:
       stable_path: evidence/release/nkf-033-nkf-0-8-guidance-review.md
       digest:
         algorithm: sha-256
-        value: "38682ea518d91c426bb3ba0c6b71393b3a76b0f66104850ea2bc3b46f4b6561f"
+        value: "70021f3b6837dfb8ae865af8a006c900d9431cf470b978b8ef61341f408694e6"
       relationships: []
   - path: evidence/release/nkf-033-nkf-0-8-release-audit.md
     kind: evidence
@@ -1852,7 +1852,7 @@ non_records:
       stable_path: evidence/release/nkf-033-nkf-0-8-release-audit.md
       digest:
         algorithm: sha-256
-        value: "1ad56e7ef8fcba6dab043cc8839e76f46ad59213fbc58a3dcf80912db9d672ae"
+        value: "107ae9e1372bc3cde7dcf5e96063cec2ab11faaf5f8489c7666eb6201dd826e6"
       relationships: []
   - path: evidence/release/nkf-031-nkf-0-71-release-audit.md
     kind: evidence
@@ -1897,7 +1897,7 @@ non_records:
       stable_path: evidence/release/nkf-0.8-release-notes.md
       digest:
         algorithm: sha-256
-        value: "a32be783641bc6f8fb0534d398f3c692012dd68cd39f2cb0f6faf1b0113e2f6e"
+        value: "68746f7b3cb4f5b469639ff67647017b8518fe9522cba764670bcfd423286a46"
       relationships: []
   - path: evidence/release/nkf-0.71-producer-promotion.yaml
     kind: evidence
@@ -1942,7 +1942,7 @@ non_records:
       stable_path: evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md
       digest:
         algorithm: sha-256
-        value: "5f43242915ac464bbe116e63a8721c154d82f87d518547576e6ea6ee73522050"
+        value: "de79ed2ffc21061787ffe3ff3ea3834caeed0606c3df10b01f79e31154199d4f"
       relationships: []
   - path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
     kind: evidence

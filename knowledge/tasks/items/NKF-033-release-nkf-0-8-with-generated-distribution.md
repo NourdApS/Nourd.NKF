@@ -285,7 +285,7 @@ handoff:
   accepted producer chain.
 - The pre-cut whole-set guidance review, the exhaustive version-surface
   inventory, the candidate archive, the isolated real-producer exercise, and
-  three independent release audit rounds with every finding of each repaired.
+  four independent release audit rounds with every finding of each repaired.
 
 ### Corrected Statements
 
@@ -311,10 +311,14 @@ recommendation, live promotion, the separate producer adoption, and merging
 remain separately authorized Human Product Owner acts.
 
 The audit rounds are recorded here as a fact about this delivery rather than as
-background. Each round's repairs were themselves defective in ways the next
-round caught, twice in the derived guidance and twice in this Task's own
-record. Whatever confidence the delivered mechanism earns, it was not earned by
-this Task getting its own corrections right the first time.
+background. Rounds two, three, and four each found defects created by the
+previous round's repairs — twice in the derived guidance and, in the last two
+rounds, mostly in this Task's own Evidence and gate. Every defect found in any
+round was body prose or a typed count, never a stale version label: the
+generated distribution, the self-description rule, and the three verifiers have
+not regressed since they were delivered. Whatever confidence the mechanism
+earns, it was not earned by this Task getting its own corrections right, and the
+record is written so a reader can see which is which.
 
 ## Completion Result
 
@@ -386,15 +390,23 @@ a reviewer noticed is not.
 The version-surface capability is proven at `data-validity` through the
 recorded
 [version-surface inventory](../../evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md):
-sixty-seven surfaces enumerated, forty-five registering `0.8`, twenty-two
-adjudicated as deliberately version-specific, and three defects found that a
-sampled pass would have missed. The inventory's own scan was widened twice,
-each time because an audit found a surface outside it, and the entry claims
-only what the final scan covers.
+sixty-nine surfaces enumerated, forty-five registering `0.8`, twenty-four
+adjudicated as deliberately version-specific, and three defects found in those
+surfaces — two by the inventory itself and one by an independent release audit.
 
-The release-order capability remains `unknown`. Three independent release audit
+The claim is bounded by how it was reached. The inventory's scan was widened
+three times, each time because an audit found a surface outside it, and its
+counts were restated wrongly in three successive revisions. It is now derived by
+a recorded script rather than typed, which is the only reason this entry can be
+checked. `proven` here means the enumeration is complete under the stated
+method and each surface was adjudicated deliberately; it does not mean the
+method was right the first time.
+
+The release-order capability remains `unknown`. Four independent release audit
 rounds have run and none returned clean: two blocking findings, then five, then
-three, with repairs in each round introducing defects the next round caught.
-The release order is not complete until a round returns clean and the
-audit-bound technical-confirmation Decision is authored, and this Task cannot
-be completed while the capability reads `unknown`.
+three, then four. In rounds two, three, and four the defects were largely
+created by the previous round's repairs, and in rounds three and four they were
+concentrated in this Task's own record rather than in the delivery. The release
+order is not complete until a round returns clean and the audit-bound
+technical-confirmation Decision is authored, and this Task cannot be completed
+while the capability reads `unknown`.

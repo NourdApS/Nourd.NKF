@@ -67,11 +67,20 @@ rather than editing the file.
 
 ## How To Adopt
 
-Run the one public Adopt operation with the shipped adopter:
+Run the one public Adopt operation with the adopter **bundled in the NKF 0.8
+archive**, not the adopter already installed in the repository:
 
 ```text
 node nourd-nkf-adopt.mjs --project <project-root>
 ```
+
+This matters and has never been written down. An installed adopter validates
+the governed recommendation against the compatibility set frozen into it when
+it was published, so the NKF 0.71 adopter refuses the NKF 0.8 recommendation —
+it fails closed with an invalid-or-ambiguous compatibility message rather than
+upgrading. The refusal is correct and the message names no remedy, so: acquire
+the NKF 0.8 archive, verify its digest, and invoke the adopter inside it. The
+same rule already applies at every stepping-stone hop.
 
 An adopted NKF 0.71 repository receives the non-breaking upgrade: the first
 invocation writes the exact delta review template — carried judgments

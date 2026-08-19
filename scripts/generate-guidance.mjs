@@ -32,13 +32,16 @@ const PLACEHOLDER = /\{\{nkf_version\}\}/g;
 const LITERAL_REGION = /<!-- nkf:literal -->[\s\S]*?<!-- nkf:end -->/g;
 const PREDECESSOR = /\{\{nkf_predecessor\}\}/g;
 const ONLY_REGION = /[ \t]*<!-- nkf:only (adopted|release) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
-// Any bare major.minor token, not only the "NKF x.y" and "x.y-to-x.y" forms.
-// The narrower pattern let `0.71` through in a sentence with no NKF prefix,
-// and the NKF 0.8 whole-set review found the stale result in the emitted tree
-// — the defect class this generator exists to end, reappearing inside the
-// generator's own guard. A deliberately historical literal is declared, not
+// Any bare version coordinate, in either the dot form used in prose and code
+// or the hyphenated form used in file and fixture names. The first version of
+// this guard matched only "NKF x.y" and "x.y-to-x.y" and let a bare `0.71`
+// through in a sentence with no prefix; the second matched the dot form only
+// and would have let `minimal-0-71` through. Both narrower forms were found by
+// audit, not by this guard. A deliberately historical literal is declared, not
 // unprefixed.
-const VERSION_LITERAL = /\b\d+\.\d+/;
+// The hyphenated alternative takes a single-digit major so an ISO date such
+// as 2026-07-30 is not read as a version coordinate.
+const VERSION_LITERAL = /(?<![0-9.])\d+\.\d+(?![0-9.])|(?<![0-9.])\d-\d+(?![0-9])/;
 
 function fail(message) {
   process.stderr.write(`${message}\n`);

@@ -120,6 +120,16 @@ describe("guidance generation", () => {
     expect(emitted).toContain("NKF Version: 0.8");
   });
 
+  it("fails on a hyphenated coordinate, as in a fixture path", async () => {
+    // The guard matched the dot form only, so `minimal-0-71` would have been
+    // emitted verbatim into every later version. The same blind spot hid two
+    // surfaces from the version-surface inventory across three passes.
+    const root = await project(`${NEUTRAL_SOURCE}\nSee fixtures/valid/minimal-0-71 for the shape.\n`, "0.71");
+    const result = generate(root, "0.8");
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('literal "0-71"');
+  });
+
   it("fails on a bare version literal carrying no NKF prefix", async () => {
     // The narrower pattern only caught "NKF x.y" and "x.y-to-x.y". A sentence
     // reading "rebind to the 0.71 set" passed the guard and emitted a stale

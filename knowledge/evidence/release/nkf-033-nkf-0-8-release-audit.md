@@ -221,20 +221,72 @@ delivery.
 | The three new verifiers do not run in the producer's own gate at this commit, because they are gated on the declared version and the producer declares NKF 0.71. | Correct by design under the pin, and the reason this release exists. It means the whole-set review and the derivation are machine-gated only inside the isolated exercise until the producer adopts NKF 0.8. Recorded as a live limit. |
 | The two mixed-delimiter keys in the accepted executable remain. | Unchanged disposition: repairing them would change accepted authority bytes for a cosmetic inconsistency. |
 
+## Round Four — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `bc1bf4400edfe7e0dbc0e49b4d98afe0811a84a6` (`task/NKF-033`, clean before and after) |
+| Audited archive | SHA-256 `b014be24c2ab39c3c3dfff521984bcba39acff3e865686f4e708c76859e84484` |
+| Verdict | Not clean: four blocking findings, three should-fix, five notes |
+
+The fourth round judged the delivery internally consistent and mutually
+confirming — archive, byte-identical rebuild, member set, manifest, bindings,
+twelve guidance members, generator, checker rule, adopter, window, and gate —
+and found no surviving stale sentence in the shipped guidance. It judged the
+delta review performed rather than substituted, verifying that its
+`extends`-not-`supersedes` reasoning is grounded in ADR 0134's actual text.
+
+Three of its four blocking findings were in the record produced by the third
+round's repairs, and one of those repairs had deleted a true row while holding a
+count constant.
+
+## Round Four Blocking Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| The inventory recorded a scan widened to the hyphenated form and had not implemented it: a differential scan showed sixty-nine surfaces, not sixty-seven, and the rewrite had deleted a true row for the frozen NKF 0.2 release-set file list while holding the count at twenty-two by adding another. The blind spot was recorded as repaired twice before it was. | The scan states the two forms' terminators explicitly, is recorded as a script rather than a description, and computes sixty-nine surfaces, forty-five registering `0.8`, twenty-four adjudicated. Both previously missing surfaces are listed. |
+| The Task's Decision Applicability gate propagated the wrong counts, so a mandatory gate again stated numbers its cited Evidence contradicted — the third round's own blocking finding, recurring. | The gate cites the computed counts and bounds the claim by how it was reached. |
+| The guidance review's part-three accounting was arithmetically false: four byte-identical copies where there are three, and one hundred twenty-five checked where the complement is one hundred twenty-six. The same document stated three copies elsewhere. | Every count in the enumeration section and the member table is computed from the release set rather than typed, and the paragraph says so. |
+| The review's self-accounting said two of its repairs introduced further defects; one repair introduced two. | Corrected. |
+
+## Round Four Should-Fix Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| The inventory credited the exhaustive passes with three defects while its own text said an audit found the third. | Each defect is attributed to whichever found it, in its own heading. |
+| No shipped guidance said which adopter performs the in-window upgrade. Verified against the published NKF 0.71 adopter: it validates the recommendation against the compatibility set frozen into it and refuses the NKF 0.8 recommendation at its own self-entry, with a message naming no remedy. Standing behaviour, never disclosed — at publication a 0.71 consumer running their installed adopter would be stuck. | The adoption protocol gains a section stating that the adopter bundled with the release performs the upgrade and why an installed one refuses; the release notes state the remedy where an adopter actually looks. |
+| The neutrality guard matched the dot form only, so a hyphenated coordinate in the source would have been emitted verbatim into every later version. Zero current instances. | The guard covers both forms, with the hyphenated alternative narrowed to a single-digit major so an ISO date is not read as a coordinate, and a fixture proves it. |
+
+## Round Four Notes And Dispositions
+
+| Note | Disposition |
+| --- | --- |
+| The adoption protocol, release notes, and acceptance criterion eight say each older repository steps through "its own next archive" when the adopter maps NKF 0.1 through 0.5 all to the published 0.6 archive. | Recorded. The projection's migration guide states it precisely as a table; the prose is imprecise rather than false, and correcting it is carried to the next revision. |
+| The Task's round-history sentence was written before the round that made it literally true. | Recorded; the round-four findings make it accurate and the audit record scopes each claim to its round. |
+| The public adopter copy's embedded `NKF Version: 0.8` literal is build-time-imported guidance, not a hand-maintained inline copy. | Verified benign; acceptance criterion two's "the adopter's inlined literals included" holds. |
+| `package-lock.json` dependency fragments are not NKF coordinates. | Correctly outside the inventory. |
+| The two mixed-delimiter keys in the accepted executable remain. | Unchanged disposition. |
+
 ## Resulting State
 
-Every blocking and should-fix finding from all three rounds is repaired; every
+Every blocking and should-fix finding from all four rounds is repaired; every
 note is repaired or recorded with an explicit disposition. Each round's repairs
 change release-set member bytes, so each round invalidates the prior archive,
 exercise, and audit by construction, and the candidate is re-cut, re-exercised,
 and re-audited before the technical-confirmation Decision.
 
-Three rounds is the fact worth carrying out of this release. Rounds one and two
-each produced repairs that the following round found defective, twice in
-derived guidance and twice in this Task's own record, and the defects the
-rounds found were overwhelmingly body prose that no verifier this release ships
-can reach. The generated distribution ends stale version labels. It does not
-end stale claims, and nothing here should be read as suggesting it does.
+Four rounds is the fact worth carrying out of this release, and the shape of the
+four matters more than the count. Every round after the first found defects
+created by the previous round's repairs. The delivery converged early — the
+generator, the self-description rule, and the three verifiers were correct from
+the round in which they were delivered and never regressed — while the
+hand-maintained record did not: rounds three and four found their defects almost
+entirely in this Task's own Evidence and gate, in prose and in typed counts.
+
+The counts are now computed by recorded scripts rather than typed, which is the
+narrow lesson. The broad one is that the generated distribution ends stale
+version labels and does nothing about stale claims, and this release is its own
+best evidence for both halves of that sentence.
 
 This Evidence establishes what the audit found and what was repaired. It
 confirms nothing: the mandatory audit-bound technical confirmation is the

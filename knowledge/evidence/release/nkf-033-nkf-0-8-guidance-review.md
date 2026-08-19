@@ -26,7 +26,7 @@ and modes, not digests.
 
 | Member | Class | Reviewed SHA-256 |
 | --- | --- | --- |
-| `distribution/nkf/0.8/integrations/adoption/nkf-adoption-protocol.md` | adoption-protocol | `fd9d62b23f202fe2f5b7bebf51755b8e0662c534ff183bc5a792cd2921072137` |
+| `distribution/nkf/0.8/integrations/adoption/nkf-adoption-protocol.md` | adoption-protocol | `26f07cc6a9564ad15bba418a605c10582dd8561807484c37ac58649632b4d930` |
 | `distribution/nkf/0.8/integrations/ai/nkf-authoring-protocol.md` | authoring-protocol | `e1b8ea7e35d500d59ce24692fecfa360844458b9436535fb48892e8f1cd7b80b` |
 | `distribution/nkf/0.8/host-adapters/AGENTS.adapter.md` | host-adapter-instruction | `0919110739d3402eeff13d4443a5e1ba51eb0f3571a76aead6f076c4116100a7` |
 | `distribution/nkf/0.8/host-adapters/CLAUDE.adapter.md` | host-adapter-instruction | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
@@ -44,16 +44,23 @@ into both host directories, and the `GEMINI` adapter is byte-identical to the
 `CLAUDE` adapter. Each byte set was read in full, not diffed against its
 predecessor.
 
-The remaining one hundred twenty-nine members were not read in full, and saying
-so is part of the record rather than a footnote to it. Four are byte-identical
-copies of members already read. The other one hundred twenty-five were checked
-for a version literal that does not state NKF 0.8. That check found the defect
+The remaining one hundred twenty-nine members were not read in full, and saying so is
+part of the record rather than a footnote to it. Three are byte-identical
+copies of members already read — both onboarding skill twins and the shipped
+onboarding protocol, in the documentation projection. The other one hundred twenty-six
+were checked for a version literal that does not state NKF 0.8: the generated
+release manifest carries the version by construction, and the one hundred twenty-five
+readable members were scanned from their bytes. That scan found the defect
 recorded below in the third-party notices; every other literal it surfaced is a
 deliberate predecessor reference — the Specification's version lineage, the
 adopter's window and stepping-stone tables, the projection's compatibility
 prose. Step four now states these three parts separately, because a review that
-enumerates one hundred forty-one members and reads twelve should say which
-twelve.
+enumerates one hundred forty-one members and reads twelve should say which twelve.
+
+Every count in this paragraph and in the table above is computed from the
+release set rather than typed. Three successive revisions of this document
+stated one or another of them wrongly, each time in a repair meant to correct
+the last.
 
 ## Corrections Made
 
@@ -232,8 +239,8 @@ and the accepted authority is a semantic judgment, and the deterministic check
 that accompanies this review verifies only that every enumerated guidance
 member is named by its full path with a reviewed digest equal to its bytes.
 
-Eight stale sentences survived this review across three audit rounds, and two
-of this review's own repairs introduced further defects. That is the recorded
+Nine stale sentences survived this review across four audit rounds, and one of
+its own repairs introduced two further defects. That is the recorded
 measure of how far a review's coverage claim reaches, and it is the strongest
 evidence in this release for its own central claim: the positions a
 deterministic check can own do not go stale, and the positions only a human

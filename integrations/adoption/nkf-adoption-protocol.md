@@ -78,6 +78,20 @@ An unadopted repository without a sealed plan fails before mutation. Mature or
 uncertain unadopted repositories remain unsupported under deferred NKF-014.
 Later category support must extend Adopt rather than add a public command.
 
+## Which Adopter Performs The Upgrade
+
+Run the adopter bundled with the release being adopted, not the one already
+installed. An installed adopter validates the governed recommendation against
+the compatibility set frozen into it at its own publication, so an adopter
+published before this version refuses this version's recommendation rather than
+upgrading through it. That refusal is correct — a frozen adopter cannot vouch
+for a set it never saw — but it is not self-explanatory, so the remedy is
+stated here: acquire this version's archive, verify its digest, and invoke the
+adopter inside it.
+
+The same applies at every hop of a stepping-stone chain, where each hop already
+uses that archive's own bundled adopter.
+
 ## Non-Breaking 0.7-To-0.71 Upgrade
 
 The recommendation declares compatibility from each in-window predecessor
