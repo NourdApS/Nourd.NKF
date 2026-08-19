@@ -69,6 +69,26 @@ try {
     fail("The fresh candidate clone is not clean.");
   }
   run("npm", ["ci", "--ignore-scripts"], { cwd: project });
+  // The NKF 0.8 accepted integration adds the three deterministic guidance
+  // verifiers to the producer host chain. The chain is declared by the project
+  // and recorded by the adopter, never invented by it, so adopting 0.8 means
+  // the producer declares the 0.8 chain first. The isolated copy applies that
+  // exact declaration here, which is the same edit the separate producer
+  // adoption Task performs on the live producer. package.json is producer
+  // configuration, not a release-set member: no candidate byte changes.
+  if (nkfVersion === "0.8") {
+    const manifestPath = path.join(project, "package.json");
+    const manifestText = await readFile(manifestPath, "utf8");
+    const producerManifest = JSON.parse(manifestText);
+    const chain = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self";
+    producerManifest.nkf.integration.host_script = chain;
+    producerManifest.scripts["nkf:check:host"] = chain;
+    producerManifest.scripts["verify:guidance-generation"] =
+      "node scripts/generate-guidance.mjs --project . --version 0.8 --check";
+    producerManifest.scripts["verify:version-labels"] = "node scripts/verify-version-labels.mjs --project .";
+    producerManifest.scripts["verify:guidance-review"] = "node scripts/verify-guidance-review.mjs --project .";
+    await writeFile(manifestPath, `${JSON.stringify(producerManifest, null, 2)}\n`);
+  }
   run("npm", ["run", "build"], { cwd: project });
   const preAdoptChecker = await readFile(
     path.join(project, verification.manifest.checker.path),

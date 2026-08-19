@@ -3164,7 +3164,7 @@ governed_artifacts:
     path: scripts/exercise-release-candidate.mjs
     digest:
       algorithm: sha-256
-      value: "8b660158ffa73a0dc67af107aa70cf049bfe16728c45357abb1d3b25d913b6d4"
+      value: "17fd833038f2a9c18752e308d8ee099ad6ebabbeb885dac7f5333cc214971912"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
@@ -3228,7 +3228,7 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: c3a0e729cc9802e9d2263345dd781ee031c8a89a4880303c97a69762523ec65a
+      value: "8817c17ba39ebe8749a0e2deba2ed81f8e35dc61c2cc23b96f97bac2efa8b175"
     record: nkf-layered-contract-enforcement
     source_section: durable-mapping
   - id: artifact-scripts-verify-build-mjs
