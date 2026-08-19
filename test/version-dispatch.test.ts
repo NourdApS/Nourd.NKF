@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -11,7 +11,7 @@ const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex
 const taskPath = "knowledge/tasks/items/task.md";
 
 async function copyFixture(): Promise<string> {
-  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-7-dispatch-"));
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-8-dispatch-"));
   const project = path.join(parent, "project");
   await cp(validFixture, project, { recursive: true });
   return project;
@@ -35,11 +35,11 @@ function ruleIds(diagnostics: { rule_id: string }[]): string[] {
   return [...new Set(diagnostics.map((diagnostic) => diagnostic.rule_id))];
 }
 
-describe("NKF 0.71 version dispatch", () => {
-  it("validates the complete native 0.71 fixture", async () => {
+describe("NKF 0.8 version dispatch", () => {
+  it("validates the complete native 0.8 fixture", async () => {
     const project = await copyFixture();
     const result = await validateProject(options(project));
-    expect(result.nkf_version).toBe("0.71");
+    expect(result.nkf_version).toBe("0.8");
     expect(result.conformance).toBe("passed");
     expect(result.diagnostics).toEqual([]);
   });
@@ -47,7 +47,7 @@ describe("NKF 0.71 version dispatch", () => {
   it("fails closed for an unsupported declared version", async () => {
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.71"', 'nkf_version: "9.9"'),
+      text.replace('nkf_version: "0.8"', 'nkf_version: "9.9"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
@@ -59,7 +59,7 @@ describe("NKF 0.71 version dispatch", () => {
     // repositories migrate through their own immutable published archives.
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.71"', 'nkf_version: "0.2"'),
+      text.replace('nkf_version: "0.8"', 'nkf_version: "0.2"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
@@ -68,18 +68,18 @@ describe("NKF 0.71 version dispatch", () => {
 
   it("fails closed for a 0.6 declaration now that 0.6 left the window", async () => {
     // The 0.6 contract set was removed from the working tree, and the checker
-    // registers exactly the {0.7, 0.71} window; 0.6 must fail closed as
+    // registers exactly the {0.71, 0.8} window; 0.6 must fail closed as
     // unsupported.
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.71"', 'nkf_version: "0.6"'),
+      text.replace('nkf_version: "0.8"', 'nkf_version: "0.6"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
     expect(ruleIds(result.diagnostics)).toContain("contract-set.unavailable");
   });
 
-  it("requires the gate section on 0.71 tasks", async () => {
+  it("requires the gate section on 0.8 tasks", async () => {
     const project = await copyFixture();
     await edit(project, taskPath, (text) => text.split("\n## Decision Applicability")[0] ?? text);
     await repinTask(project);
@@ -145,7 +145,7 @@ describe("NKF 0.71 version dispatch", () => {
     await (await import("node:fs/promises")).mkdir(path.join(matching, "integrations/ai"), { recursive: true });
     await writeFile(
       path.join(matching, "integrations/ai/nkf-authoring-protocol.md"),
-      "# NKF Authoring Protocol\n\nNKF Version: 0.71\n",
+      "# NKF Authoring Protocol\n\nNKF Version: 0.8\n",
       "utf8",
     );
     const matchingResult = await validateProject(options(matching));
@@ -160,6 +160,33 @@ describe("NKF 0.71 version dispatch", () => {
     );
     const mismatchedResult = await validateProject(options(mismatched));
     expect(ruleIds(mismatchedResult.diagnostics)).toContain("guidance.version.mismatch");
+  });
+
+  it("checks a guidance file's frontmatter self-description against the version it serves", async () => {
+    // The exact NKF 0.71 defect: a description directing an agent to prepare a
+    // predecessor's candidate under a marker declaring the current version.
+    // It shipped inside the published archive because nothing checked prose.
+    const stale = await copyFixture();
+    await mkdir(path.join(stale, ".claude/skills/nkf-onboarding"), { recursive: true });
+    await writeFile(
+      path.join(stale, ".claude/skills/nkf-onboarding/SKILL.md"),
+      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.7 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.8\n",
+      "utf8",
+    );
+    const staleResult = await validateProject(options(stale));
+    expect(ruleIds(staleResult.diagnostics)).toContain("guidance.self-description.version-mismatch");
+
+    // A predecessor named in the body is deliberate — window tables and
+    // stepping-stone chains do it — and the rule is silent there.
+    const truthful = await copyFixture();
+    await mkdir(path.join(truthful, ".claude/skills/nkf-onboarding"), { recursive: true });
+    await writeFile(
+      path.join(truthful, ".claude/skills/nkf-onboarding/SKILL.md"),
+      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.8 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.8\n\nA NKF 0.71 repository steps through its published archive.\n",
+      "utf8",
+    );
+    const truthfulResult = await validateProject(options(truthful));
+    expect(ruleIds(truthfulResult.diagnostics)).not.toContain("guidance.self-description.version-mismatch");
   });
 
   it("resolves and rejects related_tasks orientation references", async () => {

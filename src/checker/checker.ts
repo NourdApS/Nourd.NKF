@@ -387,7 +387,7 @@ function commonFrontMatterChecks(
   artifact: string,
   emitter: RuleEmitter,
   recordId?: string,
-    nkfVersion: SupportedNkfVersion = "0.7",
+    nkfVersion: SupportedNkfVersion = "0.8",
 ): Record<string, unknown> | null {
   if (!model.frontMatterPresent || model.frontMatter === null) {
     emitter.emit(
@@ -440,7 +440,7 @@ function recordFrontMatterChecks(
   record: ParsedRecord,
   model: MarkdownModel,
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.7",
+  nkfVersion: SupportedNkfVersion = "0.8",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -715,7 +715,7 @@ function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.7",
+  nkfVersion: SupportedNkfVersion = "0.8",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -832,7 +832,7 @@ function sourceChecks(
 function nonRecordSourceChecks(
   nonRecord: ParsedNonRecord,
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.7",
+  nkfVersion: SupportedNkfVersion = "0.8",
   acceptedDecisionIds: ReadonlySet<string> = new Set(),
   referenceMaps: ReferenceMaps | null = null,
   acceptedDecisionPaths: ReadonlyMap<string, string> = new Map(),
@@ -985,6 +985,7 @@ async function guidanceVersionChecks(
 ): Promise<void> {
   const contract = executable.guidance_versioning as Record<string, any> | undefined;
   if (contract === undefined) return;
+  const capabilities = VERSION_CAPABILITIES[nkfVersion as SupportedNkfVersion];
   const prefix = typeof contract.marker_line_prefix === "string" ? contract.marker_line_prefix : "NKF Version: ";
   const paths = Array.isArray(contract.checked_paths) ? contract.checked_paths : [];
   for (const candidate of paths) {
@@ -1018,6 +1019,57 @@ async function guidanceVersionChecks(
         { artifact: candidate },
       );
     }
+    if (capabilities?.guidanceSelfDescription === true) {
+      guidanceSelfDescriptionCheck(contract, nkfVersion, candidate, text, emitter);
+    }
+  }
+}
+
+// A guidance file's frontmatter description describes that file, so a version
+// literal there is a self-description and must state the version the file
+// serves. The body is deliberately out of scope: window tables and
+// stepping-stone chains name earlier versions on purpose.
+//
+// This is the exact position that carried the NKF 0.71 defect — an onboarding
+// skill directing an agent to "prepare its NKF 0.7 candidate" under a marker
+// declaring 0.71 — and it shipped inside the published archive because no
+// check covered frontmatter prose.
+function guidanceSelfDescriptionCheck(
+  contract: Record<string, any>,
+  nkfVersion: string,
+  artifact: string,
+  text: string,
+  emitter: RuleEmitter,
+): void {
+  const declaration = contract.self_description as Record<string, any> | undefined;
+  if (declaration === undefined) return;
+  const source = typeof declaration.version_literal_pattern === "string"
+    ? declaration.version_literal_pattern
+    : undefined;
+  if (source === undefined) return;
+  const frontMatter = /^---\n([\s\S]*?)\n---(?:\n|$)/.exec(text);
+  if (frontMatter === null) return;
+  const key = typeof declaration.key === "string" ? declaration.key : "description";
+  // The value is one YAML scalar and may span lines, so continuation lines are
+  // folded in before matching rather than the value being read line by line.
+  const value = new RegExp(`^${key}:[ \\t]*(.*(?:\\n[ \\t]+.*)*)$`, "m").exec(frontMatter[1] ?? "");
+  if (value === null || value[1] === undefined) return;
+  let pattern: RegExp;
+  try {
+    pattern = new RegExp(source, "gu");
+  } catch {
+    return;
+  }
+  const group = typeof declaration.captured_group === "number" ? declaration.captured_group : 1;
+  for (const hit of value[1].matchAll(pattern)) {
+    const stated = hit[group];
+    if (stated !== undefined && stated !== nkfVersion) {
+      emitter.emit(
+        "guidance.self-description.version-mismatch",
+        `The installed guidance description states NKF ${stated} but the bundle declares NKF ${nkfVersion}.`,
+        { artifact },
+      );
+    }
   }
 }
 
@@ -1025,7 +1077,7 @@ function frontMatterReferenceChecks(
   records: ParsedRecord[],
   nonRecords: ParsedNonRecord[],
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.7",
+  nkfVersion: SupportedNkfVersion = "0.8",
 ): void {
   const taskGroups = new Map<string, ParsedNonRecord[]>();
   for (const nonRecord of nonRecords) {
@@ -1331,7 +1383,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const started = (options.now ?? (() => new Date()))();
   const executionId = (options.executionId ?? randomUUID)().toLowerCase();
   const declaredVersion = await peekBundleNkfVersion(projectRoot);
-  const nkfVersion = declaredVersion ?? "0.71";
+  const nkfVersion = declaredVersion ?? "0.8";
   const requestedContractRoot = path.resolve(options.contractRoot);
   const requestedBase = path.basename(requestedContractRoot);
   const versionContractRoot =
@@ -1345,7 +1397,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   );
   const resultVersion: SupportedNkfVersion =
     bindingsForVersion(nkfVersion) === undefined
-      ? "0.71"
+      ? "0.8"
       : (nkfVersion as SupportedNkfVersion);
   const emitter = new RuleEmitter(loaded.executable);
   const diagnostics: Diagnostic[] = [...loaded.diagnostics];

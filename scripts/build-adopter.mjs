@@ -27,10 +27,10 @@ export function adopterBuildOptions(outputPath) {
       ".yaml": "text",
     },
     plugins: [{
-      name: "embedded-nkf-0.7-contract",
+      name: "embedded-nkf-0.71-contract",
       setup(context) {
         context.onResolve(
-          { filter: /^nkf:predecessor-0\.7$/ },
+          { filter: /^nkf:predecessor-0\.71$/ },
           (argumentsValue) => ({
             path: argumentsValue.path,
             namespace: "nkf-embedded-contract",
@@ -40,17 +40,17 @@ export function adopterBuildOptions(outputPath) {
           { filter: /.*/, namespace: "nkf-embedded-contract" },
           async () => {
             const paths = [
-              "knowledge/specifications/nkf-0.7.md",
-              "contracts/nkf/0.7/nkf.yaml",
-              "contracts/nkf/0.7/freshness-policy.yaml",
-              "contracts/nkf/0.7/version-delta.yaml",
-              "contracts/nkf/0.7/schemas/bundle.schema.json",
-              "contracts/nkf/0.7/schemas/record.schema.json",
-              "contracts/nkf/0.7/schemas/graph-baseline.schema.json",
-              "contracts/nkf/0.7/schemas/freshness-receipt.schema.json",
-              "contracts/nkf/0.7/schemas/freshness-policy.schema.json",
-              "contracts/nkf/0.7/schemas/validation-result.schema.json",
-              "contracts/nkf/0.7/schemas/release-manifest.schema.json",
+              "knowledge/specifications/nkf-0.71.md",
+              "contracts/nkf/0.71/nkf.yaml",
+              "contracts/nkf/0.71/freshness-policy.yaml",
+              "contracts/nkf/0.71/version-delta.yaml",
+              "contracts/nkf/0.71/schemas/bundle.schema.json",
+              "contracts/nkf/0.71/schemas/record.schema.json",
+              "contracts/nkf/0.71/schemas/graph-baseline.schema.json",
+              "contracts/nkf/0.71/schemas/freshness-receipt.schema.json",
+              "contracts/nkf/0.71/schemas/freshness-policy.schema.json",
+              "contracts/nkf/0.71/schemas/validation-result.schema.json",
+              "contracts/nkf/0.71/schemas/release-manifest.schema.json",
             ];
             const entries = Object.fromEntries(
               await Promise.all(paths.map(async (relative) => [

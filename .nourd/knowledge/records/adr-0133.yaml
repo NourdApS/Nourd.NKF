@@ -1,0 +1,82 @@
+contract: nkf.record
+id: adr-0133
+type: decision
+body_contract: nkf.decision
+title: "ADR 0133: Adopt The NKF 0.8 Generated Distribution Direction"
+source:
+  path: decisions/0133-adopt-the-nkf-0-8-generated-distribution-direction.md
+  stable_path: decisions/0133-adopt-the-nkf-0-8-generated-distribution-direction.md
+  digest:
+    algorithm: sha-256
+    value: 70bd2120c5c4852cafdf4b2fb0ee0cc06f8a776ad69224950cf2134e21c70d7a
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - claude-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships:
+  - type: extends
+    target: adr-0131
+    source_section: decision
+  - type: depends-on
+    target: adr-0132
+    source_section: decision
+  - type: depends-on
+    target: adr-0097
+    source_section: decision
+  - type: rationale-for
+    target: design-nkf-033-generated-distribution
+    source_section: decision
+task: NKF-033

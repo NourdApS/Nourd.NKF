@@ -99,6 +99,45 @@ zero-change result is truthful rather than a silent failure. The complete
 ordinary native authoring lifecycle is now exercised against an isolated copy
 of the real producer before publication rather than after it.
 
+The accepted NKF 0.8 successor authority set is a prepared candidate on the
+`task/NKF-033` branch, not a released or adopted version: the producer still
+declares, pins, and installs published NKF 0.71. Its authority is accepted
+through
+[ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md) after the
+fresh independent audit recorded in the
+[NKF 0.8 independent authority audit](../evidence/audits/nkf-033-nkf-0-8-independent-authority-audit.md),
+whose nine blocking findings were repaired before acceptance, and its direction
+is adopted through
+[ADR 0133](../decisions/0133-adopt-the-nkf-0-8-generated-distribution-direction.md).
+
+NKF 0.8 changes the enforcement surface, which is why
+[ADR 0060](../decisions/0060-layered-contract-enforcement.md) applies to it in
+full. Three enforcement additions are implemented and exercised on the branch.
+Every version-bearing guidance member is derived by
+[`scripts/generate-guidance.mjs`](../../scripts/generate-guidance.mjs) from the
+single version-neutral source under `guidance-source/`, with the version
+injected and no emitted member an input to producing another; the emitter
+rejects any bare version literal in the source and refuses to write into a
+published tree. The new registry rule
+`guidance.self-description.version-mismatch` makes a guidance file's own
+frontmatter description a checked conformance position, implemented in the
+checker from the contract's declared regular expression rather than a second
+copy of the rule.
+[`scripts/verify-guidance-review.mjs`](../../scripts/verify-guidance-review.mjs)
+binds the pre-cut whole-set review to the deterministically enumerated release
+set and requires each recorded digest to equal the reviewed member's bytes,
+and
+[`scripts/verify-version-labels.mjs`](../../scripts/verify-version-labels.mjs)
+checks the self-description position across the live and distributed trees.
+All three join the accepted producer chain at NKF 0.8 and at no earlier
+version, because the installed NKF 0.71 pin byte-locks that chain — the
+refusal that made a successor version necessary.
+
+None of this is confirmed, published, recommended, or producer-adopted. The
+live producer's own guidance, chain, and pin remain exactly the published
+NKF 0.71 bytes until the separately authorized publication and the separate
+producer adoption.
+
 The immutable NKF 0.5 predecessor pair remains accepted through
 [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md)
 and its exact release candidate remains technically confirmed through

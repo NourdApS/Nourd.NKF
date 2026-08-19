@@ -44,10 +44,10 @@ const verification = verifyReleaseArchive(archiveBytes, expectedSha256, {
   sourceRoot,
 });
 const nkfVersion = verification.manifest.nkf_version;
-if (!["0.4", "0.5", "0.6", "0.7", "0.71"].includes(nkfVersion)) {
-  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, 0.6, 0.7, or 0.71 archive.");
+if (!["0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)) {
+  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, 0.6, 0.7, 0.71, or 0.8 archive.");
 }
-if (["0.5", "0.6", "0.7", "0.71"].includes(nkfVersion) && reviewPath === undefined) {
+if (["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion) && reviewPath === undefined) {
   fail(`The NKF ${nkfVersion} exact-candidate exercise requires --review with one external semantic-review path.`);
 }
 if (nkfVersion === "0.4" && reviewPath !== undefined) {
@@ -69,6 +69,26 @@ try {
     fail("The fresh candidate clone is not clean.");
   }
   run("npm", ["ci", "--ignore-scripts"], { cwd: project });
+  // The NKF 0.8 accepted integration adds the three deterministic guidance
+  // verifiers to the producer host chain. The chain is declared by the project
+  // and recorded by the adopter, never invented by it, so adopting 0.8 means
+  // the producer declares the 0.8 chain first. The isolated copy applies that
+  // exact declaration here, which is the same edit the separate producer
+  // adoption Task performs on the live producer. package.json is producer
+  // configuration, not a release-set member: no candidate byte changes.
+  if (nkfVersion === "0.8") {
+    const manifestPath = path.join(project, "package.json");
+    const manifestText = await readFile(manifestPath, "utf8");
+    const producerManifest = JSON.parse(manifestText);
+    const chain = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self";
+    producerManifest.nkf.integration.host_script = chain;
+    producerManifest.scripts["nkf:check:host"] = chain;
+    producerManifest.scripts["verify:guidance-generation"] =
+      "node scripts/generate-guidance.mjs --project . --version 0.8 --check";
+    producerManifest.scripts["verify:version-labels"] = "node scripts/verify-version-labels.mjs --project .";
+    producerManifest.scripts["verify:guidance-review"] = "node scripts/verify-guidance-review.mjs --project .";
+    await writeFile(manifestPath, `${JSON.stringify(producerManifest, null, 2)}\n`);
+  }
   run("npm", ["run", "build"], { cwd: project });
   const preAdoptChecker = await readFile(
     path.join(project, verification.manifest.checker.path),
@@ -86,7 +106,22 @@ try {
   await chmod(adopter, 0o755);
 
   const manifest = verification.manifest;
-  const compatibility = nkfVersion === "0.71"
+  const compatibility = nkfVersion === "0.8"
+    ? [
+        {
+          from_nkf_version: "0.71",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.71 upgrades to NKF 0.8 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry.",
+        },
+        {
+          from_nkf_version: "0.8",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.8 refreshes the exact release and integration.",
+        },
+      ]
+    : nkfVersion === "0.71"
     ? [
         {
           from_nkf_version: "0.7",
@@ -198,7 +233,7 @@ try {
     flag: "wx",
   });
   const producerPrepromotionRoot = path.join(temporary, "producer-prepromotion");
-  if (["0.6", "0.7", "0.71"].includes(nkfVersion)) {
+  if (["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)) {
     await cp(project, producerPrepromotionRoot, {
       recursive: true,
       filter(sourcePath) {
@@ -223,7 +258,14 @@ try {
   ];
   const firstArguments = [
     ...commonArguments,
-    ...(nkfVersion === "0.71"
+    ...(nkfVersion === "0.8"
+      ? [
+          "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.8-producer-promotion.yaml"),
+          "--accepting-decision", path.join(project, "knowledge/decisions/0134-accept-the-nkf-0-8-authority-set.md"),
+          "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+          "--review", reviewPath,
+        ]
+      : nkfVersion === "0.71"
       ? [
           "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml"),
           "--accepting-decision", path.join(project, "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md"),
@@ -264,11 +306,28 @@ try {
     fail("Non-breaking candidate self-adoption changed producer knowledge bytes.");
   }
 
+  // The two protocol roots nothing installs are emitted at the version the
+  // repository has adopted. Adopting NKF 0.8 changes that version, so the
+  // roots are restamped from the same version-neutral source before the gate
+  // — which the gate then verifies byte-for-byte. This is a producer step of
+  // adopting the version, not a candidate change: no release-set member moves.
+  if (nkfVersion === "0.8") {
+    run(process.execPath, [
+      path.join(project, "scripts/generate-guidance.mjs"),
+      "--project", project, "--version", nkfVersion, "--stamp", "adopted",
+    ]);
+    // The release-stamp members are candidate bytes and are never rewritten
+    // here; prove they already match their derivation instead.
+    run(process.execPath, [
+      path.join(project, "scripts/generate-guidance.mjs"),
+      "--project", project, "--version", nkfVersion, "--check",
+    ]);
+  }
   const producerGate = run("npm", ["run", "nkf:check"], {
     cwd: project,
     env: {
       ...process.env,
-      ...(["0.6", "0.7", "0.71"].includes(nkfVersion)
+      ...(["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)
         ? { NKF_PRODUCER_PREPROMOTION_ROOT: producerPrepromotionRoot }
         : {}),
     },

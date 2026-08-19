@@ -11,7 +11,7 @@ import { repositoryRoot } from "./build-public-docs.mjs";
 import { readReleaseSet } from "./release/release-set.mjs";
 
 const REFERENCE_FILES = [
-  "reference/nkf-0.71.md",
+  "reference/nkf-0.8.md",
 ];
 
 function publicFilesFromReleaseSet(releaseSet) {
@@ -167,13 +167,13 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     );
   }
   const specification = await readFile(
-    path.join(root, "knowledge/specifications/nkf-0.71.md"),
+    path.join(root, "knowledge/specifications/nkf-0.8.md"),
   );
   const mirror = await readFile(
-    path.join(docsRoot, "reference/nkf-0.71.md"),
+    path.join(docsRoot, "reference/nkf-0.8.md"),
   );
   if (!mirror.equals(specification)) {
-    throw new Error("The public NKF 0.71 Markdown mirror differs from authority.");
+    throw new Error("The public NKF 0.8 Markdown mirror differs from authority.");
   }
   const adopter = await readFile(path.join(root, "dist/nourd-nkf-adopt.mjs"));
   const publicAdopter = await readFile(
@@ -183,7 +183,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
     throw new Error("The public adopter differs from the deterministic build.");
   }
   const onboardingProtocol = await readFile(
-    path.join(root, "distribution/nkf/0.71/integrations/onboarding/nkf-onboarding-protocol.md"),
+    path.join(root, "distribution/nkf/0.8/integrations/onboarding/nkf-onboarding-protocol.md"),
   );
   const publicOnboardingProtocol = await readFile(
     path.join(docsRoot, "tools/nkf-onboarding-protocol.md"),
@@ -193,7 +193,7 @@ export async function verifyPublicDocs(root = repositoryRoot) {
   }
   for (const directory of [".agents", ".claude"]) {
     const onboardingSkill = await readFile(
-      path.join(root, `distribution/nkf/0.71/${directory}/skills/nkf-onboarding/SKILL.md`),
+      path.join(root, `distribution/nkf/0.8/${directory}/skills/nkf-onboarding/SKILL.md`),
     );
     const publishedSkill = await readFile(
       path.join(docsRoot, directory, "skills/nkf-onboarding/SKILL.md"),

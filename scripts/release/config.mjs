@@ -96,6 +96,22 @@ export const ACCEPTED_0_71_ARTIFACT_DIGESTS = Object.freeze({
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
 });
 
+export const ACCEPTED_0_8_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.8.md": "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e",
+  "contracts/nkf/0.8/nkf.yaml": "6d162800ecb2a41fb9b6ead544cc0d5ecd4dc119cd72298138a4d17ccd822326",
+  "contracts/nkf/0.8/freshness-policy.yaml": "7cfb1b40a8b6f86543cb7b6016c6e9b2c1159d2a748c1915d0e9bf51bb82afd4",
+  "contracts/nkf/0.8/version-delta.yaml": "cc17f23a44afcf56b107f3e76e4d761779a4225bd2f8955c51d9781193c9c8b9",
+  "contracts/nkf/0.8/schemas/bundle.schema.json": "e9ad6d4150822d8e3190d09ea5104b5c94096b5f5d82213e963d49874b635837",
+  "contracts/nkf/0.8/schemas/record.schema.json": "b8a96b460c7735214c27fa98f23fdc756f8cf262cd9e1c039098b2163003589c",
+  "contracts/nkf/0.8/schemas/graph-baseline.schema.json": "d06edec66beb991ad7414017a2716e7ae34c252d2b80392637cd80d67cdc7685",
+  "contracts/nkf/0.8/schemas/freshness-receipt.schema.json": "ed49656906a325c5c72c2e2ae993321b5d785384468f6c643938bd32e988264a",
+  "contracts/nkf/0.8/schemas/freshness-policy.schema.json": "4060e0edb9de494bf971ad58d6502d1d8cc8b14d6f9b036ded9e53b2b2e15e76",
+  "contracts/nkf/0.8/schemas/release-manifest.schema.json": "3bd221feeece633f0b035371c04d4c6ee7ad6e03eaf737b68aeb8ca14f226624",
+  "contracts/nkf/0.8/schemas/validation-result.schema.json": "37fcde1234167449cd5dd79824296567aa8e4e74b251f9a94e66e6396e53e96d",
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
+});
+
 export const RELEASE_REPOSITORY = "NourdApS/Nourd.NKF";
 
 // Every pre-stable recommendation publishes under the same channel terms;
@@ -111,6 +127,39 @@ export const PRE_STABLE_PUBLICATION = Object.freeze({
 // every expectation from this registry, so recommending a newly accepted
 // release changes governed data here and never changes verifier logic.
 export const RECOMMENDED_RELEASE_BINDINGS = Object.freeze({
+  "0.8": Object.freeze({
+    acceptingDecisionPath:
+      "knowledge/decisions/0134-accept-the-nkf-0-8-authority-set.md",
+    confirmingDecisionPath:
+      "knowledge/decisions/0135-confirm-the-nkf-0-8-release-candidate.md",
+    archiveSha256:
+      "2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
+    sourceCommit: "1c8c31948d73e6d79ee36c1b13985ca6db031e5b",
+    checkerSha256:
+      "52d491cc25da898444bf33568e92b058fca4559fd1863902ad48504899d5985a",
+    adopterSha256:
+      "5e3288081d75e7ab9914f56498c3157e85be7ede7f89477f111fd09007d58d85",
+    authorityMarkdownSha256:
+      "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e",
+    authorityExecutableSha256:
+      "6d162800ecb2a41fb9b6ead544cc0d5ecd4dc119cd72298138a4d17ccd822326",
+    compatibility: Object.freeze([
+      Object.freeze({
+        from_nkf_version: "0.71",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.71 upgrades to NKF 0.8 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry.",
+      }),
+      Object.freeze({
+        from_nkf_version: "0.8",
+        classification: "non-breaking",
+        migration_required: false,
+        summary:
+          "NKF 0.8 refreshes the exact recommended release and integration without semantic migration.",
+      }),
+    ]),
+  }),
   "0.6": Object.freeze({
     acceptingDecisionPath:
       "knowledge/decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md",

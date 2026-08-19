@@ -1,6 +1,6 @@
 # NKF Release Protocol
 
-NKF Version: 0.2
+NKF Version: 0.71
 
 This is the governed procedure by which the Nourd Knowledge Format
 repository releases a new NKF version. It is repository process accepted
@@ -30,18 +30,37 @@ substitutes for those two facts.
    derived Schemas, the checker, the authoring and onboarding protocols, the
    portable skills and host-adapter instruction content, this protocol and
    the adoption protocol, and the fixtures, examples, and documentation
-   projection. Every artifact in the set declares the version it serves
-   through the exact guidance marker.
-4. Review every member of the versioned set against the complete current
-   rule set: enumerate the exact member list deterministically — the
-   adopter `set` command emits every member with its digest and version
-   stamp — and re-read each shipped protocol and portable skill in full
-   against this version's accepted authority pair, not only against the
-   rules that changed, correcting any sentence that describes a rule that
-   is not the current rule, including rules reversed in any earlier round.
-   Record the enumerated member list, each reviewed digest, and every
-   correction so the independent audit can verify the review covered the
-   whole set.
+   projection. The four shipped protocols and the portable skills declare
+   the version they serve through the exact guidance marker, and the
+   documentation projection carries that marker only in the copies it
+   derives byte-identically from them; no other member declares one, and the
+   host-adapter instruction content deliberately states no version at all.
+   Every guidance member — the authoring, onboarding, release, and adoption
+   protocols, the portable skills, and the host-adapter instruction content
+   — is emitted from the single version-neutral authored source; the version
+   is injected into the members that state one, and the host-adapter content
+   is emitted unchanged because it states none. No predecessor member is
+   copied and no emitted member is edited by hand: regenerating from that
+   source and this version alone must reproduce the exact committed bytes,
+   and a member that does not is invalid.
+4. Review the versioned set against the complete current rule set in three
+   parts, because the parts differ in what they can establish. Enumerate the
+   exact member list deterministically — the adopter `set` command emits
+   every member with its class and mode, taken from the accepted release-set
+   contract. Re-read every member of the six guidance classes in full — the
+   authoring, onboarding, release, and adoption protocols, the portable
+   skills, and the host-adapter instruction content — against this version's
+   accepted authority pair, not only against the rules that changed,
+   correcting any sentence that describes a rule that is not the current
+   rule, including rules reversed in any earlier round and including a claim
+   about what a command or tool does. Then check every remaining member that
+   is not derived byte-identically from one already re-read for a version
+   literal that does not state this version, and correct each one. Record
+   the enumerated member list, each reviewed digest, and every correction,
+   and state which members were re-read in full and which were checked only
+   for their version literals, so the independent audit can verify the
+   review covered the whole set and can see exactly how far the reading
+   went.
 5. Prove the set against itself: the full test suite over the version's
    fixtures, deterministic checker and adopter builds, and the guidance and
    documentation verifiers. The publishing repository's own knowledge still
@@ -49,10 +68,13 @@ substitutes for those two facts.
    validate against that version's frozen checker; that is correct, because
    the repository has not adopted the new version yet.
 6. Obtain an independent audit of the exact set, including verification
-   that the guidance review of step four was performed against the actual
-   rule diff, repair material findings, and obtain the separate Human
-   Product Owner confirmation that the exact implementation realizes the
-   accepted authority pair.
+   that the guidance review of step four covered the whole versioned set —
+   the enumerated member list is present, each member carries a reviewed
+   digest, and every correction is recorded — repair material findings, and
+   obtain the separate Human Product Owner confirmation that the exact
+   implementation realizes the accepted authority pair. A review recording
+   only the version's rule diff does not satisfy step four and the audit
+   rejects it.
 7. Produce one content-addressed release archive and manifest for the exact
    confirmed set, verify it by re-download and digest comparison, and retain
    the verification as Evidence. The version is released when this step

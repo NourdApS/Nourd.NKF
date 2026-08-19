@@ -26,7 +26,11 @@ if (!/^[0-9a-f]{64}$/.test(expectedSha256 ?? "")) {
 
 const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-consumer-exercise-"));
 const project = path.join(parent, "consumer");
-await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-2"), project, {
+// The in-window predecessor fixture: this exercise proves a real consumer
+// upgrade, so it starts from the version a consumer can actually be on. It
+// named a fixture deleted several window slides ago and failed with ENOENT
+// before reaching any adoption step; the NKF 0.8 release audit found it.
+await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"), project, {
   recursive: true,
 });
 execFileSync("git", ["init", "-b", "master"], {

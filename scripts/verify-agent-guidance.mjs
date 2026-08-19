@@ -5,6 +5,7 @@ import {
   readdir,
   realpath,
 } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -376,15 +377,15 @@ export async function verifyAgentGuidance(projectRootInput) {
   const bundle = YAML.parse(
     await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
   );
-  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71"].includes(bundle?.nkf_version)) {
-    fail("The producer guidance verifier requires an NKF 0.2 through 0.71 bundle.");
+  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 through 0.8 bundle.");
   }
   // From 0.7 the version's own accepted distribution skill is the expected
   // cross-host bootstrap; earlier versions share the embedded 0.2 lineage.
   // The accepted 0.7 skill bytes ship with this producer tooling itself, so
   // verification does not depend on the verified project carrying them.
   const toolingRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-  const expectedSkill = ["0.7", "0.71"].includes(bundle.nkf_version)
+  const expectedSkill = ["0.7", "0.71", "0.8"].includes(bundle.nkf_version)
     ? await readFile(
         path.join(toolingRoot, `distribution/nkf/${bundle.nkf_version}/.claude/skills/nkf-authoring/SKILL.md`),
         "utf8",
@@ -583,7 +584,15 @@ export async function verifyAgentGuidance(projectRootInput) {
 
   const packageBytes = await readRegularProjectFile(projectRoot, "package.json", "package manifest");
   const packageManifest = JSON.parse(packageBytes.toString("utf8"));
-  const producerCheck = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self";
+  // The accepted producer chain is version-keyed. NKF 0.8 admits the three
+  // deterministic guidance verifiers; NKF 0.71 and earlier keep exactly the
+  // chain they accepted, because the installed pin byte-locks it — which is
+  // why adding these checks required a new version at all.
+  const PRODUCER_CHECK_BY_VERSION = {
+    "0.8": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self",
+  };
+  const legacyProducerCheck = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self";
+  const producerCheck = PRODUCER_CHECK_BY_VERSION[bundle.nkf_version] ?? legacyProducerCheck;
   const installedHostChain = "npm run nkf:check:pinned && npm run nkf:check:host";
   const hostSupersetInstalled = packageManifest.scripts?.["nkf:check"] === installedHostChain;
   const expectedScripts = {
@@ -602,6 +611,12 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
     "verify:third-party-notices": "node scripts/verify-third-party-notices.mjs",
   };
+  if (bundle.nkf_version === "0.8") {
+    expectedScripts["verify:guidance-generation"] =
+      "node scripts/generate-guidance.mjs --project . --version 0.8 --check";
+    expectedScripts["verify:version-labels"] = "node scripts/verify-version-labels.mjs --project .";
+    expectedScripts["verify:guidance-review"] = "node scripts/verify-guidance-review.mjs --project .";
+  }
   if (hostSupersetInstalled) {
     expectedScripts["nkf:check:pinned"] =
       "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .";
@@ -655,8 +670,20 @@ function parseArguments(argv) {
   }
   return { project };
 }
+// Resolve both sides to a real path before comparing. On macOS a temporary
+// directory is reached through a symlink, so the raw argv path and the module
+// URL disagree and the guard silently skips the whole script with exit 0 — a
+// no-op that reads as success. The NKF 0.8 candidate exercise hit exactly
+// that: a generation step appeared to run and changed nothing.
+function invokedDirectlyAs(moduleUrl) {
+  const entry = process.argv[1];
+  if (entry === undefined) return false;
+  const real = (value) => { try { return realpathSync(value); } catch { return path.resolve(value); } };
+  return real(entry) === real(fileURLToPath(moduleUrl));
+}
 
-if (process.argv[1] !== undefined && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
+
+if (invokedDirectlyAs(import.meta.url)) {
   try {
     const result = await verifyAgentGuidance(parseArguments(process.argv.slice(2)).project);
     process.stdout.write(`${JSON.stringify(result)}\n`);

@@ -33,8 +33,21 @@ export const REPOSITORY =
 export const LEGACY_REPOSITORY =
   "https://github.com/kaveh6202/Nourd.NKF.git";
 export const ARCHIVE_ROOT = "nourd-nkf";
-const NKF_0_6_THIRD_PARTY_NOTICES_SHA256 =
-  "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea";
+// The exact reviewed licensing, copyright, attribution, and disclaimer text,
+// per version. The notices are a release-set member, so publication freezes
+// them with the rest of the set: verifying a published predecessor archive must
+// use that version's reviewed text, and a single global pin cannot do both.
+// NKF 0.8 advances the text because the notices stated they were bound to the
+// NKF 0.6 build-input graphs, two windows behind, which shipped unchanged
+// inside the published 0.7 and 0.71 archives. Neither entry carries a version
+// in its name any more; that is what let the stale sentence read as deliberate.
+const REVIEWED_THIRD_PARTY_NOTICES_SHA256 = Object.freeze({
+  "0.6": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
+  "0.7": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
+  "0.71": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
+  "0.8": "b09f92fc26c784f42b565738d99cf0aefe58c26424afcf30ed363e3a0e11f243",
+});
+
 const AUTHORITY_PATHS = Object.freeze({
   "0.5": {
     markdown: "knowledge/specifications/nkf-0.5-revision-2.md",
@@ -128,11 +141,11 @@ function fail(message) {
 }
 
 function usesReleaseSet(nkfVersion) {
-  return ["0.3", "0.4", "0.5", "0.6", "0.7", "0.71"].includes(nkfVersion);
+  return ["0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion);
 }
 
 function schemaBindings(nkfVersion) {
-  if (["0.5", "0.6", "0.7", "0.71"].includes(nkfVersion)) {
+  if (["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)) {
     return [
       "bundle",
       "record",
@@ -181,7 +194,7 @@ function bundledDependencyNames(bytes, label) {
   return [...new Set(names)].sort((left, right) => left.localeCompare(right, "en"));
 }
 
-export function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, noticeBytes) {
+export function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, noticeBytes, nkfVersion) {
   const checkerPackages = bundledDependencyNames(checkerBytes, "The release checker");
   const adopterPackages = bundledDependencyNames(adopterBytes, "The release adopter");
   if (checkerPackages.length !== 10 || adopterPackages.length !== 9) {
@@ -201,8 +214,12 @@ export function verifyThirdPartyNoticeCoverage(checkerBytes, adopterBytes, notic
   if (JSON.stringify(observed) !== JSON.stringify(expected)) {
     fail(`Third-party notice coverage differs from the exact bundled dependency graph: expected ${expected.join(", ")}; observed ${observed.join(", ")}.`);
   }
-  if (sha256(noticeBytes) !== NKF_0_6_THIRD_PARTY_NOTICES_SHA256) {
-    fail("THIRD_PARTY_NOTICES.md differs from the exact reviewed NKF 0.6 license, copyright, attribution, and disclaimer text.");
+  const reviewed = REVIEWED_THIRD_PARTY_NOTICES_SHA256[nkfVersion];
+  if (reviewed === undefined) {
+    fail(`No reviewed third-party notice text is registered for NKF ${nkfVersion}.`);
+  }
+  if (sha256(noticeBytes) !== reviewed) {
+    fail(`THIRD_PARTY_NOTICES.md differs from the exact reviewed NKF ${nkfVersion} license, copyright, attribution, and disclaimer text.`);
   }
   return { checker_packages: checkerPackages, adopter_packages: adopterPackages, noticed_packages: observed };
 }
@@ -222,7 +239,7 @@ export function constructReleaseManifest({
     executable: `contracts/nkf/${nkfVersion}/nkf.yaml`,
   };
   const specificationPath = authorityPaths.markdown;
-  const repository = ["0.6", "0.7", "0.71"].includes(nkfVersion) ? REPOSITORY : LEGACY_REPOSITORY;
+  const repository = ["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion) ? REPOSITORY : LEGACY_REPOSITORY;
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
   const markdown = requireBuffer(entries, specificationPath);
   const executable = requireBuffer(entries, authorityPaths.executable);
@@ -259,7 +276,7 @@ export function constructReleaseManifest({
     path: schema.path,
     digest: digest(requireBuffer(entries, schema.path)),
   }));
-  const manifest = ["0.5", "0.6", "0.7", "0.71"].includes(nkfVersion)
+  const manifest = ["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)
     ? {
         ...common,
         freshness_policy: {
@@ -267,7 +284,7 @@ export function constructReleaseManifest({
           path: `contracts/nkf/${nkfVersion}/freshness-policy.yaml`,
           digest: digest(requireBuffer(entries, `contracts/nkf/${nkfVersion}/freshness-policy.yaml`)),
         },
-        ...(["0.7", "0.71"].includes(nkfVersion)
+        ...(["0.71", "0.8"].includes(nkfVersion)
           ? {
               version_delta: {
                 contract: "nkf.version-delta",
@@ -277,7 +294,7 @@ export function constructReleaseManifest({
             }
           : {}),
         schemas,
-        ...(["0.6", "0.7", "0.71"].includes(nkfVersion)
+        ...(["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)
           ? {
               licensing: {
                 spdx: "Apache-2.0",
@@ -793,7 +810,7 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   ) {
     fail("Release manifest bootstrap contract or NKF version is invalid.");
   }
-  const schemaIndex = ["0.5", "0.6", "0.7", "0.71"].includes(nkfVersion) ? 5 : 2;
+  const schemaIndex = ["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion) ? 5 : 2;
   const schema = manifest?.schemas?.[schemaIndex];
   if (
     schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` ||
@@ -932,7 +949,7 @@ export function verifyReleaseArchive(
   if (manifestSchema === undefined) fail("Release manifest omits its bootstrap schema binding.");
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
-  if (["0.6", "0.7", "0.71"].includes(archiveVersion)) {
+  if (["0.6", "0.7", "0.71", "0.8"].includes(archiveVersion)) {
     if (
       manifest.licensing?.spdx !== "Apache-2.0" ||
       sha256(requireBuffer(entries, "LICENSE")) !==
@@ -963,11 +980,12 @@ export function verifyReleaseArchive(
       : [manifest.licensing.license, manifest.licensing.notice, manifest.licensing.third_party_notices]),
   ];
   for (const artifact of artifacts) verifyArtifact(entries, artifact);
-  if (["0.6", "0.7", "0.71"].includes(archiveVersion)) {
+  if (["0.6", "0.7", "0.71", "0.8"].includes(archiveVersion)) {
     verifyThirdPartyNoticeCoverage(
       requireBuffer(entries, "dist/nourd-nkf-checker.mjs"),
       requireBuffer(entries, "dist/nourd-nkf-adopt.mjs"),
       requireBuffer(entries, "THIRD_PARTY_NOTICES.md"),
+      archiveVersion,
     );
   }
   if (sourceRoot !== undefined) verifySourceProvenance(sourceRoot, manifest);

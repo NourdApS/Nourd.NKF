@@ -13,7 +13,7 @@ import { contractRoot } from "./helpers.js";
 let executable: Record<string, any>;
 
 beforeAll(async () => {
-  executable = (await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71")).executable;
+  executable = (await loadContracts(contractRoot, VERSION_BINDINGS["0.8"], "0.8")).executable;
 });
 
 function unit(
