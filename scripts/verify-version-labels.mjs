@@ -12,7 +12,9 @@
 // while its marker declared 0.71, and it shipped inside the published archive
 // because no check covered frontmatter prose.
 import { readdir, readFile, stat } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const MARKER = /^NKF Version: (\d+\.\d+)$/m;
 const BUNDLE_VERSION = /^nkf_version:\s*"?(\d+\.\d+)"?\s*$/m;
@@ -178,8 +180,20 @@ export async function verifyVersionLabels(projectRootInput) {
   return true;
 }
 
+// Resolve both sides to a real path before comparing. On macOS a temporary
+// directory is reached through a symlink, so the raw argv path and the module
+// URL disagree and the guard silently skips the whole script with exit 0 — a
+// no-op that reads as success. The NKF 0.8 candidate exercise hit exactly
+// that: a generation step appeared to run and changed nothing.
+function invokedDirectlyAs(moduleUrl) {
+  const entry = process.argv[1];
+  if (entry === undefined) return false;
+  const real = (value) => { try { return realpathSync(value); } catch { return path.resolve(value); } };
+  return real(entry) === real(fileURLToPath(moduleUrl));
+}
+
 const invokedDirectly =
-  process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
+  invokedDirectlyAs(import.meta.url);
 if (invokedDirectly) {
   const index = process.argv.indexOf("--project");
   const project = index === -1 ? "." : process.argv[index + 1];

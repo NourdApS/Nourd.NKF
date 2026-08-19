@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -95,6 +95,29 @@ describe("guidance generation", () => {
     const result = generate(root, "0.8");
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("use {{nkf_version}}");
+  });
+
+  it("runs when reached through a symlinked path", async () => {
+    // The direct-invocation guard compared the raw argv path against the
+    // module URL's real path. A macOS temporary directory is reached through a
+    // symlink, so the two disagreed and the script exited 0 having done
+    // nothing — a no-op that reads as success. The NKF 0.8 candidate exercise
+    // hit exactly that: a generation step appeared to run and changed nothing.
+    const root = await project(NEUTRAL_SOURCE, "0.71");
+    const linked = path.join(path.dirname(root), `${path.basename(root)}-link`);
+    await symlink(root, linked, "dir");
+    created.push(linked);
+    const result = spawnSync(
+      process.execPath,
+      [generator, "--project", linked, "--version", "0.8"],
+      { encoding: "utf8" },
+    );
+    expect(result.status, result.stderr).toBe(0);
+    const emitted = await readFile(
+      path.join(root, "distribution/nkf/0.8/.claude/skills/nkf-onboarding/SKILL.md"),
+      "utf8",
+    );
+    expect(emitted).toContain("NKF Version: 0.8");
   });
 
   it("fails on a bare version literal carrying no NKF prefix", async () => {

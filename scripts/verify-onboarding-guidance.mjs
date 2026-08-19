@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 import { lstat, readFile, realpath } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import process from "node:process";
 import YAML from "yaml";
 
@@ -117,7 +119,18 @@ export async function verifyOnboardingGuidance(projectRootInput) {
   };
 }
 
-if (path.resolve(process.argv[1] ?? "") === path.resolve(new URL(import.meta.url).pathname)) {
+// Resolve both sides to a real path before comparing. On macOS a temporary
+// directory is reached through a symlink, so the raw argv path and the module
+// URL disagree and the guard silently skips the whole script with exit 0 — a
+// no-op that reads as success.
+function invokedDirectlyAs(moduleUrl) {
+  const entry = process.argv[1];
+  if (entry === undefined) return false;
+  const real = (value) => { try { return realpathSync(value); } catch { return path.resolve(value); } };
+  return real(entry) === real(fileURLToPath(moduleUrl));
+}
+
+if (invokedDirectlyAs(import.meta.url)) {
   const projectIndex = process.argv.indexOf("--project");
   const project = projectIndex === -1 ? "." : process.argv[projectIndex + 1];
   try {

@@ -5,6 +5,7 @@ import {
   readdir,
   realpath,
 } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -669,8 +670,20 @@ function parseArguments(argv) {
   }
   return { project };
 }
+// Resolve both sides to a real path before comparing. On macOS a temporary
+// directory is reached through a symlink, so the raw argv path and the module
+// URL disagree and the guard silently skips the whole script with exit 0 — a
+// no-op that reads as success. The NKF 0.8 candidate exercise hit exactly
+// that: a generation step appeared to run and changed nothing.
+function invokedDirectlyAs(moduleUrl) {
+  const entry = process.argv[1];
+  if (entry === undefined) return false;
+  const real = (value) => { try { return realpathSync(value); } catch { return path.resolve(value); } };
+  return real(entry) === real(fileURLToPath(moduleUrl));
+}
 
-if (process.argv[1] !== undefined && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
+
+if (invokedDirectlyAs(import.meta.url)) {
   try {
     const result = await verifyAgentGuidance(parseArguments(process.argv.slice(2)).project);
     process.stdout.write(`${JSON.stringify(result)}\n`);
