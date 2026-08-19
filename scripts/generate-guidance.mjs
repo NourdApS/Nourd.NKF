@@ -28,9 +28,13 @@ const PLACEHOLDER = /\{\{nkf_version\}\}/g;
 const LITERAL_REGION = /<!-- nkf:literal -->[\s\S]*?<!-- nkf:end -->/g;
 const PREDECESSOR = /\{\{nkf_predecessor\}\}/g;
 const ONLY_REGION = /[ \t]*<!-- nkf:only (adopted|release) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
-// Both forms rot: "NKF 0.7" and the bare pair "0.7-to-0.71" that appears in
-// headings and delta references without the NKF prefix.
-const VERSION_LITERAL = /\bNKF (?:Version: )?\d+\.\d+|\b\d+\.\d+-[Tt]o-\d+\.\d+/;
+// Any bare major.minor token, not only the "NKF x.y" and "x.y-to-x.y" forms.
+// The narrower pattern let `0.71` through in a sentence with no NKF prefix,
+// and the NKF 0.8 whole-set review found the stale result in the emitted tree
+// — the defect class this generator exists to end, reappearing inside the
+// generator's own guard. A deliberately historical literal is declared, not
+// unprefixed.
+const VERSION_LITERAL = /\b\d+\.\d+/;
 
 function fail(message) {
   process.stderr.write(`${message}\n`);

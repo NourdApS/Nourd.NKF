@@ -31,7 +31,13 @@ substitutes for those two facts.
    portable skills and host-adapter instruction content, this protocol and
    the adoption protocol, and the fixtures, examples, and documentation
    projection. Every artifact in the set declares the version it serves
-   through the exact guidance marker.
+   through the exact guidance marker. Every version-bearing guidance member
+   — the authoring, onboarding, release, and adoption protocols, the portable
+   skills, and the host-adapter instruction content — is emitted from the
+   single version-neutral authored source with this version injected. No
+   predecessor member is copied and no emitted member is edited by hand:
+   regenerating from that source and this version alone must reproduce the
+   exact committed bytes, and a member that does not is invalid.
 4. Review every member of the versioned set against the complete current
    rule set: enumerate the exact member list deterministically — the
    adopter `set` command emits every member with its digest and version

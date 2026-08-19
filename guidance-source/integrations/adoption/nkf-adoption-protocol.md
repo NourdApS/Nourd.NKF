@@ -99,8 +99,8 @@ node nourd-nkf-adopt.mjs --project <project-root> --review <review.yaml>
 ```
 
 The upgrade performs, in one rollback-capable transaction: the mechanical
-contract rebind to the 0.71 set, conversion of the reviewed baseline to the
-digest-bound 0.71 contract with computed per-judgment carry-forward, and the
+contract rebind to the {{nkf_version}} set, conversion of the reviewed baseline to the
+digest-bound {{nkf_version}} contract with computed per-judgment carry-forward, and the
 integration refresh. A delta claim is admitted only when the performed set
 contains the computed closure; whole-root review remains the recovery path.
 The semantic reviewer's act does not accept canonical Product or Technology

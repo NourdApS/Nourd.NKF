@@ -191,7 +191,10 @@ verified deep links; `refs` exports the identifier-to-path reference map;
 judgments prefilled and the computed required fresh set left to the named
 reviewer; `record --scaffold` emits a declaration skeleton with exact digests
 and section heading paths and no semantic values; and `migrate` performs the
-declared 0.71-to-0.8 upgrade beneath the one public Adopt operation. A
+declared 0.71-to-0.8 upgrade beneath the one public Adopt operation.
+A versioned guidance member is emitted from the one version-neutral authored
+source and is never edited in place: correct the source and regenerate, because
+an edit to an emitted member is rejected against its own derivation. A
 judgment carries forward only by digest identity under the accepted
 version-delta declaration and the evaluation policy's declared judgment
 dependencies; a delta review claim is admitted only when the

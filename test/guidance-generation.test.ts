@@ -96,4 +96,14 @@ describe("guidance generation", () => {
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("use {{nkf_version}}");
   });
+
+  it("fails on a bare version literal carrying no NKF prefix", async () => {
+    // The narrower pattern only caught "NKF x.y" and "x.y-to-x.y". A sentence
+    // reading "rebind to the 0.71 set" passed the guard and emitted a stale
+    // 0.71 into the 0.8 tree, where the NKF 0.8 whole-set review found it.
+    const root = await project(`${NEUTRAL_SOURCE}\nRebind to the 0.71 set.\n`, "0.71");
+    const result = generate(root, "0.8");
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('literal "0.71"');
+  });
 });
