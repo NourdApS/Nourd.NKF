@@ -86,7 +86,22 @@ try {
   await chmod(adopter, 0o755);
 
   const manifest = verification.manifest;
-  const compatibility = nkfVersion === "0.71"
+  const compatibility = nkfVersion === "0.8"
+    ? [
+        {
+          from_nkf_version: "0.71",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.71 upgrades to NKF 0.8 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry.",
+        },
+        {
+          from_nkf_version: "0.8",
+          classification: "non-breaking",
+          migration_required: false,
+          summary: "NKF 0.8 refreshes the exact release and integration.",
+        },
+      ]
+    : nkfVersion === "0.71"
     ? [
         {
           from_nkf_version: "0.7",
@@ -223,7 +238,14 @@ try {
   ];
   const firstArguments = [
     ...commonArguments,
-    ...(nkfVersion === "0.71"
+    ...(nkfVersion === "0.8"
+      ? [
+          "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.8-producer-promotion.yaml"),
+          "--accepting-decision", path.join(project, "knowledge/decisions/0134-accept-the-nkf-0-8-authority-set.md"),
+          "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
+          "--review", reviewPath,
+        ]
+      : nkfVersion === "0.71"
       ? [
           "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml"),
           "--accepting-decision", path.join(project, "knowledge/decisions/0131-accept-the-nkf-0-71-authority-set.md"),
