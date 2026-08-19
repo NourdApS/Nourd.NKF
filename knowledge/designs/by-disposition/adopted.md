@@ -29,3 +29,4 @@
 - [NKF Unified Adopt Operation](../items/unified-adopt-operation.md)
 - [NKF 0.7 Verifiable Delta Review](../items/nkf-0-7-verifiable-delta-review.md)
 - [NKF 0.71 Corrective Successor](../items/nkf-0-71-corrective-successor.md)
+- [NKF 0.8 Generated Distribution](../items/nkf-0-8-generated-distribution.md)

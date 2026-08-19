@@ -1,0 +1,185 @@
+contract: nkf.record
+id: design-nkf-033-generated-distribution
+type: design
+body_contract: nkf.design
+title: NKF 0.8 Generated Distribution
+source:
+  path: designs/items/nkf-0-8-generated-distribution.md
+  stable_path: designs/items/nkf-0-8-generated-distribution.md
+  digest:
+    algorithm: sha-256
+    value: d55afd209e1b165e54520712cd389981440dd5ab989952ee3d45acf1d31dc5da
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: one-authored-source-for-versioned-guidance
+    heading_path:
+      - Proposed Direction
+      - One Authored Source For Versioned Guidance
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: self-description-becomes-a-checked-position
+    heading_path:
+      - Proposed Direction
+      - Self-Description Becomes A Checked Position
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-audit-verifies-what-the-rule-requires
+    heading_path:
+      - Proposed Direction
+      - The Audit Verifies What The Rule Requires
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-accepted-chain-gains-the-guidance-verifiers
+    heading_path:
+      - Proposed Direction
+      - The Accepted Chain Gains The Guidance Verifiers
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: version-coordinate-and-window
+    heading_path:
+      - Proposed Direction
+      - Version Coordinate And Window
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: fail-closed-version-registration
+    heading_path:
+      - Proposed Direction
+      - Fail-Closed Version Registration
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: correct-the-stale-sentences-and-stop
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Correct The Stale Sentences And Stop
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: repair-the-published-nkf-0-71-archive-in-place
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Repair The Published NKF 0.71 Archive In Place
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: machine-check-every-guidance-sentence-against-the-contract
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Machine-Check Every Guidance Sentence Against The Contract
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: generate-the-distribution-tree-from-the-predecessor-tree
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Generate The Distribution Tree From The Predecessor Tree
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: add-the-guidance-checks-without-a-new-version
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Add The Guidance Checks Without A New Version
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: restate-the-full-set-guidance-review-as-a-new-decision
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Restate The Full-Set Guidance Review As A New Decision
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships:
+  - type: depends-on
+    target: adr-0131
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0109
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0097
+    source_section: the-audit-verifies-what-the-rule-requires
+  - type: depends-on
+    target: adr-0107
+    source_section: version-coordinate-and-window
+task: NKF-033
+design_disposition: adopted
+design_decisions:
+  - adr-0133
+proposal_authority_effect: Adopted by ADR 0133 as the NKF 0.8 generated-distribution direction; normative NKF 0.8 meaning still requires the separate exact authority acceptance after its independent audit and the mandatory audit-bound confirmation Decision.
