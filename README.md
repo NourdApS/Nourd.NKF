@@ -28,16 +28,20 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.71 is the current accepted, published, recommended, and producer-adopted version. Its
+NKF 0.8 is the current accepted, published, and recommended version. Its
 content-addressed archive and release tag are identified by SHA-256
-`3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13`, published
-as an immutable private prerelease at the technically confirmed release
-commit. This producer repository declares and pins that exact
-recommendation: the producer publicly self-adopted 0.71 through the ordinary
-Adopt operation, the promotion created the native accepted 0.71
-Specification record through the first live promotion proven on the
-digest-bound delta claim alone, and repeat public invocations return
-`current`.
+`2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5`, published
+as an immutable private prerelease at the technically confirmed release commit
+`1c8c3194`.
+
+This producer repository has **not yet adopted NKF 0.8**. It still declares and
+pins the published NKF 0.71 archive
+`3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13`, because
+adoption is a separate deliberate act under its own Task. Until it completes,
+the recommendation is ahead of the installed pin — which is exactly what
+"published but not yet adopted" means — and the three deterministic guidance
+verifiers NKF 0.8 adds do not run in this repository's own gate, because they
+are keyed to the declared version.
 
 NKF 0.71 is the deliberately small corrective successor to NKF 0.7, its
 authority accepted by
@@ -51,7 +55,7 @@ the deterministic Task conclusion seal its own successor baseline through
 the `mechanically-concluded` claim, and regenerates the public-documentation
 projection.
 
-NKF 0.8 is the prepared successor candidate on the `task/NKF-033` branch. It
+NKF 0.8 is the released successor. It
 derives every version-bearing guidance member from one version-neutral
 authored source with the version injected instead of copying it forward,
 makes a guidance file's own frontmatter self-description a checked
@@ -65,9 +69,8 @@ conformant 0.71 repository is non-breaking through the ordinary reviewed
 delta update, a 0.7 repository steps through the published 0.71 archive, and
 older repositories step through their published archives in turn.
 
-NKF 0.8 is not published, not recommended, and not producer-adopted.
-Publication, recommendation, live promotion, and merging remain the Human
-Product Owner's separately authorized acts.
+NKF 0.8 is published and recommended. It is not yet producer-adopted, and
+merging remains the Human Product Owner's separately authorized act.
 
 Every published archive carries its complete public-documentation projection
 and exact public adopter. Publication of those bytes to the separate

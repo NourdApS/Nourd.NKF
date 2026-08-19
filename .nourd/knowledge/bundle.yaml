@@ -3126,7 +3126,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "7887ff51889abad66c7d52290c3b906125834a3e7ffeabe9bbc6fecfdacebfd7"
+      value: "34a9e73512852579ead90bb06a00349ee4b4260e1632505ec12ff803406b106b"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -3134,7 +3134,7 @@ governed_artifacts:
     path: release/recommended.json
     digest:
       algorithm: sha-256
-      value: c8404549ba6192fa21251687f9006a6acfd7559f55517b37cc230c39745732d4
+      value: "54b3797f2649b8934547793f12ad30786ceaf549aee6b61dd72f2026d45f449d"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-adoption-nourd-nkf-adopt-mjs
@@ -3206,7 +3206,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: "801fad6d9d6f0ca1bbe58a849d3beaa172f30f99ac95a9bdf1d492ee5cb34e7c"
+      value: "557e4626bca926cb966a725578b75b06f55bce4500ec32e967a00edaa6e3d034"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
