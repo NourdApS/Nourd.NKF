@@ -24,6 +24,7 @@ const MEMBERS: { path: string; class: string }[] = [
   { path: "distribution/nkf/0.8/integrations/ai/nkf-authoring-protocol.md", class: "authoring-protocol" },
   { path: "distribution/nkf/0.8/integrations/adoption/nkf-adoption-protocol.md", class: "adoption-protocol" },
   { path: "distribution/nkf/0.8/.claude/skills/nkf-authoring/SKILL.md", class: "portable-skill" },
+  { path: "distribution/nkf/0.8/.agents/skills/nkf-authoring/SKILL.md", class: "portable-skill" },
   { path: "distribution/nkf/0.8/host-adapters/AGENTS.adapter.md", class: "host-adapter-instruction" },
 ];
 const PATHS = MEMBERS.map((member) => member.path);
@@ -84,15 +85,28 @@ describe("pre-cut guidance review", () => {
     expect(verify(await project(review(PATHS.map(row).join("\n")))).status).toBe(0);
   });
 
-  it("accepts basenames, as the NKF 0.7 review used for adapter twins", async () => {
+  it("does not accept a basename in place of the member path", async () => {
+    // All four portable skills are named SKILL.md. Matching on basename let
+    // one skill's digest satisfy another, so the recorded digest proved only
+    // that some skill had been read, not which one.
     const body = PATHS.map((member) => `| \`${member.slice(member.lastIndexOf("/") + 1)}\` | \`${digest(member)}\` |`).join("\n");
-    expect(verify(await project(review(body))).status).toBe(0);
+    expect(verify(await project(review(body))).status).not.toBe(0);
+  });
+
+  it("does not let one colliding basename's digest satisfy another member", async () => {
+    const [first, second] = PATHS.filter((member) => member.endsWith("SKILL.md"));
+    const body = PATHS.map((member) =>
+      `| \`${member}\` | \`${digest(member === second && first !== undefined ? first : member)}\` |`,
+    ).join("\n");
+    const result = verify(await project(review(body)));
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("records the wrong digest for");
   });
 
   it("fails a partial enumeration", async () => {
     const result = verify(await project(review(PATHS.slice(0, 2).map(row).join("\n"))));
     expect(result.status).not.toBe(0);
-    expect(result.stderr).toContain("names 2 of 4 guidance members");
+    expect(result.stderr).toContain("names 2 of 5 guidance members");
   });
 
   it("fails a review that names every member but records no reviewed digest", async () => {
@@ -101,7 +115,7 @@ describe("pre-cut guidance review", () => {
     const result = verify(await project(review(PATHS.map(bare).join("\n"))));
     expect(result.status).not.toBe(0);
     expect(result.stderr).toContain("without a reviewed digest beside it");
-    expect(result.stderr).toContain("records no reviewed digest for 4 of 4");
+    expect(result.stderr).toContain("records no reviewed digest for 5 of 5");
   });
 
   it("does not accept digests recorded away from the member they belong to", async () => {

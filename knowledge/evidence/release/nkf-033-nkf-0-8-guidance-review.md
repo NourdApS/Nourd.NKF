@@ -27,17 +27,17 @@ and modes, not digests.
 | Member | Class | Reviewed SHA-256 |
 | --- | --- | --- |
 | `distribution/nkf/0.8/integrations/adoption/nkf-adoption-protocol.md` | adoption-protocol | `fd9d62b23f202fe2f5b7bebf51755b8e0662c534ff183bc5a792cd2921072137` |
-| `distribution/nkf/0.8/integrations/ai/nkf-authoring-protocol.md` | authoring-protocol | `f798a6bbee4e1aae684691225cb52de2866d5b1165029a66ae0081ddb16706c3` |
+| `distribution/nkf/0.8/integrations/ai/nkf-authoring-protocol.md` | authoring-protocol | `e1b8ea7e35d500d59ce24692fecfa360844458b9436535fb48892e8f1cd7b80b` |
 | `distribution/nkf/0.8/host-adapters/AGENTS.adapter.md` | host-adapter-instruction | `0919110739d3402eeff13d4443a5e1ba51eb0f3571a76aead6f076c4116100a7` |
 | `distribution/nkf/0.8/host-adapters/CLAUDE.adapter.md` | host-adapter-instruction | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
 | `distribution/nkf/0.8/host-adapters/GEMINI.adapter.md` | host-adapter-instruction | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
 | `distribution/nkf/0.8/host-adapters/copilot-instructions.adapter.md` | host-adapter-instruction | `d9a9d7ded74b90e019f35722b963e7dc55b45edfde7339e9e6e6300aaf219520` |
 | `distribution/nkf/0.8/integrations/onboarding/nkf-onboarding-protocol.md` | onboarding-protocol | `972335517d16d9c06cedd1e7ef18e5909b468eafa08c59d1bdf58366061a893c` |
-| `distribution/nkf/0.8/.agents/skills/nkf-authoring/SKILL.md` | portable-skill | `8a75eaceba8d6de4a2ef092ce5ee39e09925de949e22a8c0838b4758591c8fea` |
+| `distribution/nkf/0.8/.agents/skills/nkf-authoring/SKILL.md` | portable-skill | `12a8da78e889f213b0e4cf159db2495f8d6087d87c8ab66c4d50ea2fc0f1097b` |
 | `distribution/nkf/0.8/.agents/skills/nkf-onboarding/SKILL.md` | portable-skill | `cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837` |
-| `distribution/nkf/0.8/.claude/skills/nkf-authoring/SKILL.md` | portable-skill | `8a75eaceba8d6de4a2ef092ce5ee39e09925de949e22a8c0838b4758591c8fea` |
+| `distribution/nkf/0.8/.claude/skills/nkf-authoring/SKILL.md` | portable-skill | `12a8da78e889f213b0e4cf159db2495f8d6087d87c8ab66c4d50ea2fc0f1097b` |
 | `distribution/nkf/0.8/.claude/skills/nkf-onboarding/SKILL.md` | portable-skill | `cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837` |
-| `distribution/nkf/0.8/integrations/release/nkf-release-protocol.md` | release-protocol | `7a0cd30f255d087403e2f9deba0f30faec8d9de7c64c430f5950dba16b86ebf6` |
+| `distribution/nkf/0.8/integrations/release/nkf-release-protocol.md` | release-protocol | `d198b93dd5a07cda1d1344a3605db1d100182bb4999eb1e19941cda15b505f5f` |
 
 The twelve members are nine distinct byte sets: each portable skill is emitted
 into both host directories, and the `GEMINI` adapter is byte-identical to the
@@ -74,6 +74,14 @@ emitted member is rejected against its own derivation.
 
 ## Corrections This Review Missed
 
+Two independent release audits found sentences this review had read past. All
+of them are recorded here rather than only in the audits, because step four
+requires the review to record every correction and the honest record is that
+the review did not find them. Both rounds are recorded because the count
+matters: this is the second time.
+
+### Found By The First Audit
+
 The first independent release audit of the exact candidate found two stale
 sentences this review had read past, both in the release protocol itself — the
 artifact that defines this review. They are recorded here rather than only in
@@ -99,6 +107,48 @@ checker, adopter, fixtures, examples, or most of the projection. Step three now
 scopes the claim to the four shipped protocols and the portable skills and
 states that the host-adapter content deliberately carries none.
 
+### Found By The Second Audit
+
+**The first repair of step three replaced one false universal with another.**
+It read "no other class carries one". Eleven members carry the marker, across
+six classes: the eight in the distribution tree, and three byte-identical
+copies in the documentation projection. Step three now names the eight and the
+three derived copies explicitly.
+
+**The first repair of step three contradicted the paragraph it sat in.** The
+new sentence said the host-adapter content "deliberately carries no version
+literal at all" while the unchanged next sentence listed that same content
+among "every version-bearing guidance member … emitted … with this version
+injected". The paragraph was internally consistent before the repair and was
+not after. It now says the version is injected into the members that state
+one and the host-adapter content is emitted unchanged because it states none.
+
+**The authoring protocol claimed a command capability that does not exist.**
+It read "`migrate` performs the declared 0.71-to-0.8 upgrade beneath the one
+public Adopt operation". Run against an in-window repository the shipped
+adopter answers "migrate does not apply to an in-window NKF 0.71 repository;
+use the ordinary Adopt update"; the upgrade is performed by Adopt. This is the
+same class as the first audit's step-four finding and worse in one respect:
+the sentence lived in the version-neutral source with placeholders, so the
+generator would have re-emitted the falsehood at every future version. The
+authoring skill's command family listed `migrate` the same way. Both now state
+that `migrate` fails closed and that Adopt performs the upgrade.
+
+**Two projection guides stated the wrong out-of-window boundary.** Both read "a
+repository declaring NKF 0.1 through 0.6 is outside the support window". At
+NKF 0.8 the boundary is 0.1 through 0.7, which each file's own next section
+already said. They were true at 0.71 and carried verbatim through the hand
+slide — the exact defect class this release exists to end, in the same two
+files where this review had already found and hand-fixed one instance. Neither
+file has frontmatter, so the deterministic self-description check cannot reach
+them.
+
+**Step four's re-read scope did not match what it requires.** It named "each
+shipped protocol and portable skill" — eight members — while the enumeration
+and the deterministic check cover all twelve. Step four now names the six
+guidance classes, and requires a claim about what a command or tool does to be
+corrected like any other stale sentence.
+
 ## Reviewed Without Correction
 
 The four host-adapter instruction members carry no version literal at all and
@@ -106,9 +156,9 @@ required none. The onboarding protocol and both onboarding skill twins state
 NKF 0.8 throughout, including the frontmatter description that carried the
 published NKF 0.71 defect — that sentence now reads "prepare its NKF 0.8
 candidate" because the generator wrote it, not because anyone edited a line.
-The authoring skill's account of the deterministic command family, the Task
-transition, the seal-completing conclusion, and the deep-link and title rules
-matches the accepted NKF 0.8 authority. The adoption protocol's support-window
+The authoring skill's account of the Task transition, the seal-completing
+conclusion, and the deep-link and title rules matches the accepted NKF 0.8
+authority; its command family did not, and is corrected above. The adoption protocol's support-window
 table, stepping-stone sentence, and producer-promotion section state the
 0.8-plus-0.71 window correctly.
 
@@ -151,7 +201,14 @@ This review establishes coverage and records what was read and corrected. It
 does not establish that the guidance is true: agreement between guidance prose
 and the accepted authority is a semantic judgment, and the deterministic check
 that accompanies this review verifies only that every enumerated guidance
-member is named with a reviewed digest equal to its bytes. That two stale
-sentences survived this review and were caught by the independent audit is the
-recorded measure of how far a review's coverage claim reaches. The independent
-release audit verifies this review; it does not inherit its conclusions.
+member is named by its full path with a reviewed digest equal to its bytes.
+
+Seven stale sentences survived this review across two audit rounds, and one of
+this review's own repairs introduced a further defect. That is the recorded
+measure of how far a review's coverage claim reaches, and it is the strongest
+evidence in this release for its own central claim: the positions a
+deterministic check can own do not go stale, and the positions only a human
+re-read can own do. Every surviving instance was body prose, which the new rule
+is scoped away from by contract, so the whole-set re-read is their only
+control. The independent release audit verifies this review; it does not
+inherit its conclusions.

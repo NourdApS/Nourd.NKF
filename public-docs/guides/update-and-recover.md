@@ -12,7 +12,7 @@ An exact-current repository returns `current` only after its installed pin,
 adopter, integration, archive, manifest, knowledge, and checker result pass.
 An exact conformant NKF 0.71 repository takes the non-breaking reviewed-delta
 upgrade to 0.8. A native 0.8 repository receives the exact integration
-refresh. A repository declaring NKF 0.1 through 0.6 is outside the support
+refresh. A repository declaring NKF 0.1 through 0.7 is outside the support
 window and fails closed with the exact next stepping-stone archive named.
 
 ## Complete The 0.71 Upgrade Review

@@ -107,13 +107,82 @@ byte and no accepted immutable record changed; and the complete gate reproduced
 in a clean clone at two hundred sixty-three of two hundred sixty-three tests
 with zero diagnostics and a clean tree after building.
 
+## Round Two — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `62fd53c7ed9070dde28127a5536467cea1bc172d` (`task/NKF-033`, clean before and after) |
+| Audited archive | SHA-256 `28df58393547f0cca560c29d7cfe608d5570ab3143bc82c7a68bad1d413c1ba5` |
+| Verdict | Not clean: five blocking findings, four should-fix, four notes |
+
+The second round re-derived the first round's conclusions rather than
+inheriting them, and confirmed that both first-round blocking findings were
+genuinely repaired: the `set` capability claim is now true of the shipped
+adopter, verified by running it; the digest and missing-review checks were
+proven by construction; the stamp filter was proven by tampering with a
+release-stamp member and watching the check report it.
+
+It also found that one of those repairs had introduced a new defect, that
+another was incomplete, and that three further instances of the same defect
+class survived in shipped bytes.
+
+## Round Two Blocking Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| Step three's replacement claim was still a false universal: "no other class carries one", when eleven members across six classes carry the marker, three of them in the documentation projection. | Step three names the eight distribution-tree members and the three byte-identical projection copies. |
+| The same repair contradicted its own paragraph: it said the host-adapter content carries no version literal while the next sentence listed that content among version-bearing members receiving an injection. The paragraph was consistent before the repair and not after. | The version is injected into the members that state one; the host-adapter content is emitted unchanged because it states none. |
+| The authoring protocol claimed `migrate` performs the upgrade. The shipped adopter answers that migrate does not apply to an in-window repository and directs it to Adopt. The sentence lived in the version-neutral source with placeholders, so the generator would have re-emitted it at every future version. | Both the protocol and the skill's command family state that `migrate` fails closed and that Adopt performs the upgrade. |
+| Two projection guides stated the out-of-window boundary as NKF 0.1 through 0.6 when it is 0.1 through 0.7, each contradicting its own next section. Carried verbatim through the hand slide, and unreachable by the self-description check because neither file has frontmatter. | Both corrected. |
+| The delta review consumed by the isolated exercise was completed by script: states substituted, roles derived from an identifier heuristic, all classifications set alike, a boilerplate finding, and an observation naming a carried node outside the closure. The adoption protocol this release ships says the upgrade never invents review. | The review is performed deliberately, node by node, and the exercise re-run against it. |
+
+## Round Two Should-Fix Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| The review verifier matched a member by basename as well as by full path. All four portable skills are named `SKILL.md`, so one skill's digest satisfied another and the recorded digest proved only that some skill had been read. | Members are matched by full path only, with a fixture that records one colliding skill's digest against another and fails. |
+| The authoring skill listed `migrate` among the commands that perform governed mechanics. | Corrected with the protocol. |
+| The version-surface inventory's table declared three columns and supplied two; every "Why" cell was empty. | Every row carries its reason. |
+| The inventory missed a live continuous-integration breakage: the consumer-adoption exercise copied a fixture deleted several window slides ago and failed before reaching any adoption step. Its scan was dot-form-only over three directories while its summary promised every mutable tooling surface. | The exercise starts from the in-window predecessor fixture; the scan covers the workflows and root configuration and matches the hyphenated fixture form; the Boundary states the four populations the inventory deliberately excludes. |
+
+## Round Two Notes And Dispositions
+
+| Note | Disposition |
+| --- | --- |
+| `release/recommended.json`, `contracts/`, and `fixtures/` carry version coordinates and are outside the inventory's scan. | Recorded in the inventory's Boundary as deliberately excluded: they are data the release tooling and checker bind, not surfaces that compare versions. |
+| No verifier covers any of the enumerated surfaces; the inventory is their only control. | Recorded in the Boundary as a point-in-time record rather than an enforced one. |
+| Step four's re-read scope named eight members while the enumeration and the check cover twelve. | Step four now names the six guidance classes. |
+| Ragged wrapping persists in the repaired step three. | Reflowed. |
+
+## Round Two Judgments
+
+The auditor judged the guidance review "honest in posture, materially
+inaccurate in two assertions" — it records the audits' findings as its own
+misses and concedes the limit of a coverage claim, while endorsing a step-three
+repair its own count contradicts and asserting that the authoring skill's
+command family matched the authority when it did not. Both inaccuracies are
+corrected above and the review now records both audit rounds.
+
+The auditor judged the delta review's counts and coverage correct and
+independently re-derivable — every judgment outside the computed closure
+carried, the fresh set exactly the closure and exactly the nodes this branch
+authored — while its `semantically-reviewed-delta` claim was manufactured. That
+distinction is the finding: the mechanism was proven, the review was not
+performed. It is recorded rather than argued with.
+
+The auditor's systemic observation is recorded as the release's own most
+important limit: the new deterministic rule is scoped to the frontmatter
+description by contract, so every surviving defect across both rounds was body
+prose that no verifier this release ships can reach. The whole-set human
+re-read is their only control, and across two rounds it missed all of them.
+
 ## Resulting State
 
-Every blocking and should-fix finding is repaired; the four notes are repaired
-or recorded with an explicit disposition. The repairs change release-set member
-bytes, so the prior archive, exercise, and audit are invalidated by construction
-and the candidate is re-cut, re-exercised, and re-audited before the
-technical-confirmation Decision.
+Every blocking and should-fix finding from both rounds is repaired; every note
+is repaired or recorded with an explicit disposition. Each round's repairs
+change release-set member bytes, so each round invalidates the prior archive,
+exercise, and audit by construction, and the candidate is re-cut,
+re-exercised, and re-audited before the technical-confirmation Decision.
 
 This Evidence establishes what the audit found and what was repaired. It
 confirms nothing: the mandatory audit-bound technical confirmation is the

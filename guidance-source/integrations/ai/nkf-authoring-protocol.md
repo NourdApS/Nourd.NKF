@@ -190,8 +190,11 @@ verified deep links; `refs` exports the identifier-to-path reference map;
 `review --scaffold` emits the exact review-input skeleton with carried
 judgments prefilled and the computed required fresh set left to the named
 reviewer; `record --scaffold` emits a declaration skeleton with exact digests
-and section heading paths and no semantic values; and `migrate` performs the
-declared {{nkf_predecessor}}-to-{{nkf_version}} upgrade beneath the one public Adopt operation.
+and section heading paths and no semantic values; and `migrate` fails closed,
+directing an in-window repository to the ordinary Adopt update and naming an
+out-of-window repository its exact stepping-stone release archive. The
+{{nkf_predecessor}}-to-{{nkf_version}} upgrade itself is performed by the one
+public Adopt operation, not by `migrate`.
 A versioned guidance member is emitted from the one version-neutral authored
 source and is never edited in place: correct the source and regenerate, because
 an edit to an emitted member is rejected against its own derivation. A

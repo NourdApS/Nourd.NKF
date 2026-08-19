@@ -49,7 +49,7 @@ before archive use.
 | `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.8 project |
 | `updated` | An exact conformant NKF 0.71 repository completed the non-breaking upgrade with its reviewed delta, or a native 0.8 repository received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
-| Failed closed | A repository declaring NKF 0.1 through 0.6 is outside the support window; the refusal names the exact next stepping-stone release archive |
+| Failed closed | A repository declaring NKF 0.1 through 0.7 is outside the support window; the refusal names the exact next stepping-stone release archive |
 
 Every result names the target archive, source commit, checker, adopter, and
 applicable compatibility signal. The consumer pin under

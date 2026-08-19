@@ -15,8 +15,8 @@
 // This check starts from the same machine list ADR 0097 prescribes, selecting
 // members by their declared release-set class rather than by path shape: the
 // classes that carry authored guidance prose are exactly the ones step four
-// requires re-read in full. Every such member must be named in the review and
-// must carry a reviewed digest beside its name.
+// requires re-read in full. Every such member must be named by its full path,
+// and must carry beside that name a digest equal to its own bytes.
 //
 // What this cannot do is judge the review. It establishes that the reviewer
 // covered the whole set and recorded what they read; whether they read it
@@ -122,8 +122,11 @@ export async function verifyGuidanceReview(projectRootInput) {
     const undigested = [];
     const wrongDigest = [];
     for (const member of members) {
-      const basename = member.slice(member.lastIndexOf("/") + 1);
-      const naming = reviewLines.filter((line) => line.includes(member) || line.includes(basename));
+      // The member is matched by its full path, never by its basename. Four
+      // portable skills are all named SKILL.md, so a basename match let the
+      // digest union across those lines satisfy any one of them — the digest
+      // proved only that some skill had been read, not which.
+      const naming = reviewLines.filter((line) => line.includes(member));
       if (naming.length === 0) { missing.push(member); continue; }
       // The digest is recorded beside the member it belongs to, so a review
       // cannot satisfy this by listing digests somewhere else on the page.
