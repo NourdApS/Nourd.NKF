@@ -1758,7 +1758,7 @@ non_records:
       stable_path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
       digest:
         algorithm: sha-256
-        value: "74efe93ce740e29eede5a53d5a933d969516c6cfdd957b3739381cad4433260a"
+        value: "b3e0e1ab966c59248752b56878aebb483c23e3c611727b4a29beb55756ac3a6c"
       state:
         vocabulary: task-status
         value: "active"

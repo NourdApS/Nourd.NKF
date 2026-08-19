@@ -305,24 +305,60 @@ longer:
 
 ### Remaining
 
-The re-cut candidate, its re-run isolated exercise, a clean independent release
-audit, and the audit-bound technical-confirmation Decision. Publication,
-recommendation, live promotion, the separate producer adoption, and merging
-remain separately authorized Human Product Owner acts.
+Nothing within this Task. Publication, recommendation, live producer promotion,
+the separate producer adoption of NKF 0.8, and merging remain separately
+authorized Human Product Owner acts.
 
 The audit rounds are recorded here as a fact about this delivery rather than as
-background. Rounds two, three, and four each found defects created by the
-previous round's repairs — twice in the derived guidance and, in the last two
-rounds, mostly in this Task's own Evidence and gate. Every defect found in any
-round was body prose or a typed count, never a stale version label: the
-generated distribution, the self-description rule, and the three verifiers have
-not regressed since they were delivered. Whatever confidence the mechanism
-earns, it was not earned by this Task getting its own corrections right, and the
-record is written so a reader can see which is which.
+background. Rounds two through five each found defects created by the previous
+round's repairs — twice in the derived guidance and, in the last three rounds,
+mostly in this Task's own Evidence and gate. Every defect any round found was
+body prose or a typed count, never a stale version label: the generated
+distribution, the self-description rule, and the three verifiers did not regress
+once after delivery. Whatever confidence the mechanism earns, it was not earned
+by this Task getting its own corrections right, and the record is written so a
+reader can tell which is which.
 
 ## Completion Result
 
-Not concluded.
+NKF 0.8 is delivered as a technically confirmed release candidate. The defect
+class this Task exists to end is ended at its source: every version-bearing
+guidance member is derived from one version-neutral authored source with the
+version injected, no emitted member is an input to producing another, and the
+source may state no literal version at all. The published NKF 0.71 defect — an
+onboarding skill directing an agent to prepare a predecessor's candidate — is
+gone from the NKF 0.8 tree because the generator wrote that sentence, not
+because anyone edited a line.
+
+Three deterministic checks now cover positions nothing covered before: a
+guidance file's own frontmatter self-description is a checked conformance
+position under the new rule `guidance.self-description.version-mismatch`; the
+pre-cut whole-set guidance review is bound to the deterministically enumerated
+release set with each recorded digest verified against the member's bytes; and
+release-protocol step six verifies full-set coverage rather than the superseded
+rule diff, which is the enforcement hole that let the NKF 0.71 review pass its
+audit.
+
+The exact candidate is confirmed by
+[`adr-0135`](../../decisions/0135-confirm-the-nkf-0-8-release-candidate.md):
+archive `2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5` at
+release commit `1c8c31948d73e6d79ee36c1b13985ca6db031e5b`, one hundred
+forty-one members, live window NKF 0.8 plus NKF 0.71, proven through an
+isolated exact-producer exercise whose promotion carried three hundred
+seventeen judgments by digest identity and performed fourteen.
+
+Two results are recorded because they qualify the first. Five independent audit
+rounds were needed, and rounds two through five each found defects created by
+the previous round's repairs — concentrated, in the later rounds, in this Task's
+own Evidence rather than in the delivery. And every stale sentence any round
+found in shipped guidance was body prose, which the new rule is scoped away from
+by contract. This release ends stale version labels. It does not end stale
+claims, and the record says so in the guidance review, the release audit, and
+the confirming Decision.
+
+Publication, recommendation, live producer promotion, the separate producer
+adoption of NKF 0.8, and merging remain separately authorized Human Product
+Owner acts.
 
 ## Decision Applicability
 
@@ -366,7 +402,7 @@ Not concluded.
 | The live window is exactly NKF 0.8 plus NKF 0.71 with truthful stepping-stone signaling for out-of-window repositories | proven | runtime-behaviour | none |
 | Every version-comparing or windowing tooling surface handles the exact string `0.8`, verified exhaustively | proven | data-validity | none |
 | No published 0.1 through 0.71 byte and no accepted immutable record changes | proven | data-validity | none |
-| The full accepted release order is performed with independent audits preceding acceptance and confirmation | unknown | none | none |
+| The full accepted release order is performed with independent audits preceding acceptance and confirmation | proven | production-suitability | none |
 | The complete gate and full suite pass at every handoff on the delivered branch | proven | runtime-behaviour | none |
 
 Each `proven` finding names the level actually reached and no higher.
@@ -406,11 +442,17 @@ means the enumeration is complete under the stated method and each surface was
 adjudicated deliberately; it does not mean the method was right, or the
 transcription of it right, at any earlier point.
 
-The release-order capability remains `unknown`. Four independent release audit
-rounds have run and none returned clean: two blocking findings, then five, then
-three, then four. In rounds two, three, and four the defects were largely
-created by the previous round's repairs, and in rounds three and four they were
-concentrated in this Task's own record rather than in the delivery. The release
-order is not complete until a round returns clean and the audit-bound
-technical-confirmation Decision is authored, and this Task cannot be completed
-while the capability reads `unknown`.
+The release-order capability is `proven` at `production-suitability`. Five
+independent release audit rounds ran: two blocking findings, then five, then
+three, then four, then a fifth that found the **delivery clean with zero
+blocking defects** after rebuilding the archive byte-identically, reconciling
+every member, and executing every capability claim rather than reading it. The
+audit-bound technical-confirmation Decision is
+[`adr-0135`](../../decisions/0135-confirm-the-nkf-0-8-release-candidate.md), and
+it records verbatim the six limits the final audit declined to vouch for.
+
+The level is `production-suitability` for the delivery and no higher for the
+record. In rounds two through five the findings were largely created by the
+previous round's repairs, and in the last three rounds they sat in this Task's
+own Evidence rather than in what ships. The confirmation states that trade-off
+rather than hiding it.
