@@ -150,10 +150,17 @@ const nodeKey07 = (node) => jcs(node);
 const decisionDeclarationDigest = (declaration) =>
   sha256Hex(Buffer.from(jcs(normalizedProjectionValue(declaration)), "utf8"));
 
+// Versions whose reviewed baseline is digest-bound. Registration is
+// deliberate: an unregistered version fails closed here rather than sealing
+// under another version's rules.
+const SEAL_VERSIONS = new Set(["0.7", "0.71", "0.8"]);
+// Versions whose deterministic Task conclusion is seal-completing.
+const CONCLUSION_SEAL_VERSIONS = new Set(["0.71", "0.8"]);
+
 async function projectSealVersion(project) {
   const bundle = YAML.parse(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
-  if (!["0.7", "0.71"].includes(bundle?.nkf_version)) {
-    fail(`The digest-bound review and seal support exactly NKF 0.7 and NKF 0.71; the bundle declares ${bundle?.nkf_version}.`);
+  if (!SEAL_VERSIONS.has(bundle?.nkf_version)) {
+    fail(`The digest-bound review and seal support exactly ${[...SEAL_VERSIONS].join(", ")}; the bundle declares ${bundle?.nkf_version}.`);
   }
   return { bundle, nkfVersion: bundle.nkf_version };
 }
@@ -523,13 +530,26 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
 // against the candidate. The default target keeps the exact 0.6-to-0.7 mode;
 // the 0.71 target converts a confirmed 0.7 baseline to the digest-bound
 // 0.71 contract.
+// Each successor whose baseline conversion is a pure rebind: the declaration
+// shape is unchanged, so the conversion rebinds the version coordinate, the
+// policy, and the version delta, and marks every judgment carried. Registering
+// the pair is deliberate — an unregistered target fails closed rather than
+// silently converting under predecessor rules.
+const REBIND_CONVERSIONS = new Map([
+  ["0.71", "0.7"],
+  ["0.8", "0.71"],
+]);
+
 export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest, policyDigest, targetVersion = "0.7" }) {
   const project = await realpath(path.resolve(projectRoot));
   const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
   const baseline = YAML.parse(await readFile(baselinePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
-  if (targetVersion === "0.71") {
-    if (baseline.nkf_version === "0.71") return { state: "already-0.71" };
-    if (baseline.nkf_version !== "0.7") fail("Baseline conversion to NKF 0.71 supports exactly the confirmed NKF 0.7 predecessor.");
+  if (REBIND_CONVERSIONS.has(targetVersion)) {
+    const predecessor = REBIND_CONVERSIONS.get(targetVersion);
+    if (baseline.nkf_version === targetVersion) return { state: `already-${targetVersion}` };
+    if (baseline.nkf_version !== predecessor) {
+      fail(`Baseline conversion to NKF ${targetVersion} supports exactly the confirmed NKF ${predecessor} predecessor.`);
+    }
     const carried = {
       carried: {
         performed_in_graph_revision: baseline.graph_revision,
@@ -546,13 +566,13 @@ export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest,
         ? { carried: structuredClone(entry.provenance.carried) }
         : structuredClone(carried);
     }
-    baseline.nkf_version = "0.71";
-    baseline.policy = { id: "nkf.freshness-policy.0.71", digest: { algorithm: "sha-256", value: policyDigest } };
+    baseline.nkf_version = targetVersion;
+    baseline.policy = { id: `nkf.freshness-policy.${targetVersion}`, digest: { algorithm: "sha-256", value: policyDigest } };
     baseline.version_delta = { contract: "nkf.version-delta", digest: { algorithm: "sha-256", value: versionDeltaDigest } };
     await writeFile(baselinePath, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
     return { state: "converted", judgments: (baseline.applicability_coverage ?? []).length };
   }
-  if (targetVersion !== "0.7") fail("Baseline shape conversion supports exactly the NKF 0.7 and NKF 0.71 targets.");
+  if (targetVersion !== "0.7") fail("Baseline shape conversion supports exactly the registered NKF 0.7, 0.71, and 0.8 targets.");
   if (baseline.nkf_version === "0.7") return { state: "already-0.7" };
   if (baseline.nkf_version !== "0.6") fail("Baseline shape conversion supports exactly the NKF 0.6 predecessor.");
   const revisions = new Map(
@@ -598,8 +618,8 @@ export async function sealConclusion0_71({ projectRoot, checker, task, fromState
   const project = await realpath(path.resolve(projectRoot));
   const checkerPath = path.resolve(checker);
   const { bundle, nkfVersion } = await projectSealVersion(project);
-  if (nkfVersion !== "0.71") {
-    fail("The mechanical Task-transition conclusion seal supports exactly NKF 0.71; the ordinary review-and-seal path covers every other version.");
+  if (!CONCLUSION_SEAL_VERSIONS.has(nkfVersion)) {
+    fail(`The mechanical Task-transition conclusion seal supports exactly ${[...CONCLUSION_SEAL_VERSIONS].join(", ")}; the ordinary review-and-seal path covers every other version.`);
   }
   const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
   const predecessorBytes = await readFile(baselinePath).catch(() => null);
@@ -607,11 +627,11 @@ export async function sealConclusion0_71({ projectRoot, checker, task, fromState
     fail("The mechanical Task-transition conclusion requires the confirmed predecessor reviewed baseline; the ordinary review-and-seal path is the recovery.");
   }
   const predecessorBaseline = YAML.parse(predecessorBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
-  if (predecessorBaseline?.contract !== "nkf.graph-baseline" || predecessorBaseline?.nkf_version !== "0.71") {
-    fail("The mechanical Task-transition conclusion requires a confirmed native NKF 0.71 predecessor baseline; the ordinary review-and-seal path is the recovery.");
+  if (predecessorBaseline?.contract !== "nkf.graph-baseline" || predecessorBaseline?.nkf_version !== nkfVersion) {
+    fail(`The mechanical Task-transition conclusion requires a confirmed native NKF ${nkfVersion} predecessor baseline; the ordinary review-and-seal path is the recovery.`);
   }
   const records = await declarations(project);
-  const result = await candidateGraph07(project, checkerPath, "0.71");
+  const result = await candidateGraph07(project, checkerPath, nkfVersion);
   const taskNode = { kind: "document", id: task };
   const taskKey = nodeKey07(taskNode);
   const priorRevisions = new Map(
@@ -667,7 +687,7 @@ export async function sealConclusion0_71({ projectRoot, checker, task, fromState
   }));
   const baseline = {
     contract: "nkf.graph-baseline",
-    nkf_version: "0.71",
+    nkf_version: nkfVersion,
     bundle: bundle.id,
     profile: bundle.root.profile,
     graph_revision: result.knowledge_graph.summary?.candidate_graph_revision ?? result.knowledge_graph.candidate_graph_revision,
@@ -705,7 +725,7 @@ export async function sealConclusion0_71({ projectRoot, checker, task, fromState
   await safeDirectory(project, [".nourd", "knowledge", "freshness"], true);
   const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
   await writeFile(baselinePath, bytes);
-  const sealed = await candidateGraph07(project, checkerPath, "0.71");
+  const sealed = await candidateGraph07(project, checkerPath, nkfVersion);
   const sealedRevision = sealed.knowledge_graph.summary?.candidate_graph_revision ?? sealed.knowledge_graph.candidate_graph_revision;
   if (sealedRevision?.value !== baseline.graph_revision.value) {
     fail("The sealed conclusion baseline does not bind the exact candidate graph revision.");

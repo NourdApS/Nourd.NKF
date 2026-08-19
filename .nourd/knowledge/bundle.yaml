@@ -2354,188 +2354,188 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: fe8945e2edfc5492f4f1cbbc4c2ca6ec8bc02626ea86a92d311edfd0d10e243d
+      value: "66259339939511d0525a924ecf5110ac792114772482fa3e0939d577fdb5a8fb"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-bundle-yaml
+  - id: artifact-fixtures-valid-minimal-0-71-nourd-knowledge-bundle-yaml
     kind: fixture
-    path: fixtures/valid/minimal-0-7/.nourd/knowledge/bundle.yaml
+    path: fixtures/valid/minimal-0-71/.nourd/knowledge/bundle.yaml
     digest:
       algorithm: sha-256
-      value: ec940808cb5407fda145b74236776d7b416c63866a3bb57faa55aab442e78a30
+      value: "4c6ef51b6545ad380bf2362d329af8828492f97f8119e205f084da0dc0175769"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-freshness-baseline-yaml
+  - id: artifact-fixtures-valid-minimal-0-71-nourd-knowledge-freshness-baseline-yaml
     kind: fixture
-    path: fixtures/valid/minimal-0-7/.nourd/knowledge/freshness/baseline.yaml
+    path: fixtures/valid/minimal-0-71/.nourd/knowledge/freshness/baseline.yaml
     digest:
       algorithm: sha-256
-      value: fac759106140e11eaa8a8a8ef34f8762cf3e7ed10c3a18bc23683c902bba43b2
+      value: "8af5da81b202fb47dd586f8b3dac7a681e5a12560d14d28ccaaf6fc94c8b01aa"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-records-product-current-system-yaml
+  - id: artifact-fixtures-valid-minimal-0-71-nourd-knowledge-records-product-current-system-yaml
     kind: fixture
-    path: fixtures/valid/minimal-0-7/.nourd/knowledge/records/product-current-system.yaml
+    path: fixtures/valid/minimal-0-71/.nourd/knowledge/records/product-current-system.yaml
     digest:
       algorithm: sha-256
       value: f4e88a9a85de2aef7cbd966f34532fd2035faaedd8fbbfee831a60981ba60d0e
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-nourd-knowledge-records-product-yaml
+  - id: artifact-fixtures-valid-minimal-0-71-nourd-knowledge-records-product-yaml
     kind: fixture
-    path: fixtures/valid/minimal-0-7/.nourd/knowledge/records/product.yaml
+    path: fixtures/valid/minimal-0-71/.nourd/knowledge/records/product.yaml
     digest:
       algorithm: sha-256
       value: b145de7e5d50afba2ff099ec9238975fc5fd04b0c29d74275c35488bcd015e12
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/README.md
     digest:
       algorithm: sha-256
       value: c7c786a263a3cd77e354badb747d51729731c50e679caf33078f0ad19546ef0c
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-decisions-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-decisions-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/decisions/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/decisions/README.md
     digest:
       algorithm: sha-256
       value: 346c25f57fe4f06744ec5de50944c410672f9c85fc9c79c95c159c4e718d7943
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-designs-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-designs-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/designs/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/designs/README.md
     digest:
       algorithm: sha-256
       value: d61b4e2a71d4a8039b4d6b0a48624f1b89dd4ac637f3bf1e8986d9de0b91597d
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-designs-by-disposition-active-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-designs-by-disposition-active-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/active.md
+    path: fixtures/valid/minimal-0-71/knowledge/designs/by-disposition/active.md
     digest:
       algorithm: sha-256
       value: 1cb7452e41ad3026b371ed1ee8929140b2dd1abb75490631136bb4b279a9f381
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-designs-by-disposition-adopted-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-designs-by-disposition-adopted-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/adopted.md
+    path: fixtures/valid/minimal-0-71/knowledge/designs/by-disposition/adopted.md
     digest:
       algorithm: sha-256
       value: b63e5752c0c42b0e4e6d0a258dc89ab134c48be5e7ec2d02c7af6d8df48f7399
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-designs-by-disposition-rejected-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-designs-by-disposition-rejected-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/rejected.md
+    path: fixtures/valid/minimal-0-71/knowledge/designs/by-disposition/rejected.md
     digest:
       algorithm: sha-256
       value: 178b6892d52397d79e15c4edf99c1d343f4448165f2fdc6339ce3190d79daad2
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-designs-by-disposition-superseded-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-designs-by-disposition-superseded-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/superseded.md
+    path: fixtures/valid/minimal-0-71/knowledge/designs/by-disposition/superseded.md
     digest:
       algorithm: sha-256
       value: a48deea9a1b30ed3e1773e13f75ef7ed6f958fcf7893459d65344c6b228ee2c5
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-designs-by-disposition-withdrawn-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-designs-by-disposition-withdrawn-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/designs/by-disposition/withdrawn.md
+    path: fixtures/valid/minimal-0-71/knowledge/designs/by-disposition/withdrawn.md
     digest:
       algorithm: sha-256
       value: ce01cef58e9ef95993e4968e10ba5baa81919ef9d9c4c3f87f65d578e7155386
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-evidence-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-evidence-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/evidence/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/evidence/README.md
     digest:
       algorithm: sha-256
       value: 71f3af76de314579ce9c4d739619bf8f32c9b3ebe1a87da17e025f24e8837067
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-product-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-product-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/product.md
+    path: fixtures/valid/minimal-0-71/knowledge/product.md
     digest:
       algorithm: sha-256
       value: f4491444c972e59b571e9c87814011ae019aa17866614bce2a53a2ea39a7fc00
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-realizations-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-realizations-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/realizations/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/realizations/README.md
     digest:
       algorithm: sha-256
       value: ec0638a09805419ad4c72fb8049e044abbd0fb25d27a43c8aee61f81faebd149
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-realizations-current-system-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-realizations-current-system-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/realizations/current-system.md
+    path: fixtures/valid/minimal-0-71/knowledge/realizations/current-system.md
     digest:
       algorithm: sha-256
       value: c3ba7aa73f4f6d0c18c7f7a44b1817694db5968938d6ed9ace4f359e7fde5d7f
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-specifications-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-specifications-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/specifications/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/specifications/README.md
     digest:
       algorithm: sha-256
       value: de4664628f9c3c0159cb3af29a4a09596558135956a51419947592a99d503163
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-tasks-readme-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-tasks-readme-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/tasks/README.md
+    path: fixtures/valid/minimal-0-71/knowledge/tasks/README.md
     digest:
       algorithm: sha-256
       value: d7f693e3acd3695bfae7c835bdcd1ff2fe4a5a6b6e9782dc7c6f6a7051192ac1
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-tasks-active-task-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-tasks-active-task-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/tasks/items/task.md
+    path: fixtures/valid/minimal-0-71/knowledge/tasks/items/task.md
     digest:
       algorithm: sha-256
       value: 625ab44d1c502b5e2a433ead44cc631ac6e32faf0637df6c73b5b4ddcc5be124
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-tasks-by-state-active-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-tasks-by-state-active-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/tasks/by-state/active.md
+    path: fixtures/valid/minimal-0-71/knowledge/tasks/by-state/active.md
     digest:
       algorithm: sha-256
       value: a6a9b641346130b778c78df6bc0f482d6966d3bf1f63bb1d8137865050d3f502
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-tasks-by-state-cancelled-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-tasks-by-state-cancelled-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/tasks/by-state/cancelled.md
+    path: fixtures/valid/minimal-0-71/knowledge/tasks/by-state/cancelled.md
     digest:
       algorithm: sha-256
       value: a8a0f948f0739e9c4e42340fd945209566e30f1c1ae2ab752cd9ab3eb5c0feb5
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-tasks-by-state-completed-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-tasks-by-state-completed-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/tasks/by-state/completed.md
+    path: fixtures/valid/minimal-0-71/knowledge/tasks/by-state/completed.md
     digest:
       algorithm: sha-256
       value: 893c6eb59d719c0f9b41bbb78ef66125d602d525b928f0a5c7afbb32aefcd461
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-fixtures-valid-minimal-0-7-knowledge-tasks-by-state-deferred-md
+  - id: artifact-fixtures-valid-minimal-0-71-knowledge-tasks-by-state-deferred-md
     kind: fixture
-    path: fixtures/valid/minimal-0-7/knowledge/tasks/by-state/deferred.md
+    path: fixtures/valid/minimal-0-71/knowledge/tasks/by-state/deferred.md
     digest:
       algorithm: sha-256
       value: d37bf3b043212c6ae89f0dfe59a69b5ee8c0305c6531990d4327672c9644702e
@@ -2594,7 +2594,7 @@ governed_artifacts:
     path: public-docs/.agents/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: 54829acc74ee9d6323e3dfd842ab3d5c83d9fa534955de6886d517c3cdd33745
+      value: "cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-claude-skills-nkf-onboarding-skill-md
@@ -2602,7 +2602,7 @@ governed_artifacts:
     path: public-docs/.claude/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: 54829acc74ee9d6323e3dfd842ab3d5c83d9fa534955de6886d517c3cdd33745
+      value: "cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-readme-md
@@ -2610,7 +2610,7 @@ governed_artifacts:
     path: public-docs/README.md
     digest:
       algorithm: sha-256
-      value: 7b62e78777d0052594fb15c49ae394e6f8ce52ae037ec763a4b9b05cd9d915e3
+      value: "33fa17385b9affe731089ea9be04aceba0ff43d0e1d6fe54e1d4c8cb543b5a67"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-concepts-authority-and-lifecycle-md
@@ -2642,7 +2642,7 @@ governed_artifacts:
     path: public-docs/examples/product/project/.nourd/knowledge/bundle.yaml
     digest:
       algorithm: sha-256
-      value: 4c6ef51b6545ad380bf2362d329af8828492f97f8119e205f084da0dc0175769
+      value: "c91707c490f6724490e5233cfdc8a7a5186406fcd71ed6ad3ce732f89c2a04f1"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-examples-product-project-nourd-knowledge-freshness-baseline-yaml
@@ -2650,7 +2650,7 @@ governed_artifacts:
     path: public-docs/examples/product/project/.nourd/knowledge/freshness/baseline.yaml
     digest:
       algorithm: sha-256
-      value: 8af5da81b202fb47dd586f8b3dac7a681e5a12560d14d28ccaaf6fc94c8b01aa
+      value: "f33076af17bac72b9d3fe08020fcb5a51402b319592ab0b7abc29e18a057daa4"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-examples-product-project-nourd-knowledge-records-product-current-system-yaml
@@ -2834,7 +2834,7 @@ governed_artifacts:
     path: public-docs/examples/technology/project/.nourd/knowledge/bundle.yaml
     digest:
       algorithm: sha-256
-      value: 8c2d14c5d860229a2bbc82caa4a463b525f7511c01eec494bc5e9352af3cf7d6
+      value: "020fcbf58a8eac3d4ecd80a651a8012c29f5d21f715d7623bad42038053987d3"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-examples-technology-project-nourd-knowledge-freshness-baseline-yaml
@@ -2842,7 +2842,7 @@ governed_artifacts:
     path: public-docs/examples/technology/project/.nourd/knowledge/freshness/baseline.yaml
     digest:
       algorithm: sha-256
-      value: b84db3fac2f6dd10fed2f38a56ab798e6fc99ff92df88178faf3fdf5d5ac3151
+      value: "f65711aa80325f7b04f4c2de21095341e1e60b661303de3d0878752732308d5e"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-examples-technology-project-nourd-knowledge-records-realization-yaml
@@ -3042,7 +3042,7 @@ governed_artifacts:
     path: public-docs/guides/adopt-and-validate.md
     digest:
       algorithm: sha-256
-      value: ef0df63dce434c3d835518cde3ffc965cdc9ff8e40992c8f6f8bd9bc64719fe8
+      value: "5e34cbef65655a8301b4777fa8e658660a663b4a4e5ca77ffd8183492177b486"
     record: nkf-agent-led-initial-onboarding
     source_section: durable-mapping
   - id: artifact-public-docs-guides-initial-onboarding-md
@@ -3050,7 +3050,7 @@ governed_artifacts:
     path: public-docs/guides/initial-onboarding.md
     digest:
       algorithm: sha-256
-      value: 16760545484a96083f3780672ca987247bc4f022faa646d2f32b8feb7a7df2b8
+      value: "e4e8b360f84a842dd69fff8853ea9cf81888cc4f5e0d91cf9314dc378fdea574"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-guides-update-and-recover-md
@@ -3058,15 +3058,15 @@ governed_artifacts:
     path: public-docs/guides/update-and-recover.md
     digest:
       algorithm: sha-256
-      value: c58f18e7d42f4234b549328d70a6bca31debb322990c7ed203104b6fa11f4e1a
+      value: "d63e49052c2f5b0095b33017e571671312ff0904a496fc56a60f32fe4f9b0a13"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
-  - id: artifact-public-docs-reference-nkf-0-71-md
+  - id: artifact-public-docs-reference-nkf-0-8-md
     kind: project-configuration
-    path: public-docs/reference/nkf-0.71.md
+    path: public-docs/reference/nkf-0.8.md
     digest:
       algorithm: sha-256
-      value: ec6d7fd733a989eb86580bd3a9d77405d3c02d5402429190ad8d171c4414ae98
+      value: "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-tools-nkf-onboarding-protocol-md
@@ -3074,7 +3074,7 @@ governed_artifacts:
     path: public-docs/tools/nkf-onboarding-protocol.md
     digest:
       algorithm: sha-256
-      value: 2dd36b5437cc98db69d39d8e47b5400e8eca189f640313115fff5d38cc161788
+      value: "972335517d16d9c06cedd1e7ef18e5909b468eafa08c59d1bdf58366061a893c"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-public-docs-tools-nourd-nkf-adopt-mjs
@@ -3082,7 +3082,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: fe8945e2edfc5492f4f1cbbc4c2ca6ec8bc02626ea86a92d311edfd0d10e243d
+      value: "66259339939511d0525a924ecf5110ac792114772482fa3e0939d577fdb5a8fb"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -3106,7 +3106,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: fc747ac245e54a90950a79caccedd06682a3f36c322a54f50040ae0a925e0f39
+      value: "a149fa25139142930409d1b73c38cb3119f6d2d21664ab20244743cd04246536"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
@@ -3114,7 +3114,7 @@ governed_artifacts:
     path: scripts/build-adopter.mjs
     digest:
       algorithm: sha-256
-      value: a1da7e0e16a8da1b04befd464c75bdda07ecfe0845eb69faa197a66b6e3ac2cf
+      value: "852fb8d8838e08b998da52c8beefc5032bc960fbece76a06bbf121d22ff7113a"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-build-public-docs-mjs
@@ -3122,7 +3122,7 @@ governed_artifacts:
     path: scripts/build-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: c2c4176d95c447431bec990966b907603cb009fab9f533eec31282b3988ce169
+      value: "da822b84664ee8312a872b3a2f4e36242278bb3f3ebdbec4630aae8caa34af72"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-build-mjs
@@ -3146,7 +3146,7 @@ governed_artifacts:
     path: scripts/exercise-release-candidate.mjs
     digest:
       algorithm: sha-256
-      value: 0ebb6abd21c80ccdc5b775d0ee42b8ae350f5dac7391590dd7845e5fd12be6ac
+      value: "b78fa1e6c4b63565b3116f4ab49f27a12b07b2d02f60e7e23d2465c742904339"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
@@ -3154,7 +3154,7 @@ governed_artifacts:
     path: scripts/onboarding/core.mjs
     digest:
       algorithm: sha-256
-      value: 3f524e279ce080665e956797fb0e9fe4bf064e92efddb90adb669abf98d6ad03
+      value: "15eb6b61df7151c80e28e5848657d2810a58fd5532d06567f704b3cb94e0b4b6"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs
@@ -3162,7 +3162,7 @@ governed_artifacts:
     path: scripts/package-release.mjs
     digest:
       algorithm: sha-256
-      value: f4ef865bc9e2033443d92beb0abf30890f5fb933ceb9165e7250886ac6142fa9
+      value: "9c9dea4e33a643f149682f49ae1f1a5ed3869503070898d05a2372bb9083d1de"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-config-mjs
@@ -3178,7 +3178,7 @@ governed_artifacts:
     path: scripts/release/core.mjs
     digest:
       algorithm: sha-256
-      value: 7dc0de608b691190e57f799652e607cfe22b6dc2acf9dd6a72dd5c8494d23a9e
+      value: "6449605f889e3b428c8bd8f71411178fd951fccac44bef0407e6e67862d0d297"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-set-files-mjs
@@ -3234,7 +3234,7 @@ governed_artifacts:
     path: scripts/verify-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: 29787d6d0c54448dbd50c5d0537dcb0f08da91c79d5396f69fd6f2d4bf6bbf23
+      value: "9ff444d424a3f3067cfb899b2d09b648ff06d2ddfcbfb26a4ef88109fcb49e44"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-scripts-verify-recommended-release-mjs
@@ -3258,7 +3258,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: af50e44a67d25ebc40636db1d855e40424d47aad0f63e04550fe9505ed8f5ea9
+      value: "0220495d4aa9bf2f2869c8d75e112d1c1f1292b83fed6fab20bc8d6c4ef2ad4b"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -3266,7 +3266,7 @@ governed_artifacts:
     path: src/checker/checker.ts
     digest:
       algorithm: sha-256
-      value: c2cd938db792f2cc574fa53047698560b60522fe7150a7be37a40d9c471bd917
+      value: "e7ec7178723c54f43ad27014b795ff387b529194f1d2dddbcba2aeddd4fc041e"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-contracts-ts
@@ -3354,7 +3354,7 @@ governed_artifacts:
     path: src/checker/topology.ts
     digest:
       algorithm: sha-256
-      value: a53d2ddfb3442de12106762f4ee2d3c905c2d54e57db46514564e4664fba2d1b
+      value: "e3fcd65414da06543f61b59bdf9999f3c49b3c5c2ce2476a2607535f24432d03"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-src-checker-types-ts
@@ -3362,7 +3362,7 @@ governed_artifacts:
     path: src/checker/types.ts
     digest:
       algorithm: sha-256
-      value: edc40f9a31c71c2ad52f0772f0cbb522ff7da442e954e3157b54f846d6cbd538
+      value: "13e1c2f4a30fd14161c32c19c64b9cd7a0ac754a69bfa9be825271f18d7ee5e6"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-src-checker-util-ts
@@ -3394,7 +3394,7 @@ governed_artifacts:
     path: test/version-dispatch.test.ts
     digest:
       algorithm: sha-256
-      value: 0de11d2adff485c00e8fc7ed3e581b94f7d16256e88323e15adab5baa064923d
+      value: "80416a9c3dd81fd8f5cd6f0c9e369d9bf5362995b3bb7fe70bb2679d1aa0c95d"
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-mechanics-test-ts
@@ -3402,7 +3402,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: 0f5a746ac19f1c753e3ed8328a343a1c9cffb5c76efaebc6e45c4c2addc9b454
+      value: "b67afe16735a126a0b52512107d3aa3b524ba653f18de7f438b5b3be31e819a4"
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts
@@ -3418,7 +3418,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: deb93af90ebb30b6ef2c72d8d96ad1f63865063af8192ba0c5d36bb0f9a26199
+      value: "d52a6507b0f101ef47afc9ff78d7b7b1840429663d3518d76bd5be5afb01fab9"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts
@@ -3434,7 +3434,7 @@ governed_artifacts:
     path: test/authority.test.ts
     digest:
       algorithm: sha-256
-      value: 2f65e34e9f26bc181a1b08f0c77b16d63ed1d059bc414878dc953382e082aa6d
+      value: "0c103c82fb1f1c34166db9ab18eaa1027d07b4e7898c8c1355db1a2613b79503"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-checker-test-ts
@@ -3450,7 +3450,7 @@ governed_artifacts:
     path: test/contracts.test.ts
     digest:
       algorithm: sha-256
-      value: 44eee8e232451400a0676f2fa65a0a7b5891790ef1f7687b0dc1f0edeeb0bfad
+      value: "0a219d274e0f997edb49377c6a2ce5b550d78c0ca927792f67b105173adc5d1e"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-dependency-security-test-ts
@@ -3490,7 +3490,7 @@ governed_artifacts:
     path: test/helpers.ts
     digest:
       algorithm: sha-256
-      value: ce0c3dde2022cc11734ccb4f49cce55b56d4652c90a719f30b0644ee94a4f5bd
+      value: "b7f345f9e8c158fc02a0fb30585a5f9959fb91cc94fd98be84bc125a8542eb1a"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-onboarding-guidance-test-ts
@@ -3514,7 +3514,7 @@ governed_artifacts:
     path: test/public-docs.test.ts
     digest:
       algorithm: sha-256
-      value: 95c7cc1da0be2bedfd05c17fcf63899bcb7e4fc6a10a0eee1b4a16876264ad60
+      value: "ac42bb32aec1a2ebca2ac87a8df7b0032bb8e8ae55837b2f30a7e5528f0a4b73"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-verify-third-party-notices-mjs
@@ -3530,7 +3530,7 @@ governed_artifacts:
     path: test/release-manifest-schema.test.ts
     digest:
       algorithm: sha-256
-      value: fb0b574b41467970fcec623a4686f2fbbb361e2b60fbf118a5851d56e6207f34
+      value: "6d725fcd22cccbd1c3c91756f70cf9aad048cb2beb7c76f2af38e9d8ca38fd9b"
     record: nkf-portable-knowledge-topology
     source_section: durable-mapping
   - id: artifact-test-release-tooling-test-ts
@@ -3538,7 +3538,7 @@ governed_artifacts:
     path: test/release-tooling.test.ts
     digest:
       algorithm: sha-256
-      value: 600da9e6ebf7a5d028c8f223f16d8c2c3b7c2e6fd0634826a092ce2839c05e2d
+      value: "e6887dbb47e898e6f210c903680e5f1c0f34cce9ab05ac2235ae424e1ab11692"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-result-test-ts
@@ -3562,7 +3562,7 @@ governed_artifacts:
     path: test/self-hosting.test.ts
     digest:
       algorithm: sha-256
-      value: ec6637dce5f42744fee04d5960cbd18099e2e9dc8de1f960e9caedd3e48c711f
+      value: "100e1aac891041a5faf4ed207e46b2c13ac2e05bbc76bef7bf34c53d459e0fad"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-semantic-test-ts

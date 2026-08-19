@@ -38,14 +38,14 @@ function check(project: string) {
 async function copyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-71"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-8"), project, { recursive: true });
   return project;
 }
 
 async function copyTechnologyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-technology-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-71"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), project, { recursive: true });
   return project;
 }
 
@@ -131,7 +131,7 @@ async function snapshotTree(root: string) {
 async function gitFixture() {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-7"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-71"), project, { recursive: true });
   const taskId = "TEST-TECH-001";
   const g = (args: string[]) => spawnSync("git", ["-C", project, ...args], { encoding: "utf8" });
   const generatedPath = path.join(project, "dist/generated-adopter.mjs");
@@ -281,7 +281,7 @@ describe("deterministic governed mechanics", () => {
     );
     await mkdir(path.join(representationProject, ".nourd/knowledge"), { recursive: true });
     await mkdir(path.join(representationProject, "knowledge"), { recursive: true });
-    await mkdir(path.join(representationProject, "contracts/nkf/0.7"), { recursive: true });
+    await mkdir(path.join(representationProject, "contracts/nkf/0.71"), { recursive: true });
     await writeFile(
       path.join(representationProject, ".nourd/knowledge/bundle.yaml"),
       [
@@ -290,20 +290,20 @@ describe("deterministic governed mechanics", () => {
         "  profile: nkf.profile.technology",
         "  record: representation-fixture",
         "knowledge_root: knowledge",
-        "nkf_version: '0.7'",
+        "nkf_version: '0.71'",
         "id: representation-fixture",
         "non_records: []",
         "",
       ].join("\n"),
     );
     await cp(
-      path.join(repositoryRoot, "contracts/nkf/0.7/release-set.yaml"),
-      path.join(representationProject, "contracts/nkf/0.7/release-set.yaml"),
+      path.join(repositoryRoot, "contracts/nkf/0.71/release-set.yaml"),
+      path.join(representationProject, "contracts/nkf/0.71/release-set.yaml"),
     );
     const representedSet = run("set", representationProject);
     expect(representedSet.status, representedSet.stderr).toBe(0);
-    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.7" });
-    expect(representedSet.json.members).toHaveLength(165);
+    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.71" });
+    expect(representedSet.json.members).toHaveLength(141);
   });
 
   it("re-pins record digests after an edit", async () => {
@@ -444,7 +444,7 @@ describe("deterministic governed mechanics", () => {
     expect(second.json).toMatchObject({ changed: 0, repinned_documents: 0 });
   });
 
-  it("transitions a native 0.71 Task and seals the mechanically-concluded baseline in the same transaction", async () => {
+  it("transitions a native 0.8 Task and seals the mechanically-concluded baseline in the same transaction", async () => {
     const project = await copyFixture();
     await authorTaskResult(
       project,
@@ -491,7 +491,7 @@ describe("deterministic governed mechanics", () => {
     const baseline = YAML.parse(
       await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml"), "utf8"),
     );
-    expect(baseline.nkf_version).toBe("0.71");
+    expect(baseline.nkf_version).toBe("0.8");
     expect(baseline.confirmation.claim).toBe("mechanically-concluded");
     expect(baseline.confirmation.transition).toMatchObject({
       task: "TEST-001",

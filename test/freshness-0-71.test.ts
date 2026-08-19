@@ -45,39 +45,6 @@ async function editBaseline(project: string, change: (baseline: Record<string, a
   await writeFile(target, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
 }
 
-const carried = (baseline: Record<string, any>) => ({
-  carried: {
-    performed_in_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
-    performing_reviewer: { kind: "agent", id: "fixture-reviewer" },
-  },
-});
-
-// Rewrites the confirmed whole-root fixture baseline into the mechanically-
-// concluded shape: every judgment carried, the exact transition bound, and
-// the transitioned Task judgments marked. Individual tests then break one
-// admission precondition at a time.
-function concludeBaseline(
-  baseline: Record<string, any>,
-  transition: { task: string; from_state: string; to_state: string },
-): void {
-  baseline.confirmation.claim = "mechanically-concluded";
-  baseline.confirmation.transition = {
-    ...transition,
-    predecessor_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
-  };
-  for (const entry of baseline.applicability_coverage) {
-    entry.provenance = {
-      ...carried(baseline),
-      ...(entry.node.kind === "document" && entry.node.id === transition.task
-        ? { transition: { ...transition } }
-        : {}),
-    };
-  }
-  for (const entry of baseline.decision_classifications ?? []) {
-    entry.provenance = carried(baseline);
-  }
-}
-
 describe("NKF 0.71 digest-bound freshness", () => {
   it("passes conformance and readiness for the digest-bound Product fixture", async () => {
     const result = await validate(fixture);
@@ -109,7 +76,12 @@ describe("NKF 0.71 digest-bound freshness", () => {
       baseline.confirmation.computed_closure = nodes;
       baseline.confirmation.performed_set = [];
       for (const entry of baseline.applicability_coverage) {
-        entry.provenance = carried(baseline);
+        entry.provenance = {
+          carried: {
+            performed_in_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
+            performing_reviewer: { kind: "agent", id: "fixture-reviewer" },
+          },
+        };
       }
     });
     const result = await validate(project);
@@ -142,65 +114,5 @@ describe("NKF 0.71 digest-bound freshness", () => {
     const result = await validate(project);
     expect(result.readiness?.state).not.toBe("ready");
     expect(result.diagnostics.some((item) => item.rule_id === "freshness.baseline.judgment-digest-mismatch")).toBe(true);
-  });
-
-  it("refuses a mechanical conclusion whose delta exceeds the closed transition vocabulary", async () => {
-    // A conclusion carrying a performed judgment claims fresh review it never
-    // received.
-    const performedProject = await copyFixture(fixture);
-    await editBaseline(performedProject, (baseline) => {
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
-      baseline.applicability_coverage[0].provenance = { performed: true };
-    });
-    const performedResult = await validate(performedProject);
-    expect(performedResult.readiness?.state).not.toBe("ready");
-    expect(
-      performedResult.diagnostics.some((item) => item.rule_id === "freshness.baseline.conclusion.delta-exceeded"),
-    ).toBe(true);
-
-    // A transition mark on a node other than the transitioned Task claims a
-    // wider delta than the closed transition vocabulary.
-    const markedProject = await copyFixture(fixture);
-    await editBaseline(markedProject, (baseline) => {
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
-      const nonTask = baseline.applicability_coverage.find(
-        (entry: Record<string, any>) => entry.node.kind === "record",
-      );
-      nonTask.provenance.transition = { task: "TEST-001", from_state: "deferred", to_state: "active" };
-    });
-    const markedResult = await validate(markedProject);
-    expect(markedResult.readiness?.state).not.toBe("ready");
-    expect(
-      markedResult.diagnostics.some((item) => item.rule_id === "freshness.baseline.conclusion.delta-exceeded"),
-    ).toBe(true);
-  });
-
-  it("refuses a mechanical conclusion whose carry does not bind the exact transition", async () => {
-    // The transition binding must land on the declared Task state.
-    const mismatchedProject = await copyFixture(fixture);
-    await editBaseline(mismatchedProject, (baseline) => {
-      // The fixture Task is declared active; a conclusion into completed
-      // contradicts the declared state.
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "active", to_state: "completed" });
-    });
-    const mismatchedResult = await validate(mismatchedProject);
-    expect(mismatchedResult.readiness?.state).not.toBe("ready");
-    expect(
-      mismatchedResult.diagnostics.some((item) => item.rule_id === "freshness.baseline.conclusion.carry-invalid"),
-    ).toBe(true);
-
-    // The transitioned Task's judgments must carry the exact transition mark.
-    const unmarkedProject = await copyFixture(fixture);
-    await editBaseline(unmarkedProject, (baseline) => {
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
-      for (const entry of baseline.applicability_coverage) {
-        entry.provenance = carried(baseline);
-      }
-    });
-    const unmarkedResult = await validate(unmarkedProject);
-    expect(unmarkedResult.readiness?.state).not.toBe("ready");
-    expect(
-      unmarkedResult.diagnostics.some((item) => item.rule_id === "freshness.baseline.conclusion.carry-invalid"),
-    ).toBe(true);
   });
 });

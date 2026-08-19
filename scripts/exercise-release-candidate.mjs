@@ -44,10 +44,10 @@ const verification = verifyReleaseArchive(archiveBytes, expectedSha256, {
   sourceRoot,
 });
 const nkfVersion = verification.manifest.nkf_version;
-if (!["0.4", "0.5", "0.6", "0.7", "0.71"].includes(nkfVersion)) {
-  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, 0.6, 0.7, or 0.71 archive.");
+if (!["0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)) {
+  fail("The exact-candidate exercise requires an NKF 0.4, 0.5, 0.6, 0.7, 0.71, or 0.8 archive.");
 }
-if (["0.5", "0.6", "0.7", "0.71"].includes(nkfVersion) && reviewPath === undefined) {
+if (["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion) && reviewPath === undefined) {
   fail(`The NKF ${nkfVersion} exact-candidate exercise requires --review with one external semantic-review path.`);
 }
 if (nkfVersion === "0.4" && reviewPath !== undefined) {
@@ -198,7 +198,7 @@ try {
     flag: "wx",
   });
   const producerPrepromotionRoot = path.join(temporary, "producer-prepromotion");
-  if (["0.6", "0.7", "0.71"].includes(nkfVersion)) {
+  if (["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)) {
     await cp(project, producerPrepromotionRoot, {
       recursive: true,
       filter(sourcePath) {
@@ -268,7 +268,7 @@ try {
     cwd: project,
     env: {
       ...process.env,
-      ...(["0.6", "0.7", "0.71"].includes(nkfVersion)
+      ...(["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)
         ? { NKF_PRODUCER_PREPROMOTION_ROOT: producerPrepromotionRoot }
         : {}),
     },

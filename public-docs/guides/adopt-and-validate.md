@@ -2,10 +2,10 @@
 
 NKF has one public operation: **Adopt**. The same invocation brings a supported
 repository to the current governed recommended release whether it is new to
-NKF, on the supported predecessor NKF 0.7, missing integration, behind within
-NKF 0.71, or already current.
+NKF, on the supported predecessor NKF 0.71, missing integration, behind within
+NKF 0.8, or already current.
 
-NKF 0.71 is pre-stable. The checker and release archive are private to
+NKF 0.8 is pre-stable. The checker and release archive are private to
 authorized Nourd projects; this public adopter contains no checker or private
 credential.
 
@@ -46,8 +46,8 @@ before archive use.
 
 | State | Meaning |
 | --- | --- |
-| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.71 project |
-| `updated` | An exact conformant NKF 0.7 repository completed the non-breaking upgrade with its reviewed delta, or a native 0.71 repository received the recommended exact release and integration |
+| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.8 project |
+| `updated` | An exact conformant NKF 0.71 repository completed the non-breaking upgrade with its reviewed delta, or a native 0.8 repository received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
 | Failed closed | A repository declaring NKF 0.1 through 0.6 is outside the support window; the refusal names the exact next stepping-stone release archive |
 
@@ -59,7 +59,7 @@ later recommendation change does not alter the repository automatically.
 ## The Support Window
 
 Live support covers exactly the current version plus one predecessor:
-NKF 0.71 and NKF 0.7. A repository declaring an older version migrates
+NKF 0.8 and NKF 0.71. A repository declaring an older version migrates
 through immutable published archives as stepping stones — each hop uses that
 archive's own bundled adopter with an explicit archive and digest. See
 [Update And Recover](update-and-recover.md) for the exact stepping-stone
@@ -79,7 +79,7 @@ node nourd-nkf-adopt.mjs \
   --review /absolute/path/to/whole-root-review.yaml
 ```
 
-If the `--review` file does not exist, Adopt builds the complete isolated 0.71
+If the `--review` file does not exist, Adopt builds the complete isolated 0.8
 candidate, writes a candidate-specific review template there, and stops before
 project mutation. A named human or agent must review the actual graph, replace
 every `REVIEW_REQUIRED` value and placeholder with source-bound findings, then
@@ -87,14 +87,14 @@ rerun the exact same Adopt command. Adopt never fills semantic roles,
 relationship completeness, or Decision compatibility by itself. Missing,
 stale, incomplete, or unsupported plans or reviews stop without mutation.
 
-## Non-Breaking NKF 0.7 Upgrade
+## Non-Breaking NKF 0.71 Upgrade
 
-Updating an exact conformant NKF 0.7 repository to NKF 0.71 is `non-breaking`
+Updating an exact conformant NKF 0.71 repository to NKF 0.8 is `non-breaking`
 and requires no repository-owner approval: no stable path moves, no identity
 succeeds, no declaration changes shape, and canonical Markdown bytes are
 preserved. The upgrade still never invents review. The first Adopt invocation
 writes the exact upgrade review template — carried judgments prefilled by
-digest identity under the accepted 0.7-to-0.71 version-delta declaration, the
+digest identity under the accepted 0.71-to-0.8 version-delta declaration, the
 computed required fresh set left to a named reviewer — and stops. Rerun with
 the completed review:
 
@@ -105,13 +105,13 @@ node nourd-nkf-adopt.mjs \
 ```
 
 In one rollback-capable transaction the upgrade rebinds the contract set to
-0.71, converts the reviewed baseline to the digest-bound 0.71 contract with
+0.8, converts the reviewed baseline to the digest-bound 0.8 contract with
 computed per-judgment carry-forward, and refreshes the integration. A delta
 review claim is admitted only when the performed set contains the computed
 closure;
-whole-root review remains the recovery path. A repository whose 0.7 baseline
+whole-root review remains the recovery path. A repository whose 0.71 baseline
 is missing, outdated, disputed, or otherwise not ready is ineligible until a
-governed 0.7 knowledge-maintenance operation restores it. The semantic
+governed 0.71 knowledge-maintenance operation restores it. The semantic
 reviewer's act does not accept canonical Product or Technology meaning.
 
 ## What Adopt Installs

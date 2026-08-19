@@ -28,7 +28,7 @@ async function mutateYaml(file: string, change: (value: any) => void) {
 async function legacyLockProject(prefix: string): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), prefix));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-71"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), project, { recursive: true });
   const taskSource = path.join(project, "knowledge/tasks/items/task.md");
   const legacySource = (await readFile(taskSource, "utf8")).replace(
     "created_at: 2026-07-30T15:59:54Z\n---",
@@ -84,7 +84,7 @@ describe("baseline and freshness rule coverage", () => {
       baseline.node_revisions.push(structuredClone(baseline.node_revisions[0]));
       baseline.graph_revision.value = utilSha256(Buffer.from(jcs({
         contract: "nkf.graph-revision",
-        nkf_version: "0.71",
+        nkf_version: "0.8",
         bundle: baseline.bundle,
         profile: baseline.profile,
         nodes: baseline.node_revisions,
@@ -699,7 +699,7 @@ describe("record, path, and bundle rule coverage", () => {
 
     const bootstrapParent = await mkdtemp(path.join(os.tmpdir(), "nkf-bootstrap-coverage-"));
     const bootstrap = path.join(bootstrapParent, "project");
-    await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-71"), bootstrap, { recursive: true });
+    await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), bootstrap, { recursive: true });
     await mutateYaml(path.join(bootstrap, ".nourd/knowledge/records/specification.yaml"), (declaration) => {
       delete declaration.legacy_lock;
       declaration.accepted_bootstrap_lock = {
@@ -722,28 +722,28 @@ describe("record, path, and bundle rule coverage", () => {
 describe("contract-set rule coverage", () => {
   async function contractHarness(mutate: (root: string) => Promise<Partial<Record<string, string>>>) {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-contract-coverage-"));
-    await mkdir(path.join(parent, "contracts/nkf/0.71"), { recursive: true });
+    await mkdir(path.join(parent, "contracts/nkf/0.8"), { recursive: true });
     await mkdir(path.join(parent, "knowledge/specifications"), { recursive: true });
-    await cp(contractRoot, path.join(parent, "contracts/nkf/0.71"), { recursive: true });
+    await cp(contractRoot, path.join(parent, "contracts/nkf/0.8"), { recursive: true });
     await cp(
-      path.join(repositoryRoot, "knowledge/specifications/nkf-0.71.md"),
-      path.join(parent, "knowledge/specifications/nkf-0.71.md"),
+      path.join(repositoryRoot, "knowledge/specifications/nkf-0.8.md"),
+      path.join(parent, "knowledge/specifications/nkf-0.8.md"),
     );
     const digests = await mutate(parent);
-    const base = VERSION_BINDINGS["0.71"];
+    const base = VERSION_BINDINGS["0.8"];
     const bindings = {
       ...base,
       ...(digests.versionDelta === undefined ? {} : {
         versionDelta: { ...base.versionDelta!, sha256: digests.versionDelta },
       }),
       ...(digests.versionDeltaMissing === undefined ? {} : {
-        versionDelta: { ...base.versionDelta!, path: "contracts/nkf/0.71/version-delta-absent.yaml" },
+        versionDelta: { ...base.versionDelta!, path: "contracts/nkf/0.8/version-delta-absent.yaml" },
       }),
       ...(digests.freshnessPolicy === undefined ? {} : {
         freshnessPolicy: { ...base.freshnessPolicy!, sha256: digests.freshnessPolicy },
       }),
     };
-    const loaded = await loadContracts(path.join(parent, "contracts/nkf/0.71"), bindings, "0.71");
+    const loaded = await loadContracts(path.join(parent, "contracts/nkf/0.8"), bindings, "0.8");
     return [...new Set(loaded.diagnostics.map((diagnostic) => diagnostic.rule_id))];
   }
 
@@ -752,7 +752,7 @@ describe("contract-set rule coverage", () => {
       .toContain("version-delta.unavailable");
 
     expect(await contractHarness(async (root) => {
-      const file = path.join(root, "contracts/nkf/0.71/version-delta.yaml");
+      const file = path.join(root, "contracts/nkf/0.8/version-delta.yaml");
       const delta = YAML.parse(await readFile(file, "utf8"));
       delete delta.rules["artifact.digest-mismatch"];
       const bytes = YAML.stringify(delta, { lineWidth: 0 });
@@ -761,7 +761,7 @@ describe("contract-set rule coverage", () => {
     })).toContain("version-delta.coverage-incomplete");
 
     expect(await contractHarness(async (root) => {
-      const file = path.join(root, "contracts/nkf/0.71/version-delta.yaml");
+      const file = path.join(root, "contracts/nkf/0.8/version-delta.yaml");
       const delta = YAML.parse(await readFile(file, "utf8"));
       delta.rules["artifact.digest-mismatch"].classification = "unrecognized";
       const bytes = YAML.stringify(delta, { lineWidth: 0 });
@@ -770,7 +770,7 @@ describe("contract-set rule coverage", () => {
     })).toContain("version-delta.classification-invalid");
 
     expect(await contractHarness(async (root) => {
-      const file = path.join(root, "contracts/nkf/0.71/freshness-policy.yaml");
+      const file = path.join(root, "contracts/nkf/0.8/freshness-policy.yaml");
       const bytes = `${await readFile(file, "utf8")}unexpected_policy_key: true\n`;
       await writeFile(file, bytes);
       return { freshnessPolicy: sha256(bytes) };

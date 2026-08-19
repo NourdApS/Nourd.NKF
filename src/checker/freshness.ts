@@ -37,7 +37,7 @@ interface NormalizedEdge {
 export interface KnowledgeGraphResult {
   summary: {
     policy: {
-      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7" | "nkf.freshness-policy.0.71";
+      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7" | "nkf.freshness-policy.0.71" | "nkf.freshness-policy.0.8";
       digest: DigestValue;
       binding: "verified" | "unavailable" | "mismatched";
     };
@@ -620,8 +620,14 @@ function verifyDigestBoundBaseline(
   return "confirmed";
 }
 
+// Versions whose reviewed baseline is digest-bound with a computed delta
+// claim. Registering a version here is deliberate: an unregistered version
+// falls through to the predecessor path, which is the silent-degrade shape
+// NKF 0.71 removed from the checker's other gates.
+const DIGEST_BOUND_BASELINE_VERSIONS = new Set(["0.7", "0.71", "0.8"]);
+
 export function evaluateKnowledgeGraph(args: {
-  nkfVersion: "0.5" | "0.6" | "0.7" | "0.71";
+  nkfVersion: "0.5" | "0.6" | "0.7" | "0.71" | "0.8";
   bundle: Record<string, any>;
   records: RecordUnit[];
   documents: DocumentUnit[];
@@ -810,7 +816,7 @@ export function evaluateKnowledgeGraph(args: {
       baselineState = completenessState(baseline, nodeRevisions, edges, relationshipNames, decisions);
       if (baselineState === "confirmed" && baseline.graph_revision?.value !== candidateRevision.value) baselineState = "outdated";
       if (baseline.confirmation?.disputed === true) baselineState = "disputed";
-      if ((nkfVersion === "0.7" || nkfVersion === "0.71") && baselineState === "confirmed") {
+      if (DIGEST_BOUND_BASELINE_VERSIONS.has(nkfVersion) && baselineState === "confirmed") {
         baselineState = verifyDigestBoundBaseline(baseline, nodeRevisions, recordById, emitter, args.versionDeltaDigest ?? null, bundle);
       }
     }
@@ -923,7 +929,7 @@ export function evaluateKnowledgeGraph(args: {
     }
   }
   if (
-    (nkfVersion === "0.7" || nkfVersion === "0.71") &&
+    DIGEST_BOUND_BASELINE_VERSIONS.has(nkfVersion) &&
     baseline !== null &&
     request.purpose !== null && request.purpose !== undefined && request.purpose !== "historical-reproduction" &&
     values<Record<string, any>>(baseline.promotion_reconciliation).some((entry) => entry.state === "pending")

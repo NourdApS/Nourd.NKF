@@ -1,7 +1,7 @@
 # Initial Onboarding
 
 Initial onboarding takes an unadopted Empty Repository or Tiny Knowledge, No
-Source Or Configuration repository to a complete checked and reviewed NKF 0.71
+Source Or Configuration repository to a complete checked and reviewed NKF 0.8
 candidate without requiring manual native YAML or integration assembly.
 
 It supports Product and Technology roots. Common rules apply to both but are
@@ -206,7 +206,7 @@ node nourd-nkf-adopt.mjs seal \
 Sealing verifies the assessment and applicable confirmation, recreates the
 complete mechanical snapshot, requires every Markdown representation, and
 refreshes exact candidate digests. It does not change the project, construct
-the later 0.71 graph candidate, prove the semantic category, or establish
+the later 0.8 graph candidate, prove the semantic category, or establish
 conformance.
 
 ## Apply The Complete Candidate With Adopt
@@ -221,7 +221,7 @@ node nourd-nkf-adopt.mjs \
 ```
 
 On the first run, use an absent `--review` file. Adopt constructs the exact
-isolated 0.71 candidate, writes its complete review template to that path, and
+isolated 0.8 candidate, writes its complete review template to that path, and
 stops before mutation. A named human or agent reviews the actual candidate,
 replaces every placeholder with source-bound classifications and observations,
 then reruns the same Adopt command. The adopter validates exact node,
