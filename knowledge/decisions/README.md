@@ -149,6 +149,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0131: Accept The NKF 0.71 Authority Set](0131-accept-the-nkf-0-71-authority-set.md)
 - [ADR 0132: Confirm The NKF 0.71 Release Candidate](0132-confirm-the-nkf-0-71-release-candidate.md)
 - [ADR 0133: Adopt The NKF 0.8 Generated Distribution Direction](0133-adopt-the-nkf-0-8-generated-distribution-direction.md)
+- [ADR 0134: Accept The NKF 0.8 Authority Set](0134-accept-the-nkf-0-8-authority-set.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
