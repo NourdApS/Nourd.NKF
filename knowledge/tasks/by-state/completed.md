@@ -21,3 +21,4 @@
 - [NKF-031](../items/NKF-031-release-the-corrective-nkf-0-71.md)
 - [NKF-032](../items/NKF-032-adopt-the-producer-to-published-nkf-0-71.md)
 - [NKF-033](../items/NKF-033-release-nkf-0-8-with-generated-distribution.md)
+- [NKF-035](../items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md)
