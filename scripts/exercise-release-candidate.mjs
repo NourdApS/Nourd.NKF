@@ -306,6 +306,17 @@ try {
     fail("Non-breaking candidate self-adoption changed producer knowledge bytes.");
   }
 
+  // The two protocol roots nothing installs are emitted at the version the
+  // repository has adopted. Adopting NKF 0.8 changes that version, so the
+  // roots are restamped from the same version-neutral source before the gate
+  // — which the gate then verifies byte-for-byte. This is a producer step of
+  // adopting the version, not a candidate change: no release-set member moves.
+  if (nkfVersion === "0.8") {
+    run(process.execPath, [
+      path.join(project, "scripts/generate-guidance.mjs"),
+      "--project", project, "--version", nkfVersion,
+    ]);
+  }
   const producerGate = run("npm", ["run", "nkf:check"], {
     cwd: project,
     env: {

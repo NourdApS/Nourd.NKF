@@ -3164,7 +3164,7 @@ governed_artifacts:
     path: scripts/exercise-release-candidate.mjs
     digest:
       algorithm: sha-256
-      value: "17fd833038f2a9c18752e308d8ee099ad6ebabbeb885dac7f5333cc214971912"
+      value: "354c2b81a866e90a979604d83d2868fca95f771bd4bb00f898e15193dac8b10e"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
