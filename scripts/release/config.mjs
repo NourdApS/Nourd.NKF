@@ -96,6 +96,22 @@ export const ACCEPTED_0_71_ARTIFACT_DIGESTS = Object.freeze({
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
 });
 
+export const ACCEPTED_0_8_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.8.md": "d8049cb2b58d158099f3127986d54cdee28e13c8b2d2c41c745783d0e1adefdf",
+  "contracts/nkf/0.8/nkf.yaml": "54d9a0c5cba47081eedeafc0c93f482fe6cd1fddd642ebbffa4e84d6a637cd79",
+  "contracts/nkf/0.8/freshness-policy.yaml": "7cfb1b40a8b6f86543cb7b6016c6e9b2c1159d2a748c1915d0e9bf51bb82afd4",
+  "contracts/nkf/0.8/version-delta.yaml": "cc17f23a44afcf56b107f3e76e4d761779a4225bd2f8955c51d9781193c9c8b9",
+  "contracts/nkf/0.8/schemas/bundle.schema.json": "fef56a29c26ad56ec57c92c12353d51f826fa06e06c1e53317ad9cbe4b307ec9",
+  "contracts/nkf/0.8/schemas/record.schema.json": "9aa9a4500b44d520612c083f0a9c6641a5001b4d1767444ad3bfba6454278b1e",
+  "contracts/nkf/0.8/schemas/graph-baseline.schema.json": "80ce0f1456f4e583751421ecb64562e6268b96605b86af18623ad0b861fbac0d",
+  "contracts/nkf/0.8/schemas/freshness-receipt.schema.json": "efb012d1e7ce1160fd6cde303a1d7ea2f247df2b5a4928ad29f9b27df25ef950",
+  "contracts/nkf/0.8/schemas/freshness-policy.schema.json": "d380f4afd374e7aa354f43cf7fa2d3b90acc8e0f8a254b3d8351497be8482173",
+  "contracts/nkf/0.8/schemas/release-manifest.schema.json": "a07a2c773c6649c172d2a4be80a9ecdc3722b18b6db2fbd330f85e71abed1cb1",
+  "contracts/nkf/0.8/schemas/validation-result.schema.json": "8c882f1ba20d72ed797d5a9c497880918db9d27af25f8f1d94ce7a9e17d0851a",
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
+});
+
 export const RELEASE_REPOSITORY = "NourdApS/Nourd.NKF";
 
 // Every pre-stable recommendation publishes under the same channel terms;
