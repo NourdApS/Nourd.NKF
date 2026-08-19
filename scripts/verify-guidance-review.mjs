@@ -23,6 +23,7 @@
 // against the current rule set remains a human claim, which is why the
 // independent audit still verifies the review rather than trusting this exit
 // code.
+import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import { realpathSync } from "node:fs";
 import path from "node:path";
@@ -40,7 +41,8 @@ const GUIDANCE_CLASSES = new Set([
   "portable-skill",
   "host-adapter-instruction",
 ]);
-const DIGEST = /\b[0-9a-f]{64}\b/;
+const DIGEST = /\b[0-9a-f]{64}\b/g;
+const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
 function fail(message) {
   process.stderr.write(`${message}\n`);
@@ -77,6 +79,7 @@ export async function verifyGuidanceReview(projectRootInput) {
   let checked = 0;
   let skipped = 0;
   let failed = false;
+  const reviewed = new Set();
 
   for (const entry of entries) {
     const match = REVIEW_NAME.exec(entry);
@@ -117,19 +120,34 @@ export async function verifyGuidanceReview(projectRootInput) {
     const reviewLines = (await readFile(path.join(root, REVIEW_DIRECTORY, entry), "utf8")).split("\n");
     const missing = [];
     const undigested = [];
+    const wrongDigest = [];
     for (const member of members) {
       const basename = member.slice(member.lastIndexOf("/") + 1);
       const naming = reviewLines.filter((line) => line.includes(member) || line.includes(basename));
-      if (naming.length === 0) missing.push(member);
+      if (naming.length === 0) { missing.push(member); continue; }
       // The digest is recorded beside the member it belongs to, so a review
       // cannot satisfy this by listing digests somewhere else on the page.
-      else if (!naming.some((line) => DIGEST.test(line))) undigested.push(member);
+      const recorded = new Set(naming.flatMap((line) => [...line.matchAll(DIGEST)].map((hit) => hit[0])));
+      if (recorded.size === 0) { undigested.push(member); continue; }
+      // And the recorded digest must be the member's actual digest. Checking
+      // only that some 64-hex token is present makes the digests decorative:
+      // a transcription error, or a digest carried from an earlier revision
+      // of the same member, would pass while recording the wrong bytes.
+      const bytes = await readFile(path.join(root, member)).catch(() => null);
+      if (bytes === null) { wrongDigest.push([member, "member is absent"]); continue; }
+      const actual = sha256(bytes);
+      if (!recorded.has(actual)) wrongDigest.push([member, `recorded ${[...recorded].join(", ")}, actual ${actual}`]);
     }
 
     checked += 1;
-    if (missing.length > 0 || undigested.length > 0) {
+    reviewed.add(version);
+    if (missing.length > 0 || undigested.length > 0 || wrongDigest.length > 0) {
       for (const member of missing) fail(`${entry}: does not name guidance member ${member}.`);
       for (const member of undigested) fail(`${entry}: names ${member} without a reviewed digest beside it.`);
+      for (const [member, detail] of wrongDigest) fail(`${entry}: records the wrong digest for ${member} — ${detail}.`);
+      if (wrongDigest.length > 0) {
+        fail(`${entry}: ${wrongDigest.length} recorded digest(s) do not equal the reviewed member's bytes. A recorded digest names exactly what was read.`);
+      }
       if (missing.length > 0) {
         fail(
           `${entry}: names ${members.length - missing.length} of ${members.length} guidance members. Step four requires the enumerated member list, taken from the adopter's set command, not a narrative of what changed.`,
@@ -142,6 +160,25 @@ export async function verifyGuidanceReview(projectRootInput) {
       }
       failed = true;
     }
+  }
+
+  // A version with a release set that has not been published is a version
+  // being cut, and step four requires its review before the cut. Absence is
+  // the failure the NKF 0.71 review would have been caught by, so absence
+  // fails rather than passing with nothing checked.
+  for (const version of await readdir(path.join(root, "contracts/nkf")).catch(() => [])) {
+    if (reviewed.has(version)) continue;
+    if (published !== null) {
+      const [major, minor] = rank(version);
+      const [pMajor, pMinor] = rank(published);
+      if (major < pMajor || (major === pMajor && minor <= pMinor)) continue;
+    }
+    const setText = await readFile(path.join(root, `contracts/nkf/${version}/release-set.yaml`), "utf8").catch(() => null);
+    if (setText === null) continue;
+    fail(
+      `contracts/nkf/${version}/release-set.yaml declares an unpublished versioned set with no pre-cut guidance review at ${REVIEW_DIRECTORY}/*-nkf-${version.replace(".", "-")}-guidance-review.md.`,
+    );
+    failed = true;
   }
 
   if (failed) return false;

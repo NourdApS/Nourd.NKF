@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdtemp, mkdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -30,9 +31,11 @@ const PATHS = MEMBERS.map((member) => member.path);
 // guidance prose, so step four's full re-reading does not reach it.
 const NON_GUIDANCE = { path: "dist/nourd-nkf-checker.mjs", class: "checker" };
 
-const digest = (seed: number) => seed.toString(16).repeat(64).slice(0, 64);
+const digest = (member: string) => createHash("sha256").update(memberBytes(member)).digest("hex");
+const wrongDigest = (seed: number) => seed.toString(16).repeat(64).slice(0, 64);
+const memberBytes = (member: string) => `bytes of ${member}\n`;
 const bare = (member: string) => `- \`${member}\``;
-const row = (member: string, index: number) => `| \`${member}\` | \`${digest(index + 1)}\` |`;
+const row = (member: string) => `| \`${member}\` | \`${digest(member)}\` |`;
 const review = (body: string) => `# Review\n\n## Reviewed Members\n\n${body}\n`;
 
 async function project(reviewBody: string, published = "0.71"): Promise<string> {
@@ -55,6 +58,10 @@ async function project(reviewBody: string, published = "0.71"): Promise<string> 
       "",
     ].join("\n"),
   );
+  for (const member of [...MEMBERS, NON_GUIDANCE]) {
+    await mkdir(path.join(root, path.dirname(member.path)), { recursive: true });
+    await writeFile(path.join(root, member.path), memberBytes(member.path));
+  }
   await mkdir(path.join(root, "knowledge/evidence/release"), { recursive: true });
   await writeFile(path.join(root, "knowledge/evidence/release/nkf-035-nkf-0-8-guidance-review.md"), reviewBody);
   return root;
@@ -78,7 +85,7 @@ describe("pre-cut guidance review", () => {
   });
 
   it("accepts basenames, as the NKF 0.7 review used for adapter twins", async () => {
-    const body = PATHS.map((member, index) => row(member.slice(member.lastIndexOf("/") + 1), index)).join("\n");
+    const body = PATHS.map((member) => `| \`${member.slice(member.lastIndexOf("/") + 1)}\` | \`${digest(member)}\` |`).join("\n");
     expect(verify(await project(review(body))).status).toBe(0);
   });
 
@@ -103,7 +110,7 @@ describe("pre-cut guidance review", () => {
       "",
       "## Digests",
       "",
-      ...PATHS.map((_member, index) => `- \`${digest(index + 1)}\``),
+      ...PATHS.map((member) => `- \`${digest(member)}\``),
     ].join("\n");
     expect(verify(await project(review(body))).status).not.toBe(0);
   });
@@ -114,6 +121,26 @@ describe("pre-cut guidance review", () => {
     const result = verify(await project(review(PATHS.map(row).join("\n"))));
     expect(result.status).toBe(0);
     expect(result.stderr).not.toContain(NON_GUIDANCE.path);
+  });
+
+  it("fails a recorded digest that is not the reviewed member's bytes", async () => {
+    // A 64-hex token beside the member proved only that something was written
+    // there. A transcription error, or a digest carried from an earlier
+    // revision of the same member, recorded the wrong bytes and passed.
+    const body = PATHS.map((member, index) => `| \`${member}\` | \`${wrongDigest(index + 1)}\` |`).join("\n");
+    const result = verify(await project(review(body)));
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("records the wrong digest for");
+  });
+
+  it("fails when an unpublished versioned set has no review at all", async () => {
+    // The check passed with zero reviewed before: a release that omitted the
+    // review, or misnamed it, satisfied it by absence.
+    const root = await project(review(PATHS.map(row).join("\n")));
+    await rm(path.join(root, "knowledge/evidence/release/nkf-035-nkf-0-8-guidance-review.md"));
+    const result = verify(root);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("no pre-cut guidance review");
   });
 
   it("exempts a review for an already-published version", async () => {

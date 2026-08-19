@@ -11,7 +11,7 @@ const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex
 const taskPath = "knowledge/tasks/items/task.md";
 
 async function copyFixture(): Promise<string> {
-  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-71-dispatch-"));
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-8-dispatch-"));
   const project = path.join(parent, "project");
   await cp(validFixture, project, { recursive: true });
   return project;

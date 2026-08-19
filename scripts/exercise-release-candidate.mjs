@@ -314,7 +314,13 @@ try {
   if (nkfVersion === "0.8") {
     run(process.execPath, [
       path.join(project, "scripts/generate-guidance.mjs"),
-      "--project", project, "--version", nkfVersion,
+      "--project", project, "--version", nkfVersion, "--stamp", "adopted",
+    ]);
+    // The release-stamp members are candidate bytes and are never rewritten
+    // here; prove they already match their derivation instead.
+    run(process.execPath, [
+      path.join(project, "scripts/generate-guidance.mjs"),
+      "--project", project, "--version", nkfVersion, "--check",
     ]);
   }
   const producerGate = run("npm", ["run", "nkf:check"], {

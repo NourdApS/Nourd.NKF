@@ -1843,7 +1843,7 @@ non_records:
       stable_path: evidence/release/nkf-033-nkf-0-8-guidance-review.md
       digest:
         algorithm: sha-256
-        value: "bd4255bcae1e83bdee452f20ad8624fd5648d274afe48c44c0a1e4ea428b6ef9"
+        value: "80403beb0cd49f0df1708bc2e5e1130c2d69f742ce781cf6c1768e3d0033ad26"
       relationships: []
   - path: evidence/release/nkf-031-nkf-0-71-release-audit.md
     kind: evidence
@@ -3164,7 +3164,7 @@ governed_artifacts:
     path: scripts/exercise-release-candidate.mjs
     digest:
       algorithm: sha-256
-      value: "354c2b81a866e90a979604d83d2868fca95f771bd4bb00f898e15193dac8b10e"
+      value: "d3aa99af6b6efa08470cc4a7242a8caeefc3fcaccd1a201cacf3a22f21ff412b"
     record: nkf-release-documentation-and-adoption
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
@@ -3412,7 +3412,7 @@ governed_artifacts:
     path: test/version-dispatch.test.ts
     digest:
       algorithm: sha-256
-      value: "80416a9c3dd81fd8f5cd6f0c9e369d9bf5362995b3bb7fe70bb2679d1aa0c95d"
+      value: "74ec80b64dd333ce472f995a0d0389517cdd9ef725b1d485b13623c38267048c"
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-mechanics-test-ts

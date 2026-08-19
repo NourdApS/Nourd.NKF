@@ -1,6 +1,6 @@
 ---
 title: NKF-033 NKF 0.8 Guidance Review
-summary: Records the mandatory pre-cut guidance review for the NKF 0.8 versioned set under the corrected release-protocol step four — the deterministically enumerated member list from the adopter's set command, the reviewed digest of every guidance member, every correction made, and the findings recorded rather than fixed — performed before the candidate archive was cut.
+summary: Records the mandatory pre-cut guidance review for the NKF 0.8 versioned set under the corrected release-protocol step four — the deterministically enumerated member list, the reviewed digest of every guidance member, every correction made including the two the first independent release audit found that this review missed, and the findings recorded rather than fixed.
 created_at: 2026-08-19T02:45:00Z
 ---
 
@@ -20,7 +20,9 @@ The member list is not recollected. It is the exact enumeration the adopter's
 `contracts/nkf/0.8/release-set.yaml`: one hundred forty-one members across
 twenty-three classes. Twelve of them belong to the classes that carry authored
 guidance prose, and step four requires each of those to be re-read in full
-against the complete accepted NKF 0.8 rule set. Every one was.
+against the complete accepted NKF 0.8 rule set. Every one was. The digests
+below are computed from each member's exact bytes; `set` emits paths, classes,
+and modes, not digests.
 
 | Member | Class | Reviewed SHA-256 |
 | --- | --- | --- |
@@ -35,12 +37,12 @@ against the complete accepted NKF 0.8 rule set. Every one was.
 | `distribution/nkf/0.8/.agents/skills/nkf-onboarding/SKILL.md` | portable-skill | `cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837` |
 | `distribution/nkf/0.8/.claude/skills/nkf-authoring/SKILL.md` | portable-skill | `8a75eaceba8d6de4a2ef092ce5ee39e09925de949e22a8c0838b4758591c8fea` |
 | `distribution/nkf/0.8/.claude/skills/nkf-onboarding/SKILL.md` | portable-skill | `cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837` |
-| `distribution/nkf/0.8/integrations/release/nkf-release-protocol.md` | release-protocol | `ecb8f9b3e7d2834f2ea4180abb05039a672aa0851e0257186b2924df2360ce81` |
+| `distribution/nkf/0.8/integrations/release/nkf-release-protocol.md` | release-protocol | `7a0cd30f255d087403e2f9deba0f30faec8d9de7c64c430f5950dba16b86ebf6` |
 
-The four skill members are two authored files emitted to both host directories,
-and the `CLAUDE` and `GEMINI` adapters are byte-identical imports, so the
-twelve members are eight distinct byte sets. Each was read in full, not
-diffed against its predecessor.
+The twelve members are nine distinct byte sets: each portable skill is emitted
+into both host directories, and the `GEMINI` adapter is byte-identical to the
+`CLAUDE` adapter. Each byte set was read in full, not diffed against its
+predecessor.
 
 ## Corrections Made
 
@@ -70,6 +72,33 @@ following it had no instruction against editing an emitted guidance member in
 place. It now says to correct the source and regenerate, and that an edit to an
 emitted member is rejected against its own derivation.
 
+## Corrections This Review Missed
+
+The first independent release audit of the exact candidate found two stale
+sentences this review had read past, both in the release protocol itself — the
+artifact that defines this review. They are recorded here rather than only in
+the audit, because step four requires the review to record every correction and
+the honest record is that the review did not find these.
+
+**Step four described a command capability that does not exist.** It read "the
+adopter `set` command emits every member with its digest and version stamp".
+It does not: for every version carrying a release-set contract — which is every
+version this protocol governs — `set` returns the accepted release-set members
+with their paths, classes, and modes, and the branch computing digests and
+stamps is unreachable. Two other members of the same accepted set stated it
+correctly, so the release would have shipped a self-contradiction. Step four
+now states what `set` emits and that the reviewer computes each reviewed digest
+from the member's exact bytes.
+
+**Step three asserted a marker universal that is false for most of the set.**
+It read "Every artifact in the set declares the version it serves through the
+exact guidance marker". Eleven of the one hundred forty-one members carry that
+marker. The four host-adapter members carry no version literal at all — which
+this review's own next section records — and neither do the licences, schemas,
+checker, adopter, fixtures, examples, or most of the projection. Step three now
+scopes the claim to the four shipped protocols and the portable skills and
+states that the host-adapter content deliberately carries none.
+
 ## Reviewed Without Correction
 
 The four host-adapter instruction members carry no version literal at all and
@@ -85,15 +114,19 @@ table, stepping-stone sentence, and producer-promotion section state the
 
 ## Findings Recorded Rather Than Fixed
 
-**The public-documentation class is outside the generator.** Eleven
-`public-docs` members plus the two projection guides carry hand-authored
-version-bearing prose that no source generates. Sliding them for this release
-was a hand edit, and it surfaced a genuinely wrong stepping-stone table: the
-migration guide named the published 0.7 archive digest under an NKF 0.71 label
-and had no row for a 0.7 repository at all. It was corrected by hand, which is
-exactly the fragility NKF 0.8 removes from guidance and has not removed from
-the projection. Bringing the projection under the generator is beyond the
-direction [ADR 0133](../../decisions/0133-adopt-the-nkf-0-8-generated-distribution-direction.md)
+**Six public-documentation members are outside the generator.** Of the eleven
+`public-documentation` members, five are derived — the two onboarding skill
+twins and the shipped onboarding protocol are byte-identical to their
+`distribution/nkf/0.8` sources, the reference Specification copies the accepted
+Markdown, and the public adopter copies `dist` — and six are hand-authored:
+the projection README, two concept pages, and three guides. Sliding those six
+for this release was a hand edit, and it surfaced a genuinely wrong
+stepping-stone table: the migration guide named the published 0.7 archive
+digest under an NKF 0.71 label and had no row for a 0.7 repository at all. It
+was corrected by hand, which is exactly the fragility NKF 0.8 removes from
+guidance and has not removed from the projection. Bringing the projection under
+the generator is beyond the direction
+[ADR 0133](../../decisions/0133-adopt-the-nkf-0-8-generated-distribution-direction.md)
 adopted, which names the six guidance classes explicitly, so it is recorded
 here for a successor rather than widened into this release.
 
@@ -118,5 +151,7 @@ This review establishes coverage and records what was read and corrected. It
 does not establish that the guidance is true: agreement between guidance prose
 and the accepted authority is a semantic judgment, and the deterministic check
 that accompanies this review verifies only that every enumerated guidance
-member is named with a reviewed digest. The independent release audit verifies
-this review; it does not inherit its conclusions.
+member is named with a reviewed digest equal to its bytes. That two stale
+sentences survived this review and were caught by the independent audit is the
+recorded measure of how far a review's coverage claim reaches. The independent
+release audit verifies this review; it does not inherit its conclusions.

@@ -9,6 +9,8 @@
 //
 //   generate-guidance.mjs --project . --version 0.8            writes the tree
 //   generate-guidance.mjs --project . --version 0.8 --check     verifies bytes
+//   generate-guidance.mjs --project . --version 0.8 --stamp adopted
+//                                                  writes one emission class
 //
 // --check regenerates into memory and compares against the committed bytes, so
 // a hand edit to an emitted tree fails immediately instead of a release later.
@@ -119,7 +121,7 @@ async function resolvePredecessors(root, releaseVersion) {
   };
 }
 
-export async function generateGuidance({ projectRoot, releaseVersion, check }) {
+export async function generateGuidance({ projectRoot, releaseVersion, check, stamp }) {
   const root = path.resolve(projectRoot);
   const findings = await verifySourceIsVersionNeutral(root);
   if (findings.length > 0) {
@@ -141,6 +143,10 @@ export async function generateGuidance({ projectRoot, releaseVersion, check }) {
   for (const member of manifest.members ?? []) {
     const source = await readFile(path.join(root, SOURCE_ROOT, member.source), "utf8");
     for (const target of member.targets ?? []) {
+      // A stamp filter narrows the write to one emission class. Writing every
+      // target would silently repair a shipped member that differs from its
+      // derivation, which is exactly the divergence --check exists to report.
+      if (stamp !== undefined && target.stamp !== stamp) continue;
       const version = target.stamp === "adopted" ? adoptedVersion : releaseVersion;
       if (typeof version !== "string" || version === "") {
         fail(`Target ${target.path} needs a ${target.stamp} version; pass --version for release targets.`);
@@ -200,9 +206,14 @@ if (invokedDirectly) {
     const index = argv.indexOf(flag);
     return index === -1 ? undefined : argv[index + 1];
   };
+  const stamp = read("--stamp");
+  if (stamp !== undefined && !["adopted", "release"].includes(stamp)) {
+    fail("--stamp must be adopted or release.");
+  }
   await generateGuidance({
     projectRoot: read("--project") ?? ".",
     releaseVersion: read("--version"),
     check: argv.includes("--check"),
+    stamp,
   });
 }

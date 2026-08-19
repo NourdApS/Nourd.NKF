@@ -30,24 +30,28 @@ substitutes for those two facts.
    derived Schemas, the checker, the authoring and onboarding protocols, the
    portable skills and host-adapter instruction content, this protocol and
    the adoption protocol, and the fixtures, examples, and documentation
-   projection. Every artifact in the set declares the version it serves
-   through the exact guidance marker. Every version-bearing guidance member
-   — the authoring, onboarding, release, and adoption protocols, the portable
-   skills, and the host-adapter instruction content — is emitted from the
-   single version-neutral authored source with this version injected. No
-   predecessor member is copied and no emitted member is edited by hand:
-   regenerating from that source and this version alone must reproduce the
-   exact committed bytes, and a member that does not is invalid.
+   projection. The four shipped protocols and the portable skills declare
+   the version they serve through the exact guidance marker; no other class
+   carries one, and the host-adapter instruction content deliberately
+   carries no version literal at all. Every version-bearing guidance member
+   — the authoring, onboarding, release, and adoption protocols, the
+   portable skills, and the host-adapter instruction content — is emitted
+   from the single version-neutral authored source with this version
+   injected. No predecessor member is copied and no emitted member is edited
+   by hand: regenerating from that source and this version alone must
+   reproduce the exact committed bytes, and a member that does not is
+   invalid.
 4. Review every member of the versioned set against the complete current
-   rule set: enumerate the exact member list deterministically — the
-   adopter `set` command emits every member with its digest and version
-   stamp — and re-read each shipped protocol and portable skill in full
-   against this version's accepted authority pair, not only against the
-   rules that changed, correcting any sentence that describes a rule that
-   is not the current rule, including rules reversed in any earlier round.
-   Record the enumerated member list, each reviewed digest, and every
-   correction so the independent audit can verify the review covered the
-   whole set.
+   rule set: enumerate the exact member list deterministically — the adopter
+   `set` command emits every member with its class and mode, taken from the
+   accepted release-set contract — compute each reviewed member's digest
+   from its exact bytes, and re-read each shipped protocol and portable
+   skill in full against this version's accepted authority pair, not only
+   against the rules that changed, correcting any sentence that describes a
+   rule that is not the current rule, including rules reversed in any
+   earlier round. Record the enumerated member list, each reviewed digest,
+   and every correction so the independent audit can verify the review
+   covered the whole set.
 5. Prove the set against itself: the full test suite over the version's
    fixtures, deterministic checker and adopter builds, and the guidance and
    documentation verifiers. The publishing repository's own knowledge still
