@@ -28,20 +28,22 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.8 is the current accepted, published, and recommended version. Its
-content-addressed archive and release tag are identified by SHA-256
+NKF 0.8 is the current accepted, published, recommended, and producer-adopted
+version. Its content-addressed archive and release tag are identified by SHA-256
 `2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5`, published
 as an immutable private prerelease at the technically confirmed release commit
-`1c8c3194`.
+`1c8c3194`. This producer repository declares and pins that exact
+recommendation: it self-adopted 0.8 through the ordinary public Adopt
+operation, the promotion created the native accepted 0.8 Specification record
+on the digest-bound delta claim alone, and repeat public invocations return
+`current`.
 
-This producer repository has **not yet adopted NKF 0.8**. It still declares and
-pins the published NKF 0.71 archive
-`3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13`, because
-adoption is a separate deliberate act under its own Task. Until it completes,
-the recommendation is ahead of the installed pin — which is exactly what
-"published but not yet adopted" means — and the three deterministic guidance
-verifiers NKF 0.8 adds do not run in this repository's own gate, because they
-are keyed to the declared version.
+The three deterministic guidance verifiers NKF 0.8 adds now run in this
+repository's own gate. One of them — the generation check that proves every
+emitted guidance member matches its version-neutral source — is live and did
+real work during the adoption. The other two are cut-time controls that skip
+members frozen by publication, so they protect the next version at its cut
+rather than this one after it.
 
 NKF 0.71 is the deliberately small corrective successor to NKF 0.7, its
 authority accepted by
@@ -69,8 +71,8 @@ conformant 0.71 repository is non-breaking through the ordinary reviewed
 delta update, a 0.7 repository steps through the published 0.71 archive, and
 older repositories step through their published archives in turn.
 
-NKF 0.8 is published and recommended. It is not yet producer-adopted, and
-merging remains the Human Product Owner's separately authorized act.
+Merging remains the Human Product Owner's separately authorized act, as does
+any change of repository or release visibility.
 
 Every published archive carries its complete public-documentation projection
 and exact public adopter. Publication of those bytes to the separate

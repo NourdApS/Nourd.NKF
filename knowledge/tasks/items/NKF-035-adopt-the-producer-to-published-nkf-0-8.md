@@ -111,11 +111,40 @@ while the recommendation is ahead of the pin.
 ## Current Progress
 
 Created on `2026-08-19` under the Human Direction above, on the `task/NKF-035`
-branch based on `task/NKF-033` at the publication commit.
+branch based on `task/NKF-033` at the publication commit. The adoption is
+performed and the record is reconciled.
 
 ## Completion Result
 
-Not concluded.
+This producer repository is adopted to published NKF 0.8. It declares NKF 0.8,
+pins the exact published archive
+`2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5`, reports
+`current` on repeat public Adopt, and passes the complete gate under the
+accepted NKF 0.8 chain at two hundred sixty-eight of two hundred sixty-eight
+tests. `verify-recommended-release` passes, closing the published-but-not-adopted
+gap the release deliberately opened.
+
+The promotion created the native NKF 0.8 Specification record from the candidate
+Evidence representation on the digest-bound delta claim alone: three hundred
+thirty-one judgments carried by digest identity, two performed.
+
+The three guidance verifiers this release exists to enable now run here. The
+generation check is live and proved it by failing until the two adopted-version
+protocol roots were restamped. The other two skip members frozen by publication
+and report nothing on NKF 0.8; they protect the next version at its cut. That
+limit was recorded in advance by
+[`adr-0135`](../../decisions/0135-confirm-the-nkf-0-8-release-candidate.md) and
+is now demonstrated rather than predicted.
+
+Two undocumented ordering constraints were found by performing the adoption
+rather than reasoning about it, and both are recorded in the
+[producer adoption Evidence](../../evidence/release/nkf-035-nkf-0-8-producer-adoption.md):
+the accepted host chain must be declared before the promotion, because no
+ordinary Adopt route will change an integration that no longer matches its pin;
+and the adopted-version guidance must be restamped after adoption.
+
+Merging remains the Human Product Owner's separately authorized act, as does any
+change of repository or release visibility.
 
 ## Decision Applicability
 
@@ -136,13 +165,19 @@ Not concluded.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The producer declares NKF 0.8 and pins the exact published archive digest | unknown | none | none |
-| Adopt reports `updated` on transition and `current` on repeat with the host-superset integration preserved | unknown | none | none |
-| The three NKF 0.8 guidance verifiers run and pass in this repository's own gate | unknown | none | none |
-| The recommendation and the installed pin agree, so `verify-recommended-release` passes | unknown | none | none |
-| Every emitted guidance member matches its derivation at the adopted version | unknown | none | none |
-| No published NKF 0.1 through 0.8 byte and no accepted immutable record changes | unknown | none | none |
+| The producer declares NKF 0.8 and pins the exact published archive digest | proven | data-validity | none |
+| Adopt reports `updated` on transition and `current` on repeat with the host-superset integration preserved | proven | runtime-behaviour | none |
+| The three NKF 0.8 guidance verifiers run and pass in this repository's own gate | proven | runtime-behaviour | none |
+| The recommendation and the installed pin agree, so `verify-recommended-release` passes | proven | data-validity | none |
+| Every emitted guidance member matches its derivation at the adopted version | proven | runtime-behaviour | none |
+| No published NKF 0.1 through 0.8 byte and no accepted immutable record changes | proven | data-validity | none |
 
-Every capability reads `unknown` because the adoption has not yet been
-performed. Each is re-extracted against the adopted reality before this Task
-concludes.
+The third entry needs its scope stated, because "run and pass" is weaker than it
+sounds. All three verifiers execute in the gate. Only the generation check
+examines anything on a published version: it regenerates every emitted guidance
+member and compares bytes, and it failed the gate during this adoption until the
+two adopted-version protocol roots were restamped. The version-label and
+guidance-review checks skip members frozen by publication, so on NKF 0.8 they
+report zero checked. They are cut-time controls for the successor. The
+capability is `proven` for activation and for the generation check, and claims
+nothing beyond that.

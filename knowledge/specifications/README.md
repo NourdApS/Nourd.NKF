@@ -108,3 +108,7 @@ immutable historical provenance.
 ## NKF 0.71
 
 - [NKF 0.71 — Product And Technology Knowledge Format](nkf-0.71.md)
+
+## NKF 0.8
+
+- [NKF 0.8 — Product And Technology Knowledge Format](nkf-0.8.md)

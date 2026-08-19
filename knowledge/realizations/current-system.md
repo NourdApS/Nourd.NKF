@@ -133,10 +133,20 @@ All three join the accepted producer chain at NKF 0.8 and at no earlier
 version, because the installed NKF 0.71 pin byte-locks that chain — the
 refusal that made a successor version necessary.
 
-None of this is confirmed, published, recommended, or producer-adopted. The
-live producer's own guidance, chain, and pin remain exactly the published
-NKF 0.71 bytes until the separately authorized publication and the separate
-producer adoption.
+All of this is now confirmed, published, recommended, and producer-adopted.
+[ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md)
+technically confirmed the exact candidate after five independent audit rounds,
+the fifth finding the delivery clean; the archive
+`2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5` is published
+at that commit; and this producer self-adopted it through the ordinary public
+Adopt operation, recorded in the
+[producer adoption Evidence](../evidence/release/nkf-035-nkf-0-8-producer-adoption.md).
+
+The enforcement surface is active with one qualification worth carrying. The
+generation check runs against the live tree and is load-bearing. The
+version-label and guidance-review checks skip members frozen by publication, so
+on a published version they report nothing: they are cut-time controls for the
+successor rather than continuous controls for the current version.
 
 The immutable NKF 0.5 predecessor pair remains accepted through
 [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md)

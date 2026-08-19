@@ -1,26 +1,26 @@
 {
   "contract": "nkf.consumer-release-pin",
-  "nkf_version": "0.71",
+  "nkf_version": "0.8",
   "repository": "NourdApS/Nourd.NKF",
   "archive": {
-    "sha256": "3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13",
-    "tag": "release-sha256-3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13",
-    "asset_name": "nourd-nkf-sha256-3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13.tar",
-    "project_path": ".nourd/tools/nkf/releases/nourd-nkf-sha256-3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13.tar"
+    "sha256": "2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
+    "tag": "release-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
+    "asset_name": "nourd-nkf-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5.tar",
+    "project_path": ".nourd/tools/nkf/releases/nourd-nkf-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5.tar"
   },
-  "source_commit": "8727ac6ebedc61482bf8f90c546f9bf179d9f463",
-  "checker_sha256": "7f84501e47072f12e48c0f0222425f9027cdb9a4387b77f53c40f7a71cfde4a6",
+  "source_commit": "1c8c31948d73e6d79ee36c1b13985ca6db031e5b",
+  "checker_sha256": "52d491cc25da898444bf33568e92b058fca4559fd1863902ad48504899d5985a",
   "adopter": {
     "path": ".nourd/tools/nkf/nourd-nkf-adopt.mjs",
-    "sha256": "fe8945e2edfc5492f4f1cbbc4c2ca6ec8bc02626ea86a92d311edfd0d10e243d"
+    "sha256": "5e3288081d75e7ab9914f56498c3157e85be7ede7f89477f111fd09007d58d85"
   },
-  "integration_revision": 3,
+  "integration_revision": 4,
   "integration": {
     "mode": "host-superset",
     "scripts": {
       "canonical": "npm run nkf:check:pinned && npm run nkf:check:host",
       "pinned": "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .",
-      "host": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self"
+      "host": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self"
     }
   },
   "root_profile": "nkf.profile.technology"
