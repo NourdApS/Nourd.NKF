@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -160,6 +160,33 @@ describe("NKF 0.8 version dispatch", () => {
     );
     const mismatchedResult = await validateProject(options(mismatched));
     expect(ruleIds(mismatchedResult.diagnostics)).toContain("guidance.version.mismatch");
+  });
+
+  it("checks a guidance file's frontmatter self-description against the version it serves", async () => {
+    // The exact NKF 0.71 defect: a description directing an agent to prepare a
+    // predecessor's candidate under a marker declaring the current version.
+    // It shipped inside the published archive because nothing checked prose.
+    const stale = await copyFixture();
+    await mkdir(path.join(stale, ".claude/skills/nkf-onboarding"), { recursive: true });
+    await writeFile(
+      path.join(stale, ".claude/skills/nkf-onboarding/SKILL.md"),
+      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.7 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.8\n",
+      "utf8",
+    );
+    const staleResult = await validateProject(options(stale));
+    expect(ruleIds(staleResult.diagnostics)).toContain("guidance.self-description.version-mismatch");
+
+    // A predecessor named in the body is deliberate — window tables and
+    // stepping-stone chains do it — and the rule is silent there.
+    const truthful = await copyFixture();
+    await mkdir(path.join(truthful, ".claude/skills/nkf-onboarding"), { recursive: true });
+    await writeFile(
+      path.join(truthful, ".claude/skills/nkf-onboarding/SKILL.md"),
+      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.8 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.8\n\nA NKF 0.71 repository steps through its published archive.\n",
+      "utf8",
+    );
+    const truthfulResult = await validateProject(options(truthful));
+    expect(ruleIds(truthfulResult.diagnostics)).not.toContain("guidance.self-description.version-mismatch");
   });
 
   it("resolves and rejects related_tasks orientation references", async () => {

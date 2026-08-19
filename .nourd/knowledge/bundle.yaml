@@ -1758,7 +1758,7 @@ non_records:
       stable_path: tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md
       digest:
         algorithm: sha-256
-        value: "f4e57e54003c23418eb63f6b45d7cc4de6c59a256ea08a674edb1687a75b4c59"
+        value: "f47e663e9a8a6c9217f03ee09995b96577540c52ae6f2a5dc3858c991b6e104e"
       state:
         vocabulary: task-status
         value: "active"
@@ -1845,6 +1845,15 @@ non_records:
         algorithm: sha-256
         value: "80403beb0cd49f0df1708bc2e5e1130c2d69f742ce781cf6c1768e3d0033ad26"
       relationships: []
+  - path: evidence/release/nkf-033-nkf-0-8-release-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-0-8-release-audit
+      stable_path: evidence/release/nkf-033-nkf-0-8-release-audit.md
+      digest:
+        algorithm: sha-256
+        value: "73719e8251945c0bb1a3a4e23b85a25b9217e8974c7c7350d844bcd703b4f811"
+      relationships: []
   - path: evidence/release/nkf-031-nkf-0-71-release-audit.md
     kind: evidence
     document:
@@ -1925,6 +1934,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: "f0e94704aff4033825d296c5d79b3e4083a3d1cc0d3c78cdcf57a8c0567a4c27"
+      relationships: []
+  - path: evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md
+    kind: evidence
+    document:
+      id: document-nkf-0-8-version-surface-inventory
+      stable_path: evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md
+      digest:
+        algorithm: sha-256
+        value: "32fcf547b01a7db7935f0310f62d1e28a5ebd80a080180d1ff4d49979b1dc5d9"
       relationships: []
   - path: evidence/audits/nkf-028-nkf-0-7-independent-authority-audit.md
     kind: evidence
@@ -3404,7 +3422,7 @@ governed_artifacts:
     path: src/cli.ts
     digest:
       algorithm: sha-256
-      value: 5f3758d6d9e0363388882bc1a297a901286c740f7c93a89c34da1b697b5e1026
+      value: "29b41f4e9ea2c9c3989afb0088c8a527d208e36dd48abf652605836e94b48c0a"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-version-dispatch-test-ts
@@ -3412,7 +3430,7 @@ governed_artifacts:
     path: test/version-dispatch.test.ts
     digest:
       algorithm: sha-256
-      value: "74ec80b64dd333ce472f995a0d0389517cdd9ef725b1d485b13623c38267048c"
+      value: "4116368a83af3bad5067197ac85e622d9423dd6662d29addffac2f6928b8f6de"
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-mechanics-test-ts
@@ -3484,7 +3502,7 @@ governed_artifacts:
     path: test/diagnostics.test.ts
     digest:
       algorithm: sha-256
-      value: e14137922ebbdec881b2c39fe803f0ef59adac540f78ae2210ba89a1546fd527
+      value: "c9932ba026b388c6f86927fd56327e2f29d7b57ac3fc5ef47222ec85419b447e"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-dynamic-root-test-ts
@@ -3500,7 +3518,7 @@ governed_artifacts:
     path: test/extensions.test.ts
     digest:
       algorithm: sha-256
-      value: dc925766d92ea0b64d2dda005d61fd2a322565c6e5262e9f885aba84afd37391
+      value: "ab0f06b1b3bb5ea0b8c703017ca98b3918ee8bcc008902dd91512e3e28601a1d"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-helpers-ts
@@ -3588,7 +3606,7 @@ governed_artifacts:
     path: test/semantic.test.ts
     digest:
       algorithm: sha-256
-      value: 2cd762825fbca164c04b7682f91ff40f7130a308cba3268c8d12e064118591ca
+      value: "de5b40292303493e0815062f9ae60ff0d0494a76908259efec49dcd70c4dd932"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-titlecase-test-ts

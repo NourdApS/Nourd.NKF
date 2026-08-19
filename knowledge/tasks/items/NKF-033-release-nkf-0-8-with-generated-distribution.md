@@ -262,24 +262,53 @@ verification chain, so the producer cannot add the check that would have
 caught it. Both halves of this Task's remedy are therefore only reachable
 through a successor version, which is what NKF 0.8 is for.
 
-Delivered on the `task/NKF-033` branch so far, with the complete gate green at
-each handoff: release-protocol step six corrected to verify whole-set coverage
-with no surviving rule-diff instruction; a new
-[`scripts/verify-version-labels.mjs`](../../../scripts/verify-version-labels.mjs)
-that fails a version literal in a file's own frontmatter description when it
-contradicts that file's declared marker, exempting bytes identical to a frozen
-published member under one stated rule; and
-[`test/version-labels.test.ts`](../../../test/version-labels.test.ts) proving
-the check against the exact NKF 0.71 defect, against a 0.8 tree being cut,
-and against legitimate predecessor mentions in body prose.
+### Delivered
 
-Two honest limits are recorded rather than presented as complete. The verifier
-is not wired into `npm run nkf:check`, because the 0.71 pin forbids changing
-the accepted chain; its tests run inside the existing `test` stage, and the
-wiring belongs to the accepted 0.8 integration. And the verifier currently
-checks zero live files, because every description-bearing guidance member is
-frozen-identical today; its activation on a version being cut is proven by
-fixture, not by the live tree.
+Delivered on the `task/NKF-033` branch, with the complete gate green at each
+handoff:
+
+- The enforcement repair: step six corrected, the version-label verifier, and
+  the whole-set review verifier, each with fixtures failing closed on the exact
+  NKF 0.71 defect.
+- The generation topology: `guidance-source/` as the single version-neutral
+  authored source and
+  [`scripts/generate-guidance.mjs`](../../../scripts/generate-guidance.mjs) as
+  its deterministic emitter, with no emitted tree ever read as an input.
+- The accepted NKF 0.8 authority set — Specification, executable companion,
+  evaluation policy, per-rule version delta, seven Schemas, and producer
+  promotion input — accepted by
+  [`adr-0134`](../../decisions/0134-accept-the-nkf-0-8-authority-set.md) after
+  the fresh independent authority audit repaired nine blocking findings.
+- The implementation: checker dispatch and the new rule, the adopter's
+  0.71-to-0.8 upgrade and stepping-stone ladder, the generated 0.8 distribution
+  tree, 0.8 fixtures, the regenerated projection, and the version-keyed
+  accepted producer chain.
+- The pre-cut whole-set guidance review, the exhaustive version-surface
+  inventory, the candidate archive, the isolated real-producer exercise, and
+  the first independent release audit with every finding repaired.
+
+### Corrected Statements
+
+Two statements recorded earlier in this Task were true when written and are no
+longer:
+
+- The version-label verifier was recorded as checking zero live files because
+  every description-bearing member was frozen-identical. With the NKF 0.8
+  distribution tree generated it checks six live descriptions and skips
+  eighteen frozen ones, so its activation is now proven on the live tree rather
+  than only by fixture.
+- The verifiers were recorded as unwired from `npm run nkf:check` under the
+  0.71 pin. That remains true for the producer at NKF 0.71 and is now resolved
+  for NKF 0.8: the accepted producer chain is version-keyed, a repository
+  declaring NKF 0.8 must carry all three stages, and the isolated exercise runs
+  the extended chain green.
+
+### Remaining
+
+The re-cut candidate, its re-run isolated exercise, a clean second independent
+release audit, and the audit-bound technical-confirmation Decision. Publication,
+recommendation, live promotion, the separate producer adoption, and merging
+remain separately authorized Human Product Owner acts.
 
 ## Completion Result
 
@@ -318,14 +347,45 @@ Not concluded.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The versioned distribution tree is generated deterministically from one authored source with the version injected, and regeneration is byte-reproducible | unknown | none | none |
-| Generation changes only how release-set members are produced, never their accepted meaning, classes, or modes | unknown | none | none |
-| A guidance review recording no enumerated member list or no reviewed digests fails deterministically | unknown | none | none |
-| A stale version label in a frontmatter `description` fails deterministically, reproducing the exact 0.71 defect as a fixture | unknown | none | none |
-| Release-protocol step six verifies full-set coverage with no surviving rule-diff instruction | unknown | none | none |
-| Every live guidance member is re-read in full against the complete current rule set with the member list and reviewed digests recorded | unknown | none | none |
-| The live window is exactly NKF 0.8 plus NKF 0.71 with truthful stepping-stone signaling for out-of-window repositories | unknown | none | none |
-| Every version-comparing or windowing tooling surface handles the exact string `0.8`, verified exhaustively | unknown | none | none |
-| No published 0.1 through 0.71 byte and no accepted immutable record changes | unknown | none | none |
+| The versioned distribution tree is generated deterministically from one authored source with the version injected, and regeneration is byte-reproducible | proven | runtime-behaviour | none |
+| Generation changes only how release-set members are produced, never their accepted meaning, classes, or modes | proven | data-validity | none |
+| A guidance review recording no enumerated member list or no reviewed digests fails deterministically | proven | runtime-behaviour | none |
+| A stale version label in a frontmatter `description` fails deterministically, reproducing the exact 0.71 defect as a fixture | proven | runtime-behaviour | none |
+| Release-protocol step six verifies full-set coverage with no surviving rule-diff instruction | proven | data-validity | none |
+| Every live guidance member is re-read in full against the complete current rule set with the member list and reviewed digests recorded | proven | data-validity | none |
+| The live window is exactly NKF 0.8 plus NKF 0.71 with truthful stepping-stone signaling for out-of-window repositories | proven | runtime-behaviour | none |
+| Every version-comparing or windowing tooling surface handles the exact string `0.8`, verified exhaustively | proven | data-validity | none |
+| No published 0.1 through 0.71 byte and no accepted immutable record changes | proven | data-validity | none |
 | The full accepted release order is performed with independent audits preceding acceptance and confirmation | unknown | none | none |
-| The complete gate and full suite pass at every handoff on the delivered branch | unknown | none | none |
+| The complete gate and full suite pass at every handoff on the delivered branch | proven | runtime-behaviour | none |
+
+Each `proven` finding names the level actually reached and no higher.
+
+Generation is proven at `runtime-behaviour`: the generator emits the complete
+tree, `--check` reports byte identity, and the independent release audit
+rebuilt the archive byte-identically from the release commit in an isolated
+checkout. That every emitted sentence is *correct* is not proven by any of
+that and is not claimed.
+
+The whole-set review capability is proven at `data-validity` only, and the
+distinction is load-bearing rather than pedantic. What is established is that
+the enumerated member list is complete against the release set, that every
+recorded digest equals its member's bytes, and that the corrections recorded
+are present in the shipped bytes. What is *not* established is that the
+reading found everything: the first independent release audit found two stale
+sentences in the release protocol that this review had read past, and both are
+recorded in the review under their own heading. Coverage is checkable; whether
+a reviewer noticed is not.
+
+The version-surface capability is proven at `data-validity` through the
+recorded
+[version-surface inventory](../../evidence/audits/nkf-033-nkf-0-8-version-surface-inventory.md):
+sixty-five surfaces enumerated, forty-three registering `0.8`, twenty-two
+adjudicated as deliberately version-specific, and two defects found that a
+sampled pass would have missed.
+
+The release-order capability remains `unknown` until the re-cut candidate
+passes a clean independent release audit and the audit-bound
+technical-confirmation Decision is authored. The first audit round returned
+two blocking findings, so the release order is not yet complete and this Task
+cannot be completed while the capability reads `unknown`.

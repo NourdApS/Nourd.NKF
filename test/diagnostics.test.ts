@@ -10,18 +10,18 @@ import { contractRoot, repositoryRoot } from "./helpers.js";
 
 describe("stable native diagnostic implementation", () => {
   it("binds every accepted rule to exact registry metadata", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.8"], "0.8");
     const registry = loaded.executable.diagnostics.rules as Record<
       string,
       Pick<Diagnostic, "severity" | "blocking" | "phase">
     >;
-    expect(Object.keys(registry)).toHaveLength(215);
+    expect(Object.keys(registry)).toHaveLength(216);
 
     const emitter = new RuleEmitter(loaded.executable);
     for (const id of Object.keys(registry)) {
       emitter.emit(id, "Test message");
     }
-    expect(emitter.diagnostics).toHaveLength(215);
+    expect(emitter.diagnostics).toHaveLength(216);
     for (const diagnostic of emitter.diagnostics) {
       expect(diagnostic).toMatchObject({
         rule_id: diagnostic.rule_id,
@@ -31,7 +31,7 @@ describe("stable native diagnostic implementation", () => {
   });
 
   it("has an implementation reference for every accepted rule identity", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.8"], "0.8");
     const registry = Object.keys(
       loaded.executable.diagnostics.rules as Record<string, unknown>,
     );
@@ -50,7 +50,7 @@ describe("stable native diagnostic implementation", () => {
   });
 
   it("has a fixture assertion reference for every accepted rule identity", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.8"], "0.8");
     const registry = Object.keys(
       loaded.executable.diagnostics.rules as Record<string, unknown>,
     );
