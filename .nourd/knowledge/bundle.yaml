@@ -1761,7 +1761,7 @@ non_records:
         value: "b3e0e1ab966c59248752b56878aebb483c23e3c611727b4a29beb55756ac3a6c"
       state:
         vocabulary: task-status
-        value: "active"
+        value: "completed"
       owner: Nourd ApS
       decision_authority: Human Product Owner for every Product boundary, the version string, the window slide, publication authorization, visibility, and every merge; Claude technical reviewer under explicit delegation for contracts, serialization, compatibility, implementation, fixtures, tests, evidence, independent-audit coordination, and technical confirmation within the confirmed boundaries
       related_tasks:
