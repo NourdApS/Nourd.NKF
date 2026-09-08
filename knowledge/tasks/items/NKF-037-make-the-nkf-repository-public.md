@@ -151,15 +151,54 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
 ## Current Progress
 
 Created on `2026-09-08` under the Human Direction above, on the `task/NKF-037`
-branch from `master`. The Design is authored and, after the Human Product
-Owner confirmed the direction and all four open questions, adopted by
-[ADR 0136](../../decisions/0136-adopt-the-public-repository-direction.md). The
-history scan is recorded as
-[Evidence](../../evidence/audits/nkf-037-history-scan.md) and found no
-credential or third-party personal data. The policy files exist as repository
-content. The Task is stopped at the Human Product Owner's flip; verification,
-protection activation, reconciliation, and close follow it. Every mandatory
-capability reads `unknown` until then.
+branch from `master`. The Design is adopted, the Decision is accepted, the
+history is scanned, the policy files exist, the Human Product Owner made the
+repository public, the public state is verified and recorded, branch protection
+is active, and the record is reconciled and resealed.
+
+## Completion Result
+
+The `NourdApS/Nourd.NKF` repository is public. The
+[NKF Public Repository Design](../../designs/items/nkf-public-repository.md)
+is adopted by
+[ADR 0136](../../decisions/0136-adopt-the-public-repository-direction.md),
+which the Human Product Owner accepted after confirming the direction and all
+four open questions on `2026-09-08`, and which supersedes
+[ADR 0064](../../decisions/0064-release-documentation-and-adoption.md) only
+where it rejected a public repository.
+
+Before the flip, the complete history was scanned and recorded in the
+[history scan Evidence](../../evidence/audits/nkf-037-history-scan.md): 4121
+unique blobs across all refs, no credential and no third-party personal data,
+every hit a test fixture, an example domain, or a license attribution, and both
+workflows free of secrets. `SECURITY.md`, `CONTRIBUTING.md`, and
+`CODE_OF_CONDUCT.md` exist as repository content whose text the Human Product
+Owner accepts by merging.
+
+The Human Product Owner performed the visibility change. The
+[public repository observation](../../evidence/release/nkf-037-public-repository-observation.md)
+records the verified state: an anonymous shallow clone succeeds, the catalog's
+archive URL downloads anonymously with HTTP 200 and hashes to the recommended
+archive digest, the catalog fetches anonymously, and the branch-protection
+query moved from 403 to 404. Branch protection was then activated on `master`
+under the Decision's item seven: the exact-commit `Validate` check is required,
+strict, and enforced for administrators, with force pushes and deletion
+disallowed. The approving review and bypass policy remain with
+[NKF-012](NKF-012-activate-protected-merge-gate.md), whose activation condition
+is now observed true; that Task is not closed here.
+
+The front page and the current-system Realization state the public reality
+with no remaining current-state statement that the repository is private, and
+both record that the recommendation catalog still states a private channel
+because the released 0.8 and 0.71 adopters validate that literal in frozen
+bytes, with NKF 0.9 named as the remedy. No published NKF 0.1 through 0.8 byte,
+no accepted immutable record, and no catalog literal changed. The complete gate
+passes on the sealed tree at twenty-nine test files and two hundred sixty-eight
+tests with zero diagnostics.
+
+Github's secret scanning, push protection, and Dependabot security updates were
+found disabled and are recorded, not changed; enabling them is the Human
+Product Owner's settings act. Merging remains the Human Product Owner's act.
 
 ## Decision Applicability
 
@@ -180,9 +219,17 @@ capability reads `unknown` until then.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The Design and its adopting Decision exist, the Decision is accepted by the Human Product Owner, and the Design disposition is adopted | unknown | none | none |
-| The complete Git history is scanned for secrets and personal data with method, scope, and findings recorded as Evidence | unknown | none | none |
-| After the flip, anonymous clone, anonymous archive download hashing to the recommended digest, and branch-protection availability are observed and recorded | unknown | none | none |
-| No front-page or Realization statement describes the repository as private, and the catalog gap is recorded with NKF 0.9 as remedy | unknown | none | none |
-| No published byte, accepted immutable record, or catalog literal changes | unknown | none | none |
-| The complete gate passes | unknown | none | none |
+| The Design and its adopting Decision exist, the Decision is accepted by the Human Product Owner, and the Design disposition is adopted | proven | data-validity | none |
+| The complete Git history is scanned for secrets and personal data with method, scope, and findings recorded as Evidence | proven | runtime-behaviour | none |
+| After the flip, anonymous clone, anonymous archive download hashing to the recommended digest, and branch-protection availability are observed and recorded | proven | runtime-behaviour | none |
+| No front-page or Realization statement describes the repository as private, and the catalog gap is recorded with NKF 0.9 as remedy | proven | data-validity | none |
+| No published byte, accepted immutable record, or catalog literal changes | proven | data-validity | none |
+| The complete gate passes | proven | runtime-behaviour | none |
+
+The first and fourth entries are proven at `data-validity` by reading the
+records and the two documents for every current-state statement; no checker
+rule reads prose for visibility claims. The scan and observation entries are
+proven by executing the scan and the anonymous checks and recording their
+outputs in Evidence; the observations are of Github state at one moment and
+Github owns their later state. The gate entry is the observed result of one
+complete `npm run nkf:check` run on the sealed tree.
