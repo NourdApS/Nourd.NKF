@@ -145,8 +145,10 @@ directories that no longer exist.
    0.81 evaluation policy, and the per-rule 0.8-to-0.81 version delta, seeded
    by the deterministic registry diff and accepted only after an independent
    audit.
-3. Adopter and checker: plain-HTTPS catalog and archive fetch with digest
-   verification and no `gh` dependency; the recommended-release catalog shape
+3. Adopter and checker: the delta-review closure computed with the evaluation
+   policy's impact propagation in the seal and recomputed by the checker;
+   plain-HTTPS catalog and archive fetch with digest verification and no `gh`
+   dependency; the recommended-release catalog shape
    and its channel vocabulary validated from the accepted contract with a
    public value; dispatch of exactly 0.81 and 0.8; the 0.8-to-0.81 upgrade
    route; stepping-stone refusal naming the published 0.8 archive; and the
@@ -249,17 +251,20 @@ replace.
 
 Created on `2026-09-08` under the Human Direction above, on the `task/NKF-038`
 branch stacked on `task/NKF-012`. The Design is authored, and on `2026-09-08`
-the Human Product Owner confirmed each of its six boundaries verbatim, as
-recorded in the Design: `0.81` as a full successor with 0.71 dropping to
-stepping-stone history; two public channel values with 0.81 published as a
-prerelease; plain HTTPS with no Github CLI and no fallback; the
-adopter-obtaining step; the fixed three-name volatile registry; and the ten
-supporting Realizations retired to Git history rather than relabelled. While
-answering, one further defect was found and recorded in the Design's
-Unresolved Matters: the delta review closure omits the impact propagation the
-accepted Specification requires, which is how the frozen Realizations escaped
-re-review. Every mandatory capability reads `unknown` until the work is
-performed.
+the Human Product Owner confirmed each of its boundaries verbatim, as recorded
+in the Design: `0.81` as a full successor with 0.71 dropping to stepping-stone
+history; two public channel values with 0.81 published as a prerelease; plain
+HTTPS with no Github CLI and no fallback; the adopter-obtaining step; the fixed
+three-name volatile registry; the ten supporting Realizations retired to Git
+history rather than relabelled; and, after a further defect was found while
+answering — the delta review closure omits the impact propagation the accepted
+Specification requires, which is how the frozen Realizations escaped
+re-review — the repair of that defect, confirmed "7 - yes . go on".
+[ADR 0138](../../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+and
+[ADR 0139](../../decisions/0139-adopt-the-delta-closure-propagation-repair.md)
+adopt the direction and allocate the coordinate. Every mandatory capability
+reads `unknown` until the work is performed.
 
 ## Decision Applicability
 

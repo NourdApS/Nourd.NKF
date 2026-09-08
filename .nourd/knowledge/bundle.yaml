@@ -1821,7 +1821,7 @@ non_records:
       stable_path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
       digest:
         algorithm: sha-256
-        value: "9b9e08449b1c117f9086b8345f39f072555f5c865a042b357f60326e3285541f"
+        value: "87f9b4b1a0ff749193f222570ea5ee0935cd0a05feb9a2bea83a67ffd919e4aa"
       state:
         vocabulary: task-status
         value: "active"

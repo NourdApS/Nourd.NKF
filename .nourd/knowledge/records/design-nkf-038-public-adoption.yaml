@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/nkf-0-81-public-adoption.md
   digest:
     algorithm: sha-256
-    value: b631097edef68c07ab7f513e6377f26671db8815f2b9b7703be9d29a43d1cb4c
+    value: 745c78fdd88a336ea53c605b8f27d9c2441bdef2d25f42c5b573c85e615add75
 governance:
   lifecycle: living
   status: draft
@@ -87,6 +87,13 @@ sections:
     heading_path:
       - Proposed Direction
       - Stale Record Repair Under The Same Release
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-delta-closure-honours-impact-propagation
+    heading_path:
+      - Proposed Direction
+      - The Delta Closure Honours Impact Propagation
     occurrence: 1
     authority: proposal
     role: boundary
@@ -222,4 +229,5 @@ task: NKF-038
 design_disposition: adopted
 design_decisions:
   - adr-0138
-proposal_authority_effect: Adopted by ADR 0138 as the NKF 0.81 direction with the coordinate allocated; normative NKF 0.81 meaning still requires the separately accepted authority set after its independent audit and the mandatory audit-bound confirmation Decision, and the delta-closure propagation finding in Unresolved Matters awaits its own confirmation.
+  - adr-0139
+proposal_authority_effect: Adopted by ADR 0138 and ADR 0139 as the NKF 0.81 direction with the coordinate allocated and all seven boundaries confirmed; normative NKF 0.81 meaning still requires the separately accepted authority set after its independent audit and the mandatory audit-bound confirmation Decision.

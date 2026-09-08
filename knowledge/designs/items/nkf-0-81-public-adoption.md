@@ -210,6 +210,22 @@ the Human Product Owner directed.
   living-record revision.
 - Every living mention of 0.9 as the remedy becomes 0.81.
 
+### The Delta Closure Honours Impact Propagation
+
+The accepted 0.8 Specification already requires the computed delta-review
+closure to include every node reached from the changed inputs by the
+evaluation policy's impact propagation. The seal computes the closure from
+digest-changed and new nodes plus pending reconciliation only, and the
+validating checker verifies containment of the recorded closure without
+recomputing it, so the omission goes undetected. This release repairs both
+sides as a checker and adopter defect against accepted meaning: the seal
+walks the policy's propagation map from the changed inputs, and the checker
+recomputes the closure from the same inputs and refuses a claim whose recorded
+closure differs. The successor Specification states the recompute obligation
+explicitly so the two cannot drift again. Repositories already sealed under
+0.8 are not re-reviewed by implication; the first 0.81 delta review computes
+the propagated closure from that point forward.
+
 ### Fail-Closed Version Registration
 
 `0.81` is registered at every version surface the 0.71 and 0.8 releases
@@ -329,6 +345,8 @@ authored:
    excluded from the drift digest.
 6. The ten immutable supporting Realizations are retired to Git history
    rather than relabelled or succeeded by ten new records.
+7. The delta-review closure honours impact propagation in the seal and is
+   recomputed by the checker, as a defect repair against accepted meaning.
 
 The Human Product Owner confirmed all six on `2026-09-08`, verbatim: one,
 "alright . i can live with it ."; two, "we need two flags, one for
@@ -337,23 +355,11 @@ ones. but current 0.81 is still prerelease" and then "yes"; three,
 "agreed"; four, "yes"; five, "5 is ok ."; six, after asking what value
 keeping the files had, "you main goal is to have a updated and live
 documentation system, this is the whole point of NKF, we are not keeping
-anything just for the sake of keeping NKF digest happy !".
+anything just for the sake of keeping NKF digest happy !"; seven, after the
+closure defect was reported, "7 - yes . go on".
 
 ## Unresolved Matters
 
-- **The delta review closure omits impact propagation.** The accepted 0.8
-  Specification requires the computed closure to include "every node reached
-  from those inputs by the evaluation policy's impact propagation". The seal
-  in `scripts/freshness/seal-baseline-0-7.mjs` computes the closure from
-  digest-changed and new nodes plus pending reconciliation only, and the
-  validating checker verifies containment of the recorded closure without
-  recomputing it, so the omission is not caught. This is how ten frozen
-  Realizations with no edges and, separately, every dependent of a superseded
-  Decision escaped re-review. Classified as a checker and adopter defect
-  against accepted meaning, not a Specification change. Proposed for this
-  release as a seventh boundary: the seal computes propagation and the
-  checker recomputes and compares the closure. Awaits the Human Product
-  Owner's confirmation.
 - The ten retired Realizations were migrated with empty relationship lists,
   which is why no edge could have reached them; classified as a migration
   issue closed by their retirement.
