@@ -232,3 +232,5 @@ covers only guidance frontmatter. The publication entries are proven by a
 second fresh clone and an independent digest pass, recorded in the Evidence.
 The gate entry is the observed result of one complete `npm run nkf:check` run
 on the sealed tree; a later commit is observed separately.
+
+This sentence was appended without a repin to make the candidate invalid for the NKF-012 protected merge gate exercise.
