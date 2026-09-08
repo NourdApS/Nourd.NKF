@@ -1810,6 +1810,15 @@ non_records:
         algorithm: sha-256
         value: 831cb8f124b20337abad0b47440647757e9926e84476ec3c61ba517913131fb4
       relationships: []
+  - path: evidence/audits/nkf-038-nkf-0-81-independent-authority-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+      stable_path: evidence/audits/nkf-038-nkf-0-81-independent-authority-audit.md
+      digest:
+        algorithm: sha-256
+        value: "1d6c0efea789f0e44ce2f05898fb413d0333a17c0c210456f59480c41fa4ea73"
+      relationships: []
   - path: evidence/audits/nkf-033-nkf-0-71-guidance-review-finding.md
     kind: evidence
     document:
