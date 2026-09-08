@@ -834,7 +834,7 @@ non_records:
       stable_path: specifications/nkf-0.81.md
       digest:
         algorithm: sha-256
-        value: "b07e08381229fdf65b1a7bbd74caf7de210ef64cf0438fd9c2f8279246c56fe1"
+        value: b07e08381229fdf65b1a7bbd74caf7de210ef64cf0438fd9c2f8279246c56fe1
       relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -1306,7 +1306,7 @@ non_records:
       stable_path: tasks/items/NKF-024-release-nkf-0-4-dependency-security-maintenance.md
       digest:
         algorithm: sha-256
-        value: 0ffb2c346c0a398f41fa42facb1b9f5a7261fda53fdfc388c2b092bb7cfa8585
+        value: "108b563246fde737981e2cde1e7614bb7559e332c1f07af87fc675492707d7f1"
       state:
         vocabulary: task-status
         value: completed
@@ -1316,28 +1316,6 @@ non_records:
         - NKF-020
         - NKF-023
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 0ffb2c346c0a398f41fa42facb1b9f5a7261fda53fdfc388c2b092bb7cfa8585
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-024
-          task_status: completed
-          owner: Nourd ApS
-          related_tasks:
-            - NKF-020
-            - NKF-023
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: completed
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
-          related_tasks:
-            - NKF-020
-            - NKF-023
   - path: tasks/items/NKF-004-portable-presentation-guidance.md
     kind: task
     document:
@@ -1465,10 +1443,10 @@ non_records:
       stable_path: tasks/items/NKF-012-activate-protected-merge-gate.md
       digest:
         algorithm: sha-256
-        value: "1aad1b0b7aa00a3768a11b0de3ae244b2ff7898cb4dcee428289fe87fa9c1e50"
+        value: 1aad1b0b7aa00a3768a11b0de3ae244b2ff7898cb4dcee428289fe87fa9c1e50
       state:
         vocabulary: task-status
-        value: "completed"
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner for every protection setting, the confirmation Decision, and every merge; Claude technical reviewer under explicit delegation for the native rewrite, the invalid-candidate exercise, Evidence recording, Realization reconciliation, the audit request, the confirmation text, and the gate runs within the confirmed boundaries
       related_tasks:
@@ -1830,10 +1808,10 @@ non_records:
       stable_path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
       digest:
         algorithm: sha-256
-        value: "87f9b4b1a0ff749193f222570ea5ee0935cd0a05feb9a2bea83a67ffd919e4aa"
+        value: 87f9b4b1a0ff749193f222570ea5ee0935cd0a05feb9a2bea83a67ffd919e4aa
       state:
         vocabulary: task-status
-        value: "active"
+        value: active
       owner: Nourd ApS
       decision_authority: Human Product Owner for every Product boundary, each format-boundary confirmation, authority acceptance, publication, recommendation, promotion, and every merge; Claude technical reviewer under explicit delegation for design, derivation, implementation, fixtures, tests, guidance review, audit requests, Evidence, and record reconciliation within the confirmed boundaries
       related_tasks:
@@ -1937,7 +1915,7 @@ non_records:
       stable_path: evidence/release/nkf-012-protected-merge-gate-observation.md
       digest:
         algorithm: sha-256
-        value: "bd69a278d7b835d8dc6e4061c8fe1234d2994d08edd061cf30de4eaeab4704fa"
+        value: bd69a278d7b835d8dc6e4061c8fe1234d2994d08edd061cf30de4eaeab4704fa
       relationships: []
   - path: evidence/release/nkf-038-supporting-realizations-retirement.md
     kind: evidence
@@ -1946,7 +1924,7 @@ non_records:
       stable_path: evidence/release/nkf-038-supporting-realizations-retirement.md
       digest:
         algorithm: sha-256
-        value: "c980afdbe6b68f5e210defa57aa7e82183f95501a9d31bf5a862d28f316a0008"
+        value: c980afdbe6b68f5e210defa57aa7e82183f95501a9d31bf5a862d28f316a0008
       relationships: []
   - path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
     kind: evidence
@@ -1982,7 +1960,7 @@ non_records:
       stable_path: evidence/audits/nkf-012-completion-audit.md
       digest:
         algorithm: sha-256
-        value: "831cb8f124b20337abad0b47440647757e9926e84476ec3c61ba517913131fb4"
+        value: 831cb8f124b20337abad0b47440647757e9926e84476ec3c61ba517913131fb4
       relationships: []
   - path: evidence/audits/nkf-033-nkf-0-71-guidance-review-finding.md
     kind: evidence
@@ -3247,7 +3225,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "ff6b7af449659ced0c27e8cd9c922077fd4c51721532e3f6657641e9c4f0d2d7"
+      value: ff6b7af449659ced0c27e8cd9c922077fd4c51721532e3f6657641e9c4f0d2d7
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

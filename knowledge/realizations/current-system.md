@@ -515,24 +515,18 @@ Complete Product Or Technology Topology
 | Latest result | `.nourd/validation-result.json` | Persists the latest full-bundle observation for the repository's currently declared 0.7 state and may become stale after any governed input changes | Conformance observation only; authority-binding and Governing Use remain separately reported |
 | Release tooling | `contracts/nkf/0.6/release-set.yaml`, `contracts/nkf/0.7/release-set.yaml`, `scripts/package-release.mjs`, `scripts/release/`, `scripts/verify-recommended-release.mjs` | Version-dispatched packaging and verification; the 0.7 set deterministically constructs the exact published 165-member archive, and the recommended-release verifier derives every expectation from the per-version Decision-bound binding registry with no hand-edited version literal | Archive reproduction and catalog verification are deterministic checks; they accept nothing |
 
-Supporting current Realizations provide the detailed mappings:
-
-- [Contracts And Schemas](items/contracts-and-schemas.md)
-- [Checker And Validation](items/checker-and-validation.md)
-- [Layered Contract Enforcement](items/layered-contract-enforcement.md)
-- [NKF 0.4 Security Maintenance](items/nkf-0.4-security-maintenance.md)
-- [Agent-Led Initial Onboarding](items/agent-led-initial-onboarding.md)
-- [Portable Knowledge Topology](items/portable-knowledge-topology.md)
-- [Release Documentation And Adoption](items/release-documentation-and-adoption.md)
-- [Self-Hosting](items/self-hosting.md)
-- [Release Package](items/release-package.md)
-
-Those supporting Realizations remain bound to the NKF version current when
-each was last confirmed. They are predecessor detail, and this consolidated
-record is the current 0.7 account where they disagree.
+Ten frozen supporting Realizations that once carried per-area detail were
+retired from the working tree to Git history on `2026-09-08` under
+[ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md),
+each having described a state that no longer existed; their exact bytes,
+confirming Decisions, and removal are recorded in the
+[retirement Evidence](../evidence/release/nkf-038-supporting-realizations-retirement.md).
+This consolidated record is the one current account, and the durable mapping
+above is where their components are described today.
 
 The confirmed
-[Initial Greenfield Onboarding](items/initial-greenfield-onboarding.md)
+Initial Greenfield Onboarding Realization, retired to Git history under the
+[retirement Evidence](../evidence/release/nkf-038-supporting-realizations-retirement.md),
 Realization remains immutable predecessor provenance. [ADR 0069](../decisions/0069-agent-led-initial-onboarding.md) supersedes its
 deterministic semantic-eligibility behavior, so it is not current onboarding
 guidance.

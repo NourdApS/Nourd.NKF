@@ -2,13 +2,6 @@
 title: "NKF-024: Release NKF 0.4 Dependency Security Maintenance"
 summary: Ship a narrowly scoped non-breaking NKF 0.4 release that replaces the vulnerable fast-uri and nanoid dependency versions without changing NKF 0.3 meaning or any frozen 0.3 byte.
 created_at: 2026-08-11T13:52:19Z
-task_id: NKF-024
-task_status: completed
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
-related_tasks:
-  - NKF-020
-  - NKF-023
 ---
 
 # NKF-024: Release NKF 0.4 Dependency Security Maintenance
@@ -113,7 +106,7 @@ post-adoption audit before this Task concludes.
   0.3 complete-set member under the `0.3` coordinate;
 - introducing new format vocabulary, topology, authority meaning, validation
   semantics, public operations, onboarding categories, or Root Profiles;
-- implementing deferred [NKF-021](../deferred/NKF-021-task-scope-gate.md),
+- implementing deferred [NKF-021](NKF-021-task-scope-gate.md),
   acceptance-binding verification, protected-branch enforcement, or any other
   deferred Task;
 - broad dependency modernization unrelated to the two advisories;
@@ -224,7 +217,7 @@ post-adoption audit before this Task concludes.
   tests. Ordinary 0.3-to-0.4 Adopt preserves the complete knowledge tree and
   returns `current` on repeat; 0.1 and 0.2 remain approval-gated and preserving.
 - The successor
-  [NKF 0.4 Security Maintenance Realization](../../realizations/current/nkf-0.4-security-maintenance.md)
+  [NKF 0.4 Security Maintenance Realization, retired to Git history](../../evidence/release/nkf-038-supporting-realizations-retirement.md)
   records the implementation mapping and is exactly confirmed by the later
   delegated confirmation Decision after clean candidate audit.
 - The first private archive was superseded before publication after its
