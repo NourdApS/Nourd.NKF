@@ -105,12 +105,13 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
 - Any NKF 0.9 work: the adopter's plain-HTTPS fetch, the channel vocabulary
   moving into the accepted contract, the regenerated public-docs prose, and the
   adoption protocol's adopter-obtaining step.
-- Authoring community policy content — security response, contribution,
-  conduct — beyond recording the Human Product Owner's decision about whether
-  and when they exist.
-- Activating the protected merge gate, unless the Human Product Owner directs
-  it within this Task; otherwise it stays with
-  [NKF-012](NKF-012-activate-protected-merge-gate.md).
+- Accepting the security-response, contribution, and conduct policy text. The
+  Human Product Owner confirmed on `2026-09-08` that the files exist at the
+  flip; their text is authored under the recorded delegation and accepted only
+  by the Human Product Owner's merge.
+- Closing [NKF-012](NKF-012-activate-protected-merge-gate.md). The Human
+  Product Owner confirmed activating branch protection within this Task after
+  the flip; the deferred Task's own record is revised separately.
 - Changing any accepted meaning, contract, or published byte.
 
 ## Acceptance Criteria
