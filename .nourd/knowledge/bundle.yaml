@@ -1809,6 +1809,24 @@ non_records:
         - NKF-035
         - NKF-033
       relationships: []
+  - path: tasks/items/NKF-037-make-the-nkf-repository-public.md
+    kind: task
+    document:
+      id: NKF-037
+      stable_path: tasks/items/NKF-037-make-the-nkf-repository-public.md
+      digest:
+        algorithm: sha-256
+        value: "bfb62380572e181f19b3316cd3129b26ff37b8925dceceb20b5938d252c70dab"
+      state:
+        vocabulary: task-status
+        value: "completed"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for the visibility Decision, the visibility act, every community-policy question, and every merge; Claude technical reviewer under explicit delegation for the Design and Decision text, the history scan, the post-flip verification, the reconciliation edits, the Evidence recording, and the gate runs within the confirmed boundaries
+      related_tasks:
+        - NKF-036
+        - NKF-012
+        - NKF-009
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md
@@ -1888,6 +1906,15 @@ non_records:
         algorithm: sha-256
         value: "45e5d36166a2e489a900e6aa764820e219a613e7082c44525d1efafa83121433"
       relationships: []
+  - path: evidence/release/nkf-037-public-repository-observation.md
+    kind: evidence
+    document:
+      id: document-nkf-037-public-repository-observation
+      stable_path: evidence/release/nkf-037-public-repository-observation.md
+      digest:
+        algorithm: sha-256
+        value: "2f1fe16df309bd4f9babbb1315590da09908a0a78deef646b4985820f1a2a6f4"
+      relationships: []
   - path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
     kind: evidence
     document:
@@ -1905,6 +1932,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 3a8307b9a42b15392e73fc5c826402ea694ef6a8e7a6985511473effd534598f
+      relationships: []
+  - path: evidence/audits/nkf-037-history-scan.md
+    kind: evidence
+    document:
+      id: document-nkf-037-history-scan
+      stable_path: evidence/audits/nkf-037-history-scan.md
+      digest:
+        algorithm: sha-256
+        value: "134099a0c517bb2faf951dc675dc6feb4b7e1ea67e7a341040fc547312c7f340"
       relationships: []
   - path: evidence/audits/nkf-033-nkf-0-71-guidance-review-finding.md
     kind: evidence
@@ -3169,7 +3205,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "b5c63324803416e6cbabe5ad566ab4022ae70f145fc017ab3292d16bfc68f1db"
+      value: "98b0ad7ab8ab9d2c28d8817cb39778d99ac52b15e873dfcd28e287f8d97a85f2"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

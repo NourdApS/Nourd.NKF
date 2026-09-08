@@ -507,7 +507,7 @@ Complete Product Or Technology Topology
 | Neutral authoring and onboarding procedures | `integrations/ai/`, `integrations/onboarding/`, portable skills | Installed 0.8 vendor-neutral protocols and portable skills, emitted from the one version-neutral source | Bytes carried by the published archive; repository installation verified by the guidance verifiers |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Twelve explicit host surfaces plus the producer-only Task-authorization policy; exact registered bindings verified at NKF 0.8 | Verified by `npm run verify:agent-guidance`; acceptance and confirmation remain separate |
 | Project enforcement command | `package.json` | Canonical pinned-first `npm run nkf:check` followed by the exact preserved producer host gate | Pristine-clone runtime behavior independently verified in [0.4 producer-adoption Evidence](../evidence/audits/nkf-024-nkf-0-4-producer-adoption-audit.md) and preserved unchanged through 0.5 and 0.6 adoption |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Checked-in workflow invokes the canonical command with complete Git history; its last observed success on `master` was merge commit `d3f0e84f...` on `2026-08-19` | Github owns the time-bound run state and each later commit is observed separately; protected enforcement remains deferred to [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Checked-in workflow invokes the canonical command with complete Git history; its last observed success on `master` was merge commit `d3f0e84f...` on `2026-08-19` | Github owns the time-bound run state and each later commit is observed separately; its `Validate` check is required on `master` since `2026-09-08`, while the approving review and bypass policy remain deferred to [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) |
 | Consumer adopter | `dist/nourd-nkf-adopt.mjs`, `.nourd/tools/nkf/nourd-nkf-adopt.mjs` | Published and producer-installed 0.8 adopter SHA-256 `5e328808...d58d85`; `scripts/adoption/nourd-nkf-adopt.mjs` remains a build input rather than a runnable command | Reproduced deterministically by `npm run verify:adopter`, bound by [ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md); installed byte agreement verified by the pin |
 | Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge Product and Technology assessment, sealing, transaction, rollback, and reviewed native 0.7 graph baselining beneath public Adopt | Exercised by the 0.7 adopter suite; consumer onboarding remains a separate operational act |
 | Public documentation | `public-docs/` and versioned archives | The published 0.7 archive contains the complete public projection, conformant examples, the exact 0.7 Specification, and the public adopter | Verified by `npm run verify:public-docs`; separate docs-repository publication is not claimed |
@@ -650,10 +650,17 @@ The repository operationally moved from `kaveh6202/Nourd.NKF` to
 `NourdApS/Nourd.NKF`. Historical references that are correct immutable
 provenance are preserved unchanged; only current identity, executable
 distribution and adoption behavior, and stale mutable documentation were
-reconciled, each after explicit classification. The repository remains
-private, and its releases remain private prereleases; no NKF version changes
-visibility by implication and licensing preparation does not make the
-repository public.
+reconciled, each after explicit classification. The repository was private
+until `2026-09-08`, when the Human Product Owner made it public under
+[ADR 0136](../decisions/0136-adopt-the-public-repository-direction.md); its
+releases are prereleases whose archives now download by tag without
+authentication, as recorded in the
+[public repository observation](../evidence/release/nkf-037-public-repository-observation.md).
+No NKF version changed visibility by implication and licensing preparation did
+not make the repository public; a Decision and a human act did. The
+recommendation catalog still states a private channel because the released
+0.8 and 0.71 adopters validate that literal in frozen bytes; the gap is
+recorded with NKF 0.9 as its remedy.
 
 The workflow exists in the repository and on remote `master`. The 0.3
 recommendation was human-merged through pull request 6 at `master` commit
@@ -682,11 +689,15 @@ branches, merged to `master` on `2026-08-19`. Github,
 rather than this Realization, remains authoritative for time-bound workflow
 state.
 
-Github returned HTTP `403` for both branch-protection and repository-ruleset
-access because the repository is private under the current plan. The required
-check, review ownership, bypass controls, and blocked invalid pull-request
-observation therefore remain unavailable and unconfirmed. No repository
-visibility or subscription change was made.
+While the repository was private, Github returned HTTP `403` for both
+branch-protection and repository-ruleset access under the current plan. After
+the `2026-09-08` visibility change the same query returned `404`, not
+protected, and branch protection was then activated on `master` under
+[ADR 0136](../decisions/0136-adopt-the-public-repository-direction.md):
+the exact-commit `Validate` check is required, strict, and enforced for
+administrators, with force pushes and deletion disallowed. Review ownership,
+bypass controls, and the blocked invalid pull-request observation remain
+unconfigured and unconfirmed.
 
 [NKF-011](../tasks/items/NKF-011-enforce-nkf-contracts.md) is complete for its confirmed authoring guidance, deterministic local
 gate, and active exact-commit workflow. Deferred [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) owns the required
