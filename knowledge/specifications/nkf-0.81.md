@@ -81,8 +81,8 @@ exactly three volatile operating-system basenames is recorded in inspection
 and excluded from the sealed drift digest, with every other entry protected as
 before. The checker recomputes the delta-review closure and refuses a claim
 whose recorded closure differs from the recomputed one. Live support slides
-to exactly the current version plus one predecessor — NKF 0.81 plus NKF 0.8 — with NKF 0.71 stepping
-through the published 0.8 archive. It adds no deferred Product capability and
+to exactly the current version plus one predecessor — NKF 0.81 plus NKF 0.8 —
+with NKF 0.71 stepping through the published 0.8 archive. It adds no deferred Product capability and
 does not rewrite any published 0.8 member.
 
 ## Purpose
@@ -4109,7 +4109,8 @@ to bind exactly the six project schemas enumerated by the Validation Result
 contract in that result.
 
 The recommended-release schema,
-`contracts/nkf/0.81/schemas/recommended-release.schema.json`, with identity `urn:nkf:0.81:schema:recommended-release`, validates the
+`contracts/nkf/0.81/schemas/recommended-release.schema.json`, with
+identity `urn:nkf:0.81:schema:recommended-release`, validates the
 recommended-release catalog only. Like the release-manifest schema it is not a
 project declaration schema, does not expand project Governed Validation
 Inputs, and is not included in `validation_result.contract_artifacts.schemas`;

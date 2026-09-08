@@ -9,7 +9,7 @@ authority:
   version_delta_path: contracts/nkf/0.81/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: fff61407a36d78f35b591b4cbc280e9b5fc830e79b0660aa3ac3d865092afc28
+    value: b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45
   freshness_policy_digest:
     algorithm: sha-256
     value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
@@ -2325,7 +2325,7 @@ freshness:
     path: contracts/nkf/0.81/freshness-policy.yaml
     digest:
       algorithm: sha-256
-      value: a870dc037364776b927e93705655d3f4572407c65852c4e5a258aa7d5bafe4a4
+      value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
     schema: urn:nkf:0.81:schema:freshness-policy
     closed: true
     required_fields: [contract, nkf_version, id, classes, purposes, mappings]
