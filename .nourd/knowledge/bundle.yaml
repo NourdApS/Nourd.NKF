@@ -3160,7 +3160,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "427bdb4ec3bd60e02f83a80cf471cbfbd057ad1428ddc9da7007d6b842e0bc6d"
+      value: "ac3dafddbf46495feb9645f175f3240d213a3b99a279c53982a59504f94b5eaa"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
