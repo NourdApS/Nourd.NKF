@@ -1902,6 +1902,15 @@ non_records:
         algorithm: sha-256
         value: 2f1fe16df309bd4f9babbb1315590da09908a0a78deef646b4985820f1a2a6f4
       relationships: []
+  - path: evidence/release/nkf-012-protected-merge-gate-observation.md
+    kind: evidence
+    document:
+      id: document-nkf-012-protected-merge-gate-observation
+      stable_path: evidence/release/nkf-012-protected-merge-gate-observation.md
+      digest:
+        algorithm: sha-256
+        value: "fcff33c266131c4366a956b3d2f8e34690debec8f17f8684f49c6ba80684f3d3"
+      relationships: []
   - path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
     kind: evidence
     document:
@@ -3192,7 +3201,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: 98b0ad7ab8ab9d2c28d8817cb39778d99ac52b15e873dfcd28e287f8d97a85f2
+      value: "f785bc2763ccd1d006342ad572990ab6b49cf154262f5c3e6ca3633785996c41"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
