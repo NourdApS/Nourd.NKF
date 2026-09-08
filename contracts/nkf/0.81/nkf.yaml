@@ -9,7 +9,7 @@ authority:
   version_delta_path: contracts/nkf/0.81/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: c03c07f2971f65d5744a2554021902a748782c87330eb8fe98aa25d5c9ecb5bb
+    value: fff61407a36d78f35b591b4cbc280e9b5fc830e79b0660aa3ac3d865092afc28
   freshness_policy_digest:
     algorithm: sha-256
     value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
@@ -4911,7 +4911,7 @@ compatibility:
         contract: {const: nkf.producer-candidate-promotion}
         nkf_version: {const: "0.81"}
         repository: {const: NourdApS/Nourd.NKF}
-        task: {const: NKF-033}
+        task: {const: NKF-038}
         specification:
           closed: true
           required_fields: [path, digest]
@@ -4945,7 +4945,7 @@ compatibility:
             type: specification
             body_contract: nkf.specification
             title: NKF 0.81 — Product And Technology Knowledge Format
-            task: NKF-033
+            task: NKF-038
             source.path: specifications/nkf-0.81.md
             source.stable_path: specifications/nkf-0.81.md
             source.digest: exact-specification-binding
@@ -4963,21 +4963,21 @@ compatibility:
         authority: exact-accepting-decision
         decision_must_explicitly_accept: [specification, executable, freshness_policy, version_delta, serialized-input-digest]
         predecessor_release_authority:
-          decision: adr-0131
+          decision: adr-0134
           preservation: exact-unchanged-governed-graph-visible-accepted-history
         decision_must_explicitly_supersede:
-          decision: adr-0131
-          exact_subject: adr-0131-release-authority-selection
+          decision: adr-0134
+          exact_subject: adr-0134-release-authority-selection
           other-historical-acceptance-and-conclusions: preserved
         validation_or-input-proves-acceptance: false
     required_exact_inputs:
       source_repository_identity: NourdApS/Nourd.NKF
-      owning_task: NKF-033
+      owning_task: NKF-038
       specification:
         id: nkf-0.81-specification
         path: knowledge/specifications/nkf-0.81.md
         digest: exact-authority-markdown-digest
-        producer_0_71_representation: non-record-kind-evidence-at-same-exact-path
+        producer_0_8_representation: non-record-kind-evidence-at-same-exact-path
       executable:
         path: contracts/nkf/0.81/nkf.yaml
         digest: exact-accepted-executable-digest
@@ -5013,10 +5013,10 @@ compatibility:
       - complete-native-record-declaration-valid-under-accepted-0.81-contract
       - declaration-source-digest-equals-exact-candidate-markdown
       - declaration-governance-is-immutable-accepted
-      - declaration-task-is-NKF-033
+      - declaration-task-is-NKF-038
       - declaration-authority-and-acceptance-binding-match-exact-accepting-decision
       - accepting-decision-binds-exact-serialized-input-digest
-      - accepting-decision-explicitly-supersedes-only-adr-0131-release-authority-selection
+      - accepting-decision-explicitly-supersedes-only-adr-0134-release-authority-selection
       - delta-review-performed-set-contains-computed-closure-for-post-promotion-candidate
     exact_transaction:
       remove:

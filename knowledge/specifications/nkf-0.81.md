@@ -80,8 +80,8 @@ first where to obtain the adopter and how to verify it. A closed registry of
 exactly three volatile operating-system basenames is recorded in inspection
 and excluded from the sealed drift digest, with every other entry protected as
 before. The checker recomputes the delta-review closure and refuses a claim
-whose recorded closure differs from the recomputed one. Live support slides to exactly the current
-version plus one predecessor — NKF 0.81 plus NKF 0.8 — with NKF 0.71 stepping
+whose recorded closure differs from the recomputed one. Live support slides
+to exactly the current version plus one predecessor — NKF 0.81 plus NKF 0.8 — with NKF 0.71 stepping
 through the published 0.8 archive. It adds no deferred Product capability and
 does not rewrite any published 0.8 member.
 
@@ -186,7 +186,7 @@ candidate Evidence document representation, and creates the native 0.81
 Specification declaration at the exact supplied declaration destination,
 lifecycle `immutable`, status `accepted`, bound to the exact accepting
 Decision, source digest,
-[NKF-033](../tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md),
+[NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md),
 and the complete exact section and relationship declaration supplied by the
 accepted promotion input. This promotion applies no identity succession and
 no stable-path migration: the predecessor performed the one deliberate
@@ -264,11 +264,18 @@ executable state one neutral realizations layout explicitly, corrected the
 evaluation-policy version labels, and made the deterministic Task conclusion
 seal-completing under a closed mechanical carry through
 [ADR 0131](../decisions/0131-accept-the-nkf-0-71-authority-set.md).
-This NKF 0.81 revision preserves that complete predecessor meaning and adds
-only the derived versioned guidance distribution, the checked guidance
-self-description, the enumerated whole-set guidance review and its audit
-verification, and the window slide adopted by
-[ADR 0133](../decisions/0133-adopt-the-nkf-0-8-generated-distribution-direction.md).
+NKF 0.8 then derived every version-bearing guidance member from one
+version-neutral source, made a guidance file's self-description a checked
+position, and bound the whole-set guidance review to the enumerated release
+set through
+[ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md). This NKF
+0.81 revision preserves that complete predecessor meaning and adds only the
+recommended-release catalog contract with its closed channel vocabulary, the
+volatile-metadata registry, the checker's obligation to recompute the
+delta-review closure, and the window slide adopted by
+[ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+and
+[ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md).
 Earlier versions remain immutable authority for repositories that declare
 them, and consumers update deliberately.
 
@@ -2252,7 +2259,8 @@ recorded closure differs from the closure the checker recomputes is refused
 the same way. Tooling published under NKF 0.7 through NKF 0.8 recorded
 closures without the impact-propagation term; baselines sealed under those
 versions stand as sealed under their tooling, and the first delta review
-under NKF 0.81 computes the propagated closure from that point. A delta claim over a graph
+under NKF 0.81 computes the propagated closure from that point. A delta claim
+over a graph
 whose completeness is missing, disputed, or unprovable — a missing or
 disputed predecessor baseline, an unresolved succession chain, an unsupported
 policy or declaration, or any condition this Specification already maps to
@@ -4100,8 +4108,8 @@ Inputs, and is not included in
 to bind exactly the six project schemas enumerated by the Validation Result
 contract in that result.
 
-The recommended-release schema, `contracts/nkf/0.81/schemas/recommended-release.schema.json`
-with identity `urn:nkf:0.81:schema:recommended-release`, validates the
+The recommended-release schema,
+`contracts/nkf/0.81/schemas/recommended-release.schema.json`, with identity `urn:nkf:0.81:schema:recommended-release`, validates the
 recommended-release catalog only. Like the release-manifest schema it is not a
 project declaration schema, does not expand project Governed Validation
 Inputs, and is not included in `validation_result.contract_artifacts.schemas`;

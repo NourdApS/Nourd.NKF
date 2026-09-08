@@ -834,7 +834,7 @@ non_records:
       stable_path: specifications/nkf-0.81.md
       digest:
         algorithm: sha-256
-        value: "c03c07f2971f65d5744a2554021902a748782c87330eb8fe98aa25d5c9ecb5bb"
+        value: "fff61407a36d78f35b591b4cbc280e9b5fc830e79b0660aa3ac3d865092afc28"
       relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -1854,6 +1854,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 9f942eae2b25417d3f4ade577587d04577982aa969f51a6ac045e83865cc431a
+      relationships: []
+  - path: evidence/release/nkf-0.81-producer-promotion.yaml
+    kind: evidence
+    document:
+      id: document-nkf-0-81-producer-promotion
+      stable_path: evidence/release/nkf-0.81-producer-promotion.yaml
+      digest:
+        algorithm: sha-256
+        value: "2a9182b2a04878d25b859ed5821b8e1a2921251e9b92ecf8a65a93e1a2f75829"
       relationships: []
   - path: evidence/release/nkf-0.8-producer-promotion.yaml
     kind: evidence

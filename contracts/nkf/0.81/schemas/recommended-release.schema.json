@@ -8,12 +8,12 @@
     "markdown_path": "knowledge/specifications/nkf-0.81.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "c03c07f2971f65d5744a2554021902a748782c87330eb8fe98aa25d5c9ecb5bb"
+      "value": "fff61407a36d78f35b591b4cbc280e9b5fc830e79b0660aa3ac3d865092afc28"
     },
     "executable_path": "contracts/nkf/0.81/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "a4a7762aa90550f91633ac636ac11a49b0c4982cda871ca94159c37596af696e"
+      "value": "46eb893672bd13703e41421a3dc750414bf4511036fd0601427bc8e3e9897326"
     }
   },
   "type": "object",
