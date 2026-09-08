@@ -2,12 +2,11 @@
 // 0.8 base schemas by the 0.8-to-0.81 coordinate delta, plus the new
 // recommended-release schema derived from the 0.81 executable companion.
 //
-// That delta is coordinate rebinding alone. NKF 0.81 adds one registry rule,
-// `guidance.self-description.version-mismatch`, and the Schemas do not
-// enumerate rule identifiers, so no schema shape changes. Stating that here
-// is the point of a per-version generator: the file records which delta this
-// version's Schemas actually carry, rather than pretending every version's
-// derivation is the same operation.
+// The 0.8-to-0.81 rule delta adds one registry rule,
+// `freshness.claim.computed-closure-not-reproduced`, which the Schemas do not
+// enumerate; the seven rebound Schemas therefore change only their
+// coordinates. The eighth Schema is new: the recommended-release catalog
+// becomes an accepted contract in 0.81 and its closed shape is stated here.
 //
 // The generator derives structure from the accepted authority pair; it
 // supplies no meaning of its own.
@@ -149,7 +148,7 @@ function recommendedReleaseSchema() {
     },
     allOf: [
       { if: { properties: { channel: { const: "internal-exact-candidate" } } }, then: { properties: { release: { properties: { visibility: { const: "unpublished" }, prerelease: { const: true } } }, archive: { properties: { url: { type: "null" } } } } } },
-      { if: { properties: { channel: { const: "internal-private-github-prerelease" } } }, then: { properties: { release: { properties: { visibility: { const: "private" }, prerelease: { const: true } } } } } },
+      { if: { properties: { channel: { const: "internal-private-github-prerelease" } } }, then: { properties: { release: { properties: { visibility: { const: "private" }, prerelease: { const: true } } }, nkf_version: { enum: ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"] } } } },
       { if: { properties: { channel: { const: "public-github-prerelease" } } }, then: { properties: { release: { properties: { visibility: { const: "public" }, prerelease: { const: true } } } } } },
       { if: { properties: { channel: { const: "public-github-release" } } }, then: { properties: { release: { properties: { visibility: { const: "public" }, prerelease: { const: false } } } } } },
     ],

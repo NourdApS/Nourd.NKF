@@ -9,10 +9,10 @@ authority:
   version_delta_path: contracts/nkf/0.81/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: b07e08381229fdf65b1a7bbd74caf7de210ef64cf0438fd9c2f8279246c56fe1
+    value: c03c07f2971f65d5744a2554021902a748782c87330eb8fe98aa25d5c9ecb5bb
   freshness_policy_digest:
     algorithm: sha-256
-    value: 3a1874f550cb0c0da10491b2a7b692defd9885f2f8aef6c555596c0a8d6103ec
+    value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
   version_delta_digest:
     algorithm: sha-256
     value: 9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42
@@ -33,6 +33,78 @@ authority:
     version_delta_digest:
       algorithm: sha-256
       value: cc17f23a44afcf56b107f3e76e4d761779a4225bd2f8955c51d9781193c9c8b9
+  governing_decisions:
+    - ADR-0001
+    - ADR-0002
+    - ADR-0003
+    - ADR-0005
+    - ADR-0006
+    - ADR-0007
+    - ADR-0008
+    - ADR-0009
+    - ADR-0010
+    - ADR-0011
+    - ADR-0012
+    - ADR-0013
+    - ADR-0014
+    - ADR-0015
+    - ADR-0016
+    - ADR-0017
+    - ADR-0018
+    - ADR-0019
+    - ADR-0020
+    - ADR-0021
+    - ADR-0022
+    - ADR-0024
+    - ADR-0025
+    - ADR-0026
+    - ADR-0027
+    - ADR-0028
+    - ADR-0029
+    - ADR-0032
+    - ADR-0034
+    - ADR-0035
+    - ADR-0036
+    - ADR-0038
+    - ADR-0039
+    - ADR-0042
+    - ADR-0043
+    - ADR-0044
+    - ADR-0045
+    - ADR-0049
+    - ADR-0050
+    - ADR-0053
+    - ADR-0054
+    - ADR-0055
+    - ADR-0056
+    - ADR-0058
+    - ADR-0071
+    - ADR-0072
+    - ADR-0073
+    - ADR-0076
+    - ADR-0077
+    - ADR-0078
+    - ADR-0079
+    - ADR-0109
+    - ADR-0113
+    - ADR-0115
+    - ADR-0119
+    - ADR-0121
+    - ADR-0125
+    - ADR-0126
+    - ADR-0128
+    - ADR-0130
+    - ADR-0131
+    - ADR-0133
+    - ADR-0134
+    - ADR-0135
+    - ADR-0136
+    - ADR-0137
+    - ADR-0138
+    - ADR-0139
+  conflict_behavior: fail-closed
+  semantic_acceptance_from_validation: false
+  realization_confirmation_from_validation: false
 
 versioning:
   coordinate: major-minor
@@ -739,7 +811,7 @@ bundle:
     closed: true
     required_fields: [policy, baseline]
     fields:
-      policy: {const: nkf.freshness-policy.0.8}
+      policy: {const: nkf.freshness-policy.0.81}
       baseline:
         const: .nourd/knowledge/freshness/baseline.yaml
   governed_artifact:
@@ -1101,9 +1173,9 @@ portable_topology:
     named_human_or_agent_reviewer: required
     baseline_seal_before_apply: required
     silent_semantic_confirmation: forbidden
-  producer_candidate_promotion_0_71_to_0_8:
+  producer_candidate_promotion_0_8_to_0_81:
     availability: producer-only-at-the-two-authorized-prepublication-and-postpublication-stages
-    detailed_contract: compatibility.producer_candidate_promotion_0_71_to_0_8
+    detailed_contract: compatibility.producer_candidate_promotion_0_8_to_0_81
     serialized_input: required
     destination: serialized_input.declaration_path
     predecessor_only_locks_on_new_record: forbidden
@@ -2240,7 +2312,7 @@ freshness:
             closed: true
             required_fields: [id, sha256]
             fields:
-              id: {const: nkf.freshness-policy.0.8}
+              id: {const: nkf.freshness-policy.0.81}
               sha256: {ref: common.digest.value}
       exclude: [baseline, receipts, generated-navigation, backlinks, virtual-frontmatter, validation-results]
     array_normalization:
@@ -2249,7 +2321,7 @@ freshness:
       string_normalization: none-beyond-field-contract
       optional_absence: omit-not-null
   policy:
-    identity: nkf.freshness-policy.0.8
+    identity: nkf.freshness-policy.0.81
     path: contracts/nkf/0.81/freshness-policy.yaml
     digest:
       algorithm: sha-256
@@ -2261,7 +2333,7 @@ freshness:
     field_contracts:
       contract: {const: nkf.freshness-policy}
       nkf_version: {const: "0.81"}
-      id: {const: nkf.freshness-policy.0.8}
+      id: {const: nkf.freshness-policy.0.81}
       classes: {exact_items_in_order: [hard, review, context, historical]}
       purposes: {exact_items_in_order: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]}
       hard_events: {exact_items_in_order: [exact-revision-binding-mismatch, governed-artifact-binding-mismatch]}
@@ -2356,7 +2428,7 @@ freshness:
         required_exactly_when: stage-is-delta
         content: exact-tool-computed-required-review-closure
         checker_recompute: required-from-graph-baseline-policy-propagation-and-version-delta
-        recorded_closure_narrower_than_recomputed: freshness.claim.computed-closure-not-reproduced
+        recorded_closure_differs_from_recomputed: freshness.claim.computed-closure-not-reproduced
       nodes:
         type: array
         min_items: 1
@@ -2445,7 +2517,7 @@ freshness:
         closed: true
         required_fields: [id, digest]
         fields:
-          id: {const: nkf.freshness-policy.0.8}
+          id: {const: nkf.freshness-policy.0.81}
           digest: {ref: common.digest}
       version_delta:
         closed: true
@@ -2779,7 +2851,7 @@ freshness:
         closed: true
         required_fields: [id, digest]
         fields:
-          id: {const: nkf.freshness-policy.0.8}
+          id: {const: nkf.freshness-policy.0.81}
           digest: {ref: common.digest}
       purpose: {enum: [change-impact, whole-root-readiness, consequential-use, historical-reproduction]}
       candidate_universe: {type: array, min_items: 1, unique_items: true, order: stable-node-reference-order, items: {ref: common.node_reference}}
@@ -3080,7 +3152,6 @@ enforcement:
       freshness_receipt: contracts/nkf/0.81/schemas/freshness-receipt.schema.json
       freshness_policy: contracts/nkf/0.81/schemas/freshness-policy.schema.json
       validation_result: contracts/nkf/0.81/schemas/validation-result.schema.json
-      recommended_release: contracts/nkf/0.81/schemas/recommended-release.schema.json
     ids:
       bundle: urn:nkf:0.81:schema:bundle
       record: urn:nkf:0.81:schema:record
@@ -3834,7 +3905,7 @@ validation_result:
         closed: true
         required_fields: [identity, digest, binding]
         fields:
-          identity: {const: nkf.freshness-policy.0.8}
+          identity: {const: nkf.freshness-policy.0.81}
           digest: {ref: common.digest}
           binding: {enum: [verified, unavailable, mismatched]}
       candidate_graph_revision: {type: [common.digest, "null"]}
@@ -4258,7 +4329,7 @@ release_distribution:
     archive_url_canonical_form: "https://github.com/<repository>/releases/download/<tag>/<asset_name>"
     command_line_tool_required: false
     credentials_required: false
-    refusal_before_mutation: [non-success-response, archive-digest-mismatch, schema-invalid, channel-unsupported, channel-flag-inconsistent, archive-url-noncanonical]
+    refusal_before_mutation: [non-success-response, archive-digest-mismatch, schema-invalid, channel-unsupported, channel-flag-inconsistent, historical-channel-on-current-version, archive-url-noncanonical]
     offline_recovery: [local-recommendation, local-archive]
     adopter_source:
       projection_path: tools/nourd-nkf-adopt.mjs
@@ -4389,7 +4460,7 @@ release_distribution:
     closed: true
     required_fields: [identity, path, digest]
     fields:
-      identity: {const: nkf.freshness-policy.0.8}
+      identity: {const: nkf.freshness-policy.0.81}
       path: {const: contracts/nkf/0.81/freshness-policy.yaml}
       digest: {ref: common.digest}
   version_delta:
@@ -4429,6 +4500,9 @@ release_distribution:
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.81:schema:release-manifest
         path: contracts/nkf/0.81/schemas/release-manifest.schema.json
+        ref: release_distribution.schema_artifact
+      - identity: urn:nkf:0.81:schema:recommended-release
+        path: contracts/nkf/0.81/schemas/recommended-release.schema.json
         ref: release_distribution.schema_artifact
       - identity: urn:nkf:0.81:schema:validation-result
         path: contracts/nkf/0.81/schemas/validation-result.schema.json
@@ -4812,7 +4886,7 @@ compatibility:
     named_reviewer: human-or-agent
     rollback: complete-project-owned-pre-mutation-snapshot
     repeat_state: current
-  producer_candidate_promotion_0_71_to_0_8:
+  producer_candidate_promotion_0_8_to_0_81:
     availability:
       repository: exact-NourdApS/Nourd.NKF-producer-only
       stages:

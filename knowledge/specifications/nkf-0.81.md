@@ -80,7 +80,7 @@ first where to obtain the adopter and how to verify it. A closed registry of
 exactly three volatile operating-system basenames is recorded in inspection
 and excluded from the sealed drift digest, with every other entry protected as
 before. The checker recomputes the delta-review closure and refuses a claim
-whose recorded closure is narrower. Live support slides to exactly the current
+whose recorded closure differs from the recomputed one. Live support slides to exactly the current
 version plus one predecessor — NKF 0.81 plus NKF 0.8 — with NKF 0.71 stepping
 through the published 0.8 archive. It adds no deferred Product capability and
 does not rewrite any published 0.8 member.
@@ -700,7 +700,7 @@ Drafting Provenance. It is neither a lifecycle state nor a reusable exemption.
 
 ```yaml
 knowledge_graph:
-  policy: nkf.freshness-policy.0.8
+  policy: nkf.freshness-policy.0.81
   baseline: .nourd/knowledge/freshness/baseline.yaml
 ```
 
@@ -1295,7 +1295,7 @@ and its exact later correction Decision. Its state remains
 `immutable`/`superseded` with
 `superseded_by: [nkf-0.5-specification-revision-2]`. Neither predecessor-only
 lock accepts, rewrites, or changes either pair, and neither is a reusable
-0.81-era migration mechanism preserved as immutable history.
+0.8-era migration mechanism preserved as immutable history.
 
 An opening delimiter without a valid closing delimiter, unsafe or malformed
 YAML, multiple YAML documents, a non-mapping root, or a forbidden YAML feature
@@ -1947,7 +1947,7 @@ graph cannot change the graph being measured.
 Its exact JCS input is:
 
 ```json
-{"contract":"nkf.graph-revision","nkf_version":"0.81","bundle":"<bundle-id>","profile":"<profile-id>","nodes":[{"node":<node-reference>,"revision":"<hex>"}],"edges":[<normalized-authored-edge>],"external_dependencies":[<normalized-external-dependency>],"authority_inputs":[<normalized-authority-input>],"policy":{"id":"nkf.freshness-policy.0.8","sha256":"<hex>"}}
+{"contract":"nkf.graph-revision","nkf_version":"0.81","bundle":"<bundle-id>","profile":"<profile-id>","nodes":[{"node":<node-reference>,"revision":"<hex>"}],"edges":[<normalized-authored-edge>],"external_dependencies":[<normalized-external-dependency>],"authority_inputs":[<normalized-authority-input>],"policy":{"id":"nkf.freshness-policy.0.81","sha256":"<hex>"}}
 ```
 
 `nodes` sorts by node-reference JCS bytes. `edges` contains the exact source
@@ -1967,7 +1967,7 @@ never attempts to infer that difference from two graph digests.
 ### Evaluation Policy
 
 NKF 0.81 distributes exactly one immutable policy named
-`nkf.freshness-policy.0.8` at
+`nkf.freshness-policy.0.81` at
 `contracts/nkf/0.81/freshness-policy.yaml`. Its release manifest binds the exact
 bytes. The policy maps every supported relationship type, source/target node
 kind combination, direction, and purpose to one of:
@@ -2248,10 +2248,10 @@ verifies containment without recomputing.
 
 A delta claim whose performed set does not contain the computed closure is
 refused with the exact missing subjects named, and a delta claim whose
-recorded closure is narrower than the closure the checker recomputes is
-refused the same way. Tooling published under NKF 0.7 through NKF 0.8
-recorded closures without the impact-propagation term; baselines sealed under
-those versions stand as sealed under their tooling, and the first delta review
+recorded closure differs from the closure the checker recomputes is refused
+the same way. Tooling published under NKF 0.7 through NKF 0.8 recorded
+closures without the impact-propagation term; baselines sealed under those
+versions stand as sealed under their tooling, and the first delta review
 under NKF 0.81 computes the propagated closure from that point. A delta claim over a graph
 whose completeness is missing, disputed, or unprovable — a missing or
 disputed predecessor baseline, an unresolved succession chain, an unsupported
@@ -3227,12 +3227,13 @@ contracts/nkf/0.81/schemas/
   validation-result.schema.json
                        # urn:nkf:0.81:schema:validation-result
   graph-baseline.schema.json
-  recommended-release.schema.json
                        # urn:nkf:0.81:schema:graph-baseline
   freshness-receipt.schema.json
                        # urn:nkf:0.81:schema:freshness-receipt
   freshness-policy.schema.json
                        # urn:nkf:0.81:schema:freshness-policy
+  recommended-release.schema.json
+                       # urn:nkf:0.81:schema:recommended-release
 ```
 
 The `0.81` component is the one NKF version coordinate. Each schema carries
@@ -3967,21 +3968,22 @@ minimum major version `22`.
 - `knowledge/specifications/nkf-0.81.md`; and
 - `contracts/nkf/0.81/nkf.yaml`.
 
-`freshness_policy` binds identity `nkf.freshness-policy.0.8`, exact path
+`freshness_policy` binds identity `nkf.freshness-policy.0.81`, exact path
 `contracts/nkf/0.81/freshness-policy.yaml`, and its SHA-256 digest.
 
 `version_delta` binds contract `nkf.version-delta`, exact path
 `contracts/nkf/0.81/version-delta.yaml`, and its SHA-256 digest.
 
-`schemas` contains exactly seven entries in exact identity order:
+`schemas` contains exactly eight entries in exact identity order:
 
 1. `urn:nkf:0.81:schema:bundle`;
 2. `urn:nkf:0.81:schema:record`;
 3. `urn:nkf:0.81:schema:graph-baseline`;
 4. `urn:nkf:0.81:schema:freshness-receipt`;
 5. `urn:nkf:0.81:schema:freshness-policy`;
-6. `urn:nkf:0.81:schema:release-manifest`; and
-7. `urn:nkf:0.81:schema:validation-result`.
+6. `urn:nkf:0.81:schema:release-manifest`;
+7. `urn:nkf:0.81:schema:recommended-release`; and
+8. `urn:nkf:0.81:schema:validation-result`.
 
 `licensing` is one closed object with exactly `spdx`, `license`, `notice`, and
 `third_party_notices`. `spdx` is `Apache-2.0`. Each artifact entry contains
@@ -4097,6 +4099,14 @@ Inputs, and is not included in
 `validation_result.contract_artifacts.schemas`. The project checker continues
 to bind exactly the six project schemas enumerated by the Validation Result
 contract in that result.
+
+The recommended-release schema, `contracts/nkf/0.81/schemas/recommended-release.schema.json`
+with identity `urn:nkf:0.81:schema:recommended-release`, validates the
+recommended-release catalog only. Like the release-manifest schema it is not a
+project declaration schema, does not expand project Governed Validation
+Inputs, and is not included in `validation_result.contract_artifacts.schemas`;
+its digest is carried by the release manifest's `schemas` entry, and the
+adopter verifies that digest before validating a catalog against it.
 
 ### Deterministic Archive
 
@@ -4342,7 +4352,7 @@ root:
   profile: nkf.profile.product
 knowledge_root: knowledge
 knowledge_graph:
-  policy: nkf.freshness-policy.0.8
+  policy: nkf.freshness-policy.0.81
   baseline: .nourd/knowledge/freshness/baseline.yaml
 non_records:
   - path: README.md

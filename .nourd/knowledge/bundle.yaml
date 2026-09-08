@@ -702,7 +702,7 @@ non_records:
       stable_path: evidence/README.md
       digest:
         algorithm: sha-256
-        value: dd6c325eea40006c97ef52848bf47e6a9598bd7cddd27da61459ba45a76758c5
+        value: "83c6be0fedb1c916e39ee9bb7db61f1946154b1ed056f88302f02d64165f87bd"
       relationships: []
   - path: evidence/release/nkf-0.6-producer-promotion.yaml
     kind: evidence
@@ -834,7 +834,7 @@ non_records:
       stable_path: specifications/nkf-0.81.md
       digest:
         algorithm: sha-256
-        value: b07e08381229fdf65b1a7bbd74caf7de210ef64cf0438fd9c2f8279246c56fe1
+        value: "c03c07f2971f65d5744a2554021902a748782c87330eb8fe98aa25d5c9ecb5bb"
       relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -1306,7 +1306,7 @@ non_records:
       stable_path: tasks/items/NKF-024-release-nkf-0-4-dependency-security-maintenance.md
       digest:
         algorithm: sha-256
-        value: "108b563246fde737981e2cde1e7614bb7559e332c1f07af87fc675492707d7f1"
+        value: 108b563246fde737981e2cde1e7614bb7559e332c1f07af87fc675492707d7f1
       state:
         vocabulary: task-status
         value: completed
@@ -1323,29 +1323,13 @@ non_records:
       stable_path: tasks/items/NKF-004-portable-presentation-guidance.md
       digest:
         algorithm: sha-256
-        value: 8402a1ae62b3602942d65360a1ac948d66fe65c020d123c483d2647cf0f0b693
+        value: 8b0745303d926b49aa2eb2777092e69b230d749a1900c3cd891d5aa45a591c2b
       state:
         vocabulary: task-status
         value: deferred
       owner: Nourd ApS
       decision_authority: Human Product Owner, Nourd ApS
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 8402a1ae62b3602942d65360a1ac948d66fe65c020d123c483d2647cf0f0b693
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-004
-          task_status: deferred
-          owner: Nourd ApS
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
   - path: tasks/items/NKF-005-validation-expiry-and-authority-freshness.md
     kind: task
     document:
@@ -1353,29 +1337,13 @@ non_records:
       stable_path: tasks/items/NKF-005-validation-expiry-and-authority-freshness.md
       digest:
         algorithm: sha-256
-        value: eb5b16271f626d40f769c910577b2f076c8a1afadced75d0433861e4609e6c4b
+        value: 3a64c03b233542f1e741b610907ead47f6289d360dfae881d1cbd83ed434ca10
       state:
         vocabulary: task-status
         value: deferred
       owner: Nourd ApS
       decision_authority: Human Product Owner, Nourd ApS
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: eb5b16271f626d40f769c910577b2f076c8a1afadced75d0433861e4609e6c4b
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-005
-          task_status: deferred
-          owner: Nourd ApS
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
   - path: tasks/items/NKF-006-extensible-root-models.md
     kind: task
     document:
@@ -1383,29 +1351,13 @@ non_records:
       stable_path: tasks/items/NKF-006-extensible-root-models.md
       digest:
         algorithm: sha-256
-        value: 2217575e43d4c9c933dc4b393393e1554e0a9e273b59c9376787eb8d110c4b02
+        value: a83c3010b2c5bc9258c10f87fe2d4b86df67652a0f67a1137822599150f4d0b3
       state:
         vocabulary: task-status
         value: deferred
       owner: Nourd ApS
       decision_authority: Human Product Owner, Nourd ApS
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 2217575e43d4c9c933dc4b393393e1554e0a9e273b59c9376787eb8d110c4b02
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-006
-          task_status: deferred
-          owner: Nourd ApS
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
   - path: tasks/items/NKF-009-governed-artifact-secret-scanning.md
     kind: task
     document:
@@ -1413,29 +1365,13 @@ non_records:
       stable_path: tasks/items/NKF-009-governed-artifact-secret-scanning.md
       digest:
         algorithm: sha-256
-        value: 2cf0a955fb853d2baa19fc938c241f566c328ac4acea244f7b65e768d1af3c31
+        value: e3eb8f9674ecfeceab813687a453c5fd8c604dbba17bcc8068685c46c5724f81
       state:
         vocabulary: task-status
         value: deferred
       owner: Nourd ApS
       decision_authority: Human Product Owner, Nourd ApS
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 2cf0a955fb853d2baa19fc938c241f566c328ac4acea244f7b65e768d1af3c31
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-009
-          task_status: deferred
-          owner: Nourd ApS
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
   - path: tasks/items/NKF-012-activate-protected-merge-gate.md
     kind: task
     document:
@@ -1460,29 +1396,13 @@ non_records:
       stable_path: tasks/items/NKF-014-expand-brownfield-and-advanced-onboarding.md
       digest:
         algorithm: sha-256
-        value: 943df5d9480ef01d1db07e02a10cade4b9e06dd0cb71cdd03f9cea67ec1580bf
+        value: f26f5140b20c5df67c3e6514bdeae80c211a6c12c862c0c0f25e4cb65330519f
       state:
         vocabulary: task-status
         value: deferred
       owner: Nourd ApS
       decision_authority: Human Product Owner, Nourd ApS
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 943df5d9480ef01d1db07e02a10cade4b9e06dd0cb71cdd03f9cea67ec1580bf
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-014
-          task_status: deferred
-          owner: Nourd ApS
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
   - path: tasks/items/NKF-016-deliver-acceptance-binding-verification.md
     kind: task
     document:
@@ -1490,7 +1410,7 @@ non_records:
       stable_path: tasks/items/NKF-016-deliver-acceptance-binding-verification.md
       digest:
         algorithm: sha-256
-        value: 2517ee5929fd1040bbea2a2f760e10c1f4148cd55a020d057218e2bfefd87842
+        value: d75ae8719b4ef8075be7e83400a9d8f180f0d103e09efc66a6b2dbff0373601a
       state:
         vocabulary: task-status
         value: deferred
@@ -1502,32 +1422,6 @@ non_records:
         - NKF-008
         - NKF-011
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 2517ee5929fd1040bbea2a2f760e10c1f4148cd55a020d057218e2bfefd87842
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-016
-          task_status: deferred
-          owner: Nourd ApS
-          related_tasks:
-            - NKF-003
-            - NKF-005
-            - NKF-008
-            - NKF-011
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
-          related_tasks:
-            - NKF-003
-            - NKF-005
-            - NKF-008
-            - NKF-011
   - path: tasks/items/NKF-018-stabilize-volatile-onboarding-inputs.md
     kind: task
     document:
@@ -1535,7 +1429,7 @@ non_records:
       stable_path: tasks/items/NKF-018-stabilize-volatile-onboarding-inputs.md
       digest:
         algorithm: sha-256
-        value: 594e0f52d926b35535d86fbbf42c98de05078295bbd9405550d5a1c76f2605fc
+        value: 93b466b3245e00206dcf6a68db9c1b5431dbf9c8033f260a3036867b656dbc8d
       state:
         vocabulary: task-status
         value: deferred
@@ -1546,30 +1440,6 @@ non_records:
         - NKF-015
         - NKF-017
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 594e0f52d926b35535d86fbbf42c98de05078295bbd9405550d5a1c76f2605fc
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-018
-          task_status: deferred
-          owner: Nourd ApS
-          related_tasks:
-            - NKF-013
-            - NKF-015
-            - NKF-017
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
-          related_tasks:
-            - NKF-013
-            - NKF-015
-            - NKF-017
   - path: tasks/items/NKF-021-task-scope-gate.md
     kind: task
     document:
@@ -1577,7 +1447,7 @@ non_records:
       stable_path: tasks/items/NKF-021-task-scope-gate.md
       digest:
         algorithm: sha-256
-        value: 2b760dcf743f8e56b71fac930c6603525cc8dedbfd2ef2c951829c1bb4822003
+        value: 5425e892f77604cc1e9e24c66b6ee767843559323ba07b2fd54900c2fa523f98
       state:
         vocabulary: task-status
         value: deferred
@@ -1587,28 +1457,6 @@ non_records:
         - NKF-019
         - NKF-020
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: 2b760dcf743f8e56b71fac930c6603525cc8dedbfd2ef2c951829c1bb4822003
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-021
-          task_status: deferred
-          owner: Nourd ApS
-          related_tasks:
-            - NKF-019
-            - NKF-020
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
-          related_tasks:
-            - NKF-019
-            - NKF-020
   - path: tasks/items/NKF-027-correct-and-release-nkf-0-6-with-open-source-licensing.md
     kind: task
     document:
@@ -1790,7 +1638,7 @@ non_records:
       stable_path: tasks/items/NKF-037-make-the-nkf-repository-public.md
       digest:
         algorithm: sha-256
-        value: bfb62380572e181f19b3316cd3129b26ff37b8925dceceb20b5938d252c70dab
+        value: "9a811de43a285ff16e776fbf6d0215db7fc24548b9dfd19d7b33dbef1a6a76b2"
       state:
         vocabulary: task-status
         value: completed
@@ -3225,7 +3073,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: ff6b7af449659ced0c27e8cd9c922077fd4c51721532e3f6657641e9c4f0d2d7
+      value: "e53cf0eb57e9678cf3f74898b51d0eae3d8e22d00d2c0d7a0c090b1322e783b4"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

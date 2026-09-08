@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/task-scope-gate.md
   digest:
     algorithm: sha-256
-    value: 37fdc75dd8c353967f49cee515bbad144b179dba0f2fae2d53a980e63c73fe1d
+    value: cff6944f34d65bacbaaa1aded4154a92e1d6e369a2122117b2983348f1f3c544
 governance:
   lifecycle: living
   status: draft
@@ -162,35 +162,3 @@ relationships: []
 task: NKF-021
 design_disposition: active
 proposal_authority_effect: None until a Decision adopts the direction and the exact normative authority-pair revision is separately accepted.
-proposal_evidence: NKF-020 scope history and NKF-021 activation findings.
-implementation_evidence: None; this is a Design proposal.
-legacy_lock:
-  predecessor_version: "0.4"
-  source_digest:
-    algorithm: sha-256
-    value: 37fdc75dd8c353967f49cee515bbad144b179dba0f2fae2d53a980e63c73fe1d
-  predecessor_state:
-    record_lifecycle: living
-    record_status: draft
-    decision_authority: Human Product Owner, Nourd ApS
-    task: NKF-021
-    design_disposition: active
-    proposal_authority_effect: None until a Decision adopts the direction and the exact normative authority-pair revision is separately accepted.
-    proposal_evidence: NKF-020 scope history and NKF-021 activation findings.
-    implementation_evidence: None; this is a Design proposal.
-  initial_declaration_state:
-    governance:
-      lifecycle: living
-      status: draft
-      authority:
-        - human-product-owner
-    task: NKF-021
-    design_disposition: active
-    proposal_authority_effect: None until a Decision adopts the direction and the exact normative authority-pair revision is separately accepted.
-    proposal_evidence: NKF-020 scope history and NKF-021 activation findings.
-    implementation_evidence: None; this is a Design proposal.
-  authority_mapping:
-    source_value: Human Product Owner, Nourd ApS
-    authority_ids:
-      - human-product-owner
-    approved_by: repository-owner

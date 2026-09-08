@@ -654,7 +654,12 @@ No NKF version changed visibility by implication and licensing preparation did
 not make the repository public; a Decision and a human act did. The
 recommendation catalog still states a private channel because the released
 0.8 and 0.71 adopters validate that literal in frozen bytes; the gap is
-recorded with NKF 0.9 as its remedy.
+recorded with NKF 0.81 as its remedy — the successor
+[ADR 0136](../decisions/0136-adopt-the-public-repository-direction.md) called
+0.9 and
+[ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+allocated as 0.81, in preparation under
+[NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
 
 The workflow exists in the repository and on remote `master`. The 0.3
 recommendation was human-merged through pull request 6 at `master` commit

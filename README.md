@@ -117,9 +117,13 @@ This repository is public since `2026-09-08` under
 which supersedes the earlier rejection of a public repository for exactly that
 point. Every published release archive is downloadable by its tag without
 authentication; the released adopters still fetch through `gh`, so adoption
-needs a Github login until NKF 0.9. The recommendation catalog still states a
+needs a Github login until NKF 0.81, the successor
+[ADR 0136](knowledge/decisions/0136-adopt-the-public-repository-direction.md)
+called 0.9 and
+[ADR 0138](knowledge/decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+allocated as 0.81. The recommendation catalog still states a
 private channel because the released adopters validate that literal in frozen
-bytes; the gap and its NKF 0.9 remedy are recorded in the
+bytes; the gap and its NKF 0.81 remedy are recorded in the
 [public repository observation](knowledge/evidence/release/nkf-037-public-repository-observation.md).
 Licensing and visibility do not publish a release, accept governed knowledge,
 confirm a Realization, or establish conformance. Security-response,

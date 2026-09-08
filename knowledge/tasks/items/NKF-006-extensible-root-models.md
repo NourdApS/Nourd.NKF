@@ -1,16 +1,34 @@
 ---
 title: "NKF-006: Define Extensible Root Knowledge Models"
-summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct.
+summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct — created deferred when the Common Specification and concrete Root Profiles were accepted and still awaiting a root that neither accepted profile represents honestly.
 created_at: 2026-07-30T15:59:54Z
-task_id: NKF-006
-task_status: deferred
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-006: Define Extensible Root Knowledge Models
 
-- **Governing Boundary:** [`ADR 0049`](../../decisions/0049-common-and-root-profiles.md)
+## Human Direction
+
+This Task was created deferred on `2026-07-30` during
+[NKF-003](NKF-003-independent-nkf-authority.md), when
+[ADR 0049](../../decisions/0049-common-and-root-profiles.md) accepted one
+non-selectable Common Specification and exactly one concrete Root Profile per
+bundle and named this Task the governor of evidence-driven investigation of
+additional concrete profiles and profile-specific hierarchies, validators,
+protocols, governed inputs, and compatibility. That Decision is the governing
+boundary for this Task. The same day,
+[ADR 0050](../../decisions/0050-product-and-technology-profiles.md) accepted
+the Product and Technology Root Profiles and directed that later root kinds
+require their own evidence, accepted profile, executable realization, fixtures,
+release support, and deliberate migration under this Task.
+
+No human direction has resumed this Task. It stays deferred until the
+activation evidence below exists and the Human Product Owner explicitly
+directs work to begin.
+
+This native rewrite on 2026-09-08 under
+[NKF-038](NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md)
+replaced the legacy-locked NKF 0.4 source; the Task's substance, deferred
+state, and creation direction are unchanged.
 
 ## Desired Outcome
 
@@ -24,16 +42,29 @@ conformance, explicit compatibility, and consumer-controlled acceptance.
 
 ## Current State
 
-[ADR 0049](../../decisions/0049-common-and-root-profiles.md) accepts one non-selectable Common Specification and exactly one
-concrete Root Profile per bundle. It does not accept the exact Common
-extraction, Product Profile realization, Technology Profile, another concrete
-profile, hierarchy, validator interface, serialization, or compatibility
-realization.
+At this Task's creation on `2026-07-30`,
+[ADR 0049](../../decisions/0049-common-and-root-profiles.md) had accepted one
+non-selectable Common Specification and exactly one concrete Root Profile per
+bundle, and had not accepted the exact Common extraction, Product Profile
+realization, Technology Profile, another concrete profile, hierarchy, validator
+interface, serialization, or compatibility realization. The Task recorded
+that the candidate Technology Profile should first be exercised against the
+NKF repository and later Nourd Agent SDK before broader profile abstraction.
+
+Later the same day,
+[ADR 0050](../../decisions/0050-product-and-technology-profiles.md) accepted
+the Product and Technology Root Profiles. Since then this repository has
+self-hosted as a Technology root, which is the first exercise the creation
+text called for. The live version today is NKF 0.8, with NKF 0.81 in
+preparation under
+[NKF-038](NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md),
+and the accepted NKF 0.8 authority defines exactly those two Root Profiles.
+No third Root Profile has been proposed or accepted, and no governed root has
+been recorded that neither accepted profile represents honestly. The Nourd
+Agent SDK exercise is not recorded in this repository.
 
 `Shared Technology` remains Nourd ApS organizational vocabulary and is not an
-accepted NKF profile name. The candidate Technology Profile should first be
-exercised against the NKF repository and later Nourd Agent SDK before broader
-profile abstraction.
+accepted NKF profile name.
 
 ## Activation Evidence
 
@@ -96,15 +127,35 @@ accepted enumeration.
   by implementation.
 - Changing Product-and-Technology support merely because this Task exists.
 
+## Deferred-State Rule
+
+This Task preserves an intended future investigation; it does not claim that
+any additional root model is specified, accepted, implemented, released,
+supported, or conformant. Work begins through a recorded execution slice when
+the activation evidence exists and the Human Product Owner directs it.
+
 ## Decision Applicability
 
 ### Applicable Decisions
 
-No accepted decision applies to this Task.
+| Reference | Kind | Carried Constraint |
+| --- | --- | --- |
+| [`adr-0006`](../../decisions/0006-pre-stable-evolution.md) | record | A new root model is a consequential pre-stable change: it requires evidence, reproduction, compatibility classification, authority-first derivation, a versioned release, and deliberate consumer migration. |
+| [`adr-0017`](../../decisions/0017-acceptance-provenance.md) | record | Declared governance, conformance, Realization confirmation, and external authority remain separate axes; a profile realization, fixture, or passing check accepts no root meaning. |
+| [`adr-0049`](../../decisions/0049-common-and-root-profiles.md) | record | The Common Specification stays non-selectable and every bundle selects exactly one concrete Root Profile; a profile cannot arise from a directory name, consumer implementation, checker behavior, or generic fallback, and adding one requires accepted normative meaning, executable contracts, validator behavior, fixtures, release support, and deliberate consumer migration. |
+| [`adr-0050`](../../decisions/0050-product-and-technology-profiles.md) | record | Product and Technology share one accepted Common envelope with different semantic contracts and enforcement; a later root kind must not weaken either and requires its own evidence, accepted profile, executable realization, fixtures, release support, and deliberate migration under this Task. |
+| [`adr-0077`](../../decisions/0077-decision-applicability-gate.md) | record | This Task carries all applicable accepted Decisions and classifies each mandatory capability; unknown or unsupported requirements block completion without an explicit recorded Human Product Owner exception. |
 
 ### Mandatory Capabilities
 
-No mandatory capability is implicated by this Task.
+| Capability | Finding | Verification | Exception |
+| --- | --- | --- | --- |
+| Every supported root model is justified by concrete governed knowledge | unknown | none | none |
+| Root classification and technical form are not conflated | unknown | none | none |
+| Root-specific requirements cannot silently weaken Product or Technology meaning | unknown | none | none |
+| Unsupported root meaning fails closed for consequential use | unknown | none | none |
+| Hierarchy, validation, and protocol differences are explicit rather than inferred from directory names or implementations | unknown | none | none |
+| Compatibility and deliberate migration are defined before release | unknown | none | none |
 
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.
+This gate was extracted at the native rewrite on 2026-09-08, replacing the
+empty retrospective placeholder recorded at the NKF 0.2 self-migration.

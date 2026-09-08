@@ -2,7 +2,7 @@
 id: design-nkf-037-public-repository
 type: design
 title: NKF Public Repository
-summary: This Design proposes making the NKF producer repository public by the Human Product Owner's act, so that any repository can adopt a published NKF version without collaborator access and every published version has an address — while the released recommendation catalog keeps its private-channel literals until the NKF 0.9 successor can state a public channel truthfully, the frozen bytes stay frozen, and the visibility change is prepared by a history scan and followed by verification and reconciliation.
+summary: This Design proposes making the NKF producer repository public by the Human Product Owner's act, so that any repository can adopt a published NKF version without collaborator access and every published version has an address — while the released recommendation catalog keeps its private-channel literals until the NKF 0.81 successor can state a public channel truthfully, the frozen bytes stay frozen, and the visibility change is prepared by a history scan and followed by verification and reconciliation.
 created_at: 2026-09-08T11:25:20Z
 ---
 
@@ -87,7 +87,11 @@ addresses.
 The license already permits this. Apache-2.0 with the approved NOTICE and
 third-party notices is in place and verified by the gate.
 
-### The Catalog Stays Literal Until NKF 0.9
+### The Catalog Stays Literal Until NKF 0.81
+
+The successor was called "NKF 0.9" when this Design was written;
+[ADR 0138](../../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+allocated `0.81` to it on `2026-09-08`, and this Design says 0.81 throughout.
 
 The recommendation catalog `release/recommended.json` continues to state channel
 `internal-private-github-prerelease` and release visibility `private` after the
@@ -95,13 +99,13 @@ flip, because the released 0.8 and 0.71 adopters refuse any other value. This
 is a truthfulness gap and it is recorded as one, in the Decision and in
 Evidence, rather than smoothed over.
 
-The remedy is the NKF 0.9 successor, which this Design scopes but does not
+The remedy is the NKF 0.81 successor, which this Design scopes but does not
 deliver: the adopter fetches the catalog and the archive over plain HTTPS from
 the public repository with no `gh` dependency, the channel vocabulary gains a
 public value and moves from adopter code into the accepted contract, the frozen
 public-documentation prose that calls the checker release private is
 regenerated, and the distributed adoption protocol gains the step that tells a
-consumer where to obtain the adopter. Until 0.9 ships, a consumer adopts with a
+consumer where to obtain the adopter. Until 0.81 ships, a consumer adopts with a
 `gh` login against the now-public repository, which no longer requires
 collaborator access.
 
@@ -136,7 +140,7 @@ that no longer returns `403`. Each observation is Evidence. The front page and
 the current-system Realization are then reconciled: statements that the
 repository is private, that its releases are private prereleases, and that
 branch protection is unavailable become history with dates, and the catalog
-gap is stated with NKF 0.9 named as its remedy.
+gap is stated with NKF 0.81 named as its remedy.
 
 ## Responsibilities Interactions And Information Flows
 
@@ -146,7 +150,7 @@ recorded in the owning Task, authors the Design and Decision text, runs the
 history scan, verifies the public state, reconciles the record, and records
 Evidence. Github owns the visibility setting, the release assets, the
 protection capability, and their time-bound state; the record observes them
-and never claims to be them. The NKF 0.9 release Task owns the adopter fetch
+and never claims to be them. The NKF 0.81 release Task owns the adopter fetch
 change, the channel vocabulary, and the regenerated public prose. Consumer
 repositories own their own adoption decisions; a public repository obligates
 none of them.
@@ -158,7 +162,7 @@ none of them.
 Keep the producer private and mirror the catalog, archives, and adopter to a
 public repository. This keeps the internal record private, but the released
 adopters hard-code `NourdApS/Nourd.NKF` as the only permitted repository, so a
-mirror serves nobody until NKF 0.9 changes the adopter anyway. It also
+mirror serves nobody until NKF 0.81 changes the adopter anyway. It also
 duplicates the release channel, creating a second place the recommendation can
 drift. Rejected: it costs a release cycle and still leaves the 0.8 path closed.
 
@@ -178,7 +182,7 @@ and would fail closed on the new ones, so every existing consumer, including
 this producer, loses the ordinary Adopt path. Rejected: it trades a recorded
 truthfulness gap for a broken adoption path.
 
-### Stay Private Until NKF 0.9 Ships
+### Stay Private Until NKF 0.81 Ships
 
 Defer the flip until the successor's adopter can state a public channel. This
 avoids the truthfulness gap but delays every external adoption by a release
@@ -222,5 +226,5 @@ or confirms the Realization.
   resuming
   [NKF-012](../../tasks/items/NKF-012-activate-protected-merge-gate.md).
   Human Product Owner direction.
-- When the NKF 0.9 release Task opens. Until then the catalog gap stands as
+- When the NKF 0.81 release Task opens. Until then the catalog gap stands as
   recorded.
