@@ -4859,7 +4859,7 @@ compatibility:
   migration_0_8_to_0_81:
     preserve_canonical_markdown_bytes: exact
     contract_rebind: mechanical
-    legacy_stable_path_mapping: {ref: bundle.migration_0_8_to_0_81.legacy_stable_path_mapping}
+    legacy_stable_path_mapping: {ref: portable_topology.migration_0_8_to_0_81.legacy_stable_path_mapping}
     identity_succession_application: none-declared-by-this-revision
     provenance_attachment_classification: already-classified-entries-carried-forward-unchanged
     obsolete_legacy_lock_removal: none-remaining

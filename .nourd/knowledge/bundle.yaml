@@ -1862,7 +1862,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-producer-promotion.yaml
       digest:
         algorithm: sha-256
-        value: "2a9182b2a04878d25b859ed5821b8e1a2921251e9b92ecf8a65a93e1a2f75829"
+        value: "de4700237a5545a8f2683fb49a9a90990d10b20552020fef133c37b5fb3da569"
       relationships: []
   - path: evidence/release/nkf-0.8-producer-promotion.yaml
     kind: evidence
