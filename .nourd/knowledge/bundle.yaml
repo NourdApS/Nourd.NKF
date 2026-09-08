@@ -1792,6 +1792,23 @@ non_records:
         - NKF-033
         - NKF-032
       relationships: []
+  - path: tasks/items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md
+    kind: task
+    document:
+      id: NKF-036
+      stable_path: tasks/items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md
+      digest:
+        algorithm: sha-256
+        value: "4399fc520d558fe80c7555d767d2c4e0009b7fc00cf0c021f40e0e2d57d6034f"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary, publication authorization, visibility, and every merge; Claude technical reviewer under explicit delegation for the reconciliation edits, deterministic public-documentation staging and publication, verification, Evidence recording, and gate runs within the confirmed boundaries
+      related_tasks:
+        - NKF-035
+        - NKF-033
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md
