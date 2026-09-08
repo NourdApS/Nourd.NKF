@@ -91,8 +91,9 @@ canonical command, and since `2026-09-08` its `Validate` check is required on
 and recorded in the
 [public repository observation](knowledge/evidence/release/nkf-037-public-repository-observation.md).
 One approving review and a push restriction to the Human Product Owner are
-also required, and an intentionally invalid candidate was proven blocked, as
-recorded under
+also required, the branch lock as configured makes `master` read-only until
+lifted, and an intentionally invalid candidate was proven blocked, as recorded
+under
 [Task NKF-012](knowledge/tasks/items/NKF-012-activate-protected-merge-gate.md).
 The
 [Current System Realization](knowledge/realizations/current-system.md) records

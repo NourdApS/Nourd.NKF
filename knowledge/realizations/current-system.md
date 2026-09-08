@@ -697,7 +697,8 @@ protected, and branch protection was then activated on `master` under
 the exact-commit `Validate` check is required, strict, and enforced for
 administrators, with force pushes and deletion disallowed. The Human Product
 Owner then required one approving review with a bypass allowance for
-themselves and restricted pushes to themselves, and an intentionally invalid
+themselves, restricted pushes to themselves, and enabled the branch lock, which
+makes `master` read-only for everyone until lifted; an intentionally invalid
 candidate failed `Validate` and was reported blocked by Github, as recorded in
 the
 [protected merge gate observation](../evidence/release/nkf-012-protected-merge-gate-observation.md).

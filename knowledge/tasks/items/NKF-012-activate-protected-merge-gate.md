@@ -66,10 +66,12 @@ from a workflow file.
    independently audit the successor account, confirm it, and complete this
    Task.
 
-Items two and three were performed under
+Items two and three, and the administrator-enforcement part of item five,
+were performed under
 [ADR 0136](../../decisions/0136-adopt-the-public-repository-direction.md) item
-seven on `2026-09-08`. Items four and five were performed by the Human Product
-Owner in Github settings the same day. This Task records them and performs
+seven on `2026-09-08`. Item four and the rest of item five — the approving
+review, its bypass allowance, the push restriction, and the branch lock — were
+performed by the Human Product Owner in Github settings the same day. This Task records them and performs
 items one, six, and seven.
 
 ## Out Of Scope

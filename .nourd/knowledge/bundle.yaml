@@ -1456,7 +1456,7 @@ non_records:
       stable_path: tasks/items/NKF-012-activate-protected-merge-gate.md
       digest:
         algorithm: sha-256
-        value: 986b5479bf13b88eb29d4352f3465cb0780d67de27f6ddcddfc176690ae71afa
+        value: "d8c12d14284f30957978d646fad48c8d5cdd5d5e62b351796e79461df61b7de8"
       state:
         vocabulary: task-status
         value: active
@@ -1909,7 +1909,7 @@ non_records:
       stable_path: evidence/release/nkf-012-protected-merge-gate-observation.md
       digest:
         algorithm: sha-256
-        value: "fcff33c266131c4366a956b3d2f8e34690debec8f17f8684f49c6ba80684f3d3"
+        value: "bd69a278d7b835d8dc6e4061c8fe1234d2994d08edd061cf30de4eaeab4704fa"
       relationships: []
   - path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
     kind: evidence
@@ -3201,7 +3201,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "f785bc2763ccd1d006342ad572990ab6b49cf154262f5c3e6ca3633785996c41"
+      value: "ff6b7af449659ced0c27e8cd9c922077fd4c51721532e3f6657641e9c4f0d2d7"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

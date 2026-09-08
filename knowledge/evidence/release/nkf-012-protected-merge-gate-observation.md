@@ -39,11 +39,14 @@ Queried through the branch-protection API on `2026-09-08` at `13:18Z`.
 | Dismiss stale reviews | `false` | Human Product Owner |
 | Require last-push approval | `false` | Human Product Owner |
 | Restrict who can push | user `kaveh6202`; no teams, no apps | Human Product Owner |
-| Force pushes | disallowed | Claude technical reviewer under ADR 0136 |
+| Force pushes | disallowed | Claude technical reviewer under [ADR 0136](../../decisions/0136-adopt-the-public-repository-direction.md) item seven |
 | Branch deletion | disallowed | same |
 | Required linear history | `false` | default |
 | Required conversation resolution | `false` | default |
 | Lock branch | `true` | Human Product Owner |
+| Block branch creation matching the rule | `true` | Human Product Owner |
+| Required signed commits | `false` | default |
+| Allow fork syncing | `false` | default |
 
 ## Bypass And Direct-Push Policy
 
@@ -57,6 +60,10 @@ The policy the Human Product Owner configured, stated explicitly:
   nobody may bypass the required check.
 - Anyone may open a pull request and have it validated; only `kaveh6202` may
   merge it.
+- While Lock branch stays `true`, nobody can merge or push at all, the
+  restricted user included, because administrator enforcement binds the owner
+  too. The policy above describes the rules as configured; the lock overrides
+  them until it is lifted.
 
 Two settings are recorded with their effect rather than smoothed over.
 Require review from Code Owners is enabled but no `CODEOWNERS` file exists in
@@ -81,9 +88,15 @@ records the setting as found.
 | Merged | no |
 | Disposition | closed unmerged after this record was written; branch deleted |
 
-The candidate failed NKF validation for the reason it was built to fail, and
-Github reported the pull request blocked under the active rule. No check,
-checker, workflow, or adapter verifier was weakened.
+The candidate failed NKF validation for the reason it was built to fail. The
+`blocked` state Github reported is composite: the failed required check, the
+review requirement still reported as required, and the branch lock, which was
+already enabled when the pull request was evaluated. A valid candidate would
+also have read `blocked` under the lock, so the exercise proves that Github
+blocks this pull request and that the required check failed on its exact head;
+it does not isolate the `Validate` rule as the sole cause. The protection claim
+rests on Github's protection report, not on this exercise. No check, checker,
+workflow, or adapter verifier was weakened.
 
 ## Boundary
 
