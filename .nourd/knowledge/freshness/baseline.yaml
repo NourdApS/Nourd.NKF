@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 759cbee2f2cbcbac17a63fb3b64b964909079c7d8e14a90271cda3e6a2ee57f8
+  value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
 policy:
   id: nkf.freshness-policy.0.8
   digest:
@@ -214,6 +214,12 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 7d3ea73d3d6d65434881df17d3b829ac11ef7c3f20d071dbfeb374b034f4a2eb
+  - node:
+      kind: document
+      id: NKF-036
+    revision:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
   - node:
       kind: record
       id: adr-0001
@@ -1860,6 +1866,12 @@ node_revisions:
       value: a51f804a0a6c7b764cb46f826defaaac2bd2089cbc862a2452e1ca299d4edcf5
   - node:
       kind: document
+      id: document-nkf-0-8-public-documentation-publication
+    revision:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+  - node:
+      kind: document
       id: document-nkf-0-8-release-audit
     revision:
       algorithm: sha-256
@@ -1983,7 +1995,7 @@ node_revisions:
       id: nkf-current-system
     revision:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
   - node:
       kind: record
       id: nkf-initial-greenfield-onboarding
@@ -6692,10 +6704,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-035
-        from_state: active
-        to_state: completed
   - node:
       kind: document
       id: NKF-035
@@ -6725,10 +6733,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-035
-        from_state: active
-        to_state: completed
   - node:
       kind: document
       id: NKF-035
@@ -6758,10 +6762,75 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-035
-        from_state: active
-        to_state: completed
+  - node:
+      kind: document
+      id: NKF-036
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-036
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-036: Reconcile The Producer Record And Republish The Public Projection\"summary: Bring the producer's front page, consolidated current-system Realization, and specifications map into agreement with the adopted NKF 0.8 reality they already partly state, and publish the deterministic NKF 0.8 public-documentation projection to the public documentation repository that has stood at NKF 0.2 since 2026-08-10 — recording the publication as Evidence and the adoption Task's incomplete reconciliation step as a fact, without changing any accepted meaning, published byte, or repository visibility.created_at: 2026-09-08T10:47:23Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+    basis_digest:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-036
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-036
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-036: Reconcile The Producer Record And Republish The Public Projection\"summary: Bring the producer's front page, consolidated current-system Realization, and specifications map into agreement with the adopted NKF 0.8 reality they already partly state, and publish the deterministic NKF 0.8 public-documentation projection to the public documentation repository that has stood at NKF 0.2 since 2026-08-10 — recording the publication as Evidence and the adoption Task's incomplete reconciliation step as a fact, without changing any accepted meaning, published byte, or repository visibility.created_at: 2026-09-08T10:47:23Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+    basis_digest:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-036
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-036
+      source:
+        heading:
+          heading_path:
+            - "title: \"NKF-036: Reconcile The Producer Record And Republish The Public Projection\"summary: Bring the producer's front page, consolidated current-system Realization, and specifications map into agreement with the adopted NKF 0.8 reality they already partly state, and publish the deterministic NKF 0.8 public-documentation projection to the public documentation repository that has stood at NKF 0.2 since 2026-08-10 — recording the publication as Evidence and the adoption Task's incomplete reconciliation step as a fact, without changing any accepted meaning, published byte, or repository visibility.created_at: 2026-09-08T10:47:23Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+    basis_digest:
+      algorithm: sha-256
+      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+    provenance:
+      performed: true
   - node:
       kind: record
       id: adr-0001
@@ -29036,6 +29105,75 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: document
+      id: document-nkf-0-8-public-documentation-publication
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-8-public-documentation-publication
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-036 NKF 0.8 Public Documentation Publicationsummary: Records the publication of the deterministic NKF 0.8 public-documentation projection to the public documentation repository — the clean staging commit, the published commit, the manifest digest, the fresh-clone byte and digest verification, the repository's observed move to the NourdApS organization — and records as a separate fact that the NKF-035 adoption Task closed with its front-page and Realization reconciliation step partly done.created_at: 2026-09-08T10:58:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+    basis_digest:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-8-public-documentation-publication
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-8-public-documentation-publication
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-036 NKF 0.8 Public Documentation Publicationsummary: Records the publication of the deterministic NKF 0.8 public-documentation projection to the public documentation repository — the clean staging commit, the published commit, the manifest digest, the fresh-clone byte and digest verification, the repository's observed move to the NourdApS organization — and records as a separate fact that the NKF-035 adoption Task closed with its front-page and Realization reconciliation step partly done.created_at: 2026-09-08T10:58:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+    basis_digest:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-8-public-documentation-publication
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-8-public-documentation-publication
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-036 NKF 0.8 Public Documentation Publicationsummary: Records the publication of the deterministic NKF 0.8 public-documentation projection to the public documentation repository — the clean staging commit, the published commit, the manifest digest, the fresh-clone byte and digest verification, the repository's observed move to the NourdApS organization — and records as a separate fact that the NKF-035 adoption Task closed with its front-page and Realization reconciliation step partly done.created_at: 2026-09-08T10:58:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+    basis_digest:
+      algorithm: sha-256
+      value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
+    provenance:
+      performed: true
+  - node:
+      kind: document
       id: document-nkf-0-8-release-audit
     purpose: change-impact
     state: eligible
@@ -30653,18 +30791,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     basis_digest:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-current-system
@@ -30679,18 +30811,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     basis_digest:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-current-system
@@ -30705,18 +30831,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     basis_digest:
       algorithm: sha-256
-      value: f7183b2797b406a971a96adbcdc5044324e1ab2abbfe208269f2f4f1707adbac
+      value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-initial-greenfield-onboarding
@@ -40298,31 +40418,39 @@ promotion_reconciliation: []
 confirmation:
   reviewer:
     kind: agent
-    id: task-transition-operator
-  reviewed_at: 2026-08-19T14:42:48.421Z
-  claim: mechanically-concluded
-  transition:
-    task: NKF-035
-    from_state: active
-    to_state: completed
-    predecessor_graph_revision:
-      algorithm: sha-256
-      value: 6213f41e733461d5ae31f278a2fef89d90047dbc629b70a670f10d9bc50ffa67
+    id: claude-technical-reviewer
+  reviewed_at: 2026-09-08T11:00:09.645Z
+  claim: semantically-reviewed-delta
+  computed_closure:
+    - kind: document
+      id: NKF-036
+    - kind: document
+      id: document-nkf-0-8-public-documentation-publication
+    - kind: record
+      id: nkf-current-system
+  performed_set:
+    - kind: document
+      id: NKF-036
+    - kind: document
+      id: document-nkf-0-8-public-documentation-publication
+    - kind: record
+      id: nkf-current-system
   observations:
-    - id: transition-conclusion-observation
+    - id: nkf-036-delta-review-observation
       subject:
         kind: document
-        id: NKF-035
+        id: NKF-036
       basis:
         node:
           kind: document
-          id: NKF-035
+          id: NKF-036
         source:
           heading:
             heading_path:
-              - "title: \"NKF-035: Adopt The Producer To Published NKF 0.8\"summary: Adopt this producer repository to the published NKF 0.8 release through the ordinary public Adopt operation, declaring and installing the exact recommended archive, activating the three deterministic guidance verifiers that NKF 0.8 keys to the declared version, restamping the version-bearing guidance the adoption changes, and reconciling the governed record to the adopted reality — delivered as one stacked pull request while merging remains the Human Product Owner's act.created_at: 2026-08-19T15:00:00Z"
+              - "title: \"NKF-036: Reconcile The Producer Record And Republish The Public Projection\"summary: Bring the producer's front page, consolidated current-system Realization, and specifications map into agreement with the adopted NKF 0.8 reality they already partly state, and publish the deterministic NKF 0.8 public-documentation projection to the public documentation repository that has stood at NKF 0.2 since 2026-08-10 — recording the publication as Evidence and the adoption Task's incomplete reconciliation step as a fact, without changing any accepted meaning, published byte, or repository visibility.created_at: 2026-09-08T10:47:23Z"
             occurrence: 1
-      finding: "The deterministic Task transition NKF-035 active -> completed concluded mechanically: every judgment carried, zero judgments performed."
+      finding: "Three nodes judged fresh under the NKF-036 delegation: the NKF-036 Task as context, the NKF 0.8 public-documentation publication Evidence as evidencing, and the living current-system Realization as realizing after its reconciliation to the adopted NKF 0.8 reality. Every other judgment carried by digest identity. The reconciliation changes documentation, not accepted meaning; the Realization stays draft and partially confirmed."
   limitations:
-    - This is a mechanical conclusion of the NKF-035 active-to-completed transition carrying every prior judgment with zero fresh semantic review; any semantic doubt requires the ordinary whole-root or delta semantic review and seal.
+    - This delta review judges only the three changed nodes; carried judgments are trusted by digest identity under the accepted 0.71-to-0.8 version delta and were not re-read.
+    - Reviewing the reconciled Realization for internal consistency with the adopted NKF 0.8 state does not confirm the Realization; confirmation remains the Human Product Owner's separate act.
   disputed: false

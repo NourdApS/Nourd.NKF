@@ -148,8 +148,56 @@ Task closes it.
 ## Current Progress
 
 Created on `2026-09-08` under the Human Direction above, on the `task/NKF-036`
-branch from `master`. Every mandatory capability reads `unknown` until the work
-is performed.
+branch from `master`. The reconciliation is performed, the projection is
+published and verified, the Evidence is recorded, and the record is resealed.
+
+## Completion Result
+
+The front page, the consolidated
+[current-system Realization](../../realizations/current-system.md), and the
+specifications map now state the adopted NKF 0.8 reality wherever they describe
+what this repository currently declares, pins, installs, runs, dispatches,
+recommends, or verifies: the running format and its adoption protocol, the
+live window of exactly 0.8 plus 0.71, the 0.8 archive, checker, and adopter
+digests, the 0.8 evaluation policy and version delta, the 0.8 protocol and
+schema paths, twenty-nine test files and two hundred sixty-eight tests, the
+last observed `master` workflow success, and the 0.71 and 0.8 delivery merges.
+Predecessor statements stay as history, and the Realization stays `living`,
+`draft`, and `partially-confirmed`; nothing here confirms it.
+
+The deterministic NKF 0.8 public-documentation projection, staged from clean
+`master` commit `d3f0e84f`, is published to the public documentation
+repository as commit `b953e7ba` and verified from a second fresh clone:
+byte-identical excluding `.git`, sixty-two manifest-bound digests recomputed
+with zero mismatches, the manifest binding NKF 0.8, and the published adopter
+bytes equal to the recommended adopter digest. The mirror had stood at NKF 0.2
+since `2026-08-10`. Github reported during the push that the repository moved
+from `kaveh6202/Nourd.NKF.Docs` to `NourdApS/Nourd.NKF.Docs`; the original
+address redirects, the front page names the new location, and the immutable
+[ADR 0064](../../decisions/0064-release-documentation-and-adoption.md) keeps
+its historical bytes. All of this is recorded in the
+[publication Evidence](../../evidence/release/nkf-036-nkf-0-8-public-documentation-publication.md),
+which also records as a separate fact that
+[NKF-035](NKF-035-adopt-the-producer-to-published-nkf-0-8.md) closed with its
+reconciliation step partly done.
+
+No published NKF 0.1 through 0.8 byte and no accepted immutable record
+changed: the diff touches the front page, the living Realization, the
+specifications map, the new Task and Evidence documents, their declarations,
+and the reviewed baseline. The complete gate passes on the reconciled
+repository at twenty-nine test files and two hundred sixty-eight tests with
+zero diagnostics.
+
+One tooling observation is recorded rather than acted on. The ordinary
+review-and-seal recovery path the authoring protocol names has no top-level
+adopter command: `review --scaffold` emits the delta review, but sealing it on
+an already-current repository is reachable only through the freshness module
+the adopter bundles. This Task sealed through that module with the exact
+scaffolded review. Exposing the seal as a command is a candidate for a
+successor version, not a change this Task makes.
+
+Merging remains the Human Product Owner's separately authorized act, as does
+any change of repository or release visibility.
 
 ## Decision Applicability
 
@@ -171,8 +219,16 @@ is performed.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| The front page, current-system Realization, and specifications map state the adopted NKF 0.8 reality with no contradicting current-state statement | unknown | none | none |
-| The public documentation repository tip is byte-identical to the deterministic NKF 0.8 staging from a clean `master` commit, verified from a fresh clone | unknown | none | none |
-| Every manifest-bound published digest equals its file's bytes, the manifest binds NKF 0.8, and the published adopter digest equals the recommended adopter digest | unknown | none | none |
-| No published NKF 0.1 through 0.8 byte and no accepted immutable record changes | unknown | none | none |
-| The complete gate passes on the reconciled repository | unknown | none | none |
+| The front page, current-system Realization, and specifications map state the adopted NKF 0.8 reality with no contradicting current-state statement | proven | data-validity | none |
+| The public documentation repository tip is byte-identical to the deterministic NKF 0.8 staging from a clean `master` commit, verified from a fresh clone | proven | runtime-behaviour | none |
+| Every manifest-bound published digest equals its file's bytes, the manifest binds NKF 0.8, and the published adopter digest equals the recommended adopter digest | proven | data-validity | none |
+| No published NKF 0.1 through 0.8 byte and no accepted immutable record changes | proven | data-validity | none |
+| The complete gate passes on the reconciled repository | proven | runtime-behaviour | none |
+
+The first entry is proven at `data-validity` by reading the three documents
+for every current-state statement, not by a checker rule: no deterministic
+check reads prose for version currency, and the guidance self-description rule
+covers only guidance frontmatter. The publication entries are proven by a
+second fresh clone and an independent digest pass, recorded in the Evidence.
+The gate entry is the observed result of one complete `npm run nkf:check` run
+on the sealed tree; a later commit is observed separately.

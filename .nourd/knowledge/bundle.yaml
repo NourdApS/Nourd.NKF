@@ -1799,7 +1799,7 @@ non_records:
       stable_path: tasks/items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md
       digest:
         algorithm: sha-256
-        value: "4399fc520d558fe80c7555d767d2c4e0009b7fc00cf0c021f40e0e2d57d6034f"
+        value: "8c06dcc1f3a22c83f1e00690b1c4a30994be68274d4a0fa4c4d8552d679358ba"
       state:
         vocabulary: task-status
         value: "active"
