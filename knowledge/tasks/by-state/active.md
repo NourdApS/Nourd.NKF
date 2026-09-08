@@ -1,3 +1,3 @@
 # Active Tasks
 
-No applicable item is currently represented.
+- [NKF-037](../items/NKF-037-make-the-nkf-repository-public.md)

@@ -1809,6 +1809,24 @@ non_records:
         - NKF-035
         - NKF-033
       relationships: []
+  - path: tasks/items/NKF-037-make-the-nkf-repository-public.md
+    kind: task
+    document:
+      id: NKF-037
+      stable_path: tasks/items/NKF-037-make-the-nkf-repository-public.md
+      digest:
+        algorithm: sha-256
+        value: "fcac383df3e5b0266d0993ca6cd96ebc087f815aaa16eb876f1ae69c0cd91fbf"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for the visibility Decision, the visibility act, every community-policy question, and every merge; Claude technical reviewer under explicit delegation for the Design and Decision text, the history scan, the post-flip verification, the reconciliation edits, the Evidence recording, and the gate runs within the confirmed boundaries
+      related_tasks:
+        - NKF-036
+        - NKF-012
+        - NKF-009
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md
