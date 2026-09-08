@@ -5,6 +5,7 @@
 - [NKF-008](../items/NKF-008-publish-and-onboard-consumers.md)
 - [NKF-010](../items/NKF-010-governed-frontmatter-adoption.md)
 - [NKF-011](../items/NKF-011-enforce-nkf-contracts.md)
+- [NKF-012](../items/NKF-012-activate-protected-merge-gate.md)
 - [NKF-013](../items/NKF-013-initial-greenfield-onboarding.md)
 - [NKF-015](../items/NKF-015-agent-led-initial-onboarding.md)
 - [NKF-017](../items/NKF-017-complete-portable-onboarding-topology.md)
