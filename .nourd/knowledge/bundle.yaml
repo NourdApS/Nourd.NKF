@@ -1456,29 +1456,16 @@ non_records:
       stable_path: tasks/items/NKF-012-activate-protected-merge-gate.md
       digest:
         algorithm: sha-256
-        value: eff8a9c7c80cdfc16e67e53d49ffaaae8c83955a244246213dfac602f1b01ee2
+        value: 986b5479bf13b88eb29d4352f3465cb0780d67de27f6ddcddfc176690ae71afa
       state:
         vocabulary: task-status
-        value: deferred
+        value: active
       owner: Nourd ApS
-      decision_authority: Human Product Owner, Nourd ApS
+      decision_authority: Human Product Owner for every protection setting, the confirmation Decision, and every merge; Claude technical reviewer under explicit delegation for the native rewrite, the invalid-candidate exercise, Evidence recording, Realization reconciliation, the audit request, the confirmation text, and the gate runs within the confirmed boundaries
+      related_tasks:
+        - NKF-011
+        - NKF-037
       relationships: []
-      legacy_lock:
-        predecessor_version: "0.4"
-        source_digest:
-          algorithm: sha-256
-          value: eff8a9c7c80cdfc16e67e53d49ffaaae8c83955a244246213dfac602f1b01ee2
-        predecessor_state:
-          decision_authority: Human Product Owner, Nourd ApS
-          task_id: NKF-012
-          task_status: deferred
-          owner: Nourd ApS
-        initial_declaration_state:
-          document_state:
-            vocabulary: task-status
-            value: deferred
-          owner: Nourd ApS
-          decision_authority: Human Product Owner, Nourd ApS
   - path: tasks/items/NKF-014-expand-brownfield-and-advanced-onboarding.md
     kind: task
     document:
@@ -1782,10 +1769,10 @@ non_records:
       stable_path: tasks/items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md
       digest:
         algorithm: sha-256
-        value: "3cde604238649870474ebd7dc674903f4dd8be09cf6e3a114ad5267175816af4"
+        value: 3cde604238649870474ebd7dc674903f4dd8be09cf6e3a114ad5267175816af4
       state:
         vocabulary: task-status
-        value: "completed"
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner for every Product boundary, adoption authorization, visibility, and every merge; Claude technical reviewer under explicit delegation for the adoption mechanics, evidence recording, reconciliations, and tests within the confirmed boundaries
       related_tasks:
@@ -1799,10 +1786,10 @@ non_records:
       stable_path: tasks/items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md
       digest:
         algorithm: sha-256
-        value: "8c06dcc1f3a22c83f1e00690b1c4a30994be68274d4a0fa4c4d8552d679358ba"
+        value: 8c06dcc1f3a22c83f1e00690b1c4a30994be68274d4a0fa4c4d8552d679358ba
       state:
         vocabulary: task-status
-        value: "completed"
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner for every Product boundary, publication authorization, visibility, and every merge; Claude technical reviewer under explicit delegation for the reconciliation edits, deterministic public-documentation staging and publication, verification, Evidence recording, and gate runs within the confirmed boundaries
       related_tasks:
@@ -1816,10 +1803,10 @@ non_records:
       stable_path: tasks/items/NKF-037-make-the-nkf-repository-public.md
       digest:
         algorithm: sha-256
-        value: "bfb62380572e181f19b3316cd3129b26ff37b8925dceceb20b5938d252c70dab"
+        value: bfb62380572e181f19b3316cd3129b26ff37b8925dceceb20b5938d252c70dab
       state:
         vocabulary: task-status
-        value: "completed"
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner for the visibility Decision, the visibility act, every community-policy question, and every merge; Claude technical reviewer under explicit delegation for the Design and Decision text, the history scan, the post-flip verification, the reconciliation edits, the Evidence recording, and the gate runs within the confirmed boundaries
       related_tasks:
@@ -1904,7 +1891,7 @@ non_records:
       stable_path: evidence/release/nkf-036-nkf-0-8-public-documentation-publication.md
       digest:
         algorithm: sha-256
-        value: "45e5d36166a2e489a900e6aa764820e219a613e7082c44525d1efafa83121433"
+        value: 45e5d36166a2e489a900e6aa764820e219a613e7082c44525d1efafa83121433
       relationships: []
   - path: evidence/release/nkf-037-public-repository-observation.md
     kind: evidence
@@ -1913,7 +1900,7 @@ non_records:
       stable_path: evidence/release/nkf-037-public-repository-observation.md
       digest:
         algorithm: sha-256
-        value: "2f1fe16df309bd4f9babbb1315590da09908a0a78deef646b4985820f1a2a6f4"
+        value: 2f1fe16df309bd4f9babbb1315590da09908a0a78deef646b4985820f1a2a6f4
       relationships: []
   - path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
     kind: evidence
@@ -1922,7 +1909,7 @@ non_records:
       stable_path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
       digest:
         algorithm: sha-256
-        value: "146e3ef6f9ce01d5c02e52a151455d51162697a863ceb9f13ba7dbacd0a3813d"
+        value: 146e3ef6f9ce01d5c02e52a151455d51162697a863ceb9f13ba7dbacd0a3813d
       relationships: []
   - path: evidence/release/nkf-031-nkf-0-71-release-audit.md
     kind: evidence
@@ -1940,7 +1927,7 @@ non_records:
       stable_path: evidence/audits/nkf-037-history-scan.md
       digest:
         algorithm: sha-256
-        value: "134099a0c517bb2faf951dc675dc6feb4b7e1ea67e7a341040fc547312c7f340"
+        value: 134099a0c517bb2faf951dc675dc6feb4b7e1ea67e7a341040fc547312c7f340
       relationships: []
   - path: evidence/audits/nkf-033-nkf-0-71-guidance-review-finding.md
     kind: evidence
@@ -3205,7 +3192,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "98b0ad7ab8ab9d2c28d8817cb39778d99ac52b15e873dfcd28e287f8d97a85f2"
+      value: 98b0ad7ab8ab9d2c28d8817cb39778d99ac52b15e873dfcd28e287f8d97a85f2
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

@@ -1,3 +1,3 @@
 # Active Tasks
 
-No applicable item is currently represented.
+- [NKF-012](../items/NKF-012-activate-protected-merge-gate.md)
