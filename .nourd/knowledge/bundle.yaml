@@ -1816,7 +1816,7 @@ non_records:
       stable_path: tasks/items/NKF-037-make-the-nkf-repository-public.md
       digest:
         algorithm: sha-256
-        value: "fcac383df3e5b0266d0993ca6cd96ebc087f815aaa16eb876f1ae69c0cd91fbf"
+        value: "709abde09d8a991a4b00cf56528a289a5db74753575e864e364be16827728ba7"
       state:
         vocabulary: task-status
         value: "active"

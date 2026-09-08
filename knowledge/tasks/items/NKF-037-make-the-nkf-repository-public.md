@@ -150,8 +150,15 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
 ## Current Progress
 
 Created on `2026-09-08` under the Human Direction above, on the `task/NKF-037`
-branch from `master`. Every mandatory capability reads `unknown` until the work
-is performed.
+branch from `master`. The Design is authored and, after the Human Product
+Owner confirmed the direction and all four open questions, adopted by
+[ADR 0136](../../decisions/0136-adopt-the-public-repository-direction.md). The
+history scan is recorded as
+[Evidence](../../evidence/audits/nkf-037-history-scan.md) and found no
+credential or third-party personal data. The policy files exist as repository
+content. The Task is stopped at the Human Product Owner's flip; verification,
+protection activation, reconciliation, and close follow it. Every mandatory
+capability reads `unknown` until then.
 
 ## Decision Applicability
 
