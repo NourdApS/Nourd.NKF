@@ -827,6 +827,15 @@ non_records:
         algorithm: sha-256
         value: 6cda03da38ebf5f68fa5565805ea720acf8edff1598a3a43c91f1bf839934f12
       relationships: []
+  - path: specifications/nkf-0.81.md
+    kind: evidence
+    document:
+      id: document-nkf-0-81-specification
+      stable_path: specifications/nkf-0.81.md
+      digest:
+        algorithm: sha-256
+        value: "b07e08381229fdf65b1a7bbd74caf7de210ef64cf0438fd9c2f8279246c56fe1"
+      relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
     document:
