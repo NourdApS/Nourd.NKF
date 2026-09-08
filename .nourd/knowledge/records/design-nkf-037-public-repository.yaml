@@ -1,0 +1,169 @@
+contract: nkf.record
+id: design-nkf-037-public-repository
+type: design
+body_contract: nkf.design
+title: NKF Public Repository
+source:
+  path: designs/items/nkf-public-repository.md
+  stable_path: designs/items/nkf-public-repository.md
+  digest:
+    algorithm: sha-256
+    value: "9a93fb10e1bb2517283fc8a196140a9734df08551dfc88719b0adaecd31bc32f"
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: visibility-becomes-public-by-human-act
+    heading_path:
+      - Proposed Direction
+      - Visibility Becomes Public By Human Act
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: what-becomes-visible
+    heading_path:
+      - Proposed Direction
+      - What Becomes Visible
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-catalog-stays-literal-until-nkf-0-9
+    heading_path:
+      - Proposed Direction
+      - The Catalog Stays Literal Until NKF 0.9
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-protected-merge-gate-becomes-activatable
+    heading_path:
+      - Proposed Direction
+      - The Protected Merge Gate Becomes Activatable
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: pre-flip-hygiene
+    heading_path:
+      - Proposed Direction
+      - Pre-Flip Hygiene
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: post-flip-verification-and-reconciliation
+    heading_path:
+      - Proposed Direction
+      - Post-Flip Verification And Reconciliation
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: publish-a-separate-public-release-mirror
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Publish A Separate Public Release Mirror
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: grant-collaborator-access-per-consumer
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Grant Collaborator Access Per Consumer
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: flip-visibility-and-correct-the-catalog-now
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Flip Visibility And Correct The Catalog Now
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: stay-private-until-nkf-0-9-ships
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Stay Private Until NKF 0.9 Ships
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships:
+  - type: depends-on
+    target: adr-0064
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0109
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0121
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0080
+    source_section: governing-inputs-and-constraints
+task: NKF-037
+design_disposition: active
+proposal_authority_effect: Active proposal under NKF-037; no Decision has adopted, rejected, or superseded this direction, and the repository's visibility is unchanged until the Human Product Owner's separate Decision and act.

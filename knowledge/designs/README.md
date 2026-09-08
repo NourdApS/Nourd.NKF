@@ -45,6 +45,7 @@ establishes it.
 
 [Active Design Index](by-disposition/active.md)
 
+- [NKF Public Repository](items/nkf-public-repository.md)
 - [NKF Task Scope Gate](items/task-scope-gate.md)
 
 ## Adopted
