@@ -1792,6 +1792,23 @@ non_records:
         - NKF-033
         - NKF-032
       relationships: []
+  - path: tasks/items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md
+    kind: task
+    document:
+      id: NKF-036
+      stable_path: tasks/items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md
+      digest:
+        algorithm: sha-256
+        value: "8c06dcc1f3a22c83f1e00690b1c4a30994be68274d4a0fa4c4d8552d679358ba"
+      state:
+        vocabulary: task-status
+        value: "completed"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary, publication authorization, visibility, and every merge; Claude technical reviewer under explicit delegation for the reconciliation edits, deterministic public-documentation staging and publication, verification, Evidence recording, and gate runs within the confirmed boundaries
+      related_tasks:
+        - NKF-035
+        - NKF-033
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md
@@ -1861,6 +1878,15 @@ non_records:
       digest:
         algorithm: sha-256
         value: 454c1d371d0a658fce71dc0da589a96e5bc5408d6eefd464f82058e6a1e6cfc9
+      relationships: []
+  - path: evidence/release/nkf-036-nkf-0-8-public-documentation-publication.md
+    kind: evidence
+    document:
+      id: document-nkf-0-8-public-documentation-publication
+      stable_path: evidence/release/nkf-036-nkf-0-8-public-documentation-publication.md
+      digest:
+        algorithm: sha-256
+        value: "45e5d36166a2e489a900e6aa764820e219a613e7082c44525d1efafa83121433"
       relationships: []
   - path: evidence/release/nkf-035-nkf-0-8-producer-adoption.md
     kind: evidence
@@ -3143,7 +3169,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "427bdb4ec3bd60e02f83a80cf471cbfbd057ad1428ddc9da7007d6b842e0bc6d"
+      value: "b5c63324803416e6cbabe5ad566ab4022ae70f145fc017ab3292d16bfc68f1db"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

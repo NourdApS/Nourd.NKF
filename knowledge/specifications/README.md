@@ -97,10 +97,11 @@ with its exact release candidate confirmed by
 [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md). Its
 digest-bound executable companion lives at `contracts/nkf/0.7/nkf.yaml`,
 its evaluation policy at `contracts/nkf/0.7/freshness-policy.yaml`, and its
-per-rule version delta at `contracts/nkf/0.7/version-delta.yaml`. The
-producer declares, pins, and installs the published 0.7 release, and its
+per-rule version delta at `contracts/nkf/0.7/version-delta.yaml`. Its
 native accepted record was created by the live promotion under
-[NKF-029](../tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md).
+[NKF-029](../tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md);
+0.7 is now an immutable published predecessor outside the live window, and a
+0.7 repository steps through the published 0.71 archive.
 The superseded acceptance at
 [ADR 0127](../decisions/0127-accept-the-nkf-0-7-authority-set.md) remains
 immutable historical provenance.
@@ -109,6 +110,24 @@ immutable historical provenance.
 
 - [NKF 0.71 — Product And Technology Knowledge Format](nkf-0.71.md)
 
+NKF 0.71 is the live-supported immutable predecessor, accepted by
+[ADR 0131](../decisions/0131-accept-the-nkf-0-71-authority-set.md) and
+technically confirmed by
+[ADR 0132](../decisions/0132-confirm-the-nkf-0-71-release-candidate.md); it
+was published, recommended, and producer-adopted under
+[NKF-032](../tasks/items/NKF-032-adopt-the-producer-to-published-nkf-0-71.md).
+A conformant 0.71 repository upgrades to 0.8 non-breaking through the
+ordinary reviewed delta update.
+
 ## NKF 0.8
 
 - [NKF 0.8 — Product And Technology Knowledge Format](nkf-0.8.md)
+
+NKF 0.8 is the current accepted, technically confirmed, published,
+recommended, and producer-adopted version. Its authority set is accepted by
+[ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md), its exact
+release candidate is confirmed by
+[ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md), and
+this producer declares, pins, and installs it under
+[NKF-035](../tasks/items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md).
+Live support is exactly NKF 0.8 plus NKF 0.71.
