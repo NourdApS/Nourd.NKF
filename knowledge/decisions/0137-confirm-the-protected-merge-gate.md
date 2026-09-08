@@ -6,7 +6,7 @@ summary: Confirm the exact current-system Realization revision that states the p
 created_at: 2026-09-08T13:26:57Z
 ---
 
-# [ADR 0137](0137-confirm-the-protected-merge-gate.md): Confirm The Protected Merge Gate
+# ADR 0137: Confirm The Protected Merge Gate
 
 ## Context And Problem
 

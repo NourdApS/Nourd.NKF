@@ -8,7 +8,7 @@ source:
   stable_path: decisions/0137-confirm-the-protected-merge-gate.md
   digest:
     algorithm: sha-256
-    value: "67de55f3064d798246452cf2c90b18fbcf4ca5ff8fc69262dde78c72961d14f2"
+    value: "93f3024fd5f932c68cd5f45cc261cd86d45298db7bc2761301577575a605cf28"
 governance:
   lifecycle: immutable
   status: accepted
