@@ -1938,6 +1938,15 @@ non_records:
         algorithm: sha-256
         value: 134099a0c517bb2faf951dc675dc6feb4b7e1ea67e7a341040fc547312c7f340
       relationships: []
+  - path: evidence/audits/nkf-012-completion-audit.md
+    kind: evidence
+    document:
+      id: document-nkf-012-completion-audit
+      stable_path: evidence/audits/nkf-012-completion-audit.md
+      digest:
+        algorithm: sha-256
+        value: "831cb8f124b20337abad0b47440647757e9926e84476ec3c61ba517913131fb4"
+      relationships: []
   - path: evidence/audits/nkf-033-nkf-0-71-guidance-review-finding.md
     kind: evidence
     document:

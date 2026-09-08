@@ -152,6 +152,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0134: Accept The NKF 0.8 Authority Set](0134-accept-the-nkf-0-8-authority-set.md)
 - [ADR 0135: Confirm The NKF 0.8 Release Candidate](0135-confirm-the-nkf-0-8-release-candidate.md)
 - [ADR 0136: Adopt The Public Repository Direction](0136-adopt-the-public-repository-direction.md)
+- [ADR 0137: Confirm The Protected Merge Gate](0137-confirm-the-protected-merge-gate.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
