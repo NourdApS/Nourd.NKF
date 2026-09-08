@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 6a5ee402ac5d7680ee5f8a5d60ccc7aba5a359c3f2535fb195c9d02e7219a60c
+  value: 23de91657f5e6d95167d34bd08a8e1cace331be073b366820b67dd9037ec473e
 policy:
   id: nkf.freshness-policy.0.8
   digest:
@@ -75,7 +75,7 @@ node_revisions:
       id: NKF-012
     revision:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
   - node:
       kind: document
       id: NKF-013
@@ -1026,6 +1026,12 @@ node_revisions:
       value: 4a8b0a1850506edf93f417128bec1e7c02352343b34af562ffd26f52945be87d
   - node:
       kind: record
+      id: adr-0137
+    revision:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     revision:
       algorithm: sha-256
@@ -1908,6 +1914,18 @@ node_revisions:
       value: 1567dffdcf576235820f1fff6bc17f86b15e7a4333223ca9ef7c04697c21224a
   - node:
       kind: document
+      id: document-nkf-012-completion-audit
+    revision:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+  - node:
+      kind: document
+      id: document-nkf-012-protected-merge-gate-observation
+    revision:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+  - node:
+      kind: document
       id: document-nkf-030-whole-nkf-master-audit
     revision:
       algorithm: sha-256
@@ -2025,7 +2043,7 @@ node_revisions:
       id: nkf-current-system
     revision:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
   - node:
       kind: record
       id: nkf-initial-greenfield-onboarding
@@ -2258,6 +2276,45 @@ authored_edges:
         kind: record
         id: adr-0136
       section: rationale
+  - source:
+      kind: record
+      id: adr-0137
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0063
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0137
+      section: decision
+  - source:
+      kind: record
+      id: adr-0137
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0136
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0137
+      section: decision
+  - source:
+      kind: record
+      id: adr-0137
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0060
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0137
+      section: scope-and-applicability
   - source:
       kind: record
       id: design-nkf-025-freshness-and-deterministic-knowledge-graph
@@ -3336,6 +3393,19 @@ authored_edges:
       node:
         kind: record
         id: adr-0134
+      section: decision
+  - source:
+      kind: record
+      id: adr-0137
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0062
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0137
       section: decision
   - source:
       kind: record
@@ -4834,22 +4904,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate when repository capabilities permit requiring exact-commit NKF validation, one pull-request approval, and an explicit bypass policy.created_at: 2026-07-31T01:40:19Ztask_id: NKF-012task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate on master now that the repository is public — record the required exact-commit Validate check, the mandatory approving review, the explicit bypass and direct-push policy the Human Product Owner configured, and the intentionally invalid pull-request candidate that Github blocks — then reconcile the Realization, obtain the independent completion audit, and confirm the successor account.created_at: 2026-07-31T01:40:19Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
     basis_digest:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-012
@@ -4863,22 +4927,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate when repository capabilities permit requiring exact-commit NKF validation, one pull-request approval, and an explicit bypass policy.created_at: 2026-07-31T01:40:19Ztask_id: NKF-012task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate on master now that the repository is public — record the required exact-commit Validate check, the mandatory approving review, the explicit bypass and direct-push policy the Human Product Owner configured, and the intentionally invalid pull-request candidate that Github blocks — then reconcile the Realization, obtain the independent completion audit, and confirm the successor account.created_at: 2026-07-31T01:40:19Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
     basis_digest:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-012
@@ -4892,22 +4950,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate when repository capabilities permit requiring exact-commit NKF validation, one pull-request approval, and an explicit bypass policy.created_at: 2026-07-31T01:40:19Ztask_id: NKF-012task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate on master now that the repository is public — record the required exact-commit Validate check, the mandatory approving review, the explicit bypass and direct-push policy the Human Product Owner configured, and the intentionally invalid pull-request candidate that Github blocks — then reconcile the Realization, obtain the independent completion audit, and confirm the successor account.created_at: 2026-07-31T01:40:19Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
     basis_digest:
       algorithm: sha-256
-      value: db299583801f8c05f2b116b12a0b7ef8d8d506a9a5cdae7c96fb5bd53dd15f06
+      value: 7cd7e0420016ebb51344a50ecdaf2eade46d565288c77844014d24ac8eb5e732
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-013
@@ -7025,10 +7077,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-037
-        from_state: active
-        to_state: completed
   - node:
       kind: document
       id: NKF-037
@@ -7058,10 +7106,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-037
-        from_state: active
-        to_state: completed
   - node:
       kind: document
       id: NKF-037
@@ -7091,10 +7135,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-      transition:
-        task: NKF-037
-        from_state: active
-        to_state: completed
   - node:
       kind: record
       id: adr-0001
@@ -17469,6 +17509,66 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+  - node:
+      kind: record
+      id: adr-0137
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0137
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+    basis_digest:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0137
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0137
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+    basis_digest:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0137
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0137
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+    basis_digest:
+      algorithm: sha-256
+      value: daa14fa3ab9c33644935c2b67b1fc67bd73fc0afb5a85259f5360f3793c9b263
+    provenance:
+      performed: true
   - node:
       kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
@@ -29873,6 +29973,144 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: document
+      id: document-nkf-012-completion-audit
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-012-completion-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-012 Completion Auditsummary: Records the independent completion audit of the NKF-012 protected merge gate delivery — the auditor's read-only verification of every Evidence claim against Github, its criterion-by-criterion assessment, its verdict of no material finding with six minor findings, and the repair of each minor finding before confirmation.created_at: 2026-09-08T13:40:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+    basis_digest:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-012-completion-audit
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-012-completion-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-012 Completion Auditsummary: Records the independent completion audit of the NKF-012 protected merge gate delivery — the auditor's read-only verification of every Evidence claim against Github, its criterion-by-criterion assessment, its verdict of no material finding with six minor findings, and the repair of each minor finding before confirmation.created_at: 2026-09-08T13:40:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+    basis_digest:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-012-completion-audit
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-012-completion-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-012 Completion Auditsummary: Records the independent completion audit of the NKF-012 protected merge gate delivery — the auditor's read-only verification of every Evidence claim against Github, its criterion-by-criterion assessment, its verdict of no material finding with six minor findings, and the repair of each minor finding before confirmation.created_at: 2026-09-08T13:40:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+    basis_digest:
+      algorithm: sha-256
+      value: eaaa401f61f07932a866d3e8699f6b80c8600ea785d4012ba8d5a2409377a460
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-012-protected-merge-gate-observation
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-012-protected-merge-gate-observation
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-012 Protected Merge Gate Observationsummary: Records the Github branch protection observed on master after the repository became public — the required exact-commit Validate check, the mandatory approving review with the Human Product Owner's bypass allowance, the push restriction to the Human Product Owner, administrator enforcement, and the branch lock — together with the intentionally invalid pull-request candidate that failed Validate and that Github reported unmergeable, then closed unmerged.created_at: 2026-09-08T13:22:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+    basis_digest:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-012-protected-merge-gate-observation
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-012-protected-merge-gate-observation
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-012 Protected Merge Gate Observationsummary: Records the Github branch protection observed on master after the repository became public — the required exact-commit Validate check, the mandatory approving review with the Human Product Owner's bypass allowance, the push restriction to the Human Product Owner, administrator enforcement, and the branch lock — together with the intentionally invalid pull-request candidate that failed Validate and that Github reported unmergeable, then closed unmerged.created_at: 2026-09-08T13:22:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+    basis_digest:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-012-protected-merge-gate-observation
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-012-protected-merge-gate-observation
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-012 Protected Merge Gate Observationsummary: Records the Github branch protection observed on master after the repository became public — the required exact-commit Validate check, the mandatory approving review with the Human Product Owner's bypass allowance, the push restriction to the Human Product Owner, administrator enforcement, and the branch lock — together with the intentionally invalid pull-request candidate that failed Validate and that Github reported unmergeable, then closed unmerged.created_at: 2026-09-08T13:22:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+    basis_digest:
+      algorithm: sha-256
+      value: 53a5c2c8f9a380acf4f362ab719da3c537df6b5a1437b970e47c3278a3d5f56a
+    provenance:
+      performed: true
+  - node:
+      kind: document
       id: document-nkf-030-whole-nkf-master-audit
     purpose: change-impact
     state: eligible
@@ -31403,18 +31641,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
     basis_digest:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-current-system
@@ -31429,18 +31661,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
     basis_digest:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-current-system
@@ -31455,18 +31681,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
     basis_digest:
       algorithm: sha-256
-      value: 4c920f452587206bdc7d3cbb54d69f6adb80f7ff7122f451ede7efd110bb1d96
+      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-initial-greenfield-onboarding
@@ -41113,35 +41333,102 @@ decision_classifications:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
+  - decision: adr-0137
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0137
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 36e0b7ca834ff55b2c0236e43b4ef6842f17455a8dcc7f9fd8fbcae9fc6533ae
+    basis_digest:
+      algorithm: sha-256
+      value: 36e0b7ca834ff55b2c0236e43b4ef6842f17455a8dcc7f9fd8fbcae9fc6533ae
+    provenance:
+      performed: true
+  - decision: adr-0137
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0137
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 36e0b7ca834ff55b2c0236e43b4ef6842f17455a8dcc7f9fd8fbcae9fc6533ae
+    basis_digest:
+      algorithm: sha-256
+      value: 36e0b7ca834ff55b2c0236e43b4ef6842f17455a8dcc7f9fd8fbcae9fc6533ae
+    provenance:
+      performed: true
+  - decision: adr-0137
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0137
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 36e0b7ca834ff55b2c0236e43b4ef6842f17455a8dcc7f9fd8fbcae9fc6533ae
+    basis_digest:
+      algorithm: sha-256
+      value: 36e0b7ca834ff55b2c0236e43b4ef6842f17455a8dcc7f9fd8fbcae9fc6533ae
+    provenance:
+      performed: true
 promotion_reconciliation: []
 confirmation:
   reviewer:
     kind: agent
-    id: task-transition-operator
-  reviewed_at: 2026-09-08T11:57:37.499Z
-  claim: mechanically-concluded
-  transition:
-    task: NKF-037
-    from_state: active
-    to_state: completed
-    predecessor_graph_revision:
-      algorithm: sha-256
-      value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
+    id: claude-technical-reviewer
+  reviewed_at: 2026-09-08T13:30:23.774Z
+  claim: semantically-reviewed-delta
+  computed_closure:
+    - kind: document
+      id: NKF-012
+    - kind: record
+      id: adr-0137
+    - kind: document
+      id: document-nkf-012-completion-audit
+    - kind: document
+      id: document-nkf-012-protected-merge-gate-observation
+    - kind: record
+      id: nkf-current-system
+  performed_set:
+    - kind: document
+      id: NKF-012
+    - kind: record
+      id: adr-0137
+    - kind: document
+      id: document-nkf-012-completion-audit
+    - kind: document
+      id: document-nkf-012-protected-merge-gate-observation
+    - kind: record
+      id: nkf-current-system
   observations:
-    - id: transition-conclusion-observation
+    - id: nkf-012-delta-review-observation
       subject:
         kind: document
-        id: NKF-037
+        id: NKF-012
       basis:
         node:
           kind: document
-          id: NKF-037
+          id: NKF-012
         source:
           heading:
             heading_path:
-              - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.9 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
+              - 'title: "NKF-012: Activate Protected Merge Gate"summary: Activate and prove the Github protected merge gate on master now that the repository is public — record the required exact-commit Validate check, the mandatory approving review, the explicit bypass and direct-push policy the Human Product Owner configured, and the intentionally invalid pull-request candidate that Github blocks — then reconcile the Realization, obtain the independent completion audit, and confirm the successor account.created_at: 2026-07-31T01:40:19Z'
             occurrence: 1
-      finding: "The deterministic Task transition NKF-037 active -> completed concluded mechanically: every judgment carried, zero judgments performed."
+      finding: "Fresh judgments under the NKF-012 delegation: the natively rewritten Task as context, ADR 0137 as governing and classified extends because it confirms the protected-merge-gate account ADR 0062 and ADR 0063 left open without changing them, the protected merge gate observation and the completion audit as evidencing, and the reconciled current-system Realization as realizing. Every other judgment carried by digest identity. Protection is an operational fact; no accepted meaning changed."
   limitations:
-    - This is a mechanical conclusion of the NKF-037 active-to-completed transition carrying every prior judgment with zero fresh semantic review; any semantic doubt requires the ordinary whole-root or delta semantic review and seal.
+    - This delta review judges only the changed nodes and the new decision classifications; carried judgments are trusted by digest identity under the accepted 0.71-to-0.8 version delta.
+    - Github owns the later state of the observed protection; the review does not observe whether the branch lock blocks the Human Product Owner's own merge.
   disputed: false

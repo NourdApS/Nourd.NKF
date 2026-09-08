@@ -141,9 +141,50 @@ successor allocation and the mandatory pull-request approval requirement.
 ## Current Progress
 
 Resumed on `2026-09-08` under the Human Direction above, on the `task/NKF-012`
-branch from `master`. The protection is configured; the exercise, Evidence,
-reconciliation, audit, and confirmation follow. Every mandatory capability
-reads `unknown` until each is observed.
+branch from `master`. The protection is observed and recorded, the invalid
+candidate is proven blocked and closed, the Realization and front page are
+reconciled, the independent audit found no material finding and its minor
+findings are repaired, and the confirmation Decision binds the exact revisions.
+
+## Completion Result
+
+The protected merge gate on `master` exists and is recorded from Github's own
+report in the
+[protected merge gate observation](../../evidence/release/nkf-012-protected-merge-gate-observation.md):
+the exact-commit `Validate` check is required and strict, administrators are
+bound, one approving review is required with a bypass allowance for the Human
+Product Owner, pushes are restricted to the Human Product Owner, force pushes
+and deletion are disallowed, and the branch lock is enabled as the Human
+Product Owner configured it. The bypass and direct-push policy is stated
+explicitly, including that the lock makes `master` read-only for everyone
+while it stays enabled and that code-owner review is inert without a
+`CODEOWNERS` file.
+
+An intentionally invalid candidate — a declared Task changed without a repin —
+was pushed on its own branch as pull request 22, failed `Validate` on its exact
+head with `NKF-ADOPTER-FAILED`, and was reported blocked by Github. The blocked
+state is recorded as composite, since the lock was already enabled, and the
+protection claim rests on Github's report rather than on the exercise. The
+candidate was closed unmerged and its branch deleted after the Evidence was
+written. No check, checker, workflow, or adapter verifier was weakened.
+
+The current-system Realization and the front page state the protected boundary
+from Github's report, name the lock, and distinguish operational Evidence,
+confirmation, and conformance. An independent Claude agent instance audited the
+delivery read-only against the branch and against Github, verified every
+recorded setting equal to Github's report, and returned no material finding
+with six minor findings, each repaired before confirmation, as recorded in the
+[completion audit](../../evidence/audits/nkf-012-completion-audit.md).
+[ADR 0137](../../decisions/0137-confirm-the-protected-merge-gate.md) confirms
+the exact Realization revision and both Evidence records by digest and
+concludes the confirmation scope
+[ADR 0063](../../decisions/0063-defer-protected-merge-gate.md) transferred here.
+
+This Task changed no accepted meaning, contract, or published byte. The
+complete gate passes on the sealed tree at twenty-nine test files and two
+hundred sixty-eight tests with zero diagnostics. Merging remains the Human
+Product Owner's act, and while the branch lock stays enabled no pull request,
+this one included, can merge until the Human Product Owner lifts it.
 
 ## Decision Applicability
 
@@ -162,13 +203,22 @@ reads `unknown` until each is observed.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Github reports active branch protection on `master` with the exact `Validate` check required and strict | unknown | none | none |
-| At least one approving pull-request review is required | unknown | none | none |
-| Bypass and direct-push policy is explicit and recorded, including administrator enforcement | unknown | none | none |
-| An intentionally invalid candidate fails `Validate` and Github reports its pull request unmergeable, and it is closed unmerged | unknown | none | none |
-| The Realization and front page state the protected boundary without overstating it | unknown | none | none |
-| An independent completion audit records no unresolved material finding and a confirmation Decision binds it | unknown | none | none |
+| Github reports active branch protection on `master` with the exact `Validate` check required and strict | proven | runtime-behaviour | none |
+| At least one approving pull-request review is required | proven | runtime-behaviour | none |
+| Bypass and direct-push policy is explicit and recorded, including administrator enforcement | proven | data-validity | none |
+| An intentionally invalid candidate fails `Validate` and Github reports its pull request unmergeable, and it is closed unmerged | proven | runtime-behaviour | none |
+| The Realization and front page state the protected boundary without overstating it | proven | data-validity | none |
+| An independent completion audit records no unresolved material finding and a confirmation Decision binds it | proven | data-validity | none |
 
 This gate replaces the empty retrospective gate the NKF 0.2 self-migration
 recorded for the legacy-locked predecessor; the applicable Decisions above were
 extracted at this native rewrite on `2026-09-08`.
+
+The protection and review entries are proven at `runtime-behaviour` by
+querying Github's protection API and, for the exercise, by observing a real
+workflow failure and Github's blocked pull-request state; Github owns their
+later state. The policy, Realization, and audit entries are proven at
+`data-validity` by reading the recorded documents against the observed
+settings and by the independent auditor's own comparison. Nothing here is
+proven at `production-suitability`: whether the lock blocks the Human Product
+Owner's own merge is observed on the next merge, not here.

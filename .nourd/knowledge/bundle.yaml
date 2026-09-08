@@ -1456,7 +1456,7 @@ non_records:
       stable_path: tasks/items/NKF-012-activate-protected-merge-gate.md
       digest:
         algorithm: sha-256
-        value: "d8c12d14284f30957978d646fad48c8d5cdd5d5e62b351796e79461df61b7de8"
+        value: "1aad1b0b7aa00a3768a11b0de3ae244b2ff7898cb4dcee428289fe87fa9c1e50"
       state:
         vocabulary: task-status
         value: active
