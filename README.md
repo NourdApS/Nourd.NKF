@@ -76,9 +76,13 @@ any change of repository or release visibility.
 
 Every published archive carries its complete public-documentation projection
 and exact public adopter. Publication of those bytes to the separate
-[NKF Public Documentation repository](https://github.com/kaveh6202/Nourd.NKF.Docs)
-is a separate remote operation; this repository does not claim that mirror has
-yet moved from its last independently observed 0.2 state.
+[NKF Public Documentation repository](https://github.com/NourdApS/Nourd.NKF.Docs)
+is a separate remote operation. The NKF 0.8 projection staged from `master`
+commit `d3f0e84f` was published there on `2026-09-08` and verified
+byte-for-byte from a fresh clone, as recorded in the
+[publication Evidence](knowledge/evidence/release/nkf-036-nkf-0-8-public-documentation-publication.md);
+the repository moved from `kaveh6202/Nourd.NKF.Docs` to the NourdApS
+organization and the original address redirects. Github owns its later state.
 
 The `NKF Contracts` workflow validates every push and pull request with the
 canonical command. The protected merge gate remains deferred to
@@ -110,7 +114,7 @@ community-conduct policies remain separate matters.
 | Need | Location |
 | --- | --- |
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
-| Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/kaveh6202/Nourd.NKF.Docs) |
+| Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/NourdApS/Nourd.NKF.Docs) |
 | Read the normative format this repository runs | [NKF 0.8 Specification](knowledge/specifications/nkf-0.8.md) |
 | Read the live-supported predecessor authority | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) |
 | Inspect the executable companion | [NKF 0.8 YAML Contract](contracts/nkf/0.8/nkf.yaml) |
