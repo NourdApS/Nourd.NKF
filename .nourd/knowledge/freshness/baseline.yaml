@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+  value: 90ae99c4e46826f2d4a4166b98eaefddb65e592d859ea7d9911ce01d54f870e0
 policy:
   id: nkf.freshness-policy.0.8
   digest:
@@ -219,7 +219,7 @@ node_revisions:
       id: NKF-036
     revision:
       algorithm: sha-256
-      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+      value: 565034dce8894635daca47a45f6f2727c488847f50aeb89d2ae9f7b4efb722fd
   - node:
       kind: record
       id: adr-0001
@@ -6779,12 +6779,22 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+      value: 565034dce8894635daca47a45f6f2727c488847f50aeb89d2ae9f7b4efb722fd
     basis_digest:
       algorithm: sha-256
       value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+      transition:
+        task: NKF-036
+        from_state: active
+        to_state: completed
   - node:
       kind: document
       id: NKF-036
@@ -6802,12 +6812,22 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+      value: 565034dce8894635daca47a45f6f2727c488847f50aeb89d2ae9f7b4efb722fd
     basis_digest:
       algorithm: sha-256
       value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+      transition:
+        task: NKF-036
+        from_state: active
+        to_state: completed
   - node:
       kind: document
       id: NKF-036
@@ -6825,12 +6845,22 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
+      value: 565034dce8894635daca47a45f6f2727c488847f50aeb89d2ae9f7b4efb722fd
     basis_digest:
       algorithm: sha-256
       value: 481eb5cbd5651ec5e58c5a50d2f78212b51fee9a94c7d10c20e83e524b6532f8
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+      transition:
+        task: NKF-036
+        from_state: active
+        to_state: completed
   - node:
       kind: record
       id: adr-0001
@@ -29125,7 +29155,13 @@ applicability_coverage:
       algorithm: sha-256
       value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-8-public-documentation-publication
@@ -29148,7 +29184,13 @@ applicability_coverage:
       algorithm: sha-256
       value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-8-public-documentation-publication
@@ -29171,7 +29213,13 @@ applicability_coverage:
       algorithm: sha-256
       value: dfeb64a2cde2183b8a2dd6b8a46a4677055d4e9a5ea2d6bdc4d39995af00c857
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: document
       id: document-nkf-0-8-release-audit
@@ -30796,7 +30844,13 @@ applicability_coverage:
       algorithm: sha-256
       value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: nkf-current-system
@@ -30816,7 +30870,13 @@ applicability_coverage:
       algorithm: sha-256
       value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: nkf-current-system
@@ -30836,7 +30896,13 @@ applicability_coverage:
       algorithm: sha-256
       value: d87568dc0008217a465d1fee7623b37e47d2cd0407400a8294243dc3bbcb6d11
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: nkf-initial-greenfield-onboarding
@@ -40418,25 +40484,18 @@ promotion_reconciliation: []
 confirmation:
   reviewer:
     kind: agent
-    id: claude-technical-reviewer
-  reviewed_at: 2026-09-08T11:00:09.645Z
-  claim: semantically-reviewed-delta
-  computed_closure:
-    - kind: document
-      id: NKF-036
-    - kind: document
-      id: document-nkf-0-8-public-documentation-publication
-    - kind: record
-      id: nkf-current-system
-  performed_set:
-    - kind: document
-      id: NKF-036
-    - kind: document
-      id: document-nkf-0-8-public-documentation-publication
-    - kind: record
-      id: nkf-current-system
+    id: task-transition-operator
+  reviewed_at: 2026-09-08T11:02:55.266Z
+  claim: mechanically-concluded
+  transition:
+    task: NKF-036
+    from_state: active
+    to_state: completed
+    predecessor_graph_revision:
+      algorithm: sha-256
+      value: 18779863da66ba3e9827cc6358ef4d18ea515762ef935df6edd928502fc4448c
   observations:
-    - id: nkf-036-delta-review-observation
+    - id: transition-conclusion-observation
       subject:
         kind: document
         id: NKF-036
@@ -40449,8 +40508,7 @@ confirmation:
             heading_path:
               - "title: \"NKF-036: Reconcile The Producer Record And Republish The Public Projection\"summary: Bring the producer's front page, consolidated current-system Realization, and specifications map into agreement with the adopted NKF 0.8 reality they already partly state, and publish the deterministic NKF 0.8 public-documentation projection to the public documentation repository that has stood at NKF 0.2 since 2026-08-10 — recording the publication as Evidence and the adoption Task's incomplete reconciliation step as a fact, without changing any accepted meaning, published byte, or repository visibility.created_at: 2026-09-08T10:47:23Z"
             occurrence: 1
-      finding: "Three nodes judged fresh under the NKF-036 delegation: the NKF-036 Task as context, the NKF 0.8 public-documentation publication Evidence as evidencing, and the living current-system Realization as realizing after its reconciliation to the adopted NKF 0.8 reality. Every other judgment carried by digest identity. The reconciliation changes documentation, not accepted meaning; the Realization stays draft and partially confirmed."
+      finding: "The deterministic Task transition NKF-036 active -> completed concluded mechanically: every judgment carried, zero judgments performed."
   limitations:
-    - This delta review judges only the three changed nodes; carried judgments are trusted by digest identity under the accepted 0.71-to-0.8 version delta and were not re-read.
-    - Reviewing the reconciled Realization for internal consistency with the adopted NKF 0.8 state does not confirm the Realization; confirmation remains the Human Product Owner's separate act.
+    - This is a mechanical conclusion of the NKF-036 active-to-completed transition carrying every prior judgment with zero fresh semantic review; any semantic doubt requires the ordinary whole-root or delta semantic review and seal.
   disputed: false
