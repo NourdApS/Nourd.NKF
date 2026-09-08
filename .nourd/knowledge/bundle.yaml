@@ -1819,7 +1819,7 @@ non_records:
         value: "bfb62380572e181f19b3316cd3129b26ff37b8925dceceb20b5938d252c70dab"
       state:
         vocabulary: task-status
-        value: "active"
+        value: "completed"
       owner: Nourd ApS
       decision_authority: Human Product Owner for the visibility Decision, the visibility act, every community-policy question, and every merge; Claude technical reviewer under explicit delegation for the Design and Decision text, the history scan, the post-flip verification, the reconciliation edits, the Evidence recording, and the gate runs within the confirmed boundaries
       related_tasks:

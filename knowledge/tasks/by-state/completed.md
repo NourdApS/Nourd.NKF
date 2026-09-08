@@ -23,3 +23,4 @@
 - [NKF-033](../items/NKF-033-release-nkf-0-8-with-generated-distribution.md)
 - [NKF-035](../items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md)
 - [NKF-036](../items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md)
+- [NKF-037](../items/NKF-037-make-the-nkf-repository-public.md)
