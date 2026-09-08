@@ -156,9 +156,10 @@ directories that no longer exist.
 5. Public-documentation projection regenerated to describe a public release
    and the 0.81 format, with the projection tooling brought current.
 6. Record reconciliation, every item from the sweep: the current-system
-   Realization's remaining 0.7 layer; the Realizations map's regrouping of the
-   ten immutable supporting items as predecessor provenance with the exact
-   version each was confirmed at; the specifications and Evidence maps; the
+   Realization's remaining 0.7 layer; retirement of the ten immutable
+   supporting Realizations to Git history with their declarations, each named
+   in the adopting Decision with its last confirmed digest; the specifications
+   and Evidence maps; the
    native rewrite of the eight legacy-locked deferred Tasks with real gates,
    resolving links, and stale premises restated as history; the active
    Task Scope Gate Design's dead links; and every living mention of 0.9 as
@@ -247,8 +248,18 @@ replace.
 ## Current Progress
 
 Created on `2026-09-08` under the Human Direction above, on the `task/NKF-038`
-branch stacked on `task/NKF-012`. The Design follows. Every mandatory
-capability reads `unknown` until the work is performed.
+branch stacked on `task/NKF-012`. The Design is authored, and on `2026-09-08`
+the Human Product Owner confirmed each of its six boundaries verbatim, as
+recorded in the Design: `0.81` as a full successor with 0.71 dropping to
+stepping-stone history; two public channel values with 0.81 published as a
+prerelease; plain HTTPS with no Github CLI and no fallback; the
+adopter-obtaining step; the fixed three-name volatile registry; and the ten
+supporting Realizations retired to Git history rather than relabelled. While
+answering, one further defect was found and recorded in the Design's
+Unresolved Matters: the delta review closure omits the impact propagation the
+accepted Specification requires, which is how the frozen Realizations escaped
+re-review. Every mandatory capability reads `unknown` until the work is
+performed.
 
 ## Decision Applicability
 

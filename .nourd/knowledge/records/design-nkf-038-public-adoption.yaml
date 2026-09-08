@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/nkf-0-81-public-adoption.md
   digest:
     algorithm: sha-256
-    value: a0875f36a863ef5e14f9aa8da190feff9c0253683796d29bf9a83956fc89224f
+    value: b631097edef68c07ab7f513e6377f26671db8815f2b9b7703be9d29a43d1cb4c
 governance:
   lifecycle: living
   status: draft
@@ -155,6 +155,13 @@ sections:
     occurrence: 1
     authority: proposal
     role: alternative
+  - id: keep-the-immutable-supporting-realizations-as-labelled-history
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep The Immutable Supporting Realizations As Labelled History
+    occurrence: 1
+    authority: proposal
+    role: alternative
   - id: allocate-0-9-as-the-earlier-decision-wrote
     heading_path:
       - Alternatives And Trade-Offs
@@ -212,5 +219,7 @@ relationships:
     target: adr-0097
     source_section: governing-inputs-and-constraints
 task: NKF-038
-design_disposition: active
-proposal_authority_effect: Active proposal under NKF-038; no Decision has adopted this direction, no 0.81 authority exists, and every boundary listed under Validation And Decision Evidence awaits the Human Product Owner's confirmation.
+design_disposition: adopted
+design_decisions:
+  - adr-0138
+proposal_authority_effect: Adopted by ADR 0138 as the NKF 0.81 direction with the coordinate allocated; normative NKF 0.81 meaning still requires the separately accepted authority set after its independent audit and the mandatory audit-bound confirmation Decision, and the delta-closure propagation finding in Unresolved Matters awaits its own confirmation.

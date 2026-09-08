@@ -45,7 +45,6 @@ establishes it.
 
 [Active Design Index](by-disposition/active.md)
 
-- [NKF 0.81 Public Adoption](items/nkf-0-81-public-adoption.md)
 - [NKF Task Scope Gate](items/task-scope-gate.md)
 
 ## Adopted
@@ -71,6 +70,7 @@ establishes it.
 - [NKF 0.71 Corrective Successor](items/nkf-0-71-corrective-successor.md)
 - [NKF 0.8 Generated Distribution](items/nkf-0-8-generated-distribution.md)
 - [NKF Public Repository](items/nkf-public-repository.md)
+- [NKF 0.81 Public Adoption](items/nkf-0-81-public-adoption.md)
 - [NKF Freshness And Deterministic Knowledge Graph](items/freshness-and-deterministic-knowledge-graph.md)
 - [NKF 0.3 Immutable Freeze And Proven Self-Adoption](items/nkf-0-3-immutable-freeze-and-proven-self-adoption.md)
 - [Presentation Guidance](items/presentation-guidance.md)

@@ -108,11 +108,13 @@ The recommended-release catalog becomes an accepted contract: the successor
 Specification defines `nkf.recommended-release` with its fields, and a derived
 JSON Schema closes its shape, exactly as the release manifest and the release
 pin already are. The channel vocabulary is closed and owned there:
-`internal-exact-candidate` for the isolated exercise, and one public value —
-proposed `public-github-prerelease` — with release visibility `public`. The
-old private value remains in the vocabulary as history a 0.8 catalog may
-state, so the 0.81 adopter can read a 0.8 catalog during the upgrade window
-and refuse nothing truthful.
+`internal-exact-candidate` for the isolated exercise, and two public values —
+`public-github-prerelease` and `public-github-release`, both with release
+visibility `public` — so a version can be published as a prerelease or as a
+release and later versions can add values by Specification revision. NKF
+0.81 itself is published as a prerelease. The old private value remains in
+the vocabulary as history a 0.8 catalog may state, so the 0.81 adopter can
+read a 0.8 catalog during the upgrade window and refuse nothing truthful.
 
 After promotion the live catalog states the public channel and visibility. The
 0.81 adopter validates the catalog against the contract's Schema and
@@ -191,9 +193,13 @@ the Human Product Owner directed.
   Compatibility section, and the undated present-tense history are rewritten
   to 0.81 or framed as dated history.
 - The ten immutable supporting Realizations under `realizations/items/` are
-  not edited. The Realizations map regroups them as confirmed predecessor
-  provenance, each with the version it was last confirmed at, and the
-  current-system record remains the one current account.
+  retired from the working tree to Git history, the way the NKF 0.1
+  Specification source was retired: their files and record declarations are
+  removed, the adopting Decision names each with its last confirmed digest and
+  the Decision that confirmed it, the confirming Decisions keep binding those
+  bytes by digest, and the Realizations map lists the current-system record
+  alone. The Human Product Owner's rule governs: the record exists to be true
+  today, and nothing is kept for digest continuity.
 - The specifications and Evidence maps are brought current.
 - The eight legacy-locked deferred Tasks are rewritten natively as
   [NKF-012](../../tasks/items/NKF-012-activate-protected-merge-gate.md) was:
@@ -267,7 +273,15 @@ the release that changes it is in flight. Rejected by direction.
 
 Correct the ten stale items in place. Forbidden by their immutable lifecycle
 and legacy locks, and it would erase the provenance of what was confirmed when.
-Rejected; they are reclassified as predecessor provenance.
+Rejected.
+
+### Keep The Immutable Supporting Realizations As Labelled History
+
+Leave the ten files in the tree and relabel them in the map as predecessor
+provenance. Zero effort, and their only remaining value is a digest Git
+already preserves; a frozen record beside the current one is what let them be
+read as current. Rejected by the Human Product Owner: NKF exists to be a live,
+currently true record, and nothing is kept to keep a digest happy.
 
 ### Allocate 0.9 As The Earlier Decision Wrote
 
@@ -313,12 +327,36 @@ authored:
 5. The volatile-metadata registry is closed, contract-owned, initially
    `.DS_Store`, `Thumbs.db`, and `desktop.ini`, visible in inspection and
    excluded from the drift digest.
-6. The ten immutable supporting Realizations are reclassified as predecessor
-   provenance rather than succeeded by ten new records.
+6. The ten immutable supporting Realizations are retired to Git history
+   rather than relabelled or succeeded by ten new records.
+
+The Human Product Owner confirmed all six on `2026-09-08`, verbatim: one,
+"alright . i can live with it ."; two, "we need two flags, one for
+pre-release and one for release - later in the future we may have different
+ones. but current 0.81 is still prerelease" and then "yes"; three,
+"agreed"; four, "yes"; five, "5 is ok ."; six, after asking what value
+keeping the files had, "you main goal is to have a updated and live
+documentation system, this is the whole point of NKF, we are not keeping
+anything just for the sake of keeping NKF digest happy !".
 
 ## Unresolved Matters
 
-- The exact public channel value name; `public-github-prerelease` is proposed.
+- **The delta review closure omits impact propagation.** The accepted 0.8
+  Specification requires the computed closure to include "every node reached
+  from those inputs by the evaluation policy's impact propagation". The seal
+  in `scripts/freshness/seal-baseline-0-7.mjs` computes the closure from
+  digest-changed and new nodes plus pending reconciliation only, and the
+  validating checker verifies containment of the recorded closure without
+  recomputing it, so the omission is not caught. This is how ten frozen
+  Realizations with no edges and, separately, every dependent of a superseded
+  Decision escaped re-review. Classified as a checker and adopter defect
+  against accepted meaning, not a Specification change. Proposed for this
+  release as a seventh boundary: the seal computes propagation and the
+  checker recomputes and compares the closure. Awaits the Human Product
+  Owner's confirmation.
+- The ten retired Realizations were migrated with empty relationship lists,
+  which is why no edge could have reached them; classified as a migration
+  issue closed by their retirement.
 - Whether the catalog should additionally carry a signature or a second
   independent digest source once the repository is public. Not proposed here;
   the archive digest and installed pin remain the trust anchors.
