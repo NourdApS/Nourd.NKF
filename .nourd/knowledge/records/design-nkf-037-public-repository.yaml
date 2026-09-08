@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/nkf-public-repository.md
   digest:
     algorithm: sha-256
-    value: "9a93fb10e1bb2517283fc8a196140a9734df08551dfc88719b0adaecd31bc32f"
+    value: 9a93fb10e1bb2517283fc8a196140a9734df08551dfc88719b0adaecd31bc32f
 governance:
   lifecycle: living
   status: draft
@@ -165,5 +165,7 @@ relationships:
     target: adr-0080
     source_section: governing-inputs-and-constraints
 task: NKF-037
-design_disposition: active
-proposal_authority_effect: Active proposal under NKF-037; no Decision has adopted, rejected, or superseded this direction, and the repository's visibility is unchanged until the Human Product Owner's separate Decision and act.
+design_disposition: adopted
+proposal_authority_effect: Adopted by ADR 0136 as the public-repository direction; the visibility change itself remains the Human Product Owner's separately observed act, and the NKF 0.9 remedy for the catalog gap requires its own release Task.
+design_decisions:
+  - adr-0136
