@@ -1814,6 +1814,25 @@ non_records:
         - NKF-012
         - NKF-009
       relationships: []
+  - path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
+    kind: task
+    document:
+      id: NKF-038
+      stable_path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
+      digest:
+        algorithm: sha-256
+        value: "a29679deaba084b71e1f71c6974f2cac33604fb2181c82f344ba3665e06de61a"
+      state:
+        vocabulary: task-status
+        value: "active"
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for every Product boundary, each format-boundary confirmation, authority acceptance, publication, recommendation, promotion, and every merge; Claude technical reviewer under explicit delegation for design, derivation, implementation, fixtures, tests, guidance review, audit requests, Evidence, and record reconciliation within the confirmed boundaries
+      related_tasks:
+        - NKF-037
+        - NKF-012
+        - NKF-018
+        - NKF-036
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md
