@@ -31,7 +31,7 @@ distribution, security, and technical lifecycle.
 NKF 0.8 is the current accepted, published, recommended, and producer-adopted
 version. Its content-addressed archive and release tag are identified by SHA-256
 `2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5`, published
-as an immutable private prerelease at the technically confirmed release commit
+as an immutable prerelease at the technically confirmed release commit
 `1c8c3194`. This producer repository declares and pins that exact
 recommendation: it self-adopted 0.8 through the ordinary public Adopt
 operation, the promotion created the native accepted 0.8 Specification record
@@ -85,7 +85,12 @@ the repository moved from `kaveh6202/Nourd.NKF.Docs` to the NourdApS
 organization and the original address redirects. Github owns its later state.
 
 The `NKF Contracts` workflow validates every push and pull request with the
-canonical command. The protected merge gate remains deferred to
+canonical command, and since `2026-09-08` its `Validate` check is required on
+`master` by branch protection enforced for administrators, activated under
+[ADR 0136](knowledge/decisions/0136-adopt-the-public-repository-direction.md)
+and recorded in the
+[public repository observation](knowledge/evidence/release/nkf-037-public-repository-observation.md).
+The required approving review and bypass policy remain with
 [Task NKF-012](knowledge/tasks/items/NKF-012-activate-protected-merge-gate.md).
 The
 [Current System Realization](knowledge/realizations/current-system.md) records
@@ -104,10 +109,20 @@ Nourd ApS makes its NKF repository work available under the standard
 [Third-Party Notices](THIRD_PARTY_NOTICES.md) remain under their own compatible
 licenses.
 
-Licensing does not by itself make this private repository public, publish a
-release, accept governed knowledge, confirm a Realization, or establish
-conformance. Trademark, contribution, governance, security-response, and
-community-conduct policies remain separate matters.
+This repository is public since `2026-09-08` under
+[ADR 0136](knowledge/decisions/0136-adopt-the-public-repository-direction.md),
+which supersedes the earlier rejection of a public repository for exactly that
+point. Every published release archive is downloadable by its tag without
+authentication; the released adopters still fetch through `gh`, so adoption
+needs a Github login until NKF 0.9. The recommendation catalog still states a
+private channel because the released adopters validate that literal in frozen
+bytes; the gap and its NKF 0.9 remedy are recorded in the
+[public repository observation](knowledge/evidence/release/nkf-037-public-repository-observation.md).
+Licensing and visibility do not publish a release, accept governed knowledge,
+confirm a Realization, or establish conformance. Security-response,
+contribution, and conduct policies are stated in [SECURITY.md](SECURITY.md),
+[CONTRIBUTING.md](CONTRIBUTING.md), and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md);
+trademark and conformance-claim policy remain separate matters.
 
 ## Start Here
 
@@ -140,8 +155,8 @@ The canonical command verifies agent guidance, type-checks and tests the
 checker, verifies deterministic checker and adopter builds, verifies the
 public documentation and complete examples, and validates the complete
 self-hosted NKF bundle. The checked-in Github workflow runs the same command
-against its exact candidate commit. A successful workflow run is not a
-protected merge gate unless Github repository rules require that check.
+against its exact candidate commit, and branch protection on `master`
+requires its `Validate` check.
 
 Release review separately runs `npm run verify:recommended-release` to verify
 the published recommendation. It is not part of authoring validation for an
