@@ -277,7 +277,7 @@ try {
     ...(nkfVersion === "0.81"
       ? [
           "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.81-producer-promotion.yaml"),
-          "--accepting-decision", path.join(project, "knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md"),
+          "--accepting-decision", path.join(project, "knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md"),
           "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
           "--review", reviewPath,
         ]
