@@ -123,7 +123,7 @@ export const ACCEPTED_0_81_ARTIFACT_DIGESTS = Object.freeze({
   "contracts/nkf/0.81/schemas/freshness-receipt.schema.json": "ce4c23f76ed9375848336b9fd27121d2592e5ab540de46ee4feccb340ef22dfa",
   "contracts/nkf/0.81/schemas/freshness-policy.schema.json": "7adc387e83ca55f004308ac2f299dd158caf13a66d909010c11f17a6d8baddeb",
   "contracts/nkf/0.81/schemas/release-manifest.schema.json": "d216cc69194a5c6f2edcc75780c146c29628bc2ee6fc13b4e90bb0733dc568f7",
-  "contracts/nkf/0.81/schemas/recommended-release.schema.json": "70bd7ed77612d52c5325fcdf6be976208af7dc036a8f31c10148894d9610cfae",
+  "contracts/nkf/0.81/schemas/recommended-release.schema.json": "bc78fcd5cb0d604b6d0b956118af9c599337582d7cf5f18af0a08a718154a25c",
   "contracts/nkf/0.81/schemas/validation-result.schema.json": "cab70f511e73472acc2df8e68f102e31e2dc5feb6ae055c20a824b354fd370f2",
   "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
