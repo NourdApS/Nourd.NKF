@@ -111,7 +111,7 @@ immutable historical provenance.
 
 - [NKF 0.71 — Product And Technology Knowledge Format](nkf-0.71.md)
 
-NKF 0.71 is the live-supported immutable predecessor, accepted by
+NKF 0.71 is immutable stepping-stone history, accepted by
 [ADR 0131](../decisions/0131-accept-the-nkf-0-71-authority-set.md) and
 technically confirmed by
 [ADR 0132](../decisions/0132-confirm-the-nkf-0-71-release-candidate.md); it
@@ -124,20 +124,20 @@ ordinary reviewed delta update.
 
 - [NKF 0.8 — Product And Technology Knowledge Format](nkf-0.8.md)
 
-NKF 0.8 is the current accepted, technically confirmed, published,
-recommended, and producer-adopted version. Its authority set is accepted by
+NKF 0.8 is accepted, technically confirmed, published, and the live-supported
+predecessor to recommended and producer-adopted 0.81. Its authority set is accepted by
 [ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md), its exact
 release candidate is confirmed by
 [ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md), and
-this producer declares, pins, and installs it under
+this producer previously adopted it under
 [NKF-035](../tasks/items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md).
-Live support is exactly NKF 0.8 plus NKF 0.71.
+Live support is exactly NKF 0.81 plus NKF 0.8.
 
 ## NKF 0.81
 
 - [NKF 0.81 — Product And Technology Knowledge Format](nkf-0.81.md)
 
-NKF 0.81 is the successor candidate under
+NKF 0.81 is the published successor delivered under
 [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
 Its direction is adopted by
 [ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
@@ -145,7 +145,7 @@ and
 [ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md),
 and its five-artifact authority set — the Specification, digest-bound
 executable companion, evaluation policy, 0.8-to-0.81 version delta, and
-producer-promotion input — has a repaired unpublished revision accepted by
+producer-promotion input — has a repaired revision accepted by
 [ADR 0142](../decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](../decisions/0143-bind-the-predecessor-repair-promotion.md), under the
 Human Product Owner's explicit P1 self-audit and execution delegation. It binds
 exact predecessor history so the checker can independently reproduce delta
@@ -159,9 +159,10 @@ independent corrected-set audit and successful exact producer exercise.
 remains bound to the prior historical bytes. It adds the recommended-release catalog contract
 with public channel values, plain HTTPS adoption, the adopter-obtaining step,
 the closed volatile-metadata registry, and the checker's recompute of the
-delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. Until the
-separately authorized publication and producer promotion, the Specification is
-represented in this repository as Evidence rather than a native record, this
-repository continues to declare, pin, and install NKF 0.8, and live support
-remains NKF 0.8 plus NKF 0.71; at publication it becomes exactly NKF 0.81 plus
-NKF 0.8, and a 0.71 repository steps through the published 0.8 archive.
+delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. The exact confirmed archive is now published, with anonymous re-download
+verification in the [publication Evidence](../evidence/release/nkf-038-nkf-0-81-release-audit.md#authorized-public-publication-and-re-download).
+The producer now declares, pins, and installs the exact published 0.81 archive,
+which the catalog recommends. The reviewed producer promotion created the
+native accepted 0.81 Specification declaration and removed its candidate
+Evidence representation. Live support is exactly NKF 0.81 plus NKF 0.8; a 0.71
+repository steps through the published 0.8 archive.

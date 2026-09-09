@@ -160,3 +160,17 @@ consumer repository.
   external authority, and operational-state separation.
 - Challenge changes that create multiple NKF authorities, consumer-specific
   overfitting, false conformance, or silent semantic migration.
+
+# Producer Release Completion
+
+Standing Human Product Owner direction recorded on 2026-09-09 in
+[Task NKF-038](knowledge/tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md):
+recommendation and this producer's adoption must always select the latest
+published NKF version. An authorized release includes advancing the exact
+recommendation, deliberately adopting the verified archive in this producer,
+and publishing its matching public documentation and adopter. Complete these
+stages and their verification before reporting release completion. Preserve
+normal required checks and the exact accepted and confirmed release bytes.
+This standing authorization applies to this producer; other consumers retain
+their own adoption authority. Operational stages remain separately verified,
+but do not require repeated permission after a release is authorized.

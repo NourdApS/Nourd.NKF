@@ -1,41 +1,41 @@
 {
   "contract": "nkf.recommended-release",
-  "nkf_version": "0.8",
+  "nkf_version": "0.81",
   "state": "recommended",
-  "channel": "internal-private-github-prerelease",
+  "channel": "public-github-prerelease",
   "compatibility": [
-    {
-      "from_nkf_version": "0.71",
-      "classification": "non-breaking",
-      "migration_required": false,
-      "summary": "NKF 0.71 upgrades to NKF 0.8 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry."
-    },
     {
       "from_nkf_version": "0.8",
       "classification": "non-breaking",
       "migration_required": false,
-      "summary": "NKF 0.8 refreshes the exact recommended release and integration without semantic migration."
+      "summary": "NKF 0.8 upgrades to NKF 0.81 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry."
+    },
+    {
+      "from_nkf_version": "0.81",
+      "classification": "non-breaking",
+      "migration_required": false,
+      "summary": "NKF 0.81 refreshes the exact recommended release and integration without semantic migration."
     }
   ],
   "archive": {
-    "sha256": "2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
-    "asset_name": "nourd-nkf-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5.tar",
-    "tag": "release-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
-    "size": 7640064,
-    "url": "https://github.com/NourdApS/Nourd.NKF/releases/download/release-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5/nourd-nkf-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5.tar"
+    "sha256": "a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3",
+    "asset_name": "nourd-nkf-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3.tar",
+    "tag": "release-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3",
+    "size": 7788544,
+    "url": "https://github.com/NourdApS/Nourd.NKF/releases/download/release-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3/nourd-nkf-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3.tar"
   },
-  "source_commit": "1c8c31948d73e6d79ee36c1b13985ca6db031e5b",
-  "checker_sha256": "52d491cc25da898444bf33568e92b058fca4559fd1863902ad48504899d5985a",
+  "source_commit": "fa0efa056db17f5336a3b7a93142d58f41110cf7",
+  "checker_sha256": "1a268c93d9f484389885c02336ebd8464718967249036e79de03ddf7cd775008",
   "authority": {
-    "markdown_sha256": "6a5c571d6dcc1a00c52467095e8835458d829c67e5c9e72f9363fe66cec2982e",
-    "executable_sha256": "6d162800ecb2a41fb9b6ead544cc0d5ecd4dc119cd72298138a4d17ccd822326"
+    "markdown_sha256": "4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8",
+    "executable_sha256": "517b91442b6be5a31bc7b9a03845787494f4b9720f1d6d90b976ebcfc92b0347"
   },
-  "adopter_sha256": "5e3288081d75e7ab9914f56498c3157e85be7ede7f89477f111fd09007d58d85",
+  "adopter_sha256": "12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5",
   "release": {
-    "url": "https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
-    "published_at": "2026-08-19T14:12:04Z",
+    "url": "https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3",
+    "published_at": "2026-09-09T19:16:40Z",
     "prerelease": true,
-    "visibility": "private"
+    "visibility": "public"
   },
   "supported_root_profiles": [
     "nkf.profile.product",

@@ -1,10 +1,10 @@
 # NKF Pre-Adoption Onboarding Protocol
 
-NKF Version: 0.8
+NKF Version: 0.81
 
 This is the complete vendor-neutral procedure for preparing an Empty
 Repository or a Tiny Knowledge, No Source Or Configuration repository for
-initial NKF 0.8 adoption. It applies before the project has a project-root
+initial NKF 0.81 adoption. It applies before the project has a project-root
 `.nourd` directory.
 
 The participating agent owns complete repository review, semantic assessment,
@@ -111,7 +111,15 @@ Inspection must leave the project unchanged. It emits `inspection.json`,
 `plan.yaml`, and exact candidate copies of every Markdown file under the
 selected knowledge root. The inspection contains a complete project entry
 manifest, excluding top-level `.git` implementation metadata, plus relevant
-integration surfaces and Git-root and branch observations.
+integration surfaces and Git-root and branch observations. Regular files whose
+basename is exactly `.DS_Store`, `Thumbs.db`, or `desktop.ini`, at any depth,
+are listed with the classification `volatile`: the accepted contract's closed
+registry of operating-system metadata. They stay visible to your review, but
+the snapshot digest the plan binds excludes them, so a file browser rewriting
+one between inspection and adoption does not make the plan stale. The registry
+admits no other name, no glob, no project-declared addition, and nothing from
+`.gitignore`; a directory, symbolic link, or special file with a registered
+name is captured and protected like every other entry.
 
 Require `mechanically_ready: true`. A blocked result is a mechanical failure,
 not a category decision. Compare the manifest with the entries used in the
@@ -256,7 +264,7 @@ project directly to pass.
 
 Run the public subcommand-free Adopt operation with the sealed plan and a
 writable `--review` path. If that file is absent, Adopt constructs the exact
-isolated 0.8 candidate, writes a complete candidate-specific review template,
+isolated 0.81 candidate, writes a complete candidate-specific review template,
 and stops before project mutation. A named human or agent reviews the actual
 candidate and replaces every `REVIEW_REQUIRED` value and placeholder with
 source-bound node applicability and roles, relationship coverage, accepted-
@@ -275,8 +283,9 @@ applies only a conformant ready candidate.
 The portable topology includes the canonical `README.md`; parent indexes and
 generated `tasks/by-state/*.md` projections for Tasks; parent indexes and
 generated `designs/by-disposition/*.md` projections for Designs; Decision,
-Specification, Realization, supporting-current, and Evidence indexes; and the
-single `realizations/current-system.md` record. The managed `NKF Navigation`
+Specification and Evidence indexes; and a single `realizations/README.md`
+index covering `realizations/current-system.md` and represented supporting
+Realizations under `realizations/items/`. The managed `NKF Navigation`
 block links the root and all required entry points plus the onboarding Task and
 the initial Technology Specification when applicable. Canonical Task and
 Design paths never move because state changes.

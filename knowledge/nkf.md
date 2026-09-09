@@ -64,18 +64,19 @@ reviewed sources and observations.
 
 ## Versioning Compatibility And Migration
 
-Each native bundle declares one exact `nkf_version`; `0.8` is the current
-published, recommended, and producer-adopted format authority, and `0.71` is
-the one live-supported predecessor under the standing current-plus-one support
-window. `0.81` is the adopted successor direction. Its repaired unpublished authority
+Each native bundle declares one exact `nkf_version`; `0.81` is the current
+published, recommended, and producer-adopted version. The live
+support window is exactly `0.81` plus `0.8`. Its repaired authority
 revision is accepted by [ADR 0142](decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](decisions/0143-bind-the-predecessor-repair-promotion.md),
 under explicit P1 self-audit and execution delegation. It requires digest-bound
 predecessor proof for delta review and mechanical conclusion. The prior
 revision remains historical; the corrected release candidate has passed its
 exact exercise and independent audit and is technically confirmed by
-[ADR 0144](decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md). Publication,
-recommendation, and producer promotion remain separate acts. At publication its live support
-window becomes `0.81` plus `0.8`. Earlier versions remain immutable
+[ADR 0144](decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md). The exact confirmed archive is now published, with anonymous re-download
+verification in the [publication Evidence](evidence/release/nkf-038-nkf-0-81-release-audit.md#authorized-public-publication-and-re-download).
+Recommendation and producer adoption now select that same 0.81 archive under
+the standing Human Product Owner release-completion direction recorded in
+[NKF-038](tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md). Earlier versions remain immutable
 history: their published archives serve as exact stepping stones for
 out-of-window migration, and the tooling fails closed rather than migrating
 them silently. NKF remains pre-stable and open to evidence-driven change. Publication freezes every member of a version's

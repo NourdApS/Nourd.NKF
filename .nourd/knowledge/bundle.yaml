@@ -1,4 +1,4 @@
-nkf_version: "0.8"
+nkf_version: "0.81"
 contract: nkf.bundle
 id: nourd-knowledge-format
 root:
@@ -702,7 +702,7 @@ non_records:
       stable_path: evidence/README.md
       digest:
         algorithm: sha-256
-        value: "6bebab8231aa274b2a5ff0437bfaa7fe933842061bcdb9538c7287b8ee6fd388"
+        value: c982401ff4302b4f8d1a765d7ade76b29b0277e7fc2ee5ccd1a490aab1bd61cd
       relationships: []
   - path: evidence/release/nkf-0.6-producer-promotion.yaml
     kind: evidence
@@ -826,15 +826,6 @@ non_records:
       digest:
         algorithm: sha-256
         value: 6cda03da38ebf5f68fa5565805ea720acf8edff1598a3a43c91f1bf839934f12
-      relationships: []
-  - path: specifications/nkf-0.81.md
-    kind: evidence
-    document:
-      id: document-nkf-0-81-specification
-      stable_path: specifications/nkf-0.81.md
-      digest:
-        algorithm: sha-256
-        value: "4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8"
       relationships: []
   - path: tasks/items/NKF-025-validate-freshness-and-knowledge-graph-direction.md
     kind: task
@@ -1638,7 +1629,7 @@ non_records:
       stable_path: tasks/items/NKF-037-make-the-nkf-repository-public.md
       digest:
         algorithm: sha-256
-        value: "9a811de43a285ff16e776fbf6d0215db7fc24548b9dfd19d7b33dbef1a6a76b2"
+        value: 9a811de43a285ff16e776fbf6d0215db7fc24548b9dfd19d7b33dbef1a6a76b2
       state:
         vocabulary: task-status
         value: completed
@@ -1656,10 +1647,10 @@ non_records:
       stable_path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
       digest:
         algorithm: sha-256
-        value: "0feab1985234f4235c588e22e9a67125fea48679bef9c26b94a18bca67baf2f9"
+        value: "076fd8998b9935589ce0cdfcc7263a0f44d2f552bde5764501b6f04aed2cefb5"
       state:
         vocabulary: task-status
-        value: "completed"
+        value: completed
       owner: Nourd ApS
       decision_authority: Human Product Owner for every Product boundary, each format-boundary confirmation, authority acceptance, publication, recommendation, promotion, and every merge; Claude technical reviewer under explicit delegation for design, derivation, implementation, fixtures, tests, guidance review, audit requests, Evidence, and record reconciliation within the confirmed boundaries
       related_tasks:
@@ -1817,7 +1808,7 @@ non_records:
       stable_path: evidence/audits/nkf-038-nkf-0-81-independent-authority-audit.md
       digest:
         algorithm: sha-256
-        value: "1d6c0efea789f0e44ce2f05898fb413d0333a17c0c210456f59480c41fa4ea73"
+        value: 1d6c0efea789f0e44ce2f05898fb413d0333a17c0c210456f59480c41fa4ea73
       relationships: []
   - path: evidence/audits/nkf-033-nkf-0-71-guidance-review-finding.md
     kind: evidence
@@ -1862,7 +1853,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-release-audit.md
       digest:
         algorithm: sha-256
-        value: "6e08d6721c2364296cd68628fa4d231e22c1e7690ad9b1649a2c852568994218"
+        value: "7aa5529a570944cbceca91041b91d2f9d375023d32607ba57173c47c174122df"
       relationships: []
   - path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
     kind: evidence
@@ -1871,7 +1862,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
       digest:
         algorithm: sha-256
-        value: "66f74e240bcc101267e65a9eae7ffae883c633454680f79eca8d78526b3cdd96"
+        value: 66f74e240bcc101267e65a9eae7ffae883c633454680f79eca8d78526b3cdd96
       relationships: []
   - path: evidence/release/nkf-0.81-release-notes.md
     kind: evidence
@@ -1880,7 +1871,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-release-notes.md
       digest:
         algorithm: sha-256
-        value: "fd373860837f15cd097391ef98b3f075a8e4ab8e20bf810ac235992f12845b61"
+        value: fd373860837f15cd097391ef98b3f075a8e4ab8e20bf810ac235992f12845b61
       relationships: []
   - path: evidence/release/nkf-0.71-producer-promotion.yaml
     kind: evidence
@@ -1898,7 +1889,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-producer-promotion.yaml
       digest:
         algorithm: sha-256
-        value: "b9228327ce04afdfaced16259aaf428975989a4fd1759c704bcc9643c097ce95"
+        value: b9228327ce04afdfaced16259aaf428975989a4fd1759c704bcc9643c097ce95
       relationships: []
   - path: evidence/release/nkf-0.8-producer-promotion.yaml
     kind: evidence
@@ -2276,7 +2267,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-1/1-nkf-0.81.md
       digest:
         algorithm: sha-256
-        value: "b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45"
+        value: b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-1/2-nkf.yaml
     kind: evidence
@@ -2285,7 +2276,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-1/2-nkf.yaml
       digest:
         algorithm: sha-256
-        value: "004969c10d74191274f74a4dce0b9aebb983d52a70ee3351e05e18086dc78cb4"
+        value: 004969c10d74191274f74a4dce0b9aebb983d52a70ee3351e05e18086dc78cb4
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-1/3-freshness-policy.yaml
     kind: evidence
@@ -2294,7 +2285,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-1/3-freshness-policy.yaml
       digest:
         algorithm: sha-256
-        value: "742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4"
+        value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-1/4-version-delta.yaml
     kind: evidence
@@ -2303,7 +2294,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-1/4-version-delta.yaml
       digest:
         algorithm: sha-256
-        value: "9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42"
+        value: 9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-1/5-nkf-0.81-producer-promotion.yaml
     kind: evidence
@@ -2312,7 +2303,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-1/5-nkf-0.81-producer-promotion.yaml
       digest:
         algorithm: sha-256
-        value: "cee895a59ef8366d1dc50ca199e4fa8e6c3d7e166e8adf3a50f2eceb681bbb88"
+        value: cee895a59ef8366d1dc50ca199e4fa8e6c3d7e166e8adf3a50f2eceb681bbb88
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-2/1-nkf-0.81.md
     kind: evidence
@@ -2321,7 +2312,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-2/1-nkf-0.81.md
       digest:
         algorithm: sha-256
-        value: "bb6d2b58c544718b17b84076f3317aecac5a36aaa5c59a56fc82f277b3612014"
+        value: bb6d2b58c544718b17b84076f3317aecac5a36aaa5c59a56fc82f277b3612014
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-2/2-nkf.yaml
     kind: evidence
@@ -2330,7 +2321,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-2/2-nkf.yaml
       digest:
         algorithm: sha-256
-        value: "e016a72e923e56f80ce125fb6b9fe7dfd58b4dfab2308ec3a8b27f1f9fda3fbb"
+        value: e016a72e923e56f80ce125fb6b9fe7dfd58b4dfab2308ec3a8b27f1f9fda3fbb
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-2/3-freshness-policy.yaml
     kind: evidence
@@ -2339,7 +2330,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-2/3-freshness-policy.yaml
       digest:
         algorithm: sha-256
-        value: "742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4"
+        value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-2/4-version-delta.yaml
     kind: evidence
@@ -2348,7 +2339,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-2/4-version-delta.yaml
       digest:
         algorithm: sha-256
-        value: "0a319702b967477ab6dbc183bedaef3c256e123d5424b1c77d56e96b7fb120bb"
+        value: 0a319702b967477ab6dbc183bedaef3c256e123d5424b1c77d56e96b7fb120bb
       relationships: []
   - path: evidence/release/nkf-0.81-authority-revision-2/5-nkf-0.81-producer-promotion.yaml
     kind: evidence
@@ -2357,7 +2348,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-authority-revision-2/5-nkf-0.81-producer-promotion.yaml
       digest:
         algorithm: sha-256
-        value: "6939756c2ff8614f20b58c5a64aac7af14bf78deed6c269e3ce258f8dc40f25e"
+        value: 6939756c2ff8614f20b58c5a64aac7af14bf78deed6c269e3ce258f8dc40f25e
       relationships: []
 canonical_terms:
   - ADR
@@ -2392,7 +2383,7 @@ governed_artifacts:
     path: .agents/skills/nkf-authoring/SKILL.md
     digest:
       algorithm: sha-256
-      value: 12a8da78e889f213b0e4cf159db2495f8d6087d87c8ab66c4d50ea2fc0f1097b
+      value: 5da4e0f680a03c7322c5894126f345d09be5710a26e2c858a3055eea691a42b1
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-agents-skills-nkf-onboarding-skill-md
@@ -2400,7 +2391,7 @@ governed_artifacts:
     path: .agents/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837
+      value: f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-claude-skills-nkf-authoring-skill-md
@@ -2408,7 +2399,7 @@ governed_artifacts:
     path: .claude/skills/nkf-authoring/SKILL.md
     digest:
       algorithm: sha-256
-      value: 12a8da78e889f213b0e4cf159db2495f8d6087d87c8ab66c4d50ea2fc0f1097b
+      value: 5da4e0f680a03c7322c5894126f345d09be5710a26e2c858a3055eea691a42b1
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-claude-skills-nkf-onboarding-skill-md
@@ -2416,7 +2407,7 @@ governed_artifacts:
     path: .claude/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: cf5ad1e6413c050ec179d142a8fd6b5d2913cbfc286b246c5040d6bae7b07837
+      value: f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-github-copilot-instructions-md
@@ -2456,7 +2447,7 @@ governed_artifacts:
     path: AGENTS.md
     digest:
       algorithm: sha-256
-      value: 5da53c5780cc0a9ae3d4d569839f3744c638d2b128b2e10d91cffbb0b94d1b23
+      value: 3f550a75c2bd99939092e26a90288f743641f4d6219db957756a08fdb3d2659c
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-claude-md
@@ -2472,7 +2463,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5"
+      value: 12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-81-nourd-knowledge-bundle-yaml
@@ -2480,7 +2471,7 @@ governed_artifacts:
     path: fixtures/valid/minimal-0-81/.nourd/knowledge/bundle.yaml
     digest:
       algorithm: sha-256
-      value: "28a3ed8bac0b6eb70addd20da93a87e360cb82014b57ea9c8831417710a4a051"
+      value: 28a3ed8bac0b6eb70addd20da93a87e360cb82014b57ea9c8831417710a4a051
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-81-nourd-knowledge-freshness-baseline-yaml
@@ -2488,7 +2479,7 @@ governed_artifacts:
     path: fixtures/valid/minimal-0-81/.nourd/knowledge/freshness/baseline.yaml
     digest:
       algorithm: sha-256
-      value: "8a121fd6bb8897fc29fd346fabc14e7cec65303c7faa90ab1a60f758fa75876b"
+      value: 8a121fd6bb8897fc29fd346fabc14e7cec65303c7faa90ab1a60f758fa75876b
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-81-nourd-knowledge-records-product-current-system-yaml
@@ -2672,7 +2663,7 @@ governed_artifacts:
     path: integrations/ai/agent-hosts.yaml
     digest:
       algorithm: sha-256
-      value: 06a01786571e2d802d55a1c581477f24228fa7873ca40d5b07773c5ad09b2b6c
+      value: a21e12beed73d8a86aab5316a66592001a4a08f5457b6bdf4c464177b2a023cc
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-integrations-ai-nkf-authoring-protocol-md
@@ -2680,7 +2671,7 @@ governed_artifacts:
     path: integrations/ai/nkf-authoring-protocol.md
     digest:
       algorithm: sha-256
-      value: e1b8ea7e35d500d59ce24692fecfa360844458b9436535fb48892e8f1cd7b80b
+      value: 46659b7e55766888d1fd2d2a4fe4b47880482a02f2c59798f1436b764f94d20c
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-integrations-onboarding-nkf-onboarding-protocol-md
@@ -2688,7 +2679,7 @@ governed_artifacts:
     path: integrations/onboarding/nkf-onboarding-protocol.md
     digest:
       algorithm: sha-256
-      value: 972335517d16d9c06cedd1e7ef18e5909b468eafa08c59d1bdf58366061a893c
+      value: 4ca144af24ded2684819b5458e2340d3a85b3226058ff8a966eb32a59af18c55
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-package-lock-json
@@ -2704,7 +2695,7 @@ governed_artifacts:
     path: package.json
     digest:
       algorithm: sha-256
-      value: "bdbba6633279e25202c30de007307255596266ac35a9b68b63264887e9c6680f"
+      value: 69b00a23c894cf679301ff595ac947336eb48b802b400934f8992219833a815b
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-agents-skills-nkf-onboarding-skill-md
@@ -2712,7 +2703,7 @@ governed_artifacts:
     path: public-docs/.agents/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: "f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544"
+      value: f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-claude-skills-nkf-onboarding-skill-md
@@ -2720,7 +2711,7 @@ governed_artifacts:
     path: public-docs/.claude/skills/nkf-onboarding/SKILL.md
     digest:
       algorithm: sha-256
-      value: "f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544"
+      value: f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-readme-md
@@ -2728,7 +2719,7 @@ governed_artifacts:
     path: public-docs/README.md
     digest:
       algorithm: sha-256
-      value: "2e0e619e506a0b196ed4d7f86781d135bea31a23c24d966504656e1d720ece95"
+      value: 2e0e619e506a0b196ed4d7f86781d135bea31a23c24d966504656e1d720ece95
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-concepts-authority-and-lifecycle-md
@@ -2760,7 +2751,7 @@ governed_artifacts:
     path: public-docs/examples/product/project/.nourd/knowledge/bundle.yaml
     digest:
       algorithm: sha-256
-      value: "28a3ed8bac0b6eb70addd20da93a87e360cb82014b57ea9c8831417710a4a051"
+      value: 28a3ed8bac0b6eb70addd20da93a87e360cb82014b57ea9c8831417710a4a051
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-examples-product-project-nourd-knowledge-freshness-baseline-yaml
@@ -2768,7 +2759,7 @@ governed_artifacts:
     path: public-docs/examples/product/project/.nourd/knowledge/freshness/baseline.yaml
     digest:
       algorithm: sha-256
-      value: "8a121fd6bb8897fc29fd346fabc14e7cec65303c7faa90ab1a60f758fa75876b"
+      value: 8a121fd6bb8897fc29fd346fabc14e7cec65303c7faa90ab1a60f758fa75876b
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-examples-product-project-nourd-knowledge-records-product-current-system-yaml
@@ -2952,7 +2943,7 @@ governed_artifacts:
     path: public-docs/examples/technology/project/.nourd/knowledge/bundle.yaml
     digest:
       algorithm: sha-256
-      value: "3a710c1722eeaf4e3292f45ba8193236fbf27918e1e3feb7bb24ec77736e9728"
+      value: 3a710c1722eeaf4e3292f45ba8193236fbf27918e1e3feb7bb24ec77736e9728
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-examples-technology-project-nourd-knowledge-freshness-baseline-yaml
@@ -2960,7 +2951,7 @@ governed_artifacts:
     path: public-docs/examples/technology/project/.nourd/knowledge/freshness/baseline.yaml
     digest:
       algorithm: sha-256
-      value: "0e0f868cc613c6f80f0d9d2f3d419df033af9ded4ad96eca155f4cc0422928a6"
+      value: 0e0f868cc613c6f80f0d9d2f3d419df033af9ded4ad96eca155f4cc0422928a6
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-examples-technology-project-nourd-knowledge-records-realization-yaml
@@ -3160,7 +3151,7 @@ governed_artifacts:
     path: public-docs/guides/adopt-and-validate.md
     digest:
       algorithm: sha-256
-      value: "6692a664e668b1c15cc8d9e97b93e8687085626f03e23565a0e685a6a77a029b"
+      value: 6692a664e668b1c15cc8d9e97b93e8687085626f03e23565a0e685a6a77a029b
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-guides-initial-onboarding-md
@@ -3168,7 +3159,7 @@ governed_artifacts:
     path: public-docs/guides/initial-onboarding.md
     digest:
       algorithm: sha-256
-      value: "7e930dffc28fca389564f584be5c82927fdb3b2940d2b0266bf76da491d73dbc"
+      value: 7e930dffc28fca389564f584be5c82927fdb3b2940d2b0266bf76da491d73dbc
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-guides-update-and-recover-md
@@ -3176,7 +3167,7 @@ governed_artifacts:
     path: public-docs/guides/update-and-recover.md
     digest:
       algorithm: sha-256
-      value: "419b01c5ae3762300f19d4d3b8758e04eeb576c2ef819f75d3deada546c92c84"
+      value: 419b01c5ae3762300f19d4d3b8758e04eeb576c2ef819f75d3deada546c92c84
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-reference-nkf-0-81-md
@@ -3184,7 +3175,7 @@ governed_artifacts:
     path: public-docs/reference/nkf-0.81.md
     digest:
       algorithm: sha-256
-      value: "4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8"
+      value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-tools-nkf-onboarding-protocol-md
@@ -3192,7 +3183,7 @@ governed_artifacts:
     path: public-docs/tools/nkf-onboarding-protocol.md
     digest:
       algorithm: sha-256
-      value: "4ca144af24ded2684819b5458e2340d3a85b3226058ff8a966eb32a59af18c55"
+      value: 4ca144af24ded2684819b5458e2340d3a85b3226058ff8a966eb32a59af18c55
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-public-docs-tools-nourd-nkf-adopt-mjs
@@ -3200,7 +3191,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5"
+      value: 12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -3208,7 +3199,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "a4b28ab2089469b759b44562974ccae7023b6bff0c466014ba80295e543d2626"
+      value: "f93b7da7156310480a3b8e70f70094582ceb0d3bae5f1d7325dd616839e4bc8b"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -3216,7 +3207,7 @@ governed_artifacts:
     path: release/recommended.json
     digest:
       algorithm: sha-256
-      value: 54b3797f2649b8934547793f12ad30786ceaf549aee6b61dd72f2026d45f449d
+      value: 276fd09a06d3f9f518766901d4727d07bf2286d9014f8abbbaf22b7e715058c0
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-adoption-nourd-nkf-adopt-mjs
@@ -3224,7 +3215,7 @@ governed_artifacts:
     path: scripts/adoption/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "77bbfd2561cdab485fc66312fae1bf9393bb5024a63076ead8ccaa5ffe4def64"
+      value: 77bbfd2561cdab485fc66312fae1bf9393bb5024a63076ead8ccaa5ffe4def64
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-build-adopter-mjs
@@ -3232,7 +3223,7 @@ governed_artifacts:
     path: scripts/build-adopter.mjs
     digest:
       algorithm: sha-256
-      value: "2fa93e219713071c9b1fd5afc603f3d27f12ec1ab9dea7ccac0afce9e30b4fb9"
+      value: 2fa93e219713071c9b1fd5afc603f3d27f12ec1ab9dea7ccac0afce9e30b4fb9
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-build-public-docs-mjs
@@ -3240,7 +3231,7 @@ governed_artifacts:
     path: scripts/build-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: "f20fdac8c333cdac2d7a835c69eb273debc97dfed80e18a6435455a9535c6acf"
+      value: f20fdac8c333cdac2d7a835c69eb273debc97dfed80e18a6435455a9535c6acf
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-build-mjs
@@ -3264,7 +3255,7 @@ governed_artifacts:
     path: scripts/exercise-release-candidate.mjs
     digest:
       algorithm: sha-256
-      value: "4185afb971c2d2a63fe867c3a029c817f9ba32e5079b16065b8058458210dc08"
+      value: 4185afb971c2d2a63fe867c3a029c817f9ba32e5079b16065b8058458210dc08
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-onboarding-core-mjs
@@ -3272,7 +3263,7 @@ governed_artifacts:
     path: scripts/onboarding/core.mjs
     digest:
       algorithm: sha-256
-      value: "8d735f140896b66350e5d92a067f6fbdd6a15c8b1e07d825ee14499f2e3559cc"
+      value: 8d735f140896b66350e5d92a067f6fbdd6a15c8b1e07d825ee14499f2e3559cc
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs
@@ -3280,7 +3271,7 @@ governed_artifacts:
     path: scripts/package-release.mjs
     digest:
       algorithm: sha-256
-      value: "b66f27fc64dd665a2f786630cec515cef5306fb6a929d1431466e2c1bd6a57d6"
+      value: b66f27fc64dd665a2f786630cec515cef5306fb6a929d1431466e2c1bd6a57d6
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-config-mjs
@@ -3288,7 +3279,7 @@ governed_artifacts:
     path: scripts/release/config.mjs
     digest:
       algorithm: sha-256
-      value: "a3f3ea0382aa8b9d2bc8e67e9b1c0a787315bf60a450eab2fd521346d42cb8c3"
+      value: bea72b2a9bb18b35508ab43d23f6c89cefdf0504b9a1ed705bd6a60169a63fa6
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-core-mjs
@@ -3296,7 +3287,7 @@ governed_artifacts:
     path: scripts/release/core.mjs
     digest:
       algorithm: sha-256
-      value: "101ebb99bfeae30e2953d6233843504819409ed9291732ff04c4fb98da1635fb"
+      value: 101ebb99bfeae30e2953d6233843504819409ed9291732ff04c4fb98da1635fb
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-release-set-files-mjs
@@ -3312,7 +3303,7 @@ governed_artifacts:
     path: scripts/stage-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: "893bda8048c3016cf78c3aaeb95345f5bca98af3ebac8a14831629d3ad9ee4fc"
+      value: 893bda8048c3016cf78c3aaeb95345f5bca98af3ebac8a14831629d3ad9ee4fc
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-verify-adopter-mjs
@@ -3328,7 +3319,7 @@ governed_artifacts:
     path: scripts/verify-agent-guidance.mjs
     digest:
       algorithm: sha-256
-      value: "8d345a449f92d248ac7fb0eb64389559f40fdce22a9127b04e813629364f6f7c"
+      value: 8d345a449f92d248ac7fb0eb64389559f40fdce22a9127b04e813629364f6f7c
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-verify-build-mjs
@@ -3352,7 +3343,7 @@ governed_artifacts:
     path: scripts/verify-public-docs.mjs
     digest:
       algorithm: sha-256
-      value: "7277614b9695ba4442494100b0804699e026ec613f5a96e470fdf277cf7930ec"
+      value: 7277614b9695ba4442494100b0804699e026ec613f5a96e470fdf277cf7930ec
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-verify-recommended-release-mjs
@@ -3360,7 +3351,7 @@ governed_artifacts:
     path: scripts/verify-recommended-release.mjs
     digest:
       algorithm: sha-256
-      value: "b2d26b4d1cbcd1afc5bbef84bc3175a2887a47c6d9bfd4a8eb7d9e390d59cd3a"
+      value: b2d26b4d1cbcd1afc5bbef84bc3175a2887a47c6d9bfd4a8eb7d9e390d59cd3a
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-verify-release-mjs
@@ -3376,7 +3367,7 @@ governed_artifacts:
     path: src/checker/bindings.ts
     digest:
       algorithm: sha-256
-      value: "5c19fb9b8f55c5b33363226b1470b7ea3bbbce051c4d561b6d61e1b407a9e9cb"
+      value: 5c19fb9b8f55c5b33363226b1470b7ea3bbbce051c4d561b6d61e1b407a9e9cb
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-src-checker-checker-ts
@@ -3384,7 +3375,7 @@ governed_artifacts:
     path: src/checker/checker.ts
     digest:
       algorithm: sha-256
-      value: "53fdcc20e047b8dd6bb895fe725a8ec232f1e2d34ee12196a93db7fe230a0203"
+      value: 53fdcc20e047b8dd6bb895fe725a8ec232f1e2d34ee12196a93db7fe230a0203
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-src-checker-contracts-ts
@@ -3392,7 +3383,7 @@ governed_artifacts:
     path: src/checker/contracts.ts
     digest:
       algorithm: sha-256
-      value: "d7dce0931ccadbcfa75a2d24c57c110f4fafc888dd559fd2b9a7f2d30896f11c"
+      value: d7dce0931ccadbcfa75a2d24c57c110f4fafc888dd559fd2b9a7f2d30896f11c
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-src-checker-diagnostics-ts
@@ -3472,7 +3463,7 @@ governed_artifacts:
     path: src/checker/topology.ts
     digest:
       algorithm: sha-256
-      value: "1c998e6b079e84a9edbd16d08ff7182d377f9fa3412cf6aeb33d1c58e1ada64e"
+      value: 1c998e6b079e84a9edbd16d08ff7182d377f9fa3412cf6aeb33d1c58e1ada64e
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-src-checker-types-ts
@@ -3480,7 +3471,7 @@ governed_artifacts:
     path: src/checker/types.ts
     digest:
       algorithm: sha-256
-      value: "5e2bcfac11daaca5e727a721345ae3d9bfab5d501419d0f39169db83f2732b69"
+      value: 5e2bcfac11daaca5e727a721345ae3d9bfab5d501419d0f39169db83f2732b69
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-src-checker-util-ts
@@ -3504,7 +3495,7 @@ governed_artifacts:
     path: src/cli.ts
     digest:
       algorithm: sha-256
-      value: "9a2aa46157351bd4150d38f65afa5a8379a1c82ee8070374d3497eb519dfc1ac"
+      value: 9a2aa46157351bd4150d38f65afa5a8379a1c82ee8070374d3497eb519dfc1ac
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-version-dispatch-test-ts
@@ -3512,7 +3503,7 @@ governed_artifacts:
     path: test/version-dispatch.test.ts
     digest:
       algorithm: sha-256
-      value: "2286fdddc03c03034f0b0f84d81b234d684100cddce47afe57d3e5ab531161c6"
+      value: 2286fdddc03c03034f0b0f84d81b234d684100cddce47afe57d3e5ab531161c6
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-mechanics-test-ts
@@ -3520,7 +3511,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: "f46d8c9f0715935e7f61f006827f69c2e4b981b18638fe4ea1de1244fabfe342"
+      value: f46d8c9f0715935e7f61f006827f69c2e4b981b18638fe4ea1de1244fabfe342
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts
@@ -3536,7 +3527,7 @@ governed_artifacts:
     path: test/adopter.test.ts
     digest:
       algorithm: sha-256
-      value: "4f3be80ff38b7554b35473a54568828692a37e86e5874ee732a3b83cac9dccff"
+      value: 4f3be80ff38b7554b35473a54568828692a37e86e5874ee732a3b83cac9dccff
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-agent-guidance-test-ts
@@ -3552,7 +3543,7 @@ governed_artifacts:
     path: test/authority.test.ts
     digest:
       algorithm: sha-256
-      value: "3ef1f248204696c92b9f86424d6c9c3d8ca10d5d08341395b4b390966da467bc"
+      value: 3ef1f248204696c92b9f86424d6c9c3d8ca10d5d08341395b4b390966da467bc
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-checker-test-ts
@@ -3568,7 +3559,7 @@ governed_artifacts:
     path: test/contracts.test.ts
     digest:
       algorithm: sha-256
-      value: "7907ec2864d3b12a8493780dfb2cb8281075a0e95e87e42e8f2465995ee16ea8"
+      value: 7907ec2864d3b12a8493780dfb2cb8281075a0e95e87e42e8f2465995ee16ea8
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-dependency-security-test-ts
@@ -3584,7 +3575,7 @@ governed_artifacts:
     path: test/diagnostics.test.ts
     digest:
       algorithm: sha-256
-      value: "168701b812cf464bc37a4898567e19e43454e7a0db25e009eb2f5141aa02235e"
+      value: 168701b812cf464bc37a4898567e19e43454e7a0db25e009eb2f5141aa02235e
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-dynamic-root-test-ts
@@ -3600,7 +3591,7 @@ governed_artifacts:
     path: test/extensions.test.ts
     digest:
       algorithm: sha-256
-      value: "5da7d7df0e0811ffde0f6e4527b27cdeeba9631e3bb33a3d0145c406783315b0"
+      value: 5da7d7df0e0811ffde0f6e4527b27cdeeba9631e3bb33a3d0145c406783315b0
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-helpers-ts
@@ -3608,7 +3599,7 @@ governed_artifacts:
     path: test/helpers.ts
     digest:
       algorithm: sha-256
-      value: "07fbd478af9eba32dad2bcb9ec2395dd671f0c3ebbb6a7b8b65323e801c51f49"
+      value: 07fbd478af9eba32dad2bcb9ec2395dd671f0c3ebbb6a7b8b65323e801c51f49
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-onboarding-guidance-test-ts
@@ -3632,7 +3623,7 @@ governed_artifacts:
     path: test/public-docs.test.ts
     digest:
       algorithm: sha-256
-      value: "1ad4b3ecbb4cb00348d77dc30e92362ad2f1f463b87e058f7fa5c25fabe105aa"
+      value: 1ad4b3ecbb4cb00348d77dc30e92362ad2f1f463b87e058f7fa5c25fabe105aa
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-verify-third-party-notices-mjs
@@ -3648,7 +3639,7 @@ governed_artifacts:
     path: test/release-manifest-schema.test.ts
     digest:
       algorithm: sha-256
-      value: "d7a38dee82be81d74dd99a27afe77179efe9f8c6a51752961b4facf285e3c972"
+      value: d7a38dee82be81d74dd99a27afe77179efe9f8c6a51752961b4facf285e3c972
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-release-tooling-test-ts
@@ -3656,7 +3647,7 @@ governed_artifacts:
     path: test/release-tooling.test.ts
     digest:
       algorithm: sha-256
-      value: "6fe2cbbffb628dab748f7c5602ea5651b65930c0a98f45c02483e47a5cc28890"
+      value: 6fe2cbbffb628dab748f7c5602ea5651b65930c0a98f45c02483e47a5cc28890
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-result-test-ts
@@ -3680,7 +3671,7 @@ governed_artifacts:
     path: test/self-hosting.test.ts
     digest:
       algorithm: sha-256
-      value: "570a2f019a27effd7f3b4d4aa385176a03918231e58aad6436e5a6aff8c44bf1"
+      value: 570a2f019a27effd7f3b4d4aa385176a03918231e58aad6436e5a6aff8c44bf1
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-semantic-test-ts
@@ -3688,7 +3679,7 @@ governed_artifacts:
     path: test/semantic.test.ts
     digest:
       algorithm: sha-256
-      value: "9e3cbf2d854e469cebb525d2b217e9e6562444d526714846f114f89e57c879f3"
+      value: 9e3cbf2d854e469cebb525d2b217e9e6562444d526714846f114f89e57c879f3
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-test-titlecase-test-ts
@@ -3724,5 +3715,5 @@ governed_artifacts:
     record: nkf-current-system
     source_section: durable-mapping
 knowledge_graph:
-  policy: nkf.freshness-policy.0.8
+  policy: nkf.freshness-policy.0.81
   baseline: .nourd/knowledge/freshness/baseline.yaml
