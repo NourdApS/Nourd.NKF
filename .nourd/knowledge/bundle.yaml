@@ -1862,7 +1862,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-release-audit.md
       digest:
         algorithm: sha-256
-        value: "5e168481c5b144bc2d65d0f9d63bdb680ed641c5cc7d4bd6524d9bcd5f2fe6a7"
+        value: "009ec02637e7e78033bb123a2777b259e5bfbe4b1e346cae74ea635a2819d5fb"
       relationships: []
   - path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
     kind: evidence
@@ -1880,7 +1880,7 @@ non_records:
       stable_path: evidence/release/nkf-0.81-release-notes.md
       digest:
         algorithm: sha-256
-        value: 5e2d9287eba4318359070f735ad80b3631edbf7acde839cc34bf229ca50bd6bf
+        value: "d6e2c4e30d20b3c05ca0b8aea35f4ccf6ba01c9dcd9cc5188215baa739fbce8b"
       relationships: []
   - path: evidence/release/nkf-0.71-producer-promotion.yaml
     kind: evidence

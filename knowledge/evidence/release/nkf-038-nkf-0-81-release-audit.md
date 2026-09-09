@@ -252,14 +252,62 @@ regression exercise of the earlier rounds repeated its outcome.
 - The shipped adopter retains the legacy repository coordinate for
   pre-0.71 pins. As in round two.
 
+## Round Four — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `a211c4761e24345ca3ce8e3fea520c85cf7fe907` (`task/NKF-038`, clean before and after) |
+| Audited archive | SHA-256 `2e617fcf3350672c3b023f19dc3855c61ec342ee9a802f607fa9c2571efbe97f`, 142 entries, checker `f2fe706353ebba7737f2d280cb65f60ec1ea0feb9eef1456644668b41d03c59c`, adopter `1ffcf550e05b27bb49584616e455f188c660888c12b464afc214a439220e625f` |
+| Verdict | Delivery clean: zero blocking, zero should-fix, six notes |
+
+One independent instance verified every round-three repair with evidence,
+exercising the blank-value refusal through the archive's own adopter on a 0.8
+project — refused with the project unchanged, then `updated` and `current` at
+integration revision five with the completed review — and reading the
+Realization, guidance review, onboarding guide, and Task as repaired. It
+reproduced the gate in a clean clone with twenty-nine test files and two
+hundred eighty tests and zero diagnostics, rebuilt the archive
+byte-identically, validated the manifest, reconciled all one hundred forty-two
+members and every top-level digest, confirmed the five accepted digests and
+the twelve guidance digests, confirmed the 0.8 frozen paths and catalog
+untouched, ran the archive's checker on both 0.81 fixtures to ready with zero
+diagnostics, and read every reconciled record with every relative link
+resolving.
+
+## Round Four Notes And Dispositions
+
+- The release notes said the 0.8 adopter refuses a catalog that states the
+  public channel; exercised, it refuses on its frozen compatibility set first.
+  The sentence now says so.
+- The projection says the 0.81 archive is published and downloadable by
+  anyone; true from the publication that ships this projection, as with the
+  publication manifest it names. Recorded.
+- The Task's mandatory capabilities read `unknown` until the Completion Result
+  classifies them at close; a mid-Task reader sees the table one step behind
+  the prose. Method note.
+- The adopter has no `--help`, as in round three.
+- The fifth accepted digest binds the producer-promotion input, which is not a
+  release-set member and is verified in the tree only, by design.
+- The producer's readiness is not evaluated until the closing reseal, as in
+  every round.
+
 ## Resulting State
 
 Round one's two blocking findings, round two's seven should-fix findings,
 round three's five should-fix findings, and
 every should-fix finding of round one are repaired, and every note is recorded
-with its disposition. Because the round-three repairs change release-set
-member bytes — the adopter, the public adopter copy, and the onboarding
-guide — and the manifest binds the release commit, the candidate is re-cut
-from the repaired commit, re-exercised, and audited a fourth time before any
-technical-confirmation Decision. This Evidence confirms nothing; the mandatory
-audit-bound confirmation is the separate Decision that follows a clean round.
+with its disposition, and the fourth round found the delivery clean. The
+commit that records this round changes no release-set member byte, so the
+archive cut from it differs from the audited one only in the release commit its
+manifest names, as it did for NKF 0.8; that archive is the one the
+technical-confirmation Decision binds.
+
+Four rounds is the fact worth carrying, and their shape repeats NKF 0.8's:
+the delivery converged early — the catalog contract, the plain-HTTPS path, the
+volatile registry, and the closure recompute never regressed — while the
+findings after round one were in the hand-maintained record, in the guides the
+generator does not own, and in mechanics no rule reached: a review left at its
+placeholders, catalog facts nobody reconciled, a drift refusal that named
+nothing. Each was closed by a mechanism rather than a sentence. This Evidence
+confirms nothing; the mandatory audit-bound confirmation is the separate
+Decision that follows.

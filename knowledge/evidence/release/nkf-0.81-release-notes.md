@@ -84,8 +84,9 @@ node nourd-nkf-adopt.mjs --project <project-root>
 
 An installed adopter validates the governed recommendation against the
 compatibility set and channel literals frozen into it when it was published, so
-the NKF 0.8 adopter refuses a catalog that states the public prerelease channel
-— it fails closed rather than upgrading. The refusal is correct. Obtain the
+the NKF 0.8 adopter refuses the NKF 0.81 catalog — its frozen compatibility set
+rejects the 0.81 entries before its private-channel literal is even reached —
+and fails closed rather than upgrading. The refusal is correct. Obtain the
 NKF 0.81 archive from the public release named by the catalog, verify its
 digest, and invoke the adopter inside it; from NKF 0.81 onward the adopter
 fetches both catalog and archive itself.
