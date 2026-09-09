@@ -507,7 +507,7 @@ Complete Product Or Technology Topology
 | Neutral authoring and onboarding procedures | `integrations/ai/`, `integrations/onboarding/`, portable skills | Installed 0.8 vendor-neutral protocols and portable skills, emitted from the one version-neutral source | Bytes carried by the published archive; repository installation verified by the guidance verifiers |
 | Agent guidance integration | `AGENTS.md`, host adapters, portable skills, registry, verifier | Twelve explicit host surfaces plus the producer-only Task-authorization policy; exact registered bindings verified at NKF 0.8 | Verified by `npm run verify:agent-guidance`; acceptance and confirmation remain separate |
 | Project enforcement command | `package.json` | Canonical pinned-first `npm run nkf:check` followed by the exact preserved producer host gate | Pristine-clone runtime behavior independently verified in [0.4 producer-adoption Evidence](../evidence/audits/nkf-024-nkf-0-4-producer-adoption-audit.md) and preserved unchanged through 0.5 and 0.6 adoption |
-| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Checked-in workflow invokes the canonical command with complete Git history; its last observed success on `master` was merge commit `d3f0e84f...` on `2026-08-19` | Github owns the time-bound run state and each later commit is observed separately; its `Validate` check is required on `master` since `2026-09-08`, while the approving review and bypass policy remain deferred to [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) |
+| Exact-commit workflow | `.github/workflows/nkf-contracts.yml` | Checked-in workflow invokes the canonical command with complete Git history; its last observed success on `master` was merge commit `d3f0e84f...` on `2026-08-19` | Github owns the time-bound run state and each later commit is observed separately; its `Validate` check, one approving review, and a push restriction are required on `master` since `2026-09-08`, observed and exercised under [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) |
 | Consumer adopter | `dist/nourd-nkf-adopt.mjs`, `.nourd/tools/nkf/nourd-nkf-adopt.mjs` | Published and producer-installed 0.8 adopter SHA-256 `5e328808...d58d85`; `scripts/adoption/nourd-nkf-adopt.mjs` remains a build input rather than a runnable command | Reproduced deterministically by `npm run verify:adopter`, bound by [ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md); installed byte agreement verified by the pin |
 | Initial onboarding | `scripts/onboarding/`, `integrations/onboarding/`, portable onboarding skills | Agent-led Empty and Tiny Knowledge Product and Technology assessment, sealing, transaction, rollback, and reviewed native 0.7 graph baselining beneath public Adopt | Exercised by the 0.7 adopter suite; consumer onboarding remains a separate operational act |
 | Public documentation | `public-docs/` and versioned archives | The published 0.7 archive contains the complete public projection, conformant examples, the exact 0.7 Specification, and the public adopter | Verified by `npm run verify:public-docs`; separate docs-repository publication is not claimed |
@@ -695,15 +695,22 @@ the `2026-09-08` visibility change the same query returned `404`, not
 protected, and branch protection was then activated on `master` under
 [ADR 0136](../decisions/0136-adopt-the-public-repository-direction.md):
 the exact-commit `Validate` check is required, strict, and enforced for
-administrators, with force pushes and deletion disallowed. Review ownership,
-bypass controls, and the blocked invalid pull-request observation remain
-unconfigured and unconfirmed.
+administrators, with force pushes and deletion disallowed. The Human Product
+Owner then required one approving review with a bypass allowance for
+themselves, restricted pushes to themselves, and enabled the branch lock, which
+makes `master` read-only for everyone until lifted; an intentionally invalid
+candidate failed `Validate` and was reported blocked by Github, as recorded in
+the
+[protected merge gate observation](../evidence/release/nkf-012-protected-merge-gate-observation.md).
+Protection is claimed from Github's report, not from the workflow file.
 
 [NKF-011](../tasks/items/NKF-011-enforce-nkf-contracts.md) is complete for its confirmed authoring guidance, deterministic local
-gate, and active exact-commit workflow. Deferred [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) owns the required
-`Validate` check, one mandatory pull-request approval, bypass policy, and
-blocked-invalid-candidate observation. No release, deployment, or
-external-consumer migration is part of either enforcement Task.
+gate, and active exact-commit workflow.
+[NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md) delivers the
+required `Validate` check, the mandatory pull-request approval, the explicit
+bypass and direct-push policy, and the blocked-invalid-candidate observation.
+No release, deployment, or external-consumer migration is part of either
+enforcement Task.
 
 [NKF-008](../tasks/items/NKF-008-publish-and-onboard-consumers.md) is complete for the confirmed 0.1 predecessor. Its private release,
 recommendation, public repository, freshly cloned public bytes, complete
@@ -777,8 +784,9 @@ Product Owner.
 topology predecessor, continuing checker enforcement, initial onboarding, and
 deliberate [NKF-013](../tasks/items/NKF-013-initial-greenfield-onboarding.md) or [NKF-015](../tasks/items/NKF-015-agent-led-initial-onboarding.md) predecessor repair. Later [NKF-019](../tasks/items/NKF-019-decision-applicability-gate.md) and [NKF-020](../tasks/items/NKF-020-version-release-adoption-and-compatibility-process.md)
 work supersedes its current-release and current-projection status without
-rewriting its confirmation evidence. Acceptance-binding and protected-merge
-work remain deferred to [NKF-016](../tasks/items/NKF-016-deliver-acceptance-binding-verification.md) and [NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md).
+rewriting its confirmation evidence. Acceptance-binding work remains
+deferred to [NKF-016](../tasks/items/NKF-016-deliver-acceptance-binding-verification.md); the protected merge gate is delivered by
+[NKF-012](../tasks/items/NKF-012-activate-protected-merge-gate.md).
 
 ## Compatibility Verification And Recovery
 

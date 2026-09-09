@@ -1,0 +1,82 @@
+contract: nkf.record
+id: adr-0137
+type: decision
+body_contract: nkf.decision
+title: "ADR 0137: Confirm The Protected Merge Gate"
+source:
+  path: decisions/0137-confirm-the-protected-merge-gate.md
+  stable_path: decisions/0137-confirm-the-protected-merge-gate.md
+  digest:
+    algorithm: sha-256
+    value: "93f3024fd5f932c68cd5f45cc261cd86d45298db7bc2761301577575a605cf28"
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - claude-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships:
+  - type: depends-on
+    target: adr-0063
+    source_section: decision
+  - type: depends-on
+    target: adr-0136
+    source_section: decision
+  - type: extends
+    target: adr-0062
+    source_section: decision
+  - type: depends-on
+    target: adr-0060
+    source_section: scope-and-applicability
+task: NKF-012
