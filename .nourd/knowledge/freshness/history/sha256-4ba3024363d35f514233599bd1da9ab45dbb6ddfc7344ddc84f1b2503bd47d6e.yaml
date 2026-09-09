@@ -1,20 +1,20 @@
 contract: nkf.graph-baseline
-nkf_version: "0.81"
+nkf_version: "0.8"
 bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
+  value: ed1a68458e84b850e6ee499fc126a871ea82271c50e4f2b1d638cb7828908454
 policy:
-  id: nkf.freshness-policy.0.81
+  id: nkf.freshness-policy.0.8
   digest:
     algorithm: sha-256
-    value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
+    value: 7cfb1b40a8b6f86543cb7b6016c6e9b2c1159d2a748c1915d0e9bf51bb82afd4
 version_delta:
   contract: nkf.version-delta
   digest:
     algorithm: sha-256
-    value: 0a319702b967477ab6dbc183bedaef3c256e123d5424b1c77d56e96b7fb120bb
+    value: cc17f23a44afcf56b107f3e76e4d761779a4225bd2f8955c51d9781193c9c8b9
 node_revisions:
   - node:
       kind: document
@@ -1980,6 +1980,12 @@ node_revisions:
       value: e44e892a0cba1eb8cda485f2e67229f899cb15ca062bf7b4bed639b5b009e324
   - node:
       kind: document
+      id: document-nkf-0-81-specification
+    revision:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+  - node:
+      kind: document
       id: document-nkf-012-completion-audit
     revision:
       algorithm: sha-256
@@ -2158,12 +2164,6 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 0f079ae6284fb8466cd583f71c72b91033498a222f0a8da19216166584bcc2f3
-  - node:
-      kind: record
-      id: nkf-0.81-specification
-    revision:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
   - node:
       kind: record
       id: nkf-003-source-reconciliation
@@ -31306,6 +31306,93 @@ applicability_coverage:
           id: codex-technical-reviewer
   - node:
       kind: document
+      id: document-nkf-0-81-specification
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-specification
+      source:
+        heading:
+          heading_path:
+            - "id: nkf-0.81-specificationtitle: NKF 0.81 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.81 is the successor to NKF 0.8 that makes adoption from the public governing repository truthful and self-contained. The recommended-release catalog and its closed channel vocabulary become accepted contract meaning with public prerelease and release values, a consumer resolves the catalog and archive over plain HTTPS with digest verification and no command-line tool, the adoption protocol states where the adopter is obtained, a closed registry of three volatile operating-system metadata files stops onboarding drift without weakening complete review, the checker recomputes the delta-review closure with impact propagation instead of trusting the recorded one, and live support slides to exactly 0.81 plus 0.8 with NKF 0.71 as stepping-stone history.created_at: 2026-09-08T19:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+    basis_digest:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: fdcc6bf1d0d0661696e9c592d871b203ec5fa225590fdea9778c6d97360829a6
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
+  - node:
+      kind: document
+      id: document-nkf-0-81-specification
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-specification
+      source:
+        heading:
+          heading_path:
+            - "id: nkf-0.81-specificationtitle: NKF 0.81 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.81 is the successor to NKF 0.8 that makes adoption from the public governing repository truthful and self-contained. The recommended-release catalog and its closed channel vocabulary become accepted contract meaning with public prerelease and release values, a consumer resolves the catalog and archive over plain HTTPS with digest verification and no command-line tool, the adoption protocol states where the adopter is obtained, a closed registry of three volatile operating-system metadata files stops onboarding drift without weakening complete review, the checker recomputes the delta-review closure with impact propagation instead of trusting the recorded one, and live support slides to exactly 0.81 plus 0.8 with NKF 0.71 as stepping-stone history.created_at: 2026-09-08T19:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+    basis_digest:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: fdcc6bf1d0d0661696e9c592d871b203ec5fa225590fdea9778c6d97360829a6
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
+  - node:
+      kind: document
+      id: document-nkf-0-81-specification
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-specification
+      source:
+        heading:
+          heading_path:
+            - "id: nkf-0.81-specificationtitle: NKF 0.81 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.81 is the successor to NKF 0.8 that makes adoption from the public governing repository truthful and self-contained. The recommended-release catalog and its closed channel vocabulary become accepted contract meaning with public prerelease and release values, a consumer resolves the catalog and archive over plain HTTPS with digest verification and no command-line tool, the adoption protocol states where the adopter is obtained, a closed registry of three volatile operating-system metadata files stops onboarding drift without weakening complete review, the checker recomputes the delta-review closure with impact propagation instead of trusting the recorded one, and live support slides to exactly 0.81 plus 0.8 with NKF 0.71 as stepping-stone history.created_at: 2026-09-08T19:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+    basis_digest:
+      algorithm: sha-256
+      value: 97e5855f30411f19e3b674db1e850753918a52be554d0382453d9cb28ebca401
+    provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: fdcc6bf1d0d0661696e9c592d871b203ec5fa225590fdea9778c6d97360829a6
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
+  - node:
+      kind: document
       id: document-nkf-012-completion-audit
     purpose: change-impact
     state: eligible
@@ -33770,84 +33857,6 @@ applicability_coverage:
         performing_reviewer:
           kind: agent
           id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-0.81-specification
-    purpose: change-impact
-    state: eligible
-    role: governs
-    basis:
-      node:
-        kind: record
-        id: nkf-0.81-specification
-      source:
-        section: purpose
-    revision:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
-    basis_digest:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-0.81-specification
-    purpose: whole-root-readiness
-    state: eligible
-    role: governs
-    basis:
-      node:
-        kind: record
-        id: nkf-0.81-specification
-      source:
-        section: purpose
-    revision:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
-    basis_digest:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-0.81-specification
-    purpose: consequential-use
-    state: eligible
-    role: governs
-    basis:
-      node:
-        kind: record
-        id: nkf-0.81-specification
-      source:
-        section: purpose
-    revision:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
-    basis_digest:
-      algorithm: sha-256
-      value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
   - node:
       kind: record
       id: nkf-003-source-reconciliation
@@ -43739,7 +43748,7 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-09-09T19:42:07.368Z
+  reviewed_at: 2026-09-09T19:39:58.063Z
   claim: semantically-reviewed-delta
   computed_closure: []
   performed_set: []
@@ -43757,12 +43766,7 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: Reviewed the applied 0.81 producer promotion, exact published pin, native accepted specification, and the two adopted guidance roots regenerated from the version-neutral source. Repeat Adopt returned current and recommendation verification passed. Frozen release archives retain their exact bytes.
+      finding: Reviewed exact agent-host registry binding for the explicitly authorized producer-only release-completion instruction in AGENTS.md; it does not change the generated portable adapter block or any accepted release archive bytes.
   limitations:
     - Local NKF-038 authoring review under explicit user direction. Publication, recommendation, live producer adoption, and merge remain separate operations.
   disputed: false
-predecessor:
-  path: .nourd/knowledge/freshness/history/sha256-fb5b35f3e38518fe456bfeb7f128622d9b152799bbbb8e2172268bad5977dc7d.yaml
-  digest:
-    algorithm: sha-256
-    value: fb5b35f3e38518fe456bfeb7f128622d9b152799bbbb8e2172268bad5977dc7d

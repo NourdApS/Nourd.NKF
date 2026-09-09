@@ -1,10 +1,10 @@
 # NKF Adoption Protocol
 
-NKF Version: 0.8
+NKF Version: 0.81
 
 This is the governed procedure by which a repository adopts the current
 recommended NKF release. It is derived process, not format meaning; the
-accepted NKF 0.8 Specification remains the authority when any derived
+accepted NKF 0.81 Specification remains the authority when any derived
 instruction conflicts. It is part of the complete versioned set it serves.
 
 This in-repository copy records that the process is accepted through
@@ -57,21 +57,21 @@ node nourd-nkf-adopt.mjs --project <project-root> \
 
 ## State Resolution And The Support Window
 
-Live support covers the current version plus one predecessor: NKF 0.8 and
-NKF 0.71. Adopt observes the repository and selects one internal path:
+Live support covers the current version plus one predecessor: NKF 0.81 and
+NKF 0.8. Adopt observes the repository and selects one internal path:
 
 | Repository state | Required input | Result |
 | --- | --- | --- |
 | Supported unadopted Empty or Tiny Knowledge repository | Reviewed sealed onboarding plan and completed whole-root review | `onboarded` |
-| Adopted NKF 0.71 repository | The completed delta review of the computed required set | `updated` |
-| NKF 0.8 repository without the recommended release or integration | None beyond release access | `updated` |
-| NKF 0.8 repository already on the exact recommendation | None | `current` |
-| Repository declaring a version below NKF 0.71 | Out of window | Fails closed naming the exact stepping-stone release archive |
+| Adopted NKF 0.8 repository | The completed delta review of the computed required set | `updated` |
+| NKF 0.81 repository without the recommended release or integration | None beyond release access | `updated` |
+| NKF 0.81 repository already on the exact recommendation | None | `current` |
+| Repository declaring a version below NKF 0.8 | Out of window | Fails closed naming the exact stepping-stone release archive |
 
 An out-of-window repository migrates through immutable published archives as
 stepping stones, each hop using that archive's own bundled adopter with an
 explicit archive and digest: a repository one step below the window steps
-through the published NKF 0.71 archive, and older
+through the published NKF 0.8 archive, and older
 repositories step through their next published archive in turn. The refusal
 names the exact next stepping-stone release; nothing migrates silently.
 
@@ -109,16 +109,16 @@ adopter inside it.
 The same applies at every hop of a stepping-stone chain, where each hop already
 uses that archive's own bundled adopter.
 
-## Non-Breaking 0.71-To-0.8 Upgrade
+## Non-Breaking 0.8-To-0.81 Upgrade
 
 The recommendation declares compatibility from each in-window predecessor
 with a consistent `migration_required` value and summary. Updating an exact
-conformant NKF 0.71 repository to NKF 0.8 is `non-breaking` and requires no
+conformant NKF 0.8 repository to NKF 0.81 is `non-breaking` and requires no
 repository-owner approval: no stable path moves, no identity succeeds, no
 declaration changes shape, and canonical Markdown bytes are preserved. The
 upgrade still never invents review. The first Adopt invocation writes the
 exact upgrade review template — carried judgments prefilled by digest
-identity under the accepted 0.71-to-0.8 version-delta declaration and the
+identity under the accepted 0.8-to-0.81 version-delta declaration and the
 evaluation policy's declared judgment dependencies, the computed required
 fresh set left to a named reviewer — and stops. Rerun with the completed
 review:
@@ -128,14 +128,16 @@ node nourd-nkf-adopt.mjs --project <project-root> --review <review.yaml>
 ```
 
 The upgrade performs, in one rollback-capable transaction: the mechanical
-contract rebind to the 0.8 set, conversion of the reviewed baseline to the
-digest-bound 0.8 contract with computed per-judgment carry-forward, and the
+contract rebind to the 0.81 set, conversion of the reviewed baseline to the
+digest-bound 0.81 contract with computed per-judgment carry-forward, and the
 integration refresh. A delta claim is admitted only when the performed set
 contains the computed closure; whole-root review remains the recovery path.
+The checker recomputes that closure with the evaluation policy's impact
+propagation and refuses a claim whose recorded closure differs from it.
 The semantic reviewer's act does not accept canonical Product or Technology
 meaning.
 
-Under NKF 0.8 the deterministic Task conclusion also seals its own
+Under NKF 0.81 the deterministic Task conclusion also seals its own
 successor baseline through the mechanically-concluded claim, so a concluded
 repository never lands one step stale; a conclusion whose graph delta
 exceeds the closed transition vocabulary fails before mutation with the

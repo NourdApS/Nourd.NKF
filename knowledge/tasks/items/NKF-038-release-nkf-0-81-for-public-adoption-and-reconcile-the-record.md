@@ -224,6 +224,30 @@ directories that no longer exist.
 
 ## Execution Plan
 
+### Complete Release Recommendation Adoption And Public Documentation
+
+On `2026-09-09`, the Human Product Owner directed: "recommendation and
+producer adoption must select the latest version. always", and asked whether
+the public docs were updated. This is standing direction to complete release
+recommendation and producer adoption with each latest published version, and
+to synchronize its public documentation. It supersedes the earlier operational
+hold on these stages for this producer; it does not obligate another consumer
+or change frozen format meaning. The existing release Task owns this follow-through.
+
+1. Bind the catalog to the exact published and confirmed 0.81 archive and
+   record the standing producer release-completion rule outside frozen guidance.
+2. Perform the accepted postpublication producer promotion with the released
+   adopter and an exact reviewed delta, then verify repeat Adopt is current.
+3. Publish the deterministic 0.81 documentation projection, its exact adopter,
+   and release-bound manifest to the public documentation repository; verify
+   a fresh clone and anonymous public downloads against every manifest digest.
+4. Reconcile living knowledge, repin and review its derived bindings, run the
+   complete canonical gate and recommendation verification, and push the
+   existing publication PR. Complete normal required checks and merge the
+   release-completion updates so the public default-branch catalog selects
+   0.81. Exercise public HTTPS catalog resolution from the published adopter.
+
+
 ### Authorized Publication After Merge
 
 On `2026-09-09`, after merging the completed implementation pull request, the

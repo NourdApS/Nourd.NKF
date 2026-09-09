@@ -149,6 +149,30 @@ export const PRE_STABLE_PUBLICATION = PUBLICATION_BY_VERSION["0.8"];
 // every expectation from this registry, so recommending a newly accepted
 // release changes governed data here and never changes verifier logic.
 export const RECOMMENDED_RELEASE_BINDINGS = Object.freeze({
+  "0.81": Object.freeze({
+    "acceptingDecisionPath": "knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md",
+    "confirmingDecisionPath": "knowledge/decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md",
+    "archiveSha256": "a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3",
+    "sourceCommit": "fa0efa056db17f5336a3b7a93142d58f41110cf7",
+    "checkerSha256": "1a268c93d9f484389885c02336ebd8464718967249036e79de03ddf7cd775008",
+    "adopterSha256": "12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5",
+    "authorityMarkdownSha256": "4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8",
+    "authorityExecutableSha256": "517b91442b6be5a31bc7b9a03845787494f4b9720f1d6d90b976ebcfc92b0347",
+    "compatibility": [
+        {
+            "from_nkf_version": "0.8",
+            "classification": "non-breaking",
+            "migration_required": false,
+            "summary": "NKF 0.8 upgrades to NKF 0.81 through the ordinary update with the mechanical contract rebind and the digest-bound delta carry."
+        },
+        {
+            "from_nkf_version": "0.81",
+            "classification": "non-breaking",
+            "migration_required": false,
+            "summary": "NKF 0.81 refreshes the exact recommended release and integration without semantic migration."
+        }
+    ]
+}),
   "0.8": Object.freeze({
     acceptingDecisionPath:
       "knowledge/decisions/0134-accept-the-nkf-0-8-authority-set.md",

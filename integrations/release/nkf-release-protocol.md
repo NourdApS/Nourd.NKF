@@ -1,6 +1,6 @@
 # NKF Release Protocol
 
-NKF Version: 0.8
+NKF Version: 0.81
 
 This is the governed procedure by which the Nourd Knowledge Format
 repository releases a new NKF version. It is repository process accepted

@@ -33789,13 +33789,7 @@ applicability_coverage:
       algorithm: sha-256
       value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-0.81-specification
@@ -33815,13 +33809,7 @@ applicability_coverage:
       algorithm: sha-256
       value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-0.81-specification
@@ -33841,13 +33829,7 @@ applicability_coverage:
       algorithm: sha-256
       value: 546311e96a0572f9a68ed19ae5180301f2c40f4daacb51faaf06248035bf4919
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-003-source-reconciliation
@@ -43739,10 +43721,14 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-09-09T19:42:07.368Z
+  reviewed_at: 2026-09-09T19:40:40.398Z
   claim: semantically-reviewed-delta
-  computed_closure: []
-  performed_set: []
+  computed_closure:
+    - kind: record
+      id: nkf-0.81-specification
+  performed_set:
+    - kind: record
+      id: nkf-0.81-specification
   observations:
     - id: review-observation
       subject:
@@ -43757,12 +43743,12 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: Reviewed the applied 0.81 producer promotion, exact published pin, native accepted specification, and the two adopted guidance roots regenerated from the version-neutral source. Repeat Adopt returned current and recommendation verification passed. Frozen release archives retain their exact bytes.
+      finding: Reviewed the exact published 0.81 producer promotion under the Human Product Owner direction to keep recommendation and producer adoption on the latest release. ADR 0143 selects the exact accepted specification and promotion declaration; ADR 0144 confirms this exact archive. The one fresh native specification node governs the producer. The 359 unchanged judgments retain their exact carried provenance.
   limitations:
-    - Local NKF-038 authoring review under explicit user direction. Publication, recommendation, live producer adoption, and merge remain separate operations.
+    - This review authorizes no other consumer adoption and adds no normative meaning or whole-Realization confirmation.
   disputed: false
 predecessor:
-  path: .nourd/knowledge/freshness/history/sha256-fb5b35f3e38518fe456bfeb7f128622d9b152799bbbb8e2172268bad5977dc7d.yaml
+  path: .nourd/knowledge/freshness/history/sha256-4ba3024363d35f514233599bd1da9ab45dbb6ddfc7344ddc84f1b2503bd47d6e.yaml
   digest:
     algorithm: sha-256
-    value: fb5b35f3e38518fe456bfeb7f128622d9b152799bbbb8e2172268bad5977dc7d
+    value: 4ba3024363d35f514233599bd1da9ab45dbb6ddfc7344ddc84f1b2503bd47d6e

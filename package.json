@@ -41,7 +41,7 @@
     "verify:release": "node scripts/verify-release.mjs",
     "nkf:check:pinned": "node .nourd/tools/nkf/nourd-nkf-adopt.mjs check --project .",
     "nkf:check:host": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self",
-    "verify:guidance-generation": "node scripts/generate-guidance.mjs --project . --version 0.8 --check",
+    "verify:guidance-generation": "node scripts/generate-guidance.mjs --project . --check",
     "verify:version-labels": "node scripts/verify-version-labels.mjs --project .",
     "verify:guidance-review": "node scripts/verify-guidance-review.mjs --project ."
   },
