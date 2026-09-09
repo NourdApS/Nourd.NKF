@@ -536,7 +536,10 @@ describe("deterministic governed mechanics", () => {
     const directionalClosure = YAML.parse(readFileSync(directionalReview, "utf8")).computed_closure
       .map((node: any) => node.id);
     expect(directionalClosure).toEqual(["product"]);
-  });
+    // This end-to-end proof now includes chained seals, adversarial history,
+    // rollback, and recovery. Use the existing integration budget on slower
+    // hosted runners; every correctness assertion remains in force.
+  }, scaledTimeout(60_000));
 
   it("re-pins a governed artifact independent of sibling order without rewriting other bundle bytes", async () => {
     const project = await copyTechnologyFixture();

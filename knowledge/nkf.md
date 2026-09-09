@@ -71,9 +71,10 @@ window. `0.81` is the adopted successor direction. Its repaired unpublished auth
 revision is accepted by [ADR 0142](decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](decisions/0143-bind-the-predecessor-repair-promotion.md),
 under explicit P1 self-audit and execution delegation. It requires digest-bound
 predecessor proof for delta review and mechanical conclusion. The prior
-revision remains historical; the corrected release candidate requires its own
-exercise, audit, and confirmation before publication, recommendation, and
-producer promotion. At publication its live support
+revision remains historical; the corrected release candidate has passed its
+exact exercise and independent audit and is technically confirmed by
+[ADR 0144](decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md). Publication,
+recommendation, and producer promotion remain separate acts. At publication its live support
 window becomes `0.81` plus `0.8`. Earlier versions remain immutable
 history: their published archives serve as exact stepping stones for
 out-of-window migration, and the tooling fails closed rather than migrating

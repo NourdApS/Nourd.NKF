@@ -461,6 +461,50 @@ the 0.8 policy.
 
 ## Completion Result
 
+### Final Corrected Delivery And Closure Review
+
+On `2026-09-09`, the Codex technical reviewer completed the final review under
+the Human Product Owner's explicit direction to commit the work, close this
+Task, and make the pull request ready for merge. All acceptance criteria have
+been checked, tested where executable, and confirmed within that recorded
+technical delegation. The Task is ready for its deterministic close.
+
+1. The original seven Design boundaries remain recorded; the later P1 repair
+   is prospectively accepted under the explicit self-audit delegation by
+   [ADR 0142](../../decisions/0142-accept-the-bound-predecessor-repair.md), with
+   final artifact selection in
+   [ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md).
+   The original acceptance provenance is preserved as history, not rewritten.
+2. [ADR 0144](../../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md) technically
+   confirms archive `a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3` at release commit `fa0efa056db17f5336a3b7a93142d58f41110cf7`
+   after the fresh independent corrected-set audit and exact producer exercise.
+3. Native HTTPS acquisition is exercised with real TLS and an allowlisted
+   asset redirect, no Github CLI or credentials, exact-byte installation, and
+   refusal of untrusted TLS and tampered bytes. Live public 0.81 adoption
+   remains the post-publication check in the separately authorized stage.
+4. The closed catalog vocabulary, adopter-obtaining guidance, public
+   projection, and volatile-metadata protection pass their executable checks.
+5. GPT-5.6 Luna performed the requested lower-cost repeat documentation sweep
+   and the full twelve-member guidance reread. The final stale diagnostic was
+   repaired; no other actionable stale claim remains. Living link verification
+   reports zero dead links. Installed and published 0.8 guidance remains
+   correctly versioned for the unpromoted producer.
+6. The corrected archive and its audit-recording recut both pass isolated
+   producer adoption: `updated` then `current`, host-superset preserved, full
+   producer gate passed, and 141 source members reproduced. Each promotion
+   uses a delta with one fresh native Specification judgment and 358 carried
+   judgments, independently checked against bound predecessor proof.
+7. All 281 tests in 29 files pass. The prior P1, P2, and P3 findings and final
+   candidate-script and diagnostic omissions are resolved. The published 0.8
+   files, existing accepted Decisions, producer pin, and recommendation remain
+   unchanged. The current-system account preserves its partial Realization
+   confirmation status separately from exact release-byte confirmation.
+
+The completed technical delivery is ready for merge review. Publication,
+recommendation, live producer promotion, and the merge itself remain separate
+Human Product Owner acts. The earlier result sections below are historical
+handoffs and do not describe outstanding work at this final closure review.
+
 ### Original Candidate Handoff
 
 The following result records the prior exact candidate. The subsequent
@@ -593,9 +637,10 @@ closure sets, altered or missing history, symlink refusal, invalid earlier
 chain links, rollback, and recovery. Separate tests retain valid voluntary
 extra review and chained deterministic Task conclusions.
 
-P1 implementation and its self-audit are complete at the local authoring
-handoff. The Task remains active because a newly cut release candidate still
-needs its own exact exercise, release audit, and confirmation. The published
+At that local authoring handoff, P1 implementation and its self-audit were
+complete, while the Task remained active pending a new exact candidate
+exercise, release audit, and confirmation. The final closure review above
+records the subsequent completion of those requirements. The published
 0.8 release, producer declaration and pin, catalog recommendation, and remote
 publication or enforcement state are unchanged by this repair.
 
@@ -622,10 +667,9 @@ publication or enforcement state are unchanged by this repair.
 | [`adr-0138`](../../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md) | record | Reconcile living documents under the adopted 0.81 direction while preserving immutable history, published bytes, the producer's separately selected version, and the Human Product Owner's publication and promotion authority. |
 | [`adr-0140`](../../decisions/0140-accept-the-nkf-0-81-authority-set.md) | record | The first five-artifact revision remains immutable history; the later delegated P1 repair selects the second revision without retroactive acceptance. |
 | [`adr-0141`](../../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) | record | Confirmation covers only the exact prior candidate bytes. Correcting an emitted release member requires a new cut, exercise, audit, and confirmation before publication; the old confirmation must not be applied to the corrected working tree. |
-
 | [`adr-0142`](../../decisions/0142-accept-the-bound-predecessor-repair.md) | record | Prospective P1 delegation accepts the exact second unpublished authority revision and requires bound predecessor proof, preserved history, and a fresh candidate exercise and confirmation. |
-
 | [`adr-0143`](../../decisions/0143-bind-the-predecessor-repair-promotion.md) | record | Final navigation and promotion bindings replace only [ADR 0142](../../decisions/0142-accept-the-bound-predecessor-repair.md)'s exact artifact selection; its P1 semantics and boundaries continue. |
+| [`adr-0144`](../../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md) | record | Exact repaired candidate confirmation applies only to its named bytes; publication, recommendation, live promotion, and merge remain separate acts. |
 
 ### Mandatory Capabilities
 
@@ -633,11 +677,11 @@ publication or enforcement state are unchanged by this repair.
 | --- | --- | --- | --- |
 | Each format boundary is confirmed by the Human Product Owner at the Design and recorded verbatim before the authority set is authored | proven | human-experience | none |
 | Explicit P1 delegation and exact repaired authority selection are recorded in the successor Decisions | proven | human-experience | none |
-| The corrected exact release candidate has a fresh audit-bound confirmation | unknown | none | none |
+| The corrected exact release candidate has a fresh audit-bound confirmation | proven | human-experience | none |
 | Controlled native HTTPS adoption resolves the recommendation, follows an asset redirect, and installs exact 0.81 bytes with no `gh` binary or credentials; untrusted TLS and tampered bytes are refused. Live public 0.81 adoption remains a separate post-publication exercise | proven | runtime-behaviour | none |
 | The catalog's channel and visibility are validated from the accepted contract's closed vocabulary with a public value | proven | runtime-behaviour | none |
 | The distributed adoption protocol states where to obtain the adopter and no 0.81 member calls the release private | proven | runtime-behaviour | none |
 | The `.DS_Store` reproduction passes onboarding while a meaningful-file change between seal and adoption still fails closed | proven | runtime-behaviour | none |
 | Every sweep finding is repaired or reclassified and a repeat sweep of living surfaces is clean | proven | runtime-behaviour | none |
-| The corrected 0.8-to-0.81 producer upgrade is proven on an independently verified digest-bound delta claim in an isolated exercise | unknown | none | none |
+| The corrected 0.8-to-0.81 producer upgrade is proven on an independently verified digest-bound delta claim in an isolated exercise | proven | runtime-behaviour | none |
 | No 0.8 or earlier published byte, accepted immutable record, or 0.8 catalog literal changes before promotion, and the gate passes at every handoff | proven | runtime-behaviour | none |

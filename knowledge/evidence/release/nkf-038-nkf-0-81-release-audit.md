@@ -490,3 +490,35 @@ byte-identical to this audited archive. Only its manifest's source-commit
 binding changes; the resulting exact archive is verified and exercised again
 before confirmation. Publication, recommendation, live producer promotion,
 and merge remain separate Human Product Owner acts.
+
+### Audit-Recording Recut And Final Exercise
+
+The independent reviewer verified archive `a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3`
+at release commit `fa0efa056db17f5336a3b7a93142d58f41110cf7` against the audited archive above:
+all 141 source members are byte-identical, and the manifests differ only in
+`source.release_commit`. The new commit contains this audit's completed
+corrected-candidate findings and exercise. The final archive again passed the
+isolated exercise: `updated`, then `current`, host-superset integration, full
+producer gate passed, and 141 source members reproduced from a clean clone.
+The final semantic review SHA-256 is
+`15466062760ef2eab985f05b826308a152de68dc533223570450ac4efde60f26`;
+its closure is again exactly the new native Specification, with one fresh
+judgment and 358 carried judgments. No whole-root fallback was used.
+
+[ADR 0144](../../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md)
+records the separate delegated technical confirmation of these exact bytes.
+The root still declares and pins 0.8. No release publication, recommendation,
+live producer promotion, or merge is performed by this confirmation.
+
+### Hosted Runner Test Budget
+
+GitHub validation of commit `e5b06343b94b2b0a5b0986d43c893dfd7e5d63e2`
+ran all 281 tests and reported one failure: the expanded source-derived P1
+regression exceeded the global 60-second test timeout. It reported no failed
+correctness assertion. The same complete regression passed locally in about
+25 seconds. This test now uses the suite's existing `scaledTimeout(60_000)`
+integration allowance, retaining every assertion, refusal, rollback, and
+recovery case. The change affects only the test harness, outside the release
+set; all 141 confirmed source-member bytes remain unchanged. Local handoff
+validation and remote merge enforcement are checked separately on the final
+Task-close commits.

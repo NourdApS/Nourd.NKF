@@ -1656,7 +1656,7 @@ non_records:
       stable_path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
       digest:
         algorithm: sha-256
-        value: "d6df751b52cede9c3b0511c8629b2e7033eb7f960035acf6ee2be019945fe41e"
+        value: "0feab1985234f4235c588e22e9a67125fea48679bef9c26b94a18bca67baf2f9"
       state:
         vocabulary: task-status
         value: "active"
@@ -1862,7 +1862,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-release-audit.md
       digest:
         algorithm: sha-256
-        value: "c0d5206ec429fbc63d0f2bc92da8152901e40bc8ff55ab09f87edf5110cc62c5"
+        value: "6e08d6721c2364296cd68628fa4d231e22c1e7690ad9b1649a2c852568994218"
       relationships: []
   - path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
     kind: evidence
@@ -3208,7 +3208,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "e75496413a1725d95de331fdc0652f8015b2475f5d0bcf1ae32a1924eb1c4d8d"
+      value: "a4b28ab2089469b759b44562974ccae7023b6bff0c466014ba80295e543d2626"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json
@@ -3520,7 +3520,7 @@ governed_artifacts:
     path: test/mechanics.test.ts
     digest:
       algorithm: sha-256
-      value: "ac881adac6196aa1498adec3c8966d51fe3244b9dedd4a57366e94a8aaf89f01"
+      value: "f46d8c9f0715935e7f61f006827f69c2e4b981b18638fe4ea1de1244fabfe342"
     record: nkf-current-system
     source_section: compatibility-verification-and-recovery
   - id: artifact-test-applicability-test-ts

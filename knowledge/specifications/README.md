@@ -152,15 +152,11 @@ exact predecessor history so the checker can independently reproduce delta
 closures and verify carried judgments. The first revision and
 [ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) are preserved;
 this prospective delegation does not retroactively accept their bytes.
-Its prior exact release candidate is technically
-confirmed by
-[ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) after
-a four-round independent release audit. The subsequent documentation correction
-changes generated onboarding guidance and the bundled adopter, so the corrected
-delivery requires a new candidate cut, exercise, independent audit, and technical
-confirmation;
+The corrected exact release candidate is technically confirmed by
+[ADR 0144](../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md) after the
+independent corrected-set audit and successful exact producer exercise.
 [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
-remains bound to the prior exact bytes. It adds the recommended-release catalog contract
+remains bound to the prior historical bytes. It adds the recommended-release catalog contract
 with public channel values, plain HTTPS adoption, the adopter-obtaining step,
 the closed volatile-metadata registry, and the checker's recompute of the
 delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. Until the

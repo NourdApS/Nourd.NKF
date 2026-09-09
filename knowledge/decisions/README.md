@@ -171,3 +171,4 @@ the durable subject rather than the workflow action that created the Decision.
 
 - [ADR 0142: Accept The Bound Predecessor Repair](0142-accept-the-bound-predecessor-repair.md)
 - [ADR 0143: Bind The Predecessor Repair Promotion](0143-bind-the-predecessor-repair-promotion.md)
+- [ADR 0144: Confirm The Repaired NKF 0.81 Candidate](0144-confirm-the-repaired-nkf-0-81-candidate.md)

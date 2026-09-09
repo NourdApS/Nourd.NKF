@@ -8,7 +8,7 @@ source:
   stable_path: nkf.md
   digest:
     algorithm: sha-256
-    value: "1661142708c28bb5bbc67ce52844d950e5c36ec9883ba2fe69a539b7b0a72b19"
+    value: "e41c27dbe6fd55e3eac5c6e7208c45806082451bb4967e17578fd3ad0b22006c"
 governance:
   lifecycle: living
   status: accepted

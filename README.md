@@ -65,17 +65,15 @@ fixtures, generated distribution, public projection, and
 [release notes](knowledge/evidence/release/nkf-0.81-release-notes.md) are on
 this branch, the whole-set
 [guidance review](knowledge/evidence/release/nkf-038-nkf-0-81-guidance-review.md)
-is recorded, and the prior exact candidate — archive
-`e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea` at release commit
-`aeb95db5` — is technically confirmed by
-[ADR 0141](knowledge/decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
-after four independent
-[release audit](knowledge/evidence/release/nkf-038-nkf-0-81-release-audit.md)
-rounds, the fourth clean. The subsequent documentation, HTTPS evidence, and P1 predecessor-proof repairs
-change the candidate authority and implementation. Those corrected bytes are
-not covered by ADR 0141; they require a new candidate cut, exercise, independent
-audit, and technical confirmation before publication. The follow-up scope and
-review are recorded in NKF-038 and the guidance review linked above.
+is recorded. The corrected exact candidate — archive
+`a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3` at release commit
+`fa0efa05` — is technically confirmed by
+[ADR 0144](knowledge/decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md)
+after independent archive, guidance, and predecessor-proof review and a passed
+isolated producer exercise. All 281 tests pass; first adoption returned
+`updated`, repeat adoption `current`, with the full producer gate passed and
+141 source members reproduced. The previous confirmation remains historical
+and applies only to its earlier exact candidate.
 Publication as a public prerelease under the
 accepted channel, the catalog recommendation, this producer's promotion, and
 the merge remain the Human Product Owner's separate acts; until they happen, live
