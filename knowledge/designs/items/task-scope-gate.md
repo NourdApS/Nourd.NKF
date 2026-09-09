@@ -4,14 +4,6 @@ type: design
 title: NKF Task Scope Gate
 summary: This Design proposes one minimal Task Scope Gate that classifies newly discovered work and prevents it from remaining in a Task unless it is required by an existing acceptance criterion or explicitly admitted by the Human Product Owner.
 created_at: 2026-08-09T12:08:06Z
-record_lifecycle: living
-record_status: draft
-task: NKF-021
-design_disposition: active
-decision_authority: Human Product Owner, Nourd ApS
-proposal_authority_effect: None until a Decision adopts the direction and the exact normative authority-pair revision is separately accepted.
-proposal_evidence: NKF-020 scope history and NKF-021 activation findings.
-implementation_evidence: None; this is a Design proposal.
 ---
 
 # NKF Task Scope Gate
@@ -19,13 +11,13 @@ implementation_evidence: None; this is a Design proposal.
 ## Design Kind Problem And Scope
 
 This is a Common contract, conformance, authoring-procedure, onboarding, and
-migration Design under [NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md).
+migration Design under [NKF-021](../../tasks/items/NKF-021-task-scope-gate.md).
 It addresses one failure class: work discovered during an active Task can be
 implemented there merely because it was discovered there, even when the work
 does not satisfy the Task's established acceptance criteria.
 
 The immediate evidence is
-[NKF-020](../../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md):
+[NKF-020](../../tasks/items/NKF-020-version-release-adoption-and-compatibility-process.md):
 its original remaining scope was release-process refinement and
 breaking-change classification, while later rounds added Git transition
 mechanics and new normative Task-state meaning. This Design preserves that
@@ -64,7 +56,7 @@ keeps prose truth and acceptance outside deterministic commands, and
 requires semantic review before those commands run.
 
 The one-time NKF 0.2 recovery and branch exceptions are recorded in
-[NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md). They do not become
+[NKF-021](../../tasks/items/NKF-021-task-scope-gate.md). They do not become
 general Task Scope Gate semantics or a precedent for later in-place version
 changes.
 
@@ -191,9 +183,9 @@ scope expansion occurred; it claims only that the gate did not exist and no
 historical classification is being fabricated.
 
 The NKF repository self-migration records known current findings rather than
-hiding them behind the retrospective sentence. In particular, [NKF-021](../../tasks/deferred/NKF-021-task-scope-gate.md) records
+hiding them behind the retrospective sentence. In particular, [NKF-021](../../tasks/items/NKF-021-task-scope-gate.md) records
 the activation-worktree defect as a `blocking-dependency` transferred to
-[NKF-020](../../tasks/completed/NKF-020-version-release-adoption-and-compatibility-process.md). Existing concluded Tasks may use the retrospective sentence.
+[NKF-020](../../tasks/items/NKF-020-version-release-adoption-and-compatibility-process.md). Existing concluded Tasks may use the retrospective sentence.
 
 Fixtures and public examples carry the current sentence. The
 predecessor-to-successor migration adds the retrospective sentence to every

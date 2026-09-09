@@ -1,0 +1,233 @@
+contract: nkf.record
+id: design-nkf-038-public-adoption
+type: design
+body_contract: nkf.design
+title: NKF 0.81 Public Adoption
+source:
+  path: designs/items/nkf-0-81-public-adoption.md
+  stable_path: designs/items/nkf-0-81-public-adoption.md
+  digest:
+    algorithm: sha-256
+    value: 745c78fdd88a336ea53c605b8f27d9c2441bdef2d25f42c5b573c85e615add75
+governance:
+  lifecycle: living
+  status: draft
+  authority:
+    - human-product-owner
+scope:
+  root: nkf
+sections:
+  - id: design-kind-problem-and-scope
+    heading_path:
+      - Design Kind Problem And Scope
+    occurrence: 1
+    authority: proposal
+    role: context
+    responsibilities:
+      - design-kind-problem-and-scope
+  - id: governing-inputs-and-constraints
+    heading_path:
+      - Governing Inputs And Constraints
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - governing-inputs-and-constraints
+  - id: proposed-direction
+    heading_path:
+      - Proposed Direction
+    occurrence: 1
+    authority: proposal
+    role: governing
+    responsibilities:
+      - proposed-direction
+  - id: version-coordinate-and-window
+    heading_path:
+      - Proposed Direction
+      - Version Coordinate And Window
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-catalog-vocabulary-enters-the-contract
+    heading_path:
+      - Proposed Direction
+      - The Catalog Vocabulary Enters The Contract
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: fetching-without-the-github-command-line
+    heading_path:
+      - Proposed Direction
+      - Fetching Without The Github Command Line
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-adopter-tells-you-where-to-get-it
+    heading_path:
+      - Proposed Direction
+      - The Adopter Tells You Where To Get It
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-projection-describes-a-public-release
+    heading_path:
+      - Proposed Direction
+      - The Projection Describes A Public Release
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: a-closed-volatile-metadata-registry
+    heading_path:
+      - Proposed Direction
+      - A Closed Volatile-Metadata Registry
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: stale-record-repair-under-the-same-release
+    heading_path:
+      - Proposed Direction
+      - Stale Record Repair Under The Same Release
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: the-delta-closure-honours-impact-propagation
+    heading_path:
+      - Proposed Direction
+      - The Delta Closure Honours Impact Propagation
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: fail-closed-version-registration
+    heading_path:
+      - Proposed Direction
+      - Fail-Closed Version Registration
+    occurrence: 1
+    authority: proposal
+    role: boundary
+  - id: responsibilities-interactions-and-information-flows
+    heading_path:
+      - Responsibilities Interactions And Information Flows
+    occurrence: 1
+    authority: proposal
+    role: responsibility
+    responsibilities:
+      - responsibilities-interactions-and-information-flows
+  - id: alternatives-and-trade-offs
+    heading_path:
+      - Alternatives And Trade-Offs
+    occurrence: 1
+    authority: proposal
+    role: alternative
+    responsibilities:
+      - alternatives-and-trade-offs
+  - id: keep-the-catalog-shape-in-the-adopter-and-change-the-literal
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep The Catalog Shape In The Adopter And Change The Literal
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: keep-the-github-command-line-as-an-optional-path
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep The Github Command Line As An Optional Path
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: fix-volatile-metadata-in-the-adopter-only
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Fix Volatile Metadata In The Adopter Only
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: let-projects-declare-their-own-volatile-entries
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Let Projects Declare Their Own Volatile Entries
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: separate-the-record-repair-into-its-own-task
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Separate The Record Repair Into Its Own Task
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: edit-the-immutable-supporting-realizations
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Edit The Immutable Supporting Realizations
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: keep-the-immutable-supporting-realizations-as-labelled-history
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Keep The Immutable Supporting Realizations As Labelled History
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: allocate-0-9-as-the-earlier-decision-wrote
+    heading_path:
+      - Alternatives And Trade-Offs
+      - Allocate 0.9 As The Earlier Decision Wrote
+    occurrence: 1
+    authority: proposal
+    role: alternative
+  - id: failure-safety-recovery-and-operations
+    heading_path:
+      - Failure Safety Recovery And Operations
+    occurrence: 1
+    authority: proposal
+    role: risk
+    responsibilities:
+      - failure-safety-recovery-and-operations
+  - id: validation-and-decision-evidence
+    heading_path:
+      - Validation And Decision Evidence
+    occurrence: 1
+    authority: proposal
+    role: validation
+    responsibilities:
+      - validation-and-decision-evidence
+  - id: unresolved-matters
+    heading_path:
+      - Unresolved Matters
+    occurrence: 1
+    authority: unresolved
+    role: unresolved
+    responsibilities:
+      - unresolved-matters
+relationships:
+  - type: depends-on
+    target: adr-0076
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0107
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0109
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0134
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0135
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0136
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0064
+    source_section: governing-inputs-and-constraints
+  - type: depends-on
+    target: adr-0097
+    source_section: governing-inputs-and-constraints
+task: NKF-038
+design_disposition: adopted
+design_decisions:
+  - adr-0138
+  - adr-0139
+proposal_authority_effect: Adopted by ADR 0138 and ADR 0139 as the NKF 0.81 direction with the coordinate allocated and all seven boundaries confirmed; normative NKF 0.81 meaning still requires the separately accepted authority set after its independent audit and the mandatory audit-bound confirmation Decision.

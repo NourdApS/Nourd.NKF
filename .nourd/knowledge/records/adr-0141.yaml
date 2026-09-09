@@ -1,0 +1,82 @@
+contract: nkf.record
+id: adr-0141
+type: decision
+body_contract: nkf.decision
+title: "ADR 0141: Confirm The NKF 0.81 Release Candidate"
+source:
+  path: decisions/0141-confirm-the-nkf-0-81-release-candidate.md
+  stable_path: decisions/0141-confirm-the-nkf-0-81-release-candidate.md
+  digest:
+    algorithm: sha-256
+    value: "970b893103bf2760498a5629c572bf67ec01a1e13977f9e58259126802619a8d"
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - claude-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships:
+  - type: depends-on
+    target: adr-0140
+    source_section: decision
+  - type: depends-on
+    target: adr-0138
+    source_section: decision
+  - type: depends-on
+    target: adr-0139
+    source_section: decision
+  - type: depends-on
+    target: adr-0135
+    source_section: decision
+task: NKF-038

@@ -153,6 +153,10 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0135: Confirm The NKF 0.8 Release Candidate](0135-confirm-the-nkf-0-8-release-candidate.md)
 - [ADR 0136: Adopt The Public Repository Direction](0136-adopt-the-public-repository-direction.md)
 - [ADR 0137: Confirm The Protected Merge Gate](0137-confirm-the-protected-merge-gate.md)
+- [ADR 0138: Adopt The NKF 0.81 Public Adoption Direction](0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+- [ADR 0139: Adopt The Delta Closure Propagation Repair](0139-adopt-the-delta-closure-propagation-repair.md)
+- [ADR 0140: Accept The NKF 0.81 Authority Set](0140-accept-the-nkf-0-81-authority-set.md)
+- [ADR 0141: Confirm The NKF 0.81 Release Candidate](0141-confirm-the-nkf-0-81-release-candidate.md)
 - [ADR 0066: Confirm Release Documentation And Adoption](0066-confirm-release-documentation-and-adoption.md)
 - [ADR 0067: Initial Greenfield Onboarding](0067-initial-greenfield-onboarding.md)
 - [ADR 0068: Confirm Initial Greenfield Onboarding](0068-confirm-initial-greenfield-onboarding.md)
@@ -164,3 +168,7 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0074: Separate Authoring And Recommended Release Verification](0074-separate-authoring-and-recommended-release-verification.md)
 - [ADR 0075: Confirm Complete Portable Onboarding Topology](0075-confirm-complete-portable-onboarding-topology.md)
 - [ADR 0080: Release And Adoption Process](0080-release-and-adoption-process.md)
+
+- [ADR 0142: Accept The Bound Predecessor Repair](0142-accept-the-bound-predecessor-repair.md)
+- [ADR 0143: Bind The Predecessor Repair Promotion](0143-bind-the-predecessor-repair-promotion.md)
+- [ADR 0144: Confirm The Repaired NKF 0.81 Candidate](0144-confirm-the-repaired-nkf-0-81-candidate.md)

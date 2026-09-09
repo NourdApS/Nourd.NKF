@@ -70,7 +70,7 @@ async function rules(
   bundleValue: Record<string, unknown>,
   extensionResolver: ExtensionResolver | undefined,
 ): Promise<string[]> {
-  const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.8"], "0.8");
+  const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.81"], "0.81");
   const emitter = new RuleEmitter(loaded.executable);
   const artifacts = structuredClone(loaded.artifacts);
   await validateExtensions(

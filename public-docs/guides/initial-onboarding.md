@@ -1,7 +1,7 @@
 # Initial Onboarding
 
 Initial onboarding takes an unadopted Empty Repository or Tiny Knowledge, No
-Source Or Configuration repository to a complete checked and reviewed NKF 0.8
+Source Or Configuration repository to a complete checked and reviewed NKF 0.81
 candidate without requiring manual native YAML or integration assembly.
 
 It supports Product and Technology roots. Common rules apply to both but are
@@ -106,7 +106,11 @@ onboarding-workspace/
 Require `mechanically_ready: true`. `inspection.json` includes a complete
 project entry manifest, excluding version-control implementation metadata,
 plus integration surfaces and Git binding. Compare it with the agent's review.
-Any later project change makes the plan stale.
+Any later change to a project entry, integration surface, or Git binding makes
+the plan stale, except a regular file named `.DS_Store`, `Thumbs.db`, or
+`desktop.ini`: the accepted contract's closed registry of volatile
+operating-system metadata, which inspection lists as `volatile` and the plan's
+snapshot digest excludes.
 
 ## Record The Assessment
 
@@ -206,12 +210,13 @@ node nourd-nkf-adopt.mjs seal \
 Sealing verifies the assessment and applicable confirmation, recreates the
 complete mechanical snapshot, requires every Markdown representation, and
 refreshes exact candidate digests. It does not change the project, construct
-the later 0.8 graph candidate, prove the semantic category, or establish
+the later 0.81 graph candidate, prove the semantic category, or establish
 conformance.
 
 ## Apply The Complete Candidate With Adopt
 
-For authenticated access to the governed recommendation and private release:
+To resolve the governed recommendation and download the release over plain
+HTTPS:
 
 ```sh
 node nourd-nkf-adopt.mjs \
@@ -221,7 +226,7 @@ node nourd-nkf-adopt.mjs \
 ```
 
 On the first run, use an absent `--review` file. Adopt constructs the exact
-isolated 0.8 candidate, writes its complete review template to that path, and
+isolated 0.81 candidate, writes its complete review template to that path, and
 stops before mutation. A named human or agent reviews the actual candidate,
 replaces every placeholder with source-bound classifications and observations,
 then reruns the same Adopt command. The adopter validates exact node,

@@ -118,8 +118,10 @@ function emitIndexMismatch(
 // Versions whose knowledge topology is the neutral items layout. Every
 // version at or after NKF 0.7 carries it; registration is explicit so an
 // unregistered version fails loudly against the wrong layout rather than
-// quietly validating against the abolished currency-asserting one.
-const NEUTRAL_TOPOLOGY_VERSIONS = new Set(["0.7", "0.71", "0.8"]);
+// quietly validating against the abolished currency-asserting one. The set
+// is exactly the live window: an out-of-window version left the checker's
+// dispatch when it left the working tree.
+const NEUTRAL_TOPOLOGY_VERSIONS = new Set(["0.8", "0.81"]);
 
 export function validatePortableTopology(input: TopologyInput): void {
   const { bundle, records, nonRecords, executable, knowledgeRoot, emitter } = input;

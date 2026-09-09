@@ -1,8 +1,9 @@
 # Nourd Knowledge Format
 
-> NKF 0.8 is pre-stable. The current checker release is internal to authorized
-> Nourd projects. This public documentation is explanatory; the exact
-> digest-bound [NKF 0.8 Specification](reference/nkf-0.8.md) is normative.
+> NKF 0.81 is pre-stable. Its checker, adopter, and release archive are
+> published from the public `NourdApS/Nourd.NKF` repository and downloadable by
+> anyone. This public documentation is explanatory; the exact digest-bound
+> [NKF 0.81 Specification](reference/nkf-0.81.md) is normative.
 
 Nourd Knowledge Format, or NKF, is a governed way to keep important project
 knowledge understandable to people and mechanically coherent for tools and AI
@@ -171,25 +172,28 @@ evidence and stops without guessing a later brownfield category.
   bundle.
 - [Technology Example](examples/technology/README.md) is a complete small
   Technology bundle with governed artifacts.
-- [NKF 0.8 Specification](reference/nkf-0.8.md) is the exact normative
+- [NKF 0.81 Specification](reference/nkf-0.81.md) is the exact normative
   Markdown mirror.
 
 ## Current Boundaries
 
-- NKF 0.8 is pre-stable and may change through the governed change process.
+- NKF 0.81 is pre-stable and may change through the governed change process.
 - Live support covers exactly the current version plus one predecessor:
-  NKF 0.8 and NKF 0.71. NKF 0.7 and older versions are immutable published
+  NKF 0.81 and NKF 0.8. NKF 0.71 and older versions are immutable published
   history reached only through stepping-stone archives.
 - Repository licensing is Apache-2.0 with informational NOTICE and retained
-  compatible third-party notices. Licensing does not imply public GitHub
-  visibility or a published release.
-- The current checker release is private and available only to authorized
-  users of `NourdApS/Nourd.NKF`.
+  compatible third-party notices.
+- The governing repository `NourdApS/Nourd.NKF` is public, and each release is
+  a Github prerelease or release whose archive is downloadable by its
+  content-addressed tag without authentication; the recommendation catalog
+  states which channel a version was published under.
 - The exact Specification mirror preserves source-relative provenance links
   whose internal targets are intentionally absent from this public
   projection.
-- The public adopter is public-safe but requires either an authenticated
-  `gh` session for the private release or a locally supplied archive.
+- The public adopter is public-safe and needs only Node.js and network access:
+  it resolves the catalog and the archive over plain HTTPS and verifies the
+  archive digest before any project mutation, or takes a locally supplied
+  catalog and archive offline.
 - Only Product and Technology are selectable Root Profiles. Common rules are
   shared implementation-independent meaning, not a selectable General root.
 - Initial onboarding uses semantic agent assessment rather than file or byte

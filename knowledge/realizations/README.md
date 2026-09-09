@@ -16,27 +16,20 @@ conformance.
 
 ## Current System
 
-- [NKF Current System](current-system.md) — consolidated entry view
-- [Contracts And Schemas](items/contracts-and-schemas.md)
-- [Checker And Validation](items/checker-and-validation.md)
-- [Layered Contract Enforcement](items/layered-contract-enforcement.md)
-- [Agent-Led Initial Onboarding](items/agent-led-initial-onboarding.md)
-- [Release Documentation And Adoption](items/release-documentation-and-adoption.md)
-- [Self-Hosting](items/self-hosting.md)
-- [Release Package](items/release-package.md)
-
-## Confirmed Predecessor Provenance
-
-- [Initial Greenfield Onboarding](items/initial-greenfield-onboarding.md) —
-  the exact [NKF-013](../tasks/items/NKF-013-initial-greenfield-onboarding.md) implementation confirmed by [ADR 0068](../decisions/0068-confirm-initial-greenfield-onboarding.md); its deterministic
-  semantic-eligibility behavior was superseded by [ADR 0069](../decisions/0069-agent-led-initial-onboarding.md) and is not current
-  onboarding guidance
+- [NKF Current System](current-system.md) — the one consolidated, living
+  account of how accepted NKF meaning is implemented in this repository
 
 Begin audits and implementation reviews with the consolidated current-system
 view. Follow Decisions for governing rationale and Designs for proposal
 alternatives or trade-offs only when needed.
 
-## Migrated Supporting Realizations
+## Retired Supporting Realizations
 
-- [NKF 0.4 Security Maintenance](items/nkf-0.4-security-maintenance.md)
-- [NKF Portable Knowledge Topology](items/portable-knowledge-topology.md)
+Ten frozen per-area Realizations written between `2026-07-30` and `2026-08-11`
+were retired from the working tree to Git history on `2026-09-08` under
+[ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md),
+because each described a state that no longer existed and nothing is kept for
+the sake of a digest. Their exact bytes, confirming Decisions, and removal are
+recorded in the
+[retirement Evidence](../evidence/release/nkf-038-supporting-realizations-retirement.md).
+They are history, not current guidance.

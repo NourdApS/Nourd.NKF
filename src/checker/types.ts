@@ -135,7 +135,7 @@ export interface ValidateOptions {
 
 export interface ValidationResult {
   contract: "nkf.validation-result";
-  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.71" | "0.8";
+  nkf_version: "0.1" | "0.2" | "0.3" | "0.4" | "0.5" | "0.6" | "0.7" | "0.71" | "0.8" | "0.81";
   execution: {
     id: string;
     runner: string;
@@ -181,6 +181,10 @@ export interface ValidationResult {
 export interface LoadedContracts {
   executable: Record<string, any>;
   freshnessPolicy: Record<string, any> | null;
+  // The accepted version-delta declaration, parsed only when its binding is
+  // verified; the delta-claim closure recompute reads rule classifications
+  // from it.
+  versionDelta: Record<string, any> | null;
   schemas: {
     bundle: Record<string, unknown>;
     record: Record<string, unknown>;

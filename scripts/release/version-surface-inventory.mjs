@@ -6,12 +6,12 @@
 // as a script because those counts were restated wrongly in three successive
 // revisions of that document while being typed by hand.
 //
-//   node scripts/release/version-surface-inventory.mjs [--version 0.8]
+//   node scripts/release/version-surface-inventory.mjs [--version 0.81]
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
-const NKF = new Set(["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"]);
+const NKF = new Set(["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"]);
 const ROOT_FILES = new Set([
   "package.json", "tsconfig.json", "vitest.config.ts",
   "AGENTS.md", "CLAUDE.md", "GEMINI.md", "README.md",
@@ -25,7 +25,7 @@ const HYPHEN = /(?<![0-9.])0-\d+(?![0-9])/g;
 
 const current = (() => {
   const index = process.argv.indexOf("--version");
-  return index === -1 ? "0.8" : process.argv[index + 1];
+  return index === -1 ? "0.81" : process.argv[index + 1];
 })();
 
 const tracked = execFileSync("git", ["ls-files"], { encoding: "utf8" }).split("\n").filter(Boolean);

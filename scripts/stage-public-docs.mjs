@@ -60,7 +60,10 @@ const publication = {
   source_commit: sourceCommit,
   normative_markdown_sha256: recommended.authority.markdown_sha256,
   release: {
-    availability: "internal",
+    // The catalog states the channel and visibility the release was published
+    // under; the manifest repeats them rather than asserting a fixed label.
+    availability: recommended.release?.visibility ?? "internal",
+    channel: recommended.channel ?? null,
     archive_sha256: recommended.archive.sha256,
     source_commit: recommended.source_commit,
     checker_sha256: recommended.checker_sha256,

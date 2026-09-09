@@ -1,0 +1,326 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nkf:0.81:schema:recommended-release",
+  "title": "NKF 0.81 Recommended Release Catalog",
+  "description": "The closed nkf.recommended-release catalog published at release/recommended.json on the governing repository's default branch. It is the selection channel, not a trust anchor; the archive digest and installed pin remain the trust anchors.",
+  "x-nkf-source": {
+    "nkf_version": "0.81",
+    "markdown_path": "knowledge/specifications/nkf-0.81.md",
+    "markdown_digest": {
+      "algorithm": "sha-256",
+      "value": "4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8"
+    },
+    "executable_path": "contracts/nkf/0.81/nkf.yaml",
+    "executable_digest": {
+      "algorithm": "sha-256",
+      "value": "517b91442b6be5a31bc7b9a03845787494f4b9720f1d6d90b976ebcfc92b0347"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "nkf_version",
+    "state",
+    "channel",
+    "compatibility",
+    "archive",
+    "source_commit",
+    "checker_sha256",
+    "authority",
+    "adopter_sha256",
+    "release",
+    "supported_root_profiles"
+  ],
+  "properties": {
+    "contract": {
+      "const": "nkf.recommended-release"
+    },
+    "nkf_version": {
+      "type": "string",
+      "pattern": "^0\\.[0-9]+$"
+    },
+    "state": {
+      "enum": [
+        "recommended",
+        "candidate"
+      ]
+    },
+    "channel": {
+      "enum": [
+        "internal-exact-candidate",
+        "internal-private-github-prerelease",
+        "public-github-prerelease",
+        "public-github-release"
+      ]
+    },
+    "compatibility": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from_nkf_version",
+          "classification",
+          "migration_required",
+          "summary"
+        ],
+        "properties": {
+          "from_nkf_version": {
+            "type": "string",
+            "pattern": "^0\\.[0-9]+$"
+          },
+          "classification": {
+            "enum": [
+              "non-breaking",
+              "breaking"
+            ]
+          },
+          "migration_required": {
+            "type": "boolean"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "asset_name",
+        "tag",
+        "size",
+        "url"
+      ],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "asset_name": {
+          "type": "string",
+          "pattern": "^nourd-nkf-sha256-[0-9a-f]{64}\\.tar$"
+        },
+        "tag": {
+          "type": "string",
+          "pattern": "^release-sha256-[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://github\\.com/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+/releases/download/release-sha256-[0-9a-f]{64}/nourd-nkf-sha256-[0-9a-f]{64}\\.tar$"
+        }
+      }
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "checker_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "markdown_sha256",
+        "executable_sha256"
+      ],
+      "properties": {
+        "markdown_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "executable_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "adopter_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "published_at",
+        "prerelease",
+        "visibility"
+      ],
+      "properties": {
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^https://github\\.com/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+/releases/tag/release-sha256-[0-9a-f]{64}$"
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        "prerelease": {
+          "type": "boolean"
+        },
+        "visibility": {
+          "enum": [
+            "unpublished",
+            "private",
+            "public"
+          ]
+        }
+      }
+    },
+    "supported_root_profiles": {
+      "const": [
+        "nkf.profile.product",
+        "nkf.profile.technology"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "const": "internal-exact-candidate"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "release": {
+            "type": "object",
+            "properties": {
+              "visibility": {
+                "const": "unpublished"
+              },
+              "prerelease": {
+                "const": true
+              }
+            }
+          },
+          "archive": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "const": "internal-private-github-prerelease"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "release": {
+            "type": "object",
+            "properties": {
+              "visibility": {
+                "const": "private"
+              },
+              "prerelease": {
+                "const": true
+              }
+            }
+          },
+          "nkf_version": {
+            "enum": [
+              "0.1",
+              "0.2",
+              "0.3",
+              "0.4",
+              "0.5",
+              "0.6",
+              "0.7",
+              "0.71",
+              "0.8"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "const": "public-github-prerelease"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "release": {
+            "type": "object",
+            "properties": {
+              "visibility": {
+                "const": "public"
+              },
+              "prerelease": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "const": "public-github-release"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "release": {
+            "type": "object",
+            "properties": {
+              "visibility": {
+                "const": "public"
+              },
+              "prerelease": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

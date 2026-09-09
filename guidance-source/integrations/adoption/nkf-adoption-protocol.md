@@ -16,6 +16,19 @@ Adoption is separate from release. A release obligates no repository. Each
 repository remains authoritative for its own meaning and compatibility
 approvals.
 
+## Obtaining The Adopter
+
+Before the first command, obtain the adopter itself. It is published in the
+public documentation projection at `tools/nourd-nkf-adopt.mjs`, beside a
+`reference/publication.json` manifest that records the projection's exact
+file digests and the recommended adopter digest. Download both from the public
+documentation repository at its published commit, compute the adopter's
+SHA-256, and confirm it equals the manifest's adopter digest and the
+`adopter_sha256` the recommendation catalog states. Run an adopter only after
+those digests agree. No command-line tool, session, or credential is required
+for this step or for any step below; a consumer needs Node.js and network
+access, or the offline inputs.
+
 ## One Public Operation
 
 The public operation is **Adopt**, invoked without a subcommand:
@@ -24,12 +37,16 @@ The public operation is **Adopt**, invoked without a subcommand:
 node nourd-nkf-adopt.mjs --project <project-root>
 ```
 
-The adopter resolves `release/recommended.json` from the governed NKF default
-branch, validates its closed shape, and exposes the exact target version,
-archive SHA-256, source commit, checker digest, adopter digest, and applicable
-compatibility signal. The mutable reviewed recommendation is only a selection
-channel. The verified full archive digest and the installed consumer pin are
-the immutable trust anchors.
+The adopter resolves `release/recommended.json` over plain HTTPS from the
+governed NKF repository's default branch, validates it against the accepted
+`nkf.recommended-release` contract and its closed channel vocabulary, and
+exposes the exact target version, archive SHA-256, source commit, checker
+digest, adopter digest, channel, and applicable compatibility signal. It then
+downloads the archive from the catalog's canonical release-asset locator over
+plain HTTPS and refuses it before any project mutation unless its SHA-256
+equals the catalog's archive digest. The mutable reviewed recommendation is
+only a selection channel. The verified full archive digest and the installed
+consumer pin are the immutable trust anchors.
 
 For an approved offline release, supply both the exact reviewed recommendation
 and its archive:
@@ -117,6 +134,10 @@ contract rebind to the {{nkf_version}} set, conversion of the reviewed baseline 
 digest-bound {{nkf_version}} contract with computed per-judgment carry-forward, and the
 integration refresh. A delta claim is admitted only when the performed set
 contains the computed closure; whole-root review remains the recovery path.
+<!-- nkf:since 0.81 -->
+The checker recomputes that closure with the evaluation policy's impact
+propagation and refuses a claim whose recorded closure differs from it.
+<!-- nkf:end -->
 The semantic reviewer's act does not accept canonical Product or Technology
 meaning.
 

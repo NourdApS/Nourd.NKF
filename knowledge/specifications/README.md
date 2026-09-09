@@ -8,12 +8,13 @@ created_at: 2026-07-28T22:01:17Z
 
 Specifications own current accepted normative NKF meaning.
 
-[NKF 0.2](nkf-0.2.md) is the accepted successor specification produced under
-[NKF-019](../tasks/items/NKF-019-decision-applicability-gate.md): it adds the Decision Applicability Gate, the versioned-set
-evolution rules, and the title-free dynamic frontmatter, with its
-digest-bound executable companion at `contracts/nkf/0.2/nkf.yaml`. [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md)
-accepts the exact pair. It governs repositories that declare NKF 0.2;
-repositories migrate deliberately under the adoption protocol. NKF 0.1
+[NKF 0.2](nkf-0.2.md) was the accepted successor specification produced under
+[NKF-019](../tasks/items/NKF-019-decision-applicability-gate.md): it added the Decision Applicability Gate, the versioned-set
+evolution rules, and the title-free dynamic frontmatter, with a
+digest-bound executable companion retained in Git history and the 0.2 release
+archive. [ADR 0081](../decisions/0081-accept-nkf-0-2-authority-pair.md)
+accepts the exact pair. NKF 0.2 is immutable out-of-window history; a 0.2
+repository steps through the published archives in turn. NKF 0.1
 remains immutable authority for repositories that declare it; its accepted
 sources live in Git history and the 0.1 release archives rather than in
 this working tree.
@@ -34,18 +35,19 @@ successor under
 [ADR 0113](../decisions/0113-accept-the-nkf-0-4-authority-pair.md) accepts its
 exact normative Markdown and digest-bound executable companion under the
 maintenance delegation in
-[ADR 0112](../decisions/0112-allocate-nkf-0-4-security-maintenance.md). Derived
-implementation, technical confirmation, publication, recommendation, and
-repository adoption remain separate later boundaries.
+[ADR 0112](../decisions/0112-allocate-nkf-0-4-security-maintenance.md). Its
+implementation was confirmed by
+[ADR 0114](../decisions/0114-confirm-the-nkf-0-4-release-candidate.md),
+published, recommended, and producer-adopted in its time; NKF 0.4 is immutable
+out-of-window history.
 
 [NKF 0.5 revision 2](nkf-0.5-revision-2.md) is the immutable accepted,
 published, recommended, and producer-adopted predecessor under
 [NKF-026](../tasks/items/NKF-026-implement-and-release-nkf-0-5-freshness-and-knowledge-graph.md)
 and
 [ADR 0119](../decisions/0119-accept-the-nkf-0-5-revision-2-authority-pair.md).
-Its digest-bound executable companion lives at
-`contracts/nkf/0.5/revision-2/nkf.yaml`; the accepted freshness policy remains
-at `contracts/nkf/0.5/freshness-policy.yaml`. Its released record-repin
+Its digest-bound executable companion and accepted freshness policy are
+retained in Git history and the 0.5 release archive. Its released record-repin
 defect remains immutable and was corrected by the distinct 0.6 successor;
 0.5 is out of the live support window and migrates through its published
 stepping-stone archive.
@@ -67,9 +69,8 @@ containment accepted by
 [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md).
 NKF 0.6 was accepted, published, recommended, and producer-adopted without a
 separate technical-confirmation Decision — the recorded ordering exception
-the 0.7 successor reconciles — and is now the one live-supported
-predecessor: migration from 0.6 to 0.7 is breaking and requires explicit
-repository-owner approval.
+the 0.7 successor reconciled. It is immutable out-of-window history; a 0.6
+repository steps through the published 0.7 archive.
 
 The exact [NKF 0.6 revision 2](nkf-0.6-revision-2.md) authority remains
 immutable historical provenance. [ADR 0125](../decisions/0125-accept-the-nkf-0-6-revision-3-authority-set.md)
@@ -88,16 +89,16 @@ describe the current implementation but cannot override this Specification.
 
 ## NKF 0.7
 
-[NKF 0.7](nkf-0.7.md) is the current accepted, technically confirmed,
-published, recommended, and producer-adopted normative authority under
+[NKF 0.7](nkf-0.7.md) was the accepted, technically confirmed, published,
+recommended, and producer-adopted authority from `2026-08-17` until its
+corrective successor, under
 [NKF-028](../tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md)
 and
 [ADR 0128](../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md),
 with its exact release candidate confirmed by
 [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md). Its
-digest-bound executable companion lives at `contracts/nkf/0.7/nkf.yaml`,
-its evaluation policy at `contracts/nkf/0.7/freshness-policy.yaml`, and its
-per-rule version delta at `contracts/nkf/0.7/version-delta.yaml`. Its
+digest-bound executable companion, evaluation policy, and per-rule version
+delta are retained in Git history and the 0.7 release archive. Its
 native accepted record was created by the live promotion under
 [NKF-029](../tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md);
 0.7 is now an immutable published predecessor outside the live window, and a
@@ -131,3 +132,36 @@ release candidate is confirmed by
 this producer declares, pins, and installs it under
 [NKF-035](../tasks/items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md).
 Live support is exactly NKF 0.8 plus NKF 0.71.
+
+## NKF 0.81
+
+- [NKF 0.81 — Product And Technology Knowledge Format](nkf-0.81.md)
+
+NKF 0.81 is the successor candidate under
+[NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
+Its direction is adopted by
+[ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+and
+[ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md),
+and its five-artifact authority set — the Specification, digest-bound
+executable companion, evaluation policy, 0.8-to-0.81 version delta, and
+producer-promotion input — has a repaired unpublished revision accepted by
+[ADR 0142](../decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](../decisions/0143-bind-the-predecessor-repair-promotion.md), under the
+Human Product Owner's explicit P1 self-audit and execution delegation. It binds
+exact predecessor history so the checker can independently reproduce delta
+closures and verify carried judgments. The first revision and
+[ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) are preserved;
+this prospective delegation does not retroactively accept their bytes.
+The corrected exact release candidate is technically confirmed by
+[ADR 0144](../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md) after the
+independent corrected-set audit and successful exact producer exercise.
+[ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
+remains bound to the prior historical bytes. It adds the recommended-release catalog contract
+with public channel values, plain HTTPS adoption, the adopter-obtaining step,
+the closed volatile-metadata registry, and the checker's recompute of the
+delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. Until the
+separately authorized publication and producer promotion, the Specification is
+represented in this repository as Evidence rather than a native record, this
+repository continues to declare, pin, and install NKF 0.8, and live support
+remains NKF 0.8 plus NKF 0.71; at publication it becomes exactly NKF 0.81 plus
+NKF 0.8, and a 0.71 repository steps through the published 0.8 archive.

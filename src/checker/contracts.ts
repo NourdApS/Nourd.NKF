@@ -157,6 +157,7 @@ export async function loadContracts(
 
   let executable: Record<string, any> = {};
   let freshnessPolicy: Record<string, any> | null = null;
+  let versionDelta: Record<string, any> | null = null;
   if (executableBinding.binding === "verified" && executableRead.bytes !== null) {
     try {
       const documents = YAML.parseAllDocuments(
@@ -277,7 +278,6 @@ export async function loadContracts(
     versionDeltaRead?.bytes !== null &&
     versionDeltaRead?.bytes !== undefined
   ) {
-    let versionDelta: Record<string, any> | null = null;
     try {
       versionDelta = asObject(YAML.parse(
         new TextDecoder("utf-8", { fatal: true }).decode(versionDeltaRead.bytes),
@@ -331,6 +331,7 @@ export async function loadContracts(
   return {
     executable,
     freshnessPolicy,
+    versionDelta,
     schemas: {
       bundle: bundleSchema,
       record: recordSchema,

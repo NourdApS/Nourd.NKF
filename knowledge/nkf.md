@@ -32,7 +32,7 @@ Profile. Nourd Knowledge Engine may consume NKF but does not define it.
 
 ## Capabilities And Contracts
 
-NKF 0.71 supplies Common contracts plus Product and Technology Root Profiles,
+NKF supplies Common contracts plus Product and Technology Root Profiles,
 bundle and record declarations, exact source and artifact bindings, body and
 vocabulary contracts, deterministic diagnostics, validation results,
 extensions, release and compatibility meaning, a native checker contract,
@@ -53,7 +53,10 @@ future Nourd Knowledge Protocol runtime.
 
 ## Technology Map
 
-The canonical NKF 0.71 Specification defines current normative behavior.
+The canonical Specification for each declared NKF version defines its normative
+behavior. The [Specification index](specifications/README.md) identifies the
+accepted versions, and the [Current System Realization](realizations/current-system.md)
+maps them to the implementation and records release confirmation boundaries.
 Decisions preserve accepted choices; Designs preserve proposals and rationale;
 Realizations bind the specification to schemas, checker source, tests,
 fixtures, build tooling, and project configuration; Evidence preserves
@@ -61,10 +64,18 @@ reviewed sources and observations.
 
 ## Versioning Compatibility And Migration
 
-Each native bundle declares one exact `nkf_version`; `0.71` is the current
-accepted, published, recommended, and producer-adopted format authority, and
-`0.6` is the one live-supported predecessor under the standing
-current-plus-one support window. `0.1` through `0.5` remain immutable
+Each native bundle declares one exact `nkf_version`; `0.8` is the current
+published, recommended, and producer-adopted format authority, and `0.71` is
+the one live-supported predecessor under the standing current-plus-one support
+window. `0.81` is the adopted successor direction. Its repaired unpublished authority
+revision is accepted by [ADR 0142](decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](decisions/0143-bind-the-predecessor-repair-promotion.md),
+under explicit P1 self-audit and execution delegation. It requires digest-bound
+predecessor proof for delta review and mechanical conclusion. The prior
+revision remains historical; the corrected release candidate has passed its
+exact exercise and independent audit and is technically confirmed by
+[ADR 0144](decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md). Publication,
+recommendation, and producer promotion remain separate acts. At publication its live support
+window becomes `0.81` plus `0.8`. Earlier versions remain immutable
 history: their published archives serve as exact stepping stones for
 out-of-window migration, and the tooling fails closed rather than migrating
 them silently. NKF remains pre-stable and open to evidence-driven change. Publication freezes every member of a version's

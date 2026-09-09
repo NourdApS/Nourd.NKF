@@ -147,7 +147,7 @@ async function main(): Promise<void> {
         }),
   };
   const checkerArtifact = fileURLToPath(import.meta.url);
-  const contractRoot = fileURLToPath(new URL("../contracts/nkf/0.8", import.meta.url));
+  const contractRoot = fileURLToPath(new URL("../contracts/nkf/0.81", import.meta.url));
   let evaluation: { state: "evaluated" | "evaluated-current"; receipt: { id: string; path: string } } | undefined;
   const result = await validateProject({
     projectRoot: argumentsValue.project,

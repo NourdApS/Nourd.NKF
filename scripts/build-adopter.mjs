@@ -27,10 +27,15 @@ export function adopterBuildOptions(outputPath) {
       ".yaml": "text",
     },
     plugins: [{
-      name: "embedded-nkf-0.71-contract",
+      name: "embedded-nkf-contracts",
       setup(context) {
+        // Two exact embeddings, both read from the working tree at build:
+        // the complete in-window predecessor contract (NKF 0.8) the adopter
+        // needs to run the predecessor checker, and the accepted NKF 0.81
+        // recommended-release Schema the adopter validates every catalog
+        // against before trusting a single field of it.
         context.onResolve(
-          { filter: /^nkf:predecessor-0\.71$/ },
+          { filter: /^nkf:(predecessor-0\.8|recommended-release-schema)$/ },
           (argumentsValue) => ({
             path: argumentsValue.path,
             namespace: "nkf-embedded-contract",
@@ -38,20 +43,22 @@ export function adopterBuildOptions(outputPath) {
         );
         context.onLoad(
           { filter: /.*/, namespace: "nkf-embedded-contract" },
-          async () => {
-            const paths = [
-              "knowledge/specifications/nkf-0.71.md",
-              "contracts/nkf/0.71/nkf.yaml",
-              "contracts/nkf/0.71/freshness-policy.yaml",
-              "contracts/nkf/0.71/version-delta.yaml",
-              "contracts/nkf/0.71/schemas/bundle.schema.json",
-              "contracts/nkf/0.71/schemas/record.schema.json",
-              "contracts/nkf/0.71/schemas/graph-baseline.schema.json",
-              "contracts/nkf/0.71/schemas/freshness-receipt.schema.json",
-              "contracts/nkf/0.71/schemas/freshness-policy.schema.json",
-              "contracts/nkf/0.71/schemas/validation-result.schema.json",
-              "contracts/nkf/0.71/schemas/release-manifest.schema.json",
-            ];
+          async (argumentsValue) => {
+            const paths = argumentsValue.path === "nkf:recommended-release-schema"
+              ? ["contracts/nkf/0.81/schemas/recommended-release.schema.json"]
+              : [
+                  "knowledge/specifications/nkf-0.8.md",
+                  "contracts/nkf/0.8/nkf.yaml",
+                  "contracts/nkf/0.8/freshness-policy.yaml",
+                  "contracts/nkf/0.8/version-delta.yaml",
+                  "contracts/nkf/0.8/schemas/bundle.schema.json",
+                  "contracts/nkf/0.8/schemas/record.schema.json",
+                  "contracts/nkf/0.8/schemas/graph-baseline.schema.json",
+                  "contracts/nkf/0.8/schemas/freshness-receipt.schema.json",
+                  "contracts/nkf/0.8/schemas/freshness-policy.schema.json",
+                  "contracts/nkf/0.8/schemas/validation-result.schema.json",
+                  "contracts/nkf/0.8/schemas/release-manifest.schema.json",
+                ];
             const entries = Object.fromEntries(
               await Promise.all(paths.map(async (relative) => [
                 relative,

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  PRE_STABLE_PUBLICATION,
+  PUBLICATION_BY_VERSION,
   RECOMMENDED_RELEASE_BINDINGS,
   RELEASE_REPOSITORY,
 } from "./release/config.mjs";
@@ -74,6 +74,10 @@ exactKeys(
 // Every expectation below derives from the accepted per-version binding
 // registry; an unregistered version fails closed instead of guessing.
 const binding = RECOMMENDED_RELEASE_BINDINGS[catalog.nkf_version];
+const publication = PUBLICATION_BY_VERSION[catalog.nkf_version];
+if (publication === undefined) {
+  fail(`No publication channel terms are registered for NKF version ${JSON.stringify(catalog.nkf_version)}.`);
+}
 if (binding === undefined) {
   fail(
     `No accepted recommended-release binding is registered for NKF version ${JSON.stringify(catalog.nkf_version)}.`,
@@ -86,7 +90,7 @@ const tag = `release-sha256-${archiveSha256}`;
 if (
   catalog.contract !== "nkf.recommended-release" ||
   catalog.state !== "recommended" ||
-  catalog.channel !== PRE_STABLE_PUBLICATION.channel ||
+  catalog.channel !== publication.channel ||
   JSON.stringify(catalog.compatibility) !==
     JSON.stringify(binding.compatibility) ||
   !/^[0-9a-f]{64}$/.test(archiveSha256 ?? "") ||
@@ -106,8 +110,8 @@ if (
   !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(
     catalog.release.published_at ?? "",
   ) ||
-  catalog.release.prerelease !== PRE_STABLE_PUBLICATION.prerelease ||
-  catalog.release.visibility !== PRE_STABLE_PUBLICATION.visibility ||
+  catalog.release.prerelease !== publication.prerelease ||
+  catalog.release.visibility !== publication.visibility ||
   JSON.stringify(catalog.supported_root_profiles) !==
     JSON.stringify(["nkf.profile.product", "nkf.profile.technology"])
 ) {

@@ -32,6 +32,23 @@ const PLACEHOLDER = /\{\{nkf_version\}\}/g;
 const LITERAL_REGION = /<!-- nkf:literal -->[\s\S]*?<!-- nkf:end -->/g;
 const PREDECESSOR = /\{\{nkf_predecessor\}\}/g;
 const ONLY_REGION = /[ \t]*<!-- nkf:only (adopted|release) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
+// A version-gated region is emitted only when the target's version is at or
+// above the named coordinate, so a sentence that describes a rule introduced by
+// one version can live in the neutral source without becoming false in the
+// adopted root of an earlier version. The marker's coordinate is generator
+// syntax, not prose, and is the one place the neutrality guard blanks it.
+const SINCE_REGION = /[ \t]*<!-- nkf:since (\d+\.\d+) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
+const SINCE_MARKER = /<!-- nkf:since \d+\.\d+ -->/g;
+// NKF coordinates are major-minor with the minor compared as a string, which
+// is the accepted coordinate model: 0.71 precedes 0.8, and 0.81 follows 0.8
+// and precedes 0.9. A numeric minor would order 0.81 after 0.9. The same
+// comparison freezes published trees below.
+function versionAtLeast(version, since) {
+  const [major, minor] = version.split(".");
+  const [sinceMajor, sinceMinor] = since.split(".");
+  if (Number(major) !== Number(sinceMajor)) return Number(major) > Number(sinceMajor);
+  return minor >= sinceMinor;
+}
 // Any bare version coordinate, in either the dot form used in prose and code
 // or the hyphenated form used in file and fixture names. The first version of
 // this guard matched only "NKF x.y" and "x.y-to-x.y" and let a bare `0.71`
@@ -70,7 +87,9 @@ async function verifySourceIsVersionNeutral(projectRoot) {
     const raw = await readFile(path.join(root, relative), "utf8");
     // Blank declared-literal regions rather than dropping them, so reported
     // line numbers still match the file.
-    const text = raw.replace(LITERAL_REGION, (block) => block.replace(/[^\n]/g, " "));
+    const text = raw
+      .replace(LITERAL_REGION, (block) => block.replace(/[^\n]/g, " "))
+      .replace(SINCE_MARKER, (marker) => " ".repeat(marker.length));
     for (const [index, line] of text.split("\n").entries()) {
       const hit = VERSION_LITERAL.exec(line);
       if (hit !== null) {
@@ -143,6 +162,12 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
   const predecessors = await resolvePredecessors(root, releaseVersion);
   const written = [];
   const mismatched = [];
+  // Publication freezes a version's release members; they were proven to match
+  // the source at their cut and recorded in that version's guidance review. The
+  // source may evolve for a later version, so re-deriving a frozen tree from a
+  // later source is checking the wrong thing. --check therefore compares only
+  // unfrozen release trees and the adopted-stamp roots, and says what it skipped.
+  const skippedFrozen = [];
   for (const member of manifest.members ?? []) {
     const source = await readFile(path.join(root, SOURCE_ROOT, member.source), "utf8");
     for (const target of member.targets ?? []) {
@@ -160,11 +185,16 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
       }
       const emitted = source
         .replace(ONLY_REGION, (_match, stamp, body) => (stamp === target.stamp ? body : ""))
+        .replace(SINCE_REGION, (_match, since, body) => (versionAtLeast(version, since) ? body : ""))
         .replace(LITERAL_REGION, (block) => block.replace(/<!-- nkf:(literal|end) -->\n?/g, ""))
         .replace(PLACEHOLDER, version)
         .replace(PREDECESSOR, predecessors[target.stamp] ?? "");
       const absolute = path.join(root, relative);
       if (check) {
+        if (target.stamp === "release" && frozen.has(version)) {
+          skippedFrozen.push(relative);
+          continue;
+        }
         const existing = await readFile(absolute, "utf8").catch(() => null);
         if (existing !== emitted) mismatched.push(relative);
       } else {
@@ -182,7 +212,9 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
       }
       fail(`${mismatched.length} emitted file(s) do not match the guidance source. Regenerate rather than editing an emitted tree.`);
     }
-    process.stdout.write("Every emitted guidance file matches the generated output.\n");
+    process.stdout.write(
+      `Every emitted guidance file matches the generated output.${skippedFrozen.length > 0 ? ` ${skippedFrozen.length} member(s) of the published NKF ${releaseVersion} tree are frozen by publication and were not re-derived.` : ""}\n`,
+    );
     return true;
   }
   process.stdout.write(`${JSON.stringify({ contract: "nkf.guidance-generation", adopted: adoptedVersion, release: releaseVersion ?? null, written }, null, 2)}\n`);
@@ -213,10 +245,22 @@ if (invokedDirectly) {
   if (stamp !== undefined && !["adopted", "release"].includes(stamp)) {
     fail("--stamp must be adopted or release.");
   }
-  await generateGuidance({
-    projectRoot: read("--project") ?? ".",
-    releaseVersion: read("--version"),
-    check: argv.includes("--check"),
-    stamp,
-  });
+  const projectRoot = read("--project") ?? ".";
+  const check = argv.includes("--check");
+  const version = read("--version");
+  if (check && version === undefined) {
+    // A check with no version names every emitted release tree, so the gate
+    // stays bound to whatever versions the tree carries rather than to one
+    // literal that goes stale when the producer adopts its successor.
+    const trees = (await readdir(path.join(projectRoot, "distribution/nkf"), { withFileTypes: true }).catch(() => []))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    if (trees.length === 0) fail("No emitted release tree exists under distribution/nkf to check.");
+    for (const tree of trees) {
+      await generateGuidance({ projectRoot, releaseVersion: tree, check: true, stamp });
+    }
+  } else {
+    await generateGuidance({ projectRoot, releaseVersion: version, check, stamp });
+  }
 }

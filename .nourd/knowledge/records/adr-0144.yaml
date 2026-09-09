@@ -1,0 +1,76 @@
+contract: nkf.record
+id: adr-0144
+type: decision
+body_contract: nkf.decision
+title: "ADR 0144: Confirm The Repaired NKF 0.81 Candidate"
+source:
+  path: decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md
+  stable_path: decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md
+  digest:
+    algorithm: sha-256
+    value: 83a40cfcb0eaee42de79e4890917d73a12ea4c917d105afd7d8c326db787f4ff
+governance:
+  lifecycle: immutable
+  status: accepted
+  authority:
+    - codex-technical-reviewer
+scope:
+  root: nkf
+sections:
+  - id: context-and-problem
+    heading_path:
+      - Context And Problem
+    occurrence: 1
+    authority: accepted-meaning
+    role: context
+  - id: decision
+    heading_path:
+      - Decision
+    occurrence: 1
+    authority: accepted-meaning
+    role: governing
+    responsibilities:
+      - context-and-problem
+      - decision
+      - scope-and-applicability
+      - rationale
+      - alternatives-considered
+      - consequences-and-trade-offs
+  - id: scope-and-applicability
+    heading_path:
+      - Scope And Applicability
+    occurrence: 1
+    authority: accepted-meaning
+    role: applicability
+  - id: rationale
+    heading_path:
+      - Rationale
+    occurrence: 1
+    authority: accepted-meaning
+    role: rationale
+  - id: alternatives-considered
+    heading_path:
+      - Alternatives Considered
+    occurrence: 1
+    authority: accepted-meaning
+    role: alternative
+  - id: consequences-and-trade-offs
+    heading_path:
+      - Consequences And Trade-Offs
+    occurrence: 1
+    authority: accepted-meaning
+    role: consequence
+  - id: non-claims
+    heading_path:
+      - Non-Claims
+    occurrence: 1
+    authority: accepted-meaning
+    role: content
+relationships:
+  - type: supersedes
+    target: adr-0141
+    source_section: decision
+  - type: depends-on
+    target: adr-0143
+    source_section: decision
+task: NKF-038

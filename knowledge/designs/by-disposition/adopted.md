@@ -31,3 +31,4 @@
 - [NKF 0.71 Corrective Successor](../items/nkf-0-71-corrective-successor.md)
 - [NKF 0.8 Generated Distribution](../items/nkf-0-8-generated-distribution.md)
 - [NKF Public Repository](../items/nkf-public-repository.md)
+- [NKF 0.81 Public Adoption](../items/nkf-0-81-public-adoption.md)

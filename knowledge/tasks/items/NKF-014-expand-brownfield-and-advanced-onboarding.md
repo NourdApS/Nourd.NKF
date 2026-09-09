@@ -1,19 +1,38 @@
 ---
 title: "NKF-014: Expand Brownfield And Advanced Onboarding"
-summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows.
+summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows — deferred since 2026-07-31 as the explicit successor to the deliberately narrow first onboarding iteration, awaiting the Human Product Owner's separate activation.
 created_at: 2026-07-31T09:51:12Z
-task_id: NKF-014
-task_status: deferred
-owner: Nourd ApS
-decision_authority: Human Product Owner, Nourd ApS
 ---
 
 # NKF-014: Expand Brownfield And Advanced Onboarding
 
-- **Activation Condition:** [`NKF-013`](../completed/NKF-013-initial-greenfield-onboarding.md) must remain complete as historical
-  provenance, [`NKF-015`](../completed/NKF-015-agent-led-initial-onboarding.md) must deliver and confirm its released successor
-  initial-onboarding path, and the Human Product Owner must separately
-  activate this expansion.
+## Human Direction
+
+This Task was created deferred on `2026-07-31` when the Human Product Owner
+restricted the first onboarding iteration to greenfield projects with an empty
+or small documentation set and directed that all broader onboarding work be
+preserved as an explicit successor rather than left implicit. Its activation
+condition, as written then, had three parts:
+[NKF-013](NKF-013-initial-greenfield-onboarding.md) must remain complete as
+historical provenance; [NKF-015](NKF-015-agent-led-initial-onboarding.md) must
+deliver and confirm its released successor initial-onboarding path; and the
+Human Product Owner must separately activate this expansion.
+
+The first two parts now hold. [NKF-013](NKF-013-initial-greenfield-onboarding.md)
+is completed, and [NKF-015](NKF-015-agent-led-initial-onboarding.md) is
+completed with its Realization confirmed under
+[ADR 0070](../../decisions/0070-confirm-agent-led-initial-onboarding.md). The
+third part has not been given: no direction has activated this Task, and
+creation alone authorizes no Design, Decision, Specification, implementation,
+release, or consumer work.
+
+The live NKF version is 0.8, with 0.81 in preparation under
+[NKF-038](NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md),
+whose scope explicitly excludes this Task's brownfield onboarding substance.
+This native rewrite on 2026-09-08 under
+[NKF-038](NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md)
+replaced the legacy-locked NKF 0.4 source; the Task's substance, deferred
+state, and creation direction are unchanged.
 
 ## Purpose
 
@@ -98,7 +117,12 @@ Review And Apply One Checked Draft Candidate
 The exact distribution surface, command name, trust-root acquisition,
 offline path, host-adapter set, manifest contract, conflict behavior, and
 bootstrap-to-authoring transaction require a later Design and accepted
-Decision under this Task.
+Decision under this Task. When this Task was written the repository was
+private and the release channel required collaborator access; since
+`2026-09-08` the `NourdApS/Nourd.NKF` repository is public under
+[ADR 0136](../../decisions/0136-adopt-the-public-repository-direction.md),
+which removes one obstacle to a public bootstrap command without deciding any
+of the boundaries listed above.
 
 ## Brownfield Reconstruction Boundary
 
@@ -152,8 +176,9 @@ claim may enter Governed Validation Inputs.
 ## Guardrails
 
 - Do not begin this Task merely because the agent cannot recommend either
-  category supported by [`NKF-015`](../completed/NKF-015-agent-led-initial-onboarding.md); report the evidence, fail closed, and
-  request explicit activation.
+  category supported by
+  [NKF-015](NKF-015-agent-led-initial-onboarding.md); report the evidence,
+  fail closed, and request explicit activation.
 - Do not weaken the first-iteration boundary to hide unsupported brownfield
   behavior.
 - Do not infer acceptance, historical Decisions, Root Profile, or Product
@@ -179,8 +204,10 @@ When the Human Product Owner activates this Task:
 2. design the standalone bootstrap envelope, public one-command experience,
    trust-root acquisition, exact manifest, supported host adapters, conflict
    behavior, and atomic transition to permanent authoring integration;
-3. reconcile that Design with the released [NKF-015](../completed/NKF-015-agent-led-initial-onboarding.md) assessment, candidate,
-   seal, onboarding, and validation boundaries;
+3. reconcile that Design with the released
+   [NKF-015](NKF-015-agent-led-initial-onboarding.md) assessment, candidate,
+   seal, onboarding, and validation boundaries as they stand in the live NKF
+   version at activation;
 4. design each activated brownfield, interrupted, reconstruction, migration,
    or recovery capability without collapsing observation into authority;
 5. obtain the applicable accepted Decisions before implementation;
@@ -195,29 +222,62 @@ When the Human Product Owner activates this Task:
 
 ## Origin
 
-The initial [`NKF-013`](../completed/NKF-013-initial-greenfield-onboarding.md) draft captured a complete onboarding vision. Before any
-Design or implementation began, the Human Product Owner restricted the first
-iteration to greenfield projects with an empty or small documentation set and
-directed that all broader work be deferred. This Task preserves that broader
-scope as an explicit successor rather than leaving it implicit in the active
-iteration.
+The initial [NKF-013](NKF-013-initial-greenfield-onboarding.md) draft captured
+a complete onboarding vision. Before any Design or implementation began, the
+Human Product Owner restricted the first iteration to greenfield projects with
+an empty or small documentation set and directed that all broader work be
+deferred. This Task preserves that broader scope as an explicit successor
+rather than leaving it implicit in the active iteration.
 
 The Human Product Owner later identified the standalone bootstrap gap: a user
 starting from an empty repository should not need a local NKF checkout or an
 already installed NKF skill merely to discover and run onboarding. The
 project-local, content-bound bootstrap direction is recorded here for later
-Design and activation rather than being added to the current [NKF-015](../completed/NKF-015-agent-led-initial-onboarding.md)
-realization.
+Design and activation rather than being added to the
+[NKF-015](NKF-015-agent-led-initial-onboarding.md) Realization that was then
+current. That supporting Realization was confirmed under
+[ADR 0070](../../decisions/0070-confirm-agent-led-initial-onboarding.md) and
+[ADR 0075](../../decisions/0075-confirm-complete-portable-onboarding-topology.md)
+and retired to Git history on `2026-09-08`, as recorded in the
+[supporting Realizations retirement](../../evidence/release/nkf-038-supporting-realizations-retirement.md);
+the one current Realization is the
+[current-system Realization](../../realizations/current-system.md).
+
+## Current Progress
+
+Created deferred on `2026-07-31`. No activation has been directed, and no
+Design, Decision, Specification, implementation, fixture, release, or consumer
+change has been made under this Task. The initial onboarding path this Task
+extends has since been delivered and confirmed through
+[NKF-015](NKF-015-agent-led-initial-onboarding.md) and
+[NKF-017](NKF-017-complete-portable-onboarding-topology.md) and carried
+forward through every release to the live NKF 0.8; the two delivery-side
+parts of the activation condition are therefore met, and only the Human
+Product Owner's separate activation remains outstanding.
 
 ## Decision Applicability
 
 ### Applicable Decisions
 
-No accepted decision applies to this Task.
+| Reference | Kind | Carried Constraint |
+| --- | --- | --- |
+| [`adr-0006`](../../decisions/0006-pre-stable-evolution.md) | record | Every consequential brownfield, bootstrap, or recovery change requires evidence, reproduction, compatibility analysis, Human Product Owner confirmation, authority-first specification updates, derived implementation, a versioned release, and deliberate consumer migration; passing fixtures and exercised consumers cannot change NKF by implication. |
+| [`adr-0017`](../../decisions/0017-acceptance-provenance.md) | record | Declared governance, acceptance binding, conformance, Realization confirmation, and external authority remain separate axes; source-grounded reconstruction may propose but never accepts, and a generated Realization is unconfirmed until a Decision confirms it. |
+| [`adr-0067`](../../decisions/0067-initial-greenfield-onboarding.md) | record | The first onboarding iteration is bounded to empty and small-document repositories with a stable expansion boundary reserved for this Task; every category beyond that boundary fails closed with an explicit deferral rather than being absorbed into the first iteration. |
+| [`adr-0069`](../../decisions/0069-agent-led-initial-onboarding.md) | record | Agent-led semantic assessment supplies category recommendations and Draft meaning only, while mechanical capture, sealing, application, rollback, and validation stay deterministic; an expanded path keeps that division and never lets the agent or executable hide project content. |
+| [`adr-0071`](../../decisions/0071-complete-portable-onboarding-topology.md) | record | Product and Technology onboarding produce one lifecycle-first knowledge topology with a single reconciled knowledge map and continuing conformance; brownfield migration preserves existing topology by default and treats every move, split, merge, or reclassification with exact provenance. |
+| [`adr-0077`](../../decisions/0077-decision-applicability-gate.md) | record | This Task carries all applicable accepted Decisions and classifies each mandatory capability; unknown or unsupported requirements block completion without an explicit recorded Human Product Owner exception. |
 
 ### Mandatory Capabilities
 
-No mandatory capability is implicated by this Task.
+| Capability | Finding | Verification | Exception |
+| --- | --- | --- | --- |
+| Large documented corpora migrate through an explicit, complete, reviewable source-to-candidate map with no unexplained loss | unknown | none | none |
+| Source-rich reconstruction separates direct observation, source-grounded interpretation, accepted meaning, and unresolved matters and never presents a generated Realization as confirmed | unknown | none | none |
+| Complex interrupted onboarding state resumes or rolls back deterministically without a false adoption claim | unknown | none | none |
+| Already adopted repositories migrate deliberately between supported contracts and releases without following moving recommendations | unknown | none | none |
+| A user with no NKF checkout or preinstalled skill begins adoption through one documented public bootstrap command whose envelope is project-local, content-bound, non-overwriting, snapshot-visible, and removable only when its manifest and bytes verify | unknown | none | none |
+| Successful onboarding atomically replaces temporary bootstrap guidance with permanent authoring integration, and failure preserves or restores a coherent predecessor instruction topology | unknown | none | none |
 
-This gate was added retrospectively during the NKF 0.2 self-migration; no
-historical extraction is implied.
+This gate was extracted at the native rewrite on 2026-09-08, replacing the
+empty retrospective placeholder recorded at the NKF 0.2 self-migration.

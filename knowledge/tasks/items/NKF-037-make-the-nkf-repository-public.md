@@ -1,6 +1,6 @@
 ---
 title: "NKF-037: Make The NKF Repository Public"
-summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.9 — without changing any accepted meaning or published byte.
+summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.81 — without changing any accepted meaning or published byte.
 created_at: 2026-09-08T11:25:20Z
 ---
 
@@ -13,7 +13,7 @@ On `2026-09-08`, after the
 pull request was merged, the Human Product Owner directed verbatim: "yes let's
 open source the repo. what steps needs to be taken here ?" The Claude technical
 reviewer listed the steps and proposed one Task for the governance, hygiene,
-flip verification, and reconciliation, with the NKF 0.9 successor work left to
+flip verification, and reconciliation, with the NKF 0.81 successor work left to
 a separate release Task. The Human Product Owner directed verbatim: "go on".
 
 That direction explicitly creates this Task and begins its work, starting with
@@ -33,6 +33,14 @@ the Design. The confirmed boundaries:
    edits, the Evidence recording, and the gate runs.
 
 ## Problem
+
+The successor this Task names as the remedy was called "NKF 0.9" when the
+Task was written and closed;
+[ADR 0138](../../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
+allocated the coordinate `0.81` to it on `2026-09-08`, and this Task's text
+was reconciled to that coordinate under
+[NKF-038](NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md)
+without changing anything else it states.
 
 NKF 0.8 is ready for a clean repository to adopt, but the adoption path assumes
 access this repository does not grant. The released adopter resolves the
@@ -62,7 +70,7 @@ release catalog against closed literals: channel
 vocabulary is adopter code, not accepted Specification meaning. Once the
 repository is public the catalog states a false visibility, and correcting the
 literal breaks every 0.8 and 0.71 adopter, because their validation is frozen
-in published bytes. A truthful public catalog needs the NKF 0.9 successor.
+in published bytes. A truthful public catalog needs the NKF 0.81 successor.
 
 ## Desired Outcome
 
@@ -78,7 +86,7 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
    download by the catalog URL, and branch-protection availability — and
    recorded as Evidence.
 4. The front page and the current-system Realization state the public reality,
-   and the recorded catalog-truthfulness gap names NKF 0.9 as its remedy.
+   and the recorded catalog-truthfulness gap names NKF 0.81 as its remedy.
 5. [NKF-012](NKF-012-activate-protected-merge-gate.md) is either unblocked with
    its activation condition observed true, or activated if the Human Product
    Owner directs it.
@@ -93,7 +101,7 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
 4. After the Human Product Owner's flip, verify the public state and record it
    as Evidence.
 5. Reconcile the front page and the Realization paragraphs that describe the
-   repository as private, and record the catalog gap with its 0.9 remedy.
+   repository as private, and record the catalog gap with its 0.81 remedy.
 6. Repin, reseal, run the gate, and deliver one pull request.
 
 ## Out Of Scope
@@ -101,8 +109,8 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
 - Performing the visibility change. That is the Human Product Owner's act in
   Github settings.
 - Changing the recommendation catalog's channel or visibility literals. That
-  breaks released adopters and belongs to NKF 0.9.
-- Any NKF 0.9 work: the adopter's plain-HTTPS fetch, the channel vocabulary
+  breaks released adopters and belongs to NKF 0.81.
+- Any NKF 0.81 work: the adopter's plain-HTTPS fetch, the channel vocabulary
   moving into the accepted contract, the regenerated public-docs prose, and the
   adoption protocol's adopter-obtaining step.
 - Accepting the security-response, contribution, and conduct policy text. The
@@ -126,7 +134,7 @@ in published bytes. A truthful public catalog needs the NKF 0.9 successor.
    and the branch-protection API no longer returns `403`, each recorded as
    Evidence.
 4. No statement in the front page or the Realization describes the repository
-   as private, and the catalog-truthfulness gap is recorded with NKF 0.9 named
+   as private, and the catalog-truthfulness gap is recorded with NKF 0.81 named
    as its remedy.
 5. No published NKF 0.1 through 0.8 byte, no accepted immutable record, and no
    recommendation catalog literal changes.
@@ -191,7 +199,7 @@ The front page and the current-system Realization state the public reality
 with no remaining current-state statement that the repository is private, and
 both record that the recommendation catalog still states a private channel
 because the released 0.8 and 0.71 adopters validate that literal in frozen
-bytes, with NKF 0.9 named as the remedy. No published NKF 0.1 through 0.8 byte,
+bytes, with NKF 0.81 named as the remedy. No published NKF 0.1 through 0.8 byte,
 no accepted immutable record, and no catalog literal changed. The complete gate
 passes on the sealed tree at twenty-nine test files and two hundred sixty-eight
 tests with zero diagnostics.
@@ -211,7 +219,7 @@ Product Owner's settings act. Merging remains the Human Product Owner's act.
 | [`adr-0064`](../../decisions/0064-release-documentation-and-adoption.md) | record | Rejected making the complete repository public on documentation grounds and chose the allowlisted public projection. This Task supersedes exactly the rejection through a later Decision; the projection direction stands. |
 | [`adr-0077`](../../decisions/0077-decision-applicability-gate.md) | record | This Task carries all applicable accepted Decisions and classifies each mandatory capability; unknown or unsupported requirements block completion without an explicit recorded Human Product Owner exception. |
 | [`adr-0080`](../../decisions/0080-release-and-adoption-process.md) | record | Release and adoption are separate governed protocols in the versioned set; this Task changes neither, and the adopter's fetch behaviour changes only through a versioned release. |
-| [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Publication freezes released bytes permanently; the released adopters' catalog validation is frozen, which is why the catalog literals cannot change before NKF 0.9. |
+| [`adr-0109`](../../decisions/0109-publication-freeze-and-proven-self-adoption.md) | record | Publication freezes released bytes permanently; the released adopters' catalog validation is frozen, which is why the catalog literals cannot change before NKF 0.81. |
 | [`adr-0121`](../../decisions/0121-adopt-the-nkf-0-6-corrective-and-licensing-direction.md) | record | Apache-2.0 licensing was prepared as repository content and explicitly did not make the repository public; this Task supplies the separate visibility Decision that licensing anticipated. |
 | [`adr-0135`](../../decisions/0135-confirm-the-nkf-0-8-release-candidate.md) | record | The confirmed and published NKF 0.8 bytes stay exactly as confirmed; a public repository exposes them, it does not change them. |
 
@@ -222,7 +230,7 @@ Product Owner's settings act. Merging remains the Human Product Owner's act.
 | The Design and its adopting Decision exist, the Decision is accepted by the Human Product Owner, and the Design disposition is adopted | proven | data-validity | none |
 | The complete Git history is scanned for secrets and personal data with method, scope, and findings recorded as Evidence | proven | runtime-behaviour | none |
 | After the flip, anonymous clone, anonymous archive download hashing to the recommended digest, and branch-protection availability are observed and recorded | proven | runtime-behaviour | none |
-| No front-page or Realization statement describes the repository as private, and the catalog gap is recorded with NKF 0.9 as remedy | proven | data-validity | none |
+| No front-page or Realization statement describes the repository as private, and the catalog gap is recorded with NKF 0.81 as remedy | proven | data-validity | none |
 | No published byte, accepted immutable record, or catalog literal changes | proven | data-validity | none |
 | The complete gate passes | proven | runtime-behaviour | none |
 

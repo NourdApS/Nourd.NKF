@@ -90,6 +90,52 @@ describe("guidance generation", () => {
     expect(generate(root, "0.8", true).status).not.toBe(0);
   });
 
+  it("emits a version-gated region only at or above its coordinate, and the guard ignores the marker", async () => {
+    // A rule introduced by one version needs a sentence that is true in that
+    // version's tree and absent from an earlier adopted root. The marker's own
+    // coordinate is syntax, not a stale literal.
+    const gated = `${NEUTRAL_SOURCE}\n<!-- nkf:since 0.81 -->\nThe checker recomputes the closure.\n<!-- nkf:end -->\nAfter.\n`;
+    const root = await project(gated, "0.8");
+    expect(generate(root, "0.81").status).toBe(0);
+    const adopted = await readFile(path.join(root, ".claude/skills/nkf-onboarding/SKILL.md"), "utf8");
+    const release = await readFile(path.join(root, "distribution/nkf/0.81/.claude/skills/nkf-onboarding/SKILL.md"), "utf8");
+    expect(release).toContain("The checker recomputes the closure.\nAfter.");
+    expect(adopted).not.toContain("recomputes");
+    expect(adopted).toContain("Body.\n\nAfter.");
+    expect(release).not.toContain("nkf:since");
+    const older = await project(gated.replace("nkf:since 0.81", "nkf:since 0.9"), "0.8");
+    expect(generate(older, "0.81").status).toBe(0);
+    expect(await readFile(path.join(older, "distribution/nkf/0.81/.claude/skills/nkf-onboarding/SKILL.md"), "utf8")).not.toContain("recomputes");
+  });
+
+  it("does not re-derive a published release tree in --check, and refuses to write into it", async () => {
+    // Publication freezes the 0.8 tree at the bytes its guidance review
+    // recorded. The source keeps evolving for the next version, so comparing
+    // the frozen tree to the later source would report the wrong divergence:
+    // --check skips the frozen members, says so, and still refuses a write.
+    const root = await project(NEUTRAL_SOURCE, "0.71");
+    expect(generate(root, "0.8").status).toBe(0);
+    await mkdir(path.join(root, "release"), { recursive: true });
+    await writeFile(path.join(root, "release/recommended.json"), JSON.stringify({ nkf_version: "0.8" }));
+    await writeFile(
+      path.join(root, "guidance-source/skills/nkf-onboarding/SKILL.md"),
+      `${NEUTRAL_SOURCE}\nA sentence authored for the next version.\n`,
+    );
+    const checked = generate(root, "0.8", true);
+    expect(checked.status).not.toBe(0);
+    expect(checked.stderr).toContain(".claude/skills/nkf-onboarding/SKILL.md");
+    expect(checked.stderr).not.toContain("distribution/nkf/0.8/");
+    // Re-emit the adopted root only; the frozen release member is then the one
+    // remaining divergence, and it is skipped rather than reported.
+    expect(spawnSync(process.execPath, [generator, "--project", root, "--stamp", "adopted"], { encoding: "utf8" }).status).toBe(0);
+    const skipped = generate(root, "0.8", true);
+    expect(skipped.status).toBe(0);
+    expect(skipped.stdout).toContain("1 member(s) of the published NKF 0.8 tree are frozen by publication");
+    const write = generate(root, "0.8");
+    expect(write.status).not.toBe(0);
+    expect(write.stderr).toContain("Refusing to write into the published NKF 0.8 tree");
+  });
+
   it("fails when a literal version is typed into the source", async () => {
     const root = await project(NEUTRAL_SOURCE.replace("NKF Version: {{nkf_version}}", "NKF Version: 0.8"), "0.71");
     const result = generate(root, "0.8");

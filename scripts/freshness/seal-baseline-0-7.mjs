@@ -1,13 +1,15 @@
-// NKF 0.7 and 0.71 digest-bound review and seal.
+// NKF 0.7 through 0.81 digest-bound review and seal.
 //
 // Carry-forward is computed here from digest identity alone; the reviewer
 // receives carried judgments prefilled with provenance and performs only the
 // computed required set. The seal refuses a delta claim whose performed set
-// does not contain the recomputed closure. This module also powers the
+// does not contain the recomputed closure, and, from NKF 0.81, a delta claim
+// whose recorded closure differs from the closure recomputed with the
+// evaluation policy's impact propagation. This module also powers the
 // adopter's `review --scaffold` operation and the deterministic
 // Task-transition conclusion seal.
 import { spawnSync } from "node:child_process";
-import { lstat, mkdir, readFile, readdir, realpath, writeFile } from "node:fs/promises";
+import { lstat, mkdir, readFile, readdir, realpath, rm, rmdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import * as commonmark from "commonmark";
@@ -63,6 +65,71 @@ async function safeDirectory(root, segments, createMissing) {
     if (!inside(root, await realpath(current))) fail(`Freshness seal path escapes the project: ${segments.join("/")}`);
   }
   return current;
+}
+
+// Content-addressed history is append-only. A conflicting existing path is
+// refused, never overwritten. The baseline binding carries the exact bytes.
+async function preservePredecessor(project, bytes) {
+  const value = sha256Hex(bytes);
+  const relative = `.nourd/knowledge/freshness/history/sha256-${value}.yaml`;
+  await safeDirectory(project, [".nourd", "knowledge", "freshness", "history"], true);
+  const target = path.join(project, relative);
+  const previous = await lstat(target).catch(() => null);
+  if (previous !== null) {
+    if (!previous.isFile() || previous.isSymbolicLink() || !(await readFile(target)).equals(bytes)) fail("Predecessor history path is unsafe or conflicts with its exact bytes.");
+  } else await writeFile(target, bytes, {flag:"wx",mode:0o600});
+  return {path:relative,digest:{algorithm:"sha-256",value}};
+}
+
+// The standalone sealer also rolls back a rejected proof. Adopter operations
+// additionally apply this candidate through their isolated file transaction.
+async function writeVerifiedSeal0_81(project, checkerPath, baseline, predecessorBytes) {
+  const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
+  const original = await readFile(baselinePath).catch(() => null);
+  const direct = await lstat(baselinePath).catch(() => null);
+  if (direct !== null && (!direct.isFile() || direct.isSymbolicLink())) fail("The baseline must be a direct regular file.");
+  const directories = [path.dirname(baselinePath), path.join(path.dirname(baselinePath), "history")];
+  const absentDirectories = [];
+  for (const directory of directories) if (await lstat(directory).catch(() => null) === null) absentDirectories.push(directory);
+  let addedHistory = null;
+  try {
+    if (predecessorBytes !== null) {
+      const target = path.join(project, `.nourd/knowledge/freshness/history/sha256-${sha256Hex(predecessorBytes)}.yaml`);
+      const existed = await lstat(target).catch(() => null);
+      baseline.predecessor = await preservePredecessor(project, predecessorBytes);
+      if (existed === null) addedHistory = target;
+    }
+    await writeFile(baselinePath, YAML.stringify(baseline, {lineWidth:0,aliasDuplicateObjects:false}));
+    const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--purpose", "whole-root-readiness", "--no-persist"], {encoding:"utf8",maxBuffer:64*1024*1024});
+    const result = run.stdout ? JSON.parse(run.stdout) : null;
+    if (run.status !== 0 || result?.conformance !== "passed" || (result?.knowledge_graph?.summary?.baseline_state ?? result?.knowledge_graph?.baseline_state) !== "confirmed") {
+      fail(`The sealed predecessor proof was refused: ${JSON.stringify(result?.diagnostics ?? run.stderr)}`);
+    }
+  } catch (error) {
+    if (original === null) await rm(baselinePath, {force:true});
+    else await writeFile(baselinePath, original);
+    if (addedHistory !== null) await rm(addedHistory);
+    for (const directory of absentDirectories.reverse()) await rmdir(directory).catch(() => {});
+    throw error;
+  }
+}
+
+async function reviewPredecessor(project, nkfVersion) {
+  const bytes = await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml")).catch(() => null);
+  if (bytes === null) return {bytes:null, baseline:null};
+  const baseline = YAML.parse(bytes.toString("utf8"), {schema:"core",strict:true,uniqueKeys:true});
+  // The isolated 0.8 -> 0.81 shape conversion is pre-review scaffolding. Its
+  // graph revision still names the exact frozen 0.8 graph. Review and sealing
+  // compare with that preserved original, not the synthetic converted shell.
+  const binding = baseline.predecessor;
+  if (nkfVersion === "0.81" && binding?.digest?.algorithm === "sha-256" &&
+      binding.path === `.nourd/knowledge/freshness/history/sha256-${binding.digest.value}.yaml`) {
+    const original = await readFile(path.join(project, binding.path));
+    if (sha256Hex(original) !== binding.digest.value) fail("The review predecessor digest does not match.");
+    const prior = YAML.parse(original.toString("utf8"), {schema:"core",strict:true,uniqueKeys:true});
+    if (prior.nkf_version === "0.8" && prior.graph_revision?.value === baseline.graph_revision?.value) return {bytes:original,baseline:prior};
+  }
+  return {bytes,baseline};
 }
 
 function firstHeading(bytes) {
@@ -153,9 +220,14 @@ const decisionDeclarationDigest = (declaration) =>
 // Versions whose reviewed baseline is digest-bound. Registration is
 // deliberate: an unregistered version fails closed here rather than sealing
 // under another version's rules.
-const SEAL_VERSIONS = new Set(["0.7", "0.71", "0.8"]);
+const SEAL_VERSIONS = new Set(["0.7", "0.71", "0.8", "0.81"]);
 // Versions whose deterministic Task conclusion is seal-completing.
-const CONCLUSION_SEAL_VERSIONS = new Set(["0.71", "0.8"]);
+const CONCLUSION_SEAL_VERSIONS = new Set(["0.71", "0.8", "0.81"]);
+// Versions whose delta-review closure includes the evaluation policy's impact
+// propagation (ADR 0139). Tooling published under 0.7 through 0.8 recorded
+// closures without that term; their bundles keep exactly that behaviour, and
+// the first delta review under 0.81 computes the propagated closure.
+const PROPAGATED_CLOSURE_VERSIONS = new Set(["0.81"]);
 
 async function projectSealVersion(project) {
   const bundle = YAML.parse(await readFile(path.join(project, ".nourd/knowledge/bundle.yaml"), "utf8"), { schema: "core", strict: true, uniqueKeys: true });
@@ -166,7 +238,7 @@ async function projectSealVersion(project) {
 }
 
 async function candidateGraph07(project, checkerPath, expectedVersion) {
-  const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8" });
+  const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   if (run.status !== 0) fail(`The pre-review candidate does not conform: ${run.stderr || run.stdout}`);
   const result = JSON.parse(run.stdout);
   if (result.nkf_version !== expectedVersion || result.conformance !== "passed" || result.knowledge_graph?.policy?.binding !== "verified") {
@@ -225,6 +297,109 @@ function carryAllowedByKind(versionDelta, policy) {
   };
 }
 
+// The accepted evaluation policy and version-delta declaration the closure is
+// computed against. They are read from the verified distribution root the
+// checker runs from — the same contract tree the checker itself binds — and
+// fail closed unless their digests equal the digest the checker reported for
+// the policy and the digest the baseline binds for the version delta.
+async function acceptedClosureContracts(checkerPath, nkfVersion, result, versionDeltaDigest, supplied) {
+  const contractRoot = path.resolve(path.dirname(checkerPath), "..", "contracts", "nkf", nkfVersion);
+  const load = async (name, expectedDigest, label) => {
+    const bytes = await readFile(path.join(contractRoot, name)).catch(() => null);
+    if (bytes === null) fail(`The verified distribution omits the accepted NKF ${nkfVersion} ${label}; the delta closure cannot be computed.`);
+    if (expectedDigest !== undefined && expectedDigest !== null && sha256Hex(bytes) !== expectedDigest) {
+      fail(`The distributed NKF ${nkfVersion} ${label} does not carry the exact bound digest; the delta closure cannot be computed.`);
+    }
+    return YAML.parse(bytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  };
+  const policy = supplied.policy ?? await load("freshness-policy.yaml", result.knowledge_graph?.policy?.digest?.value, "evaluation policy");
+  const versionDelta = supplied.versionDelta ?? await load("version-delta.yaml", versionDeltaDigest, "version-delta declaration");
+  if (policy?.contract !== "nkf.freshness-policy" || policy?.nkf_version !== nkfVersion || !Array.isArray(policy.mappings)) {
+    fail(`The evaluation policy is not the accepted NKF ${nkfVersion} policy.`);
+  }
+  if (versionDelta?.contract !== "nkf.version-delta" || versionDelta?.rules === undefined) {
+    fail("The version-delta declaration is not an accepted nkf.version-delta declaration.");
+  }
+  return { policy, versionDelta };
+}
+
+// The NKF 0.81 computed required-review closure (Delta Review Claim And
+// Computed Closure): seeds ∪ propagation, where
+//   seeds = every candidate node whose revision differs from the predecessor
+//           node_revisions entry or that is absent from it; every judgment
+//           whose basis digest differs from the predecessor judgment's (or
+//           that has no predecessor judgment); every judgment depending on a
+//           rule classified semantically-new in the accepted version delta,
+//           dependency meaning membership in the policy's judgment_dependencies
+//           list for that judgment kind; every Decision classification whose
+//           Decision declaration digest differs or whose Decision is new; and
+//           every pending promotion-reconciliation subject;
+//   propagation = the fixpoint over the authored candidate edges under the
+//           policy mappings of class hard or review (context and historical
+//           mappings do not propagate; the purposes filter is ignored):
+//           source in set and propagation source-to-target or both adds the
+//           target; target in set and propagation target-to-source or both
+//           adds the source.
+// The result is restricted to the candidate node universe and returned in
+// candidate node order. It is a pure function of the candidate graph, the
+// predecessor baseline, the policy, the version delta, and the judgment basis
+// digests, so the seal and the validating checker recompute the same set.
+function deltaClosure0_81({ result, edges, predecessorBaseline, policy, versionDelta, basisDigestByNode, acceptedDecisions, decisionDigestById }) {
+  const prior = priorJudgments(predecessorBaseline);
+  const universe = result.nodes.map((entry) => nodeKey07(entry.node));
+  const universeSet = new Set(universe);
+  const closure = new Set();
+  const semanticallyNew = new Set(
+    Object.entries(versionDelta.rules ?? {})
+      .filter(([, rule]) => rule?.classification === "semantically-new")
+      .map(([rule]) => rule),
+  );
+  const dependsOnNew = (list) => (list ?? []).some((rule) => semanticallyNew.has(rule));
+  const declared = policy.judgment_dependencies ?? {};
+  for (const entry of result.nodes) {
+    const key = nodeKey07(entry.node);
+    if (prior.revisions.get(key) !== entry.revision.value) { closure.add(key); continue; }
+    const priorEntry = prior.nodes.get(key);
+    if (priorEntry === undefined) { closure.add(key); continue; }
+    const priorBasis = priorEntry.basis_digest?.value ?? priorRevision(prior, priorEntry, entry.node);
+    if (basisDigestByNode.get(key) !== priorBasis) { closure.add(key); continue; }
+    if (dependsOnNew(declared.node_applicability)) closure.add(key);
+  }
+  for (const decision of acceptedDecisions) {
+    const key = nodeKey07({ kind: "record", id: decision });
+    const digest = decisionDigestById.get(decision);
+    for (const purpose of PURPOSES) {
+      const priorEntry = prior.decisions.get(`${decision} ${purpose}`);
+      if (priorEntry === undefined || priorEntry.decision_digest?.value !== digest || dependsOnNew(declared.decision_classification)) {
+        closure.add(key);
+      }
+    }
+  }
+  for (const entry of predecessorBaseline?.promotion_reconciliation ?? []) {
+    if (entry.state === "pending") closure.add(nodeKey07(entry.node));
+  }
+  const mappings = new Map(policy.mappings.map((mapping) => [mapping.relationship, mapping]));
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const edge of edges) {
+      const mapping = mappings.get(edge.relationship);
+      if (mapping === undefined || !["hard", "review"].includes(mapping.class)) continue;
+      const source = nodeKey07(edge.source);
+      const target = nodeKey07(edge.target);
+      if (closure.has(source) && ["source-to-target", "both"].includes(mapping.propagation) && !closure.has(target)) {
+        closure.add(target);
+        changed = true;
+      }
+      if (closure.has(target) && ["target-to-source", "both"].includes(mapping.propagation) && !closure.has(source)) {
+        closure.add(source);
+        changed = true;
+      }
+    }
+  }
+  return universe.filter((key) => closure.has(key) && universeSet.has(key));
+}
+
 export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath, stage = "delta", versionDelta = null, policy = null }) {
   const project = await realpath(path.resolve(projectRoot));
   const checkerPath = path.resolve(checker);
@@ -236,16 +411,20 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
   const documentsById = new Map(
     (bundle.non_records ?? []).filter((entry) => entry.document !== undefined).map((entry) => [entry.document.id, entry]),
   );
-  const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
-  const predecessorBytes = await readFile(baselinePath).catch(() => null);
-  const predecessorBaseline = stage === "delta" && predecessorBytes !== null
-    ? YAML.parse(predecessorBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true })
-    : null;
+  const priorInput = stage === "delta" ? await reviewPredecessor(project, nkfVersion) : {baseline:null};
+  const predecessorBaseline = stage === "delta" ? priorInput.baseline : null;
   if (stage === "delta" && predecessorBaseline === null) {
     fail("A delta review requires the predecessor reviewed baseline; whole-root review is the recovery path.");
   }
   const prior = priorJudgments(predecessorBaseline);
-  const carryByKind = carryAllowedByKind(versionDelta, policy);
+  const propagated = stage === "delta" && PROPAGATED_CLOSURE_VERSIONS.has(nkfVersion);
+  const closureContracts = propagated
+    ? await acceptedClosureContracts(checkerPath, nkfVersion, result, predecessorBaseline?.version_delta?.digest?.value, { versionDelta, policy })
+    : null;
+  const carryByKind = carryAllowedByKind(
+    propagated ? closureContracts.versionDelta : versionDelta,
+    propagated ? closureContracts.policy : policy,
+  );
   const basisFor = async (node) => {
     if (node.kind === "record" || node.kind === "entity") {
       const record = recordsById.get(node.kind === "record" ? node.id : node.record);
@@ -339,7 +518,30 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
   const pendingReconciliation = (predecessorBaseline?.promotion_reconciliation ?? [])
     .filter((entry) => entry.state === "pending")
     .map((entry) => entry.node);
-  const closureKeys = new Set([...fresh, ...pendingReconciliation].map(nodeKey07));
+  let closureKeys = new Set([...fresh, ...pendingReconciliation].map(nodeKey07));
+  if (propagated) {
+    closureKeys = new Set(deltaClosure0_81({
+      result,
+      edges: normalizedEdges(bundle, records),
+      predecessorBaseline,
+      policy: closureContracts.policy,
+      versionDelta: closureContracts.versionDelta,
+      basisDigestByNode: new Map(nodes.map((entry) => [nodeKey07(entry.node), entry.basis_digest?.value])),
+      acceptedDecisions,
+      decisionDigestById: new Map(acceptedDecisions.map((decision) => [decision, decisionDeclarationDigest(recordsById.get(decision))])),
+    }));
+    // Every closure node is performed, including one reached by propagation
+    // whose own revision is unchanged: it keeps its exact prior basis and
+    // basis digest — the cited basis content is unchanged — and loses its
+    // carried judgment values, which the reviewer performs afresh.
+    for (const entry of nodes) {
+      if (!closureKeys.has(nodeKey07(entry.node)) || entry.provenance?.carried === undefined) continue;
+      carried -= 1;
+      entry.state = "REVIEW_REQUIRED";
+      entry.role = "REVIEW_REQUIRED";
+      entry.provenance = { performed: true };
+    }
+  }
   const computedClosure = result.nodes.map((entry) => entry.node).filter((node) => closureKeys.has(nodeKey07(node)));
   const relationships = predecessorBaseline !== null && carryByKind.relationship_review
     ? predecessorBaseline.relationship_coverage
@@ -376,7 +578,7 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
   return { path: target, stage, nodes: nodes.length, carried, fresh: computedClosure.length, decisions: acceptedDecisions.length };
 }
 
-export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versionDeltaDigest }) {
+export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versionDeltaDigest, versionDelta = null, policy = null }) {
   const project = await realpath(path.resolve(projectRoot));
   const checkerPath = path.resolve(checker);
   const { bundle, nkfVersion } = await projectSealVersion(project);
@@ -387,6 +589,32 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
     ...(review.stage === "delta" ? ["computed_closure"] : []),
   ];
   exactObject(review, expected, "review");
+  // The template's placeholders are not a review. A reviewer id, finding, or
+  // limitation left at its sentinel, or a node or classification still marked
+  // REVIEW_REQUIRED, is refused by name rather than sealed into the baseline
+  // as the work of a reviewer called REVIEWER_ID_REQUIRED.
+  const placeholders = [];
+  const blank = (value) => typeof value !== "string" || value.trim() === "";
+  if (review.reviewer?.id === "REVIEWER_ID_REQUIRED" || blank(review.reviewer?.id)) placeholders.push("reviewer.id");
+  if (review.reviewed_at === "REVIEWED_AT_UTC_MILLISECOND_REQUIRED") placeholders.push("reviewed_at");
+  for (const [index, entry] of (Array.isArray(review.nodes) ? review.nodes : []).entries()) {
+    if (entry?.state === "REVIEW_REQUIRED" || entry?.role === "REVIEW_REQUIRED") placeholders.push(`nodes[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.relationships) ? review.relationships : []).entries()) {
+    if (entry?.state === "REVIEW_REQUIRED") placeholders.push(`relationships[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.decision_classifications) ? review.decision_classifications : []).entries()) {
+    if (entry?.classification === "REVIEW_REQUIRED") placeholders.push(`decision_classifications[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.observations) ? review.observations : []).entries()) {
+    if (entry?.finding === "REVIEW_FINDING_REQUIRED" || blank(entry?.finding)) placeholders.push(`observations[${index}].finding`);
+  }
+  for (const [index, entry] of (Array.isArray(review.limitations) ? review.limitations : []).entries()) {
+    if (entry === "REVIEW_LIMITATION_REQUIRED" || blank(entry)) placeholders.push(`limitations[${index}]`);
+  }
+  if (placeholders.length > 0) {
+    fail(`The review still carries the template's placeholders, or blank values, at ${placeholders.slice(0, 8).join(", ")}${placeholders.length > 8 ? ` and ${placeholders.length - 8} more` : ""}; a named reviewer must complete it before it can seal.`);
+  }
   const deltaStage = review.stage === "delta";
   if (
     review.contract !== "nkf.semantic-review-input" || review.nkf_version !== nkfVersion ||
@@ -401,10 +629,8 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   const reviewNodes = review.nodes.map((entry) => nodeKey07(entry.node)).sort();
   if (JSON.stringify(expectedNodes) !== JSON.stringify(reviewNodes)) fail("Review node coverage must equal the exact candidate graph universe.");
   const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
-  const predecessorBytes = await readFile(baselinePath).catch(() => null);
-  const predecessorBaseline = predecessorBytes === null
-    ? null
-    : YAML.parse(predecessorBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const {bytes:predecessorBytes,baseline:predecessorBaseline} = !deltaStage && nkfVersion === "0.81"
+    ? {bytes:null,baseline:null} : await reviewPredecessor(project, nkfVersion);
   const prior = priorJudgments(predecessorBaseline);
   const performedNodes = new Set();
   for (const [index, entry] of review.nodes.entries()) {
@@ -444,18 +670,46 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   }
   const pendingReconciliation = (predecessorBaseline?.promotion_reconciliation ?? []).filter((entry) => entry.state === "pending");
   if (deltaStage) {
-    const closure = new Set();
-    for (const entry of review.nodes) {
-      const priorEntry = prior.nodes.get(nodeKey07(entry.node));
-      const carriable = predecessorBaseline !== null
-        && priorEntry !== undefined
-        && priorRevision(prior, priorEntry, entry.node) === entry.revision?.value;
-      if (!carriable) closure.add(nodeKey07(entry.node));
+    let closure;
+    if (PROPAGATED_CLOSURE_VERSIONS.has(nkfVersion)) {
+      if (predecessorBaseline === null) {
+        fail("A delta claim requires the predecessor reviewed baseline; whole-root review is the recovery path.");
+      }
+      const contracts = await acceptedClosureContracts(checkerPath, nkfVersion, result, versionDeltaDigest, { versionDelta, policy });
+      const acceptedDecisions = records
+        .filter((record) => record.type === "decision" && record.governance?.status === "accepted")
+        .map((record) => record.id)
+        .sort();
+      closure = new Set(deltaClosure0_81({
+        result,
+        edges: normalizedEdges(bundle, records),
+        predecessorBaseline,
+        policy: contracts.policy,
+        versionDelta: contracts.versionDelta,
+        basisDigestByNode: new Map(review.nodes.map((entry) => [nodeKey07(entry.node), entry.basis_digest?.value])),
+        acceptedDecisions,
+        decisionDigestById: new Map(acceptedDecisions.map((decision) => [decision, decisionDeclarationDigest(recordsById.get(decision))])),
+      }));
+    } else {
+      closure = new Set();
+      for (const entry of review.nodes) {
+        const priorEntry = prior.nodes.get(nodeKey07(entry.node));
+        const carriable = predecessorBaseline !== null
+          && priorEntry !== undefined
+          && priorRevision(prior, priorEntry, entry.node) === entry.revision?.value;
+        if (!carriable) closure.add(nodeKey07(entry.node));
+      }
+      for (const entry of pendingReconciliation) closure.add(nodeKey07(entry.node));
     }
-    for (const entry of pendingReconciliation) closure.add(nodeKey07(entry.node));
     const declaredClosure = new Set((review.computed_closure ?? []).map(nodeKey07));
     if (jcs([...closure].sort()) !== jcs([...declaredClosure].sort())) {
-      fail("The delta claim does not record the exact recomputed required-review closure.");
+      const missing = [...closure].filter((key) => !declaredClosure.has(key)).sort();
+      const extra = [...declaredClosure].filter((key) => !closure.has(key)).sort();
+      fail(
+        "The delta claim does not record the exact recomputed required-review closure."
+        + (missing.length > 0 ? ` Missing subjects: ${missing.join(", ")}.` : "")
+        + (extra.length > 0 ? ` Subjects not in the recomputed closure: ${extra.join(", ")}.` : ""),
+      );
     }
     for (const key of closure) {
       if (!performedNodes.has(key)) fail("The delta claim performed set does not contain the computed closure.");
@@ -509,8 +763,13 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   };
   await safeDirectory(project, [".nourd", "knowledge"], false);
   await safeDirectory(project, [".nourd", "knowledge", "freshness"], true);
-  const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
-  await writeFile(baselinePath, bytes);
+  if (nkfVersion === "0.81") {
+    if (deltaStage && predecessorBytes === null) fail("A delta review requires exact predecessor bytes.");
+    await writeVerifiedSeal0_81(project, checkerPath, baseline, deltaStage ? predecessorBytes : null);
+  } else {
+    const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
+    await writeFile(baselinePath, bytes);
+  }
   return {
     state: "sealed",
     stage: review.stage,
@@ -538,6 +797,7 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
 const REBIND_CONVERSIONS = new Map([
   ["0.71", "0.7"],
   ["0.8", "0.71"],
+  ["0.81", "0.8"],
 ]);
 
 export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest, policyDigest, targetVersion = "0.7" }) {
@@ -550,6 +810,8 @@ export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest,
     if (baseline.nkf_version !== predecessor) {
       fail(`Baseline conversion to NKF ${targetVersion} supports exactly the confirmed NKF ${predecessor} predecessor.`);
     }
+    const predecessorBinding = targetVersion === "0.81"
+      ? await preservePredecessor(project, await readFile(baselinePath)) : null;
     const carried = {
       carried: {
         performed_in_graph_revision: baseline.graph_revision,
@@ -566,13 +828,14 @@ export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest,
         ? { carried: structuredClone(entry.provenance.carried) }
         : structuredClone(carried);
     }
+    if (predecessorBinding !== null) baseline.predecessor = predecessorBinding;
     baseline.nkf_version = targetVersion;
     baseline.policy = { id: `nkf.freshness-policy.${targetVersion}`, digest: { algorithm: "sha-256", value: policyDigest } };
     baseline.version_delta = { contract: "nkf.version-delta", digest: { algorithm: "sha-256", value: versionDeltaDigest } };
     await writeFile(baselinePath, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
     return { state: "converted", judgments: (baseline.applicability_coverage ?? []).length };
   }
-  if (targetVersion !== "0.7") fail("Baseline shape conversion supports exactly the registered NKF 0.7, 0.71, and 0.8 targets.");
+  if (targetVersion !== "0.7") fail("Baseline shape conversion supports exactly the registered NKF 0.7, 0.71, 0.8, and 0.81 targets.");
   if (baseline.nkf_version === "0.7") return { state: "already-0.7" };
   if (baseline.nkf_version !== "0.6") fail("Baseline shape conversion supports exactly the NKF 0.6 predecessor.");
   const revisions = new Map(
@@ -723,8 +986,11 @@ export async function sealConclusion0_71({ projectRoot, checker, task, fromState
   };
   await safeDirectory(project, [".nourd", "knowledge"], false);
   await safeDirectory(project, [".nourd", "knowledge", "freshness"], true);
-  const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
-  await writeFile(baselinePath, bytes);
+  if (nkfVersion === "0.81") await writeVerifiedSeal0_81(project, checkerPath, baseline, predecessorBytes);
+  else {
+    const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
+    await writeFile(baselinePath, bytes);
+  }
   const sealed = await candidateGraph07(project, checkerPath, nkfVersion);
   const sealedRevision = sealed.knowledge_graph.summary?.candidate_graph_revision ?? sealed.knowledge_graph.candidate_graph_revision;
   if (sealedRevision?.value !== baseline.graph_revision.value) {

@@ -2,19 +2,21 @@
 
 NKF has one public operation: **Adopt**. The same invocation brings a supported
 repository to the current governed recommended release whether it is new to
-NKF, on the supported predecessor NKF 0.71, missing integration, behind within
-NKF 0.8, or already current.
+NKF, on the supported predecessor NKF 0.8, missing integration, behind within
+NKF 0.81, or already current.
 
-NKF 0.8 is pre-stable. The checker and release archive are private to
-authorized Nourd projects; this public adopter contains no checker or private
-credential.
+NKF 0.81 is pre-stable. The checker and release archive are published from
+the public `NourdApS/Nourd.NKF` repository and downloadable by anyone; this
+public adopter contains no checker and no credential, and it needs none.
 
 ## Before You Run Adopt
 
-Use Node.js 22 or later. For the default authenticated path, install `gh` and
-log in to an account authorized for `NourdApS/Nourd.NKF`. Download
-`tools/nourd-nkf-adopt.mjs` and verify its SHA-256 against
-`reference/publication.json`.
+Use Node.js 22 or later. The default path needs network access to
+`raw.githubusercontent.com`, `github.com`, and the release-asset host Github
+redirects downloads to; it needs no Github account, session, or command-line
+tool. Download `tools/nourd-nkf-adopt.mjs`
+and verify its SHA-256 against `reference/publication.json` and the
+`adopter_sha256` the recommendation catalog states before running it.
 
 The repository's authority approves adoption. The command cannot accept
 project meaning or confirm a Realization.
@@ -46,10 +48,10 @@ before archive use.
 
 | State | Meaning |
 | --- | --- |
-| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.8 project |
-| `updated` | An exact conformant NKF 0.71 repository completed the non-breaking upgrade with its reviewed delta, or a native 0.8 repository received the recommended exact release and integration |
+| `onboarded` | A reviewed sealed initial plan and whole-root graph review became a ready NKF 0.81 project |
+| `updated` | An exact conformant NKF 0.8 repository completed the non-breaking upgrade with its reviewed delta, or a native 0.81 repository received the recommended exact release and integration |
 | `current` | The exact recommended release and integration already validate |
-| Failed closed | A repository declaring NKF 0.1 through 0.7 is outside the support window; the refusal names the exact next stepping-stone release archive |
+| Failed closed | A repository declaring NKF 0.1 through 0.71 is outside the support window; the refusal names the exact next stepping-stone release archive |
 
 Every result names the target archive, source commit, checker, adopter, and
 applicable compatibility signal. The consumer pin under
@@ -59,7 +61,7 @@ later recommendation change does not alter the repository automatically.
 ## The Support Window
 
 Live support covers exactly the current version plus one predecessor:
-NKF 0.8 and NKF 0.71. A repository declaring an older version migrates
+NKF 0.81 and NKF 0.8. A repository declaring an older version migrates
 through immutable published archives as stepping stones — each hop uses that
 archive's own bundled adopter with an explicit archive and digest. See
 [Update And Recover](update-and-recover.md) for the exact stepping-stone
@@ -79,7 +81,7 @@ node nourd-nkf-adopt.mjs \
   --review /absolute/path/to/whole-root-review.yaml
 ```
 
-If the `--review` file does not exist, Adopt builds the complete isolated 0.8
+If the `--review` file does not exist, Adopt builds the complete isolated 0.81
 candidate, writes a candidate-specific review template there, and stops before
 project mutation. A named human or agent must review the actual graph, replace
 every `REVIEW_REQUIRED` value and placeholder with source-bound findings, then
@@ -87,14 +89,14 @@ rerun the exact same Adopt command. Adopt never fills semantic roles,
 relationship completeness, or Decision compatibility by itself. Missing,
 stale, incomplete, or unsupported plans or reviews stop without mutation.
 
-## Non-Breaking NKF 0.71 Upgrade
+## Non-Breaking NKF 0.8 Upgrade
 
-Updating an exact conformant NKF 0.71 repository to NKF 0.8 is `non-breaking`
+Updating an exact conformant NKF 0.8 repository to NKF 0.81 is `non-breaking`
 and requires no repository-owner approval: no stable path moves, no identity
 succeeds, no declaration changes shape, and canonical Markdown bytes are
 preserved. The upgrade still never invents review. The first Adopt invocation
 writes the exact upgrade review template — carried judgments prefilled by
-digest identity under the accepted 0.71-to-0.8 version-delta declaration, the
+digest identity under the accepted 0.8-to-0.81 version-delta declaration, the
 computed required fresh set left to a named reviewer — and stops. Rerun with
 the completed review:
 
@@ -105,13 +107,14 @@ node nourd-nkf-adopt.mjs \
 ```
 
 In one rollback-capable transaction the upgrade rebinds the contract set to
-0.8, converts the reviewed baseline to the digest-bound 0.8 contract with
+0.81, converts the reviewed baseline to the digest-bound 0.81 contract with
 computed per-judgment carry-forward, and refreshes the integration. A delta
 review claim is admitted only when the performed set contains the computed
-closure;
-whole-root review remains the recovery path. A repository whose 0.71 baseline
+closure and the recorded closure equals the closure the 0.81 checker
+recomputes with the evaluation policy's impact propagation; whole-root review
+remains the recovery path. A repository whose 0.8 baseline
 is missing, outdated, disputed, or otherwise not ready is ineligible until a
-governed 0.71 knowledge-maintenance operation restores it. The semantic
+governed 0.8 knowledge-maintenance operation restores it. The semantic
 reviewer's act does not accept canonical Product or Technology meaning.
 
 ## What Adopt Installs

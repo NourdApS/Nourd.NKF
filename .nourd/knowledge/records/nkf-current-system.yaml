@@ -8,7 +8,7 @@ source:
   stable_path: realizations/current-system.md
   digest:
     algorithm: sha-256
-    value: 6c8195106561f537771bfa53b605ca4f2de1ecc3f5cc851a028aee4421f8f371
+    value: "e1850f9f6c5a134947c11c942dbce74998815dbc2901dde34ba1c26e30ecf999"
 governance:
   lifecycle: living
   status: draft
@@ -29,6 +29,42 @@ sections:
   - id: governed-meaning-realized
     heading_path:
       - Governed Meaning Realized
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities:
+      - governed-meaning-realized
+  - id: current-release-state
+    heading_path:
+      - Governed Meaning Realized
+      - Current Release State
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities:
+      - governed-meaning-realized
+  - id: what-nkf-0-81-adds
+    heading_path:
+      - Governed Meaning Realized
+      - What NKF 0.81 Adds
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities:
+      - governed-meaning-realized
+  - id: what-the-live-implementation-realizes
+    heading_path:
+      - Governed Meaning Realized
+      - What The Live Implementation Realizes
+    occurrence: 1
+    authority: accepted-meaning
+    role: mapping
+    responsibilities:
+      - governed-meaning-realized
+  - id: lineage
+    heading_path:
+      - Governed Meaning Realized
+      - Lineage
     occurrence: 1
     authority: accepted-meaning
     role: mapping

@@ -8,7 +8,7 @@ source:
   stable_path: designs/items/nkf-public-repository.md
   digest:
     algorithm: sha-256
-    value: 9a93fb10e1bb2517283fc8a196140a9734df08551dfc88719b0adaecd31bc32f
+    value: 018f935dac52be5b139961f518f22665e806f6671f61dbf8dc7830d195803bf3
 governance:
   lifecycle: living
   status: draft
@@ -55,10 +55,10 @@ sections:
     occurrence: 1
     authority: proposal
     role: boundary
-  - id: the-catalog-stays-literal-until-nkf-0-9
+  - id: the-catalog-stays-literal-until-nkf-0-81
     heading_path:
       - Proposed Direction
-      - The Catalog Stays Literal Until NKF 0.9
+      - The Catalog Stays Literal Until NKF 0.81
     occurrence: 1
     authority: proposal
     role: boundary
@@ -120,10 +120,10 @@ sections:
     occurrence: 1
     authority: proposal
     role: alternative
-  - id: stay-private-until-nkf-0-9-ships
+  - id: stay-private-until-nkf-0-81-ships
     heading_path:
       - Alternatives And Trade-Offs
-      - Stay Private Until NKF 0.9 Ships
+      - Stay Private Until NKF 0.81 Ships
     occurrence: 1
     authority: proposal
     role: alternative
@@ -166,6 +166,6 @@ relationships:
     source_section: governing-inputs-and-constraints
 task: NKF-037
 design_disposition: adopted
-proposal_authority_effect: Adopted by ADR 0136 as the public-repository direction; the visibility change itself remains the Human Product Owner's separately observed act, and the NKF 0.9 remedy for the catalog gap requires its own release Task.
 design_decisions:
   - adr-0136
+proposal_authority_effect: Adopted by ADR 0136 as the public-repository direction; the visibility change was the Human Product Owner's separately observed act, and the successor that remedies the catalog gap is NKF 0.81 under NKF-038.

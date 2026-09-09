@@ -12,13 +12,13 @@ import { RuleEmitter } from "../src/checker/diagnostics.js";
 import { evaluateKnowledgeGraph } from "../src/checker/freshness.js";
 import type { ValidationRequest } from "../src/checker/types.js";
 import { jcs, sha256 as utilSha256 } from "../src/checker/util.js";
-import { contractRoot, copyValidFixture, options, repositoryRoot } from "./helpers.js";
+import { bindSyntheticPredecessor, contractRoot, copyValidFixture, options, repositoryRoot } from "./helpers.js";
 
 const sha256 = (bytes: Buffer | string) => createHash("sha256").update(bytes).digest("hex");
 
-async function mutateYaml(file: string, change: (value: any) => void) {
+async function mutateYaml(file: string, change: (value: any) => void | Promise<void>) {
   const value = YAML.parse(await readFile(file, "utf8"));
-  change(value);
+  await change(value);
   await writeFile(file, YAML.stringify(value, { lineWidth: 0, aliasDuplicateObjects: false }));
 }
 
@@ -28,7 +28,7 @@ async function mutateYaml(file: string, change: (value: any) => void) {
 async function legacyLockProject(prefix: string): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), prefix));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-81"), project, { recursive: true });
   const taskSource = path.join(project, "knowledge/tasks/items/task.md");
   const legacySource = (await readFile(taskSource, "utf8")).replace(
     "created_at: 2026-07-30T15:59:54Z\n---",
@@ -84,7 +84,7 @@ describe("baseline and freshness rule coverage", () => {
       baseline.node_revisions.push(structuredClone(baseline.node_revisions[0]));
       baseline.graph_revision.value = utilSha256(Buffer.from(jcs({
         contract: "nkf.graph-revision",
-        nkf_version: "0.8",
+        nkf_version: "0.81",
         bundle: baseline.bundle,
         profile: baseline.profile,
         nodes: baseline.node_revisions,
@@ -125,7 +125,7 @@ describe("baseline and freshness rule coverage", () => {
   });
 
   it("verifies digest-bound judgment provenance and carry preconditions", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.81"], "0.81");
     const record = {
       artifact: ".nourd/knowledge/records/alpha.yaml",
       declaration: {
@@ -142,7 +142,7 @@ describe("baseline and freshness rule coverage", () => {
     const bundle = { id: "coverage", root: { profile: "nkf.profile.product", record: "alpha" }, knowledge_graph: { baseline: ".nourd/knowledge/freshness/baseline.yaml" } };
     const evaluateSealed = (tamper: (baseline: any) => void) => {
       const first = evaluateKnowledgeGraph({
-        nkfVersion: "0.71", bundle, records: [record], documents: [],
+        nkfVersion: "0.81", bundle, records: [record], documents: [],
         executable: loaded.executable, policy: loaded.freshnessPolicy,
         policyBinding: { expected_sha256: "0".repeat(64), observed_sha256: "0".repeat(64), binding: "verified" },
         baseline: null, baselinePresent: false,
@@ -153,9 +153,9 @@ describe("baseline and freshness rule coverage", () => {
       const purposes = ["change-impact", "whole-root-readiness", "consequential-use"];
       const relationships = Object.keys(loaded.executable.vocabularies.graph_relationship_types);
       const baseline: any = {
-        contract: "nkf.graph-baseline", nkf_version: "0.71",
+        contract: "nkf.graph-baseline", nkf_version: "0.81",
         bundle: bundle.id, profile: bundle.root.profile,
-        policy: { id: "nkf.freshness-policy.0.71", digest: { algorithm: "sha-256", value: "0".repeat(64) } },
+        policy: { id: "nkf.freshness-policy.0.81", digest: { algorithm: "sha-256", value: "0".repeat(64) } },
         version_delta: { contract: "nkf.version-delta", digest: { algorithm: "sha-256", value: "5".repeat(64) } },
         node_revisions: nodes,
         authored_edges: [],
@@ -178,15 +178,15 @@ describe("baseline and freshness rule coverage", () => {
         },
       };
       baseline.graph_revision = { algorithm: "sha-256", value: utilSha256(Buffer.from(jcs({
-        contract: "nkf.graph-revision", nkf_version: "0.71", bundle: bundle.id, profile: bundle.root.profile,
+        contract: "nkf.graph-revision", nkf_version: "0.81", bundle: bundle.id, profile: bundle.root.profile,
         nodes: baseline.node_revisions, edges: baseline.authored_edges,
         external_dependencies: [], authority_inputs: [],
-        policy: { id: "nkf.freshness-policy.0.71", sha256: "0".repeat(64) },
+        policy: { id: "nkf.freshness-policy.0.81", sha256: "0".repeat(64) },
       }), "utf8")) };
       tamper(baseline);
       const emitter = new RuleEmitter(loaded.executable);
       evaluateKnowledgeGraph({
-        nkfVersion: "0.71", bundle, records: [record], documents: [],
+        nkfVersion: "0.81", bundle, records: [record], documents: [],
         executable: loaded.executable, policy: loaded.freshnessPolicy,
         policyBinding: { expected_sha256: "0".repeat(64), observed_sha256: "0".repeat(64), binding: "verified" },
         baseline, baselinePresent: true,
@@ -264,6 +264,31 @@ describe("baseline and freshness rule coverage", () => {
       }
     });
     expect(await rules(mismatch, readiness)).toContain("freshness.claim.computed-closure-mismatch");
+
+    // A recorded closure whose propagation term is missing is not reproduced
+    // by the 0.81 recompute: the Technology fixture's realizes edge reaches
+    // the realization from the changed specification.
+    const notReproducedParent = await mkdtemp(path.join(os.tmpdir(), "nkf-closure-coverage-"));
+    const notReproduced = path.join(notReproducedParent, "project");
+    await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-81"), notReproduced, { recursive: true });
+    await mutateYaml(baselineFile(notReproduced), async (baseline) => {
+      const specification = { kind: "record", id: "specification" };
+      const prior = await bindSyntheticPredecessor(notReproduced, baseline, [specification]);
+      baseline.confirmation.claim = "semantically-reviewed-delta";
+      baseline.confirmation.computed_closure = [specification];
+      baseline.confirmation.performed_set = [specification];
+      for (const entry of baseline.applicability_coverage) {
+        entry.provenance = entry.node.kind === "record" && entry.node.id === "specification"
+          ? { performed: true }
+          : {
+              carried: {
+                performed_in_graph_revision: prior.graph_revision,
+                performing_reviewer: prior.confirmation.reviewer,
+              },
+            };
+      }
+    });
+    expect(await rules(notReproduced, readiness)).toContain("freshness.claim.computed-closure-not-reproduced");
 
     const pending = await copyValidFixture();
     await mutateYaml(baselineFile(pending), (baseline) => {
@@ -422,7 +447,7 @@ describe("graph rule coverage", () => {
   });
 
   it("keeps every changed node in its own impact selection", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.81"], "0.81");
     const emitter = new RuleEmitter(loaded.executable);
     // freshness.policy.false-negative is the fail-closed backstop for a
     // policy that would drop a changed node from its own impact selection.
@@ -430,7 +455,7 @@ describe("graph rule coverage", () => {
     // the invariant: the selection contains the changed node and the
     // backstop stays silent.
     const result = evaluateKnowledgeGraph({
-      nkfVersion: "0.71",
+      nkfVersion: "0.81",
       bundle: { id: "coverage", root: { profile: "nkf.profile.product", record: "product" }, knowledge_graph: { baseline: ".nourd/knowledge/freshness/baseline.yaml" } },
       records: [],
       documents: [],
@@ -453,11 +478,11 @@ describe("graph rule coverage", () => {
   });
 
   it("fails closed for unsupported policies, vocabularies, and malformed synthetic inputs", async () => {
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.81"], "0.81");
     const evaluate = (overrides: Record<string, any>) => {
       const emitter = new RuleEmitter(loaded.executable);
       evaluateKnowledgeGraph({
-        nkfVersion: "0.71",
+        nkfVersion: "0.81",
         bundle: { id: "coverage", root: { profile: "nkf.profile.product", record: "product" }, knowledge_graph: { baseline: ".nourd/knowledge/freshness/baseline.yaml" } },
         records: [],
         documents: [],
@@ -554,7 +579,7 @@ describe("graph rule coverage", () => {
     // one accepted decision as conflicting for the readiness purpose.
     const project = await copyValidFixture();
     await rm(conflict, { recursive: true, force: true });
-    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.71"], "0.71");
+    const loaded = await loadContracts(contractRoot, VERSION_BINDINGS["0.81"], "0.81");
     const emitter = new RuleEmitter(loaded.executable);
     const record = {
       artifact: ".nourd/knowledge/records/adr-0001.yaml",
@@ -570,7 +595,7 @@ describe("graph rule coverage", () => {
       sourceValid: true,
     };
     evaluateKnowledgeGraph({
-      nkfVersion: "0.71",
+      nkfVersion: "0.81",
       bundle: { id: "coverage", root: { profile: "nkf.profile.product", record: "product" }, knowledge_graph: { baseline: ".nourd/knowledge/freshness/baseline.yaml" } },
       records: [record],
       documents: [],
@@ -699,7 +724,7 @@ describe("record, path, and bundle rule coverage", () => {
 
     const bootstrapParent = await mkdtemp(path.join(os.tmpdir(), "nkf-bootstrap-coverage-"));
     const bootstrap = path.join(bootstrapParent, "project");
-    await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), bootstrap, { recursive: true });
+    await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-81"), bootstrap, { recursive: true });
     await mutateYaml(path.join(bootstrap, ".nourd/knowledge/records/specification.yaml"), (declaration) => {
       delete declaration.legacy_lock;
       declaration.accepted_bootstrap_lock = {
@@ -722,28 +747,28 @@ describe("record, path, and bundle rule coverage", () => {
 describe("contract-set rule coverage", () => {
   async function contractHarness(mutate: (root: string) => Promise<Partial<Record<string, string>>>) {
     const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-contract-coverage-"));
-    await mkdir(path.join(parent, "contracts/nkf/0.8"), { recursive: true });
+    await mkdir(path.join(parent, "contracts/nkf/0.81"), { recursive: true });
     await mkdir(path.join(parent, "knowledge/specifications"), { recursive: true });
-    await cp(contractRoot, path.join(parent, "contracts/nkf/0.8"), { recursive: true });
+    await cp(contractRoot, path.join(parent, "contracts/nkf/0.81"), { recursive: true });
     await cp(
-      path.join(repositoryRoot, "knowledge/specifications/nkf-0.8.md"),
-      path.join(parent, "knowledge/specifications/nkf-0.8.md"),
+      path.join(repositoryRoot, "knowledge/specifications/nkf-0.81.md"),
+      path.join(parent, "knowledge/specifications/nkf-0.81.md"),
     );
     const digests = await mutate(parent);
-    const base = VERSION_BINDINGS["0.8"];
+    const base = VERSION_BINDINGS["0.81"];
     const bindings = {
       ...base,
       ...(digests.versionDelta === undefined ? {} : {
         versionDelta: { ...base.versionDelta!, sha256: digests.versionDelta },
       }),
       ...(digests.versionDeltaMissing === undefined ? {} : {
-        versionDelta: { ...base.versionDelta!, path: "contracts/nkf/0.8/version-delta-absent.yaml" },
+        versionDelta: { ...base.versionDelta!, path: "contracts/nkf/0.81/version-delta-absent.yaml" },
       }),
       ...(digests.freshnessPolicy === undefined ? {} : {
         freshnessPolicy: { ...base.freshnessPolicy!, sha256: digests.freshnessPolicy },
       }),
     };
-    const loaded = await loadContracts(path.join(parent, "contracts/nkf/0.8"), bindings, "0.8");
+    const loaded = await loadContracts(path.join(parent, "contracts/nkf/0.81"), bindings, "0.81");
     return [...new Set(loaded.diagnostics.map((diagnostic) => diagnostic.rule_id))];
   }
 
@@ -752,7 +777,7 @@ describe("contract-set rule coverage", () => {
       .toContain("version-delta.unavailable");
 
     expect(await contractHarness(async (root) => {
-      const file = path.join(root, "contracts/nkf/0.8/version-delta.yaml");
+      const file = path.join(root, "contracts/nkf/0.81/version-delta.yaml");
       const delta = YAML.parse(await readFile(file, "utf8"));
       delete delta.rules["artifact.digest-mismatch"];
       const bytes = YAML.stringify(delta, { lineWidth: 0 });
@@ -761,7 +786,7 @@ describe("contract-set rule coverage", () => {
     })).toContain("version-delta.coverage-incomplete");
 
     expect(await contractHarness(async (root) => {
-      const file = path.join(root, "contracts/nkf/0.8/version-delta.yaml");
+      const file = path.join(root, "contracts/nkf/0.81/version-delta.yaml");
       const delta = YAML.parse(await readFile(file, "utf8"));
       delta.rules["artifact.digest-mismatch"].classification = "unrecognized";
       const bytes = YAML.stringify(delta, { lineWidth: 0 });
@@ -770,7 +795,7 @@ describe("contract-set rule coverage", () => {
     })).toContain("version-delta.classification-invalid");
 
     expect(await contractHarness(async (root) => {
-      const file = path.join(root, "contracts/nkf/0.8/freshness-policy.yaml");
+      const file = path.join(root, "contracts/nkf/0.81/freshness-policy.yaml");
       const bytes = `${await readFile(file, "utf8")}unexpected_policy_key: true\n`;
       await writeFile(file, bytes);
       return { freshnessPolicy: sha256(bytes) };
