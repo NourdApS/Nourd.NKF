@@ -234,3 +234,35 @@ of the prior whole-set review; this focused correction is not a new whole-set
 release audit. ADR 0141 continues to confirm only its exact prior candidate
 archive. The changed delivery requires a new candidate cut, exercise,
 independent audit, and technical confirmation before publication.
+
+## Final Whole-Set Guidance Reread — 2026-09-09
+
+At the Human Product Owner's request, the independent documentation reviewer
+used GPT-5.6 Luna for the final documentation sweep. The reviewer re-read all
+twelve current 0.81 guidance members in full, together with their neutral
+sources, and recorded the following exact reviewed bytes. This is a new
+whole-set reading after the topology and predecessor-proof repairs, not a
+reuse of the earlier focused review.
+
+| Member re-read in full | Reviewed SHA-256 |
+| --- | --- |
+| `distribution/nkf/0.81/.agents/skills/nkf-onboarding/SKILL.md` | `f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544` |
+| `distribution/nkf/0.81/.agents/skills/nkf-authoring/SKILL.md` | `5da4e0f680a03c7322c5894126f345d09be5710a26e2c858a3055eea691a42b1` |
+| `distribution/nkf/0.81/.claude/skills/nkf-onboarding/SKILL.md` | `f4053d8b27db4ee6298d96b278dd3ad446108e19c9b8a72a436d13931bb11544` |
+| `distribution/nkf/0.81/.claude/skills/nkf-authoring/SKILL.md` | `5da4e0f680a03c7322c5894126f345d09be5710a26e2c858a3055eea691a42b1` |
+| `distribution/nkf/0.81/integrations/adoption/nkf-adoption-protocol.md` | `df3066e3b43fb78a1a6add384e4173083ad7965d4131f1079b330043c57b7b85` |
+| `distribution/nkf/0.81/integrations/release/nkf-release-protocol.md` | `e2f70472160ff2b738d4103732bc4110ad095a8c0d2258a66dc7556e3fc2b4b9` |
+| `distribution/nkf/0.81/integrations/ai/nkf-authoring-protocol.md` | `46659b7e55766888d1fd2d2a4fe4b47880482a02f2c59798f1436b764f94d20c` |
+| `distribution/nkf/0.81/integrations/onboarding/nkf-onboarding-protocol.md` | `4ca144af24ded2684819b5458e2340d3a85b3226058ff8a966eb32a59af18c55` |
+| `distribution/nkf/0.81/host-adapters/AGENTS.adapter.md` | `0919110739d3402eeff13d4443a5e1ba51eb0f3571a76aead6f076c4116100a7` |
+| `distribution/nkf/0.81/host-adapters/CLAUDE.adapter.md` | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
+| `distribution/nkf/0.81/host-adapters/GEMINI.adapter.md` | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
+| `distribution/nkf/0.81/host-adapters/copilot-instructions.adapter.md` | `d9a9d7ded74b90e019f35722b963e7dc55b45edfde7339e9e6e6300aaf219520` |
+
+The producer's root integrations and installed skills still state 0.8 because
+the producer still declares and pins published 0.8. Those installed-version
+instructions are intentionally preserved; the 0.81 generated distribution is
+the successor release surface. Changing the installed labels before adoption
+would state an adoption that has not occurred. Historical accepted records,
+archived authority revisions, and published 0.8 distribution retain their
+original version claims as provenance.
