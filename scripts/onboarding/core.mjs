@@ -688,7 +688,7 @@ function validatePlanEnvelope(plan) {
     "plan",
   );
   if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.81") {
-    fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.4 onboarding plan.");
+    fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.81 onboarding plan.");
   }
   requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
   safeRelative(plan.inspection.knowledge_root, "inspection.knowledge_root");

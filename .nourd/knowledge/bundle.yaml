@@ -1871,7 +1871,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
       digest:
         algorithm: sha-256
-        value: "60d9401c3417d1efc26554f19464615290d801c10e2f68b12aed17bc24f642d9"
+        value: "66f74e240bcc101267e65a9eae7ffae883c633454680f79eca8d78526b3cdd96"
       relationships: []
   - path: evidence/release/nkf-0.81-release-notes.md
     kind: evidence
@@ -2472,7 +2472,7 @@ governed_artifacts:
     path: dist/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "b4840ee7293532ae8adcb018048e8c6d5bcfbe9b30c3286e895a579ffe68bc00"
+      value: "12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-fixtures-valid-minimal-0-81-nourd-knowledge-bundle-yaml
@@ -3200,7 +3200,7 @@ governed_artifacts:
     path: public-docs/tools/nourd-nkf-adopt.mjs
     digest:
       algorithm: sha-256
-      value: "b4840ee7293532ae8adcb018048e8c6d5bcfbe9b30c3286e895a579ffe68bc00"
+      value: "12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-readme-md
@@ -3272,7 +3272,7 @@ governed_artifacts:
     path: scripts/onboarding/core.mjs
     digest:
       algorithm: sha-256
-      value: "66e7e8846f0cfb45f95e296901625da6cebae64f21bd5725329e4b0132ca8a88"
+      value: "8d735f140896b66350e5d92a067f6fbdd6a15c8b1e07d825ee14499f2e3559cc"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-scripts-package-release-mjs

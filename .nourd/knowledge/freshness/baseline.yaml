@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 102c1619bda1bc407dfbbd092b0d2edd4097e1503466a4e5fa9050253c352607
+  value: 0a1e578233f28a41eb594de56ac0d3250a44627c61444400276913065f0ca5f4
 policy:
   id: nkf.freshness-policy.0.8
   digest:
@@ -2019,7 +2019,7 @@ node_revisions:
       id: document-nkf-038-nkf-0-81-guidance-review
     revision:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
   - node:
       kind: document
       id: document-nkf-038-nkf-0-81-independent-authority-audit
@@ -31820,10 +31820,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     basis_digest:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     provenance:
       performed: true
   - node:
@@ -31843,10 +31843,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     basis_digest:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     provenance:
       performed: true
   - node:
@@ -31866,10 +31866,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     basis_digest:
       algorithm: sha-256
-      value: 777c8c67d6ba772cece3b81d7e8283ce647842c86fbb9a30042409db567091b0
+      value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     provenance:
       performed: true
   - node:
@@ -43551,7 +43551,7 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-09-09T17:42:01.008Z
+  reviewed_at: 2026-09-09T17:46:41.414Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
@@ -43573,7 +43573,7 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: "Reviewed final whole-set guidance evidence: all twelve exact 0.81 guidance members re-read by the independent Luna documentation reviewer; preserved installed producer 0.8 instructions under the explicit unpromoted boundary."
+      finding: "Reviewed the final inventory and corrected only the stale onboarding diagnostic: the existing 0.81 precondition now names 0.81. Guidance and installed-version semantics are unchanged; generated adopter copies are synchronized."
   limitations:
     - Local NKF-038 authoring review under explicit user direction. Publication, recommendation, live producer adoption, and merge remain separate operations.
   disputed: false

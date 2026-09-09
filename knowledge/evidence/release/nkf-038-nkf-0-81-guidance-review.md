@@ -266,3 +266,25 @@ the successor release surface. Changing the installed labels before adoption
 would state an adoption that has not occurred. Historical accepted records,
 archived authority revisions, and published 0.8 distribution retain their
 original version claims as provenance.
+
+### Remaining Release Members And Final Sweep Disposition
+
+The final deterministic inventory contains 142 release members, including the
+generated manifest, and 141 source members. The independent reviewer checked
+every remaining member for stale version literals. Sixteen source paths
+contained predecessor literals. Their compatibility enumerations, version
+delta, frozen predecessor contract bindings, historical notices, and migration
+examples were correctly scoped. One runtime diagnostic was stale:
+`scripts/onboarding/core.mjs` required a 0.81 plan but its refusal called the
+required plan 0.4. The source message now names 0.81 and its distributed adopter
+and public copy were regenerated. Validation semantics are unchanged.
+
+The documentation inventory covered 428 knowledge files, including 36 Task
+items, 37 Design items, 144 top-level Decision entries, and 183 Evidence files;
+these populations overlap and are not additive. It also covered 11 neutral
+guidance files, 12 distributed guidance files, 62 public-projection files,
+six root integration files, and the installed skills. The independent sweep
+found no other actionable stale claim. The primary reviewer verified the
+installed 0.8 boundary and the diagnostic correction. Link verification found
+zero dead living links among 1,878 checked links; 175 historical-link exemptions
+remain classified as history, not silently repaired.
