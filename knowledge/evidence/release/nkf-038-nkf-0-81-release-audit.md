@@ -522,3 +522,51 @@ recovery case. The change affects only the test harness, outside the release
 set; all 141 confirmed source-member bytes remain unchanged. Local handoff
 validation and remote merge enforcement are checked separately on the final
 Task-close commits.
+
+
+## Authorized Public Publication And Re-Download
+
+On `2026-09-09`, after merging the implementation, the Human Product Owner
+directed: "it is merged to master . let's release now". The publication plan
+is recorded in [NKF-038](../../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
+GitHub reported pull request 24 merged at `2026-09-09T19:08:57Z`, merge commit
+`492bb960bdb39a6c9e16be967867096be6287cf2`, whose tree equals the checked task
+head. The master `NKF Contracts` run `34393325253` completed successfully.
+The confirmed release commit is an ancestor of that merged master.
+
+The exact archive confirmed by
+[ADR 0144](../../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md)
+was published without recutting it. GitHub reported:
+
+| Observation | Value |
+| --- | --- |
+| Public release | [NKF 0.81](https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3) |
+| Published at | `2026-09-09T19:16:40Z` |
+| Repository visibility | `PUBLIC` |
+| Draft / prerelease | `false` / `true` |
+| Tag and manifest source commit | `fa0efa056db17f5336a3b7a93142d58f41110cf7` |
+| Archive SHA-256 | `a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3` |
+| Uploaded asset identifier | `553406927` |
+| Uploaded bytes | `7788544` |
+| Checker SHA-256 | `1a268c93d9f484389885c02336ebd8464718967249036e79de03ddf7cd775008` |
+| Adopter SHA-256 | `12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5` |
+
+An independent unauthenticated `curl` request downloaded the canonical release
+asset over HTTPS, allowing HTTPS redirects only. `scripts/verify-release.mjs`
+verified the downloaded archive against the independently supplied confirmed
+SHA-256, its complete member and manifest bindings, tag, release commit, and
+checker digest. GitHub's separately reported asset digest matches that same
+SHA-256. Its tag API resolves directly to the confirmed commit. This is live
+public download evidence; it does not claim live default-catalog 0.81 adoption.
+Source reproduction and full candidate execution remain the independently
+recorded prepublication checks above; they were not repeated or relabelled as
+part of the download-only check.
+
+The release body publishes the four named migration sections, exact digests,
+and commit-bound links to authority and confirmation. It explicitly states
+that the catalog and producer still select 0.8 and the separate documentation
+repository still hosts the 0.8 projection. Catalog recommendation, external
+documentation promotion, and live producer adoption have not been performed.
+The published live support window is now exactly 0.81 plus 0.8; 0.71 is
+stepping-stone history. These observations do not alter accepted meaning or
+upgrade the living Realization's partial confirmation status.

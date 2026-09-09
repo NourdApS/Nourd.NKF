@@ -28,7 +28,11 @@ distribution, security, and technical lifecycle.
 
 ## Current Status
 
-NKF 0.8 is the current published, recommended, and producer-adopted version.
+NKF 0.81 is the current published version, available as a [public prerelease](https://github.com/NourdApS/Nourd.NKF/releases/tag/release-sha256-a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3) since `2026-09-09`.
+Its archive was re-downloaded anonymously and verified against the exact
+confirmed digest, as recorded in the [publication Evidence](knowledge/evidence/release/nkf-038-nkf-0-81-release-audit.md#authorized-public-publication-and-re-download).
+The recommendation catalog and this producer still select NKF 0.8.
+NKF 0.8 remains published, recommended, and producer-adopted.
 Its content-addressed archive and release tag are identified by SHA-256
 `2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5`, published
 as an immutable prerelease at the technically confirmed release commit
@@ -45,7 +49,7 @@ adopted by
 [ADR 0138](knowledge/decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
 and
 [ADR 0139](knowledge/decisions/0139-adopt-the-delta-closure-propagation-repair.md),
-and its repaired unpublished five-artifact authority revision is accepted by
+and its repaired five-artifact authority revision is accepted by
 [ADR 0142](knowledge/decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md),
 under the Human Product Owner's explicit P1 self-audit and execution delegation.
 It repairs the reproduced false-ready closure result by binding exact
@@ -74,12 +78,11 @@ isolated producer exercise. All 281 tests pass; first adoption returned
 `updated`, repeat adoption `current`, with the full producer gate passed and
 141 source members reproduced. The previous confirmation remains historical
 and applies only to its earlier exact candidate.
-Publication as a public prerelease under the
-accepted channel, the catalog recommendation, this producer's promotion, and
-the merge remain the Human Product Owner's separate acts; until they happen, live
-support is NKF 0.8 plus NKF 0.71, and at publication it becomes exactly
-NKF 0.81 plus NKF 0.8 with a 0.71 repository stepping through the published
-0.8 archive.
+The implementation has merged to `master`, and the confirmed archive is
+published under the accepted public prerelease channel. Catalog recommendation
+and this producer's promotion remain separately authorized acts. Live support
+is now exactly NKF 0.81 plus NKF 0.8, with a 0.71 repository stepping through
+the published 0.8 archive.
 
 The ten frozen supporting Realizations that once sat beside the current-system
 record were retired to Git history under ADR 0138, and the
@@ -94,7 +97,8 @@ is a separate remote operation. The NKF 0.8 projection staged from `master`
 commit `d3f0e84f` was published there on `2026-09-08` and verified
 byte-for-byte from a fresh clone, as recorded in the
 [publication Evidence](knowledge/evidence/release/nkf-036-nkf-0-8-public-documentation-publication.md);
-the 0.81 projection is republished after the 0.81 release. Github owns its
+the 0.81 projection is included in its published archive but awaits separate
+documentation-repository promotion. Github owns its
 later state.
 
 The `NKF Contracts` workflow validates every push and pull request with the
@@ -139,7 +143,7 @@ allocated as 0.81 — fetches over plain HTTPS. The recommendation catalog still
 states the historical private channel because the released adopters validate
 that literal in frozen bytes; the gap is recorded in the
 [public repository observation](knowledge/evidence/release/nkf-037-public-repository-observation.md)
-and closes when 0.81 is published and recommended.
+and remains open until the separately authorized 0.81 recommendation.
 Licensing and visibility do not publish a release, accept governed knowledge,
 confirm a Realization, or establish conformance. Security-response,
 contribution, and conduct policies are stated in [SECURITY.md](SECURITY.md),
@@ -153,12 +157,12 @@ trademark and conformance-claim policy remain separate matters.
 | Understand the current implementation | [Current System Realization](knowledge/realizations/current-system.md) |
 | Read the public explanation and adoption guide | [NKF Public Documentation](https://github.com/NourdApS/Nourd.NKF.Docs) |
 | Read the normative format this repository runs | [NKF 0.8 Specification](knowledge/specifications/nkf-0.8.md) |
-| Read the accepted successor awaiting release | [NKF 0.81 Specification](knowledge/specifications/nkf-0.81.md) |
-| Read the live-supported predecessor authority | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) |
+| Read the current published successor | [NKF 0.81 Specification](knowledge/specifications/nkf-0.81.md) |
+| Read the historical 0.71 stepping-stone authority | [NKF 0.71 Specification](knowledge/specifications/nkf-0.71.md) |
 | Inspect the executable companions | [NKF 0.8 YAML Contract](contracts/nkf/0.8/nkf.yaml), [NKF 0.81 YAML Contract](contracts/nkf/0.81/nkf.yaml) |
 | Inspect the closed structural contracts | [NKF 0.8 Schemas](contracts/nkf/0.8/schemas/), [NKF 0.81 Schemas](contracts/nkf/0.81/schemas/) |
-| Adopt the released version | [NKF 0.8 Adoption Protocol](distribution/nkf/0.8/integrations/adoption/nkf-adoption-protocol.md) |
-| Read how NKF 0.81 will be adopted | [NKF 0.81 Adoption Protocol](distribution/nkf/0.81/integrations/adoption/nkf-adoption-protocol.md) |
+| Adopt the recommended version | [NKF 0.8 Adoption Protocol](distribution/nkf/0.8/integrations/adoption/nkf-adoption-protocol.md) |
+| Read the NKF 0.81 adoption protocol | [NKF 0.81 Adoption Protocol](distribution/nkf/0.81/integrations/adoption/nkf-adoption-protocol.md) |
 | Navigate governed knowledge | [Knowledge Map](knowledge/README.md) |
 | Review active and deferred work | [Task Map](knowledge/tasks/README.md) |
 

@@ -702,7 +702,7 @@ non_records:
       stable_path: evidence/README.md
       digest:
         algorithm: sha-256
-        value: "6bebab8231aa274b2a5ff0437bfaa7fe933842061bcdb9538c7287b8ee6fd388"
+        value: "c982401ff4302b4f8d1a765d7ade76b29b0277e7fc2ee5ccd1a490aab1bd61cd"
       relationships: []
   - path: evidence/release/nkf-0.6-producer-promotion.yaml
     kind: evidence
@@ -1656,7 +1656,7 @@ non_records:
       stable_path: tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md
       digest:
         algorithm: sha-256
-        value: "0feab1985234f4235c588e22e9a67125fea48679bef9c26b94a18bca67baf2f9"
+        value: "3a5c3b065c2549bb774ebd4d0c5d2d8692b5c0f6f3a4beee67709cb4531f5f69"
       state:
         vocabulary: task-status
         value: "completed"
@@ -1862,7 +1862,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-release-audit.md
       digest:
         algorithm: sha-256
-        value: "6e08d6721c2364296cd68628fa4d231e22c1e7690ad9b1649a2c852568994218"
+        value: "7ed06ae37d6509403a8a89d0262f2ffdfff9134575a3ea7f3b54b49101d89f95"
       relationships: []
   - path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
     kind: evidence
@@ -3208,7 +3208,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "a4b28ab2089469b759b44562974ccae7023b6bff0c466014ba80295e543d2626"
+      value: "f3f1c708c5fc9f6e1aaf34a56494a2dbe9e495cf8cfe6be7842305e4a3a6706e"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

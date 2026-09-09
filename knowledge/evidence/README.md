@@ -180,7 +180,8 @@ public-documentation publication; the public repository observation after the
 repository became public; the protected merge gate observation; the
 retirement of the ten frozen supporting Realizations; and, for NKF 0.81, the
 accepted producer-promotion input, the whole-set guidance review, the
-independent release audit, and the release notes.
+independent release audit, the release notes, and the
+[public publication and anonymous re-download verification](release/nkf-038-nkf-0-81-release-audit.md#authorized-public-publication-and-re-download).
 
 ## Decision Inputs
 

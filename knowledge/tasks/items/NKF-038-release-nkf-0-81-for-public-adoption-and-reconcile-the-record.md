@@ -224,6 +224,29 @@ directories that no longer exist.
 
 ## Execution Plan
 
+### Authorized Publication After Merge
+
+On `2026-09-09`, after merging the completed implementation pull request, the
+Human Product Owner directed: "it is merged to master . let's release now".
+This authorizes the publication stage already reserved above. The completed
+implementation Task remains the owner of this release and its publication
+Evidence; this follow-through does not reopen its delivered implementation or
+infer authorization for catalog recommendation or live producer adoption.
+
+1. Verify the merged source, successful master check, public repository, and
+   exact archive against [ADR 0144](../../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md).
+2. Publish that exact content-addressed archive as the accepted public
+   prerelease, with all four named migration sections and explicit catalog
+   availability state. Bind its tag to the confirmed release commit.
+3. Download the asset anonymously over HTTPS, verify its complete archive and
+   manifest digests, and retain the observed publication verification as
+   Evidence. No candidate bytes are recut or substituted.
+4. Reconcile the repository front page and living release status, preserving
+   the producer's 0.8 declaration and recommendation. Repin, semantically
+   review and seal these publication records, run `npm run nkf:check`, and
+   present their follow-up pull request through normal human merge review.
+
+
 ### Final Documentation Sweep And Merge Handoff
 
 On `2026-09-09`, the Human Product Owner directed: "commit current work, close
