@@ -147,7 +147,10 @@ and its five-artifact authority set — the Specification, digest-bound
 executable companion, evaluation policy, 0.8-to-0.81 version delta, and
 producer-promotion input — is accepted by
 [ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) after a
-three-round independent audit. It adds the recommended-release catalog contract
+three-round independent audit, and its exact release candidate is technically
+confirmed by
+[ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) after
+a four-round independent release audit. It adds the recommended-release catalog contract
 with public channel values, plain HTTPS adoption, the adopter-obtaining step,
 the closed volatile-metadata registry, and the checker's recompute of the
 delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. Until the

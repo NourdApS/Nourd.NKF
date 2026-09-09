@@ -329,6 +329,81 @@ overbroad staleness sentence — repaired here; the catalog channel a pin cannot
 corroborate is recorded for the successor. Each cut passed the complete gate at
 its commit and its isolated exercise before its audit.
 
+The fourth candidate, cut from `a211c47`, was found clean by its independent
+round — zero blocking, zero should-fix, six notes with dispositions. The commit
+recording that round, `aeb95db5`, changes no release-set member byte and is
+the release commit; the archive cut from it,
+`e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea`, is technically
+confirmed by
+[ADR 0141](../../decisions/0141-confirm-the-nkf-0-81-release-candidate.md).
+The Realization, the front page, and the Specifications map state the confirmed
+state; this producer still declares, pins, and installs NKF 0.8, and the
+publication, recommendation, promotion, and merge are the Human Product Owner's
+acts. The closing delta review of this Task reseals the producer baseline under
+the 0.8 policy.
+
+## Completion Result
+
+NKF 0.81 is accepted, implemented, and technically confirmed, and the record is
+reconciled; publication, recommendation, promotion, and merge are left to the
+Human Product Owner as this Task's Human Direction requires.
+
+1. Each of the seven format boundaries was confirmed verbatim by the Human
+   Product Owner at the Design on `2026-09-08` before the authority set was
+   authored; the Design records the answers.
+2. The five-artifact authority set is accepted by
+   [ADR 0140](../../decisions/0140-accept-the-nkf-0-81-authority-set.md) after
+   a three-round independent audit, and the exact candidate — archive
+   `e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea` at release
+   commit `aeb95db5` — is technically confirmed by
+   [ADR 0141](../../decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
+   bound to the four-round
+   [release audit](../../evidence/release/nkf-038-nkf-0-81-release-audit.md).
+3. The shipped 0.81 adopter resolves the catalog from the public repository's
+   raw default-branch URL and the archive from the canonical release asset URL
+   with Node's fetch alone, refusing a digest or locator mismatch before
+   mutation; the adopter suite proves the network path against a local server
+   and every audit round proved the offline path installs 0.81 into a 0.8 and
+   an unadopted repository with no Github CLI on the adoption path. Adoption
+   from the live public release awaits the publication this Task leaves to
+   the Human Product Owner.
+4. The catalog is validated against the accepted `nkf.recommended-release`
+   contract's closed vocabulary; the 0.81 exercise catalog states
+   `public-github-prerelease` with visibility `public`, the historical channel
+   is refused on a 0.81 catalog, and the stated facts are reconciled with the
+   archive. The published catalog states the public channel truthfully at the
+   promotion, which is the Human Product Owner's act.
+5. The distributed adoption protocol opens with the adopter-obtaining step, and
+   the whole-set guidance review found no 0.81 member calling the release
+   private or requiring a session; the two that did were corrected at the
+   source and the projection.
+6. The volatile registry lets a rewritten, added, or deleted `.DS_Store`,
+   `Thumbs.db`, or `desktop.ini` regular file pass sealing and onboarding while
+   a changed regular file, a directory or symbolic link with a registered name,
+   and a near-miss name each stale the plan; inspection lists the volatile
+   entries with their classification.
+7. Every finding of the `2026-09-08` sweep is repaired under this Task — the
+   current-system Realization rewritten current-first, the ten frozen
+   Realizations retired to Git history, the maps brought current, the eight
+   legacy-locked Tasks and the two Designs rewritten natively, every 0.9 remedy
+   restated as 0.81 with the reallocation — and four audit rounds read the
+   living surfaces for a superseded state stated as current or a dead path,
+   repairing the sentences they found.
+8. The isolated exercise proved the 0.8-to-0.81 promotion on the delta claim
+   alone at every cut: three hundred twelve judgments carried by digest
+   identity and thirty-four fresh judgments equal to the propagated closure,
+   `updated` then `current` at integration revision five.
+9. No published 0.8 or earlier byte, accepted immutable record, or 0.8 catalog
+   literal changed; four audit rounds compared the published 0.8 archive to
+   the tree. The complete gate passes at this handoff and passed at every cut
+   except the first, whose unrepinned declaration the first audit round found
+   before any handoff and the repaired cut corrected.
+
+Recorded for the successor rather than resolved: the catalog channel a pin
+cannot corroborate, the six projection members still outside the generator,
+the release protocol's precondition wording that predates delegated
+acceptance, and the `inspect` workspace left behind by one refused argument.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -354,12 +429,12 @@ its commit and its isolated exercise before its audit.
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
-| Each format boundary is confirmed by the Human Product Owner at the Design and recorded verbatim before the authority set is authored | unknown | none | none |
-| The 0.81 authority set is accepted after an independent audit and the exact release candidate is confirmed bound to a fresh release audit | unknown | none | none |
-| Adopt resolves the recommendation and installs 0.81 over plain HTTPS with no `gh` binary and no credentials, verified by digest | unknown | none | none |
-| The catalog's channel and visibility are validated from the accepted contract's closed vocabulary with a public value | unknown | none | none |
-| The distributed adoption protocol states where to obtain the adopter and no 0.81 member calls the release private | unknown | none | none |
-| The `.DS_Store` reproduction passes onboarding while a meaningful-file change between seal and adoption still fails closed | unknown | none | none |
-| Every sweep finding is repaired or reclassified and a repeat sweep of living surfaces is clean | unknown | none | none |
-| The 0.8-to-0.81 producer upgrade is proven on the digest-bound delta claim alone in the isolated exercise | unknown | none | none |
-| No 0.8 or earlier published byte, accepted immutable record, or 0.8 catalog literal changes before promotion, and the gate passes at every handoff | unknown | none | none |
+| Each format boundary is confirmed by the Human Product Owner at the Design and recorded verbatim before the authority set is authored | proven | human-experience | none |
+| The 0.81 authority set is accepted after an independent audit and the exact release candidate is confirmed bound to a fresh release audit | proven | runtime-behaviour | none |
+| Adopt resolves the recommendation and installs 0.81 over plain HTTPS with no `gh` binary and no credentials, verified by digest | proven | runtime-behaviour | none |
+| The catalog's channel and visibility are validated from the accepted contract's closed vocabulary with a public value | proven | runtime-behaviour | none |
+| The distributed adoption protocol states where to obtain the adopter and no 0.81 member calls the release private | proven | runtime-behaviour | none |
+| The `.DS_Store` reproduction passes onboarding while a meaningful-file change between seal and adoption still fails closed | proven | runtime-behaviour | none |
+| Every sweep finding is repaired or reclassified and a repeat sweep of living surfaces is clean | proven | runtime-behaviour | none |
+| The 0.8-to-0.81 producer upgrade is proven on the digest-bound delta claim alone in the isolated exercise | proven | runtime-behaviour | none |
+| No 0.8 or earlier published byte, accepted immutable record, or 0.8 catalog literal changes before promotion, and the gate passes at every handoff | proven | runtime-behaviour | none |

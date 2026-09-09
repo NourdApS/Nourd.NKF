@@ -59,10 +59,15 @@ fixtures, generated distribution, public projection, and
 [release notes](knowledge/evidence/release/nkf-0.81-release-notes.md) are on
 this branch, the whole-set
 [guidance review](knowledge/evidence/release/nkf-038-nkf-0-81-guidance-review.md)
-is recorded, and the exact candidate awaits the independent release audit and
-the mandatory audit-bound confirmation Decision. Publication as a public
-prerelease, the catalog recommendation, this producer's promotion, and the
-merge remain the Human Product Owner's separate acts; until they happen, live
+is recorded, and the exact candidate — archive
+`e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea` at release commit
+`aeb95db5` — is technically confirmed by
+[ADR 0141](knowledge/decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
+after four independent
+[release audit](knowledge/evidence/release/nkf-038-nkf-0-81-release-audit.md)
+rounds, the fourth clean. Publication as a public prerelease under the
+accepted channel, the catalog recommendation, this producer's promotion, and
+the merge remain the Human Product Owner's separate acts; until they happen, live
 support is NKF 0.8 plus NKF 0.71, and at publication it becomes exactly
 NKF 0.81 plus NKF 0.8 with a 0.71 repository stepping through the published
 0.8 archive.

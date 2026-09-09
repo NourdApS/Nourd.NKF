@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+  value: 90730dfc243083383d3046d9a755762e0cf658234234c4ab037cdda1fbcaf6b1
 policy:
   id: nkf.freshness-policy.0.8
   digest:
@@ -27,19 +27,19 @@ node_revisions:
       id: NKF-004
     revision:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
   - node:
       kind: document
       id: NKF-005
     revision:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
   - node:
       kind: document
       id: NKF-006
     revision:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
   - node:
       kind: document
       id: NKF-007
@@ -57,7 +57,7 @@ node_revisions:
       id: NKF-009
     revision:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
   - node:
       kind: document
       id: NKF-010
@@ -87,7 +87,7 @@ node_revisions:
       id: NKF-014
     revision:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
   - node:
       kind: document
       id: NKF-015
@@ -99,7 +99,7 @@ node_revisions:
       id: NKF-016
     revision:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
   - node:
       kind: document
       id: NKF-017
@@ -111,7 +111,7 @@ node_revisions:
       id: NKF-018
     revision:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
   - node:
       kind: document
       id: NKF-019
@@ -129,7 +129,7 @@ node_revisions:
       id: NKF-021
     revision:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
   - node:
       kind: document
       id: NKF-022
@@ -147,7 +147,7 @@ node_revisions:
       id: NKF-024
     revision:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
   - node:
       kind: document
       id: NKF-025
@@ -225,7 +225,13 @@ node_revisions:
       id: NKF-037
     revision:
       algorithm: sha-256
-      value: c47dfbabc8e30526c646059ee6bcf516722dfd37110709a39c1a6cc68f9d7eb0
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
+  - node:
+      kind: document
+      id: NKF-038
+    revision:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
   - node:
       kind: record
       id: adr-0001
@@ -1032,6 +1038,30 @@ node_revisions:
       value: b43559975c76f6570fff06aa77a5a969d8371cb6778234c93c984f28b915592f
   - node:
       kind: record
+      id: adr-0138
+    revision:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+  - node:
+      kind: record
+      id: adr-0139
+    revision:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+  - node:
+      kind: record
+      id: adr-0140
+    revision:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+  - node:
+      kind: record
+      id: adr-0141
+    revision:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+  - node:
+      kind: record
       id: design-nkf-0-1-acceptance-provenance-boundary
     revision:
       algorithm: sha-256
@@ -1191,7 +1221,7 @@ node_revisions:
       id: design-nkf-021-task-scope-gate
     revision:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
   - node:
       kind: record
       id: design-nkf-023-immutable-freeze-and-proven-self-adoption
@@ -1233,7 +1263,13 @@ node_revisions:
       id: design-nkf-037-public-repository
     revision:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
+  - node:
+      kind: record
+      id: design-nkf-038-public-adoption
+    revision:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
   - node:
       kind: record
       id: design-nkf-record-v2-responsibility-bindings
@@ -1401,7 +1437,7 @@ node_revisions:
       id: document-31cb849adacd1ccb39c02a34824ddf8cc0c73242300e9ea20e0e6264b747a02b
     revision:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
   - node:
       kind: document
       id: document-3532ef3861cfd2ddf7c064a88428faa9323998f21606af8915745b2587cc1370
@@ -1914,6 +1950,24 @@ node_revisions:
       value: 1567dffdcf576235820f1fff6bc17f86b15e7a4333223ca9ef7c04697c21224a
   - node:
       kind: document
+      id: document-nkf-0-81-producer-promotion
+    revision:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+  - node:
+      kind: document
+      id: document-nkf-0-81-release-notes
+    revision:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+  - node:
+      kind: document
+      id: document-nkf-0-81-specification
+    revision:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+  - node:
+      kind: document
       id: document-nkf-012-completion-audit
     revision:
       algorithm: sha-256
@@ -1949,6 +2003,30 @@ node_revisions:
       algorithm: sha-256
       value: 96d4a8411120c38a018a712b896b50168408cdd86e311406e463fb98813d6fa8
   - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-guidance-review
+    revision:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+    revision:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-release-audit
+    revision:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+  - node:
+      kind: document
+      id: document-nkf-038-supporting-realizations-retirement
+    revision:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+  - node:
       kind: record
       id: nkf
     revision:
@@ -1966,12 +2044,6 @@ node_revisions:
     revision:
       algorithm: sha-256
       value: 54d886d69ce73cd776023b6b415bb2800cb4a6eafd7fd139157c6e7d7d3f4d23
-  - node:
-      kind: record
-      id: nkf-0.4-security-maintenance
-    revision:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
   - node:
       kind: record
       id: nkf-0.4-specification
@@ -2022,64 +2094,10 @@ node_revisions:
       value: 9314d6fc4c7a510123adff2357199b7d481b62a3e4d10c015b6ff22ad2fe8868
   - node:
       kind: record
-      id: nkf-agent-led-initial-onboarding
-    revision:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-  - node:
-      kind: record
-      id: nkf-checker-and-validation
-    revision:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-  - node:
-      kind: record
-      id: nkf-contracts-and-schemas
-    revision:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-  - node:
-      kind: record
       id: nkf-current-system
     revision:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
-  - node:
-      kind: record
-      id: nkf-initial-greenfield-onboarding
-    revision:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-  - node:
-      kind: record
-      id: nkf-layered-contract-enforcement
-    revision:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-  - node:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    revision:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-  - node:
-      kind: record
-      id: nkf-release-documentation-and-adoption
-    revision:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-  - node:
-      kind: record
-      id: nkf-release-package
-    revision:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-  - node:
-      kind: record
-      id: nkf-self-hosting
-    revision:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
 authored_edges:
   - source:
       kind: record
@@ -2317,6 +2335,175 @@ authored_edges:
       section: scope-and-applicability
   - source:
       kind: record
+      id: adr-0138
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0076
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0138
+      section: decision
+  - source:
+      kind: record
+      id: adr-0138
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0107
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0138
+      section: decision
+  - source:
+      kind: record
+      id: adr-0138
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0109
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0138
+      section: decision
+  - source:
+      kind: record
+      id: adr-0138
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0134
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0138
+      section: decision
+  - source:
+      kind: record
+      id: adr-0139
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0115
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0139
+      section: decision
+  - source:
+      kind: record
+      id: adr-0139
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0134
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0139
+      section: decision
+  - source:
+      kind: record
+      id: adr-0140
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0134
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0140
+      section: decision
+  - source:
+      kind: record
+      id: adr-0140
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0135
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0140
+      section: decision
+  - source:
+      kind: record
+      id: adr-0140
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0139
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0140
+      section: decision
+  - source:
+      kind: record
+      id: adr-0141
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0135
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0141
+      section: decision
+  - source:
+      kind: record
+      id: adr-0141
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0138
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0141
+      section: decision
+  - source:
+      kind: record
+      id: adr-0141
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0139
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0141
+      section: decision
+  - source:
+      kind: record
+      id: adr-0141
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0140
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0141
+      section: decision
+  - source:
+      kind: record
       id: design-nkf-025-freshness-and-deterministic-knowledge-graph
     relationship: depends-on
     target:
@@ -2548,6 +2735,110 @@ authored_edges:
       node:
         kind: record
         id: design-nkf-037-public-repository
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0064
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0076
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0097
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0107
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0109
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0134
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0135
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      section: governing-inputs-and-constraints
+  - source:
+      kind: record
+      id: design-nkf-038-public-adoption
+    relationship: depends-on
+    target:
+      kind: record
+      id: adr-0136
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
       section: governing-inputs-and-constraints
   - source:
       kind: record
@@ -3409,6 +3700,45 @@ authored_edges:
       section: decision
   - source:
       kind: record
+      id: adr-0138
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0136
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0138
+      section: decision
+  - source:
+      kind: record
+      id: adr-0139
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0138
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0139
+      section: decision
+  - source:
+      kind: record
+      id: adr-0140
+    relationship: extends
+    target:
+      kind: record
+      id: adr-0138
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0140
+      section: decision
+  - source:
+      kind: record
       id: design-nkf-025-freshness-and-deterministic-knowledge-graph
     relationship: extends
     target:
@@ -3682,6 +4012,32 @@ authored_edges:
       section: decision
   - source:
       kind: record
+      id: adr-0138
+    relationship: rationale-for
+    target:
+      kind: record
+      id: design-nkf-038-public-adoption
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0138
+      section: decision
+  - source:
+      kind: record
+      id: adr-0139
+    relationship: rationale-for
+    target:
+      kind: record
+      id: design-nkf-038-public-adoption
+    source_binding:
+      kind: section
+      node:
+        kind: record
+        id: adr-0139
+      section: decision
+  - source:
+      kind: record
       id: adr-0075
     relationship: realizes
     target:
@@ -3721,32 +4077,6 @@ authored_edges:
       section: decision
   - source:
       kind: record
-      id: nkf-0.4-security-maintenance
-    relationship: realizes
-    target:
-      kind: record
-      id: adr-0113
-    source_binding:
-      kind: section
-      node:
-        kind: record
-        id: nkf-0.4-security-maintenance
-      section: governed-meaning-realized
-  - source:
-      kind: record
-      id: nkf-agent-led-initial-onboarding
-    relationship: realizes
-    target:
-      kind: record
-      id: adr-0069
-    source_binding:
-      kind: section
-      node:
-        kind: record
-        id: nkf-agent-led-initial-onboarding
-      section: governed-meaning-realized
-  - source:
-      kind: record
       id: nkf-current-system
     relationship: realizes
     target:
@@ -3783,58 +4113,6 @@ authored_edges:
       node:
         kind: record
         id: nkf-current-system
-      section: governed-meaning-realized
-  - source:
-      kind: record
-      id: nkf-initial-greenfield-onboarding
-    relationship: realizes
-    target:
-      kind: record
-      id: adr-0067
-    source_binding:
-      kind: section
-      node:
-        kind: record
-        id: nkf-initial-greenfield-onboarding
-      section: governed-meaning-realized
-  - source:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    relationship: realizes
-    target:
-      kind: record
-      id: adr-0075
-    source_binding:
-      kind: section
-      node:
-        kind: record
-        id: nkf-portable-knowledge-topology
-      section: compatibility-verification-and-recovery
-  - source:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    relationship: realizes
-    target:
-      kind: record
-      id: adr-0071
-    source_binding:
-      kind: section
-      node:
-        kind: record
-        id: nkf-portable-knowledge-topology
-      section: governed-meaning-realized
-  - source:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    relationship: realizes
-    target:
-      kind: record
-      id: adr-0073
-    source_binding:
-      kind: section
-      node:
-        kind: record
-        id: nkf-portable-knowledge-topology
       section: governed-meaning-realized
   - source:
       kind: record
@@ -4208,22 +4486,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-004: Define portable presentation-guidance extension"summary: Define an NKF-owned optional contract for portable presentation guidance when real consumer projects demonstrate that native NKF semantics and canonical Markdown are insufficient to communicate consistent display intent across interfaces.created_at: 2026-07-29T20:06:17Ztask_id: NKF-004task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-004: Define Portable Presentation-Guidance Extension"summary: Define an NKF-owned optional contract for portable presentation guidance once real consumer projects show that native NKF semantics and canonical Markdown cannot communicate consistent display intent across interfaces — created deferred under the current presentation-guidance boundary and still awaiting that activation evidence.created_at: 2026-07-29T20:06:17Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
     basis_digest:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-004
@@ -4237,22 +4509,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-004: Define portable presentation-guidance extension"summary: Define an NKF-owned optional contract for portable presentation guidance when real consumer projects demonstrate that native NKF semantics and canonical Markdown are insufficient to communicate consistent display intent across interfaces.created_at: 2026-07-29T20:06:17Ztask_id: NKF-004task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-004: Define Portable Presentation-Guidance Extension"summary: Define an NKF-owned optional contract for portable presentation guidance once real consumer projects show that native NKF semantics and canonical Markdown cannot communicate consistent display intent across interfaces — created deferred under the current presentation-guidance boundary and still awaiting that activation evidence.created_at: 2026-07-29T20:06:17Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
     basis_digest:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-004
@@ -4266,22 +4532,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-004: Define portable presentation-guidance extension"summary: Define an NKF-owned optional contract for portable presentation guidance when real consumer projects demonstrate that native NKF semantics and canonical Markdown are insufficient to communicate consistent display intent across interfaces.created_at: 2026-07-29T20:06:17Ztask_id: NKF-004task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-004: Define Portable Presentation-Guidance Extension"summary: Define an NKF-owned optional contract for portable presentation guidance once real consumer projects show that native NKF semantics and canonical Markdown cannot communicate consistent display intent across interfaces — created deferred under the current presentation-guidance boundary and still awaiting that activation evidence.created_at: 2026-07-29T20:06:17Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
     basis_digest:
       algorithm: sha-256
-      value: a1984458ae8e4ae4a2282be31561672c69ca2af6ce88b6fc58fdb41459c49a95
+      value: f2f8638f3f090bcc68d2766952463a5d67974cf41f21439d1f505528ea16230f
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-005
@@ -4295,22 +4555,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-005: Investigate Validation Expiry And Authority Freshness"summary: "Determine from concrete consumer evidence whether NKF needs:"created_at: 2026-07-30T00:27:52Ztask_id: NKF-005task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-005: Investigate Validation Expiry And Authority Freshness"summary: Determine from concrete consumer evidence whether NKF needs a universal time-based expiry for a completed validation result, a separate freshness mechanism for an acceptance binding or another externally governed claim, an authority-specific optional extension, or no additional mechanism — created deferred beside the accepted validation-result meaning and still awaiting that evidence.created_at: 2026-07-30T00:27:52Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
     basis_digest:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-005
@@ -4324,22 +4578,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-005: Investigate Validation Expiry And Authority Freshness"summary: "Determine from concrete consumer evidence whether NKF needs:"created_at: 2026-07-30T00:27:52Ztask_id: NKF-005task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-005: Investigate Validation Expiry And Authority Freshness"summary: Determine from concrete consumer evidence whether NKF needs a universal time-based expiry for a completed validation result, a separate freshness mechanism for an acceptance binding or another externally governed claim, an authority-specific optional extension, or no additional mechanism — created deferred beside the accepted validation-result meaning and still awaiting that evidence.created_at: 2026-07-30T00:27:52Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
     basis_digest:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-005
@@ -4353,22 +4601,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-005: Investigate Validation Expiry And Authority Freshness"summary: "Determine from concrete consumer evidence whether NKF needs:"created_at: 2026-07-30T00:27:52Ztask_id: NKF-005task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-005: Investigate Validation Expiry And Authority Freshness"summary: Determine from concrete consumer evidence whether NKF needs a universal time-based expiry for a completed validation result, a separate freshness mechanism for an acceptance binding or another externally governed claim, an authority-specific optional extension, or no additional mechanism — created deferred beside the accepted validation-result meaning and still awaiting that evidence.created_at: 2026-07-30T00:27:52Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
     basis_digest:
       algorithm: sha-256
-      value: e359b6ef5bf22783c04f9562f3762e79c385ee17db2a8d18406c7130b94e434a
+      value: bc14f6da4885269cd743a0867c4b4e6767c1ffa5a7cafc099e77fabbdd0a0961
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-006
@@ -4382,22 +4624,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-006: Define Extensible Root Knowledge Models"summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct.created_at: 2026-07-30T15:59:54Ztask_id: NKF-006task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-006: Define Extensible Root Knowledge Models"summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct — created deferred when the Common Specification and concrete Root Profiles were accepted and still awaiting a root that neither accepted profile represents honestly.created_at: 2026-07-30T15:59:54Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
     basis_digest:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-006
@@ -4411,22 +4647,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-006: Define Extensible Root Knowledge Models"summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct.created_at: 2026-07-30T15:59:54Ztask_id: NKF-006task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-006: Define Extensible Root Knowledge Models"summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct — created deferred when the Common Specification and concrete Root Profiles were accepted and still awaiting a root that neither accepted profile represents honestly.created_at: 2026-07-30T15:59:54Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
     basis_digest:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-006
@@ -4440,22 +4670,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-006: Define Extensible Root Knowledge Models"summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct.created_at: 2026-07-30T15:59:54Ztask_id: NKF-006task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-006: Define Extensible Root Knowledge Models"summary: Determine how NKF should support additional independently governed knowledge roots without assuming that Product and Technology hierarchies, bodies, validators, profiles, or protocols are universally correct — created deferred when the Common Specification and concrete Root Profiles were accepted and still awaiting a root that neither accepted profile represents honestly.created_at: 2026-07-30T15:59:54Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
     basis_digest:
       algorithm: sha-256
-      value: 92b59b2cd6fec81ffd4a2591eb41bdfebeac28ac6d5c5e8ed1f20f160bc6d290
+      value: 6fdeabda61f4a7c2953e42cbe6419ade690e783e744ea1b3ebb2712503df35f6
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-007
@@ -4643,22 +4867,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"summary: Determine and implement the correct security-scanning boundary for governed validation inputs that are not Markdown sources.created_at: 2026-07-30T17:03:21Ztask_id: NKF-009task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"summary: Determine and implement the correct security-scanning boundary for Governed Validation Inputs that are not Markdown sources — governed artifacts, structured data, binary artifacts, and extension-added resources — transferred here deferred from the whole-repository audit and still awaiting separate activation.created_at: 2026-07-30T17:03:21Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
     basis_digest:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-009
@@ -4672,22 +4890,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"summary: Determine and implement the correct security-scanning boundary for governed validation inputs that are not Markdown sources.created_at: 2026-07-30T17:03:21Ztask_id: NKF-009task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"summary: Determine and implement the correct security-scanning boundary for Governed Validation Inputs that are not Markdown sources — governed artifacts, structured data, binary artifacts, and extension-added resources — transferred here deferred from the whole-repository audit and still awaiting separate activation.created_at: 2026-07-30T17:03:21Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
     basis_digest:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-009
@@ -4701,22 +4913,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"summary: Determine and implement the correct security-scanning boundary for governed validation inputs that are not Markdown sources.created_at: 2026-07-30T17:03:21Ztask_id: NKF-009task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - 'title: "NKF-009: Extend Secret Scanning Across Governed Artifacts"summary: Determine and implement the correct security-scanning boundary for Governed Validation Inputs that are not Markdown sources — governed artifacts, structured data, binary artifacts, and extension-added resources — transferred here deferred from the whole-repository audit and still awaiting separate activation.created_at: 2026-07-30T17:03:21Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
     basis_digest:
       algorithm: sha-256
-      value: 8698ad8fb81cd00d6880b6f8c66a354952227d515b07e4df3d5221b07c6da25e
+      value: 39482510d25d266c4649bdcf6b617dbbc6fe67ffb1f62aed0b43a705d790ae21
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-010
@@ -5078,22 +5284,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-014: Expand Brownfield And Advanced Onboarding"summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows.created_at: 2026-07-31T09:51:12Ztask_id: NKF-014task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - "title: \"NKF-014: Expand Brownfield And Advanced Onboarding\"summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows — deferred since 2026-07-31 as the explicit successor to the deliberately narrow first onboarding iteration, awaiting the Human Product Owner's separate activation.created_at: 2026-07-31T09:51:12Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
     basis_digest:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-014
@@ -5107,22 +5307,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-014: Expand Brownfield And Advanced Onboarding"summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows.created_at: 2026-07-31T09:51:12Ztask_id: NKF-014task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - "title: \"NKF-014: Expand Brownfield And Advanced Onboarding\"summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows — deferred since 2026-07-31 as the explicit successor to the deliberately narrow first onboarding iteration, awaiting the Human Product Owner's separate activation.created_at: 2026-07-31T09:51:12Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
     basis_digest:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-014
@@ -5136,22 +5330,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - 'title: "NKF-014: Expand Brownfield And Advanced Onboarding"summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows.created_at: 2026-07-31T09:51:12Ztask_id: NKF-014task_status: deferredowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
+            - "title: \"NKF-014: Expand Brownfield And Advanced Onboarding\"summary: Extend the confirmed initial NKF onboarding path with a standalone project-local bootstrap experience, large documented brownfield migration, source-rich system reconstruction, complex recovery, and advanced already-adopted compatibility workflows — deferred since 2026-07-31 as the explicit successor to the deliberately narrow first onboarding iteration, awaiting the Human Product Owner's separate activation.created_at: 2026-07-31T09:51:12Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
     basis_digest:
       algorithm: sha-256
-      value: d746a7c6c673dc9dbc045d5bb1ee5edb5a49151c48c010c2d253406bce4b1415
+      value: 43ee66d10986319ead1362042d39d9b68bb39185260b5493bd2b9902269c3736
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-015
@@ -5252,22 +5440,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-016: Deliver Acceptance-Binding Verification"
+            - 'title: "NKF-016: Deliver Acceptance-Binding Verification"summary: Define, implement, verify, document, and distribute at least one usable acceptance-authority resolver path under the live NKF version so acceptance binding can be verified in practice rather than existing only as a library interface — deferred since 2026-07-31, with accepted records still reported not-verified at NKF 0.8.created_at: 2026-07-31T18:06:25Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
     basis_digest:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-016
@@ -5281,22 +5463,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-016: Deliver Acceptance-Binding Verification"
+            - 'title: "NKF-016: Deliver Acceptance-Binding Verification"summary: Define, implement, verify, document, and distribute at least one usable acceptance-authority resolver path under the live NKF version so acceptance binding can be verified in practice rather than existing only as a library interface — deferred since 2026-07-31, with accepted records still reported not-verified at NKF 0.8.created_at: 2026-07-31T18:06:25Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
     basis_digest:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-016
@@ -5310,22 +5486,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-016: Deliver Acceptance-Binding Verification"
+            - 'title: "NKF-016: Deliver Acceptance-Binding Verification"summary: Define, implement, verify, document, and distribute at least one usable acceptance-authority resolver path under the live NKF version so acceptance binding can be verified in practice rather than existing only as a library interface — deferred since 2026-07-31, with accepted records still reported not-verified at NKF 0.8.created_at: 2026-07-31T18:06:25Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
     basis_digest:
       algorithm: sha-256
-      value: 7b8c257abe241e3b3961316469a5d39513e0b2bf42ff20695c684ed3e5bb64fa
+      value: c2c5f985d90c54ec2d0601ed541ca360579fa0de1eed98aae9edea51c80bf8af
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-017
@@ -5426,22 +5596,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-018: Stabilize Volatile Onboarding Inputs"
+            - 'title: "NKF-018: Stabilize Volatile Onboarding Inputs"summary: Define and realize a safe onboarding snapshot boundary that remains sensitive to meaningful repository drift without repeatedly failing on volatile incidental operating-system metadata such as .DS_Store — deferred since 2026-08-01, with the closed three-name registry that answers it adopted under ADR 0138 and being delivered in NKF 0.81 under NKF-038.created_at: 2026-08-01T18:41:40Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
     basis_digest:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-018
@@ -5455,22 +5619,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-018: Stabilize Volatile Onboarding Inputs"
+            - 'title: "NKF-018: Stabilize Volatile Onboarding Inputs"summary: Define and realize a safe onboarding snapshot boundary that remains sensitive to meaningful repository drift without repeatedly failing on volatile incidental operating-system metadata such as .DS_Store — deferred since 2026-08-01, with the closed three-name registry that answers it adopted under ADR 0138 and being delivered in NKF 0.81 under NKF-038.created_at: 2026-08-01T18:41:40Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
     basis_digest:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-018
@@ -5484,22 +5642,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-018: Stabilize Volatile Onboarding Inputs"
+            - 'title: "NKF-018: Stabilize Volatile Onboarding Inputs"summary: Define and realize a safe onboarding snapshot boundary that remains sensitive to meaningful repository drift without repeatedly failing on volatile incidental operating-system metadata such as .DS_Store — deferred since 2026-08-01, with the closed three-name registry that answers it adopted under ADR 0138 and being delivered in NKF 0.81 under NKF-038.created_at: 2026-08-01T18:41:40Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
     basis_digest:
       algorithm: sha-256
-      value: 3ee4b03c49b93e76acf1e21d036f072dcefe60c6ff7a6b1535ad741edb444dfe
+      value: ffbce5161ba7be5aeb2282d3889e82dff9e0834254ae88ddf7209a81273a4c05
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-019
@@ -5687,22 +5839,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-021: Establish The Task Scope Gate"
+            - 'title: "NKF-021: Establish The Task Scope Gate"summary: Prevent an active Task from silently absorbing discovered work that is not necessary to satisfy an existing acceptance criterion, while preserving explicit Human Product Owner scope amendments as the bounded exception — created and deferred on 2026-08-09 during the NKF 0.2 recovery, its Draft Design preserved for a successor NKF version.created_at: 2026-08-09T11:53:35Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
     basis_digest:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-021
@@ -5716,22 +5862,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-021: Establish The Task Scope Gate"
+            - 'title: "NKF-021: Establish The Task Scope Gate"summary: Prevent an active Task from silently absorbing discovered work that is not necessary to satisfy an existing acceptance criterion, while preserving explicit Human Product Owner scope amendments as the bounded exception — created and deferred on 2026-08-09 during the NKF 0.2 recovery, its Draft Design preserved for a successor NKF version.created_at: 2026-08-09T11:53:35Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
     basis_digest:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-021
@@ -5745,22 +5885,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-021: Establish The Task Scope Gate"
+            - 'title: "NKF-021: Establish The Task Scope Gate"summary: Prevent an active Task from silently absorbing discovered work that is not necessary to satisfy an existing acceptance criterion, while preserving explicit Human Product Owner scope amendments as the bounded exception — created and deferred on 2026-08-09 during the NKF 0.2 recovery, its Draft Design preserved for a successor NKF version.created_at: 2026-08-09T11:53:35Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
     basis_digest:
       algorithm: sha-256
-      value: 5018e41cb9a18f9ae3fa140557631d055d47684b28b20fcaa729b82e887e49a0
+      value: 28949490c22c43631731b708ccab00de457923816891065332ac202bc7f91c7b
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-022
@@ -5948,22 +6082,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-024: Release NKF 0.4 Dependency Security Maintenance"
+            - 'title: "NKF-024: Release NKF 0.4 Dependency Security Maintenance"summary: Ship a narrowly scoped non-breaking NKF 0.4 release that replaces the vulnerable fast-uri and nanoid dependency versions without changing NKF 0.3 meaning or any frozen 0.3 byte.created_at: 2026-08-11T13:52:19Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
     basis_digest:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-024
@@ -5977,22 +6105,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-024: Release NKF 0.4 Dependency Security Maintenance"
+            - 'title: "NKF-024: Release NKF 0.4 Dependency Security Maintenance"summary: Ship a narrowly scoped non-breaking NKF 0.4 release that replaces the vulnerable fast-uri and nanoid dependency versions without changing NKF 0.3 meaning or any frozen 0.3 byte.created_at: 2026-08-11T13:52:19Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
     basis_digest:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-024
@@ -6006,22 +6128,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "NKF-024: Release NKF 0.4 Dependency Security Maintenance"
+            - 'title: "NKF-024: Release NKF 0.4 Dependency Security Maintenance"summary: Ship a narrowly scoped non-breaking NKF 0.4 release that replaces the vulnerable fast-uri and nanoid dependency versions without changing NKF 0.3 meaning or any frozen 0.3 byte.created_at: 2026-08-11T13:52:19Z'
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
     basis_digest:
       algorithm: sha-256
-      value: f9706925c8331122131fd3800739a71d05ee2013ebaf3fa1297cd4664f613fcc
+      value: d8db1356c008317d1828411b05f94ab76e30d41701374f12e5d9c5423995b093
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-025
@@ -7079,22 +7195,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.9 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
+            - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.81 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: c47dfbabc8e30526c646059ee6bcf516722dfd37110709a39c1a6cc68f9d7eb0
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
     basis_digest:
       algorithm: sha-256
-      value: 1e2c89a1bb23f5ca7f355268760ba9df3f90c98450da3daeb542a5806616adb6
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-037
@@ -7108,22 +7218,16 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.9 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
+            - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.81 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: c47dfbabc8e30526c646059ee6bcf516722dfd37110709a39c1a6cc68f9d7eb0
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
     basis_digest:
       algorithm: sha-256
-      value: 1e2c89a1bb23f5ca7f355268760ba9df3f90c98450da3daeb542a5806616adb6
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: NKF-037
@@ -7137,22 +7241,85 @@ applicability_coverage:
       source:
         heading:
           heading_path:
-            - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.9 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
+            - "title: \"NKF-037: Make The NKF Repository Public\"summary: Govern the change of the NKF producer repository from private to public — propose the direction as a Design, record the Human Product Owner's Decision superseding the earlier rejection of a public repository, perform the pre-flip hygiene and post-flip verification and reconciliation around the Human Product Owner's own visibility act, and record why the released recommendation catalog keeps its private-channel literals until NKF 0.81 — without changing any accepted meaning or published byte.created_at: 2026-09-08T11:25:20Z"
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: c47dfbabc8e30526c646059ee6bcf516722dfd37110709a39c1a6cc68f9d7eb0
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
     basis_digest:
       algorithm: sha-256
-      value: 1e2c89a1bb23f5ca7f355268760ba9df3f90c98450da3daeb542a5806616adb6
+      value: 5cc234b10fd41fa776c376cc989fe3a0b9ab6dfab150a31a2a6d6ac8ebae2192
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
+  - node:
+      kind: document
+      id: NKF-038
+    purpose: change-impact
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-038
+      source:
+        heading:
+          heading_path:
+            - 'title: "NKF-038: Release NKF 0.81 For Public Adoption And Reconcile The Record"summary: Release NKF 0.81 as the successor that makes adoption from the now-public repository truthful and self-contained — a recommendation catalog whose channel vocabulary lives in the accepted contract with a public value, an adopter that fetches the catalog and archive over plain HTTPS with no gh dependency and tells a consumer where to obtain itself, a regenerated public-documentation projection that no longer calls the release private, and an onboarding snapshot that no longer fails on volatile operating-system metadata — and, under the same release, repair every stale document the whole-repository sweep of 2026-09-08 found, recording that the coordinate 0.81 is what ADR 0136 called the NKF 0.9 successor.created_at: 2026-09-08T13:51:52Z'
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
+    basis_digest:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-038
+    purpose: whole-root-readiness
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-038
+      source:
+        heading:
+          heading_path:
+            - 'title: "NKF-038: Release NKF 0.81 For Public Adoption And Reconcile The Record"summary: Release NKF 0.81 as the successor that makes adoption from the now-public repository truthful and self-contained — a recommendation catalog whose channel vocabulary lives in the accepted contract with a public value, an adopter that fetches the catalog and archive over plain HTTPS with no gh dependency and tells a consumer where to obtain itself, a regenerated public-documentation projection that no longer calls the release private, and an onboarding snapshot that no longer fails on volatile operating-system metadata — and, under the same release, repair every stale document the whole-repository sweep of 2026-09-08 found, recording that the coordinate 0.81 is what ADR 0136 called the NKF 0.9 successor.created_at: 2026-09-08T13:51:52Z'
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
+    basis_digest:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: NKF-038
+    purpose: consequential-use
+    state: eligible
+    role: context
+    basis:
+      node:
+        kind: document
+        id: NKF-038
+      source:
+        heading:
+          heading_path:
+            - 'title: "NKF-038: Release NKF 0.81 For Public Adoption And Reconcile The Record"summary: Release NKF 0.81 as the successor that makes adoption from the now-public repository truthful and self-contained — a recommendation catalog whose channel vocabulary lives in the accepted contract with a public value, an adopter that fetches the catalog and archive over plain HTTPS with no gh dependency and tells a consumer where to obtain itself, a regenerated public-documentation projection that no longer calls the release private, and an onboarding snapshot that no longer fails on volatile operating-system metadata — and, under the same release, repair every stale document the whole-repository sweep of 2026-09-08 found, recording that the coordinate 0.81 is what ADR 0136 called the NKF 0.9 successor.created_at: 2026-09-08T13:51:52Z'
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
+    basis_digest:
+      algorithm: sha-256
+      value: cff0ff4e042a41cc94cad601448f8acf947f016a9f8b0256904869b456ca40b9
+    provenance:
+      performed: true
   - node:
       kind: record
       id: adr-0001
@@ -17546,7 +17713,13 @@ applicability_coverage:
       algorithm: sha-256
       value: b43559975c76f6570fff06aa77a5a969d8371cb6778234c93c984f28b915592f
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: adr-0137
@@ -17566,7 +17739,13 @@ applicability_coverage:
       algorithm: sha-256
       value: b43559975c76f6570fff06aa77a5a969d8371cb6778234c93c984f28b915592f
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - node:
       kind: record
       id: adr-0137
@@ -17586,6 +17765,252 @@ applicability_coverage:
       algorithm: sha-256
       value: b43559975c76f6570fff06aa77a5a969d8371cb6778234c93c984f28b915592f
     provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - node:
+      kind: record
+      id: adr-0138
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0138
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+    basis_digest:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0138
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0138
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+    basis_digest:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0138
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0138
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+    basis_digest:
+      algorithm: sha-256
+      value: ca8cba991eaab71550685186d96aa30860ac39605c0cbdc92b572a12b66fcb84
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0139
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0139
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+    basis_digest:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0139
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0139
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+    basis_digest:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0139
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0139
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+    basis_digest:
+      algorithm: sha-256
+      value: 452a26a2616e3ba3e4550af8bb31949c62b3f072890eeb257d5ec4c94d183c4e
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0140
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0140
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+    basis_digest:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0140
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0140
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+    basis_digest:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0140
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0140
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+    basis_digest:
+      algorithm: sha-256
+      value: 786cd2444ff54448ace294469903cae9360456deab6d234173a27cdf1900f0ba
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0141
+    purpose: change-impact
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0141
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+    basis_digest:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0141
+    purpose: whole-root-readiness
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0141
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+    basis_digest:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: adr-0141
+    purpose: consequential-use
+    state: eligible
+    role: governs
+    basis:
+      node:
+        kind: record
+        id: adr-0141
+      source:
+        section: context-and-problem
+    revision:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+    basis_digest:
+      algorithm: sha-256
+      value: 13b31db5c76717327e3b7d7df81681dc93590768b2b0b19b162e4643c998f920
+    provenance:
       performed: true
   - node:
       kind: record
@@ -19629,18 +20054,12 @@ applicability_coverage:
         section: design-kind-problem-and-scope
     revision:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
     basis_digest:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: design-nkf-021-task-scope-gate
@@ -19655,18 +20074,12 @@ applicability_coverage:
         section: design-kind-problem-and-scope
     revision:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
     basis_digest:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: design-nkf-021-task-scope-gate
@@ -19681,18 +20094,12 @@ applicability_coverage:
         section: design-kind-problem-and-scope
     revision:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
     basis_digest:
       algorithm: sha-256
-      value: 23bd6c159d49155b7c9c843bc33db0db001840dd859186012428e3dc92d7bbc7
+      value: aa24d917e5d03e8d2ff5a270460b64ffc0dee92541931c05ed2ea2da7768cc1b
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: design-nkf-023-immutable-freeze-and-proven-self-adoption
@@ -20175,18 +20582,12 @@ applicability_coverage:
         section: design-kind-problem-and-scope
     revision:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
     basis_digest:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: design-nkf-037-public-repository
@@ -20201,18 +20602,12 @@ applicability_coverage:
         section: design-kind-problem-and-scope
     revision:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
     basis_digest:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: design-nkf-037-public-repository
@@ -20227,18 +20622,72 @@ applicability_coverage:
         section: design-kind-problem-and-scope
     revision:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
     basis_digest:
       algorithm: sha-256
-      value: bc66b059e21ca17c6ea22418f5a4771002e7bbd9590abdd5c7b90d769b950f72
+      value: b2c50a8713bc4494660d730eae6ed6746bbf175c5c21e5fc01a715f807ef3017
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 8ffc9204f4b698c55d29934bce965bb6709a085cb18d59d6a21abaa6860f9c62
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
+  - node:
+      kind: record
+      id: design-nkf-038-public-adoption
+    purpose: change-impact
+    state: eligible
+    role: proposes
+    basis:
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      source:
+        section: design-kind-problem-and-scope
+    revision:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
+    basis_digest:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: design-nkf-038-public-adoption
+    purpose: whole-root-readiness
+    state: eligible
+    role: proposes
+    basis:
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      source:
+        section: design-kind-problem-and-scope
+    revision:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
+    basis_digest:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
+    provenance:
+      performed: true
+  - node:
+      kind: record
+      id: design-nkf-038-public-adoption
+    purpose: consequential-use
+    state: eligible
+    role: proposes
+    basis:
+      node:
+        kind: record
+        id: design-nkf-038-public-adoption
+      source:
+        section: design-kind-problem-and-scope
+    revision:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
+    basis_digest:
+      algorithm: sha-256
+      value: 9f5f31975f7863b8a75ce34060a7ac0fe03975f8684aaa1c4584cc499d6aefe8
+    provenance:
+      performed: true
   - node:
       kind: record
       id: design-nkf-record-v2-responsibility-bindings
@@ -22566,7 +23015,7 @@ applicability_coverage:
       id: document-31cb849adacd1ccb39c02a34824ddf8cc0c73242300e9ea20e0e6264b747a02b
     purpose: change-impact
     state: eligible
-    role: context
+    role: evidences
     basis:
       node:
         kind: document
@@ -22578,24 +23027,18 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
     basis_digest:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 9ef8457949835b826dd84efb009ba10c202e4e1ef06d15bc8f1901652b476908
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: document-31cb849adacd1ccb39c02a34824ddf8cc0c73242300e9ea20e0e6264b747a02b
     purpose: whole-root-readiness
     state: eligible
-    role: context
+    role: evidences
     basis:
       node:
         kind: document
@@ -22607,24 +23050,18 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
     basis_digest:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 9ef8457949835b826dd84efb009ba10c202e4e1ef06d15bc8f1901652b476908
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: document-31cb849adacd1ccb39c02a34824ddf8cc0c73242300e9ea20e0e6264b747a02b
     purpose: consequential-use
     state: eligible
-    role: context
+    role: evidences
     basis:
       node:
         kind: document
@@ -22636,18 +23073,12 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
     basis_digest:
       algorithm: sha-256
-      value: 1f235ab68830375da8d459643b2a439a36aef19e251a1bbe59a6f655aaebc435
+      value: 9294ffd61d3872a72a456d96731898a166713adb2685e27fa1298c2b3d6809c4
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 9ef8457949835b826dd84efb009ba10c202e4e1ef06d15bc8f1901652b476908
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: document-3532ef3861cfd2ddf7c064a88428faa9323998f21606af8915745b2587cc1370
@@ -29991,6 +30422,204 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: document
+      id: document-nkf-0-81-producer-promotion
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: record
+        id: nkf
+      source:
+        section: technology-definition
+    revision:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+    basis_digest:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-producer-promotion
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: record
+        id: nkf
+      source:
+        section: technology-definition
+    revision:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+    basis_digest:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-producer-promotion
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: record
+        id: nkf
+      source:
+        section: technology-definition
+    revision:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+    basis_digest:
+      algorithm: sha-256
+      value: 4b9c81aca05b4b98d4504e9a8f13826ef84f01695b9780a98fa2ed3aa302e2b9
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-release-notes
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-release-notes
+      source:
+        heading:
+          heading_path:
+            - "title: NKF 0.81 Release Notessummary: The publication-ready migration meaning for NKF 0.81, the first successor released from the public repository — the recommended-release catalog as an accepted contract with public channel values, adoption over plain HTTPS with no Github CLI, the adopter-obtaining step, the closed volatile-metadata registry, and the checker's recompute of the delta-review closure; what is new, what breaks, how to adopt, and how to verify.created_at: 2026-09-08T21:30:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+    basis_digest:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-release-notes
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-release-notes
+      source:
+        heading:
+          heading_path:
+            - "title: NKF 0.81 Release Notessummary: The publication-ready migration meaning for NKF 0.81, the first successor released from the public repository — the recommended-release catalog as an accepted contract with public channel values, adoption over plain HTTPS with no Github CLI, the adopter-obtaining step, the closed volatile-metadata registry, and the checker's recompute of the delta-review closure; what is new, what breaks, how to adopt, and how to verify.created_at: 2026-09-08T21:30:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+    basis_digest:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-release-notes
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-release-notes
+      source:
+        heading:
+          heading_path:
+            - "title: NKF 0.81 Release Notessummary: The publication-ready migration meaning for NKF 0.81, the first successor released from the public repository — the recommended-release catalog as an accepted contract with public channel values, adoption over plain HTTPS with no Github CLI, the adopter-obtaining step, the closed volatile-metadata registry, and the checker's recompute of the delta-review closure; what is new, what breaks, how to adopt, and how to verify.created_at: 2026-09-08T21:30:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+    basis_digest:
+      algorithm: sha-256
+      value: 871c852a2d76e6b5485193102f8a1ff08541da69288cac70180c7550de012203
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-specification
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-specification
+      source:
+        heading:
+          heading_path:
+            - "id: nkf-0.81-specificationtitle: NKF 0.81 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.81 is the successor to NKF 0.8 that makes adoption from the public governing repository truthful and self-contained. The recommended-release catalog and its closed channel vocabulary become accepted contract meaning with public prerelease and release values, a consumer resolves the catalog and archive over plain HTTPS with digest verification and no command-line tool, the adoption protocol states where the adopter is obtained, a closed registry of three volatile operating-system metadata files stops onboarding drift without weakening complete review, the checker recomputes the delta-review closure with impact propagation instead of trusting the recorded one, and live support slides to exactly 0.81 plus 0.8 with NKF 0.71 as stepping-stone history.created_at: 2026-09-08T19:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+    basis_digest:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-specification
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-specification
+      source:
+        heading:
+          heading_path:
+            - "id: nkf-0.81-specificationtitle: NKF 0.81 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.81 is the successor to NKF 0.8 that makes adoption from the public governing repository truthful and self-contained. The recommended-release catalog and its closed channel vocabulary become accepted contract meaning with public prerelease and release values, a consumer resolves the catalog and archive over plain HTTPS with digest verification and no command-line tool, the adoption protocol states where the adopter is obtained, a closed registry of three volatile operating-system metadata files stops onboarding drift without weakening complete review, the checker recomputes the delta-review closure with impact propagation instead of trusting the recorded one, and live support slides to exactly 0.81 plus 0.8 with NKF 0.71 as stepping-stone history.created_at: 2026-09-08T19:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+    basis_digest:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-0-81-specification
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-0-81-specification
+      source:
+        heading:
+          heading_path:
+            - "id: nkf-0.81-specificationtitle: NKF 0.81 — Product And Technology Knowledge Formattype: specificationsummary: NKF 0.81 is the successor to NKF 0.8 that makes adoption from the public governing repository truthful and self-contained. The recommended-release catalog and its closed channel vocabulary become accepted contract meaning with public prerelease and release values, a consumer resolves the catalog and archive over plain HTTPS with digest verification and no command-line tool, the adoption protocol states where the adopter is obtained, a closed registry of three volatile operating-system metadata files stops onboarding drift without weakening complete review, the checker recomputes the delta-review closure with impact propagation instead of trusting the recorded one, and live support slides to exactly 0.81 plus 0.8 with NKF 0.71 as stepping-stone history.created_at: 2026-09-08T19:20:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+    basis_digest:
+      algorithm: sha-256
+      value: d2ae5b96fbcf2c5950e35555e7ad84d078c0e8b89752701c0b43ad2da22d4b1b
+    provenance:
+      performed: true
+  - node:
+      kind: document
       id: document-nkf-012-completion-audit
     purpose: change-impact
     state: eligible
@@ -30512,6 +31141,282 @@ applicability_coverage:
           kind: agent
           id: claude-technical-reviewer
   - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-guidance-review
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-guidance-review
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Guidance Reviewsummary: Records the mandatory pre-cut guidance review for the NKF 0.81 versioned set under release-protocol step four — the deterministically enumerated one hundred forty-two-member list, the reviewed digest of each of the twelve guidance members re-read in full, the version-literal check of every remaining member, every correction made, and what was recorded rather than fixed.created_at: 2026-09-09T05:10:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+    basis_digest:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-guidance-review
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-guidance-review
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Guidance Reviewsummary: Records the mandatory pre-cut guidance review for the NKF 0.81 versioned set under release-protocol step four — the deterministically enumerated one hundred forty-two-member list, the reviewed digest of each of the twelve guidance members re-read in full, the version-literal check of every remaining member, every correction made, and what was recorded rather than fixed.created_at: 2026-09-09T05:10:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+    basis_digest:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-guidance-review
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-guidance-review
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Guidance Reviewsummary: Records the mandatory pre-cut guidance review for the NKF 0.81 versioned set under release-protocol step four — the deterministically enumerated one hundred forty-two-member list, the reviewed digest of each of the twelve guidance members re-read in full, the version-literal check of every remaining member, every correction made, and what was recorded rather than fixed.created_at: 2026-09-09T05:10:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+    basis_digest:
+      algorithm: sha-256
+      value: f889b1c38adbde2180df9293037e92e8ca63a45070256c925a4c03555b08d8b3
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-independent-authority-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Independent Authority Auditsummary: Records the three-round independent audit of the NKF 0.81 candidate authority set before its acceptance — the thirteen first-round findings, the two further material findings the second round surfaced after eleven repairs, the clean third round with two minor findings, every repair made, and the exact digests of the set as it stood when the last round found no material finding.created_at: 2026-09-08T19:59:31Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+    basis_digest:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-independent-authority-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Independent Authority Auditsummary: Records the three-round independent audit of the NKF 0.81 candidate authority set before its acceptance — the thirteen first-round findings, the two further material findings the second round surfaced after eleven repairs, the clean third round with two minor findings, every repair made, and the exact digests of the set as it stood when the last round found no material finding.created_at: 2026-09-08T19:59:31Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+    basis_digest:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-independent-authority-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Independent Authority Auditsummary: Records the three-round independent audit of the NKF 0.81 candidate authority set before its acceptance — the thirteen first-round findings, the two further material findings the second round surfaced after eleven repairs, the clean third round with two minor findings, every repair made, and the exact digests of the set as it stood when the last round found no material finding.created_at: 2026-09-08T19:59:31Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+    basis_digest:
+      algorithm: sha-256
+      value: 72344010bf89d06c7664d8f37fa94b1b23b5932dfa8dce6e750261f8de427d36
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-release-audit
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-release-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Release Auditsummary: Records the fresh independent release audit of the exact NKF 0.81 candidate archive and its isolated producer exercise under release-protocol step six — each round's exact subject and verdict, every finding with its repair or disposition, and what each round verified — as the Evidence the mandatory technical-confirmation Decision binds.created_at: 2026-09-09T06:00:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+    basis_digest:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-release-audit
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-release-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Release Auditsummary: Records the fresh independent release audit of the exact NKF 0.81 candidate archive and its isolated producer exercise under release-protocol step six — each round's exact subject and verdict, every finding with its repair or disposition, and what each round verified — as the Evidence the mandatory technical-confirmation Decision binds.created_at: 2026-09-09T06:00:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+    basis_digest:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-nkf-0-81-release-audit
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-nkf-0-81-release-audit
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 NKF 0.81 Release Auditsummary: Records the fresh independent release audit of the exact NKF 0.81 candidate archive and its isolated producer exercise under release-protocol step six — each round's exact subject and verdict, every finding with its repair or disposition, and what each round verified — as the Evidence the mandatory technical-confirmation Decision binds.created_at: 2026-09-09T06:00:00Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+    basis_digest:
+      algorithm: sha-256
+      value: dddf1a7834c4d01ed924de7b69715399368283912c333bd04f3fa5b3f8ee59f8
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-supporting-realizations-retirement
+    purpose: change-impact
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-supporting-realizations-retirement
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 Supporting Realizations Retirementsummary: Records the retirement of the ten frozen supporting Realizations under realizations/items/ from the working tree to Git history under ADR 0138 item seven — each file's exact SHA-256 at retirement, the Decisions that confirmed it, the record declaration removed with it, the verification that no record or bundle edge targeted any of them, and the commit that removed them — as Evidence of an operational act that accepts nothing.created_at: 2026-09-08T19:31:11Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+    basis_digest:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-supporting-realizations-retirement
+    purpose: whole-root-readiness
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-supporting-realizations-retirement
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 Supporting Realizations Retirementsummary: Records the retirement of the ten frozen supporting Realizations under realizations/items/ from the working tree to Git history under ADR 0138 item seven — each file's exact SHA-256 at retirement, the Decisions that confirmed it, the record declaration removed with it, the verification that no record or bundle edge targeted any of them, and the commit that removed them — as Evidence of an operational act that accepts nothing.created_at: 2026-09-08T19:31:11Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+    basis_digest:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+    provenance:
+      performed: true
+  - node:
+      kind: document
+      id: document-nkf-038-supporting-realizations-retirement
+    purpose: consequential-use
+    state: eligible
+    role: evidences
+    basis:
+      node:
+        kind: document
+        id: document-nkf-038-supporting-realizations-retirement
+      source:
+        heading:
+          heading_path:
+            - "title: NKF-038 Supporting Realizations Retirementsummary: Records the retirement of the ten frozen supporting Realizations under realizations/items/ from the working tree to Git history under ADR 0138 item seven — each file's exact SHA-256 at retirement, the Decisions that confirmed it, the record declaration removed with it, the verification that no record or bundle edge targeted any of them, and the commit that removed them — as Evidence of an operational act that accepts nothing.created_at: 2026-09-08T19:31:11Z"
+          occurrence: 1
+    revision:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+    basis_digest:
+      algorithm: sha-256
+      value: 2e895d5a78c9daf56dcccfe485ba045676d935084bcc557819eea026eaf0090b
+    provenance:
+      performed: true
+  - node:
       kind: record
       id: nkf
     purpose: change-impact
@@ -30737,84 +31642,6 @@ applicability_coverage:
     basis_digest:
       algorithm: sha-256
       value: 54d886d69ce73cd776023b6b415bb2800cb4a6eafd7fd139157c6e7d7d3f4d23
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-0.4-security-maintenance
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-0.4-security-maintenance
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
-    basis_digest:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-0.4-security-maintenance
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-0.4-security-maintenance
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
-    basis_digest:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-0.4-security-maintenance
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-0.4-security-maintenance
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
-    basis_digest:
-      algorithm: sha-256
-      value: ff22798f84c8642d157d45b310797920c78dab51648791ec8d3ab267c4689bcc
     provenance:
       carried:
         performed_in_graph_revision:
@@ -31449,240 +32276,6 @@ applicability_coverage:
           id: claude-technical-reviewer
   - node:
       kind: record
-      id: nkf-agent-led-initial-onboarding
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-agent-led-initial-onboarding
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-    basis_digest:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-agent-led-initial-onboarding
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-agent-led-initial-onboarding
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-    basis_digest:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-agent-led-initial-onboarding
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-agent-led-initial-onboarding
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-    basis_digest:
-      algorithm: sha-256
-      value: 18f4fdeda302d8534ae2f042231d72ee55f7487b6d0b92bbc7c7a70d38798cdf
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-checker-and-validation
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-checker-and-validation
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-    basis_digest:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-checker-and-validation
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-checker-and-validation
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-    basis_digest:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-checker-and-validation
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-checker-and-validation
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-    basis_digest:
-      algorithm: sha-256
-      value: f0d41fb3bb2c32d525fe70ae31a8558e9f9b3b96466bd5c043c2e83b4d374ad8
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-contracts-and-schemas
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-contracts-and-schemas
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-    basis_digest:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-contracts-and-schemas
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-contracts-and-schemas
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-    basis_digest:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-contracts-and-schemas
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-contracts-and-schemas
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-    basis_digest:
-      algorithm: sha-256
-      value: 2bff1037ee868f906b4efffeb6cb8137617b05d154956292b271c22b2cacbae9
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
       id: nkf-current-system
     purpose: change-impact
     state: eligible
@@ -31695,18 +32288,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
     basis_digest:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 23de91657f5e6d95167d34bd08a8e1cace331be073b366820b67dd9037ec473e
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-current-system
@@ -31721,18 +32308,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
     basis_digest:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 23de91657f5e6d95167d34bd08a8e1cace331be073b366820b67dd9037ec473e
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
   - node:
       kind: record
       id: nkf-current-system
@@ -31747,486 +32328,12 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
     basis_digest:
       algorithm: sha-256
-      value: 0b0160f22b743d6a3386d325c1442b7db66ca2e8a838ce2a702f962a62ee3587
+      value: ec7e65a9f7f17b2be4a9abd3d9e622420b1de0042a25d6d99a91fa5a3db746c2
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: 23de91657f5e6d95167d34bd08a8e1cace331be073b366820b67dd9037ec473e
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-initial-greenfield-onboarding
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-initial-greenfield-onboarding
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-    basis_digest:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-initial-greenfield-onboarding
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-initial-greenfield-onboarding
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-    basis_digest:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-initial-greenfield-onboarding
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-initial-greenfield-onboarding
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-    basis_digest:
-      algorithm: sha-256
-      value: b4a5857d7e8657a177c4fc7bb17399680742e5d86d389729975f8e6f4dd5185f
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-layered-contract-enforcement
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-layered-contract-enforcement
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-    basis_digest:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-layered-contract-enforcement
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-layered-contract-enforcement
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-    basis_digest:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-layered-contract-enforcement
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-layered-contract-enforcement
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-    basis_digest:
-      algorithm: sha-256
-      value: c7fcc39cbf25a7135bd326939ac9b3097b15a9d9211880eea08d26b3e4eae334
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-portable-knowledge-topology
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-    basis_digest:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-portable-knowledge-topology
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-    basis_digest:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-portable-knowledge-topology
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-portable-knowledge-topology
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-    basis_digest:
-      algorithm: sha-256
-      value: fce8b8d6fc66cf4f5da744b935f7db6f757585c7e60ac15c753e30f06da88057
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-release-documentation-and-adoption
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-release-documentation-and-adoption
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-    basis_digest:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-release-documentation-and-adoption
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-release-documentation-and-adoption
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-    basis_digest:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-release-documentation-and-adoption
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-release-documentation-and-adoption
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-    basis_digest:
-      algorithm: sha-256
-      value: 42ed3d0661955ed7ce0785330099a1483c78b6a0d65d7e956d0a6431c6ba800d
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-release-package
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-release-package
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-    basis_digest:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-release-package
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-release-package
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-    basis_digest:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-release-package
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-release-package
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-    basis_digest:
-      algorithm: sha-256
-      value: 27a4e9c21f6bc631ce24aad66a2a773a6e775e0b093b6b8484b880ba7e7387be
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-self-hosting
-    purpose: change-impact
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-self-hosting
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
-    basis_digest:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-self-hosting
-    purpose: whole-root-readiness
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-self-hosting
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
-    basis_digest:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
-  - node:
-      kind: record
-      id: nkf-self-hosting
-    purpose: consequential-use
-    state: eligible
-    role: realizes
-    basis:
-      node:
-        kind: record
-        id: nkf-self-hosting
-      source:
-        section: realization-identity-and-kind
-    revision:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
-    basis_digest:
-      algorithm: sha-256
-      value: 8abf11ea0815f90178b21ef1e49cbe3941519267d23c81e7c42dbcb89daaa038
-    provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: f4c965e637d81c8ca24cb235841e63f97285142abb66aade08a3b627508a0576
-        performing_reviewer:
-          kind: agent
-          id: claude-technical-reviewer
+      performed: true
 decision_classifications:
   - decision: adr-0001
     purpose: change-impact
@@ -41421,7 +41528,13 @@ decision_classifications:
       algorithm: sha-256
       value: 450162d4ce114dabb1dac286c8732190e5969e6eba916332974b39d32e6ec631
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - decision: adr-0137
     purpose: whole-root-readiness
     classification: extends
@@ -41438,7 +41551,13 @@ decision_classifications:
       algorithm: sha-256
       value: 450162d4ce114dabb1dac286c8732190e5969e6eba916332974b39d32e6ec631
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
   - decision: adr-0137
     purpose: consequential-use
     classification: extends
@@ -41455,32 +41574,361 @@ decision_classifications:
       algorithm: sha-256
       value: 450162d4ce114dabb1dac286c8732190e5969e6eba916332974b39d32e6ec631
     provenance:
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 85de3743bf62c9de9f9c330d1e25dec1fb5dcf0bb49c59b7b81128f2ed235adf
+        performing_reviewer:
+          kind: agent
+          id: claude-technical-reviewer
+  - decision: adr-0138
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0138
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 2672bb92d6542b922cc6d64ae3307fe7937f181d3ee3c25a18f106bfc59793b9
+    basis_digest:
+      algorithm: sha-256
+      value: 2672bb92d6542b922cc6d64ae3307fe7937f181d3ee3c25a18f106bfc59793b9
+    provenance:
+      performed: true
+  - decision: adr-0138
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0138
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 2672bb92d6542b922cc6d64ae3307fe7937f181d3ee3c25a18f106bfc59793b9
+    basis_digest:
+      algorithm: sha-256
+      value: 2672bb92d6542b922cc6d64ae3307fe7937f181d3ee3c25a18f106bfc59793b9
+    provenance:
+      performed: true
+  - decision: adr-0138
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0138
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 2672bb92d6542b922cc6d64ae3307fe7937f181d3ee3c25a18f106bfc59793b9
+    basis_digest:
+      algorithm: sha-256
+      value: 2672bb92d6542b922cc6d64ae3307fe7937f181d3ee3c25a18f106bfc59793b9
+    provenance:
+      performed: true
+  - decision: adr-0139
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0139
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 5edd5d777af72f6c54f0fc7650a8d140b6d37172d2e87cce5b0f82ee81e43119
+    basis_digest:
+      algorithm: sha-256
+      value: 5edd5d777af72f6c54f0fc7650a8d140b6d37172d2e87cce5b0f82ee81e43119
+    provenance:
+      performed: true
+  - decision: adr-0139
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0139
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 5edd5d777af72f6c54f0fc7650a8d140b6d37172d2e87cce5b0f82ee81e43119
+    basis_digest:
+      algorithm: sha-256
+      value: 5edd5d777af72f6c54f0fc7650a8d140b6d37172d2e87cce5b0f82ee81e43119
+    provenance:
+      performed: true
+  - decision: adr-0139
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0139
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 5edd5d777af72f6c54f0fc7650a8d140b6d37172d2e87cce5b0f82ee81e43119
+    basis_digest:
+      algorithm: sha-256
+      value: 5edd5d777af72f6c54f0fc7650a8d140b6d37172d2e87cce5b0f82ee81e43119
+    provenance:
+      performed: true
+  - decision: adr-0140
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0140
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: a386fd5293238032ad23c144aaf4a8fb6fe5383d530b9c06099b9aeb15df4f40
+    basis_digest:
+      algorithm: sha-256
+      value: a386fd5293238032ad23c144aaf4a8fb6fe5383d530b9c06099b9aeb15df4f40
+    provenance:
+      performed: true
+  - decision: adr-0140
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0140
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: a386fd5293238032ad23c144aaf4a8fb6fe5383d530b9c06099b9aeb15df4f40
+    basis_digest:
+      algorithm: sha-256
+      value: a386fd5293238032ad23c144aaf4a8fb6fe5383d530b9c06099b9aeb15df4f40
+    provenance:
+      performed: true
+  - decision: adr-0140
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0140
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: a386fd5293238032ad23c144aaf4a8fb6fe5383d530b9c06099b9aeb15df4f40
+    basis_digest:
+      algorithm: sha-256
+      value: a386fd5293238032ad23c144aaf4a8fb6fe5383d530b9c06099b9aeb15df4f40
+    provenance:
+      performed: true
+  - decision: adr-0141
+    purpose: change-impact
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0141
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 64e6b00276af6f9510744a1205cca07587e531e8977cb44a1ad23055dcbd1bf9
+    basis_digest:
+      algorithm: sha-256
+      value: 64e6b00276af6f9510744a1205cca07587e531e8977cb44a1ad23055dcbd1bf9
+    provenance:
+      performed: true
+  - decision: adr-0141
+    purpose: whole-root-readiness
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0141
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 64e6b00276af6f9510744a1205cca07587e531e8977cb44a1ad23055dcbd1bf9
+    basis_digest:
+      algorithm: sha-256
+      value: 64e6b00276af6f9510744a1205cca07587e531e8977cb44a1ad23055dcbd1bf9
+    provenance:
+      performed: true
+  - decision: adr-0141
+    purpose: consequential-use
+    classification: extends
+    basis:
+      node:
+        kind: record
+        id: adr-0141
+      source:
+        section: context-and-problem
+    decision_digest:
+      algorithm: sha-256
+      value: 64e6b00276af6f9510744a1205cca07587e531e8977cb44a1ad23055dcbd1bf9
+    basis_digest:
+      algorithm: sha-256
+      value: 64e6b00276af6f9510744a1205cca07587e531e8977cb44a1ad23055dcbd1bf9
+    provenance:
       performed: true
 promotion_reconciliation: []
 confirmation:
   reviewer:
     kind: agent
     id: claude-technical-reviewer
-  reviewed_at: 2026-09-08T17:45:08.183Z
+  reviewed_at: 2026-09-09T10:46:17.332Z
   claim: semantically-reviewed-delta
   computed_closure:
+    - kind: document
+      id: NKF-004
+    - kind: document
+      id: NKF-005
+    - kind: document
+      id: NKF-006
+    - kind: document
+      id: NKF-009
+    - kind: document
+      id: NKF-014
+    - kind: document
+      id: NKF-016
+    - kind: document
+      id: NKF-018
+    - kind: document
+      id: NKF-021
+    - kind: document
+      id: NKF-024
+    - kind: document
+      id: NKF-037
+    - kind: document
+      id: NKF-038
     - kind: record
-      id: adr-0137
+      id: adr-0138
+    - kind: record
+      id: adr-0139
+    - kind: record
+      id: adr-0140
+    - kind: record
+      id: adr-0141
+    - kind: record
+      id: design-nkf-021-task-scope-gate
+    - kind: record
+      id: design-nkf-037-public-repository
+    - kind: record
+      id: design-nkf-038-public-adoption
+    - kind: document
+      id: document-31cb849adacd1ccb39c02a34824ddf8cc0c73242300e9ea20e0e6264b747a02b
+    - kind: document
+      id: document-nkf-0-81-producer-promotion
+    - kind: document
+      id: document-nkf-0-81-release-notes
+    - kind: document
+      id: document-nkf-0-81-specification
+    - kind: document
+      id: document-nkf-038-nkf-0-81-guidance-review
+    - kind: document
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+    - kind: document
+      id: document-nkf-038-nkf-0-81-release-audit
+    - kind: document
+      id: document-nkf-038-supporting-realizations-retirement
+    - kind: record
+      id: nkf-current-system
   performed_set:
+    - kind: document
+      id: NKF-004
+    - kind: document
+      id: NKF-005
+    - kind: document
+      id: NKF-006
+    - kind: document
+      id: NKF-009
+    - kind: document
+      id: NKF-014
+    - kind: document
+      id: NKF-016
+    - kind: document
+      id: NKF-018
+    - kind: document
+      id: NKF-021
+    - kind: document
+      id: NKF-024
+    - kind: document
+      id: NKF-037
+    - kind: document
+      id: NKF-038
     - kind: record
-      id: adr-0137
+      id: adr-0138
+    - kind: record
+      id: adr-0139
+    - kind: record
+      id: adr-0140
+    - kind: record
+      id: adr-0141
+    - kind: record
+      id: design-nkf-021-task-scope-gate
+    - kind: record
+      id: design-nkf-037-public-repository
+    - kind: record
+      id: design-nkf-038-public-adoption
+    - kind: document
+      id: document-31cb849adacd1ccb39c02a34824ddf8cc0c73242300e9ea20e0e6264b747a02b
+    - kind: document
+      id: document-nkf-0-81-producer-promotion
+    - kind: document
+      id: document-nkf-0-81-release-notes
+    - kind: document
+      id: document-nkf-0-81-specification
+    - kind: document
+      id: document-nkf-038-nkf-0-81-guidance-review
+    - kind: document
+      id: document-nkf-038-nkf-0-81-independent-authority-audit
+    - kind: document
+      id: document-nkf-038-nkf-0-81-release-audit
+    - kind: document
+      id: document-nkf-038-supporting-realizations-retirement
+    - kind: record
+      id: nkf-current-system
   observations:
-    - id: adr-0137-h1-repair-observation
+    - id: nkf-038-closing-delta-review-task
+      subject:
+        kind: document
+        id: NKF-038
+      basis:
+        node:
+          kind: document
+          id: NKF-038
+        source:
+          heading:
+            heading_path:
+              - 'title: "NKF-038: Release NKF 0.81 For Public Adoption And Reconcile The Record"summary: Release NKF 0.81 as the successor that makes adoption from the now-public repository truthful and self-contained — a recommendation catalog whose channel vocabulary lives in the accepted contract with a public value, an adopter that fetches the catalog and archive over plain HTTPS with no gh dependency and tells a consumer where to obtain itself, a regenerated public-documentation projection that no longer calls the release private, and an onboarding snapshot that no longer fails on volatile operating-system metadata — and, under the same release, repair every stale document the whole-repository sweep of 2026-09-08 found, recording that the coordinate 0.81 is what ADR 0136 called the NKF 0.9 successor.created_at: 2026-09-08T13:51:52Z'
+            occurrence: 1
+      finding: "Twenty-seven nodes judged fresh under the NKF-038 delegation at the Task's close: the eleven Tasks rewritten natively or created under it as context — each restating its stale premise as dated history with a real gate; the four 0.81 Decisions as governing — adopting the direction, adopting the closure repair, accepting the audited authority set, and confirming the audited candidate; the three Designs as proposing; the eight Evidence documents as evidencing — the Evidence map, the accepted 0.81 Specification represented as Evidence until promotion, the producer-promotion input, the release notes, the guidance review, the authority audit, the four-round release audit, and the retirement record; and the rewritten current-system Realization as realizing. Every other judgment carried by digest identity under the accepted 0.71-to-0.8 version delta."
+    - id: nkf-038-closing-delta-review-realization
       subject:
         kind: record
-        id: adr-0137
+        id: nkf-current-system
       basis:
         node:
           kind: record
-          id: adr-0137
+          id: nkf-current-system
         source:
-          section: context-and-problem
-      finding: "One node judged fresh: ADR 0137 after its H1 was restored to plain text, repairing a self-link a mechanical link pass had inserted before merge; no other byte of the Decision changed and its meaning is unchanged. Every other judgment carried by digest identity."
+          section: realization-identity-and-kind
+      finding: "The current-system Realization now states the accepted and confirmed 0.81 candidate, this producer's continuing 0.8 declaration, and the version lineage as a table; it changes no accepted meaning and remains draft and partially confirmed. ADR 0138 through ADR 0141 extend the accepted decision set for every purpose: they adopt, accept, and confirm a successor without reversing any carried decision before the separately authorized publication and promotion."
   limitations:
-    - This delta review judges only the repaired ADR 0137 node; carried judgments are trusted by digest identity under the accepted 0.71-to-0.8 version delta.
+    - This delta review judges the twenty-seven nodes in the closure computed under the 0.8 evaluation policy, which does not propagate impact; the accepted Decisions the rewritten Realization realizes were re-read in the isolated 0.81 exercises and found unchanged in meaning, and they are judged again with propagation at this producer's first seal under 0.81.
+    - Carried judgments are trusted by digest identity under the accepted 0.71-to-0.8 version delta and were not re-read; the review confirms no Realization and accepts no knowledge.
   disputed: false
