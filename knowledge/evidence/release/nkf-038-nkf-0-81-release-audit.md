@@ -417,3 +417,76 @@ second five-artifact revision remains byte-for-byte under
 The sealer also verifies the resulting proof before success, rolls back a
 rejected successor and newly added history, and permits whole-root recovery
 after history loss. Regression checks cover both rollback and recovery.
+
+## Final Corrected Candidate Audit — 2026-09-09
+
+The Human Product Owner explicitly directed committing the current repair,
+closing [NKF-038](../../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md),
+and making its pull request ready for merge, with a lower-cost documentation
+sweep. GPT-5.6 Luna independently swept the documentation and audited the
+corrected release set and archive; the Codex technical reviewer performed the
+exact producer exercise and reviewed its semantic delta under the recorded
+delegation. The earlier audit rounds and their original findings remain
+history and do not supply this verdict.
+
+| Audited binding | Exact value |
+| --- | --- |
+| Release commit | `e5b06343b94b2b0a5b0986d43c893dfd7e5d63e2` |
+| Archive SHA-256 | `070d3222af5274cbec51153fb2c9eac6f2befc336470e3f7de2792cbd16a6851` |
+| Checker SHA-256 | `1a268c93d9f484389885c02336ebd8464718967249036e79de03ddf7cd775008` |
+| Adopter SHA-256 | `12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5` |
+| Complete release set | 142 members: 141 source members and the generated manifest |
+| Completed semantic review SHA-256 | `fa4a044fef2bd0bc48fe004b74d4913eefb596c00d4a245da8307d9c1b6ee5c8` |
+
+The independent audit recomputed the archive hash, checked all 141
+manifest-listed member hashes, matched the five current authority artifacts
+to [ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md),
+and verified all twelve final guidance digests against the full reread in the
+[guidance review](nkf-038-nkf-0-81-guidance-review.md). It checked the P1 source
+proof and its adversarial regression cases: exact predecessor history and
+chain validation, exact carried values and provenance, independently computed
+mandatory closure, missing or altered history, unsafe paths, malformed closure
+sets, rollback, whole-root recovery, and closed mechanical transitions.
+Twenty-four version-specific 0.8 contract, Specification, and distribution
+members remain byte-identical to the published archive
+`2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5`.
+Existing accepted Decisions, the 0.8 recommendation, and the producer pin are
+unchanged.
+
+The final literal sweep found one remaining stale diagnostic: an invalid
+0.81 onboarding plan was described as a 0.4 plan. The source and generated
+adopter copies now name 0.81; a direct invalid-plan exercise verified the
+corrected message. The exact candidate exercise script also still selected
+[ADR 0140](../../decisions/0140-accept-the-nkf-0-81-authority-set.md).
+It now supplies the current exact promotion selection in
+[ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md).
+These findings are repaired, not waived. No other actionable stale claim or
+archive-integrity finding remains in this audit.
+
+Release packaging passed all 281 tests in 29 files, deterministic checker and
+adopter builds, the public projection, and notices verification. The controlled
+native HTTPS test verifies real TLS certificate and hostname checking, an
+allowlisted cross-host redirect, exact installation, and refusal of untrusted
+TLS and tampered bytes. It does not claim a live public 0.81 release exists.
+
+The exact archive was then exercised in a fresh isolated producer clone.
+Source-provenance reproduction rebuilt all 141 source members from the
+manifest-bound commit. The promotion review was a delta, not a whole-root
+fallback: its computed closure is exactly the new native
+`record:nkf-0.81-specification`, reviewed as eligible and governing against its
+accepted purpose section and exact native declaration; 358 unchanged judgments
+carry with their predecessor values and provenance. The independent reviewer
+parsed and checked this one-fresh, 358-carried review scope. The shipped
+checker verifies the resulting predecessor proof and requires readiness.
+First Adopt returned `updated`, repeat Adopt returned `current`, host-superset
+integration remained intact, and the full `npm run nkf:check` passed inside the
+promoted copy. The digest-bound 0.8-to-0.81 promotion is therefore proven for
+this exact candidate.
+
+This audit clears the corrected release set for a fresh technical confirmation.
+As in the previous release order, the confirmation archive is cut from the
+clean commit that records this audit, with every source member checked
+byte-identical to this audited archive. Only its manifest's source-commit
+binding changes; the resulting exact archive is verified and exercised again
+before confirmation. Publication, recommendation, live producer promotion,
+and merge remain separate Human Product Owner acts.

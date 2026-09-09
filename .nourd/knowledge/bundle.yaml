@@ -1862,7 +1862,7 @@ non_records:
       stable_path: evidence/release/nkf-038-nkf-0-81-release-audit.md
       digest:
         algorithm: sha-256
-        value: "3810961580ab5bbd36ec6c6f6ee90923355d736bd86eec3041b9564e539ba34f"
+        value: "c0d5206ec429fbc63d0f2bc92da8152901e40bc8ff55ab09f87edf5110cc62c5"
       relationships: []
   - path: evidence/release/nkf-038-nkf-0-81-guidance-review.md
     kind: evidence

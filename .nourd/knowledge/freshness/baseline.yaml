@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 0a1e578233f28a41eb594de56ac0d3250a44627c61444400276913065f0ca5f4
+  value: 38a577cbd4b49a43198bfcb05a565fc203261a08c78b4ba2405393126e3df44d
 policy:
   id: nkf.freshness-policy.0.8
   digest:
@@ -2031,7 +2031,7 @@ node_revisions:
       id: document-nkf-038-nkf-0-81-release-audit
     revision:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
   - node:
       kind: document
       id: document-nkf-038-supporting-realizations-retirement
@@ -31825,7 +31825,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 0a1e578233f28a41eb594de56ac0d3250a44627c61444400276913065f0ca5f4
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
   - node:
       kind: document
       id: document-nkf-038-nkf-0-81-guidance-review
@@ -31848,7 +31854,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 0a1e578233f28a41eb594de56ac0d3250a44627c61444400276913065f0ca5f4
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
   - node:
       kind: document
       id: document-nkf-038-nkf-0-81-guidance-review
@@ -31871,7 +31883,13 @@ applicability_coverage:
       algorithm: sha-256
       value: 337413e94c31c55e0a83fcb6267ff4149876505cb3b17935aa921dd14549c61e
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 0a1e578233f28a41eb594de56ac0d3250a44627c61444400276913065f0ca5f4
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
   - node:
       kind: document
       id: document-nkf-038-nkf-0-81-independent-authority-audit
@@ -31976,18 +31994,12 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
     basis_digest:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: fdcc6bf1d0d0661696e9c592d871b203ec5fa225590fdea9778c6d97360829a6
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: document-nkf-038-nkf-0-81-release-audit
@@ -32005,18 +32017,12 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
     basis_digest:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: fdcc6bf1d0d0661696e9c592d871b203ec5fa225590fdea9778c6d97360829a6
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: document-nkf-038-nkf-0-81-release-audit
@@ -32034,18 +32040,12 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
     basis_digest:
       algorithm: sha-256
-      value: cd99517995a846da9e2afa8cb53d805d7c8441be06b99a5582c9775768fd0739
+      value: 00ec974ad0e2c58fd5a16d07a40be28e03746301d9658e2910731ea074d8b648
     provenance:
-      carried:
-        performed_in_graph_revision:
-          algorithm: sha-256
-          value: fdcc6bf1d0d0661696e9c592d871b203ec5fa225590fdea9778c6d97360829a6
-        performing_reviewer:
-          kind: agent
-          id: codex-technical-reviewer
+      performed: true
   - node:
       kind: document
       id: document-nkf-038-supporting-realizations-retirement
@@ -43551,14 +43551,14 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-09-09T17:46:41.414Z
+  reviewed_at: 2026-09-09T17:56:59.754Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
-      id: document-nkf-038-nkf-0-81-guidance-review
+      id: document-nkf-038-nkf-0-81-release-audit
   performed_set:
     - kind: document
-      id: document-nkf-038-nkf-0-81-guidance-review
+      id: document-nkf-038-nkf-0-81-release-audit
   observations:
     - id: review-observation
       subject:
@@ -43573,7 +43573,7 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: "Reviewed the final inventory and corrected only the stale onboarding diagnostic: the existing 0.81 precondition now names 0.81. Guidance and installed-version semantics are unchanged; generated adopter copies are synchronized."
+      finding: "Reviewed the final corrected exact-candidate audit: independently verified archive, current authority and guidance bindings, frozen 0.8 preservation, one-fresh Specification delta review, and successful isolated full producer exercise. Technical confirmation remains the next separate record."
   limitations:
     - Local NKF-038 authoring review under explicit user direction. Publication, recommendation, live producer adoption, and merge remain separate operations.
   disputed: false
