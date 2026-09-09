@@ -603,6 +603,17 @@ describe("NKF consumer adopter", () => {
     for (const entry of template.nodes) {
       expect(entry.provenance.carried, JSON.stringify(entry.node)).toBeDefined();
     }
+    // A template with only its timestamp filled in is not a review: the
+    // sentinel reviewer, finding, and limitation are refused by name rather
+    // than sealed into the successor baseline.
+    const placeholderPath = path.join(path.dirname(project), "placeholder-review.yaml");
+    const placeholder = YAML.parse(readFileSync(reviewPath, "utf8"));
+    placeholder.reviewed_at = "2026-09-09T08:00:00.000Z";
+    writeFileSync(placeholderPath, YAML.stringify(placeholder, { lineWidth: 0, aliasDuplicateObjects: false }));
+    const sentinel = runAdopt(project, ["--archive", archivePath, "--review", placeholderPath]);
+    expect(sentinel.status).toBe(1);
+    expect(sentinel.stderr).toContain("template's placeholders at reviewer.id");
+    expectTreeEqual(await snapshotTree(path.join(project, "knowledge")), beforeKnowledge);
     completeGeneratedReview(reviewPath);
     const result = runAdopt(project, ["--archive", archivePath, "--review", reviewPath]);
     expect(result.status, result.stderr).toBe(0);
@@ -1174,6 +1185,12 @@ describe("NKF consumer adopter", () => {
         catalog.archive.url = catalog.archive.url.replace("NourdApS/Nourd.NKF", "someone-else/Nourd.NKF");
       }, "archive-url-noncanonical"],
       ["shape", (catalog) => { catalog.archive.size = 0; }, "schema-invalid"],
+      // Shape-valid facts the archive does not carry are refused after
+      // acquisition and before staging; the result never echoes them.
+      ["checker-fact", (catalog) => { catalog.checker_sha256 = "1".repeat(64); }, "catalog-archive-inconsistent"],
+      ["commit-fact", (catalog) => { catalog.source_commit = "3".repeat(40); }, "catalog-archive-inconsistent"],
+      ["size-fact", (catalog) => { catalog.archive.size = 1; }, "catalog-archive-inconsistent"],
+      ["authority-fact", (catalog) => { catalog.authority.markdown_sha256 = "2".repeat(64); }, "catalog-archive-inconsistent"],
     ];
     for (const [name, mutate, refusal] of refusals) {
       const refused = await withCatalog(name, mutate);
@@ -1341,12 +1358,16 @@ describe("NKF consumer adopter", () => {
     const drifted = onboard(project, workspace);
     expect(drifted.status).toBe(1);
     expect(drifted.stderr).toContain("NKF-ONBOARDING-INSPECTION-DRIFT");
+    // The refusal names what moved instead of leaving a large repository to
+    // be diffed by hand.
+    expect(drifted.stderr).toContain("notes.txt (changed)");
     await writeFile(path.join(project, "notes.txt"), "kept\n");
     // A directory with a registered basename is not volatile.
     await mkdir(path.join(project, "docs", ".DS_Store"));
     const directoryDrift = onboard(project, workspace);
     expect(directoryDrift.status).toBe(1);
     expect(directoryDrift.stderr).toContain("NKF-ONBOARDING-INSPECTION-DRIFT");
+    expect(directoryDrift.stderr).toContain("docs/.DS_Store (added)");
     await rm(path.join(project, "docs", ".DS_Store"), { recursive: true });
     const result = onboard(project, workspace);
     expect(result.status, result.stderr).toBe(0);

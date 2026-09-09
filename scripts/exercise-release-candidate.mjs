@@ -83,8 +83,9 @@ try {
     const chain = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self";
     producerManifest.nkf.integration.host_script = chain;
     producerManifest.scripts["nkf:check:host"] = chain;
-    producerManifest.scripts["verify:guidance-generation"] =
-      `node scripts/generate-guidance.mjs --project . --version ${nkfVersion} --check`;
+    producerManifest.scripts["verify:guidance-generation"] = nkfVersion === "0.8"
+      ? "node scripts/generate-guidance.mjs --project . --version 0.8 --check"
+      : "node scripts/generate-guidance.mjs --project . --check";
     producerManifest.scripts["verify:version-labels"] = "node scripts/verify-version-labels.mjs --project .";
     producerManifest.scripts["verify:guidance-review"] = "node scripts/verify-guidance-review.mjs --project .";
     await writeFile(manifestPath, `${JSON.stringify(producerManifest, null, 2)}\n`);

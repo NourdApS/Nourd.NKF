@@ -289,8 +289,9 @@ belong in this record rather than only in code:
   checker input under the closed governed-input set. A seal that omitted a
   changed node from both its closure and its performed set is therefore
   indistinguishable from an unchanged node without predecessor bytes; that
-  remains the seal's obligation, and the seal now computes the same propagated
-  closure.
+  remains the seal's obligation, and a seal under 0.81 computes the same
+  propagated closure; this producer's own seals stay under the 0.8 policy until
+  it adopts 0.81.
 
 The adopter and seal implementation was completed by an agent instance whose
 session ended before it could report; its work was verified here by rebuild,

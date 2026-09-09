@@ -18827,6 +18827,38 @@ function validateResolvedAssessment(assessment, inspection, projectAuthority) {
     );
   }
 }
+async function describeInspectionDrift(loaded, inspection) {
+  const previousBytes = await readFile(path.join(loaded.workspaceRoot, "inspection.json")).catch(() => null);
+  if (previousBytes === null) return { drift: null };
+  let previous;
+  try {
+    previous = JSON.parse(previousBytes.toString("utf8"));
+  } catch {
+    return { drift: null };
+  }
+  const before = new Map((previous.project_entries ?? []).filter((entry) => !isVolatileEntry(entry)).map((entry) => [entry.path, entry]));
+  const after = new Map((inspection.project_entries ?? []).filter((entry) => !isVolatileEntry(entry)).map((entry) => [entry.path, entry]));
+  const drift = [];
+  for (const [entryPath, entry] of before) {
+    const now = after.get(entryPath);
+    if (now === void 0) drift.push({ path: entryPath, change: "removed" });
+    else if (now.kind !== entry.kind || now.sha256 !== entry.sha256) drift.push({ path: entryPath, change: "changed" });
+  }
+  for (const entryPath of after.keys()) {
+    if (!before.has(entryPath)) drift.push({ path: entryPath, change: "added" });
+  }
+  drift.sort((left, right) => left.path.localeCompare(right.path));
+  return { drift: drift.slice(0, 50), drift_total: drift.length };
+}
+async function failInspectionDrift(loaded, inspection) {
+  const described = await describeInspectionDrift(loaded, inspection);
+  const named = described.drift === null ? "" : described.drift.length === 0 ? " The project entries match; the relevant integration surfaces or Git binding changed." : ` Drifted entries: ${described.drift.slice(0, 5).map((entry) => `${entry.path} (${entry.change})`).join(", ")}${described.drift_total > 5 ? ` and ${described.drift_total - 5} more` : ""}.`;
+  fail(
+    "NKF-ONBOARDING-INSPECTION-DRIFT",
+    `The project no longer matches the mechanical snapshot bound by the plan.${named}`,
+    { ...described, diagnostics: inspection.diagnostics }
+  );
+}
 async function sealOnboardingPlan(projectRootInput, planPathInput) {
   const projectRoot = await resolveProjectRoot(projectRootInput);
   const loaded = await readPlan(planPathInput);
@@ -18834,11 +18866,7 @@ async function sealOnboardingPlan(projectRootInput, planPathInput) {
   validateOnboardingTopologyPlan(loaded.plan);
   const inspection = await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
   if (!inspection.mechanically_ready || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
-    fail(
-      "NKF-ONBOARDING-INSPECTION-DRIFT",
-      "The project no longer matches the mechanical snapshot bound by the plan.",
-      { diagnostics: inspection.diagnostics }
-    );
+    await failInspectionDrift(loaded, inspection);
   }
   validateResolvedAssessment(loaded.plan.assessment, inspection, loaded.plan.project.authority);
   for (const [index, item2] of loaded.plan.documents.entries()) {
@@ -19309,11 +19337,7 @@ async function validateLoadedPlan(projectRoot, loaded, observedInspection = null
   validateOnboardingTopologyPlan(loaded.plan);
   const inspection = observedInspection ?? await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
   if (!inspection.mechanically_ready || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
-    fail(
-      "NKF-ONBOARDING-INSPECTION-DRIFT",
-      "The project no longer matches the mechanical snapshot bound by the plan.",
-      { diagnostics: inspection.diagnostics }
-    );
+    await failInspectionDrift(loaded, inspection);
   }
   validateResolvedAssessment(loaded.plan.assessment, inspection, loaded.plan.project.authority);
   const observed = new Map(inspection.documents.map((item2) => [item2.path, item2]));
@@ -21257,6 +21281,27 @@ async function sealBaseline0_7({ projectRoot, checker, reviewPath, versionDeltaD
     ...review.stage === "delta" ? ["computed_closure"] : []
   ];
   exactObject(review, expected, "review");
+  const placeholders = [];
+  if (review.reviewer?.id === "REVIEWER_ID_REQUIRED") placeholders.push("reviewer.id");
+  if (review.reviewed_at === "REVIEWED_AT_UTC_MILLISECOND_REQUIRED") placeholders.push("reviewed_at");
+  for (const [index, entry] of (Array.isArray(review.nodes) ? review.nodes : []).entries()) {
+    if (entry?.state === "REVIEW_REQUIRED" || entry?.role === "REVIEW_REQUIRED") placeholders.push(`nodes[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.relationships) ? review.relationships : []).entries()) {
+    if (entry?.state === "REVIEW_REQUIRED") placeholders.push(`relationships[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.decision_classifications) ? review.decision_classifications : []).entries()) {
+    if (entry?.classification === "REVIEW_REQUIRED") placeholders.push(`decision_classifications[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.observations) ? review.observations : []).entries()) {
+    if (entry?.finding === "REVIEW_FINDING_REQUIRED") placeholders.push(`observations[${index}].finding`);
+  }
+  for (const [index, entry] of (Array.isArray(review.limitations) ? review.limitations : []).entries()) {
+    if (entry === "REVIEW_LIMITATION_REQUIRED") placeholders.push(`limitations[${index}]`);
+  }
+  if (placeholders.length > 0) {
+    fail4(`The review still carries the template's placeholders at ${placeholders.slice(0, 8).join(", ")}${placeholders.length > 8 ? ` and ${placeholders.length - 8} more` : ""}; a named reviewer must complete it before it can seal.`);
+  }
   const deltaStage = review.stage === "delta";
   if (review.contract !== "nkf.semantic-review-input" || review.nkf_version !== nkfVersion || (deltaStage ? review.claim !== "semantically-reviewed-delta" : review.stage !== "whole-root" || review.claim !== "semantically-reviewed-whole-root") || review.disputed !== false) fail4("The completed review has the wrong contract, version, stage, claim, or dispute state.");
   const result = await candidateGraph07(project, checkerPath, nkfVersion);
@@ -22174,6 +22219,33 @@ function releaseIdentity(archiveSha256) {
     tag: `release-sha256-${archiveSha256}`
   };
 }
+function reconcileCatalogWithArchive(binding, bytes, expectedSha256) {
+  if (binding === void 0) return;
+  const verification = verifyReleaseArchive(bytes, expectedSha256);
+  const manifest = verification.manifest;
+  const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
+  const observed = {
+    nkf_version: manifest.nkf_version,
+    checker_sha256: manifest.checker.digest.value,
+    adopter_sha256: archivedAdopter === void 0 ? null : digest(archivedAdopter),
+    markdown_sha256: manifest.authority.markdown.digest.value,
+    executable_sha256: manifest.authority.executable.digest.value,
+    source_commit: manifest.source.release_commit,
+    size: bytes.length
+  };
+  const differing = Object.keys(observed).filter((key) => observed[key] !== binding[key]);
+  if (differing.length > 0) {
+    throw new OnboardingError(
+      "NKF-ADOPTER-CATALOG-REFUSED",
+      `The catalog states ${differing.join(", ")} that the selected archive does not carry. Refusal: catalog-archive-inconsistent. Nothing was staged.`,
+      {
+        refusal: "catalog-archive-inconsistent",
+        differing: Object.fromEntries(differing.map((key) => [key, { catalog: binding[key], archive: observed[key] }])),
+        offline_path: OFFLINE_PATH
+      }
+    );
+  }
+}
 async function acquireArchive(options, expectedSha256) {
   const hasArchive = options.archive !== void 0;
   const hasRepository = options["github-repository"] !== void 0;
@@ -22181,7 +22253,9 @@ async function acquireArchive(options, expectedSha256) {
     fail5("Supply exactly one of --archive or --github-repository.");
   }
   if (hasArchive) {
-    return readFile5(path5.resolve(options.archive));
+    const bytes2 = await readFile5(path5.resolve(options.archive));
+    reconcileCatalogWithArchive(options.catalogBinding, bytes2, expectedSha256);
+    return bytes2;
   }
   const repository = options["github-repository"];
   if (repository !== CURRENT_REPOSITORY) {
@@ -22206,6 +22280,7 @@ async function acquireArchive(options, expectedSha256) {
       { url, expected_sha256: expectedSha256, observed_sha256: observed, offline_path: OFFLINE_PATH }
     );
   }
+  reconcileCatalogWithArchive(options.catalogBinding, bytes, expectedSha256);
   return bytes;
 }
 function mergeBlock(existingBytes, block, relativePath) {
@@ -25700,7 +25775,16 @@ async function adopt(options) {
   const releaseOptions = {
     ...options,
     sha256: catalog.archive.sha256,
-    ...catalog.archive.url === null ? {} : { "archive-url": catalog.archive.url }
+    ...catalog.archive.url === null ? {} : { "archive-url": catalog.archive.url },
+    catalogBinding: {
+      nkf_version: catalog.nkf_version,
+      checker_sha256: catalog.checker_sha256,
+      adopter_sha256: catalog.adopter_sha256,
+      markdown_sha256: catalog.authority.markdown_sha256,
+      executable_sha256: catalog.authority.executable_sha256,
+      source_commit: catalog.source_commit,
+      size: catalog.archive.size
+    }
   };
   delete releaseOptions.recommendation;
   delete releaseOptions["accept-breaking"];

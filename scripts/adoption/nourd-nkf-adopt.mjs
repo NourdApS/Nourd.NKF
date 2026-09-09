@@ -776,6 +776,40 @@ function releaseIdentity(archiveSha256) {
   };
 }
 
+// The catalog is the selection channel and the archive digest is the trust
+// anchor, but a catalog that states facts about the archive it selects —
+// checker and adopter digests, authority digests, source commit, byte size —
+// must state them truthfully, or the human-facing result would echo values the
+// tool never verified. Every acquired archive is reconciled against the
+// catalog that selected it before any caller stages a byte.
+function reconcileCatalogWithArchive(binding, bytes, expectedSha256) {
+  if (binding === undefined) return;
+  const verification = verifyReleaseArchive(bytes, expectedSha256);
+  const manifest = verification.manifest;
+  const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
+  const observed = {
+    nkf_version: manifest.nkf_version,
+    checker_sha256: manifest.checker.digest.value,
+    adopter_sha256: archivedAdopter === undefined ? null : digest(archivedAdopter),
+    markdown_sha256: manifest.authority.markdown.digest.value,
+    executable_sha256: manifest.authority.executable.digest.value,
+    source_commit: manifest.source.release_commit,
+    size: bytes.length,
+  };
+  const differing = Object.keys(observed).filter((key) => observed[key] !== binding[key]);
+  if (differing.length > 0) {
+    throw new OnboardingError(
+      "NKF-ADOPTER-CATALOG-REFUSED",
+      `The catalog states ${differing.join(", ")} that the selected archive does not carry. Refusal: catalog-archive-inconsistent. Nothing was staged.`,
+      {
+        refusal: "catalog-archive-inconsistent",
+        differing: Object.fromEntries(differing.map((key) => [key, { catalog: binding[key], archive: observed[key] }])),
+        offline_path: OFFLINE_PATH,
+      },
+    );
+  }
+}
+
 async function acquireArchive(options, expectedSha256) {
   const hasArchive = options.archive !== undefined;
   const hasRepository = options["github-repository"] !== undefined;
@@ -783,7 +817,9 @@ async function acquireArchive(options, expectedSha256) {
     fail("Supply exactly one of --archive or --github-repository.");
   }
   if (hasArchive) {
-    return readFile(path.resolve(options.archive));
+    const bytes = await readFile(path.resolve(options.archive));
+    reconcileCatalogWithArchive(options.catalogBinding, bytes, expectedSha256);
+    return bytes;
   }
   const repository = options["github-repository"];
   if (repository !== CURRENT_REPOSITORY) {
@@ -812,6 +848,7 @@ async function acquireArchive(options, expectedSha256) {
       { url, expected_sha256: expectedSha256, observed_sha256: observed, offline_path: OFFLINE_PATH },
     );
   }
+  reconcileCatalogWithArchive(options.catalogBinding, bytes, expectedSha256);
   return bytes;
 }
 
@@ -4972,6 +5009,15 @@ async function adopt(options) {
     ...options,
     sha256: catalog.archive.sha256,
     ...(catalog.archive.url === null ? {} : { "archive-url": catalog.archive.url }),
+    catalogBinding: {
+      nkf_version: catalog.nkf_version,
+      checker_sha256: catalog.checker_sha256,
+      adopter_sha256: catalog.adopter_sha256,
+      markdown_sha256: catalog.authority.markdown_sha256,
+      executable_sha256: catalog.authority.executable_sha256,
+      source_commit: catalog.source_commit,
+      size: catalog.archive.size,
+    },
   };
   delete releaseOptions.recommendation;
   delete releaseOptions["accept-breaking"];

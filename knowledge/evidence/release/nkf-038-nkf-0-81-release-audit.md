@@ -123,12 +123,83 @@ guidance-review, version-label, and link verifiers; the absence of
 files' last committed bytes; and the judgment that the set realizes exactly the
 seven adopted boundaries with the ten retirements and nothing else.
 
+## Round Two — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `a7aa6d8b0934542abb39581b3f7e55efb6aa7a46` (`task/NKF-038`, clean before and after) |
+| Audited archive | SHA-256 `04c6850b199fedc738647706076e989eea56e5013ee89910fe85406a6e1fb868`, 142 entries, checker `f2fe706353ebba7737f2d280cb65f60ec1ea0feb9eef1456644668b41d03c59c` |
+| Verdict | Delivery clean of blocking findings: zero blocking, seven should-fix, eleven notes |
+
+Round two was performed by three independent agent instances with divided
+scope after a single instance stalled twice on long-running commands: one
+reproduced the gate and the archive, one read every guidance member, every
+hand-authored projection member, and every reconciled record, and one
+exercised the shipped checker and adopter adversarially. All three confirmed
+every round-one repair with evidence. The archive was rebuilt byte-identically
+from a clean clone at the release commit; the manifest validated against the
+shipped Schema with every digest, mode, and class reconciled; the five accepted
+artifacts carried the ADR 0140 digests in tree and archive; every member of
+the published 0.8 archive with a frozen path was byte-identical to the tree and
+the 0.8 catalog was unchanged; the complete gate passed in the clone with
+twenty-nine test files and two hundred eighty tests, zero diagnostics from the
+full-bundle checker, and a passing pinned chain; the twelve guidance members
+and the six hand-authored projection members were read in full without a
+stale sentence; and every shipped-tool exercise of round one was repeated with
+the same outcomes.
+
+## Round Two Should-Fix Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| The adopter sealed a review whose reviewer id, finding, and limitation were still the template's sentinels, and the checker then reported the project ready; with every judgment carried, an update could complete on a timestamp alone | The seal refuses a review that still carries any template placeholder, naming the positions; the adopter suite proves the refusal before the completed review is accepted |
+| Catalog facts about the archive — checker and adopter digests, authority digests, source commit, byte size — were validated for shape only, so a catalog contradicting the archive it named was accepted and the adopt result echoed the false values | Every acquired archive is reconciled against the catalog that selected it before any staging, refusing `catalog-archive-inconsistent` with the differing keys; four adversarial catalogs are refused in the suite |
+| The onboarding drift refusal named no entry, leaving a large repository to be diffed by hand | The refusal names the added, removed, and changed entries from the workspace inspection when it is present |
+| The Realization stated that this Task's delta reviews had resealed the producer baseline with the propagated closure, before any reseal and under a 0.8 policy whose seal does not propagate | The row states that the closing delta review reseals under the 0.8 policy and that the propagated closure applies from the first seal under 0.81; the Task progress says the same |
+| The publication-manifest generator labelled every release `internal` | The manifest repeats the catalog's visibility and channel |
+| The guides said the default path needs `raw.githubusercontent.com` and `github.com` "and nothing else", while release-asset downloads follow a redirect to Github's asset host | Both guides name the redirect host |
+| The Realization listed a root `host-adapters/` path that does not exist | The path is removed; the adapters live under the guidance source and the emitted trees |
+
+## Round Two Notes And Dispositions
+
+- The producer gate checked guidance generation for the adopted version's
+  tree only, so after the producer adopts 0.81 and 0.81 publishes, the check
+  would have become vacuous. The generator now checks every emitted release
+  tree when no version is named, and the accepted 0.81 chain names none; the
+  0.8 chain this producer still runs is unchanged, and the promotion restamps
+  it.
+- The version-gated region compares minors as strings, which is the accepted
+  coordinate order and is now stated in a comment.
+- `inspect` writes the workspace before validating `--created-at`, leaving a
+  partial workspace after that one refusal. Recorded for the successor.
+- The closure recompute refusal arrives with the expected cascade of
+  `freshness.result.noncurrent` diagnostics; consistent, not a defect.
+- The `task` subcommand's read-only status view also invokes the Github CLI;
+  no adoption, onboarding, or update path does. Recorded.
+- The shipped adopter retains the legacy `kaveh6202/Nourd.NKF` coordinate to
+  recognise pins written before the move. Recorded; a public reader will see
+  the name.
+- The producer's self-validation is still NKF 0.8, as ADR 0140 requires until
+  publication and promotion; the adopter `check` command emits no diagnostics
+  array on success; the checker bundle is untracked and was compared to a
+  fresh build; the manifest Schema's vendor annotation keyword was registered
+  for strict validation exactly as the checker does. Method statements, not
+  findings.
+- The release protocol's step three says no member outside the protocols and
+  skills declares the version marker; the adopter bundle embeds the guidance
+  and so carries the literal. Embedding is not declaring; the wording is
+  inexact and recorded for the successor.
+- The projection README's boundary that a protected merge gate is outside the
+  delivered boundary describes what NKF delivers to a consumer, not this
+  producer's gate. Ambiguous, not false; recorded.
+
 ## Resulting State
 
-Round one's two blocking findings and seven should-fix findings are repaired
-and every note is recorded with its disposition. Because the repairs change
-release-set member bytes and the manifest binds the release commit, the
-candidate is re-cut from the repaired commit, re-exercised, and re-audited
-before any technical-confirmation Decision. This Evidence confirms nothing; the
-mandatory audit-bound confirmation is the separate Decision that follows a
-clean round.
+Round one's two blocking findings, round two's seven should-fix findings, and
+every should-fix finding of round one are repaired, and every note is recorded
+with its disposition. Because the round-two repairs change release-set member
+bytes — the adopter, the public adopter copy, and two guides — and the
+manifest binds the release commit, the candidate is re-cut from the repaired
+commit, re-exercised, and audited a third time before any
+technical-confirmation Decision. This Evidence confirms nothing; the mandatory
+audit-bound confirmation is the separate Decision that follows a clean round.

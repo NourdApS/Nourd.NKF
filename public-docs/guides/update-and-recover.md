@@ -77,7 +77,7 @@ compatibility and migration rules; there is no moving rollback label.
 
 | Failure | First Check |
 | --- | --- |
-| Recommendation unavailable | Confirm network access to `github.com` and `raw.githubusercontent.com`, or supply the offline catalog and archive |
+| Recommendation or archive unavailable | Confirm network access to `raw.githubusercontent.com`, `github.com`, and the release-asset host Github redirects to, or supply the offline catalog and archive |
 | Recommendation or archive mismatch | Confirm the reviewed catalog and exact content-addressed bytes |
 | Out-of-window version refused | Follow the named stepping-stone archive; do not force the current adopter |
 | Upgrade review required | Complete the written template's computed fresh set with a named reviewer |

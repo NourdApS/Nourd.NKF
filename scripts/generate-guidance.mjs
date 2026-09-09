@@ -39,6 +39,10 @@ const ONLY_REGION = /[ \t]*<!-- nkf:only (adopted|release) -->\n([\s\S]*?)[ \t]*
 // syntax, not prose, and is the one place the neutrality guard blanks it.
 const SINCE_REGION = /[ \t]*<!-- nkf:since (\d+\.\d+) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
 const SINCE_MARKER = /<!-- nkf:since \d+\.\d+ -->/g;
+// NKF coordinates are major-minor with the minor compared as a string, which
+// is the accepted coordinate model: 0.71 precedes 0.8, and 0.81 follows 0.8
+// and precedes 0.9. A numeric minor would order 0.81 after 0.9. The same
+// comparison freezes published trees below.
 function versionAtLeast(version, since) {
   const [major, minor] = version.split(".");
   const [sinceMajor, sinceMinor] = since.split(".");
@@ -241,10 +245,22 @@ if (invokedDirectly) {
   if (stamp !== undefined && !["adopted", "release"].includes(stamp)) {
     fail("--stamp must be adopted or release.");
   }
-  await generateGuidance({
-    projectRoot: read("--project") ?? ".",
-    releaseVersion: read("--version"),
-    check: argv.includes("--check"),
-    stamp,
-  });
+  const projectRoot = read("--project") ?? ".";
+  const check = argv.includes("--check");
+  const version = read("--version");
+  if (check && version === undefined) {
+    // A check with no version names every emitted release tree, so the gate
+    // stays bound to whatever versions the tree carries rather than to one
+    // literal that goes stale when the producer adopts its successor.
+    const trees = (await readdir(path.join(projectRoot, "distribution/nkf"), { withFileTypes: true }).catch(() => []))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    if (trees.length === 0) fail("No emitted release tree exists under distribution/nkf to check.");
+    for (const tree of trees) {
+      await generateGuidance({ projectRoot, releaseVersion: tree, check: true, stamp });
+    }
+  } else {
+    await generateGuidance({ projectRoot, releaseVersion: version, check, stamp });
+  }
 }

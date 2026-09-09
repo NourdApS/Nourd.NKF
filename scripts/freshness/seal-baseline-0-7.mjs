@@ -527,6 +527,31 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
     ...(review.stage === "delta" ? ["computed_closure"] : []),
   ];
   exactObject(review, expected, "review");
+  // The template's placeholders are not a review. A reviewer id, finding, or
+  // limitation left at its sentinel, or a node or classification still marked
+  // REVIEW_REQUIRED, is refused by name rather than sealed into the baseline
+  // as the work of a reviewer called REVIEWER_ID_REQUIRED.
+  const placeholders = [];
+  if (review.reviewer?.id === "REVIEWER_ID_REQUIRED") placeholders.push("reviewer.id");
+  if (review.reviewed_at === "REVIEWED_AT_UTC_MILLISECOND_REQUIRED") placeholders.push("reviewed_at");
+  for (const [index, entry] of (Array.isArray(review.nodes) ? review.nodes : []).entries()) {
+    if (entry?.state === "REVIEW_REQUIRED" || entry?.role === "REVIEW_REQUIRED") placeholders.push(`nodes[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.relationships) ? review.relationships : []).entries()) {
+    if (entry?.state === "REVIEW_REQUIRED") placeholders.push(`relationships[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.decision_classifications) ? review.decision_classifications : []).entries()) {
+    if (entry?.classification === "REVIEW_REQUIRED") placeholders.push(`decision_classifications[${index}]`);
+  }
+  for (const [index, entry] of (Array.isArray(review.observations) ? review.observations : []).entries()) {
+    if (entry?.finding === "REVIEW_FINDING_REQUIRED") placeholders.push(`observations[${index}].finding`);
+  }
+  for (const [index, entry] of (Array.isArray(review.limitations) ? review.limitations : []).entries()) {
+    if (entry === "REVIEW_LIMITATION_REQUIRED") placeholders.push(`limitations[${index}]`);
+  }
+  if (placeholders.length > 0) {
+    fail(`The review still carries the template's placeholders at ${placeholders.slice(0, 8).join(", ")}${placeholders.length > 8 ? ` and ${placeholders.length - 8} more` : ""}; a named reviewer must complete it before it can seal.`);
+  }
   const deltaStage = review.stage === "delta";
   if (
     review.contract !== "nkf.semantic-review-input" || review.nkf_version !== nkfVersion ||

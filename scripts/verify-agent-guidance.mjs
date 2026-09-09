@@ -613,8 +613,12 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:third-party-notices": "node scripts/verify-third-party-notices.mjs",
   };
   if (["0.8", "0.81"].includes(bundle.nkf_version)) {
-    expectedScripts["verify:guidance-generation"] =
-      `node scripts/generate-guidance.mjs --project . --version ${bundle.nkf_version} --check`;
+    // The 0.8 chain names the adopted version; from 0.81 the check names no
+    // version and covers every emitted release tree, so it cannot go vacuous
+    // when the version it named is later frozen by publication.
+    expectedScripts["verify:guidance-generation"] = bundle.nkf_version === "0.8"
+      ? "node scripts/generate-guidance.mjs --project . --version 0.8 --check"
+      : "node scripts/generate-guidance.mjs --project . --check";
     expectedScripts["verify:version-labels"] = "node scripts/verify-version-labels.mjs --project .";
     expectedScripts["verify:guidance-review"] = "node scripts/verify-guidance-review.mjs --project .";
   }

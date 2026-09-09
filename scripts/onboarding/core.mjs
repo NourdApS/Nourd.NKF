@@ -846,6 +846,44 @@ function validateResolvedAssessment(assessment, inspection, projectAuthority) {
   }
 }
 
+// Names what moved between the sealed snapshot and the observed one, so an
+// operator with a large repository is told the path rather than left to diff.
+// The comparison uses the inspection.json beside the plan when it is present;
+// the plan itself binds only the snapshot digest.
+async function describeInspectionDrift(loaded, inspection) {
+  const previousBytes = await readFile(path.join(loaded.workspaceRoot, "inspection.json")).catch(() => null);
+  if (previousBytes === null) return { drift: null };
+  let previous;
+  try { previous = JSON.parse(previousBytes.toString("utf8")); } catch { return { drift: null }; }
+  const before = new Map((previous.project_entries ?? []).filter((entry) => !isVolatileEntry(entry)).map((entry) => [entry.path, entry]));
+  const after = new Map((inspection.project_entries ?? []).filter((entry) => !isVolatileEntry(entry)).map((entry) => [entry.path, entry]));
+  const drift = [];
+  for (const [entryPath, entry] of before) {
+    const now = after.get(entryPath);
+    if (now === undefined) drift.push({ path: entryPath, change: "removed" });
+    else if (now.kind !== entry.kind || now.sha256 !== entry.sha256) drift.push({ path: entryPath, change: "changed" });
+  }
+  for (const entryPath of after.keys()) {
+    if (!before.has(entryPath)) drift.push({ path: entryPath, change: "added" });
+  }
+  drift.sort((left, right) => left.path.localeCompare(right.path));
+  return { drift: drift.slice(0, 50), drift_total: drift.length };
+}
+
+async function failInspectionDrift(loaded, inspection) {
+  const described = await describeInspectionDrift(loaded, inspection);
+  const named = described.drift === null
+    ? ""
+    : described.drift.length === 0
+      ? " The project entries match; the relevant integration surfaces or Git binding changed."
+      : ` Drifted entries: ${described.drift.slice(0, 5).map((entry) => `${entry.path} (${entry.change})`).join(", ")}${described.drift_total > 5 ? ` and ${described.drift_total - 5} more` : ""}.`;
+  fail(
+    "NKF-ONBOARDING-INSPECTION-DRIFT",
+    `The project no longer matches the mechanical snapshot bound by the plan.${named}`,
+    { ...described, diagnostics: inspection.diagnostics },
+  );
+}
+
 export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   const projectRoot = await resolveProjectRoot(projectRootInput);
   const loaded = await readPlan(planPathInput);
@@ -853,11 +891,7 @@ export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   validateOnboardingTopologyPlan(loaded.plan);
   const inspection = await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
   if (!inspection.mechanically_ready || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
-    fail(
-      "NKF-ONBOARDING-INSPECTION-DRIFT",
-      "The project no longer matches the mechanical snapshot bound by the plan.",
-      { diagnostics: inspection.diagnostics },
-    );
+    await failInspectionDrift(loaded, inspection);
   }
   validateResolvedAssessment(loaded.plan.assessment, inspection, loaded.plan.project.authority);
   for (const [index, item] of loaded.plan.documents.entries()) {
@@ -1296,11 +1330,7 @@ async function validateLoadedPlan(projectRoot, loaded, observedInspection = null
   const inspection = observedInspection
     ?? await inspectOnboardingProject(projectRoot, loaded.plan.inspection.knowledge_root);
   if (!inspection.mechanically_ready || inspection.snapshot_sha256 !== loaded.plan.inspection.snapshot_sha256) {
-    fail(
-      "NKF-ONBOARDING-INSPECTION-DRIFT",
-      "The project no longer matches the mechanical snapshot bound by the plan.",
-      { diagnostics: inspection.diagnostics },
-    );
+    await failInspectionDrift(loaded, inspection);
   }
   validateResolvedAssessment(loaded.plan.assessment, inspection, loaded.plan.project.authority);
   const observed = new Map(inspection.documents.map((item) => [item.path, item]));

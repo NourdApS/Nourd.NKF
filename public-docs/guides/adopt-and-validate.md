@@ -12,8 +12,9 @@ public adopter contains no checker and no credential, and it needs none.
 ## Before You Run Adopt
 
 Use Node.js 22 or later. The default path needs network access to
-`raw.githubusercontent.com` and `github.com` and nothing else: no Github
-account, session, or command-line tool. Download `tools/nourd-nkf-adopt.mjs`
+`raw.githubusercontent.com`, `github.com`, and the release-asset host Github
+redirects downloads to; it needs no Github account, session, or command-line
+tool. Download `tools/nourd-nkf-adopt.mjs`
 and verify its SHA-256 against `reference/publication.json` and the
 `adopter_sha256` the recommendation catalog states before running it.
 
