@@ -202,7 +202,10 @@ judgment carries forward only by digest identity under the accepted
 version-delta declaration and the evaluation policy's declared judgment
 dependencies; a delta review claim is admitted only when the
 performed set contains the computed closure, and whole-root review remains
-the recovery path. Every command
+the recovery path.
+The checker recomputes that closure with the evaluation policy's impact
+propagation and refuses a claim whose recorded closure differs from it.
+Every command
 validates its staged result and rolls back on failure. Prose, gate
 truthfulness, classification, and acceptance stay with the author: a command
 supplies no meaning and accepts nothing.

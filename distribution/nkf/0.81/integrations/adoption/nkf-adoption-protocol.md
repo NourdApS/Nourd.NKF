@@ -129,6 +129,8 @@ contract rebind to the 0.81 set, conversion of the reviewed baseline to the
 digest-bound 0.81 contract with computed per-judgment carry-forward, and the
 integration refresh. A delta claim is admitted only when the performed set
 contains the computed closure; whole-root review remains the recovery path.
+The checker recomputes that closure with the evaluation policy's impact
+propagation and refuses a claim whose recorded closure differs from it.
 The semantic reviewer's act does not accept canonical Product or Technology
 meaning.
 

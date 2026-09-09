@@ -179,8 +179,8 @@ producer-promotion inputs; the NKF 0.8 producer adoption; the NKF 0.8
 public-documentation publication; the public repository observation after the
 repository became public; the protected merge gate observation; the
 retirement of the ten frozen supporting Realizations; and, for NKF 0.81, the
-accepted producer-promotion input, the whole-set guidance review, and the
-release notes.
+accepted producer-promotion input, the whole-set guidance review, the
+independent release audit, and the release notes.
 
 ## Decision Inputs
 

@@ -179,7 +179,7 @@ evidence and stops without guessing a later brownfield category.
 
 - NKF 0.81 is pre-stable and may change through the governed change process.
 - Live support covers exactly the current version plus one predecessor:
-  NKF 0.81 and NKF 0.8. NKF 0.8 and older versions are immutable published
+  NKF 0.81 and NKF 0.8. NKF 0.71 and older versions are immutable published
   history reached only through stepping-stone archives.
 - Repository licensing is Apache-2.0 with informational NOTICE and retained
   compatible third-party notices.

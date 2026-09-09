@@ -90,6 +90,24 @@ describe("guidance generation", () => {
     expect(generate(root, "0.8", true).status).not.toBe(0);
   });
 
+  it("emits a version-gated region only at or above its coordinate, and the guard ignores the marker", async () => {
+    // A rule introduced by one version needs a sentence that is true in that
+    // version's tree and absent from an earlier adopted root. The marker's own
+    // coordinate is syntax, not a stale literal.
+    const gated = `${NEUTRAL_SOURCE}\n<!-- nkf:since 0.81 -->\nThe checker recomputes the closure.\n<!-- nkf:end -->\nAfter.\n`;
+    const root = await project(gated, "0.8");
+    expect(generate(root, "0.81").status).toBe(0);
+    const adopted = await readFile(path.join(root, ".claude/skills/nkf-onboarding/SKILL.md"), "utf8");
+    const release = await readFile(path.join(root, "distribution/nkf/0.81/.claude/skills/nkf-onboarding/SKILL.md"), "utf8");
+    expect(release).toContain("The checker recomputes the closure.\nAfter.");
+    expect(adopted).not.toContain("recomputes");
+    expect(adopted).toContain("Body.\n\nAfter.");
+    expect(release).not.toContain("nkf:since");
+    const older = await project(gated.replace("nkf:since 0.81", "nkf:since 0.9"), "0.8");
+    expect(generate(older, "0.81").status).toBe(0);
+    expect(await readFile(path.join(older, "distribution/nkf/0.81/.claude/skills/nkf-onboarding/SKILL.md"), "utf8")).not.toContain("recomputes");
+  });
+
   it("does not re-derive a published release tree in --check, and refuses to write into it", async () => {
     // Publication freezes the 0.8 tree at the bytes its guidance review
     // recorded. The source keeps evolving for the next version, so comparing

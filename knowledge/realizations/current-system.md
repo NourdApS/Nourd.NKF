@@ -70,9 +70,11 @@ verbatim on `2026-09-08`; its five-artifact authority set is accepted by
 three-round
 [independent authority audit](../evidence/audits/nkf-038-nkf-0-81-independent-authority-audit.md);
 and its exact release candidate is built from a clean release commit for the
-independent release audit and the mandatory audit-bound confirmation Decision
-that the release protocol requires before publication; that Decision, the
-audit Evidence, and the candidate digests are recorded here when they exist.
+independent
+[release audit](../evidence/release/nkf-038-nkf-0-81-release-audit.md) and
+the mandatory audit-bound confirmation Decision that the release protocol
+requires before publication; that Decision and the confirmed candidate digests
+are recorded here when they exist.
 Publication, recommendation, producer promotion, and the merge to `master`
 remain the Human Product Owner's separate acts. At publication the live window
 becomes exactly NKF 0.81 plus NKF 0.8; NKF 0.71 drops to stepping-stone
@@ -82,8 +84,9 @@ The working tree already carries the complete 0.81 implementation beside the
 declared 0.8 state: the accepted companion, evaluation policy, and version
 delta under `contracts/nkf/0.81/` with the derived release set and eight
 Schemas, the generated `distribution/nkf/0.81/` tree, the `*-0-81` fixtures,
-a checker and adopter dispatching exactly 0.81 and 0.8, and the public
-projection teaching 0.81. The 0.71 contract and distribution copies left the
+a checker and adopter dispatching exactly 0.81 and 0.8 where a version's
+contract set is present — a consumer install carries only the 0.81 set — and
+the public projection teaching 0.81. The 0.71 contract and distribution copies left the
 working tree with this release; the published 0.71 archive
 `3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13` remains the
 complete authority for repositories that declare it.
@@ -184,7 +187,9 @@ catalog, verifies the executing adopter and exact archive against it, observes
 the bundle and installed pin, classifies the compatibility boundary relative
 to the declared predecessor, requires explicit repository-owner approval for a
 breaking migration, applies transactionally, and returns exactly one of
-`onboarded`, `migrated`, `updated`, or `current`. A repository outside the live
+`onboarded`, `updated`, or `current`; the `migrated` outcome exists for a
+breaking in-window predecessor and is unreachable while every in-window
+compatibility is non-breaking, as it is at 0.81. A repository outside the live
 window stops fail-closed and is told the exact published stepping-stone archive
 for its next hop.
 
@@ -303,7 +308,7 @@ Governed Recommended Release + Supported Repository State
         ↓ resolved by one public subcommand-free operation
 Adopt Preflight + Compatibility Signal + Required Human Approval
         ↓ selects internal path and validates the complete candidate
-Onboarded | Migrated | Updated | Current Exact Consumer Pin
+Onboarded | Updated | Current Exact Consumer Pin
 
 Unadopted Empty Or Tiny Knowledge Repository
         ↓ complete agent review and applicable human confirmation
@@ -486,8 +491,9 @@ and adopter reproduction, third-party notice reproduction from the exact
 bundled build graphs, the five guidance verifiers, the public-projection
 verifier, the version-surface inventory, and full-bundle self-validation.
 
-The current gate passes 29 test files and 279 tests, 1,828 checked
-links with zero dead links, deterministic checker and adopter reproduction,
+The current gate passes 29 test files and 279 tests, every checked living
+link resolving with zero dead links, deterministic checker and adopter
+reproduction,
 third-party notice reproduction, the complete 62-file public projection,
 and full-bundle
 self-validation with zero diagnostics, with knowledge-proportional test bounds
@@ -505,8 +511,8 @@ naming the exact next archives, both producer promotion stages against
 isolated copies of this repository, the review and record scaffolds, and the
 Git transition orchestration as operational output. The isolated exercise of
 the exact 0.81 candidate against a copy of this producer is recorded in the
-release audit Evidence when the audit is performed; it is a runtime
-observation, not confirmation of this account.
+[release audit](../evidence/release/nkf-038-nkf-0-81-release-audit.md); it is
+a runtime observation, not confirmation of this account.
 
 Historical gate results — from the 15-file predecessor baseline under
 [ADR 0059](../decisions/0059-confirm-governed-frontmatter-realization.md)

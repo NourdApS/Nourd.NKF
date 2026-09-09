@@ -18,10 +18,13 @@ version literal.
 
 ## Enumeration
 
-The member list is not recollected. It is the exact enumeration the adopter's
-`set` command emits for the NKF 0.81 release set, taken from
+The member list is not recollected. It is the exact membership of
 `contracts/nkf/0.81/release-set.yaml` after its coverage was regenerated for
-this version: one hundred forty-two members across twenty-three classes. One
+this version by the release tooling's deterministic coverage union — the same
+accepted release-set contract the adopter's `set` command exports for a
+repository that declares NKF 0.81; against this producer, which still declares
+0.8, `set` exports the 0.8 set — one hundred forty-two members across
+twenty-three classes. One
 more than NKF 0.8, because the accepted catalog contract adds an eighth derived
 Schema. Twelve members belong to the six classes that carry
 authored guidance prose, and step four requires each of those to be re-read in
@@ -31,8 +34,8 @@ classes, and modes, not digests.
 
 | Member | Class | Reviewed SHA-256 |
 | --- | --- | --- |
-| `distribution/nkf/0.81/integrations/adoption/nkf-adoption-protocol.md` | adoption-protocol | `57e244d18315cf2899acb029a1153e502879b580ec521cae6702ad3d97ee7ef3` |
-| `distribution/nkf/0.81/integrations/ai/nkf-authoring-protocol.md` | authoring-protocol | `3e92fe9651e7a67f8054efa2c518aa5fb977321208a73c8c8fa80724dae9fbde` |
+| `distribution/nkf/0.81/integrations/adoption/nkf-adoption-protocol.md` | adoption-protocol | `df3066e3b43fb78a1a6add384e4173083ad7965d4131f1079b330043c57b7b85` |
+| `distribution/nkf/0.81/integrations/ai/nkf-authoring-protocol.md` | authoring-protocol | `46659b7e55766888d1fd2d2a4fe4b47880482a02f2c59798f1436b764f94d20c` |
 | `distribution/nkf/0.81/host-adapters/AGENTS.adapter.md` | host-adapter-instruction | `0919110739d3402eeff13d4443a5e1ba51eb0f3571a76aead6f076c4116100a7` |
 | `distribution/nkf/0.81/host-adapters/CLAUDE.adapter.md` | host-adapter-instruction | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
 | `distribution/nkf/0.81/host-adapters/GEMINI.adapter.md` | host-adapter-instruction | `97cf8c9fcc1a9c16e9fdbb224ae2aab193b34194877897b6f7fb275cf71aa43d` |
@@ -116,6 +119,32 @@ evaluation policy's impact propagation. Both guides now state both conditions,
 and the upgrade section heading names the 0.8-to-0.81 upgrade rather than
 "the 0.8 upgrade".
 
+## Corrections This Review Missed
+
+The first independent release audit of the exact candidate found one stale
+sentence this review had read past, in a member it claimed to have read in
+full. It is recorded here rather than only in the audit, because step four
+requires the review to record every correction and the honest record is that
+the review did not find it.
+
+**The projection README stated the window boundary falsely.** Its Current
+Boundaries section read "NKF 0.8 and older versions are immutable published
+history" one sentence after stating that live support is NKF 0.81 plus NKF 0.8.
+It is the hand-slide defect this review had already found and corrected in the
+two guides, surviving in the third hand-authored member the same slide touched.
+It now reads "NKF 0.71 and older".
+
+The same audit found that the delta-claim sentence this review had recorded
+rather than fixed could be fixed after all: the generator gained a
+version-gated region, and both protocols now state the 0.81 recompute condition
+in their 0.81 emission while the adopted 0.8 root keeps the sentence 0.8 knew.
+The regenerated adoption and authoring protocols were re-read in full after
+that change and the table above records their new digests; the other seven
+byte sets did not change.
+And it found that this section's first sentence described the enumeration as
+what the `set` command emits, which is true only for a repository declaring
+0.81; the sentence now says where the list came from.
+
 ## Reviewed Without Correction
 
 The adoption protocol's new Obtaining The Adopter section names the projection
@@ -152,15 +181,6 @@ satisfied. The protocol sentence predates that delegation and does not state
 it. It is derived process rather than format meaning, but rewording who accepts
 is a governance statement for the Human Product Owner to confirm, not a label
 correction, so it is recorded for the successor.
-
-**The distributed protocols state the delta-claim condition NKF 0.8 knew.**
-The adoption and authoring protocols say a delta claim is admitted when the
-performed set contains the computed closure. That remains a necessary condition
-under 0.81 and the sentence is true, but it does not mention the recomputed
-closure. The adoption protocol is also emitted at the adopted stamp into this
-repository's 0.8 root, where the recompute does not apply, and the version-
-neutral source has no per-version conditional, so the sentence is left as the
-common truth and the projection guides carry the 0.81 condition.
 
 **Six projection members remain outside the generator**, as the NKF 0.8 review
 recorded and this review found again in the same two files. Bringing the

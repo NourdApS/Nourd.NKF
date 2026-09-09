@@ -294,10 +294,22 @@ belong in this record rather than only in code:
 
 The adopter and seal implementation was completed by an agent instance whose
 session ended before it could report; its work was verified here by rebuild,
-typecheck, and the complete suite, and two defects it left were repaired: the
-generated catalog Schema failed Ajv strict mode for lack of `type: object` on
-its channel clauses, and the third-party notices digest bound in the release
+typecheck, and the complete test suite, and two defects it left were repaired:
+the generated catalog Schema failed Ajv strict mode for lack of `type: object`
+on its channel clauses, and the third-party notices digest bound in the release
 tooling still named the 0.8 bytes.
+
+The first candidate was cut from commit `c7d10aa` after the guidance review
+and the isolated exercise passed, and its first independent
+[release audit](../../evidence/release/nkf-038-nkf-0-81-release-audit.md)
+found the delivery not clean: the cut commit had changed one release-tooling
+line without repinning its declaration, so the complete gate failed at the
+release commit even though the packaging's own check passed, and the projection
+README carried the window sentence the hand slide had corrupted in the two
+guides. Both were repaired with the seven should-fix findings, among them a
+version-gated region in the guidance generator so the distributed protocols can
+state the 0.81 recompute condition without the adopted 0.8 root becoming false.
+The candidate is re-cut, re-exercised, and re-audited from the repaired commit.
 
 ## Decision Applicability
 

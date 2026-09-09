@@ -32,6 +32,19 @@ const PLACEHOLDER = /\{\{nkf_version\}\}/g;
 const LITERAL_REGION = /<!-- nkf:literal -->[\s\S]*?<!-- nkf:end -->/g;
 const PREDECESSOR = /\{\{nkf_predecessor\}\}/g;
 const ONLY_REGION = /[ \t]*<!-- nkf:only (adopted|release) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
+// A version-gated region is emitted only when the target's version is at or
+// above the named coordinate, so a sentence that describes a rule introduced by
+// one version can live in the neutral source without becoming false in the
+// adopted root of an earlier version. The marker's coordinate is generator
+// syntax, not prose, and is the one place the neutrality guard blanks it.
+const SINCE_REGION = /[ \t]*<!-- nkf:since (\d+\.\d+) -->\n([\s\S]*?)[ \t]*<!-- nkf:end -->\n/g;
+const SINCE_MARKER = /<!-- nkf:since \d+\.\d+ -->/g;
+function versionAtLeast(version, since) {
+  const [major, minor] = version.split(".");
+  const [sinceMajor, sinceMinor] = since.split(".");
+  if (Number(major) !== Number(sinceMajor)) return Number(major) > Number(sinceMajor);
+  return minor >= sinceMinor;
+}
 // Any bare version coordinate, in either the dot form used in prose and code
 // or the hyphenated form used in file and fixture names. The first version of
 // this guard matched only "NKF x.y" and "x.y-to-x.y" and let a bare `0.71`
@@ -70,7 +83,9 @@ async function verifySourceIsVersionNeutral(projectRoot) {
     const raw = await readFile(path.join(root, relative), "utf8");
     // Blank declared-literal regions rather than dropping them, so reported
     // line numbers still match the file.
-    const text = raw.replace(LITERAL_REGION, (block) => block.replace(/[^\n]/g, " "));
+    const text = raw
+      .replace(LITERAL_REGION, (block) => block.replace(/[^\n]/g, " "))
+      .replace(SINCE_MARKER, (marker) => " ".repeat(marker.length));
     for (const [index, line] of text.split("\n").entries()) {
       const hit = VERSION_LITERAL.exec(line);
       if (hit !== null) {
@@ -166,6 +181,7 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
       }
       const emitted = source
         .replace(ONLY_REGION, (_match, stamp, body) => (stamp === target.stamp ? body : ""))
+        .replace(SINCE_REGION, (_match, since, body) => (versionAtLeast(version, since) ? body : ""))
         .replace(LITERAL_REGION, (block) => block.replace(/<!-- nkf:(literal|end) -->\n?/g, ""))
         .replace(PLACEHOLDER, version)
         .replace(PREDECESSOR, predecessors[target.stamp] ?? "");

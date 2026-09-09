@@ -47,10 +47,7 @@ if (Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10) < 22) {
 if (git("rev-parse", "--show-toplevel") !== repositoryRoot) {
   throw new Error("Release packaging is running from the wrong Git repository.");
 }
-if (![
-  "https://github.com/NourdApS/Nourd.NKF.git",
-  "https://github.com/kaveh6202/Nourd.NKF.git",
-].includes(git("remote", "get-url", "origin"))) {
+if (git("remote", "get-url", "origin") !== "https://github.com/NourdApS/Nourd.NKF.git") {
   throw new Error("Release packaging found the wrong origin remote.");
 }
 if (git("status", "--porcelain") !== "") {

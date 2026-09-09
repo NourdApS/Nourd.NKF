@@ -134,6 +134,10 @@ contract rebind to the {{nkf_version}} set, conversion of the reviewed baseline 
 digest-bound {{nkf_version}} contract with computed per-judgment carry-forward, and the
 integration refresh. A delta claim is admitted only when the performed set
 contains the computed closure; whole-root review remains the recovery path.
+<!-- nkf:since 0.81 -->
+The checker recomputes that closure with the evaluation policy's impact
+propagation and refuses a claim whose recorded closure differs from it.
+<!-- nkf:end -->
 The semantic reviewer's act does not accept canonical Product or Technology
 meaning.
 
