@@ -14,7 +14,7 @@ version_delta:
   contract: nkf.version-delta
   digest:
     algorithm: sha-256
-    value: 9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42
+    value: 0a319702b967477ab6dbc183bedaef3c256e123d5424b1c77d56e96b7fb120bb
 node_revisions:
   - node:
       kind: document

@@ -57,14 +57,14 @@ describe("canonical NKF authority realization", () => {
     }
   });
 
-  it("keeps the current 0.81 authority pair bound to ADR 0140", async () => {
+  it("keeps the current 0.81 authority pair bound to ADR 0143", async () => {
     const [specification, executable, acceptanceDecision] = await Promise.all([
       readFile(specificationPath),
       readFile(executablePath),
       readFile(
         path.join(
           repositoryRoot,
-          "knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md",
+          "knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md",
         ),
         "utf8",
       ),
@@ -110,7 +110,7 @@ describe("canonical NKF authority realization", () => {
   it("keeps every participating canonical heading in Unicode 17 Title Case", async () => {
     const specification = await readFile(specificationPath, "utf8");
     const headings = parseMarkdown(specification).headings;
-    expect(headings).toHaveLength(69);
+    expect(headings).toHaveLength(70);
     for (const heading of headings) {
       const ranges = protectedCanonicalRanges(
         heading.text,

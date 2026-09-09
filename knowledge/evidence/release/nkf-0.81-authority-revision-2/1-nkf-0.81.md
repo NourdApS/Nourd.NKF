@@ -2210,7 +2210,7 @@ baseline.
 ### Bound Predecessor Baselines
 
 This is the second, pre-publication NKF 0.81 authority revision under the P1
-repair delegation recorded in [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md). The exact first authority revision is
+repair delegation recorded in NKF-038. The exact first authority revision is
 preserved as Evidence under `evidence/release/nkf-0.81-authority-revision-1/`
 and at source commit `c2c4dd989c2e46a281c54628605d7d25e3234547`. It is
 superseded only by the later exact authority selection; no published 0.8 byte

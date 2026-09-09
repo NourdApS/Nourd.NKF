@@ -2207,6 +2207,62 @@ coverage reports the distinct `coverage-incomplete` state. Recovery is a new who
 baseline never rewrites canonical Markdown or the historical predecessor
 baseline.
 
+### Bound Predecessor Baselines
+
+This is the second, pre-publication NKF 0.81 authority revision under the P1
+repair delegation recorded in [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md). The exact first authority revision is
+preserved as Evidence under `evidence/release/nkf-0.81-authority-revision-1/`
+and at source commit `c2c4dd989c2e46a281c54628605d7d25e3234547`. It is
+superseded only by the later exact authority selection; no published 0.8 byte
+or immutable Decision is rewritten.
+
+A native 0.81 baseline with a delta or mechanically-concluded claim MUST bind
+one `predecessor` object with exactly `path` and `digest`. The digest is SHA-256
+of the predecessor's exact file bytes. The only permitted path is
+`.nourd/knowledge/freshness/history/sha256-<digest>.yaml`, where `<digest>` is
+the lowercase digest value. A whole-root claim has no predecessor and MUST
+perform every applicability judgment and Decision classification.
+
+Sealing preserves the prior file at that content-addressed history path before
+replacing the current baseline. Existing history bytes are never overwritten.
+The successor and any newly preserved history are one logical transaction;
+a failed application leaves the original project unchanged. History files
+are Governed Validation Inputs observed by the checker and bound into the
+validation snapshot. They are not canonical knowledge nodes and do not enter
+the graph revision recursively.
+
+The checker resolves and verifies the complete declared predecessor chain.
+Every input must be a direct safe regular file with the declared exact digest,
+a supported closed baseline shape, matching bundle and profile, the exact
+supported policy and version-delta bindings, an internally reproducible graph
+revision, undisputed confirmation, and complete revision-bound coverage.
+Missing, corrupt, cyclic, ambiguous, or unsupported material refuses the claim
+with `freshness.claim.delta-completeness-unprovable`. A fully performed 0.81
+whole-root review anchors a native chain. An exact, supported 0.8 baseline is
+also a historical anchor under the standing non-retroactive migration rule;
+its history is not re-reviewed by implication. A pre-review 0.8-to-0.81
+conversion preserves and ultimately binds the original 0.8 bytes, not a
+synthetic converted baseline.
+
+For each 0.81 delta link the checker computes the closure from the verified
+predecessor's revisions, judgment bases, Decision digests, and pending
+reconciliation subjects, with the existing policy propagation. The recorded
+closure must equal it exactly: missing subjects, extra subjects, and duplicate
+subjects are refused. A performed set may still voluntarily exceed that exact
+closure. Carried applicability and Decision judgments must equal their exact
+predecessor values, bases, digests, and performing provenance; a changed or
+new node cannot claim an unchanged carried judgment. A mechanical conclusion
+must preserve every other node revision and graph input and bind its exact
+predecessor graph revision; its existing closed Task-transition rules continue
+to apply. These checks establish structural and digest proof, not the truth of
+a reviewer's semantic judgment or their human authority.
+
+The baseline-envelope rule `schema.graph-baseline.invalid` is additionally
+`semantically-new` relative to 0.8. It occurs in no judgment-dependency list,
+so existing eligible judgments can still carry under the declared delta.
+Previously cut, unpublished 0.81 delta baselines without this proof cannot
+establish readiness under this revision; whole-root review remains recovery.
+
 ### Version-Delta Declaration
 
 Each accepted NKF 0.7-or-later authority carries one digest-bound

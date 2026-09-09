@@ -5,7 +5,8 @@
 // The 0.8-to-0.81 rule delta adds one registry rule,
 // `freshness.claim.computed-closure-not-reproduced`, which the Schemas do not
 // enumerate; the seven rebound Schemas therefore change only their
-// coordinates. The eighth Schema is new: the recommended-release catalog
+// coordinates. Revision two adds the declared predecessor binding to the
+// baseline schema. The eighth Schema is new: the recommended-release catalog
 // becomes an accepted contract in 0.81 and its closed shape is stated here.
 //
 // The generator derives structure from the accepted authority pair; it
@@ -74,7 +75,19 @@ async function readBase(name) {
 const generators = {
   "bundle.schema.json": (name) => readBase(name),
   "record.schema.json": (name) => readBase(name),
-  "graph-baseline.schema.json": (name) => readBase(name),
+  "graph-baseline.schema.json": async (name) => {
+    const schema = await readBase(name);
+    // Claim admission enforces presence/absence; keeping the field optional
+    // here permits the ordinary pre-review recovery of a stale baseline.
+    schema.properties.predecessor = {
+      type: "object", additionalProperties: false, required: ["path", "digest"],
+      properties: {
+        path: {type:"string",pattern:"^\\.nourd/knowledge/freshness/history/sha256-[0-9a-f]{64}\\.yaml$"},
+        digest: structuredClone(schema.properties.graph_revision),
+      },
+    };
+    return schema;
+  },
   "freshness-receipt.schema.json": (name) => readBase(name),
   "freshness-policy.schema.json": (name) => readBase(name),
   "validation-result.schema.json": (name) => readBase(name),

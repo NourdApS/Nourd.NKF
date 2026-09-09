@@ -163,12 +163,12 @@ const ONBOARDING_SKILL_PATHS = [
 const PRODUCER_PROMOTION_INPUT_PATH =
   "knowledge/evidence/release/nkf-0.81-producer-promotion.yaml";
 const PRODUCER_PROMOTION_INPUT_SHA256 =
-  "cee895a59ef8366d1dc50ca199e4fa8e6c3d7e166e8adf3a50f2eceb681bbb88";
+  "b9228327ce04afdfaced16259aaf428975989a4fd1759c704bcc9643c097ce95";
 const PRODUCER_ACCEPTING_DECISION_PATH =
-  "knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md";
+  "knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md";
 const PRODUCER_ACCEPTING_DECISION_SHA256 =
-  "2156f38ae4934eeca639da18868379d644421b4590c0357dc7116c15f5ac77b7";
-const PRODUCER_ACCEPTING_DECISION_ID = "adr-0140";
+  "195e3e324c9b4f4a24a742b7b24b8ad1eccc08cb29f81fca4db36064886ff018";
+const PRODUCER_ACCEPTING_DECISION_ID = "adr-0143";
 const PRODUCER_CANDIDATE_EVIDENCE_PATH = "specifications/nkf-0.81.md";
 const PRODUCER_SPECIFICATION_ID = "nkf-0.81-specification";
 const PRODUCER_PROMOTION_STAGES = new Set([
@@ -4086,6 +4086,13 @@ async function stageTransitionConclusionSeal(projectRoot, options, files, conclu
       ".nourd/knowledge/freshness/baseline.yaml",
       await readFile(path.join(candidate, ".nourd/knowledge/freshness/baseline.yaml")),
     );
+    for (const [relative, bytes] of await regularFileInventory(candidate)) {
+      if (relative.startsWith(".nourd/knowledge/freshness/history/")) {
+        const original = await readRegularInside(projectRoot, relative, false);
+        if (original === null) files.set(relative, bytes);
+        else if (!original.equals(bytes)) fail("A Task transition must not rewrite predecessor history.");
+      }
+    }
     return sealed;
   } finally {
     await rm(temporary, { recursive: true, force: true });

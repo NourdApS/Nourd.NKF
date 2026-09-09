@@ -6,12 +6,12 @@ specification:
   path: knowledge/specifications/nkf-0.81.md
   digest:
     algorithm: sha-256
-    value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
+    value: b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45
 executable:
   path: contracts/nkf/0.81/nkf.yaml
   digest:
     algorithm: sha-256
-    value: 517b91442b6be5a31bc7b9a03845787494f4b9720f1d6d90b976ebcfc92b0347
+    value: 004969c10d74191274f74a4dce0b9aebb983d52a70ee3351e05e18086dc78cb4
 freshness_policy:
   path: contracts/nkf/0.81/freshness-policy.yaml
   digest:
@@ -21,7 +21,7 @@ version_delta:
   path: contracts/nkf/0.81/version-delta.yaml
   digest:
     algorithm: sha-256
-    value: 0a319702b967477ab6dbc183bedaef3c256e123d5424b1c77d56e96b7fb120bb
+    value: 9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42
 declaration_path: .nourd/knowledge/records/nkf-0.81-specification.yaml
 record_declaration:
   contract: nkf.record
@@ -37,12 +37,12 @@ record_declaration:
     stable_path: specifications/nkf-0.81.md
     digest:
       algorithm: sha-256
-      value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
+      value: b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45
   governance:
     lifecycle: immutable
     status: accepted
     authority:
-      - codex-technical-reviewer
+      - claude-technical-reviewer
   sections:
     - id: purpose
       heading_path:
@@ -233,13 +233,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-    - id: deterministic-knowledge-graph-and-freshness-bound-predecessor-baselines
-      heading_path:
-        - Deterministic Knowledge Graph And Freshness
-        - Bound Predecessor Baselines
-      occurrence: 1
-      authority: accepted-meaning
-      role: content
     - id: deterministic-knowledge-graph-and-freshness-version-delta-declaration
       heading_path:
         - Deterministic Knowledge Graph And Freshness

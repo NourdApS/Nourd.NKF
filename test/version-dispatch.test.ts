@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import YAML from "yaml";
 import { createHash } from "node:crypto";
 import { validateProject } from "../src/checker/checker.js";
-import { options, validFixture, validTechnologyFixture } from "./helpers.js";
+import { bindSyntheticPredecessor, options, validFixture, validTechnologyFixture } from "./helpers.js";
 
 const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const taskPath = "knowledge/tasks/items/task.md";
@@ -201,6 +201,7 @@ describe("NKF 0.81 version dispatch", () => {
     const sealDelta = async (project: string, closure: Record<string, string>[]) => {
       const file = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
       const baseline = YAML.parse(await readFile(file, "utf8"));
+      const prior = await bindSyntheticPredecessor(project, baseline, [specification]);
       baseline.confirmation.claim = "semantically-reviewed-delta";
       baseline.confirmation.computed_closure = closure;
       baseline.confirmation.performed_set = [specification, realization];
@@ -210,8 +211,8 @@ describe("NKF 0.81 version dispatch", () => {
           ? { performed: true }
           : {
               carried: {
-                performed_in_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
-                performing_reviewer: { kind: "agent", id: "fixture-reviewer" },
+                performed_in_graph_revision: prior.graph_revision,
+                performing_reviewer: prior.confirmation.reviewer,
               },
             };
       }

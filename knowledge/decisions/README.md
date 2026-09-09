@@ -168,3 +168,6 @@ the durable subject rather than the workflow action that created the Decision.
 - [ADR 0074: Separate Authoring And Recommended Release Verification](0074-separate-authoring-and-recommended-release-verification.md)
 - [ADR 0075: Confirm Complete Portable Onboarding Topology](0075-confirm-complete-portable-onboarding-topology.md)
 - [ADR 0080: Release And Adoption Process](0080-release-and-adoption-process.md)
+
+- [ADR 0142: Accept The Bound Predecessor Repair](0142-accept-the-bound-predecessor-repair.md)
+- [ADR 0143: Bind The Predecessor Repair Promotion](0143-bind-the-predecessor-repair-promotion.md)

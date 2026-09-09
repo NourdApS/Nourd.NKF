@@ -1,4 +1,4 @@
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import {
   appendFile,
@@ -902,7 +902,7 @@ describe("NKF consumer adopter", () => {
     const reviewPath = path.join(parent, "promotion-review.yaml");
     const promotionArguments = [
       "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.81-producer-promotion.yaml"),
-      "--accepting-decision", path.join(project, "knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md"),
+      "--accepting-decision", path.join(project, "knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md"),
       "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
       "--review", reviewPath,
     ];
@@ -1034,7 +1034,7 @@ describe("NKF consumer adopter", () => {
     const reviewPath = path.join(parent, "promotion-review.yaml");
     const promotionArguments = [
       "--promotion-input", path.join(project, "knowledge/evidence/release/nkf-0.81-producer-promotion.yaml"),
-      "--accepting-decision", path.join(project, "knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md"),
+      "--accepting-decision", path.join(project, "knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md"),
       "--promotion-stage", "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
       "--review", reviewPath,
     ];
@@ -1239,7 +1239,7 @@ describe("NKF consumer adopter", () => {
     expect(JSON.parse(release.stdout).state).toBe("current");
   }, scaledTimeout(120_000));
 
-  it("resolves the catalog and archive over plain HTTPS with Node's fetch and refuses before mutation", async () => {
+  it("selects catalog and archive URLs and refuses bad responses with a substituted fetch transport", async () => {
     // No network: the child process receives a fetch substitute through a
     // preload module the test controls. The adopter looks fetch up on the
     // global at call time, so the substitution needs no adopter hook.
@@ -1259,7 +1259,7 @@ describe("NKF consumer adopter", () => {
     ].join("\n"));
     const catalog = JSON.parse(await readFile(recommendationPath, "utf8"));
     const catalogUrl = "https://raw.githubusercontent.com/NourdApS/Nourd.NKF/master/release/recommended.json";
-    const runOverHttps = async (
+    const runWithMockedFetch = async (
       project: string,
       responses: Record<string, { file: string; status?: number }>,
     ) => {
@@ -1285,7 +1285,7 @@ describe("NKF consumer adopter", () => {
     // The success path: the catalog from the raw default-branch URL, the
     // archive from exactly the canonical asset locator the catalog carries.
     const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-81"));
-    const adopted = await runOverHttps(project, {
+    const adopted = await runWithMockedFetch(project, {
       [catalogUrl]: { file: recommendationPath },
       [catalog.archive.url]: { file: archivePath },
     });
@@ -1298,7 +1298,7 @@ describe("NKF consumer adopter", () => {
     // A non-success catalog response names the offline path.
     const fresh = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-81"));
     const before = await snapshotTree(fresh);
-    const unreachable = await runOverHttps(fresh, {
+    const unreachable = await runWithMockedFetch(fresh, {
       [catalogUrl]: { file: recommendationPath, status: 503 },
     });
     expect(unreachable.status).toBe(1);
@@ -1311,7 +1311,7 @@ describe("NKF consumer adopter", () => {
     expectTreeEqual(await snapshotTree(fresh), before);
 
     // A missing archive asset likewise.
-    const missingArchive = await runOverHttps(fresh, {
+    const missingArchive = await runWithMockedFetch(fresh, {
       [catalogUrl]: { file: recommendationPath },
     });
     expect(missingArchive.status).toBe(1);
@@ -1328,7 +1328,7 @@ describe("NKF consumer adopter", () => {
     const tampered = Buffer.from(await readFile(archivePath));
     tampered[700] = tampered[700]! ^ 1;
     await writeFile(tamperedPath, tampered);
-    const mismatch = await runOverHttps(fresh, {
+    const mismatch = await runWithMockedFetch(fresh, {
       [catalogUrl]: { file: recommendationPath },
       [catalog.archive.url]: { file: tamperedPath },
     });
@@ -1339,6 +1339,111 @@ describe("NKF consumer adopter", () => {
       observed_sha256: sha256(tampered),
     });
     expectTreeEqual(await snapshotTree(fresh), before);
+  }, scaledTimeout(120_000));
+
+  it("uses native fetch and verified TLS through a controlled HTTPS asset redirect and refuses tampered bytes", async () => {
+    // Only socket routing is redirected to loopback. Node's global fetch,
+    // TLS certificate/hostname validation, HTTP parsing, and redirect handling
+    // are unchanged. The local CA is trusted by this test child only.
+    const directory = await mkdtemp(path.join(os.tmpdir(), "nkf-native-https-"));
+    const key = path.join(directory, "key.pem");
+    const cert = path.join(directory, "cert.pem");
+    const config = path.join(directory, "openssl.cnf");
+    const log = path.join(directory, "requests.log");
+    const tamper = path.join(directory, "tamper");
+    const serverPath = path.join(directory, "server.mjs");
+    const preload = path.join(directory, "route-sockets.mjs");
+    const hosts = ["raw.githubusercontent.com", "github.com", "release-assets.githubusercontent.com"];
+    await writeFile(config, [
+      "[req]", "distinguished_name=dn", "x509_extensions=ext", "prompt=no",
+      "[dn]", "CN=NKF local transport test", "[ext]", "basicConstraints=critical,CA:TRUE",
+      "keyUsage=critical,digitalSignature,keyEncipherment,keyCertSign", "extendedKeyUsage=serverAuth",
+      `subjectAltName=${hosts.map((host) => `DNS:${host}`).join(",")}`, "",
+    ].join("\n"));
+    const certificate = spawnSync("openssl", [
+      "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1",
+      "-keyout", key, "-out", cert, "-config", config,
+    ], { encoding: "utf8" });
+    expect(certificate.status, certificate.stderr).toBe(0);
+    await writeFile(log, "");
+    await writeFile(serverPath, [
+      'import https from "node:https";',
+      'import {readFileSync,appendFileSync,existsSync} from "node:fs";',
+      "const c = JSON.parse(process.env.NKF_HTTPS_SERVER);",
+      "const catalog = JSON.parse(readFileSync(c.catalog));",
+      "const asset = new URL(catalog.archive.url);",
+      'const finalUrl = new URL("https://release-assets.githubusercontent.com/test-asset");',
+      "const server = https.createServer({key:readFileSync(c.key),cert:readFileSync(c.cert)}, (req,res) => {",
+      "  appendFileSync(c.log, JSON.stringify({host:req.headers.host,path:req.url})+'\\n');",
+      "  if(req.headers.host==='raw.githubusercontent.com' && req.url==='/NourdApS/Nourd.NKF/master/release/recommended.json') {res.end(readFileSync(c.catalog));return;}",
+      "  if(req.headers.host===asset.host && req.url===asset.pathname) {res.writeHead(302,{location:finalUrl.href});res.end();return;}",
+      "  if(req.headers.host===finalUrl.host && req.url===finalUrl.pathname) {const bytes=readFileSync(c.archive);if(existsSync(c.tamper))bytes[700]^=1;res.end(bytes);return;}",
+      "  res.writeHead(404);res.end();",
+      "});",
+      "server.listen(0,'127.0.0.1',()=>process.send({port:server.address().port}));",
+      "",
+    ].join("\n"));
+    await writeFile(preload, [
+      'import tls from "node:tls";',
+      'import {syncBuiltinESMExports} from "node:module";',
+      "const connect=tls.connect;",
+      `const hosts=new Set(${JSON.stringify(hosts)});`,
+      "tls.connect=function(options,...rest){",
+      "  if(!hosts.has(options.host))throw new Error('Unexpected HTTPS host: '+options.host);",
+      "  return connect.call(this,{...options,host:'127.0.0.1',port:Number(process.env.NKF_HTTPS_PORT),servername:options.servername||options.host},...rest);",
+      "};",
+      "syncBuiltinESMExports();",
+      "",
+    ].join("\n"));
+    const server = spawn(process.execPath, [serverPath], {
+      stdio: ["ignore", "ignore", "pipe", "ipc"],
+      env: { ...process.env, NKF_HTTPS_SERVER: JSON.stringify({ key, cert, log, tamper, catalog: recommendationPath, archive: archivePath }) },
+    });
+    let serverError = "";
+    server.stderr!.on("data", (bytes: Buffer) => { serverError += bytes.toString(); });
+    try {
+      const port = await new Promise<number>((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error(`HTTPS server start timed out: ${serverError}`)), 10_000);
+        server.once("message", (message: any) => { clearTimeout(timeout); resolve(message.port); });
+        server.once("error", (error) => { clearTimeout(timeout); reject(error); });
+        server.once("exit", (code) => { clearTimeout(timeout); reject(new Error(`HTTPS server exited ${code}: ${serverError}`)); });
+      });
+      const run = (project: string, trust: boolean) => {
+        const env: NodeJS.ProcessEnv = { ...process.env, NKF_HTTPS_PORT: String(port) };
+        delete env.NODE_TLS_REJECT_UNAUTHORIZED;
+        delete env.NODE_EXTRA_CA_CERTS;
+        return spawnSync(process.execPath, ["--import", pathToFileURL(preload).href, adopter, "--project", project], {
+          encoding: "utf8", env: { ...env, ...(trust ? { NODE_EXTRA_CA_CERTS: cert } : {}) },
+          timeout: scaledTimeout(120_000), killSignal: "SIGKILL",
+        });
+      };
+      const project = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-81"));
+      const adopted = run(project, true);
+      expect(adopted.status, adopted.stderr).toBe(0);
+      expect(JSON.parse(adopted.stdout)).toMatchObject({state:"updated",target:{archive_sha256:archiveSha256}});
+      const catalog = JSON.parse(await readFile(recommendationPath, "utf8"));
+      expect((await readFile(log, "utf8")).trim().split("\n").map((line) => JSON.parse(line))).toEqual([
+        {host:hosts[0],path:"/NourdApS/Nourd.NKF/master/release/recommended.json"},
+        {host:hosts[1],path:new URL(catalog.archive.url).pathname},
+        {host:hosts[2],path:"/test-asset"},
+      ]);
+      const fresh = await createProject(path.join(repositoryRoot, "fixtures/valid/minimal-0-81"));
+      const before = await snapshotTree(fresh);
+      const untrusted = run(fresh, false);
+      expect(untrusted.status).toBe(1);
+      expect(JSON.parse(untrusted.stderr).diagnostics[0].code).toBe("NKF-ADOPTER-CATALOG-UNAVAILABLE");
+      expectTreeEqual(await snapshotTree(fresh), before);
+      await writeFile(tamper, "tamper the response, preserve the catalog digest");
+      const refused = run(fresh, true);
+      expect(refused.status).toBe(1);
+      expect(JSON.parse(refused.stderr).diagnostics[0]).toMatchObject({code:"NKF-ADOPTER-ARCHIVE-DIGEST-MISMATCH",expected_sha256:archiveSha256});
+      expectTreeEqual(await snapshotTree(fresh), before);
+    } finally {
+      const stopped = new Promise<void>((resolve) => { if(server.exitCode!==null || server.signalCode!==null)resolve();else server.once("exit",()=>resolve()); });
+      server.kill();
+      await stopped;
+      await rm(directory, {recursive:true,force:true});
+    }
   }, scaledTimeout(120_000));
 
   it("tolerates volatile operating-system metadata between inspection and application", async () => {

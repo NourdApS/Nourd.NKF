@@ -44,21 +44,33 @@ is a reviewed revision rather than a silent edit.
   invalidates the plan.
 - The checker recomputes the delta-review closure with the evaluation
   policy's impact propagation and refuses a claim whose recorded closure
-  differs, through the one new rule
+  differs, through the new diagnostic
   `freshness.claim.computed-closure-not-reproduced`. The seal computes the same
   propagated closure. Before this, the seal closed over the directly changed
   inputs alone and the checker trusted what the seal recorded, which is how
   records depending on changed inputs escaped re-review for eight versions in
   the producer's own tree.
-- The 0.8-to-0.81 version delta declares two hundred sixteen identical rules
-  and exactly one new rule, in no judgment-dependency list, so every existing
+- The 0.8-to-0.81 version delta declares two hundred fifteen identical rules
+  and two semantically-new rules, neither in a judgment-dependency list, so every existing
   review judgment carries by digest identity and the upgrade is provable on the
   delta claim alone.
+
+The delegated P1 repair additionally binds exact content-addressed predecessor
+baselines, verifies their chain and carried judgments, and rejects erased,
+padded, or unsupported closure proofs. Sealing retains history transactionally
+and supports fresh whole-root review after history loss. The first authority
+revision and prior candidate confirmation remain historical;
+[ADR 0142](../../decisions/0142-accept-the-bound-predecessor-repair.md) and
+[ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md)
+select the repaired authority before a new release candidate is confirmed.
 
 ## What Breaks
 
 Nothing breaks for an adopted NKF 0.8 repository: the upgrade is non-breaking,
-moves no stable path, succeeds no identity, and changes no declaration shape.
+moves no stable path and succeeds no identity. The adoption tooling adds the
+bound predecessor history needed by the new baseline admission rules. Earlier
+unpublished 0.81 delta baselines without that proof require whole-root review
+or an exact supported predecessor; they cannot establish readiness unchanged.
 
 Three things change for adopters. The live support window slides to exactly
 NKF 0.81 plus NKF 0.8, so a repository declaring NKF 0.71 leaves the live

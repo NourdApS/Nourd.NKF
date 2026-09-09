@@ -1,4 +1,4 @@
-import { cp, lstat, mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
+import { cp, lstat, mkdir, mkdtemp, readFile, readdir, rename, rm, symlink, writeFile } from "node:fs/promises";
 import { readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import os from "node:os";
@@ -410,6 +410,109 @@ describe("deterministic governed mechanics", () => {
     expect(validated.diagnostics, JSON.stringify(validated.diagnostics)).toEqual([]);
     expect(validated.conformance).toBe("passed");
 
+    // Audit P1: both seals above were produced from real source revisions.
+    // Readiness must depend on the retained predecessor, never on the claim
+    // being verified. Keep voluntary extra review separate from changed seeds.
+    const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
+    const validBytes = await readFile(baselinePath);
+    const historyPath = path.join(project, baseline.predecessor.path);
+    const priorBytes = await readFile(historyPath);
+    expect(sha256(priorBytes)).toBe(baseline.predecessor.digest.value);
+    const prior = YAML.parse(priorBytes.toString("utf8"));
+    const readiness = () => {
+      const result = spawnSync(process.execPath, [checker, "--project", project,
+        "--level", "full-bundle", "--purpose", "whole-root-readiness",
+        "--require-readiness", "--no-persist"], {encoding:"utf8", maxBuffer:64*1024*1024});
+      return JSON.parse(result.stdout);
+    };
+    expect(readiness().readiness.state).toBe("ready");
+    const carry = {carried:{performed_in_graph_revision:prior.graph_revision,performing_reviewer:prior.confirmation.reviewer}};
+    const mutations: Array<[string, (b: any) => void]> = [
+      ["erased closure including initiating node", b => { b.confirmation.computed_closure=[]; }],
+      ["required reached judgment carried", b => {
+        b.confirmation.computed_closure=[];
+        b.confirmation.performed_set=b.confirmation.performed_set.filter((n:any)=>n.id!=="product-current-system");
+        for(const e of b.applicability_coverage) if(e.node.id==="product-current-system") e.provenance=carry;
+      }],
+      ["changed initiating judgment carried", b => {
+        b.confirmation.computed_closure=[]; b.confirmation.performed_set=[];
+        for(const e of b.applicability_coverage) e.provenance=carry;
+      }],
+      ["required purpose judgment carried", b => { b.applicability_coverage.find((e:any)=>e.node.id==="product-current-system").provenance=carry; }],
+      ["missing predecessor", b => { delete b.predecessor; }],
+      ["extra closure node", b => { b.confirmation.computed_closure.push({kind:"document",id:"TEST-001"}); }],
+      ["duplicate closure node", b => { b.confirmation.computed_closure.push(b.confirmation.computed_closure[0]); }],
+      ["forged performing reviewer", b => { for(const e of b.applicability_coverage) if(e.provenance.carried) e.provenance.carried.performing_reviewer.id="forged"; }],
+      ["relabeled whole-root carrying judgments", b => { b.confirmation.claim="semantically-reviewed-whole-root"; delete b.predecessor; delete b.confirmation.computed_closure; delete b.confirmation.performed_set; }],
+    ];
+    for(const [label, mutate] of mutations) {
+      const changed=structuredClone(baseline); mutate(changed);
+      await writeFile(baselinePath,YAML.stringify(changed,{lineWidth:0,aliasDuplicateObjects:false}));
+      expect(readiness().readiness.state,label).not.toBe("ready");
+    }
+    for (const [label, mutate] of [
+      ["foreign bundle", (p:any)=>{p.bundle="foreign";}],
+      ["wrong policy identity", (p:any)=>{p.policy.id="unaccepted-policy";}],
+      ["unreproducible historical graph", (p:any)=>{p.graph_revision.value="0".repeat(64);}],
+      ["incomplete historical coverage", (p:any)=>{p.applicability_coverage.pop();}],
+      ["unsupported predecessor shape", (p:any)=>{p.unsupported=true;}],
+    ] as Array<[string,(p:any)=>void]>) {
+      const changedPrior=structuredClone(prior); mutate(changedPrior);
+      const changedBytes=Buffer.from(YAML.stringify(changedPrior,{lineWidth:0,aliasDuplicateObjects:false}));
+      const digest=sha256(changedBytes);
+      const changed=structuredClone(baseline);
+      changed.predecessor={path:`.nourd/knowledge/freshness/history/sha256-${digest}.yaml`,digest:{algorithm:"sha-256",value:digest}};
+      await writeFile(path.join(project,changed.predecessor.path),changedBytes);
+      await writeFile(baselinePath,YAML.stringify(changed,{lineWidth:0,aliasDuplicateObjects:false}));
+      expect(readiness().readiness.state,label).not.toBe("ready");
+    }
+    await writeFile(baselinePath,validBytes);
+    await writeFile(historyPath,Buffer.concat([priorBytes,Buffer.from("# tampered\n")]));
+    expect(readiness().readiness.state).not.toBe("ready");
+    await rm(historyPath);
+    expect(readiness().readiness.state).not.toBe("ready");
+    await writeFile(historyPath,priorBytes);
+    const historyDirectory=path.dirname(historyPath);
+    await rename(historyDirectory,`${historyDirectory}-actual`);
+    await symlink(`${historyDirectory}-actual`,historyDirectory,"dir");
+    expect(readiness().readiness.state).not.toBe("ready");
+    await rm(historyDirectory); await rename(`${historyDirectory}-actual`,historyDirectory);
+    expect(readiness().readiness.state).toBe("ready");
+
+    // A later no-change delta still verifies the earlier delta's proof.
+    const secondReview=path.join(project,"..","second-review.yaml");
+    await writeReviewTemplate0_7({projectRoot:project,checker,reviewPath:secondReview,stage:"delta"});
+    complete(secondReview);
+    await sealBaseline0_7({projectRoot:project,checker,reviewPath:secondReview,versionDeltaDigest});
+    expect(readiness().readiness.state).toBe("ready");
+    const second=YAML.parse(await readFile(baselinePath,"utf8"));
+    const forged=structuredClone(baseline); forged.confirmation.computed_closure=[];
+    const forgedBytes=Buffer.from(YAML.stringify(forged,{lineWidth:0,aliasDuplicateObjects:false}));
+    const forgedHash=sha256(forgedBytes);
+    second.predecessor={path:`.nourd/knowledge/freshness/history/sha256-${forgedHash}.yaml`,digest:{algorithm:"sha-256",value:forgedHash}};
+    await writeFile(path.join(project,second.predecessor.path),forgedBytes);
+    await writeFile(baselinePath,YAML.stringify(second,{lineWidth:0,aliasDuplicateObjects:false}));
+    expect(readiness().readiness.state).not.toBe("ready");
+    const rejectedBytes = await readFile(baselinePath);
+    const previousHistory = (await readdir(historyDirectory)).sort();
+    const rejectedReview = path.join(project,"..","rejected-chain-review.yaml");
+    await writeReviewTemplate0_7({projectRoot:project,checker,reviewPath:rejectedReview,stage:"delta"});
+    complete(rejectedReview);
+    await expect(sealBaseline0_7({projectRoot:project,checker,reviewPath:rejectedReview,versionDeltaDigest}))
+      .rejects.toThrow(/sealed predecessor proof was refused/);
+    expect(await readFile(baselinePath)).toEqual(rejectedBytes);
+    expect((await readdir(historyDirectory)).sort()).toEqual(previousHistory);
+
+    // Loss of history requires fresh whole-root review, which must remain a
+    // usable recovery path and must not invent any predecessor bytes.
+    await rm(path.join(project,second.predecessor.path));
+    const recoveryReview=path.join(project,"..","recovery-review.yaml");
+    await writeReviewTemplate0_7({projectRoot:project,checker,reviewPath:recoveryReview,stage:"whole-root"});
+    complete(recoveryReview);
+    await sealBaseline0_7({projectRoot:project,checker,reviewPath:recoveryReview,versionDeltaDigest});
+    expect(readiness().readiness.state).toBe("ready");
+    expect(YAML.parse(await readFile(baselinePath,"utf8")).predecessor).toBeUndefined();
+
     // Direction matters: depends-on propagates target-to-source only, so a
     // changed target pulls its dependent source while a changed source
     // pulls nothing through that edge.
@@ -593,6 +696,7 @@ describe("deterministic governed mechanics", () => {
     expect(result.json.changed_subjects).toEqual([
       ".nourd/knowledge/bundle.yaml",
       ".nourd/knowledge/freshness/baseline.yaml",
+      expect.stringMatching(/^\.nourd\/knowledge\/freshness\/history\/sha256-[0-9a-f]{64}\.yaml$/),
       "knowledge/tasks/by-state/active.md",
       "knowledge/tasks/by-state/cancelled.md",
       "knowledge/tasks/by-state/completed.md",

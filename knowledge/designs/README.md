@@ -27,7 +27,8 @@ knowledge belongs to Realizations.
 
 ## Dispositions
 
-Every Design declares exactly one `design_disposition` in front matter:
+Every Design declares exactly one `design_disposition` in its native YAML
+record declaration under `.nourd/knowledge/records/`:
 
 | Disposition | Meaning |
 | --- | --- |
@@ -38,8 +39,10 @@ Every Design declares exactly one `design_disposition` in front matter:
 | Withdrawn | The owner explicitly stopped consideration without a merits Decision |
 
 `resolved` is only a derived grouping for non-Active Designs. It is not a
-disposition. Directory placement reflects the declared disposition and never
-establishes it.
+disposition. Canonical Design sources remain in `designs/items/` when their
+disposition changes. The generated `designs/by-disposition/*.md` projections
+reflect the YAML declaration; neither a projection nor directory placement
+establishes disposition.
 
 ## Active
 

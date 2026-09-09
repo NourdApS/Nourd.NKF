@@ -283,8 +283,9 @@ applies only a conformant ready candidate.
 The portable topology includes the canonical `README.md`; parent indexes and
 generated `tasks/by-state/*.md` projections for Tasks; parent indexes and
 generated `designs/by-disposition/*.md` projections for Designs; Decision,
-Specification, Realization, supporting-current, and Evidence indexes; and the
-single `realizations/current-system.md` record. The managed `NKF Navigation`
+Specification and Evidence indexes; and a single `realizations/README.md`
+index covering `realizations/current-system.md` and represented supporting
+Realizations under `realizations/items/`. The managed `NKF Navigation`
 block links the root and all required entry points plus the onboarding Task and
 the initial Technology Specification when applicable. Canonical Task and
 Design paths never move because state changes.

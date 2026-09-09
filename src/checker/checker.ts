@@ -1425,6 +1425,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   let bundle: Record<string, any> | null = null;
   let graphBaseline: Record<string, any> | null = null;
   let graphBaselinePresent = false;
+  const predecessorBaselines = new Map<string, Record<string, any>>();
   const parsedRecords: ParsedRecord[] = [];
   const parsedNonRecords: ParsedNonRecord[] = [];
   let selectedFreshnessReceipt: Record<string, any> | null = null;
@@ -1448,6 +1449,38 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
         const parsed = parseNativeYaml(baselineObservation.bytes, baselinePath);
         graphBaseline = parsed.value;
         diagnostics.push(...parsed.diagnostics);
+        if (resultVersion === "0.81") {
+          let next = graphBaseline?.predecessor;
+          const seen = new Set<string>();
+          while (next !== undefined) {
+            const hash = next?.digest?.value;
+            const expectedPath = `.nourd/knowledge/freshness/history/sha256-${hash}.yaml`;
+            if (typeof hash !== "string" || !/^[0-9a-f]{64}$/.test(hash) || next.digest?.algorithm !== "sha-256" || next.path !== expectedPath || seen.has(hash)) {
+              emitter.emit("freshness.claim.delta-completeness-unprovable", "The predecessor binding is invalid or cyclic.", {artifact:baselinePath}); break;
+            }
+            seen.add(hash);
+            const observed = await collector.observe(expectedPath, {content:true});
+            if (observed.hasSymlink || observed.entry.resolution !== "direct" || observed.entry.final_kind !== "regular-file" || observed.entry.direct_kind !== "regular-file" || observed.bytes === null || sha256(observed.bytes) !== hash) {
+              emitter.emit("freshness.claim.delta-completeness-unprovable", "The exact predecessor file is missing, unsafe, or digest-mismatched.", {artifact:expectedPath}); break;
+            }
+            const prior = parseNativeYaml(observed.bytes, expectedPath);
+            const value = prior.value;
+            // Published 0.8 has the same baseline envelope except its exact
+            // version and policy identity; its frozen shape remains an anchor.
+            const shape = value?.nkf_version === "0.8"
+              ? {...value, nkf_version:"0.81", policy:{...value.policy,id:"nkf.freshness-policy.0.81"}}
+              : value;
+            if (prior.diagnostics.length || value === null || !["0.8","0.81"].includes(value.nkf_version) || !loaded.validators.baseline(shape) || (value.nkf_version === "0.8" && value.predecessor !== undefined)) {
+              emitter.emit("freshness.claim.delta-completeness-unprovable", "The predecessor baseline does not satisfy its supported closed shape.", {artifact:expectedPath}); break;
+            }
+            const frozen = bindingsForVersion(value.nkf_version);
+            if (value.policy?.id !== `nkf.freshness-policy.${value.nkf_version}` || value.policy?.digest?.value !== frozen?.freshnessPolicy?.sha256 || value.version_delta?.digest?.value !== frozen?.versionDelta?.sha256) {
+              emitter.emit("freshness.claim.delta-completeness-unprovable", "The predecessor does not bind the exact supported policy and version delta.", {artifact:expectedPath}); break;
+            }
+            predecessorBaselines.set(hash, value);
+            next = value.nkf_version === "0.8" ? undefined : value.predecessor;
+          }
+        }
       }
     }
 
@@ -2154,6 +2187,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       versionDelta: loaded.versionDelta,
       baseline: graphBaseline,
       baselinePresent: graphBaselinePresent,
+      predecessorBaselines,
       request: {
         purpose: null,
         require_readiness: false,

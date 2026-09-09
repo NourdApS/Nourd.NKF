@@ -224,6 +224,123 @@ directories that no longer exist.
 
 ## Execution Plan
 
+### Final Documentation Sweep And Merge Handoff
+
+On `2026-09-09`, the Human Product Owner directed: "commit current work, close
+the task and make sur ethe PR is ready to merge", and requested a fresh sweep
+of all documentation using a less expensive model. This explicitly authorizes
+committing and pushing the repaired work, completing the remaining candidate
+verification and confirmation under the recorded technical delegation, and
+concluding this Task for merge review. Publication, recommendation, live
+producer promotion, and the merge itself remain separate acts.
+
+1. Preserve and commit the validated audit repairs with this handoff plan.
+2. Delegate a read-only documentation inventory and stale-content sweep to
+   GPT-5.6 Luna, covering living knowledge, neutral guidance, generated 0.81
+   guidance, and public documentation. Classify frozen and historical content
+   separately and preserve its exact bytes. Review and fix actionable findings
+   at their canonical source, then regenerate affected projections.
+3. Re-read the complete current guidance set, record exact coverage and reviewed
+   digests, build the corrected candidate from a clean commit, and exercise its
+   archive against an isolated exact producer copy using delta review.
+4. Obtain the independent candidate review, resolve findings, and record a new
+   exact-byte technical confirmation after the reviewed candidate is clean.
+5. Reconcile the living summaries and this Task's gate and Completion Result,
+   run the canonical handoff validation, then conclude the Task through the
+   deterministic command. Push the completed branch and verify the PR's final
+   head, required CI, mergeability, and ready-for-review state on GitHub.
+
+
+### Post-Review Documentation Correction
+
+On `2026-09-09`, after the independent PR review identified the stale
+Technology root, the Designs map's superseded frontmatter instruction, and
+the onboarding protocol's obsolete supporting-current index, the Human
+Product Owner directed: "alright, i want all of them fixed." This directs
+these three corrections on this unmerged Task branch. The earlier
+Completion Result records the prior handoff; this follow-up does not repeat
+the Task transition or claim that the other independent review findings are
+resolved.
+
+1. Reconcile the living Technology root against the declared and pinned 0.8
+   producer state and the accepted 0.81 successor, keeping publication and
+   promotion distinct and preserving the root's identity and scope.
+2. Correct the Designs map from the accepted native YAML disposition and
+   neutral-path rules.
+3. Correct the version-neutral onboarding source from the accepted
+   Realization topology and regenerate only the unpublished 0.81 release
+   emission, bundled adopter, and public projection.
+4. Record the corrected guidance revision beside its prior review, and
+   distinguish the corrected working tree from the exact older archive
+   confirmed by [ADR 0141](../../decisions/0141-confirm-the-nkf-0-81-release-candidate.md).
+5. Repin through the deterministic adopter, review and reseal the changed
+   documentation baseline, verify the three corrections and frozen 0.8
+   bytes, and run `npm run nkf:check` before handoff. Leave the corrected
+   release members subject to a new candidate cut, exercise, independent
+   audit, and confirmation; no publication or promotion is performed here.
+
+### Independent Audit Repair
+
+On `2026-09-09`, the Human Product Owner further delegated the P1 audit and
+execution to the Codex technical reviewer: "i need you to audit the P1 yourself
+and execute at will". This authorizes the reviewer to resolve the proposed
+predecessor-binding boundary, audit and implement the repair, and record the
+result without another confirmation request. It is prospective delegation for
+this P1 successor revision, not retroactive acceptance of the earlier set or
+authorization to publish, promote, or merge. The reviewer selects a digest-bound
+historical predecessor file, complete chain verification to a whole-root or
+published 0.8 anchor, exact closure equality, and independently checked carry.
+The earlier deferral is resolved for this work; the Task returns to active.
+
+The execution adds the predecessor binding to the unpublished 0.81 successor
+authority, preserves the exact prior authority set as historical Evidence,
+derives schemas and bindings, implements checker and seal transaction support,
+and exercises both valid chains and adversarial real sealed successors. The
+reviewer audits the successor against the prior authority and records a later
+Decision under this explicit delegation. Published 0.8 bytes remain frozen.
+
+On `2026-09-09`, after clarification that the checker delta-closure defect,
+acceptance-provenance contradiction, and unsupported HTTPS-test claim remained
+open, the Human Product Owner directed: "go on fix those too".
+
+This reopens the previously concluded delivery for the named repairs. Its
+current gate must report the unresolved authority and predecessor-proof
+requirements as unknown, not preserve the old completion claim. The Task was
+deferred pending the concrete predecessor-binding direction and the necessary
+authority reconciliation; the later explicit delegation above resumes this work. The deterministic declaration and navigation change
+is derived in an isolated copy and applied locally; it performs no GitHub
+operation or new completion transition.
+
+1. Reproduce the false-readiness defect from a real sealed predecessor and
+   successor. Derive the repair from
+   [ADR 0139](../../decisions/0139-adopt-the-delta-closure-propagation-repair.md):
+   independently verify predecessor material, compare exact computed closure,
+   and refuse missing or unprovable predecessor evidence. Preserve published
+   0.8 behavior. If a new serialized contract boundary is required, prepare
+   its concrete successor proposal for the Human Product Owner before
+   changing accepted authority bytes.
+2. Reconcile authority provenance without rewriting immutable
+   [ADR 0140](../../decisions/0140-accept-the-nkf-0-81-authority-set.md) or
+   inventing prior human acceptance. Prepare the exact prospective human
+   acceptance or clarification required by the existing Design and release
+   protocol, recording any outstanding authority act explicitly.
+3. Correct the Task's local-server claim and the mocked test's name, then
+   exercise native Node fetch with a controlled HTTPS redirect and digest
+   refusal. State the demonstrated level and distinguish the controlled
+   exercise from live public adoption.
+4. Add regressions for removing the initiating node, removing a reached node,
+   carrying a required review, missing or corrupt predecessor proof, and
+   closure equality; verify valid whole-root and supported delta flows.
+5. Update the current Realization and review Evidence, regenerate affected
+   distribution, mechanically repin and reseal, and run focused tests plus
+   `npm run nkf:check`. Record release and authority blockers truthfully;
+   perform no publication, promotion, merge, or inferred human acceptance.
+
+### Original Delivery Plan
+
+The follow-up audit repair plan below extends the original delivery work; it
+does not extend the prior candidate's confirmation.
+
 1. Open this Task, declare it, regenerate the state index, repin, commit.
 2. Author the Design, declare it Active, repin, commit, and stop for the
    Human Product Owner's boundary confirmations.
@@ -344,6 +461,11 @@ the 0.8 policy.
 
 ## Completion Result
 
+### Original Candidate Handoff
+
+The following result records the prior exact candidate. The subsequent
+documentation correction described below is outside its technical confirmation.
+
 NKF 0.81 is accepted, implemented, and technically confirmed, and the record is
 reconciled; publication, recommendation, promotion, and merge are left to the
 Human Product Owner as this Task's Human Direction requires.
@@ -362,8 +484,10 @@ Human Product Owner as this Task's Human Direction requires.
 3. The shipped 0.81 adopter resolves the catalog from the public repository's
    raw default-branch URL and the archive from the canonical release asset URL
    with Node's fetch alone, refusing a digest or locator mismatch before
-   mutation; the adopter suite proves the network path against a local server
-   and every audit round proved the offline path installs 0.81 into a 0.8 and
+   mutation; the original adopter suite used a substituted fetch transport
+   returning local file bytes, proving URL selection, response handling,
+   digest refusal, and installation, without exercising a server, TLS, or
+   native fetch. Every original audit round proved the offline path installs 0.81 into a 0.8 and
    an unadopted repository with no Github CLI on the adoption path. Adoption
    from the live public release awaits the publication this Task leaves to
    the Human Product Owner.
@@ -404,6 +528,77 @@ cannot corroborate, the six projection members still outside the generator,
 the release protocol's precondition wording that predates delegated
 acceptance, and the `inspect` workspace left behind by one refused argument.
 
+### Post-Review Documentation Correction Result
+
+On `2026-09-09`, the Human Product Owner requested all three documentation
+consistency findings be fixed. The living Technology root now distinguishes
+published, recommended, and producer-adopted 0.8 from accepted successor 0.81,
+with 0.71 as the current predecessor. The Design index now describes native
+YAML disposition and neutral source paths with generated projections. The
+neutral onboarding protocol now describes one Realization index covering the
+current-system record and represented supporting items; the unpublished 0.81
+protocol, bundled adopter, and public projection were regenerated.
+
+The root README, Specification index, and current-system Realization now
+distinguish the prior confirmed archive from this corrected delivery. The
+[guidance review](../../evidence/release/nkf-038-nkf-0-81-guidance-review.md)
+preserves the prior reviewed digest and appends the focused correction and
+its new digest. A new candidate cut, exercise, independent audit, and technical
+confirmation remain required before publication. This correction does not
+resolve the separate checker-closure or acceptance-provenance audit findings.
+
+The installed 0.8 repin operation does not reconcile changed governed artifact
+digests. The 0.81 repin operation therefore generates and validates the derived
+declarations in an isolated copy using an explicit checker; only those
+declarations return to the producer, whose release pin remains 0.8. The delta
+review and baseline seal use that declared 0.8 policy. Validation and local Git
+state are reported separately at the authoring handoff; no publication,
+recommendation, producer promotion, new acceptance, or technical confirmation
+is supplied by these corrections.
+
+### HTTPS Verification Correction
+
+The original local-server assertion above was incorrect and is corrected to
+describe the mocked transport that actually ran. On `2026-09-09`, the Codex
+technical reviewer added and ran a separate controlled integration test in
+`test/adopter.test.ts`. It leaves `globalThis.fetch` unchanged, routes only
+the three test hosts' TLS sockets to a temporary loopback server, and trusts
+the generated local certificate only in the adopter child process. It proves
+native Node fetch, verified TLS, a cross-host HTTPS asset redirect, exact
+archive installation, refusal of an untrusted certificate, and refusal of
+tampered archive bytes before project mutation. The test explicitly does not
+prove public DNS routing, GitHub availability, or adoption of a published
+0.81 release. The old mock remains separately named as a mocked transport
+test. The controlled test passed; the first sandboxed attempt was refused
+at the local listening socket, before the test could exercise HTTPS.
+
+### Delegated P1 Repair Result
+
+The Codex technical reviewer reproduced the original false-ready delta from
+actual source revisions and repaired it under the explicit P1 delegation.
+[ADR 0142](../../decisions/0142-accept-the-bound-predecessor-repair.md) selects
+the predecessor-proof semantics; [ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md)
+selects the final navigation and promotion bindings after the producer test
+exposed their omissions. Earlier authority bytes and Decisions remain exact
+historical evidence. This is prospective delegated acceptance of the repaired
+set, with no retroactive acceptance or independent second-person audit claim.
+
+The checker observes exact predecessor files, validates the reachable chain,
+recomputes the mandatory closure from those inputs, and verifies carried
+judgments and mechanical transitions. The sealer retains history, verifies
+its successor proof, rolls back a rejected seal, and supports whole-root
+recovery after history loss. The source-derived regression verifies the valid
+seal, the original erased-closure exploit, forged or partial carry, malformed
+closure sets, altered or missing history, symlink refusal, invalid earlier
+chain links, rollback, and recovery. Separate tests retain valid voluntary
+extra review and chained deterministic Task conclusions.
+
+P1 implementation and its self-audit are complete at the local authoring
+handoff. The Task remains active because a newly cut release candidate still
+needs its own exact exercise, release audit, and confirmation. The published
+0.8 release, producer declaration and pin, catalog recommendation, and remote
+publication or enforcement state are unchanged by this repair.
+
 ## Decision Applicability
 
 ### Applicable Decisions
@@ -424,17 +619,25 @@ acceptance, and the `inspect` workspace left behind by one refused argument.
 | [`adr-0135`](../../decisions/0135-confirm-the-nkf-0-8-release-candidate.md) | record | The confirmed 0.8 bytes stay exactly as confirmed; the six limits the fifth audit declined to vouch for are inputs to the 0.81 guidance review, not repaired by implication. |
 | [`adr-0136`](../../decisions/0136-adopt-the-public-repository-direction.md) | record | The repository is public and the catalog keeps its private-channel literals until a successor states a public channel truthfully; that Decision named the successor "NKF 0.9", and this Task records `0.81` as that successor without editing the Decision. |
 | [`adr-0137`](../../decisions/0137-confirm-the-protected-merge-gate.md) | record | The protected merge gate account is confirmed at an exact Realization revision; the further Realization revision this Task performs is confirmed or not by its own Decision, and this Task must not represent the earlier confirmation as covering it. |
+| [`adr-0138`](../../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md) | record | Reconcile living documents under the adopted 0.81 direction while preserving immutable history, published bytes, the producer's separately selected version, and the Human Product Owner's publication and promotion authority. |
+| [`adr-0140`](../../decisions/0140-accept-the-nkf-0-81-authority-set.md) | record | The first five-artifact revision remains immutable history; the later delegated P1 repair selects the second revision without retroactive acceptance. |
+| [`adr-0141`](../../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) | record | Confirmation covers only the exact prior candidate bytes. Correcting an emitted release member requires a new cut, exercise, audit, and confirmation before publication; the old confirmation must not be applied to the corrected working tree. |
+
+| [`adr-0142`](../../decisions/0142-accept-the-bound-predecessor-repair.md) | record | Prospective P1 delegation accepts the exact second unpublished authority revision and requires bound predecessor proof, preserved history, and a fresh candidate exercise and confirmation. |
+
+| [`adr-0143`](../../decisions/0143-bind-the-predecessor-repair-promotion.md) | record | Final navigation and promotion bindings replace only [ADR 0142](../../decisions/0142-accept-the-bound-predecessor-repair.md)'s exact artifact selection; its P1 semantics and boundaries continue. |
 
 ### Mandatory Capabilities
 
 | Capability | Finding | Verification | Exception |
 | --- | --- | --- | --- |
 | Each format boundary is confirmed by the Human Product Owner at the Design and recorded verbatim before the authority set is authored | proven | human-experience | none |
-| The 0.81 authority set is accepted after an independent audit and the exact release candidate is confirmed bound to a fresh release audit | proven | runtime-behaviour | none |
-| Adopt resolves the recommendation and installs 0.81 over plain HTTPS with no `gh` binary and no credentials, verified by digest | proven | runtime-behaviour | none |
+| Explicit P1 delegation and exact repaired authority selection are recorded in the successor Decisions | proven | human-experience | none |
+| The corrected exact release candidate has a fresh audit-bound confirmation | unknown | none | none |
+| Controlled native HTTPS adoption resolves the recommendation, follows an asset redirect, and installs exact 0.81 bytes with no `gh` binary or credentials; untrusted TLS and tampered bytes are refused. Live public 0.81 adoption remains a separate post-publication exercise | proven | runtime-behaviour | none |
 | The catalog's channel and visibility are validated from the accepted contract's closed vocabulary with a public value | proven | runtime-behaviour | none |
 | The distributed adoption protocol states where to obtain the adopter and no 0.81 member calls the release private | proven | runtime-behaviour | none |
 | The `.DS_Store` reproduction passes onboarding while a meaningful-file change between seal and adoption still fails closed | proven | runtime-behaviour | none |
 | Every sweep finding is repaired or reclassified and a repeat sweep of living surfaces is clean | proven | runtime-behaviour | none |
-| The 0.8-to-0.81 producer upgrade is proven on the digest-bound delta claim alone in the isolated exercise | proven | runtime-behaviour | none |
+| The corrected 0.8-to-0.81 producer upgrade is proven on an independently verified digest-bound delta claim in an isolated exercise | unknown | none | none |
 | No 0.8 or earlier published byte, accepted immutable record, or 0.8 catalog literal changes before promotion, and the gate passes at every handoff | proven | runtime-behaviour | none |

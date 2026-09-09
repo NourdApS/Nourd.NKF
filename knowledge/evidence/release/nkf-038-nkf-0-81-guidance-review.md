@@ -206,3 +206,31 @@ that accompanies this review verifies only that every enumerated guidance
 member is named by its full path with a reviewed digest equal to its bytes. The
 independent release audit verifies this review; it does not inherit its
 conclusions.
+
+## Post-Review Documentation Correction — 2026-09-09
+
+The Human Product Owner requested correction of all three follow-up
+documentation consistency findings under NKF-038. The Technology root now
+distinguishes published, recommended, and producer-adopted 0.8 from accepted
+successor 0.81 and states the 0.71 predecessor correctly. The Design index now
+locates disposition in the native YAML declaration, keeps source paths under
+`designs/items/`, and identifies the generated disposition projections.
+
+The neutral onboarding protocol source previously described a separate
+supporting-current index. Its topology paragraph now describes one
+`realizations/README.md` indexing `realizations/current-system.md` and
+represented supporting Realizations under `realizations/items/`. This is a
+derived guidance correction, with no change to the accepted authority set.
+The 0.81 release-stamped guidance, bundled adopter, and public projection were
+regenerated. Published and installed 0.8 guidance remains frozen.
+
+| Changed member | Follow-up reviewed SHA-256 |
+| --- | --- |
+| `distribution/nkf/0.81/integrations/onboarding/nkf-onboarding-protocol.md` | `4ca144af24ded2684819b5458e2340d3a85b3226058ff8a966eb32a59af18c55` |
+
+This follow-up reviewed the topology correction against the native topology
+and checked its generated copies. The original table above remains the record
+of the prior whole-set review; this focused correction is not a new whole-set
+release audit. ADR 0141 continues to confirm only its exact prior candidate
+archive. The changed delivery requires a new candidate cut, exercise,
+independent audit, and technical confirmation before publication.

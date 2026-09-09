@@ -9,13 +9,13 @@ authority:
   version_delta_path: contracts/nkf/0.81/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
+    value: b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45
   freshness_policy_digest:
     algorithm: sha-256
     value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4
   version_delta_digest:
     algorithm: sha-256
-    value: 0a319702b967477ab6dbc183bedaef3c256e123d5424b1c77d56e96b7fb120bb
+    value: 9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42
   accepted_baseline:
     markdown_path: knowledge/specifications/nkf-0.8.md
     markdown_digest:
@@ -2507,21 +2507,7 @@ freshness:
     committed: true
     closed: true
     required_fields: [contract, nkf_version, bundle, profile, graph_revision, policy, version_delta, node_revisions, authored_edges, external_dependencies, authority_inputs, relationship_coverage, applicability_coverage, decision_classifications, promotion_reconciliation, confirmation]
-    optional_fields: [predecessor]
-    predecessor_required_for: [semantically-reviewed-delta, mechanically-concluded]
-    predecessor_forbidden_for: [semantically-reviewed-whole-root]
-    predecessor_history: content-addressed-exact-file-bytes
-    predecessor_chain: verified-to-whole-root-or-supported-0.8-anchor
-    predecessor_failure: freshness.claim.delta-completeness-unprovable
-    recorded_closure: exact-recomputed-set-no-extra-or-duplicate-subjects
     fields:
-      predecessor:
-        closed: true
-        required_fields: [path, digest]
-        fields:
-          path: {type: string, pattern: '^\.nourd/knowledge/freshness/history/sha256-[0-9a-f]{64}\.yaml$'}
-          digest: {ref: common.digest}
-        path_digest_equals: exact-predecessor-file-sha256
       contract: {const: nkf.graph-baseline}
       nkf_version: {const: "0.81"}
       bundle: {ref: common.identifier}

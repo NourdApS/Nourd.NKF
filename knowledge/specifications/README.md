@@ -137,7 +137,7 @@ Live support is exactly NKF 0.8 plus NKF 0.71.
 
 - [NKF 0.81 — Product And Technology Knowledge Format](nkf-0.81.md)
 
-NKF 0.81 is the accepted successor under
+NKF 0.81 is the successor candidate under
 [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
 Its direction is adopted by
 [ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
@@ -145,12 +145,22 @@ and
 [ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md),
 and its five-artifact authority set — the Specification, digest-bound
 executable companion, evaluation policy, 0.8-to-0.81 version delta, and
-producer-promotion input — is accepted by
-[ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) after a
-three-round independent audit, and its exact release candidate is technically
+producer-promotion input — has a repaired unpublished revision accepted by
+[ADR 0142](../decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](../decisions/0143-bind-the-predecessor-repair-promotion.md), under the
+Human Product Owner's explicit P1 self-audit and execution delegation. It binds
+exact predecessor history so the checker can independently reproduce delta
+closures and verify carried judgments. The first revision and
+[ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) are preserved;
+this prospective delegation does not retroactively accept their bytes.
+Its prior exact release candidate is technically
 confirmed by
 [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) after
-a four-round independent release audit. It adds the recommended-release catalog contract
+a four-round independent release audit. The subsequent documentation correction
+changes generated onboarding guidance and the bundled adopter, so the corrected
+delivery requires a new candidate cut, exercise, independent audit, and technical
+confirmation;
+[ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
+remains bound to the prior exact bytes. It adds the recommended-release catalog contract
 with public channel values, plain HTTPS adoption, the adopter-obtaining step,
 the closed volatile-metadata registry, and the checker's recompute of the
 delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. Until the

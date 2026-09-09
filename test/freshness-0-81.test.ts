@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { validateProject } from "../src/checker/checker.js";
 import YAML from "yaml";
+import { bindSyntheticPredecessor as bindPrior } from "./helpers.js";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contractRoot = path.join(repositoryRoot, "contracts/nkf/0.81");
@@ -38,62 +39,59 @@ async function copyFixture(source: string): Promise<string> {
   return project;
 }
 
-async function editBaseline(project: string, change: (baseline: Record<string, any>) => void): Promise<void> {
+async function editBaseline(project: string, change: (baseline: Record<string, any>) => void | Promise<void>): Promise<void> {
   const target = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
   const baseline = YAML.parse(await readFile(target, "utf8"));
-  change(baseline);
+  await change(baseline);
   await writeFile(target, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
 }
 
 const carried = (baseline: Record<string, any>) => ({
   carried: {
     performed_in_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
-    performing_reviewer: { kind: "agent", id: "fixture-reviewer" },
+    performing_reviewer: baseline.confirmation.reviewer,
   },
 });
 
 type Node = { kind: string; id: string };
 const sameNode = (left: Node, right: Node) => left.kind === right.kind && left.id === right.id;
 
-// Rewrites the confirmed whole-root fixture baseline into the delta-claim
-// shape a 0.81 seal produces: the recorded closure and performed set are
-// bound, every performed node's judgments carry `performed` provenance, and
-// every other judgment is carried from the (reconstructed) predecessor.
-function deltaClaim(baseline: Record<string, any>, closure: Node[], performed: Node[]): void {
+// These local shape tests bind a complete distinct predecessor snapshot.
+// The end-to-end regression below additionally creates both seals from source.
+async function deltaClaim(project: string, baseline: Record<string, any>, closure: Node[], performed: Node[]): Promise<void> {
+  const prior = await bindPrior(project,baseline,[{kind:"record",id:"specification"}]);
   baseline.confirmation.claim = "semantically-reviewed-delta";
   baseline.confirmation.computed_closure = closure;
   baseline.confirmation.performed_set = performed;
-  for (const entry of baseline.applicability_coverage) {
-    entry.provenance = performed.some((node) => sameNode(node, entry.node)) ? { performed: true } : carried(baseline);
-  }
-  for (const entry of baseline.decision_classifications ?? []) {
-    entry.provenance = carried(baseline);
-  }
+  for (const entry of baseline.applicability_coverage) entry.provenance = performed.some(node => sameNode(node,entry.node)) ? {performed:true} : carried(prior);
+  for (const entry of baseline.decision_classifications ?? []) entry.provenance=carried(prior);
 }
 
 // Rewrites the confirmed whole-root fixture baseline into the mechanically-
 // concluded shape: every judgment carried, the exact transition bound, and
 // the transitioned Task judgments marked. Individual tests then break one
 // admission precondition at a time.
-function concludeBaseline(
+async function concludeBaseline(
+  project: string,
   baseline: Record<string, any>,
   transition: { task: string; from_state: string; to_state: string },
-): void {
+): Promise<void> {
+  const prior = await bindPrior(project, baseline, [{kind:"document",id:transition.task}]);
   baseline.confirmation.claim = "mechanically-concluded";
   baseline.confirmation.transition = {
     ...transition,
-    predecessor_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
+    predecessor_graph_revision: prior.graph_revision,
   };
   for (const entry of baseline.applicability_coverage) {
     entry.provenance = {
-      ...carried(baseline),
+      ...carried(prior),
       ...(entry.node.kind === "document" && entry.node.id === transition.task
         ? { transition: { ...transition } }
         : {}),
     };
   }
   for (const entry of baseline.decision_classifications ?? []) {
-    entry.provenance = carried(baseline);
+    entry.provenance = carried(prior);
   }
 }
 
@@ -118,7 +116,7 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
   it("rejects a baseline that does not bind the accepted version-delta declaration", async () => {
     const project = await copyFixture(fixture);
-    await editBaseline(project, (baseline) => {
+    await editBaseline(project, async (baseline) => {
       baseline.version_delta.digest.value = "0".repeat(64);
     });
     const result = await validate(project);
@@ -128,7 +126,7 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
   it("refuses a delta claim whose performed set does not contain the computed closure", async () => {
     const project = await copyFixture(fixture);
-    await editBaseline(project, (baseline) => {
+    await editBaseline(project, async (baseline) => {
       const nodes = baseline.node_revisions.map((entry: Record<string, any>) => entry.node);
       baseline.confirmation.claim = "semantically-reviewed-delta";
       baseline.confirmation.computed_closure = nodes;
@@ -149,8 +147,8 @@ describe("NKF 0.81 digest-bound freshness", () => {
     // exactly the closure the 0.7-through-0.8 tooling recorded (ADR 0139);
     // under 0.81 the checker recomputes it and refuses, naming the subject.
     const project = await copyFixture(technologyFixture);
-    await editBaseline(project, (baseline) => {
-      deltaClaim(baseline, [specification], [specification]);
+    await editBaseline(project, async (baseline) => {
+      await deltaClaim(project, baseline, [specification], [specification]);
     });
     const result = await validate(project);
     expect(result.conformance).toBe("failed");
@@ -164,8 +162,8 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
   it("admits a delta claim whose recorded closure reproduces the propagated closure", async () => {
     const project = await copyFixture(technologyFixture);
-    await editBaseline(project, (baseline) => {
-      deltaClaim(baseline, [specification, realization], [specification, realization]);
+    await editBaseline(project, async (baseline) => {
+      await deltaClaim(project, baseline, [specification, realization], [specification, realization]);
     });
     const result = await validate(project);
     expect(result.conformance).toBe("passed");
@@ -178,8 +176,8 @@ describe("NKF 0.81 digest-bound freshness", () => {
     // reviewer who also re-performed an unchanged node is not refused, and
     // the voluntarily reviewed node seeds no propagation of its own.
     const project = await copyFixture(technologyFixture);
-    await editBaseline(project, (baseline) => {
-      deltaClaim(baseline, [specification, realization], [specification, realization, technology]);
+    await editBaseline(project, async (baseline) => {
+      await deltaClaim(project, baseline, [specification, realization], [specification, realization, technology]);
     });
     const result = await validate(project);
     expect(result.conformance).toBe("passed");
@@ -188,8 +186,7 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
   it("requires every pending promotion-reconciliation subject in the recorded closure", async () => {
     const project = await copyFixture(technologyFixture);
-    await editBaseline(project, (baseline) => {
-      deltaClaim(baseline, [specification, realization], [specification, realization, technology]);
+    await editBaseline(project, async (baseline) => {
       baseline.promotion_reconciliation = [
         {
           node: technology,
@@ -198,6 +195,7 @@ describe("NKF 0.81 digest-bound freshness", () => {
           state: "pending",
         },
       ];
+      await deltaClaim(project, baseline, [specification, realization], [specification, realization, technology]);
     });
     const result = await validate(project);
     expect(result.readiness?.state).not.toBe("ready");
@@ -208,7 +206,7 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
   it("blocks readiness while a promotion-reconciliation entry is pending", async () => {
     const project = await copyFixture(fixture);
-    await editBaseline(project, (baseline) => {
+    await editBaseline(project, async (baseline) => {
       baseline.promotion_reconciliation = [
         {
           node: baseline.node_revisions[0].node,
@@ -225,7 +223,7 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
   it("reports stale judgment digests when a judged node changes", async () => {
     const project = await copyFixture(fixture);
-    await editBaseline(project, (baseline) => {
+    await editBaseline(project, async (baseline) => {
       baseline.applicability_coverage[0].revision.value = "1".repeat(64);
     });
     const result = await validate(project);
@@ -237,8 +235,8 @@ describe("NKF 0.81 digest-bound freshness", () => {
     // A conclusion carrying a performed judgment claims fresh review it never
     // received.
     const performedProject = await copyFixture(fixture);
-    await editBaseline(performedProject, (baseline) => {
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
+    await editBaseline(performedProject, async (baseline) => {
+      await concludeBaseline(performedProject, baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
       baseline.applicability_coverage[0].provenance = { performed: true };
     });
     const performedResult = await validate(performedProject);
@@ -248,8 +246,8 @@ describe("NKF 0.81 digest-bound freshness", () => {
     // A transition mark on a node other than the transitioned Task claims a
     // wider delta than the closed transition vocabulary.
     const markedProject = await copyFixture(fixture);
-    await editBaseline(markedProject, (baseline) => {
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
+    await editBaseline(markedProject, async (baseline) => {
+      await concludeBaseline(markedProject, baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
       const nonTask = baseline.applicability_coverage.find(
         (entry: Record<string, any>) => entry.node.kind === "record",
       );
@@ -263,10 +261,10 @@ describe("NKF 0.81 digest-bound freshness", () => {
   it("refuses a mechanical conclusion whose carry does not bind the exact transition", async () => {
     // The transition binding must land on the declared Task state.
     const mismatchedProject = await copyFixture(fixture);
-    await editBaseline(mismatchedProject, (baseline) => {
+    await editBaseline(mismatchedProject, async (baseline) => {
       // The fixture Task is declared active; a conclusion into completed
       // contradicts the declared state.
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "active", to_state: "completed" });
+      await concludeBaseline(mismatchedProject, baseline, { task: "TEST-001", from_state: "active", to_state: "completed" });
     });
     const mismatchedResult = await validate(mismatchedProject);
     expect(mismatchedResult.readiness?.state).not.toBe("ready");
@@ -274,10 +272,10 @@ describe("NKF 0.81 digest-bound freshness", () => {
 
     // The transitioned Task's judgments must carry the exact transition mark.
     const unmarkedProject = await copyFixture(fixture);
-    await editBaseline(unmarkedProject, (baseline) => {
-      concludeBaseline(baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
+    await editBaseline(unmarkedProject, async (baseline) => {
+      await concludeBaseline(unmarkedProject, baseline, { task: "TEST-001", from_state: "deferred", to_state: "active" });
       for (const entry of baseline.applicability_coverage) {
-        entry.provenance = carried(baseline);
+        delete entry.provenance.transition;
       }
     });
     const unmarkedResult = await validate(unmarkedProject);

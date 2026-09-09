@@ -9,7 +9,7 @@ authority:
   version_delta_path: contracts/nkf/0.81/version-delta.yaml
   markdown_digest:
     algorithm: sha-256
-    value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
+    value: bb6d2b58c544718b17b84076f3317aecac5a36aaa5c59a56fc82f277b3612014
   freshness_policy_digest:
     algorithm: sha-256
     value: 742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4

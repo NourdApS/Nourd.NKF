@@ -370,7 +370,7 @@ rules:
   schema.freshness-receipt.invalid:
     classification: identical
   schema.graph-baseline.invalid:
-    classification: semantically-new
+    classification: identical
   schema.record.invalid:
     classification: identical
   schema.unavailable:

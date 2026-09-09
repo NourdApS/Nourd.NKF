@@ -7,12 +7,12 @@
     "markdown_path": "knowledge/specifications/nkf-0.81.md",
     "markdown_digest": {
       "algorithm": "sha-256",
-      "value": "b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45"
+      "value": "4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8"
     },
     "executable_path": "contracts/nkf/0.81/nkf.yaml",
     "executable_digest": {
       "algorithm": "sha-256",
-      "value": "004969c10d74191274f74a4dce0b9aebb983d52a70ee3351e05e18086dc78cb4"
+      "value": "517b91442b6be5a31bc7b9a03845787494f4b9720f1d6d90b976ebcfc92b0347"
     }
   },
   "type": "object",
@@ -2715,6 +2715,37 @@
               "pending",
               "resolved"
             ]
+          }
+        }
+      }
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "digest"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^\\.nourd/knowledge/freshness/history/sha256-[0-9a-f]{64}\\.yaml$"
+        },
+        "digest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "value"
+          ],
+          "properties": {
+            "algorithm": {
+              "const": "sha-256"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
           }
         }
       }

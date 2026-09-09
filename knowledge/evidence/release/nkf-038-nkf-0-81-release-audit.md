@@ -311,3 +311,109 @@ placeholders, catalog facts nobody reconciled, a drift refusal that named
 nothing. Each was closed by a mechanism rather than a sentence. This Evidence
 confirms nothing; the mandatory audit-bound confirmation is the separate
 Decision that follows.
+
+## Subsequent PR Audit And Corrections — 2026-09-09
+
+The Codex technical reviewer subsequently audited PR 24 at
+`c2c4dd989c2e46a281c54628605d7d25e3234547`. That review reproduced a
+false-readiness defect in the closure checker, identified contradictory
+authority-acceptance provenance, and found that the Task described a mocked
+fetch test as a local-server exercise. The preceding four-round audit remains
+historical evidence for its exact candidate; its clean result does not dispose
+of these later findings or confirm corrected bytes.
+
+### Acceptance Provenance Correction
+
+ADR 0140 declares that the Claude technical reviewer accepted its five-artifact
+authority set under the Task's delegation. The Design instead assigns that
+acceptance to the Human Product Owner, as does the release protocol, and the
+Task's enumerated technical delegation does not explicitly include authority-set
+acceptance. The reviewed sources do not establish the human acceptance or
+explicit delegation needed to reconcile those statements. Authoring an
+acceptance Decision and passing an independent technical audit do not supply
+the missing authority act.
+
+ADR 0140 is preserved byte-for-byte as an immutable historical declaration.
+Its acceptance provenance is unresolved for publication reliance. A prospective
+human acceptance or explicit delegation, recorded in a governed successor at
+the exact applicable artifact digests after audit, is required. A direction
+to repair audit findings does not retroactively accept those bytes. If the
+predecessor-binding repair changes the authority set, that revised set must
+receive its own audit and acceptance; accepting the old set would not accept
+the revision. Current summaries must report this distinction.
+
+### HTTPS Evidence Correction
+
+The original test substituted `globalThis.fetch` and returned local file bytes.
+It demonstrated adapter behavior, not a listening server, TLS, native fetch,
+or a network redirect. The Task now describes that evidence accurately, and
+the original test is named as a substituted transport test.
+
+The added controlled integration test in `test/adopter.test.ts` passed on
+`2026-09-09`. It leaves native fetch unchanged and routes TLS sockets for the
+three allowlisted hosts to a temporary loopback HTTPS server. A generated local
+certificate covers the three hostnames and is trusted only by the adopter
+child. The server records the catalog request, the canonical asset request,
+and a cross-host redirect to the final asset. Installation binds the expected
+archive digest. Removing certificate trust refuses the catalog; altering the
+served archive refuses its digest; both refusals preserve the project tree.
+The first sandboxed run could not listen on loopback (`EPERM`); the run with
+local-server permission passed. No public DNS, live GitHub availability, or
+published 0.81 adoption is claimed. This focused correction is not a new
+independent release audit or technical confirmation.
+
+### Delegated P1 Repair — 2026-09-09
+
+After the preceding findings, the Human Product Owner explicitly directed:
+"i need you to audit the P1 yourself and execute at will". The Codex technical
+reviewer audited the reproduced bypass and selected exact digest-bound
+predecessor history. [ADR 0142](../../decisions/0142-accept-the-bound-predecessor-repair.md)
+accepts the second unpublished authority revision under that prospective,
+bounded delegation. It does not retroactively accept ADR 0140 and does not
+claim an independent second-person audit.
+
+The original exploit is now a source-derived regression in
+`test/mechanics.test.ts`: seal a whole-root baseline with Product applying to
+Realization, change the Product, and seal the resulting two-subject delta.
+The valid seal establishes readiness. Erasing the closure including its
+initiating subject, carrying the required Realization, forging carried
+provenance, omitting or corrupting history, padding the closure, relabeling a
+carrying delta as whole-root, and laundering an invalid earlier delta through
+a later seal are refused. Local tests also retain valid voluntary extra review
+and the mechanical transition's closed vocabulary.
+
+The checker verifies exact historical bytes and graph identity, complete
+judgment coverage, the supported policy and version delta, carried judgment
+values and performing provenance, and exact closure equality. A chain must
+reach a fully performed 0.81 whole-root anchor or supported frozen 0.8 review.
+Historical files enter the validation snapshot and may not use symlinks.
+The sealer preserves predecessor bytes; the adopter applies new history and
+baseline bytes within its staged transaction, including Task transitions and
+0.8-to-0.81 conversion.
+
+The proof establishes structural and digest consistency. It cannot verify the
+semantic truth of an authored performed-review assertion or replace external
+human authority. The first authority revision remains exact source evidence
+from `NourdApS/Nourd.NKF` commit
+`c2c4dd989c2e46a281c54628605d7d25e3234547`:
+
+| Original path | Preserved bytes | SHA-256 |
+| --- | --- | --- |
+| `knowledge/specifications/nkf-0.81.md` | [1-nkf-0.81.md](nkf-0.81-authority-revision-1/1-nkf-0.81.md) | `b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45` |
+| `contracts/nkf/0.81/nkf.yaml` | [2-nkf.yaml](nkf-0.81-authority-revision-1/2-nkf.yaml) | `004969c10d74191274f74a4dce0b9aebb983d52a70ee3351e05e18086dc78cb4` |
+| `contracts/nkf/0.81/freshness-policy.yaml` | [3-freshness-policy.yaml](nkf-0.81-authority-revision-1/3-freshness-policy.yaml) | `742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4` |
+| `contracts/nkf/0.81/version-delta.yaml` | [4-version-delta.yaml](nkf-0.81-authority-revision-1/4-version-delta.yaml) | `9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42` |
+| `knowledge/evidence/release/nkf-0.81-producer-promotion.yaml` | [5-nkf-0.81-producer-promotion.yaml](nkf-0.81-authority-revision-1/5-nkf-0.81-producer-promotion.yaml) | `cee895a59ef8366d1dc50ca199e4fa8e6c3d7e166e8adf3a50f2eceb681bbb88` |
+
+This repaired working tree is outside ADR 0141's exact candidate confirmation.
+Publication, recommendation, producer promotion, and merge remain separate.
+
+The producer-upgrade test then exposed an omitted promotion heading declaration
+and one unlinked Task reference in that accepted revision. The checker refused
+them. [ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md)
+selects the corrected navigation bindings without changing P1 semantics. The
+second five-artifact revision remains byte-for-byte under
+`nkf-0.81-authority-revision-2/`, at the digests recorded by ADR 0142.
+The sealer also verifies the resulting proof before success, rolls back a
+rejected successor and newly added history, and permits whole-root recovery
+after history loss. Regression checks cover both rollback and recovery.

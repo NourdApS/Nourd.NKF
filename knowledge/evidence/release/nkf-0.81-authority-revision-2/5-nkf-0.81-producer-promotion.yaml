@@ -6,12 +6,12 @@ specification:
   path: knowledge/specifications/nkf-0.81.md
   digest:
     algorithm: sha-256
-    value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
+    value: bb6d2b58c544718b17b84076f3317aecac5a36aaa5c59a56fc82f277b3612014
 executable:
   path: contracts/nkf/0.81/nkf.yaml
   digest:
     algorithm: sha-256
-    value: 517b91442b6be5a31bc7b9a03845787494f4b9720f1d6d90b976ebcfc92b0347
+    value: e016a72e923e56f80ce125fb6b9fe7dfd58b4dfab2308ec3a8b27f1f9fda3fbb
 freshness_policy:
   path: contracts/nkf/0.81/freshness-policy.yaml
   digest:
@@ -37,7 +37,7 @@ record_declaration:
     stable_path: specifications/nkf-0.81.md
     digest:
       algorithm: sha-256
-      value: 4a5d2bd6289b0157edbbab0de8f51e38bb0b55ccecc80e6d94b0e14ab42cf8a8
+      value: bb6d2b58c544718b17b84076f3317aecac5a36aaa5c59a56fc82f277b3612014
   governance:
     lifecycle: immutable
     status: accepted
@@ -233,13 +233,6 @@ record_declaration:
       occurrence: 1
       authority: accepted-meaning
       role: governing
-    - id: deterministic-knowledge-graph-and-freshness-bound-predecessor-baselines
-      heading_path:
-        - Deterministic Knowledge Graph And Freshness
-        - Bound Predecessor Baselines
-      occurrence: 1
-      authority: accepted-meaning
-      role: content
     - id: deterministic-knowledge-graph-and-freshness-version-delta-declaration
       heading_path:
         - Deterministic Knowledge Graph And Freshness

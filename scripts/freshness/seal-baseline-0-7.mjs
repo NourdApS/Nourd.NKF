@@ -9,7 +9,7 @@
 // adopter's `review --scaffold` operation and the deterministic
 // Task-transition conclusion seal.
 import { spawnSync } from "node:child_process";
-import { lstat, mkdir, readFile, readdir, realpath, writeFile } from "node:fs/promises";
+import { lstat, mkdir, readFile, readdir, realpath, rm, rmdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import * as commonmark from "commonmark";
@@ -65,6 +65,71 @@ async function safeDirectory(root, segments, createMissing) {
     if (!inside(root, await realpath(current))) fail(`Freshness seal path escapes the project: ${segments.join("/")}`);
   }
   return current;
+}
+
+// Content-addressed history is append-only. A conflicting existing path is
+// refused, never overwritten. The baseline binding carries the exact bytes.
+async function preservePredecessor(project, bytes) {
+  const value = sha256Hex(bytes);
+  const relative = `.nourd/knowledge/freshness/history/sha256-${value}.yaml`;
+  await safeDirectory(project, [".nourd", "knowledge", "freshness", "history"], true);
+  const target = path.join(project, relative);
+  const previous = await lstat(target).catch(() => null);
+  if (previous !== null) {
+    if (!previous.isFile() || previous.isSymbolicLink() || !(await readFile(target)).equals(bytes)) fail("Predecessor history path is unsafe or conflicts with its exact bytes.");
+  } else await writeFile(target, bytes, {flag:"wx",mode:0o600});
+  return {path:relative,digest:{algorithm:"sha-256",value}};
+}
+
+// The standalone sealer also rolls back a rejected proof. Adopter operations
+// additionally apply this candidate through their isolated file transaction.
+async function writeVerifiedSeal0_81(project, checkerPath, baseline, predecessorBytes) {
+  const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
+  const original = await readFile(baselinePath).catch(() => null);
+  const direct = await lstat(baselinePath).catch(() => null);
+  if (direct !== null && (!direct.isFile() || direct.isSymbolicLink())) fail("The baseline must be a direct regular file.");
+  const directories = [path.dirname(baselinePath), path.join(path.dirname(baselinePath), "history")];
+  const absentDirectories = [];
+  for (const directory of directories) if (await lstat(directory).catch(() => null) === null) absentDirectories.push(directory);
+  let addedHistory = null;
+  try {
+    if (predecessorBytes !== null) {
+      const target = path.join(project, `.nourd/knowledge/freshness/history/sha256-${sha256Hex(predecessorBytes)}.yaml`);
+      const existed = await lstat(target).catch(() => null);
+      baseline.predecessor = await preservePredecessor(project, predecessorBytes);
+      if (existed === null) addedHistory = target;
+    }
+    await writeFile(baselinePath, YAML.stringify(baseline, {lineWidth:0,aliasDuplicateObjects:false}));
+    const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--purpose", "whole-root-readiness", "--no-persist"], {encoding:"utf8",maxBuffer:64*1024*1024});
+    const result = run.stdout ? JSON.parse(run.stdout) : null;
+    if (run.status !== 0 || result?.conformance !== "passed" || (result?.knowledge_graph?.summary?.baseline_state ?? result?.knowledge_graph?.baseline_state) !== "confirmed") {
+      fail(`The sealed predecessor proof was refused: ${JSON.stringify(result?.diagnostics ?? run.stderr)}`);
+    }
+  } catch (error) {
+    if (original === null) await rm(baselinePath, {force:true});
+    else await writeFile(baselinePath, original);
+    if (addedHistory !== null) await rm(addedHistory);
+    for (const directory of absentDirectories.reverse()) await rmdir(directory).catch(() => {});
+    throw error;
+  }
+}
+
+async function reviewPredecessor(project, nkfVersion) {
+  const bytes = await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml")).catch(() => null);
+  if (bytes === null) return {bytes:null, baseline:null};
+  const baseline = YAML.parse(bytes.toString("utf8"), {schema:"core",strict:true,uniqueKeys:true});
+  // The isolated 0.8 -> 0.81 shape conversion is pre-review scaffolding. Its
+  // graph revision still names the exact frozen 0.8 graph. Review and sealing
+  // compare with that preserved original, not the synthetic converted shell.
+  const binding = baseline.predecessor;
+  if (nkfVersion === "0.81" && binding?.digest?.algorithm === "sha-256" &&
+      binding.path === `.nourd/knowledge/freshness/history/sha256-${binding.digest.value}.yaml`) {
+    const original = await readFile(path.join(project, binding.path));
+    if (sha256Hex(original) !== binding.digest.value) fail("The review predecessor digest does not match.");
+    const prior = YAML.parse(original.toString("utf8"), {schema:"core",strict:true,uniqueKeys:true});
+    if (prior.nkf_version === "0.8" && prior.graph_revision?.value === baseline.graph_revision?.value) return {bytes:original,baseline:prior};
+  }
+  return {bytes,baseline};
 }
 
 function firstHeading(bytes) {
@@ -173,7 +238,7 @@ async function projectSealVersion(project) {
 }
 
 async function candidateGraph07(project, checkerPath, expectedVersion) {
-  const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8" });
+  const run = spawnSync(process.execPath, [checkerPath, "--project", project, "--level", "full-bundle", "--no-persist"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   if (run.status !== 0) fail(`The pre-review candidate does not conform: ${run.stderr || run.stdout}`);
   const result = JSON.parse(run.stdout);
   if (result.nkf_version !== expectedVersion || result.conformance !== "passed" || result.knowledge_graph?.policy?.binding !== "verified") {
@@ -346,11 +411,8 @@ export async function writeReviewTemplate0_7({ projectRoot, checker, reviewPath,
   const documentsById = new Map(
     (bundle.non_records ?? []).filter((entry) => entry.document !== undefined).map((entry) => [entry.document.id, entry]),
   );
-  const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
-  const predecessorBytes = await readFile(baselinePath).catch(() => null);
-  const predecessorBaseline = stage === "delta" && predecessorBytes !== null
-    ? YAML.parse(predecessorBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true })
-    : null;
+  const priorInput = stage === "delta" ? await reviewPredecessor(project, nkfVersion) : {baseline:null};
+  const predecessorBaseline = stage === "delta" ? priorInput.baseline : null;
   if (stage === "delta" && predecessorBaseline === null) {
     fail("A delta review requires the predecessor reviewed baseline; whole-root review is the recovery path.");
   }
@@ -567,10 +629,8 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   const reviewNodes = review.nodes.map((entry) => nodeKey07(entry.node)).sort();
   if (JSON.stringify(expectedNodes) !== JSON.stringify(reviewNodes)) fail("Review node coverage must equal the exact candidate graph universe.");
   const baselinePath = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
-  const predecessorBytes = await readFile(baselinePath).catch(() => null);
-  const predecessorBaseline = predecessorBytes === null
-    ? null
-    : YAML.parse(predecessorBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const {bytes:predecessorBytes,baseline:predecessorBaseline} = !deltaStage && nkfVersion === "0.81"
+    ? {bytes:null,baseline:null} : await reviewPredecessor(project, nkfVersion);
   const prior = priorJudgments(predecessorBaseline);
   const performedNodes = new Set();
   for (const [index, entry] of review.nodes.entries()) {
@@ -703,8 +763,13 @@ export async function sealBaseline0_7({ projectRoot, checker, reviewPath, versio
   };
   await safeDirectory(project, [".nourd", "knowledge"], false);
   await safeDirectory(project, [".nourd", "knowledge", "freshness"], true);
-  const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
-  await writeFile(baselinePath, bytes);
+  if (nkfVersion === "0.81") {
+    if (deltaStage && predecessorBytes === null) fail("A delta review requires exact predecessor bytes.");
+    await writeVerifiedSeal0_81(project, checkerPath, baseline, deltaStage ? predecessorBytes : null);
+  } else {
+    const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
+    await writeFile(baselinePath, bytes);
+  }
   return {
     state: "sealed",
     stage: review.stage,
@@ -745,6 +810,8 @@ export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest,
     if (baseline.nkf_version !== predecessor) {
       fail(`Baseline conversion to NKF ${targetVersion} supports exactly the confirmed NKF ${predecessor} predecessor.`);
     }
+    const predecessorBinding = targetVersion === "0.81"
+      ? await preservePredecessor(project, await readFile(baselinePath)) : null;
     const carried = {
       carried: {
         performed_in_graph_revision: baseline.graph_revision,
@@ -761,6 +828,7 @@ export async function convertBaselineShape0_7({ projectRoot, versionDeltaDigest,
         ? { carried: structuredClone(entry.provenance.carried) }
         : structuredClone(carried);
     }
+    if (predecessorBinding !== null) baseline.predecessor = predecessorBinding;
     baseline.nkf_version = targetVersion;
     baseline.policy = { id: `nkf.freshness-policy.${targetVersion}`, digest: { algorithm: "sha-256", value: policyDigest } };
     baseline.version_delta = { contract: "nkf.version-delta", digest: { algorithm: "sha-256", value: versionDeltaDigest } };
@@ -918,8 +986,11 @@ export async function sealConclusion0_71({ projectRoot, checker, task, fromState
   };
   await safeDirectory(project, [".nourd", "knowledge"], false);
   await safeDirectory(project, [".nourd", "knowledge", "freshness"], true);
-  const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
-  await writeFile(baselinePath, bytes);
+  if (nkfVersion === "0.81") await writeVerifiedSeal0_81(project, checkerPath, baseline, predecessorBytes);
+  else {
+    const bytes = Buffer.from(YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }), "utf8");
+    await writeFile(baselinePath, bytes);
+  }
   const sealed = await candidateGraph07(project, checkerPath, nkfVersion);
   const sealedRevision = sealed.knowledge_graph.summary?.candidate_graph_revision ?? sealed.knowledge_graph.candidate_graph_revision;
   if (sealedRevision?.value !== baseline.graph_revision.value) {

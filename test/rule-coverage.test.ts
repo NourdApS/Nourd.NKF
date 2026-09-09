@@ -12,13 +12,13 @@ import { RuleEmitter } from "../src/checker/diagnostics.js";
 import { evaluateKnowledgeGraph } from "../src/checker/freshness.js";
 import type { ValidationRequest } from "../src/checker/types.js";
 import { jcs, sha256 as utilSha256 } from "../src/checker/util.js";
-import { contractRoot, copyValidFixture, options, repositoryRoot } from "./helpers.js";
+import { bindSyntheticPredecessor, contractRoot, copyValidFixture, options, repositoryRoot } from "./helpers.js";
 
 const sha256 = (bytes: Buffer | string) => createHash("sha256").update(bytes).digest("hex");
 
-async function mutateYaml(file: string, change: (value: any) => void) {
+async function mutateYaml(file: string, change: (value: any) => void | Promise<void>) {
   const value = YAML.parse(await readFile(file, "utf8"));
-  change(value);
+  await change(value);
   await writeFile(file, YAML.stringify(value, { lineWidth: 0, aliasDuplicateObjects: false }));
 }
 
@@ -271,8 +271,9 @@ describe("baseline and freshness rule coverage", () => {
     const notReproducedParent = await mkdtemp(path.join(os.tmpdir(), "nkf-closure-coverage-"));
     const notReproduced = path.join(notReproducedParent, "project");
     await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-81"), notReproduced, { recursive: true });
-    await mutateYaml(baselineFile(notReproduced), (baseline) => {
+    await mutateYaml(baselineFile(notReproduced), async (baseline) => {
       const specification = { kind: "record", id: "specification" };
+      const prior = await bindSyntheticPredecessor(notReproduced, baseline, [specification]);
       baseline.confirmation.claim = "semantically-reviewed-delta";
       baseline.confirmation.computed_closure = [specification];
       baseline.confirmation.performed_set = [specification];
@@ -281,8 +282,8 @@ describe("baseline and freshness rule coverage", () => {
           ? { performed: true }
           : {
               carried: {
-                performed_in_graph_revision: baseline.graph_revision,
-                performing_reviewer: { kind: "agent", id: "prior-reviewer" },
+                performed_in_graph_revision: prior.graph_revision,
+                performing_reviewer: prior.confirmation.reviewer,
               },
             };
       }

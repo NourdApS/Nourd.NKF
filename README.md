@@ -38,34 +38,45 @@ operation, the promotion created the native accepted 0.8 Specification record
 on the digest-bound delta claim alone, and repeat public invocations return
 `current`.
 
-NKF 0.81 is the accepted successor, delivered under
+NKF 0.81 is the adopted successor direction, delivered under
 [Task NKF-038](knowledge/tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md)
 as the first version released from the public repository. Its direction is
 adopted by
 [ADR 0138](knowledge/decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
 and
 [ADR 0139](knowledge/decisions/0139-adopt-the-delta-closure-propagation-repair.md),
-and its five-artifact authority set is accepted by
+and its repaired unpublished five-artifact authority revision is accepted by
+[ADR 0142](knowledge/decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](knowledge/decisions/0143-bind-the-predecessor-repair-promotion.md),
+under the Human Product Owner's explicit P1 self-audit and execution delegation.
+It repairs the reproduced false-ready closure result by binding exact
+predecessor baselines and verifying their history, closure, and carried
+judgments. The first authority revision and
 [ADR 0140](knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md)
-after a three-round independent audit. It moves the recommended-release
+remain immutable history; the new delegation does not retroactively establish
+that Decision's acceptance provenance. It moves the recommended-release
 catalog into the accepted contract with public channel values, makes the
 adopter fetch the catalog and archive over plain HTTPS with no Github CLI,
 states where a consumer obtains the adopter, defines the closed three-name
 volatile-metadata registry for onboarding, and makes the checker recompute the
 delta-review closure with the evaluation policy's impact propagation. The
-0.8-to-0.81 upgrade is non-breaking: two hundred sixteen identical rules and
-one new rule, in no judgment-dependency list. The complete implementation,
+0.8-to-0.81 upgrade is non-breaking: two hundred fifteen identical rules and
+two semantically-new rules, neither in a judgment-dependency list. The complete implementation,
 fixtures, generated distribution, public projection, and
 [release notes](knowledge/evidence/release/nkf-0.81-release-notes.md) are on
 this branch, the whole-set
 [guidance review](knowledge/evidence/release/nkf-038-nkf-0-81-guidance-review.md)
-is recorded, and the exact candidate — archive
+is recorded, and the prior exact candidate — archive
 `e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea` at release commit
 `aeb95db5` — is technically confirmed by
 [ADR 0141](knowledge/decisions/0141-confirm-the-nkf-0-81-release-candidate.md)
 after four independent
 [release audit](knowledge/evidence/release/nkf-038-nkf-0-81-release-audit.md)
-rounds, the fourth clean. Publication as a public prerelease under the
+rounds, the fourth clean. The subsequent documentation, HTTPS evidence, and P1 predecessor-proof repairs
+change the candidate authority and implementation. Those corrected bytes are
+not covered by ADR 0141; they require a new candidate cut, exercise, independent
+audit, and technical confirmation before publication. The follow-up scope and
+review are recorded in NKF-038 and the guidance review linked above.
+Publication as a public prerelease under the
 accepted channel, the catalog recommendation, this producer's promotion, and
 the merge remain the Human Product Owner's separate acts; until they happen, live
 support is NKF 0.8 plus NKF 0.71, and at publication it becomes exactly

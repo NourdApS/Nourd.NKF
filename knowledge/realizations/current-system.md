@@ -2,7 +2,7 @@
 id: nkf-current-system
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, reconciled to the accepted and technically confirmed NKF 0.81 release candidate that awaits publication, while the producer still declares, pins, and installs the published NKF 0.8 release until the separately authorized promotion.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository. The NKF 0.81 direction is adopted, its repaired authority revision is accepted under explicit P1 delegation, and its corrected delivery awaits a new candidate cut and confirmation. The producer still declares, pins, and installs published NKF 0.8 until separately authorized promotion.
 created_at: 2026-07-30T15:59:54Z
 ---
 
@@ -58,25 +58,53 @@ governed catalog at `release/recommended.json` selects that same release and
 still states the historical private channel literal the released 0.8 adopter
 validates in its frozen bytes.
 
-NKF 0.81 is the accepted successor, delivered under
+NKF 0.81 is the adopted successor direction, delivered under
 [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
 Its direction is adopted by
 [ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
 and
 [ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md)
 after the Human Product Owner confirmed each of seven format boundaries
-verbatim on `2026-09-08`; its five-artifact authority set is accepted by
+verbatim on `2026-09-08`; its five-artifact authority set has declared acceptance in
 [ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) after the
 three-round
 [independent authority audit](../evidence/audits/nkf-038-nkf-0-81-independent-authority-audit.md);
-and its exact release candidate — archive
+and its prior exact release candidate — archive
 `e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea` at release commit
 `aeb95db5`, checker `f2fe7063...3c59c`, adopter `1ffcf550...e625f` — is
 technically confirmed by
 [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md), bound
 to the four-round independent
 [release audit](../evidence/release/nkf-038-nkf-0-81-release-audit.md) whose
-fourth round found the delivery clean.
+fourth round found that delivery clean.
+
+The subsequent PR audit reproduced a false-ready closure claim and found
+missing human acceptance provenance in the first authority revision. The
+Human Product Owner then explicitly directed the Codex technical reviewer to
+self-audit P1 and execute at will. [ADR 0142](../decisions/0142-accept-the-bound-predecessor-repair.md), with final navigation bindings selected by [ADR 0143](../decisions/0143-bind-the-predecessor-repair-promotion.md),
+adopts and accepts the repaired unpublished authority revision under that
+prospective delegation. The first five artifacts are retained byte-for-byte
+under `knowledge/evidence/release/nkf-0.81-authority-revision-1/`; neither the
+new Decision nor passing validation retroactively accepts
+[ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md).
+
+The P1 implementation loads exact content-addressed predecessor baselines,
+observes them in the validation snapshot, verifies their chain, recomputes the
+closure from actual predecessor revisions and judgment bases, and checks exact
+carried judgments. Missing or altered history, an erased initiating subject,
+extra closure entries, and a relabeled whole-root claim with carried judgments
+cannot establish readiness. Sealing retains history through review and Task
+transition application. Published 0.8 bytes and behavior remain frozen.
+
+The post-review documentation correction under
+[NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md) changes the generated
+0.81 onboarding protocol and bundled adopter. The working-tree correction is
+outside [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md)'s
+exact confirmation and awaits a new candidate cut, exercise,
+independent audit, and technical confirmation. References below to the confirmed
+archive, checker, adopter, or candidate describe the prior exact candidate;
+they do not confirm this corrected delivery. The follow-up guidance review
+records the changed protocol's new digest beside the original review.
 Publication, recommendation, producer promotion, and the merge to `master`
 remain the Human Product Owner's separate acts. At publication the live window
 becomes exactly NKF 0.81 plus NKF 0.8; NKF 0.71 drops to stepping-stone
@@ -95,10 +123,16 @@ complete authority for repositories that declare it.
 
 ### What NKF 0.81 Adds
 
+The following describes the adopted direction and repaired candidate
+implementation. The P1 repair replaces reconstruction from the claimed closure
+with independently bound predecessor history and exact closure verification.
+Its local regression is proven; publication still requires a newly confirmed
+release candidate at the corrected bytes.
+
 NKF 0.81 is a full successor to 0.8 under the major-minor coordinate model,
 exactly as 0.71 was to 0.7, and the 0.8-to-0.81 upgrade is non-breaking. The
-per-rule version delta declares two hundred sixteen identical rules and one
-semantically-new rule in no judgment-dependency list, so every existing review
+per-rule version delta declares two hundred fifteen identical rules and two
+semantically-new rules, neither in a judgment-dependency list, so every existing review
 judgment carries by digest identity and the producer promotion is provable on
 the delta claim alone. The version realizes the seven confirmed boundaries:
 
@@ -230,7 +264,7 @@ repository has been public since `2026-09-08` under
 | 0.7 | [NKF-028](../tasks/items/NKF-028-release-nkf-0-7-with-verifiable-delta-review.md), [NKF-029](../tasks/items/NKF-029-adopt-the-producer-to-published-nkf-0-7.md) | [ADR 0128](../decisions/0128-accept-the-revised-nkf-0-7-authority-set.md) | [ADR 0129](../decisions/0129-confirm-the-nkf-0-7-release-candidate.md) | `c5ee783cd56c75fff2b19e8ae897e70954be2a82a6f0ce646270dc059c3df94f` | Out-of-window immutable history; a 0.7 repository steps through the 0.71 archive |
 | 0.71 | [NKF-031](../tasks/items/NKF-031-release-the-corrective-nkf-0-71.md), [NKF-032](../tasks/items/NKF-032-adopt-the-producer-to-published-nkf-0-71.md) | [ADR 0131](../decisions/0131-accept-the-nkf-0-71-authority-set.md) | [ADR 0132](../decisions/0132-confirm-the-nkf-0-71-release-candidate.md) | `3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13` | Live-supported predecessor until 0.81 publishes; then stepping-stone history through the 0.8 archive |
 | 0.8 | [NKF-033](../tasks/items/NKF-033-release-nkf-0-8-with-generated-distribution.md), [NKF-035](../tasks/items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md) | [ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md) | [ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md) | `2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5` | Live release authority, recommended, and producer-adopted; live-supported predecessor after 0.81 publishes |
-| 0.81 | [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md) | [ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) | [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) | `e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea`, confirmed and not yet published | Accepted and confirmed successor awaiting publication, recommendation, and promotion |
+| 0.81 | [NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md) | [ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) | [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) | `e36ef44b53c88cfd0cd22093eca9507416eb54d575289a96e30d81227d5c88ea`, confirmed and not yet published | Prior exact candidate only; authority revision two and corrected delivery require a new candidate confirmation |
 
 Each version's acceptance and confirmation Decisions remain immutable
 provenance; a successor supersedes only the predecessor's current-release
@@ -323,7 +357,7 @@ Draft NKF Candidate Or Complete Rollback
 
 | Component | Durable Location | Current State | Confirmation |
 | --- | --- | --- | --- |
-| NKF 0.81 authority (accepted successor) | `knowledge/specifications/nkf-0.81.md`, `contracts/nkf/0.81/nkf.yaml`, `contracts/nkf/0.81/freshness-policy.yaml`, `contracts/nkf/0.81/version-delta.yaml`, `knowledge/evidence/release/nkf-0.81-producer-promotion.yaml` | Exact accepted five-artifact set: the recommended-release catalog contract and channel vocabulary, the volatile-metadata registry, the checker's closure recompute obligation, the window slide, and the 0.8-to-0.81 delta of two hundred sixteen identical rules and one new rule; the Specification is represented as Evidence until the promotion creates its native record | Accepted by [ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) at the digests it states; the candidate is confirmed by [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md) |
+| NKF 0.81 authority (accepted successor) | `knowledge/specifications/nkf-0.81.md`, `contracts/nkf/0.81/nkf.yaml`, `contracts/nkf/0.81/freshness-policy.yaml`, `contracts/nkf/0.81/version-delta.yaml`, `knowledge/evidence/release/nkf-0.81-producer-promotion.yaml` | Exact accepted five-artifact set: the recommended-release catalog contract and channel vocabulary, the volatile-metadata registry, the checker's closure recompute obligation, the window slide, and the 0.8-to-0.81 delta of two hundred fifteen identical rules and two semantically-new rules; the Specification is represented as Evidence until the promotion creates its native record | Predecessor-proof semantics accepted by [ADR 0142](../decisions/0142-accept-the-bound-predecessor-repair.md), with final artifact bindings selected by [ADR 0143](../decisions/0143-bind-the-predecessor-repair-promotion.md); the corrected implementation awaits a new exact candidate confirmation |
 | NKF 0.8 authority (live release authority) | `knowledge/specifications/nkf-0.8.md`, `contracts/nkf/0.8/nkf.yaml`, `contracts/nkf/0.8/freshness-policy.yaml`, `contracts/nkf/0.8/version-delta.yaml` | Exact accepted authority the producer declares, pins, and installs; becomes the live-supported predecessor at 0.81 publication | Accepted by [ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md), confirmed by [ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md) |
 | Derived implementation | `contracts/nkf/0.81/schemas/`, `contracts/nkf/0.8/schemas/`, `src/checker/`, `src/cli.ts`, `scripts/freshness/`, `scripts/adoption/`, `scripts/onboarding/`, `scripts/generate-guidance.mjs`, `fixtures/valid/*-0-81/`, `fixtures/valid/*-0-8/`, `test/` | The 0.81 implementation succeeding the published 0.8 implementation: all two hundred seventeen accepted 0.81 rules implemented with test coverage, exact 0.81 and 0.8 bindings behind the exhaustive capability table, eight 0.81 Schemas, the closure recompute in seal and checker, the HTTPS catalog and archive resolution, the volatile registry in onboarding inspection and sealing, and the host integration at revision five | Confirmed at the exact release commit `aeb95db5` by [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md); acceptance remains with the authority set |
 | NKF 0.81 release realization | `contracts/nkf/0.81/release-set.yaml`, `distribution/nkf/0.81/`, `scripts/release/`, `public-docs/` | Derived one-hundred-forty-two-member release set, the generated version-bearing guidance with the adopter-obtaining step, the public projection describing a public prerelease, and the exact confirmed archive `e36ef44b...c88ea` with checker `f2fe7063...3c59c` and adopter `1ffcf550...e625f`, built from release commit `aeb95db5` and exercised against an isolated copy of this producer at every cut | Confirmed by [ADR 0141](../decisions/0141-confirm-the-nkf-0-81-release-candidate.md); publication, recommendation, and promotion are unperformed Human Product Owner acts |
@@ -493,7 +527,7 @@ and adopter reproduction, third-party notice reproduction from the exact
 bundled build graphs, the five guidance verifiers, the public-projection
 verifier, the version-surface inventory, and full-bundle self-validation.
 
-The current gate passes every test file of the suite — the release audit
+The prior candidate's gate passed every test file of the suite — the release audit
 records the exact counts at each cut — with every checked living link
 resolving and zero dead links, deterministic checker and adopter
 reproduction,
@@ -515,7 +549,20 @@ isolated copies of this repository, the review and record scaffolds, and the
 Git transition orchestration as operational output. The isolated exercise of
 the exact 0.81 candidate against a copy of this producer is recorded in the
 [release audit](../evidence/release/nkf-038-nkf-0-81-release-audit.md); it is
-a runtime observation, not confirmation of this account.
+a runtime observation, not confirmation of this account. Those tests did not
+detect the later reproduced closure defect, and their passing result does not
+resolve it. The added source-derived P1 regression seals an actual changed
+Product and propagated Realization, then checks tampered closures, carried
+judgments, history files, and a later chain link.
+
+The original HTTPS test supplied local files through a substituted fetch
+function. The subsequent controlled test leaves native fetch unchanged,
+routes the three test hosts' TLS sockets to loopback, verifies the local
+certificate and hostnames, follows a cross-host asset redirect, and proves
+installation plus certificate and archive-digest refusals before mutation.
+This is controlled runtime evidence, not a live public 0.81 adoption claim.
+The [follow-up audit Evidence](../evidence/release/nkf-038-nkf-0-81-release-audit.md)
+records that distinction and the subsequent delegated P1 repair.
 
 Historical gate results — from the 15-file predecessor baseline under
 [ADR 0059](../decisions/0059-confirm-governed-frontmatter-realization.md)
