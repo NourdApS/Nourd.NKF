@@ -81,9 +81,10 @@ guides recorded below.
 path, install `gh` and log in to an account authorized for
 `NourdApS/Nourd.NKF`". NKF 0.81 invokes no command-line tool and needs no
 account; the sentence described the 0.8 adopter. It now states that the default
-path needs network access to `raw.githubusercontent.com` and `github.com` and
-nothing else, and that the downloaded adopter is verified against both the
-publication manifest and the catalog's `adopter_sha256` before it runs.
+path needs network access to `raw.githubusercontent.com`, `github.com`, and
+the release-asset host Github redirects downloads to, and no account, session,
+or command-line tool, and that the downloaded adopter is verified against both
+the publication manifest and the catalog's `adopter_sha256` before it runs.
 
 **The hand slide of the projection guides corrupted the stepping-stone
 account.** Shifting the version labels in `update-and-recover.md` and

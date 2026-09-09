@@ -106,7 +106,11 @@ onboarding-workspace/
 Require `mechanically_ready: true`. `inspection.json` includes a complete
 project entry manifest, excluding version-control implementation metadata,
 plus integration surfaces and Git binding. Compare it with the agent's review.
-Any later project change makes the plan stale.
+Any later change to a project entry, integration surface, or Git binding makes
+the plan stale, except a regular file named `.DS_Store`, `Thumbs.db`, or
+`desktop.ini`: the accepted contract's closed registry of volatile
+operating-system metadata, which inspection lists as `volatile` and the plan's
+snapshot digest excludes.
 
 ## Record The Assessment
 

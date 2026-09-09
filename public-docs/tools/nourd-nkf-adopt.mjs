@@ -21282,7 +21282,8 @@ async function sealBaseline0_7({ projectRoot, checker, reviewPath, versionDeltaD
   ];
   exactObject(review, expected, "review");
   const placeholders = [];
-  if (review.reviewer?.id === "REVIEWER_ID_REQUIRED") placeholders.push("reviewer.id");
+  const blank = (value) => typeof value !== "string" || value.trim() === "";
+  if (review.reviewer?.id === "REVIEWER_ID_REQUIRED" || blank(review.reviewer?.id)) placeholders.push("reviewer.id");
   if (review.reviewed_at === "REVIEWED_AT_UTC_MILLISECOND_REQUIRED") placeholders.push("reviewed_at");
   for (const [index, entry] of (Array.isArray(review.nodes) ? review.nodes : []).entries()) {
     if (entry?.state === "REVIEW_REQUIRED" || entry?.role === "REVIEW_REQUIRED") placeholders.push(`nodes[${index}]`);
@@ -21294,13 +21295,13 @@ async function sealBaseline0_7({ projectRoot, checker, reviewPath, versionDeltaD
     if (entry?.classification === "REVIEW_REQUIRED") placeholders.push(`decision_classifications[${index}]`);
   }
   for (const [index, entry] of (Array.isArray(review.observations) ? review.observations : []).entries()) {
-    if (entry?.finding === "REVIEW_FINDING_REQUIRED") placeholders.push(`observations[${index}].finding`);
+    if (entry?.finding === "REVIEW_FINDING_REQUIRED" || blank(entry?.finding)) placeholders.push(`observations[${index}].finding`);
   }
   for (const [index, entry] of (Array.isArray(review.limitations) ? review.limitations : []).entries()) {
-    if (entry === "REVIEW_LIMITATION_REQUIRED") placeholders.push(`limitations[${index}]`);
+    if (entry === "REVIEW_LIMITATION_REQUIRED" || blank(entry)) placeholders.push(`limitations[${index}]`);
   }
   if (placeholders.length > 0) {
-    fail4(`The review still carries the template's placeholders at ${placeholders.slice(0, 8).join(", ")}${placeholders.length > 8 ? ` and ${placeholders.length - 8} more` : ""}; a named reviewer must complete it before it can seal.`);
+    fail4(`The review still carries the template's placeholders, or blank values, at ${placeholders.slice(0, 8).join(", ")}${placeholders.length > 8 ? ` and ${placeholders.length - 8} more` : ""}; a named reviewer must complete it before it can seal.`);
   }
   const deltaStage = review.stage === "delta";
   if (review.contract !== "nkf.semantic-review-input" || review.nkf_version !== nkfVersion || (deltaStage ? review.claim !== "semantically-reviewed-delta" : review.stage !== "whole-root" || review.claim !== "semantically-reviewed-whole-root") || review.disputed !== false) fail4("The completed review has the wrong contract, version, stage, claim, or dispute state.");

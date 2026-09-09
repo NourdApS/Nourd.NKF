@@ -312,6 +312,23 @@ version-gated region in the guidance generator so the distributed protocols can
 state the 0.81 recompute condition without the adopted 0.8 root becoming false.
 The candidate is re-cut, re-exercised, and re-audited from the repaired commit.
 
+The second candidate, cut from `a7aa6d8`, was audited by three divided
+instances after one instance stalled twice on long-running commands: no
+blocking finding, seven should-fix findings — the adopter sealed a review left
+at the template's sentinels, catalog facts about the archive were validated for
+shape only, the onboarding drift refusal named no entry, the Realization stated
+a reseal that had not happened, the publication manifest labelled every release
+internal, the guides omitted the release-asset redirect host, and the
+Realization listed a path that did not exist — all repaired, together with a
+version-neutral guidance-generation check for the 0.81 chain. The third
+candidate, cut from `14bcb44`, was audited by two instances: no blocking
+finding, five should-fix findings — blank review values escaping the placeholder
+refusal, the Realization's summary and test count stated ahead of the tree, the
+guidance review describing superseded guide prose, and the onboarding guide's
+overbroad staleness sentence — repaired here; the catalog channel a pin cannot
+corroborate is recorded for the successor. Each cut passed the complete gate at
+its commit and its isolated exercise before its audit.
+
 ## Decision Applicability
 
 ### Applicable Decisions

@@ -2,7 +2,7 @@
 id: nkf-current-system
 type: realization
 title: NKF Current System
-summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, reconciled to the accepted and technically confirmed NKF 0.81 release candidate that awaits publication, while the producer still declares, pins, and installs the published NKF 0.8 release until the separately authorized promotion.
+summary: This is the consolidated current-system Realization for the Nourd Knowledge Format repository, reconciled to the accepted NKF 0.81 successor whose exact release candidate is under independent audit ahead of its confirmation Decision and publication, while the producer still declares, pins, and installs the published NKF 0.8 release until the separately authorized promotion.
 created_at: 2026-07-30T15:59:54Z
 ---
 
@@ -491,8 +491,9 @@ and adopter reproduction, third-party notice reproduction from the exact
 bundled build graphs, the five guidance verifiers, the public-projection
 verifier, the version-surface inventory, and full-bundle self-validation.
 
-The current gate passes 29 test files and 279 tests, every checked living
-link resolving with zero dead links, deterministic checker and adopter
+The current gate passes every test file of the suite — the release audit
+records the exact counts at each cut — with every checked living link
+resolving and zero dead links, deterministic checker and adopter
 reproduction,
 third-party notice reproduction, the complete 62-file public projection,
 and full-bundle

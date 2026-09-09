@@ -612,7 +612,19 @@ describe("NKF consumer adopter", () => {
     writeFileSync(placeholderPath, YAML.stringify(placeholder, { lineWidth: 0, aliasDuplicateObjects: false }));
     const sentinel = runAdopt(project, ["--archive", archivePath, "--review", placeholderPath]);
     expect(sentinel.status).toBe(1);
-    expect(sentinel.stderr).toContain("template's placeholders at reviewer.id");
+    expect(sentinel.stderr).toContain("placeholders, or blank values, at reviewer.id");
+    expectTreeEqual(await snapshotTree(path.join(project, "knowledge")), beforeKnowledge);
+    // A one-space edit is not a review either: blank reviewer, finding, or
+    // limitation values are refused the same way.
+    const blank = YAML.parse(readFileSync(reviewPath, "utf8"));
+    blank.reviewed_at = "2026-09-09T08:00:00.000Z";
+    blank.reviewer = { kind: "agent", id: " " };
+    blank.observations[0].finding = "  ";
+    blank.limitations = [" "];
+    writeFileSync(placeholderPath, YAML.stringify(blank, { lineWidth: 0, aliasDuplicateObjects: false }));
+    const blankRun = runAdopt(project, ["--archive", archivePath, "--review", placeholderPath]);
+    expect(blankRun.status).toBe(1);
+    expect(blankRun.stderr).toContain("reviewer.id, observations[0].finding, limitations[0]");
     expectTreeEqual(await snapshotTree(path.join(project, "knowledge")), beforeKnowledge);
     completeGeneratedReview(reviewPath);
     const result = runAdopt(project, ["--archive", archivePath, "--review", reviewPath]);

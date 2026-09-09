@@ -193,13 +193,73 @@ the same outcomes.
   delivered boundary describes what NKF delivers to a consumer, not this
   producer's gate. Ambiguous, not false; recorded.
 
+## Round Three — Exact Subject And Verdict
+
+| Binding | Value |
+| --- | --- |
+| Audited release commit | `14bcb44656269379295b6c3d2d7b401290371e16` (`task/NKF-038`, clean before and after) |
+| Audited archive | SHA-256 `c24d3e19ac2da4cfc44a4bcaf76211ba72ea90ef44e9eb803b524d4f87b0237d`, 142 entries, checker `f2fe706353ebba7737f2d280cb65f60ec1ea0feb9eef1456644668b41d03c59c` |
+| Verdict | Delivery clean of blocking findings: zero blocking, five should-fix, seven notes |
+
+Two independent instances audited the third candidate: one verified every
+round-two repair, reproduced the gate and the byte-identical archive, and read
+the record; the other exercised the shipped checker and adopter adversarially
+against the repaired behaviours. Every round-two repair was confirmed with
+evidence — the placeholder refusal naming its positions, the catalog
+reconciliation refusing each tampered fact on 0.8 and 0.81 projects while the
+untampered catalog updates and returns current, the drift refusal naming the
+changed and added entries, the Realization and guide corrections, the
+publication manifest's derived availability, and the versionless generation
+check bound to the 0.81 chain. The gate passed in the clone with twenty-nine
+test files and two hundred eighty tests and zero diagnostics, the archive
+rebuilt byte-identically, the manifest and all one hundred forty-two members
+reconciled, the five accepted digests held, the twelve guidance digests equalled
+the archive bytes, the 0.8 frozen paths and catalog were untouched, and every
+regression exercise of the earlier rounds repeated its outcome.
+
+## Round Three Should-Fix Findings And Repairs
+
+| Finding | Repair |
+| --- | --- |
+| The placeholder refusal matched the sentinel tokens exactly, so a reviewer id, finding, or limitation of a single space sealed and passed | Blank or whitespace-only values are refused with the placeholders, and the adopter suite proves it |
+| The Realization's summary called the candidate technically confirmed before any confirmation Decision existed, and its gate sentence typed a test count one behind the tree | The summary states the candidate is under audit ahead of confirmation; the gate sentence carries no typed count and points to this Evidence for the counts at each cut |
+| The guidance review described the adopt guide's host sentence as it read before the round-two repair | The review describes the current sentence |
+| The onboarding guide said any later project change stales the plan, which the volatile registry makes overbroad | The guide states the registry's exception |
+| The Task's progress recorded round one only | The progress records every round and cut |
+
+## Round Three Notes And Dispositions
+
+- A catalog stating the stable `public-github-release` channel is accepted
+  offline with no corroboration, because neither the release manifest nor the
+  consumer pin carries a channel; the archive digest remains the trust anchor
+  and the pin records nothing about the channel it was adopted under. Recorded
+  for the successor: a manifest or pin field for the channel would let the
+  adopter reconcile it.
+- The guides describe the release-asset redirect host rather than naming it,
+  because Github controls that host. A firewall-configuring reader still lacks
+  a hostname; recorded.
+- The producer's self-validation reports readiness not evaluated with a
+  candidate graph revision ahead of the sealed baseline, consistent with the
+  reseal this Task performs at its close. Method statement.
+- The adopter has no `--help`; the checker does. Cosmetic; recorded.
+- Tampering the archive digest alone is refused as a noncanonical URL, and a
+  tag or asset-name mismatch is refused as an inconsistent catalog without a
+  `refusal` key. Both refuse before mutation; the diagnostics are less specific
+  than the reconciled-key path. Recorded.
+- The closure refusal arrives with its consistent cascade; the shipped checker
+  alone cannot validate a 0.8 fixture without the 0.8 contract set. Both as in
+  the earlier rounds.
+- The shipped adopter retains the legacy repository coordinate for
+  pre-0.71 pins. As in round two.
+
 ## Resulting State
 
-Round one's two blocking findings, round two's seven should-fix findings, and
+Round one's two blocking findings, round two's seven should-fix findings,
+round three's five should-fix findings, and
 every should-fix finding of round one are repaired, and every note is recorded
-with its disposition. Because the round-two repairs change release-set member
-bytes — the adopter, the public adopter copy, and two guides — and the
-manifest binds the release commit, the candidate is re-cut from the repaired
-commit, re-exercised, and audited a third time before any
+with its disposition. Because the round-three repairs change release-set
+member bytes — the adopter, the public adopter copy, and the onboarding
+guide — and the manifest binds the release commit, the candidate is re-cut
+from the repaired commit, re-exercised, and audited a fourth time before any
 technical-confirmation Decision. This Evidence confirms nothing; the mandatory
 audit-bound confirmation is the separate Decision that follows a clean round.
