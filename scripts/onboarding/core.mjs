@@ -301,6 +301,22 @@ async function markdownInventory(projectRoot, knowledgeRoot) {
   return { documents, diagnostics };
 }
 
+// The closed volatile-metadata registry (NKF 0.81, Volatile Metadata
+// Registry): exactly these basenames, at any depth, and only as regular
+// files. A registered entry is still captured in the manifest — classified
+// `volatile` so the participating reviewer sees it — but its bytes and its
+// presence are excluded from the snapshot digest the sealed plan binds, so
+// preflight tolerates it appearing, changing, or disappearing. No glob, no
+// project-declared addition, no content inspection, no `.gitignore`
+// authority, and never a deletion. A symbolic link, directory, or special
+// entry with a registered basename is not volatile and keeps fail-closed
+// drift protection.
+const VOLATILE_METADATA_BASENAMES = new Set([".DS_Store", "Thumbs.db", "desktop.ini"]);
+
+function isVolatileEntry(entry) {
+  return entry.classification === "volatile";
+}
+
 async function projectEntryInventory(projectRoot) {
   const entries = [];
   const diagnostics = [];
@@ -337,6 +353,7 @@ async function projectEntryInventory(projectRoot) {
           kind: "file",
           bytes: bytes.length,
           sha256: sha256(bytes),
+          ...(VOLATILE_METADATA_BASENAMES.has(child.name) ? { classification: "volatile" } : {}),
         });
         continue;
       }
@@ -450,10 +467,12 @@ async function projectSurfaceInventory(projectRoot) {
 }
 
 function snapshotDigest(knowledgeRoot, documents, projectEntries, projectSurfaces, git) {
+  // Volatile operating-system metadata is listed for the reviewer but bound
+  // by neither its bytes nor its presence.
   return sha256(Buffer.from(JSON.stringify({
     knowledge_root: knowledgeRoot,
     documents,
-    project_entries: projectEntries,
+    project_entries: projectEntries.filter((entry) => !isVolatileEntry(entry)),
     project_surfaces: projectSurfaces,
     git,
   }), "utf8"));
@@ -500,7 +519,7 @@ export async function inspectOnboardingProject(projectRootInput, knowledgeRootIn
   );
   return {
     contract: "nkf.onboarding-inspection",
-    nkf_version: "0.8",
+    nkf_version: "0.81",
     mechanically_ready: diagnostics.length === 0,
     knowledge_root: knowledgeRoot,
     observed: {
@@ -611,7 +630,7 @@ export async function createOnboardingWorkspace(options) {
   }
   const plan = {
     contract: "nkf.onboarding-plan",
-    nkf_version: "0.8",
+    nkf_version: "0.81",
     inspection: {
       knowledge_root: inspection.knowledge_root,
       snapshot_sha256: inspection.snapshot_sha256,
@@ -668,7 +687,7 @@ function validatePlanEnvelope(plan) {
     ["contract", "nkf_version", "inspection", "assessment", "project", "scaffold", "documents"],
     "plan",
   );
-  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.8") {
+  if (plan.contract !== "nkf.onboarding-plan" || plan.nkf_version !== "0.81") {
     fail("NKF-ONBOARDING-PLAN-INVALID", "The plan must be an NKF 0.4 onboarding plan.");
   }
   requireExactKeys(plan.inspection, ["knowledge_root", "snapshot_sha256"], "inspection");
@@ -759,7 +778,8 @@ function validateResolvedAssessment(assessment, inspection, projectAuthority) {
   }
   if (
     assessment.evidence.length === 0 &&
-    (assessment.category !== "empty-repository" || inspection.project_entries.length > 0)
+    (assessment.category !== "empty-repository" ||
+      inspection.project_entries.some((entry) => !isVolatileEntry(entry)))
   ) {
     fail(
       "NKF-ONBOARDING-ASSESSMENT-UNRESOLVED",
@@ -851,7 +871,7 @@ export async function sealOnboardingPlan(projectRootInput, planPathInput) {
   await writeFile(loaded.planPath, sealed);
   return {
     contract: "nkf.onboarding-plan-seal-result",
-    nkf_version: "0.8",
+    nkf_version: "0.81",
     state: "sealed",
     plan_sha256: sha256(sealed),
     documents: loaded.plan.documents.length,
@@ -1597,14 +1617,14 @@ export async function buildOnboardingKnowledge(projectRootInput, planPathInput) 
     };
   }
   const bundle = {
-    nkf_version: "0.8",
+    nkf_version: "0.81",
     contract: "nkf.bundle",
     id: plan.project.root.id,
     root: { record: plan.project.root.id, profile: plan.project.profile },
     knowledge_root: knowledgeRoot,
     knowledge_graph: {
       baseline: ".nourd/knowledge/freshness/baseline.yaml",
-      policy: "nkf.freshness-policy.0.8",
+      policy: "nkf.freshness-policy.0.81",
     },
     non_records: nonRecords,
   };

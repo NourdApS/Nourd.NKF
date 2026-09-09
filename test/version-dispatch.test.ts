@@ -5,13 +5,13 @@ import { describe, expect, it } from "vitest";
 import YAML from "yaml";
 import { createHash } from "node:crypto";
 import { validateProject } from "../src/checker/checker.js";
-import { options, validFixture } from "./helpers.js";
+import { options, validFixture, validTechnologyFixture } from "./helpers.js";
 
 const sha256 = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const taskPath = "knowledge/tasks/items/task.md";
 
 async function copyFixture(): Promise<string> {
-  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-8-dispatch-"));
+  const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-0-81-dispatch-"));
   const project = path.join(parent, "project");
   await cp(validFixture, project, { recursive: true });
   return project;
@@ -35,11 +35,11 @@ function ruleIds(diagnostics: { rule_id: string }[]): string[] {
   return [...new Set(diagnostics.map((diagnostic) => diagnostic.rule_id))];
 }
 
-describe("NKF 0.8 version dispatch", () => {
-  it("validates the complete native 0.8 fixture", async () => {
+describe("NKF 0.81 version dispatch", () => {
+  it("validates the complete native 0.81 fixture", async () => {
     const project = await copyFixture();
     const result = await validateProject(options(project));
-    expect(result.nkf_version).toBe("0.8");
+    expect(result.nkf_version).toBe("0.81");
     expect(result.conformance).toBe("passed");
     expect(result.diagnostics).toEqual([]);
   });
@@ -47,7 +47,7 @@ describe("NKF 0.8 version dispatch", () => {
   it("fails closed for an unsupported declared version", async () => {
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.8"', 'nkf_version: "9.9"'),
+      text.replace('nkf_version: "0.81"', 'nkf_version: "9.9"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
@@ -59,7 +59,7 @@ describe("NKF 0.8 version dispatch", () => {
     // repositories migrate through their own immutable published archives.
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.8"', 'nkf_version: "0.2"'),
+      text.replace('nkf_version: "0.81"', 'nkf_version: "0.2"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
@@ -68,18 +68,18 @@ describe("NKF 0.8 version dispatch", () => {
 
   it("fails closed for a 0.6 declaration now that 0.6 left the window", async () => {
     // The 0.6 contract set was removed from the working tree, and the checker
-    // registers exactly the {0.71, 0.8} window; 0.6 must fail closed as
+    // registers exactly the {0.8, 0.81} window; 0.6 must fail closed as
     // unsupported.
     const project = await copyFixture();
     await edit(project, ".nourd/knowledge/bundle.yaml", (text) =>
-      text.replace('nkf_version: "0.8"', 'nkf_version: "0.6"'),
+      text.replace('nkf_version: "0.81"', 'nkf_version: "0.6"'),
     );
     const result = await validateProject(options(project));
     expect(result.conformance).toBe("failed");
     expect(ruleIds(result.diagnostics)).toContain("contract-set.unavailable");
   });
 
-  it("requires the gate section on 0.8 tasks", async () => {
+  it("requires the gate section on 0.81 tasks", async () => {
     const project = await copyFixture();
     await edit(project, taskPath, (text) => text.split("\n## Decision Applicability")[0] ?? text);
     await repinTask(project);
@@ -145,7 +145,7 @@ describe("NKF 0.8 version dispatch", () => {
     await (await import("node:fs/promises")).mkdir(path.join(matching, "integrations/ai"), { recursive: true });
     await writeFile(
       path.join(matching, "integrations/ai/nkf-authoring-protocol.md"),
-      "# NKF Authoring Protocol\n\nNKF Version: 0.8\n",
+      "# NKF Authoring Protocol\n\nNKF Version: 0.81\n",
       "utf8",
     );
     const matchingResult = await validateProject(options(matching));
@@ -170,7 +170,7 @@ describe("NKF 0.8 version dispatch", () => {
     await mkdir(path.join(stale, ".claude/skills/nkf-onboarding"), { recursive: true });
     await writeFile(
       path.join(stale, ".claude/skills/nkf-onboarding/SKILL.md"),
-      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.7 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.8\n",
+      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.7 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.81\n",
       "utf8",
     );
     const staleResult = await validateProject(options(stale));
@@ -182,11 +182,62 @@ describe("NKF 0.8 version dispatch", () => {
     await mkdir(path.join(truthful, ".claude/skills/nkf-onboarding"), { recursive: true });
     await writeFile(
       path.join(truthful, ".claude/skills/nkf-onboarding/SKILL.md"),
-      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.8 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.8\n\nA NKF 0.71 repository steps through its published archive.\n",
+      "---\nname: nkf-onboarding\ndescription: prepare its NKF 0.81 candidate\n---\n\n# NKF Onboarding\n\nNKF Version: 0.81\n\nA NKF 0.8 repository steps through its published archive.\n",
       "utf8",
     );
     const truthfulResult = await validateProject(options(truthful));
     expect(ruleIds(truthfulResult.diagnostics)).not.toContain("guidance.self-description.version-mismatch");
+  });
+
+  it("recomputes a 0.81 delta claim closure with impact propagation", async () => {
+    // The Technology fixture authors realization --realizes--> specification
+    // and the policy propagates `realizes` target-to-source, so a changed
+    // specification reaches the realization. A recorded closure that omits
+    // the reached node is the exact 0.7-through-0.8 tooling defect ADR 0139
+    // repairs: 0.81 recomputes the closure and refuses, naming the subject.
+    const specification = { kind: "record", id: "specification" };
+    const realization = { kind: "record", id: "realization" };
+    const readiness = { purpose: "whole-root-readiness" as const, require_readiness: false };
+    const sealDelta = async (project: string, closure: Record<string, string>[]) => {
+      const file = path.join(project, ".nourd/knowledge/freshness/baseline.yaml");
+      const baseline = YAML.parse(await readFile(file, "utf8"));
+      baseline.confirmation.claim = "semantically-reviewed-delta";
+      baseline.confirmation.computed_closure = closure;
+      baseline.confirmation.performed_set = [specification, realization];
+      for (const entry of baseline.applicability_coverage) {
+        const performed = entry.node.kind === "record" && ["specification", "realization"].includes(entry.node.id);
+        entry.provenance = performed
+          ? { performed: true }
+          : {
+              carried: {
+                performed_in_graph_revision: { algorithm: "sha-256", value: baseline.graph_revision.value },
+                performing_reviewer: { kind: "agent", id: "fixture-reviewer" },
+              },
+            };
+      }
+      await writeFile(file, YAML.stringify(baseline, { lineWidth: 0, aliasDuplicateObjects: false }));
+    };
+
+    const omitted = path.join(await mkdtemp(path.join(os.tmpdir(), "nkf-0-81-closure-")), "project");
+    await cp(validTechnologyFixture, omitted, { recursive: true });
+    await sealDelta(omitted, [specification]);
+    const omittedResult = await validateProject(options(omitted, {
+      request: { level: "full-bundle", record_id: null, acceptance_binding: "not-requested", ...readiness },
+    }));
+    expect(omittedResult.conformance).toBe("failed");
+    expect(ruleIds(omittedResult.diagnostics)).toContain("freshness.claim.computed-closure-not-reproduced");
+    expect(omittedResult.diagnostics.find((item) => item.rule_id === "freshness.claim.computed-closure-not-reproduced")?.message)
+      .toContain('"id":"realization"');
+
+    const reproduced = path.join(await mkdtemp(path.join(os.tmpdir(), "nkf-0-81-closure-")), "project");
+    await cp(validTechnologyFixture, reproduced, { recursive: true });
+    await sealDelta(reproduced, [specification, realization]);
+    const reproducedResult = await validateProject(options(reproduced, {
+      request: { level: "full-bundle", record_id: null, acceptance_binding: "not-requested", ...readiness },
+    }));
+    expect(reproducedResult.conformance).toBe("passed");
+    expect(ruleIds(reproducedResult.diagnostics)).not.toContain("freshness.claim.computed-closure-not-reproduced");
+    expect((reproducedResult.readiness as { state?: string } | undefined)?.state).toBe("ready");
   });
 
   it("resolves and rejects related_tasks orientation references", async () => {

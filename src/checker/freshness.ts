@@ -1,3 +1,4 @@
+import { capabilitiesForVersion } from "./bindings.js";
 import type { RuleEmitter } from "./diagnostics.js";
 import type { MarkdownModel } from "./markdown.js";
 import type { Observation } from "./project.js";
@@ -37,7 +38,7 @@ interface NormalizedEdge {
 export interface KnowledgeGraphResult {
   summary: {
     policy: {
-      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7" | "nkf.freshness-policy.0.71" | "nkf.freshness-policy.0.8";
+      identity: "nkf.freshness-policy.0.5" | "nkf.freshness-policy.0.6" | "nkf.freshness-policy.0.7" | "nkf.freshness-policy.0.71" | "nkf.freshness-policy.0.8" | "nkf.freshness-policy.0.81";
       digest: DigestValue;
       binding: "verified" | "unavailable" | "mismatched";
     };
@@ -285,11 +286,20 @@ function changedNodeKeys(
   return selected;
 }
 
-function expandImpact(
+// The evaluator traverses only `hard` and `review` mappings; `context` keeps
+// the edge queryable without expanding review and `historical` participates
+// only in reproduction.
+const TRAVERSED_CLASSES = new Set(["hard", "review"]);
+
+// Deterministic cycle-safe fixed point over the policy's propagation map.
+// A purpose restricts traversal to the mappings declared for it; `null`
+// traverses every mapping regardless of purpose, which is the delta-claim
+// closure's reading of the map (the closure is one set for all purposes).
+function propagate(
   initial: Set<string>,
   edges: NormalizedEdge[],
   policy: Record<string, any>,
-  purpose: string,
+  purpose: string | null,
 ): Set<string> {
   const result = new Set(initial);
   const mappings = new Map(values<Record<string, any>>(policy.mappings).map((entry) => [entry.relationship, entry]));
@@ -298,7 +308,8 @@ function expandImpact(
     changed = false;
     for (const edge of edges) {
       const mapping = mappings.get(edge.relationship);
-      if (mapping === undefined || !values<string>(mapping.purposes).includes(purpose) || mapping.class === "context") continue;
+      if (mapping === undefined || !TRAVERSED_CLASSES.has(String(mapping.class))) continue;
+      if (purpose !== null && !values<string>(mapping.purposes).includes(purpose)) continue;
       const source = nodeKey(edge.source);
       const target = nodeKey(edge.target);
       const add = (key: string) => { if (!result.has(key)) { result.add(key); changed = true; } };
@@ -307,6 +318,133 @@ function expandImpact(
     }
   }
   return result;
+}
+
+function expandImpact(
+  initial: Set<string>,
+  edges: NormalizedEdge[],
+  policy: Record<string, any>,
+  purpose: string,
+): Set<string> {
+  return propagate(initial, edges, policy, purpose);
+}
+
+// The predecessor material the delta-claim closure is computed against: the
+// predecessor baseline's node revisions, the basis digest of each predecessor
+// node judgment, the Decision declaration digest bound by each predecessor
+// classification, and the predecessor's pending promotion-reconciliation
+// subjects. A node absent from `nodeRevisions` is new.
+export interface PredecessorView {
+  nodeRevisions: ReadonlyMap<string, string>;
+  judgmentBasisDigests: ReadonlyMap<string, string>;
+  decisionDigests: ReadonlyMap<string, string>;
+  pendingReconciliation: readonly NodeReference[];
+}
+
+// The delta-claim required-review closure (NKF 0.81, ADR 0139). Seeds are
+// every candidate node whose revision differs from the predecessor's, every
+// node absent from the predecessor, every node judgment whose basis digest
+// differs, every judgment kind depending on a rule the accepted version
+// delta classifies `semantically-new` (dependency is exactly membership in
+// the policy's closed `judgment_dependencies` list for that kind), every
+// Decision classification whose Decision declaration digest differs or whose
+// Decision is new, and every pending promotion-reconciliation subject. The
+// closure is the fixed point of the policy's `hard` and `review` propagation
+// over the seeds, ignoring the per-purpose filter. The seal computes the
+// same set from the same definition; the two must agree on identical inputs.
+export function computeDeltaClosure(args: {
+  candidate: readonly NodeRevision[];
+  candidateJudgments: ReadonlyMap<string, string>;
+  candidateDecisions: ReadonlyMap<string, string>;
+  predecessor: PredecessorView;
+  edges: NormalizedEdge[];
+  policy: Record<string, any>;
+  versionDelta: Record<string, any> | null;
+}): Set<string> {
+  const { candidate, candidateJudgments, candidateDecisions, predecessor, edges, policy, versionDelta } = args;
+  const seeds = new Set<string>();
+  for (const entry of candidate) {
+    const key = nodeKey(entry.node);
+    if (predecessor.nodeRevisions.get(key) !== entry.revision.value) seeds.add(key);
+    const basis = candidateJudgments.get(key);
+    if (basis !== undefined && predecessor.judgmentBasisDigests.get(key) !== basis) seeds.add(key);
+  }
+  for (const [decision, digestValue] of candidateDecisions) {
+    if (predecessor.decisionDigests.get(decision) !== digestValue) seeds.add(nodeKey({ kind: "record", id: decision }));
+  }
+  const rules = asObject(versionDelta?.rules) ?? {};
+  const dependencies = asObject(policy.judgment_dependencies) ?? {};
+  const kindReopened = (kind: string) =>
+    values<string>(dependencies[kind]).some((rule) => asObject(rules[rule])?.classification === "semantically-new");
+  if (kindReopened("node_applicability")) {
+    for (const entry of candidate) seeds.add(nodeKey(entry.node));
+  }
+  if (kindReopened("decision_classification")) {
+    for (const decision of candidateDecisions.keys()) seeds.add(nodeKey({ kind: "record", id: decision }));
+  }
+  if (kindReopened("relationship_review")) {
+    // A relationship review covers the authored facts of its relationship;
+    // the nodes it reopens are the endpoints of every authored edge.
+    for (const edge of edges) {
+      seeds.add(nodeKey(edge.source));
+      seeds.add(nodeKey(edge.target));
+    }
+  }
+  for (const node of predecessor.pendingReconciliation) seeds.add(nodeKey(node));
+  return propagate(seeds, edges, policy, null);
+}
+
+// The checker's governed validation inputs contain exactly one baseline —
+// the sealed successor — and never the predecessor it was sealed against
+// (the seal read the predecessor from the same path it then overwrote).
+// The predecessor is therefore reconstructed from what the sealed baseline
+// itself proves about it:
+//
+// - a `carried` judgment proves its node unchanged: the carry preconditions
+//   (equal node revision, equal basis digest, identical dependency rules,
+//   equal Decision digest) are enforced by the seal and verified above, so
+//   the predecessor held this node at exactly the current revision and basis;
+// - a `performed` judgment named by the recorded closure is a node the seal
+//   found changed, new, or reached, and no checker-held input can dispute
+//   that seed claim, so it enters the view as absent (a seed);
+// - a `performed` judgment outside the recorded closure is a voluntary
+//   expansion the Specification permits ("the performed set contains the
+//   computed closure"); it enters the view as unchanged so the recompute
+//   never refuses a reviewer for reviewing more than required.
+//
+// What this reconstruction leaves the recompute to establish independently
+// is exactly what the 0.7-through-0.8 tooling omitted: the propagation term
+// and the pending-reconciliation term. A seal that omitted a changed node
+// from both its closure and its performed set is indistinguishable from an
+// unchanged node without the predecessor bytes; that is the seal's proof
+// obligation, not one a single-baseline checker can discharge.
+function predecessorViewFromSealedBaseline(
+  baseline: Record<string, any>,
+  recordedClosure: ReadonlySet<string>,
+): PredecessorView {
+  const nodeRevisions = new Map<string, string>();
+  const judgmentBasisDigests = new Map<string, string>();
+  for (const entry of values<Record<string, any>>(baseline.applicability_coverage)) {
+    if (entry.purpose !== "change-impact") continue;
+    const key = nodeKey(entry.node as NodeReference);
+    const performed = asObject(entry.provenance)?.performed === true;
+    if (performed && recordedClosure.has(key)) continue;
+    if (typeof entry.revision?.value === "string") nodeRevisions.set(key, entry.revision.value);
+    if (typeof entry.basis_digest?.value === "string") judgmentBasisDigests.set(key, entry.basis_digest.value);
+  }
+  const decisionDigests = new Map<string, string>();
+  for (const entry of values<Record<string, any>>(baseline.decision_classifications)) {
+    if (entry.purpose !== "change-impact") continue;
+    const decision = String(entry.decision);
+    const performed = asObject(entry.provenance)?.performed === true;
+    if (performed && recordedClosure.has(nodeKey({ kind: "record", id: decision }))) continue;
+    if (typeof entry.decision_digest?.value === "string") decisionDigests.set(decision, entry.decision_digest.value);
+  }
+  const pendingReconciliation = values<Record<string, any>>(baseline.promotion_reconciliation)
+    .filter((entry) => entry.state === "pending")
+    .map((entry) => asNodeReference(entry.node))
+    .filter((node): node is NodeReference => node !== null);
+  return { nodeRevisions, judgmentBasisDigests, decisionDigests, pendingReconciliation };
 }
 
 function initialChangeSeeds(
@@ -476,7 +614,14 @@ function verifyDigestBoundBaseline(
   emitter: RuleEmitter,
   versionDeltaDigest: string | null,
   bundle: Record<string, any>,
+  closure: {
+    recompute: boolean;
+    edges: NormalizedEdge[];
+    policy: Record<string, any> | null;
+    versionDelta: Record<string, any> | null;
+  },
 ): "confirmed" | "outdated" | "unsupported" {
+  const { recompute: closureRecompute, edges, policy, versionDelta } = closure;
   const artifact = String(bundle.knowledge_graph?.baseline);
   // The accepted version-delta declaration is digest-bound into the baseline.
   if (versionDeltaDigest === null || baseline.version_delta?.digest?.value !== versionDeltaDigest) {
@@ -568,6 +713,36 @@ function verifyDigestBoundBaseline(
       emitter.emit("freshness.claim.delta-closure-not-contained", `The delta claim performed set does not contain the computed closure: ${missing.slice(0, 5).join(", ")}${missing.length > 5 ? ", …" : ""}.`, { artifact });
       return "unsupported";
     }
+    if (closureRecompute) {
+      // Containment against a recorded closure alone is not admission: the
+      // closure is recomputed from the candidate graph, the predecessor view
+      // the sealed baseline proves, the policy's propagation, and the
+      // accepted version-delta declaration, and a recorded closure that
+      // differs is refused naming the missing subjects (ADR 0139).
+      const recorded = new Set(closure);
+      const recomputed = computeDeltaClosure({
+        candidate: nodeRevisions,
+        candidateJudgments: new Map(
+          values<Record<string, any>>(baseline.applicability_coverage)
+            .filter((entry) => entry.purpose === "change-impact" && typeof entry.basis_digest?.value === "string")
+            .map((entry) => [nodeKey(entry.node as NodeReference), String(entry.basis_digest.value)]),
+        ),
+        candidateDecisions: new Map(
+          values<Record<string, any>>(baseline.decision_classifications)
+            .filter((entry) => entry.purpose === "change-impact" && typeof entry.decision_digest?.value === "string")
+            .map((entry) => [String(entry.decision), String(entry.decision_digest.value)]),
+        ),
+        predecessor: predecessorViewFromSealedBaseline(baseline, recorded),
+        edges,
+        policy: policy ?? {},
+        versionDelta,
+      });
+      const unreproduced = [...recomputed].filter((key) => !recorded.has(key)).sort(utf16Compare);
+      if (unreproduced.length > 0) {
+        emitter.emit("freshness.claim.computed-closure-not-reproduced", `The recorded delta claim closure omits subjects the recomputed closure requires: ${unreproduced.slice(0, 5).join(", ")}${unreproduced.length > 5 ? ", …" : ""}.`, { artifact });
+        return "unsupported";
+      }
+    }
   }
   if (confirmation.claim === "mechanically-concluded") {
     // Static admission of the seal-completing conclusion: every judgment is
@@ -623,11 +798,12 @@ function verifyDigestBoundBaseline(
 // Versions whose reviewed baseline is digest-bound with a computed delta
 // claim. Registering a version here is deliberate: an unregistered version
 // falls through to the predecessor path, which is the silent-degrade shape
-// NKF 0.71 removed from the checker's other gates.
-const DIGEST_BOUND_BASELINE_VERSIONS = new Set(["0.7", "0.71", "0.8"]);
+// NKF 0.71 removed from the checker's other gates. The set is exactly the
+// live window; a version leaves it when its contract leaves the working tree.
+const DIGEST_BOUND_BASELINE_VERSIONS = new Set(["0.8", "0.81"]);
 
 export function evaluateKnowledgeGraph(args: {
-  nkfVersion: "0.5" | "0.6" | "0.7" | "0.71" | "0.8";
+  nkfVersion: "0.5" | "0.6" | "0.7" | "0.71" | "0.8" | "0.81";
   bundle: Record<string, any>;
   records: RecordUnit[];
   documents: DocumentUnit[];
@@ -641,6 +817,7 @@ export function evaluateKnowledgeGraph(args: {
   emitter: RuleEmitter;
   selectedReceipt?: Record<string, any> | null;
   versionDeltaDigest?: string | null;
+  versionDelta?: Record<string, any> | null;
 }): KnowledgeGraphResult {
   const { nkfVersion, bundle, records, documents, executable, policy, policyBinding, baseline, request, diagnostics, emitter } = args;
   const policyId = `nkf.freshness-policy.${nkfVersion}` as const;
@@ -817,7 +994,12 @@ export function evaluateKnowledgeGraph(args: {
       if (baselineState === "confirmed" && baseline.graph_revision?.value !== candidateRevision.value) baselineState = "outdated";
       if (baseline.confirmation?.disputed === true) baselineState = "disputed";
       if (DIGEST_BOUND_BASELINE_VERSIONS.has(nkfVersion) && baselineState === "confirmed") {
-        baselineState = verifyDigestBoundBaseline(baseline, nodeRevisions, recordById, emitter, args.versionDeltaDigest ?? null, bundle);
+        baselineState = verifyDigestBoundBaseline(baseline, nodeRevisions, recordById, emitter, args.versionDeltaDigest ?? null, bundle, {
+          recompute: capabilitiesForVersion(nkfVersion)?.closureRecompute === true,
+          edges,
+          policy,
+          versionDelta: args.versionDelta ?? null,
+        });
       }
     }
   }

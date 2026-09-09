@@ -1,4 +1,5 @@
 import { cp, lstat, mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
+import { readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
@@ -12,6 +13,9 @@ const { sha256, releaseEntriesForVersion } = release;
 // @ts-expect-error Repository release-set tooling is directly executable ESM.
 const releaseSetTooling = await import("../scripts/release/release-set.mjs");
 const { readReleaseSet } = releaseSetTooling;
+// @ts-expect-error The digest-bound review and seal module is directly executable ESM.
+const sealTooling = await import("../scripts/freshness/seal-baseline-0-7.mjs");
+const { sealBaseline0_7, writeReviewTemplate0_7 } = sealTooling;
 
 const adopter = path.join(repositoryRoot, "dist/nourd-nkf-adopt.mjs");
 const checker = path.join(repositoryRoot, "dist/nourd-nkf-checker.mjs");
@@ -38,14 +42,14 @@ function check(project: string) {
 async function copyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-8"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/minimal-0-81"), project, { recursive: true });
   return project;
 }
 
 async function copyTechnologyFixture(): Promise<string> {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-mechanics-technology-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-81"), project, { recursive: true });
   return project;
 }
 
@@ -131,7 +135,7 @@ async function snapshotTree(root: string) {
 async function gitFixture() {
   const parent = await mkdtemp(path.join(os.tmpdir(), "nkf-git-mechanics-"));
   const project = path.join(parent, "project");
-  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-71"), project, { recursive: true });
+  await cp(path.join(repositoryRoot, "fixtures/valid/technology-0-8"), project, { recursive: true });
   const taskId = "TEST-TECH-001";
   const g = (args: string[]) => spawnSync("git", ["-C", project, ...args], { encoding: "utf8" });
   const generatedPath = path.join(project, "dist/generated-adopter.mjs");
@@ -281,7 +285,7 @@ describe("deterministic governed mechanics", () => {
     );
     await mkdir(path.join(representationProject, ".nourd/knowledge"), { recursive: true });
     await mkdir(path.join(representationProject, "knowledge"), { recursive: true });
-    await mkdir(path.join(representationProject, "contracts/nkf/0.71"), { recursive: true });
+    await mkdir(path.join(representationProject, "contracts/nkf/0.8"), { recursive: true });
     await writeFile(
       path.join(representationProject, ".nourd/knowledge/bundle.yaml"),
       [
@@ -290,19 +294,19 @@ describe("deterministic governed mechanics", () => {
         "  profile: nkf.profile.technology",
         "  record: representation-fixture",
         "knowledge_root: knowledge",
-        "nkf_version: '0.71'",
+        "nkf_version: '0.8'",
         "id: representation-fixture",
         "non_records: []",
         "",
       ].join("\n"),
     );
     await cp(
-      path.join(repositoryRoot, "contracts/nkf/0.71/release-set.yaml"),
-      path.join(representationProject, "contracts/nkf/0.71/release-set.yaml"),
+      path.join(repositoryRoot, "contracts/nkf/0.8/release-set.yaml"),
+      path.join(representationProject, "contracts/nkf/0.8/release-set.yaml"),
     );
     const representedSet = run("set", representationProject);
     expect(representedSet.status, representedSet.stderr).toBe(0);
-    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.71" });
+    expect(representedSet.json).toMatchObject({ state: "enumerated", nkf_version: "0.8" });
     expect(representedSet.json.members).toHaveLength(141);
   });
 
@@ -314,6 +318,121 @@ describe("deterministic governed mechanics", () => {
     expect(result.status, result.stderr).toBe(0);
     expect(result.json.records).toBe(1);
     expect(check(project).conformance).toBe("passed");
+  });
+
+  it("computes the 0.81 delta closure with the policy's impact propagation and refuses a narrower claim", async () => {
+    // The Product record applies-to the current-system Realization
+    // (source-to-target propagation) and depends-on it (target-to-source), so
+    // a change to either endpoint reaches the other. Both authorities are
+    // permitted for proposal sections; `supersedes` requires accepted meaning
+    // the draft fixture does not carry.
+    const project = await copyFixture();
+    const declarationPath = path.join(project, ".nourd/knowledge/records/product.yaml");
+    const declaration = YAML.parse(await readFile(declarationPath, "utf8"));
+    declaration.relationships = [
+      { type: "applies-to", target: "product-current-system", source_section: "product-definition" },
+    ];
+    await writeFile(declarationPath, YAML.stringify(declaration, { lineWidth: 0 }));
+    const repin = run("repin", project, ["--checker", checker]);
+    expect(repin.status, repin.stderr).toBe(0);
+    const complete = (reviewPath: string) => {
+      const review = YAML.parse(readFileSync(reviewPath, "utf8"));
+      review.reviewer = { kind: "agent", id: "nkf-mechanics-test-reviewer" };
+      review.reviewed_at = "2026-09-08T12:00:00.000Z";
+      for (const entry of review.nodes) {
+        if (entry.provenance?.carried !== undefined) continue;
+        entry.state = "eligible";
+        entry.role = entry.node.kind === "record" && String(entry.node.id).includes("current-system") ? "realizes" : "governs";
+      }
+      for (const entry of review.relationships) {
+        if (entry.state === "REVIEW_REQUIRED") entry.state = "reviewed";
+      }
+      for (const entry of review.decision_classifications) {
+        if (entry.classification === "REVIEW_REQUIRED") entry.classification = "compatible";
+      }
+      review.observations[0].finding = "The mechanics test reviewer read every required subject.";
+      review.limitations = ["Test review; no semantic authority claimed."];
+      writeFileSync(reviewPath, YAML.stringify(review, { lineWidth: 0, aliasDuplicateObjects: false }));
+      return review;
+    };
+    const versionDeltaDigest = sha256(await readFile(path.join(repositoryRoot, "contracts/nkf/0.81/version-delta.yaml")));
+    // Establish a confirmed predecessor baseline that already knows the edge.
+    const wholeRoot = path.join(project, "..", "whole-root-review.yaml");
+    await writeReviewTemplate0_7({ projectRoot: project, checker, reviewPath: wholeRoot, stage: "whole-root" });
+    complete(wholeRoot);
+    await sealBaseline0_7({ projectRoot: project, checker, reviewPath: wholeRoot, versionDeltaDigest });
+    expect(check(project).conformance).toBe("passed");
+
+    // Change the source: the unchanged target enters the closure by
+    // propagation and is marked for fresh review, not carried.
+    const doc = path.join(project, "knowledge/product.md");
+    await writeFile(doc, `${await readFile(doc, "utf8")}\nPropagated change.\n`);
+    expect(run("repin", project, ["--checker", checker]).status).toBe(0);
+    const deltaReview = path.join(project, "..", "delta-review.yaml");
+    const template = await writeReviewTemplate0_7({ projectRoot: project, checker, reviewPath: deltaReview, stage: "delta" });
+    const generated = YAML.parse(readFileSync(deltaReview, "utf8"));
+    const closure = generated.computed_closure.map((node: unknown) => JSON.stringify(node));
+    expect(closure).toContain(JSON.stringify({ kind: "record", id: "product" }));
+    expect(closure).toContain(JSON.stringify({ kind: "record", id: "product-current-system" }));
+    expect(closure).not.toContain(JSON.stringify({ kind: "document", id: "TEST-001" }));
+    expect(template.fresh).toBe(2);
+    const target = generated.nodes.find((entry: any) => entry.node.id === "product-current-system");
+    expect(target.provenance).toEqual({ performed: true });
+    expect(target.state).toBe("REVIEW_REQUIRED");
+    const untouched = generated.nodes.find((entry: any) => entry.node.id === "TEST-001");
+    expect(untouched.provenance.carried).toBeDefined();
+
+    // A claim whose recorded closure omits the propagated target is refused,
+    // and so is one that carries the target instead of performing it.
+    complete(deltaReview);
+    const narrowed = YAML.parse(readFileSync(deltaReview, "utf8"));
+    narrowed.computed_closure = narrowed.computed_closure.filter((node: any) => node.id !== "product-current-system");
+    const narrowedPath = path.join(project, "..", "narrowed-review.yaml");
+    writeFileSync(narrowedPath, YAML.stringify(narrowed, { lineWidth: 0, aliasDuplicateObjects: false }));
+    await expect(sealBaseline0_7({ projectRoot: project, checker, reviewPath: narrowedPath, versionDeltaDigest }))
+      .rejects.toThrow(/exact recomputed required-review closure.*product-current-system/);
+    const carried = YAML.parse(readFileSync(deltaReview, "utf8"));
+    const carriedTarget = carried.nodes.find((entry: any) => entry.node.id === "product-current-system");
+    carriedTarget.provenance = {
+      carried: { performed_in_graph_revision: { algorithm: "sha-256", value: "0".repeat(64) }, performing_reviewer: { kind: "agent", id: "tamperer" } },
+    };
+    const carriedPath = path.join(project, "..", "carried-review.yaml");
+    writeFileSync(carriedPath, YAML.stringify(carried, { lineWidth: 0, aliasDuplicateObjects: false }));
+    await expect(sealBaseline0_7({ projectRoot: project, checker, reviewPath: carriedPath, versionDeltaDigest }))
+      .rejects.toThrow(/performed set does not contain the computed closure/);
+
+    // The exact template closure seals, and the checker accepts the claim.
+    const sealed = await sealBaseline0_7({ projectRoot: project, checker, reviewPath: deltaReview, versionDeltaDigest });
+    expect(sealed).toMatchObject({ state: "sealed", stage: "delta", performed: 2 });
+    const baseline = YAML.parse(await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml"), "utf8"));
+    expect(baseline.confirmation.computed_closure).toHaveLength(2);
+    const validated = check(project);
+    expect(validated.diagnostics, JSON.stringify(validated.diagnostics)).toEqual([]);
+    expect(validated.conformance).toBe("passed");
+
+    // Direction matters: depends-on propagates target-to-source only, so a
+    // changed target pulls its dependent source while a changed source
+    // pulls nothing through that edge.
+    const directional = await copyFixture();
+    const directionalDeclarationPath = path.join(directional, ".nourd/knowledge/records/product.yaml");
+    const directionalDeclaration = YAML.parse(await readFile(directionalDeclarationPath, "utf8"));
+    directionalDeclaration.relationships = [
+      { type: "depends-on", target: "product-current-system", source_section: "product-definition" },
+    ];
+    await writeFile(directionalDeclarationPath, YAML.stringify(directionalDeclaration, { lineWidth: 0 }));
+    expect(run("repin", directional, ["--checker", checker]).status).toBe(0);
+    const directionalWholeRoot = path.join(directional, "..", "whole-root-review.yaml");
+    await writeReviewTemplate0_7({ projectRoot: directional, checker, reviewPath: directionalWholeRoot, stage: "whole-root" });
+    complete(directionalWholeRoot);
+    await sealBaseline0_7({ projectRoot: directional, checker, reviewPath: directionalWholeRoot, versionDeltaDigest });
+    const directionalDoc = path.join(directional, "knowledge/product.md");
+    await writeFile(directionalDoc, `${await readFile(directionalDoc, "utf8")}\nSource-only change.\n`);
+    expect(run("repin", directional, ["--checker", checker]).status).toBe(0);
+    const directionalReview = path.join(directional, "..", "delta-review.yaml");
+    await writeReviewTemplate0_7({ projectRoot: directional, checker, reviewPath: directionalReview, stage: "delta" });
+    const directionalClosure = YAML.parse(readFileSync(directionalReview, "utf8")).computed_closure
+      .map((node: any) => node.id);
+    expect(directionalClosure).toEqual(["product"]);
   });
 
   it("re-pins a governed artifact independent of sibling order without rewriting other bundle bytes", async () => {
@@ -444,7 +563,7 @@ describe("deterministic governed mechanics", () => {
     expect(second.json).toMatchObject({ changed: 0, repinned_documents: 0 });
   });
 
-  it("transitions a native 0.8 Task and seals the mechanically-concluded baseline in the same transaction", async () => {
+  it("transitions a native 0.81 Task and seals the mechanically-concluded baseline in the same transaction", async () => {
     const project = await copyFixture();
     await authorTaskResult(
       project,
@@ -491,7 +610,7 @@ describe("deterministic governed mechanics", () => {
     const baseline = YAML.parse(
       await readFile(path.join(project, ".nourd/knowledge/freshness/baseline.yaml"), "utf8"),
     );
-    expect(baseline.nkf_version).toBe("0.8");
+    expect(baseline.nkf_version).toBe("0.81");
     expect(baseline.confirmation.claim).toBe("mechanically-concluded");
     expect(baseline.confirmation.transition).toMatchObject({
       task: "TEST-001",
@@ -538,7 +657,7 @@ describe("deterministic governed mechanics", () => {
     });
   });
 
-  it("refuses a 0.71 transition whose staged graph delta exceeds the closed transition vocabulary", async () => {
+  it("refuses a 0.81 transition whose staged graph delta exceeds the closed transition vocabulary", async () => {
     const project = await copyFixture();
     await authorTaskResult(
       project,
@@ -609,7 +728,7 @@ describe("deterministic governed mechanics", () => {
     expect(await taskState(project)).toBe("active");
   });
 
-  it("defers and reactivates a 0.71 task through chained mechanical conclusions", async () => {
+  it("defers and reactivates a 0.81 task through chained mechanical conclusions", async () => {
     const project = await copyFixture();
     const deferred = run("task", project, ["--task", "TEST-001", "--to", "defer", "--checker", checker]);
     expect(deferred.status, deferred.stderr).toBe(0);
@@ -676,7 +795,7 @@ describe("deterministic governed mechanics", () => {
     const { project, taskId, g, bare } = await gitFixture();
     const result = run("task", project, ["--task", taskId, "--to", "defer", "--checker", checker]);
     expect(result.status, result.stderr).toBe(0);
-    // A pinned NKF 0.7 predecessor keeps its exact prior behavior: no
+    // A pinned NKF 0.8 predecessor keeps its exact prior behavior: no
     // mechanical conclusion baseline accompanies the transition.
     expect(result.json.baseline_conclusion).toBeUndefined();
     expect(result.json.changed_subjects).not.toContain(

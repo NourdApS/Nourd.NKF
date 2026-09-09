@@ -387,7 +387,7 @@ function commonFrontMatterChecks(
   artifact: string,
   emitter: RuleEmitter,
   recordId?: string,
-    nkfVersion: SupportedNkfVersion = "0.8",
+    nkfVersion: SupportedNkfVersion = "0.81",
 ): Record<string, unknown> | null {
   if (!model.frontMatterPresent || model.frontMatter === null) {
     emitter.emit(
@@ -440,7 +440,7 @@ function recordFrontMatterChecks(
   record: ParsedRecord,
   model: MarkdownModel,
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.8",
+  nkfVersion: SupportedNkfVersion = "0.81",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -715,7 +715,7 @@ function sourceChecks(
   record: ParsedRecord,
   projectTerms: string[],
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.8",
+  nkfVersion: SupportedNkfVersion = "0.81",
   referenceMaps: ReferenceMaps | null = null,
 ): void {
   const declaration = record.value;
@@ -832,7 +832,7 @@ function sourceChecks(
 function nonRecordSourceChecks(
   nonRecord: ParsedNonRecord,
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.8",
+  nkfVersion: SupportedNkfVersion = "0.81",
   acceptedDecisionIds: ReadonlySet<string> = new Set(),
   referenceMaps: ReferenceMaps | null = null,
   acceptedDecisionPaths: ReadonlyMap<string, string> = new Map(),
@@ -1077,7 +1077,7 @@ function frontMatterReferenceChecks(
   records: ParsedRecord[],
   nonRecords: ParsedNonRecord[],
   emitter: RuleEmitter,
-  nkfVersion: SupportedNkfVersion = "0.8",
+  nkfVersion: SupportedNkfVersion = "0.81",
 ): void {
   const taskGroups = new Map<string, ParsedNonRecord[]>();
   for (const nonRecord of nonRecords) {
@@ -1383,7 +1383,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   const started = (options.now ?? (() => new Date()))();
   const executionId = (options.executionId ?? randomUUID)().toLowerCase();
   const declaredVersion = await peekBundleNkfVersion(projectRoot);
-  const nkfVersion = declaredVersion ?? "0.8";
+  const nkfVersion = declaredVersion ?? "0.81";
   const requestedContractRoot = path.resolve(options.contractRoot);
   const requestedBase = path.basename(requestedContractRoot);
   const versionContractRoot =
@@ -1397,7 +1397,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
   );
   const resultVersion: SupportedNkfVersion =
     bindingsForVersion(nkfVersion) === undefined
-      ? "0.8"
+      ? "0.81"
       : (nkfVersion as SupportedNkfVersion);
   const emitter = new RuleEmitter(loaded.executable);
   const diagnostics: Diagnostic[] = [...loaded.diagnostics];
@@ -2151,6 +2151,7 @@ export async function validateProject(options: ValidateOptions): Promise<Validat
       policy: loaded.freshnessPolicy,
       policyBinding: loaded.artifacts.core.freshness_policy,
       versionDeltaDigest: loaded.artifacts.core.version_delta?.expected_sha256 ?? null,
+      versionDelta: loaded.versionDelta,
       baseline: graphBaseline,
       baselinePresent: graphBaselinePresent,
       request: {

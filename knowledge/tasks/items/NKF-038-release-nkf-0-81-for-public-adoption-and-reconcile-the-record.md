@@ -266,6 +266,39 @@ and
 adopt the direction and allocate the coordinate. Every mandatory capability
 reads `unknown` until the work is performed.
 
+On `2026-09-08` and `2026-09-09` the candidate authority set was derived,
+audited three times, repaired, and accepted by
+[ADR 0140](../../decisions/0140-accept-the-nkf-0-81-authority-set.md); the
+implementation was then derived from it. Three facts about that derivation
+belong in this record rather than only in code:
+
+- The release set is derived at cut time and is outside the accepted set. Its
+  first copy carried the 0.8 fixture selectors, so the regenerated membership
+  shipped the predecessor fixtures as the 0.81 set's own until the guidance
+  review's enumeration caught it; the selectors now name the `*-0-81`
+  fixtures and the membership is one hundred forty-two members.
+- The guidance generator's check mode skips the release members of a version
+  frozen by publication and says how many it skipped, because the source
+  evolves for the successor and re-deriving a frozen tree from a later source
+  checks the wrong thing. The frozen 0.8 tree therefore is not continuously
+  re-derived; its bytes were proven at its cut and are bound by its manifest.
+- The checker's closure recompute reconstructs the predecessor view from what
+  the sealed baseline proves — carried judgments as unchanged nodes, performed
+  judgments inside the recorded closure as seeds, performed judgments outside
+  it as voluntary expansion — because the predecessor baseline is not a
+  checker input under the closed governed-input set. A seal that omitted a
+  changed node from both its closure and its performed set is therefore
+  indistinguishable from an unchanged node without predecessor bytes; that
+  remains the seal's obligation, and the seal now computes the same propagated
+  closure.
+
+The adopter and seal implementation was completed by an agent instance whose
+session ended before it could report; its work was verified here by rebuild,
+typecheck, and the complete suite, and two defects it left were repaired: the
+generated catalog Schema failed Ajv strict mode for lack of `type: object` on
+its channel clauses, and the third-party notices digest bound in the release
+tooling still named the 0.8 bytes.
+
 ## Decision Applicability
 
 ### Applicable Decisions

@@ -143,6 +143,12 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
   const predecessors = await resolvePredecessors(root, releaseVersion);
   const written = [];
   const mismatched = [];
+  // Publication freezes a version's release members; they were proven to match
+  // the source at their cut and recorded in that version's guidance review. The
+  // source may evolve for a later version, so re-deriving a frozen tree from a
+  // later source is checking the wrong thing. --check therefore compares only
+  // unfrozen release trees and the adopted-stamp roots, and says what it skipped.
+  const skippedFrozen = [];
   for (const member of manifest.members ?? []) {
     const source = await readFile(path.join(root, SOURCE_ROOT, member.source), "utf8");
     for (const target of member.targets ?? []) {
@@ -165,6 +171,10 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
         .replace(PREDECESSOR, predecessors[target.stamp] ?? "");
       const absolute = path.join(root, relative);
       if (check) {
+        if (target.stamp === "release" && frozen.has(version)) {
+          skippedFrozen.push(relative);
+          continue;
+        }
         const existing = await readFile(absolute, "utf8").catch(() => null);
         if (existing !== emitted) mismatched.push(relative);
       } else {
@@ -182,7 +192,9 @@ export async function generateGuidance({ projectRoot, releaseVersion, check, sta
       }
       fail(`${mismatched.length} emitted file(s) do not match the guidance source. Regenerate rather than editing an emitted tree.`);
     }
-    process.stdout.write("Every emitted guidance file matches the generated output.\n");
+    process.stdout.write(
+      `Every emitted guidance file matches the generated output.${skippedFrozen.length > 0 ? ` ${skippedFrozen.length} member(s) of the published NKF ${releaseVersion} tree are frozen by publication and were not re-derived.` : ""}\n`,
+    );
     return true;
   }
   process.stdout.write(`${JSON.stringify({ contract: "nkf.guidance-generation", adopted: adoptedVersion, release: releaseVersion ?? null, written }, null, 2)}\n`);

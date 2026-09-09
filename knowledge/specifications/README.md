@@ -135,12 +135,24 @@ Live support is exactly NKF 0.8 plus NKF 0.71.
 
 ## NKF 0.81
 
-A candidate NKF 0.81 Specification is in preparation under
-[NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md),
-its direction adopted by
+- [NKF 0.81 — Product And Technology Knowledge Format](nkf-0.81.md)
+
+NKF 0.81 is the accepted successor under
+[NKF-038](../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md).
+Its direction is adopted by
 [ADR 0138](../decisions/0138-adopt-the-nkf-0-81-public-adoption-direction.md)
 and
-[ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md).
-Until its authority set is accepted after an independent audit, it is candidate
-Evidence, not normative meaning, and this repository continues to declare,
-pin, and install NKF 0.8.
+[ADR 0139](../decisions/0139-adopt-the-delta-closure-propagation-repair.md),
+and its five-artifact authority set — the Specification, digest-bound
+executable companion, evaluation policy, 0.8-to-0.81 version delta, and
+producer-promotion input — is accepted by
+[ADR 0140](../decisions/0140-accept-the-nkf-0-81-authority-set.md) after a
+three-round independent audit. It adds the recommended-release catalog contract
+with public channel values, plain HTTPS adoption, the adopter-obtaining step,
+the closed volatile-metadata registry, and the checker's recompute of the
+delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. Until the
+separately authorized publication and producer promotion, the Specification is
+represented in this repository as Evidence rather than a native record, this
+repository continues to declare, pin, and install NKF 0.8, and live support
+remains NKF 0.8 plus NKF 0.71; at publication it becomes exactly NKF 0.81 plus
+NKF 0.8, and a 0.71 repository steps through the published 0.8 archive.

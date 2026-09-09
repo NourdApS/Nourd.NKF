@@ -147,10 +147,10 @@ function recommendedReleaseSchema() {
       supported_root_profiles: { const: ["nkf.profile.product", "nkf.profile.technology"] },
     },
     allOf: [
-      { if: { properties: { channel: { const: "internal-exact-candidate" } } }, then: { properties: { release: { properties: { visibility: { const: "unpublished" }, prerelease: { const: true } } }, archive: { properties: { url: { type: "null" } } } } } },
-      { if: { properties: { channel: { const: "internal-private-github-prerelease" } } }, then: { properties: { release: { properties: { visibility: { const: "private" }, prerelease: { const: true } } }, nkf_version: { enum: ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"] } } } },
-      { if: { properties: { channel: { const: "public-github-prerelease" } } }, then: { properties: { release: { properties: { visibility: { const: "public" }, prerelease: { const: true } } } } } },
-      { if: { properties: { channel: { const: "public-github-release" } } }, then: { properties: { release: { properties: { visibility: { const: "public" }, prerelease: { const: false } } } } } },
+      { if: { type: "object", properties: { channel: { const: "internal-exact-candidate" } } }, then: { type: "object", properties: { release: { type: "object", properties: { visibility: { const: "unpublished" }, prerelease: { const: true } } }, archive: { type: "object", properties: { url: { type: "null" } } } } } },
+      { if: { type: "object", properties: { channel: { const: "internal-private-github-prerelease" } } }, then: { type: "object", properties: { release: { type: "object", properties: { visibility: { const: "private" }, prerelease: { const: true } } }, nkf_version: { enum: ["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"] } } } },
+      { if: { type: "object", properties: { channel: { const: "public-github-prerelease" } } }, then: { type: "object", properties: { release: { type: "object", properties: { visibility: { const: "public" }, prerelease: { const: true } } } } } },
+      { if: { type: "object", properties: { channel: { const: "public-github-release" } } }, then: { type: "object", properties: { release: { type: "object", properties: { visibility: { const: "public" }, prerelease: { const: false } } } } } },
     ],
   };
 }

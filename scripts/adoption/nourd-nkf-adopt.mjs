@@ -20,14 +20,17 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import * as commonmark from "commonmark";
-import neutralProtocol from "../../distribution/nkf/0.8/integrations/ai/nkf-authoring-protocol.md";
-import portableSkill from "../../distribution/nkf/0.8/.agents/skills/nkf-authoring/SKILL.md";
-import onboardingProtocol from "../../distribution/nkf/0.8/integrations/onboarding/nkf-onboarding-protocol.md";
-import onboardingSkill from "../../distribution/nkf/0.8/.agents/skills/nkf-onboarding/SKILL.md";
-import rootAdapter from "../../distribution/nkf/0.8/host-adapters/AGENTS.adapter.md";
-import importAdapter from "../../distribution/nkf/0.8/host-adapters/CLAUDE.adapter.md";
-import copilotAdapter from "../../distribution/nkf/0.8/host-adapters/copilot-instructions.adapter.md";
-import predecessorContract0_71 from "nkf:predecessor-0.71";
+import Ajv2020 from "ajv/dist/2020.js";
+import addFormats from "ajv-formats";
+import neutralProtocol from "../../distribution/nkf/0.81/integrations/ai/nkf-authoring-protocol.md";
+import portableSkill from "../../distribution/nkf/0.81/.agents/skills/nkf-authoring/SKILL.md";
+import onboardingProtocol from "../../distribution/nkf/0.81/integrations/onboarding/nkf-onboarding-protocol.md";
+import onboardingSkill from "../../distribution/nkf/0.81/.agents/skills/nkf-onboarding/SKILL.md";
+import rootAdapter from "../../distribution/nkf/0.81/host-adapters/AGENTS.adapter.md";
+import importAdapter from "../../distribution/nkf/0.81/host-adapters/CLAUDE.adapter.md";
+import copilotAdapter from "../../distribution/nkf/0.81/host-adapters/copilot-instructions.adapter.md";
+import predecessorContract0_8 from "nkf:predecessor-0.8";
+import recommendedReleaseSchemaEmbed from "nkf:recommended-release-schema";
 import {
   buildOnboardingKnowledge,
   buildPortableTopologyRepair,
@@ -45,7 +48,7 @@ import {
 } from "../release/core.mjs";
 import { readReleaseSet } from "../release/release-set.mjs";
 // Out-of-window predecessors migrate through their own immutable published
-// archives; the 0.8 adopter carries no live legacy migration.
+// archives; the 0.81 adopter carries no live legacy migration.
 const STEPPING_STONE_0_6 = Object.freeze({
   repository: "NourdApS/Nourd.NKF",
   nkf_version: "0.6",
@@ -61,9 +64,15 @@ const STEPPING_STONE_0_71 = Object.freeze({
   nkf_version: "0.71",
   archive_sha256: "3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13",
 });
+const STEPPING_STONE_0_8 = Object.freeze({
+  repository: "NourdApS/Nourd.NKF",
+  nkf_version: "0.8",
+  archive_sha256: "2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5",
+});
 // Each out-of-window repository is named its own exact next archive rather
-// than one fallback: a 0.7 repository steps through the published 0.71
-// archive, a 0.6 repository through 0.7, and anything older through 0.6.
+// than one fallback: a 0.71 repository steps through the published 0.8
+// archive, a 0.7 repository through 0.71, a 0.6 repository through 0.7, and
+// anything older through 0.6.
 // Registration is explicit, so a version that is neither in-window nor
 // registered here returns null and is reported as unsupported rather than
 // silently pointed at the wrong hop.
@@ -72,6 +81,7 @@ const STEPPING_STONES = new Map([
   ["0.4", STEPPING_STONE_0_6], ["0.5", STEPPING_STONE_0_6],
   ["0.6", STEPPING_STONE_0_7],
   ["0.7", STEPPING_STONE_0_71],
+  ["0.71", STEPPING_STONE_0_8],
 ]);
 function steppingStoneFor(version) {
   return STEPPING_STONES.get(version) ?? null;
@@ -101,8 +111,8 @@ import {
   writePredecessorGateReviewTemplate0_5,
 } from "../freshness/retrospective-gates-0-5.mjs";
 
-const CURRENT_NKF_VERSION = "0.8";
-const MODERN_NKF_VERSIONS = new Set(["0.5", "0.6", "0.7", "0.71", "0.8"]);
+const CURRENT_NKF_VERSION = "0.81";
+const MODERN_NKF_VERSIONS = new Set(["0.5", "0.6", "0.7", "0.71", "0.8", "0.81"]);
 const RELATIONSHIP_TYPES = new Set([
   "part-of", "defines", "governs", "applies-to", "depends-on", "extends",
   "supersedes", "rationale-for", "realizes", "evidences", "references",
@@ -110,13 +120,27 @@ const RELATIONSHIP_TYPES = new Set([
 ]);
 const CURRENT_REPOSITORY = "NourdApS/Nourd.NKF";
 const LEGACY_REPOSITORY = "kaveh6202/Nourd.NKF";
-const INTEGRATION_REVISION = 4;
+// The recommended-release catalog is resolved over plain HTTPS from the
+// governing repository's raw default-branch content, and the archive from the
+// canonical release asset locator the catalog carries. No command-line tool,
+// session, or credential is consulted; the archive digest and the installed
+// pin remain the only trust anchors, and the explicit offline path is the
+// recovery for every unreachable or refused response.
+const DEFAULT_BRANCH = "master";
+const RECOMMENDED_RELEASE_CATALOG_URL =
+  `https://raw.githubusercontent.com/${CURRENT_REPOSITORY}/${DEFAULT_BRANCH}/release/recommended.json`;
+const OFFLINE_PATH = Object.freeze({
+  recommendation: "--recommendation <path to a locally supplied release/recommended.json>",
+  archive: "--archive <path to the locally supplied release archive>",
+});
+const INTEGRATION_REVISION = 5;
 // The integration revisions an in-window predecessor pin may carry. Revision 3
-// is the one the published NKF 0.71 release installed; revision 4 adds the
-// three guidance verifiers to the accepted chain, which is why NKF 0.8 needed
-// a new revision at all. A predecessor pin outside this set is rejected rather
-// than upgraded silently.
-const PREDECESSOR_INTEGRATION_REVISIONS = new Set([2, 3, INTEGRATION_REVISION]);
+// is the one the published NKF 0.71 release installed; revision 4 added the
+// three guidance verifiers to the accepted chain for NKF 0.8; revision 5 is
+// the NKF 0.81 integration, whose accepted producer chain keeps the 0.8 script
+// names while the generation verifier those names invoke serves 0.81. A
+// predecessor pin outside this set is rejected rather than upgraded silently.
+const PREDECESSOR_INTEGRATION_REVISIONS = new Set([2, 3, 4, INTEGRATION_REVISION]);
 const PIN_PATH = ".nourd/nkf-release.json";
 const ADOPTER_PATH = ".nourd/tools/nkf/nourd-nkf-adopt.mjs";
 const RELEASE_DIRECTORY = ".nourd/tools/nkf/releases";
@@ -137,16 +161,16 @@ const ONBOARDING_SKILL_PATHS = [
   ".claude/skills/nkf-onboarding/SKILL.md",
 ];
 const PRODUCER_PROMOTION_INPUT_PATH =
-  "knowledge/evidence/release/nkf-0.8-producer-promotion.yaml";
+  "knowledge/evidence/release/nkf-0.81-producer-promotion.yaml";
 const PRODUCER_PROMOTION_INPUT_SHA256 =
-  "274e978941833d747ff27b7693788c9f07d92139d3c75074c9eccd0a54947d03";
+  "cee895a59ef8366d1dc50ca199e4fa8e6c3d7e166e8adf3a50f2eceb681bbb88";
 const PRODUCER_ACCEPTING_DECISION_PATH =
-  "knowledge/decisions/0134-accept-the-nkf-0-8-authority-set.md";
+  "knowledge/decisions/0140-accept-the-nkf-0-81-authority-set.md";
 const PRODUCER_ACCEPTING_DECISION_SHA256 =
-  "bb59f6b605659644b1a91a99169e7eefef3374fba62beae0aa85e0f6ba3d41e1";
-const PRODUCER_ACCEPTING_DECISION_ID = "adr-0134";
-const PRODUCER_CANDIDATE_EVIDENCE_PATH = "specifications/nkf-0.8.md";
-const PRODUCER_SPECIFICATION_ID = "nkf-0.8-specification";
+  "2156f38ae4934eeca639da18868379d644421b4590c0357dc7116c15f5ac77b7";
+const PRODUCER_ACCEPTING_DECISION_ID = "adr-0140";
+const PRODUCER_CANDIDATE_EVIDENCE_PATH = "specifications/nkf-0.81.md";
+const PRODUCER_SPECIFICATION_ID = "nkf-0.81-specification";
 const PRODUCER_PROMOTION_STAGES = new Set([
   "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy",
   "postpublication-ordinary-public-self-adopt-by-exact-live-producer",
@@ -181,7 +205,7 @@ state, and remote enforcement state separate.
 `, "utf8");
 
 function guidanceForVersion(nkfVersion) {
-  // Every reachable install or update target inside the 0.8-plus-0.71
+  // Every reachable install or update target inside the 0.81-plus-0.8
   // window seeds the current embedded guidance; out-of-window versions
   // fail closed before any guidance seeding.
   void nkfVersion;
@@ -319,7 +343,7 @@ function parseArguments(values) {
     "adopt",
   ].includes(result.command)) {
     fail(
-      `Usage: nourd-nkf-adopt.mjs --project <path> [--plan <sealed-plan>] [--recommendation <catalog>] [--archive <archive>|--github-repository ${CURRENT_REPOSITORY}] [--accept-breaking <authority>]`,
+      `Usage: nourd-nkf-adopt.mjs --project <path> [--plan <sealed-plan>] [--recommendation <catalog>] [--archive <archive>|--github-repository ${CURRENT_REPOSITORY}] [--accept-breaking <authority>]. Without --recommendation and --archive the catalog and archive are fetched over plain HTTPS from ${CURRENT_REPOSITORY}; no Github CLI, session, or credential is used.`,
     );
   }
   for (let index = publicAdopt ? 0 : 1; index < values.length; index += 2) {
@@ -392,6 +416,58 @@ function parseArguments(values) {
   return result;
 }
 
+// The embedded accepted NKF 0.81 recommended-release Schema: the catalog is
+// validated against the contract, and the channel vocabulary — which
+// channel states which visibility and prerelease flag, which channel is the
+// historical private one and through which version it may be stated — is
+// read from that Schema rather than frozen as literals in this code.
+function recommendedReleaseSchema() {
+  const encoded = recommendedReleaseSchemaEmbed["contracts/nkf/0.81/schemas/recommended-release.schema.json"];
+  if (typeof encoded !== "string") fail("The adopter build omits the embedded recommended-release Schema.");
+  return parseStrictJson(Buffer.from(encoded, "base64"));
+}
+
+let recommendedReleaseContract = null;
+function loadRecommendedReleaseContract() {
+  if (recommendedReleaseContract !== null) return recommendedReleaseContract;
+  const schema = recommendedReleaseSchema();
+  const ajv = new Ajv2020({ allErrors: true, strict: true, validateFormats: true });
+  addFormats(ajv);
+  ajv.addKeyword({ keyword: "x-nkf-source", schemaType: "object", valid: true });
+  const validate = ajv.compile(schema);
+  const channels = schema.properties?.channel?.enum;
+  if (!Array.isArray(channels) || channels.length === 0) {
+    fail("The embedded recommended-release Schema declares no channel vocabulary.");
+  }
+  const rules = new Map();
+  for (const clause of schema.allOf ?? []) {
+    const channel = clause?.if?.properties?.channel?.const;
+    if (typeof channel !== "string") continue;
+    const release = clause?.then?.properties?.release?.properties ?? {};
+    rules.set(channel, {
+      visibility: release.visibility?.const,
+      prerelease: release.prerelease?.const,
+      archive_url_null: clause?.then?.properties?.archive?.properties?.url?.type === "null",
+      historical_versions: Array.isArray(clause?.then?.properties?.nkf_version?.enum)
+        ? clause.then.properties.nkf_version.enum
+        : null,
+    });
+  }
+  for (const channel of channels) {
+    if (!rules.has(channel)) fail(`The embedded recommended-release Schema states no rule for channel ${channel}.`);
+  }
+  recommendedReleaseContract = { ajv, validate, channels, rules };
+  return recommendedReleaseContract;
+}
+
+function refuseCatalog(refusal, message) {
+  throw new OnboardingError(
+    "NKF-ADOPTER-CATALOG-REFUSED",
+    `${message} Refusal: ${refusal}. The offline path is the recovery: ${OFFLINE_PATH.recommendation} with ${OFFLINE_PATH.archive}.`,
+    { refusal, offline_path: OFFLINE_PATH },
+  );
+}
+
 function requireRecommendedRelease(value, candidateBinding = undefined) {
   requireExactKeys(
     value,
@@ -426,6 +502,38 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     ["prerelease", "published_at", "url", "visibility"],
     "Recommended publication",
   );
+  const candidate = candidateBinding !== undefined;
+  const contract = loadRecommendedReleaseContract();
+  // Channel vocabulary and flag consistency come from the accepted contract.
+  if (!contract.channels.includes(value.channel)) {
+    refuseCatalog("channel-unsupported", `The catalog names a channel outside the accepted vocabulary: ${JSON.stringify(value.channel)}.`);
+  }
+  const channelRule = contract.rules.get(value.channel);
+  if (
+    channelRule.historical_versions !== null &&
+    !channelRule.historical_versions.includes(value.nkf_version)
+  ) {
+    refuseCatalog(
+      "historical-channel-on-current-version",
+      `The catalog states the historical channel ${value.channel} for NKF ${value.nkf_version}; that channel may be stated only through NKF ${channelRule.historical_versions.at(-1)}.`,
+    );
+  }
+  if (
+    value.release?.visibility !== channelRule.visibility ||
+    value.release?.prerelease !== channelRule.prerelease
+  ) {
+    refuseCatalog(
+      "channel-flag-inconsistent",
+      `The catalog states visibility ${JSON.stringify(value.release?.visibility)} and prerelease ${JSON.stringify(value.release?.prerelease)}, inconsistent with channel ${value.channel}.`,
+    );
+  }
+  // The internal candidate binding shares the closed catalog shape under its
+  // own contract identity; validate the shape under the catalog identity and
+  // check the identity separately below.
+  const shape = candidate ? { ...value, contract: "nkf.recommended-release" } : value;
+  if (!contract.validate(shape)) {
+    refuseCatalog("schema-invalid", `The catalog fails the nkf.recommended-release Schema: ${contract.ajv.errorsText(contract.validate.errors)}.`);
+  }
   if (!Array.isArray(value.compatibility) || value.compatibility.length === 0) {
     fail("Recommended release compatibility must be a non-empty array.");
   }
@@ -437,7 +545,7 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
       `Recommended compatibility[${index}]`,
     );
     if (
-      !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(entry.from_nkf_version) ||
+      !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(entry.from_nkf_version) ||
       !["breaking", "non-breaking"].includes(entry.classification) ||
       typeof entry.migration_required !== "boolean" ||
       typeof entry.summary !== "string" ||
@@ -456,24 +564,31 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
   }
   const archiveSha256 = value.archive.sha256;
   const { assetName, tag } = releaseIdentity(archiveSha256);
-  const candidate = candidateBinding !== undefined;
   if (candidate && candidateBinding !== archiveSha256) {
     fail("The internal candidate binding differs from the selected archive digest.");
+  }
+  const canonicalArchiveUrl = `https://github.com/${CURRENT_REPOSITORY}/releases/download/${tag}/${assetName}`;
+  if (candidate) {
+    if (value.channel !== "internal-exact-candidate" || !channelRule.archive_url_null) {
+      refuseCatalog("channel-unsupported", "An internal candidate binding must state the internal-exact-candidate channel.");
+    }
+  } else if (value.channel === "internal-exact-candidate") {
+    refuseCatalog("channel-unsupported", "A published recommended release cannot state the internal-exact-candidate channel.");
+  } else if (value.archive.url !== canonicalArchiveUrl) {
+    refuseCatalog(
+      "archive-url-noncanonical",
+      `The catalog archive.url must equal the canonical release asset locator ${canonicalArchiveUrl}.`,
+    );
   }
   const releaseStateValid = candidate
     ? value.contract === "nkf.release-candidate-binding" &&
       value.state === "candidate" &&
-      value.channel === "internal-exact-candidate" &&
-      value.release.prerelease === true &&
       value.release.published_at === null &&
       value.release.url === null &&
-      value.release.visibility === "unpublished"
+      value.archive.url === null
     : value.contract === "nkf.recommended-release" &&
       value.state === "recommended" &&
-      value.channel === "internal-private-github-prerelease" &&
       /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value.release.published_at ?? "") &&
-      value.release.prerelease === true &&
-      value.release.visibility === "private" &&
       value.release.url ===
         `https://github.com/${CURRENT_REPOSITORY}/releases/tag/${tag}`;
   if (
@@ -484,10 +599,6 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     value.archive.tag !== tag ||
     !Number.isSafeInteger(value.archive.size) ||
     value.archive.size <= 0 ||
-    (candidate
-      ? value.archive.url !== null
-      : value.archive.url !==
-        `https://github.com/${CURRENT_REPOSITORY}/releases/download/${tag}/${assetName}`) ||
     !/^[0-9a-f]{40}$/.test(value.source_commit ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.checker_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value.adopter_sha256 ?? "") ||
@@ -499,14 +610,45 @@ function requireRecommendedRelease(value, candidateBinding = undefined) {
     // out-of-window repositories migrate through published stepping-stone
     // releases instead of a declared compatibility rule.
     compatibility.size !== 2 ||
-    compatibility.get("0.71")?.classification !== "non-breaking" ||
-    compatibility.get("0.71")?.migration_required !== false ||
     compatibility.get("0.8")?.classification !== "non-breaking" ||
-    compatibility.get("0.8")?.migration_required !== false
+    compatibility.get("0.8")?.migration_required !== false ||
+    compatibility.get("0.81")?.classification !== "non-breaking" ||
+    compatibility.get("0.81")?.migration_required !== false
   ) {
     fail("The recommended release catalog is invalid or inconsistent.");
   }
   return { catalog: value, compatibility };
+}
+
+// Node's own fetch, resolved at call time from the global so a host may
+// substitute it; the adopter never shells out for network access.
+async function fetchOverHttps(url, code, subject) {
+  const fetchImplementation = globalThis.fetch;
+  if (typeof fetchImplementation !== "function") {
+    throw new OnboardingError(
+      code,
+      `Resolving the ${subject} requires Node's fetch, which this runtime does not provide. Use the offline path: ${OFFLINE_PATH.recommendation} with ${OFFLINE_PATH.archive}.`,
+      { url, offline_path: OFFLINE_PATH },
+    );
+  }
+  let response;
+  try {
+    response = await fetchImplementation(url, { redirect: "follow" });
+  } catch (error) {
+    throw new OnboardingError(
+      code,
+      `Unable to resolve the ${subject} over HTTPS from ${url}: ${error instanceof Error ? error.message : String(error)}. Use the offline path: ${OFFLINE_PATH.recommendation} with ${OFFLINE_PATH.archive}.`,
+      { url, offline_path: OFFLINE_PATH },
+    );
+  }
+  if (!response.ok) {
+    throw new OnboardingError(
+      code,
+      `The ${subject} at ${url} responded with HTTP ${response.status} instead of success. Use the offline path: ${OFFLINE_PATH.recommendation} with ${OFFLINE_PATH.archive}.`,
+      { url, status: response.status, offline_path: OFFLINE_PATH },
+    );
+  }
+  return Buffer.from(await response.arrayBuffer());
 }
 
 async function resolveRecommendedRelease(options) {
@@ -530,29 +672,11 @@ async function resolveRecommendedRelease(options) {
     }
     bytes = await readFile(recommendationPath);
   } else {
-    let encoded;
-    try {
-      encoded = execFileSync(
-        "gh",
-        [
-          "api",
-          `repos/${CURRENT_REPOSITORY}/contents/release/recommended.json`,
-          "--method",
-          "GET",
-          "-f",
-          "ref=master",
-          "--jq",
-          ".content",
-        ],
-        { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
-      );
-    } catch (error) {
-      const detail = error?.stderr?.toString().trim();
-      fail(
-        `Unable to resolve the governed recommended release from ${CURRENT_REPOSITORY}${detail ? `: ${detail}` : "."}`,
-      );
-    }
-    bytes = Buffer.from(encoded.replace(/\s/g, ""), "base64");
+    bytes = await fetchOverHttps(
+      RECOMMENDED_RELEASE_CATALOG_URL,
+      "NKF-ADOPTER-CATALOG-UNAVAILABLE",
+      "governed recommended-release catalog",
+    );
   }
   return requireRecommendedRelease(
     parseStrictJson(bytes),
@@ -610,7 +734,7 @@ async function requireBundle(projectRoot) {
   } catch (error) {
     fail(`The NKF bundle is invalid YAML: ${error.message}`);
   }
-  if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
+  if (!["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(bundle?.nkf_version) || bundle?.contract !== "nkf.bundle") {
     fail("The project must already declare a supported NKF bundle.");
   }
   if (!ROOT_PROFILES.has(bundle?.root?.profile)) {
@@ -666,27 +790,29 @@ async function acquireArchive(options, expectedSha256) {
     fail(`--github-repository must be ${CURRENT_REPOSITORY}.`);
   }
   const { assetName, tag } = releaseIdentity(expectedSha256);
-  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-download-"));
-  try {
-    execFileSync(
-      "gh",
-      [
-        "release",
-        "download",
-        tag,
-        "--repo",
-        repository,
-        "--pattern",
-        assetName,
-        "--dir",
-        temporary,
-      ],
-      { stdio: "inherit" },
+  // The archive is fetched from the canonical release asset locator; a
+  // catalog-supplied locator is accepted only when it is exactly that form.
+  const canonicalUrl = `https://github.com/${CURRENT_REPOSITORY}/releases/download/${tag}/${assetName}`;
+  const url = options["archive-url"] ?? canonicalUrl;
+  if (url !== canonicalUrl) {
+    throw new OnboardingError(
+      "NKF-ADOPTER-CATALOG-REFUSED",
+      `The selected archive locator ${url} is not the canonical release asset URL ${canonicalUrl}. Refusal: archive-url-noncanonical.`,
+      { refusal: "archive-url-noncanonical", offline_path: OFFLINE_PATH },
     );
-    return readFile(path.join(temporary, assetName));
-  } finally {
-    await rm(temporary, { recursive: true, force: true });
   }
+  const bytes = await fetchOverHttps(url, "NKF-ADOPTER-ARCHIVE-UNAVAILABLE", "release archive");
+  // The digest check happens here, before any staging or mutation; every
+  // caller repeats it through the complete archive verification.
+  const observed = digest(bytes);
+  if (observed !== expectedSha256) {
+    throw new OnboardingError(
+      "NKF-ADOPTER-ARCHIVE-DIGEST-MISMATCH",
+      `The release archive fetched from ${url} has SHA-256 ${observed}; the selected release binds ${expectedSha256}. Nothing was staged. Use the offline path: ${OFFLINE_PATH.archive} with ${OFFLINE_PATH.recommendation}.`,
+      { url, expected_sha256: expectedSha256, observed_sha256: observed, offline_path: OFFLINE_PATH },
+    );
+  }
+  return bytes;
 }
 
 function mergeBlock(existingBytes, block, relativePath) {
@@ -1537,8 +1663,8 @@ function requirePinShape(pin) {
     !pin.integration.scripts.host.includes(HOST_SCRIPT_NAME);
   if (
     pin?.contract !== "nkf.consumer-release-pin" ||
-    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(pin?.nkf_version) ||
-    (["0.71", "0.8"].includes(pin?.nkf_version)
+    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(pin?.nkf_version) ||
+    (["0.71", "0.8", "0.81"].includes(pin?.nkf_version)
       ? pin?.repository !== CURRENT_REPOSITORY
       : ![LEGACY_REPOSITORY, CURRENT_REPOSITORY].includes(pin?.repository)) ||
     !/^[0-9a-f]{64}$/.test(pin?.archive?.sha256 ?? "") ||
@@ -1765,7 +1891,7 @@ async function verifyPredecessorInstallation(projectRoot, priorBytes) {
   }
   const archivedAdopter = verification.entries.get("dist/nourd-nkf-adopt.mjs");
   if (
-    ["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(verification.manifest.nkf_version) &&
+    ["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(verification.manifest.nkf_version) &&
     (!Buffer.isBuffer(archivedAdopter) || digest(archivedAdopter) !== pin.adopter.sha256)
   ) {
     fail("The predecessor adopter is not bound by its release archive.");
@@ -1846,7 +1972,7 @@ async function verified0_5Checker(temporary, verification) {
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, bytes);
   }
-  for (const [relative, encoded] of Object.entries(predecessorContract0_71)) {
+  for (const [relative, encoded] of Object.entries(predecessorContract0_8)) {
     const target = path.join(root, ...relative.split("/"));
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, Buffer.from(encoded, "base64"));
@@ -1900,12 +2026,12 @@ async function requireModernReadiness(projectRoot, verification, version) {
   return report;
 }
 
-// The non-breaking 0.71-to-0.8 carry-forward for the ordinary public Adopt
-// update: it proves the exact ready NKF 0.71 predecessor, rebinds the
+// The non-breaking 0.8-to-0.81 carry-forward for the ordinary public Adopt
+// update: it proves the exact ready NKF 0.8 predecessor, rebinds the
 // contract set mechanically, converts the reviewed baseline with computed
 // per-judgment carry-forward under the accepted version-delta declaration,
 // and consumes the exact completed review of the computed required set.
-async function stage0_71To0_8CarryForward(
+async function stage0_8To0_81CarryForward(
   projectRoot,
   bundle,
   predecessorVerification,
@@ -1913,7 +2039,7 @@ async function stage0_71To0_8CarryForward(
   files,
   reviewPath,
 ) {
-  const oldPolicyId = "nkf.freshness-policy.0.71";
+  const oldPolicyId = "nkf.freshness-policy.0.8";
   const bundleText = (
     files.get(".nourd/knowledge/bundle.yaml") ??
     await readRegularInside(projectRoot, ".nourd/knowledge/bundle.yaml")
@@ -1921,27 +2047,27 @@ async function stage0_71To0_8CarryForward(
   const candidateBundle = YAML.parse(bundleText);
   if (
     (predecessorVerification !== null &&
-      predecessorVerification.manifest.nkf_version !== "0.71") ||
-    successorVerification.manifest.nkf_version !== "0.8" ||
-    candidateBundle.nkf_version !== "0.71" ||
+      predecessorVerification.manifest.nkf_version !== "0.8") ||
+    successorVerification.manifest.nkf_version !== "0.81" ||
+    candidateBundle.nkf_version !== "0.8" ||
     candidateBundle.knowledge_graph?.policy !== oldPolicyId
   ) {
-    fail("The non-breaking carry-forward requires an exact native NKF 0.71 predecessor and NKF 0.8 successor.");
+    fail("The non-breaking carry-forward requires an exact native NKF 0.8 predecessor and NKF 0.81 successor.");
   }
   const baselineRelative = safeRelative(
     String(candidateBundle.knowledge_graph?.baseline ?? ""),
     "Freshness baseline path",
   );
   if (baselineRelative !== ".nourd/knowledge/freshness/baseline.yaml") {
-    fail("The native 0.71 baseline path differs from the exact supported carry-forward path.");
+    fail("The native 0.8 baseline path differs from the exact supported carry-forward path.");
   }
-  // The update is ineligible until the exact 0.71 predecessor baseline is
-  // current and ready; a separate governed 0.71 knowledge-maintenance
+  // The update is ineligible until the exact 0.8 predecessor baseline is
+  // current and ready; a separate governed 0.8 knowledge-maintenance
   // operation is the recovery for a stale predecessor.
   if (predecessorVerification !== null) {
-    await requireModernReadiness(projectRoot, predecessorVerification, "0.71");
+    await requireModernReadiness(projectRoot, predecessorVerification, "0.8");
   } else {
-    const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-7-predecessor-"));
+    const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-8-predecessor-"));
     try {
       const checker = await verified0_5Checker(temporary, successorVerification);
       const invocation = spawnSync(process.execPath, [
@@ -1954,28 +2080,28 @@ async function stage0_71To0_8CarryForward(
         "--no-persist",
       ], { encoding: "utf8" });
       if (invocation.status !== 0) {
-        fail(`The NKF 0.71 predecessor did not pass whole-root readiness: ${invocation.stderr || invocation.stdout}`);
+        fail(`The NKF 0.8 predecessor did not pass whole-root readiness: ${invocation.stderr || invocation.stdout}`);
       }
       const report = parseStrictJson(Buffer.from(invocation.stdout, "utf8"));
       if (
-        report.nkf_version !== "0.71" ||
+        report.nkf_version !== "0.8" ||
         report.conformance !== "passed" ||
         report.readiness?.state !== "ready"
       ) {
-        fail("The NKF 0.71 predecessor is not conformant and ready against its reviewed baseline.");
+        fail("The NKF 0.8 predecessor is not conformant and ready against its reviewed baseline.");
       }
     } finally {
       await rm(temporary, { recursive: true, force: true });
     }
   }
-  const candidate = await prepare0_8Candidate(
+  const candidate = await prepare0_81Candidate(
     projectRoot,
     files,
     reviewPath,
     successorVerification,
   );
   for (const relative of candidate.removedPaths) {
-    fail(`The NKF 0.8 update attempted to remove a project file: ${relative}`);
+    fail(`The NKF 0.81 update attempted to remove a project file: ${relative}`);
   }
   for (const [relative, bytes] of candidate.files) {
     files.set(relative, bytes);
@@ -2009,7 +2135,7 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
     fail("Producer promotion is forbidden outside the exact NourdApS/Nourd.NKF producer.");
   }
   if (candidateEntry.length !== 1) {
-    fail("Producer promotion requires exactly one candidate Evidence representation of NKF 0.8.");
+    fail("Producer promotion requires exactly one candidate Evidence representation of NKF 0.81.");
   }
   if (
     options["promotion-input"] === undefined ||
@@ -2023,7 +2149,7 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
     fail("The producer promotion stage is not one of the two accepted stages.");
   }
   if (options["accept-breaking"] !== undefined) {
-    fail("--accept-breaking is invalid for the non-breaking 0.71-to-0.8 producer promotion.");
+    fail("--accept-breaking is invalid for the non-breaking 0.8-to-0.81 producer promotion.");
   }
   const requireCanonicalInput = async (option, relative, expectedDigest, label) => {
     const supplied = await realpath(path.resolve(option)).catch(() => null);
@@ -2059,18 +2185,18 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
   ], "Producer promotion input");
   if (
     input.contract !== "nkf.producer-candidate-promotion" ||
-    input.nkf_version !== "0.8" ||
+    input.nkf_version !== "0.81" ||
     input.repository !== CURRENT_REPOSITORY ||
-    input.task !== "NKF-033" ||
+    input.task !== "NKF-038" ||
     input.declaration_path !== `.nourd/knowledge/records/${PRODUCER_SPECIFICATION_ID}.yaml`
   ) {
     fail("The producer promotion input has the wrong contract identity or destination.");
   }
   for (const [key, expectedPath] of [
-    ["specification", "knowledge/specifications/nkf-0.8.md"],
-    ["executable", "contracts/nkf/0.8/nkf.yaml"],
-    ["freshness_policy", "contracts/nkf/0.8/freshness-policy.yaml"],
-    ["version_delta", "contracts/nkf/0.8/version-delta.yaml"],
+    ["specification", "knowledge/specifications/nkf-0.81.md"],
+    ["executable", "contracts/nkf/0.81/nkf.yaml"],
+    ["freshness_policy", "contracts/nkf/0.81/freshness-policy.yaml"],
+    ["version_delta", "contracts/nkf/0.81/version-delta.yaml"],
   ]) {
     const binding = input[key];
     requireExactKeys(binding, ["path", "digest"], `Promotion ${key} binding`);
@@ -2110,7 +2236,7 @@ async function requireProducerPromotionInput(projectRoot, options, bundle) {
       declaration.id === PRODUCER_SPECIFICATION_ID ||
       declaration.source?.path === PRODUCER_CANDIDATE_EVIDENCE_PATH
     ) {
-      fail("The native NKF 0.8 Specification declaration already exists or collides.");
+      fail("The native NKF 0.81 Specification declaration already exists or collides.");
     }
   }
   if (await readRegularInside(projectRoot, input.declaration_path, false) !== null) {
@@ -2281,72 +2407,27 @@ async function verifyInstalled0_5Ready(projectRoot) {
   return { ...installed, readiness };
 }
 
-// The exact terminal state the 0.71 producer promotion left behind. The 0.8
+// The exact terminal state the 0.8 producer promotion left behind. The 0.81
 // adopter keeps this predecessor gate for the pinned live producer still
-// declaring NKF 0.71; the constants stay inlined because the current
-// producer-promotion constants now bind NKF 0.8.
-async function requireProducer0_71TerminalState(projectRoot) {
-  const { bundle } = await requireBundle(projectRoot);
-  const producer =
-    bundle.nkf_version === "0.71" &&
-    await isExactProducer(projectRoot, bundle);
-  if (!producer) return;
-  const inputBytes = await readRegularInside(
-    projectRoot,
-    "knowledge/evidence/release/nkf-0.71-producer-promotion.yaml",
-    false,
-  );
-  if (inputBytes === null) return;
-  if (digest(inputBytes) !== "9f942eae2b25417d3f4ade577587d04577982aa969f51a6ac045e83865cc431a") {
-    fail("The native NKF 0.71 producer promotion input differs from its accepted exact bytes.");
-  }
-  const candidateEvidence = (bundle.non_records ?? []).filter(
-    (entry) => entry?.path === "specifications/nkf-0.71.md",
-  );
-  if (candidateEvidence.length !== 0) {
-    fail("The native NKF 0.71 producer still carries the candidate Evidence representation.");
-  }
-  const promotion = YAML.parse(inputBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
-  const nativeDeclaration = YAML.parse(
-    (await readRegularInside(projectRoot, promotion.declaration_path)).toString("utf8"),
-    { schema: "core", strict: true, uniqueKeys: true },
-  );
-  if (jcs(nativeDeclaration) !== jcs(promotion.record_declaration)) {
-    fail("The native NKF 0.71 producer Specification declaration differs from the exact accepted promotion input.");
-  }
-  const acceptingDecision = YAML.parse(
-    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0131.yaml")).toString("utf8"),
-    { schema: "core", strict: true, uniqueKeys: true },
-  );
-  if (acceptingDecision.source?.digest?.value !== "fd8938d3338f53c959fa454bc771ad76e2ef98e0848bb6375c8898149944e0df") {
-    fail("The native NKF 0.71 producer no longer binds the exact accepting Decision.");
-  }
-}
-
-async function verifyInstalled0_71Ready(projectRoot) {
-  const installed = await verifyInstalled(projectRoot, true);
-  const readiness = await requireModernReadiness(
-    projectRoot,
-    installed.verification,
-    "0.71",
-  );
-  await requireProducer0_71TerminalState(projectRoot);
-  return { ...installed, readiness };
-}
-
+// declaring NKF 0.8; the constants stay inlined because the current
+// producer-promotion constants now bind NKF 0.81.
 async function requireProducer0_8TerminalState(projectRoot) {
   const { bundle } = await requireBundle(projectRoot);
   const producer =
     bundle.nkf_version === "0.8" &&
     await isExactProducer(projectRoot, bundle);
   if (!producer) return;
-  const inputBytes = await readRegularInside(projectRoot, PRODUCER_PROMOTION_INPUT_PATH, false);
+  const inputBytes = await readRegularInside(
+    projectRoot,
+    "knowledge/evidence/release/nkf-0.8-producer-promotion.yaml",
+    false,
+  );
   if (inputBytes === null) return;
-  if (digest(inputBytes) !== PRODUCER_PROMOTION_INPUT_SHA256) {
+  if (digest(inputBytes) !== "274e978941833d747ff27b7693788c9f07d92139d3c75074c9eccd0a54947d03") {
     fail("The native NKF 0.8 producer promotion input differs from its accepted exact bytes.");
   }
   const candidateEvidence = (bundle.non_records ?? []).filter(
-    (entry) => entry?.path === PRODUCER_CANDIDATE_EVIDENCE_PATH,
+    (entry) => entry?.path === "specifications/nkf-0.8.md",
   );
   if (candidateEvidence.length !== 0) {
     fail("The native NKF 0.8 producer still carries the candidate Evidence representation.");
@@ -2360,10 +2441,10 @@ async function requireProducer0_8TerminalState(projectRoot) {
     fail("The native NKF 0.8 producer Specification declaration differs from the exact accepted promotion input.");
   }
   const acceptingDecision = YAML.parse(
-    (await readRegularInside(projectRoot, `.nourd/knowledge/records/${PRODUCER_ACCEPTING_DECISION_ID}.yaml`)).toString("utf8"),
+    (await readRegularInside(projectRoot, ".nourd/knowledge/records/adr-0134.yaml")).toString("utf8"),
     { schema: "core", strict: true, uniqueKeys: true },
   );
-  if (acceptingDecision.source?.digest?.value !== PRODUCER_ACCEPTING_DECISION_SHA256) {
+  if (acceptingDecision.source?.digest?.value !== "bb59f6b605659644b1a91a99169e7eefef3374fba62beae0aa85e0f6ba3d41e1") {
     fail("The native NKF 0.8 producer no longer binds the exact accepting Decision.");
   }
 }
@@ -2376,6 +2457,51 @@ async function verifyInstalled0_8Ready(projectRoot) {
     "0.8",
   );
   await requireProducer0_8TerminalState(projectRoot);
+  return { ...installed, readiness };
+}
+
+async function requireProducer0_81TerminalState(projectRoot) {
+  const { bundle } = await requireBundle(projectRoot);
+  const producer =
+    bundle.nkf_version === "0.81" &&
+    await isExactProducer(projectRoot, bundle);
+  if (!producer) return;
+  const inputBytes = await readRegularInside(projectRoot, PRODUCER_PROMOTION_INPUT_PATH, false);
+  if (inputBytes === null) return;
+  if (digest(inputBytes) !== PRODUCER_PROMOTION_INPUT_SHA256) {
+    fail("The native NKF 0.81 producer promotion input differs from its accepted exact bytes.");
+  }
+  const candidateEvidence = (bundle.non_records ?? []).filter(
+    (entry) => entry?.path === PRODUCER_CANDIDATE_EVIDENCE_PATH,
+  );
+  if (candidateEvidence.length !== 0) {
+    fail("The native NKF 0.81 producer still carries the candidate Evidence representation.");
+  }
+  const promotion = YAML.parse(inputBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true });
+  const nativeDeclaration = YAML.parse(
+    (await readRegularInside(projectRoot, promotion.declaration_path)).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (jcs(nativeDeclaration) !== jcs(promotion.record_declaration)) {
+    fail("The native NKF 0.81 producer Specification declaration differs from the exact accepted promotion input.");
+  }
+  const acceptingDecision = YAML.parse(
+    (await readRegularInside(projectRoot, `.nourd/knowledge/records/${PRODUCER_ACCEPTING_DECISION_ID}.yaml`)).toString("utf8"),
+    { schema: "core", strict: true, uniqueKeys: true },
+  );
+  if (acceptingDecision.source?.digest?.value !== PRODUCER_ACCEPTING_DECISION_SHA256) {
+    fail("The native NKF 0.81 producer no longer binds the exact accepting Decision.");
+  }
+}
+
+async function verifyInstalled0_81Ready(projectRoot) {
+  const installed = await verifyInstalled(projectRoot, true);
+  const readiness = await requireModernReadiness(
+    projectRoot,
+    installed.verification,
+    "0.81",
+  );
+  await requireProducer0_81TerminalState(projectRoot);
   return { ...installed, readiness };
 }
 
@@ -2397,8 +2523,8 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
   const verification = verifyReleaseArchive(archiveBytes, expectedSha256);
   const versionUpgrade =
     allowNonBreakingVersionUpgrade &&
-    bundle.nkf_version === "0.71" &&
-    verification.manifest.nkf_version === "0.8";
+    bundle.nkf_version === "0.8" &&
+    verification.manifest.nkf_version === "0.81";
   if (verification.manifest.nkf_version !== bundle.nkf_version && !versionUpgrade) {
     fail("Install or update requires a same-version release; use Adopt for migration.");
   }
@@ -2410,7 +2536,7 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
   );
   if (versionUpgrade) {
     await stageVerifiedHostRegistryMigration(projectRoot, files);
-    await stage0_71To0_8CarryForward(
+    await stage0_8To0_81CarryForward(
       projectRoot,
       bundle,
       predecessorInstallation?.verification ?? null,
@@ -2446,22 +2572,22 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
       !versionUpgrade
     ) {
       if (
+        bundle.nkf_version === "0.81" &&
+        await isExactProducer(projectRoot, bundle)
+      ) {
+        await verifyInstalled0_81Ready(projectRoot);
+      } else if (
         bundle.nkf_version === "0.8" &&
         await isExactProducer(projectRoot, bundle)
       ) {
         await verifyInstalled0_8Ready(projectRoot);
-      } else if (
-        bundle.nkf_version === "0.71" &&
-        await isExactProducer(projectRoot, bundle)
-      ) {
-        await verifyInstalled0_71Ready(projectRoot);
       } else {
         await verifyInstalled(projectRoot, true);
       }
       return { state: "no-update", project: projectRoot, pin: prior };
     }
   }
-  const verifier = versionUpgrade ? verifyInstalled0_8Ready : null;
+  const verifier = versionUpgrade ? verifyInstalled0_81Ready : null;
   await validateCompleteCandidate(projectRoot, files, [], verifier);
   const installed = await writeTransaction(
     projectRoot,
@@ -2475,8 +2601,8 @@ async function installOrUpdate(command, options, allowNonBreakingVersionUpgrade 
     ...(versionUpgrade
       ? {
           compatibility: {
-            from_nkf_version: "0.71",
-            to_nkf_version: "0.8",
+            from_nkf_version: "0.8",
+            to_nkf_version: "0.81",
             classification: "non-breaking",
             repository_owner_approval: "not-required",
             readiness: installed.readiness?.readiness?.state ?? "ready",
@@ -2547,7 +2673,7 @@ function requireOnboardingReceipt(value) {
   );
   if (
     value?.contract !== "nkf.onboarding-receipt" ||
-    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(value?.nkf_version) ||
+    !["0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(value?.nkf_version) ||
     !/^[0-9a-f]{64}$/.test(value?.plan_sha256 ?? "") ||
     !/^[0-9a-f]{64}$/.test(value?.inspection_sha256 ?? "") ||
     !ROOT_PROFILES.has(value?.profile) ||
@@ -2748,7 +2874,7 @@ async function onboard(options) {
     preserved_paths: knowledge.preserved_documents,
   };
   files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  const candidate = await prepare0_8Candidate(
+  const candidate = await prepare0_81Candidate(
     projectRoot,
     files,
     options.review,
@@ -2775,7 +2901,7 @@ async function onboard(options) {
   receipt.created_paths = createdPaths;
   receipt.changed_paths = changedPaths;
   candidate.files.set(ONBOARDING_RECEIPT_PATH, serializeOnboardingReceipt(receipt));
-  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_8Ready);
+  await validateCompleteCandidate(projectRoot, candidate.files, [], verifyInstalled0_81Ready);
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
@@ -2783,7 +2909,7 @@ async function onboard(options) {
       if (process.env.NKF_ONBOARDING_TEST_FAIL_AFTER_WRITE === "1") {
         fail("Injected onboarding transaction failure.");
       }
-      return verifyInstalled0_8Ready(projectRoot);
+      return verifyInstalled0_81Ready(projectRoot);
     },
   );
   return onboardingResult("onboarded", projectRoot, receipt, installed, knowledge);
@@ -3212,7 +3338,7 @@ async function planRepinGoverned(projectRoot, sourceOverrides = new Map()) {
     let updated = declarationText;
     if (declaration.source.digest.value !== observed) {
       if (declaration.legacy_lock !== undefined) {
-        if (!["0.6", "0.7", "0.71", "0.8"].includes(context.bundle.nkf_version)) {
+        if (!["0.6", "0.7", "0.71", "0.8", "0.81"].includes(context.bundle.nkf_version)) {
           fail(`Legacy-locked record ${record.declarationFile} cannot change before native NKF 0.6 adoption.`);
         }
         requireNativeRecordEnvelope(sourceBytes, declaration, record.declarationFile);
@@ -3263,7 +3389,7 @@ async function planRepinGoverned(projectRoot, sourceOverrides = new Map()) {
       const observed = digest(bytes);
       if (item.document.digest.value !== observed) {
         if (item.document.legacy_lock !== undefined) {
-          if (!["0.6", "0.7", "0.71", "0.8"].includes(context.bundle.nkf_version)) {
+          if (!["0.6", "0.7", "0.71", "0.8", "0.81"].includes(context.bundle.nkf_version)) {
             fail(`Legacy-locked document ${item.path} cannot change before native NKF 0.6 adoption.`);
           }
           if (item.kind !== "evidence") requireNativeDocumentEnvelope(bytes, item.path);
@@ -3442,7 +3568,7 @@ async function exportReferences(projectRoot) {
 async function exportVersionedSet(projectRoot) {
   const { bundle } = await requireBundle(projectRoot);
   const declared = bundle.nkf_version;
-  const releaseSet = ["0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(declared)
+  const releaseSet = ["0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(declared)
     ? await readReleaseSet(projectRoot, declared)
     : undefined;
   if (releaseSet !== undefined) {
@@ -3873,12 +3999,12 @@ function generatedTaskStateIndex(state, items, indexPath) {
   return `# ${title}\n\n${body}\n`;
 }
 
-// The NKF 0.8 seal-completing conclusion: the deterministic Task transition
+// The NKF 0.81 seal-completing conclusion: the deterministic Task transition
 // stages its successor baseline from an exact candidate copy whose only
 // graph change is the transitioned Task node's declared state, so the sealed
 // baseline lands inside the same write transaction as the transition itself.
 async function stageTransitionConclusionSeal(projectRoot, options, files, conclusion) {
-  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-71-transition-"));
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-81-transition-"));
   const candidate = path.join(temporary, "project");
   try {
     await cp(projectRoot, candidate, {
@@ -4001,12 +4127,12 @@ async function transitionTask0_5(projectRoot, context, options, transition, orig
       .sort((left, right) => String(left.path).localeCompare(String(right.path), "en"));
     files.set(`${context.knowledgeRoot}/${indexPath}`, Buffer.from(generatedTaskStateIndex(state, items, indexPath), "utf8"));
   }
-  // NKF 0.8: the deterministic transition seals its own successor baseline
+  // NKF 0.81: the deterministic transition seals its own successor baseline
   // through the mechanical conclusion carry; a graph delta beyond the closed
   // transition vocabulary fails here, before any project mutation. Pinned
-  // NKF 0.71 predecessor projects keep their exact prior behavior.
+  // NKF 0.8 predecessor projects keep their exact prior behavior.
   let conclusion = null;
-  if (context.bundle.nkf_version === "0.8") {
+  if (context.bundle.nkf_version === "0.81") {
     conclusion = await stageTransitionConclusionSeal(projectRoot, options, files, {
       task: options.task,
       fromState: priorTaskStatus,
@@ -4393,11 +4519,11 @@ async function migrateLegacyTo0_4(options, prepared = undefined) {
   };
 }
 
-async function prepare0_8Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = [], promotion = null) {
+async function prepare0_81Candidate(projectRoot, seedFiles, reviewPath, verification, seedRemovals = [], promotion = null) {
   if (reviewPath === undefined) {
     throw new OnboardingError(
       "NKF-ADOPT-REVIEW-PATH-REQUIRED",
-      "The NKF 0.8 update requires --review with a writable path for the exact semantic graph review.",
+      "The NKF 0.81 update requires --review with a writable path for the exact semantic graph review.",
       { next_action: "rerun-adopt-with-review-path" },
     );
   }
@@ -4406,11 +4532,11 @@ async function prepare0_8Candidate(projectRoot, seedFiles, reviewPath, verificat
   if (reviewStat !== null && (!reviewStat.isFile() || reviewStat.isSymbolicLink())) {
     fail("--review must identify one regular semantic graph review file or one absent file to create as a review template.");
   }
-  const versionDeltaBytes = verification.entries.get("contracts/nkf/0.8/version-delta.yaml");
-  if (!Buffer.isBuffer(versionDeltaBytes)) fail("The verified NKF 0.8 archive omits the accepted version-delta declaration.");
-  const policyBytes = verification.entries.get("contracts/nkf/0.8/freshness-policy.yaml");
-  if (!Buffer.isBuffer(policyBytes)) fail("The verified NKF 0.8 archive omits the accepted evaluation policy.");
-  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-71-adopt-"));
+  const versionDeltaBytes = verification.entries.get("contracts/nkf/0.81/version-delta.yaml");
+  if (!Buffer.isBuffer(versionDeltaBytes)) fail("The verified NKF 0.81 archive omits the accepted version-delta declaration.");
+  const policyBytes = verification.entries.get("contracts/nkf/0.81/freshness-policy.yaml");
+  if (!Buffer.isBuffer(policyBytes)) fail("The verified NKF 0.81 archive omits the accepted evaluation policy.");
+  const temporary = await mkdtemp(path.join(os.tmpdir(), "nkf-0-8-adopt-"));
   const candidate = path.join(temporary, "project");
   try {
     await cp(projectRoot, candidate, {
@@ -4459,26 +4585,26 @@ async function prepare0_8Candidate(projectRoot, seedFiles, reviewPath, verificat
       }
     }
     const bundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
-    const onboarding = bundle.nkf_version === "0.8";
+    const onboarding = bundle.nkf_version === "0.81";
     if (!onboarding) {
-      if (bundle.nkf_version !== "0.71") {
+      if (bundle.nkf_version !== "0.8") {
         fail(
-          "The NKF 0.8 update supports exactly the NKF 0.71 predecessor; an out-of-window repository migrates through its exact stepping-stone release archive first.",
+          "The NKF 0.81 update supports exactly the NKF 0.8 predecessor; an out-of-window repository migrates through its exact stepping-stone release archive first.",
         );
       }
       // The mechanical contract rebind: canonical Markdown bytes stay exact,
       // no identity succession applies, and no stable path moves.
       const reboundBundle = YAML.parse(await readFile(bundlePath, "utf8"), { schema: "core", strict: true, uniqueKeys: true });
-      reboundBundle.nkf_version = "0.8";
+      reboundBundle.nkf_version = "0.81";
       if (reboundBundle.knowledge_graph?.policy !== undefined) {
-        reboundBundle.knowledge_graph.policy = "nkf.freshness-policy.0.8";
+        reboundBundle.knowledge_graph.policy = "nkf.freshness-policy.0.81";
       }
       await writeFile(bundlePath, YAML.stringify(reboundBundle, { lineWidth: 0, aliasDuplicateObjects: false }));
       await convertBaselineShape0_7({
         projectRoot: candidate,
         versionDeltaDigest: digest(versionDeltaBytes),
         policyDigest: digest(policyBytes),
-        targetVersion: "0.8",
+        targetVersion: "0.81",
       });
     }
     const reviewStage = promotion !== null ? "delta" : onboarding ? "whole-root" : "delta";
@@ -4511,6 +4637,8 @@ async function prepare0_8Candidate(projectRoot, seedFiles, reviewPath, verificat
       checker,
       reviewPath: review,
       versionDeltaDigest: digest(versionDeltaBytes),
+      versionDelta: onboarding ? null : YAML.parse(versionDeltaBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true }),
+      policy: onboarding ? null : YAML.parse(policyBytes.toString("utf8"), { schema: "core", strict: true, uniqueKeys: true }),
     });
     if (promotion !== null) {
       // A version promotion writes one pending reconciliation entry for every
@@ -4539,7 +4667,7 @@ async function prepare0_8Candidate(projectRoot, seedFiles, reviewPath, verificat
         );
       }
     }
-    await requireModernReadiness(candidate, verification, "0.8");
+    await requireModernReadiness(candidate, verification, "0.81");
     const before = await regularFileInventory(projectRoot);
     const after = await regularFileInventory(candidate);
     const files = new Map();
@@ -4558,8 +4686,8 @@ async function prepare0_8Candidate(projectRoot, seedFiles, reviewPath, verificat
   }
 }
 
-// The live support window is NKF 0.8 plus its exact NKF 0.71 predecessor,
-// and the 0.71-to-0.8 update is the ordinary non-breaking Adopt update, so
+// The live support window is NKF 0.81 plus its exact NKF 0.8 predecessor,
+// and the 0.8-to-0.81 update is the ordinary non-breaking Adopt update, so
 // this adopter performs no live migration: every migrate request fails
 // closed naming its exact remedy.
 async function migrateToCurrent(options, prepared = undefined) {
@@ -4698,7 +4826,7 @@ function adoptResult(state, projectRoot, catalog, compatibility, operation) {
   };
 }
 
-async function promoteProducerTo0_8(
+async function promoteProducerTo0_81(
   projectRoot,
   bundle,
   options,
@@ -4706,8 +4834,8 @@ async function promoteProducerTo0_8(
   catalog,
   promotion,
 ) {
-  if (bundle.nkf_version !== "0.71") {
-    fail("Producer promotion requires the exact NKF producer still declaring NKF 0.71.");
+  if (bundle.nkf_version !== "0.8") {
+    fail("Producer promotion requires the exact NKF producer still declaring NKF 0.8.");
   }
   const prepublication = promotion.stage ===
     "prepublication-candidate-bound-adopt-into-isolated-exact-producer-copy";
@@ -4716,8 +4844,8 @@ async function promoteProducerTo0_8(
   }
   const archiveBytes = await acquireArchive(releaseOptions, catalog.archive.sha256);
   const verification = verifyReleaseArchive(archiveBytes, catalog.archive.sha256);
-  if (verification.manifest.nkf_version !== "0.8") {
-    fail("Producer promotion requires one exact NKF 0.8 release candidate or published archive.");
+  if (verification.manifest.nkf_version !== "0.81") {
+    fail("Producer promotion requires one exact NKF 0.81 release candidate or published archive.");
   }
   const targetIntegration = await targetFiles(
     projectRoot,
@@ -4756,7 +4884,7 @@ async function promoteProducerTo0_8(
   const specificationFileName = PRODUCER_CANDIDATE_EVIDENCE_PATH.slice("specifications/".length);
   if (!specificationsIndexText.includes(`](${specificationFileName})`)) {
     const indexBytes = Buffer.from(
-      `${specificationsIndexText.trimEnd()}\n\n## NKF 0.8\n\n- [${promotion.input.record_declaration.title}](${specificationFileName})\n`,
+      `${specificationsIndexText.trimEnd()}\n\n## NKF 0.81\n\n- [${promotion.input.record_declaration.title}](${specificationFileName})\n`,
       "utf8",
     );
     files.set(specificationsIndexRelative, indexBytes);
@@ -4776,7 +4904,7 @@ async function promoteProducerTo0_8(
     projectRoot,
     `${bundle.knowledge_root}/${PRODUCER_CANDIDATE_EVIDENCE_PATH}`,
   );
-  const candidate = await prepare0_8Candidate(
+  const candidate = await prepare0_81Candidate(
     projectRoot,
     files,
     options.review,
@@ -4794,18 +4922,18 @@ async function promoteProducerTo0_8(
   const specificationRelative = `${bundle.knowledge_root}/${PRODUCER_CANDIDATE_EVIDENCE_PATH}`;
   const stagedSpecification = candidate.files.get(specificationRelative);
   if (stagedSpecification !== undefined && !stagedSpecification.equals(specificationSourceBefore)) {
-    fail("Producer promotion changed the accepted NKF 0.8 Markdown bytes.");
+    fail("Producer promotion changed the accepted NKF 0.81 Markdown bytes.");
   }
   await validateCompleteCandidate(
     projectRoot,
     candidate.files,
     candidate.removedPaths,
-    verifyInstalled0_8Ready,
+    verifyInstalled0_81Ready,
   );
   const installed = await writeTransaction(
     projectRoot,
     candidate.files,
-    () => verifyInstalled0_8Ready(projectRoot),
+    () => verifyInstalled0_81Ready(projectRoot),
     candidate.removedPaths,
   );
   return {
@@ -4843,6 +4971,7 @@ async function adopt(options) {
   const releaseOptions = {
     ...options,
     sha256: catalog.archive.sha256,
+    ...(catalog.archive.url === null ? {} : { "archive-url": catalog.archive.url }),
   };
   delete releaseOptions.recommendation;
   delete releaseOptions["accept-breaking"];
@@ -4889,7 +5018,7 @@ async function adopt(options) {
   const { bundle } = await requireBundle(projectRoot);
   const promotion = await requireProducerPromotionInput(projectRoot, options, bundle);
   if (promotion !== null) {
-    const result = await promoteProducerTo0_8(
+    const result = await promoteProducerTo0_81(
       projectRoot,
       bundle,
       options,
@@ -4898,10 +5027,10 @@ async function adopt(options) {
       promotion,
     );
     return adoptResult("updated", projectRoot, catalog, {
-      from_nkf_version: "0.71",
+      from_nkf_version: "0.8",
       classification: "non-breaking",
       migration_required: false,
-      summary: "The exact NKF producer promotion applies the accepted native 0.8 declaration, the mechanical contract rebind, and the separately reviewed post-promotion delta graph.",
+      summary: "The exact NKF producer promotion applies the accepted native 0.81 declaration, the mechanical contract rebind, and the separately reviewed post-promotion delta graph.",
     }, result);
   }
   const rule = compatibility.get(bundle.nkf_version);

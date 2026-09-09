@@ -162,8 +162,9 @@ NKF 0.71 successor.
 Later audits: the NKF-031 independent NKF 0.71 authority audit; the NKF-033
 NKF 0.71 guidance-review finding, the NKF-033 independent NKF 0.8 authority
 audit, and the NKF-033 version-surface inventory; the NKF-037 pre-flip history
-scan of the complete Git history before the repository became public; and the
-NKF-012 completion audit of the protected merge gate delivery.
+scan of the complete Git history before the repository became public; the
+NKF-012 completion audit of the protected merge gate delivery; and the NKF-038
+three-round independent NKF 0.81 authority audit.
 
 ## Release
 
@@ -176,8 +177,10 @@ its re-download verification; the same guidance review, release audit, release
 notes, and publication Evidence for NKF 0.71 and NKF 0.8, with their
 producer-promotion inputs; the NKF 0.8 producer adoption; the NKF 0.8
 public-documentation publication; the public repository observation after the
-repository became public; the protected merge gate observation; and the
-retirement of the ten frozen supporting Realizations.
+repository became public; the protected merge gate observation; the
+retirement of the ten frozen supporting Realizations; and, for NKF 0.81, the
+accepted producer-promotion input, the whole-set guidance review, and the
+release notes.
 
 ## Decision Inputs
 

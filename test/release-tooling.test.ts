@@ -15,14 +15,14 @@ const {
 } = release;
 import { repositoryRoot, scaledTimeout } from "./helpers.js";
 
-// The predecessor 0.71 fixture archive uses the exact real release-set
+// The predecessor 0.8 fixture archive uses the exact real release-set
 // members from the working tree, so manifest bindings, licensing digests,
-// and third-party coverage verify against genuine bytes; the 0.8 release
-// set arrives with the later release task, and the substituted 0.8
-// candidate archive is exercised by the adopter suite.
+// and third-party coverage verify against genuine bytes; the 0.81 release
+// set is derived at its cut, and the substituted 0.81 candidate archive is
+// exercised by the adopter suite.
 // @ts-expect-error Repository release tooling is a directly executable ESM module.
 const releaseSetModule = await import("../scripts/release/release-set.mjs");
-const releaseSet = await releaseSetModule.readReleaseSet(repositoryRoot, "0.71");
+const releaseSet = await releaseSetModule.readReleaseSet(repositoryRoot, "0.8");
 
 function fixtureMemberEntries() {
   return releaseSet.members.map((member: { path: string; mode: string }) => ({
@@ -32,19 +32,19 @@ function fixtureMemberEntries() {
 }
 
 async function releaseFixture() {
-  // Predecessor member bytes come from the exact published 0.71 archive; the
+  // Predecessor member bytes come from the exact published 0.8 archive; the
   // working tree no longer carries the predecessor projection bytes.
   const archiveBytes = await readFile(path.join(
     repositoryRoot,
-    ".nourd/tools/nkf/releases/nourd-nkf-sha256-3419801cbddeb374aa458345389a22a8205780c2137f0fd6fa5fe84e63160c13.tar",
+    ".nourd/tools/nkf/releases/nourd-nkf-sha256-2714fb486b8402a9d5e6dfbf4d10528c714f5480f10e97369dfdf45274c699d5.tar",
   ));
   const entries = inspectUstar(archiveBytes) as Map<string, Buffer>;
   entries.delete("release-manifest.json");
-  const schema = entries.get("contracts/nkf/0.71/schemas/release-manifest.schema.json")!;
+  const schema = entries.get("contracts/nkf/0.8/schemas/release-manifest.schema.json")!;
   const manifest = constructReleaseManifest({
     releaseCommit: "a".repeat(40),
     entries,
-    nkfVersion: "0.71",
+    nkfVersion: "0.8",
     releaseSet,
   });
   validateReleaseManifest(manifest, schema);
@@ -54,13 +54,13 @@ async function releaseFixture() {
 }
 
 describe("NKF release tooling", () => {
-  it("defines the exact complete 0.71 archive membership", () => {
+  it("defines the exact complete 0.8 archive membership", () => {
     const paths = releaseSet.members.map((entry: { path: string }) => entry.path);
     expect(paths).toHaveLength(141);
     expect(new Set(paths).size).toBe(paths.length);
     expect(paths).toContain("release-manifest.json");
     expect(paths).toContain("dist/nourd-nkf-adopt.mjs");
-    expect(paths).toContain("contracts/nkf/0.71/version-delta.yaml");
+    expect(paths).toContain("contracts/nkf/0.8/version-delta.yaml");
     expect(paths).toContain("LICENSE");
     expect(paths).toContain("NOTICE");
     expect(paths).toContain("THIRD_PARTY_NOTICES.md");

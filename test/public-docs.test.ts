@@ -10,20 +10,20 @@ import { verifyPublicDocs } from "../scripts/verify-public-docs.mjs";
 // @ts-expect-error Repository release tooling is directly executable ESM.
 import { regenerateReleaseMembers } from "../scripts/release/release-set.mjs";
 
-// The complete 0.8 source surface the release-set coverage enumerates. A
+// The complete 0.81 source surface the release-set coverage enumerates. A
 // staged copy carries all of it so the copy's release set can be regenerated
 // and the projection verified against its own exact enumeration.
 const PROJECTION_SOURCES = [
   "LICENSE",
   "NOTICE",
   "THIRD_PARTY_NOTICES.md",
-  "contracts/nkf/0.8",
+  "contracts/nkf/0.81",
   "dist/nourd-nkf-adopt.mjs",
   "dist/nourd-nkf-checker.mjs",
-  "distribution/nkf/0.8",
-  "fixtures/valid/minimal-0-8",
-  "fixtures/valid/technology-0-8",
-  "knowledge/specifications/nkf-0.8.md",
+  "distribution/nkf/0.81",
+  "fixtures/valid/minimal-0-81",
+  "fixtures/valid/technology-0-81",
+  "knowledge/specifications/nkf-0.81.md",
   "public-docs",
 ];
 
@@ -41,20 +41,20 @@ async function copyProjection() {
 }
 
 describe("NKF public documentation", () => {
-  it("teaches exactly NKF 0.8", async () => {
+  it("teaches exactly NKF 0.81", async () => {
     const docsRoot = path.join(repositoryRoot, "public-docs");
     const references = await readdir(path.join(docsRoot, "reference"));
-    expect(references).toEqual(["nkf-0.8.md"]);
+    expect(references).toEqual(["nkf-0.81.md"]);
     const readme = await readFile(path.join(docsRoot, "README.md"), "utf8");
-    expect(readme).toContain("NKF 0.8 is pre-stable");
-    expect(readme).toContain("reference/nkf-0.8.md");
-    expect(readme).not.toMatch(/reference\/nkf-0\.[2-7]\.md/);
+    expect(readme).toContain("NKF 0.81 is pre-stable");
+    expect(readme).toContain("reference/nkf-0.81.md");
+    expect(readme).not.toMatch(/reference\/nkf-0\.(?:[2-7]|71|8)\.md/);
     for (const kind of ["product", "technology"]) {
       const bundle = await readFile(
         path.join(docsRoot, "examples", kind, "project/.nourd/knowledge/bundle.yaml"),
         "utf8",
       );
-      expect(bundle).toContain('nkf_version: "0.8"');
+      expect(bundle).toContain('nkf_version: "0.81"');
       expect(
         existsSync(path.join(docsRoot, "examples", kind, "project/knowledge/tasks/items/task.md")),
       ).toBe(true);
@@ -93,7 +93,7 @@ describe("NKF public documentation", () => {
   it("rejects mirror drift, unexpected files, and private local paths", async () => {
     const mirrorDrift = await copyProjection();
     await writeFile(
-      path.join(mirrorDrift, "public-docs/reference/nkf-0.8.md"),
+      path.join(mirrorDrift, "public-docs/reference/nkf-0.81.md"),
       "# Changed\n",
     );
     await expect(verifyPublicDocs(mirrorDrift)).rejects.toThrow(

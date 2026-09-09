@@ -46,6 +46,7 @@ const REVIEWED_THIRD_PARTY_NOTICES_SHA256 = Object.freeze({
   "0.7": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
   "0.71": "913a3f093c2bd95aabc124ad20b1e9c113d6f341d6458e7b591615cc33bfffea",
   "0.8": "b09f92fc26c784f42b565738d99cf0aefe58c26424afcf30ed363e3a0e11f243",
+  "0.81": "3eca15d3501c128d2a810509bd9156791014e6cfbb5a0f065555d7ab406b13d5",
 });
 
 const AUTHORITY_PATHS = Object.freeze({
@@ -141,11 +142,11 @@ function fail(message) {
 }
 
 function usesReleaseSet(nkfVersion) {
-  return ["0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion);
+  return ["0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(nkfVersion);
 }
 
 function schemaBindings(nkfVersion) {
-  if (["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)) {
+  if (["0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(nkfVersion)) {
     return [
       "bundle",
       "record",
@@ -239,7 +240,7 @@ export function constructReleaseManifest({
     executable: `contracts/nkf/${nkfVersion}/nkf.yaml`,
   };
   const specificationPath = authorityPaths.markdown;
-  const repository = ["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion) ? REPOSITORY : LEGACY_REPOSITORY;
+  const repository = ["0.6", "0.7", "0.71", "0.8", "0.81"].includes(nkfVersion) ? REPOSITORY : LEGACY_REPOSITORY;
   const checker = requireBuffer(entries, "dist/nourd-nkf-checker.mjs");
   const markdown = requireBuffer(entries, specificationPath);
   const executable = requireBuffer(entries, authorityPaths.executable);
@@ -276,7 +277,7 @@ export function constructReleaseManifest({
     path: schema.path,
     digest: digest(requireBuffer(entries, schema.path)),
   }));
-  const manifest = ["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)
+  const manifest = ["0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(nkfVersion)
     ? {
         ...common,
         freshness_policy: {
@@ -284,7 +285,7 @@ export function constructReleaseManifest({
           path: `contracts/nkf/${nkfVersion}/freshness-policy.yaml`,
           digest: digest(requireBuffer(entries, `contracts/nkf/${nkfVersion}/freshness-policy.yaml`)),
         },
-        ...(["0.71", "0.8"].includes(nkfVersion)
+        ...(["0.71", "0.8", "0.81"].includes(nkfVersion)
           ? {
               version_delta: {
                 contract: "nkf.version-delta",
@@ -294,7 +295,7 @@ export function constructReleaseManifest({
             }
           : {}),
         schemas,
-        ...(["0.6", "0.7", "0.71", "0.8"].includes(nkfVersion)
+        ...(["0.6", "0.7", "0.71", "0.8", "0.81"].includes(nkfVersion)
           ? {
               licensing: {
                 spdx: "Apache-2.0",
@@ -810,7 +811,7 @@ function requireManifestBootstrap(manifest, nkfVersion = "0.2") {
   ) {
     fail("Release manifest bootstrap contract or NKF version is invalid.");
   }
-  const schemaIndex = ["0.5", "0.6", "0.7", "0.71", "0.8"].includes(nkfVersion) ? 5 : 2;
+  const schemaIndex = ["0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(nkfVersion) ? 5 : 2;
   const schema = manifest?.schemas?.[schemaIndex];
   if (
     schema?.identity !== `urn:nkf:${nkfVersion}:schema:release-manifest` ||
@@ -949,7 +950,7 @@ export function verifyReleaseArchive(
   if (manifestSchema === undefined) fail("Release manifest omits its bootstrap schema binding.");
   verifyArtifact(entries, manifestSchema);
   validateReleaseManifest(manifest, requireBuffer(entries, manifestSchema.path));
-  if (["0.6", "0.7", "0.71", "0.8"].includes(archiveVersion)) {
+  if (["0.6", "0.7", "0.71", "0.8", "0.81"].includes(archiveVersion)) {
     if (
       manifest.licensing?.spdx !== "Apache-2.0" ||
       sha256(requireBuffer(entries, "LICENSE")) !==
@@ -980,7 +981,7 @@ export function verifyReleaseArchive(
       : [manifest.licensing.license, manifest.licensing.notice, manifest.licensing.third_party_notices]),
   ];
   for (const artifact of artifacts) verifyArtifact(entries, artifact);
-  if (["0.6", "0.7", "0.71", "0.8"].includes(archiveVersion)) {
+  if (["0.6", "0.7", "0.71", "0.8", "0.81"].includes(archiveVersion)) {
     verifyThirdPartyNoticeCoverage(
       requireBuffer(entries, "dist/nourd-nkf-checker.mjs"),
       requireBuffer(entries, "dist/nourd-nkf-adopt.mjs"),

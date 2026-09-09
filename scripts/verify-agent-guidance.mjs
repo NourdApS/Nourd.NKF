@@ -377,15 +377,15 @@ export async function verifyAgentGuidance(projectRootInput) {
   const bundle = YAML.parse(
     await readFile(path.join(projectRoot, ".nourd/knowledge/bundle.yaml"), "utf8"),
   );
-  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8"].includes(bundle?.nkf_version)) {
-    fail("The producer guidance verifier requires an NKF 0.2 through 0.8 bundle.");
+  if (!["0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.71", "0.8", "0.81"].includes(bundle?.nkf_version)) {
+    fail("The producer guidance verifier requires an NKF 0.2 through 0.81 bundle.");
   }
   // From 0.7 the version's own accepted distribution skill is the expected
   // cross-host bootstrap; earlier versions share the embedded 0.2 lineage.
   // The accepted 0.7 skill bytes ship with this producer tooling itself, so
   // verification does not depend on the verified project carrying them.
   const toolingRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-  const expectedSkill = ["0.7", "0.71", "0.8"].includes(bundle.nkf_version)
+  const expectedSkill = ["0.7", "0.71", "0.8", "0.81"].includes(bundle.nkf_version)
     ? await readFile(
         path.join(toolingRoot, `distribution/nkf/${bundle.nkf_version}/.claude/skills/nkf-authoring/SKILL.md`),
         "utf8",
@@ -590,6 +590,7 @@ export async function verifyAgentGuidance(projectRootInput) {
   // why adding these checks required a new version at all.
   const PRODUCER_CHECK_BY_VERSION = {
     "0.8": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self",
+    "0.81": "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:guidance-generation && npm run verify:version-labels && npm run verify:guidance-review && npm run verify:links && npm run check && npm run validate:self",
   };
   const legacyProducerCheck = "npm run verify:agent-guidance && npm run verify:onboarding-guidance && npm run verify:links && npm run check && npm run validate:self";
   const producerCheck = PRODUCER_CHECK_BY_VERSION[bundle.nkf_version] ?? legacyProducerCheck;
@@ -611,9 +612,9 @@ export async function verifyAgentGuidance(projectRootInput) {
     "verify:recommended-release": "node scripts/verify-recommended-release.mjs",
     "verify:third-party-notices": "node scripts/verify-third-party-notices.mjs",
   };
-  if (bundle.nkf_version === "0.8") {
+  if (["0.8", "0.81"].includes(bundle.nkf_version)) {
     expectedScripts["verify:guidance-generation"] =
-      "node scripts/generate-guidance.mjs --project . --version 0.8 --check";
+      `node scripts/generate-guidance.mjs --project . --version ${bundle.nkf_version} --check`;
     expectedScripts["verify:version-labels"] = "node scripts/verify-version-labels.mjs --project .";
     expectedScripts["verify:guidance-review"] = "node scripts/verify-guidance-review.mjs --project .";
   }

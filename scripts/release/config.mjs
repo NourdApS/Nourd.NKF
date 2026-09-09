@@ -112,15 +112,37 @@ export const ACCEPTED_0_8_ARTIFACT_DIGESTS = Object.freeze({
   "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
 });
 
+export const ACCEPTED_0_81_ARTIFACT_DIGESTS = Object.freeze({
+  "knowledge/specifications/nkf-0.81.md": "b6a3991cde1121a87842e2464e16145346e72c7ee82b2040621bad851bb1da45",
+  "contracts/nkf/0.81/nkf.yaml": "004969c10d74191274f74a4dce0b9aebb983d52a70ee3351e05e18086dc78cb4",
+  "contracts/nkf/0.81/freshness-policy.yaml": "742f72d81531e48b3af2453affb3548faa85064f0dcca7e39b8e3962a7a25de4",
+  "contracts/nkf/0.81/version-delta.yaml": "9908a65fbd31e1c7e5c6ce9f70769d54142a57e0a446643b0abea51c07ccdf42",
+  "contracts/nkf/0.81/schemas/bundle.schema.json": "56e0ff6bbfcd1bbd5175933e0190b7abae2c57490fcaac9d15f1626881d5506c",
+  "contracts/nkf/0.81/schemas/record.schema.json": "d96c48742af39c2ea62d5f07614f0144fc9ded8836f3dfe0e835b10b55708f06",
+  "contracts/nkf/0.81/schemas/graph-baseline.schema.json": "5526662aca6028945d0b1938ffa27061b2111c3488e9b7c22f1cc6935f750be2",
+  "contracts/nkf/0.81/schemas/freshness-receipt.schema.json": "ce4c23f76ed9375848336b9fd27121d2592e5ab540de46ee4feccb340ef22dfa",
+  "contracts/nkf/0.81/schemas/freshness-policy.schema.json": "7adc387e83ca55f004308ac2f299dd158caf13a66d909010c11f17a6d8baddeb",
+  "contracts/nkf/0.81/schemas/release-manifest.schema.json": "d216cc69194a5c6f2edcc75780c146c29628bc2ee6fc13b4e90bb0733dc568f7",
+  "contracts/nkf/0.81/schemas/recommended-release.schema.json": "70bd7ed77612d52c5325fcdf6be976208af7dc036a8f31c10148894d9610cfae",
+  "contracts/nkf/0.81/schemas/validation-result.schema.json": "cab70f511e73472acc2df8e68f102e31e2dc5feb6ae055c20a824b354fd370f2",
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "NOTICE": "48023a31a53e68e9c51358d5ee313dc5f705df1caf4f24f2f2818b372bf5a4e6",
+});
+
 export const RELEASE_REPOSITORY = "NourdApS/Nourd.NKF";
 
-// Every pre-stable recommendation publishes under the same channel terms;
-// these are policy constants shared by all versions, not per-version data.
-export const PRE_STABLE_PUBLICATION = Object.freeze({
-  channel: "internal-private-github-prerelease",
-  prerelease: true,
-  visibility: "private",
+// Publication channel terms per version. Through NKF 0.8 every release was a
+// private Github prerelease of a private repository; from NKF 0.81 the
+// governing repository is public and the channel is the accepted contract's
+// public prerelease value (ADR 0136, ADR 0138, ADR 0140). A catalog declaring a
+// version not listed here is refused rather than assumed.
+export const PUBLICATION_BY_VERSION = Object.freeze({
+  "0.71": Object.freeze({ channel: "internal-private-github-prerelease", prerelease: true, visibility: "private" }),
+  "0.8": Object.freeze({ channel: "internal-private-github-prerelease", prerelease: true, visibility: "private" }),
+  "0.81": Object.freeze({ channel: "public-github-prerelease", prerelease: true, visibility: "public" }),
 });
+// Retained name for the pre-0.81 terms; new code selects by version.
+export const PRE_STABLE_PUBLICATION = PUBLICATION_BY_VERSION["0.8"];
 
 // One entry per NKF version a recommended-release catalog may declare, each
 // bound to its accepting Decision. The recommended-release verifier derives

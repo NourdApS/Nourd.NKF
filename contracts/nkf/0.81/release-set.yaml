@@ -60,10 +60,10 @@ coverage:
     path: distribution/nkf/0.81/host-adapters
   - class: product-fixture
     selection: recursive-regular-files
-    path: fixtures/valid/minimal-0-8
+    path: fixtures/valid/minimal-0-81
   - class: technology-fixture
     selection: recursive-regular-files
-    path: fixtures/valid/technology-0-8
+    path: fixtures/valid/technology-0-81
   - class: product-public-example
     selection: recursive-regular-files
     path: public-docs/examples/product
@@ -122,6 +122,9 @@ members:
   - path: contracts/nkf/0.81/schemas/graph-baseline.schema.json
     class: derived-schema
     mode: "0644"
+  - path: contracts/nkf/0.81/schemas/recommended-release.schema.json
+    class: derived-schema
+    mode: "0644"
   - path: contracts/nkf/0.81/schemas/record.schema.json
     class: derived-schema
     mode: "0644"
@@ -176,151 +179,151 @@ members:
   - path: distribution/nkf/0.81/integrations/release/nkf-release-protocol.md
     class: release-protocol
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/.nourd/knowledge/bundle.yaml
+  - path: fixtures/valid/minimal-0-81/.nourd/knowledge/bundle.yaml
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/.nourd/knowledge/freshness/baseline.yaml
+  - path: fixtures/valid/minimal-0-81/.nourd/knowledge/freshness/baseline.yaml
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/.nourd/knowledge/records/product-current-system.yaml
+  - path: fixtures/valid/minimal-0-81/.nourd/knowledge/records/product-current-system.yaml
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/.nourd/knowledge/records/product.yaml
+  - path: fixtures/valid/minimal-0-81/.nourd/knowledge/records/product.yaml
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/decisions/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/decisions/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/designs/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/designs/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/designs/by-disposition/active.md
+  - path: fixtures/valid/minimal-0-81/knowledge/designs/by-disposition/active.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/designs/by-disposition/adopted.md
+  - path: fixtures/valid/minimal-0-81/knowledge/designs/by-disposition/adopted.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/designs/by-disposition/rejected.md
+  - path: fixtures/valid/minimal-0-81/knowledge/designs/by-disposition/rejected.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/designs/by-disposition/superseded.md
+  - path: fixtures/valid/minimal-0-81/knowledge/designs/by-disposition/superseded.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/designs/by-disposition/withdrawn.md
+  - path: fixtures/valid/minimal-0-81/knowledge/designs/by-disposition/withdrawn.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/evidence/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/evidence/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/product.md
+  - path: fixtures/valid/minimal-0-81/knowledge/product.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/realizations/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/realizations/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/realizations/current-system.md
+  - path: fixtures/valid/minimal-0-81/knowledge/realizations/current-system.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/specifications/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/specifications/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/tasks/README.md
+  - path: fixtures/valid/minimal-0-81/knowledge/tasks/README.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/tasks/by-state/active.md
+  - path: fixtures/valid/minimal-0-81/knowledge/tasks/by-state/active.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/tasks/by-state/cancelled.md
+  - path: fixtures/valid/minimal-0-81/knowledge/tasks/by-state/cancelled.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/tasks/by-state/completed.md
+  - path: fixtures/valid/minimal-0-81/knowledge/tasks/by-state/completed.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/tasks/by-state/deferred.md
+  - path: fixtures/valid/minimal-0-81/knowledge/tasks/by-state/deferred.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/minimal-0-8/knowledge/tasks/items/task.md
+  - path: fixtures/valid/minimal-0-81/knowledge/tasks/items/task.md
     class: product-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/.nourd/knowledge/bundle.yaml
+  - path: fixtures/valid/technology-0-81/.nourd/knowledge/bundle.yaml
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/.nourd/knowledge/freshness/baseline.yaml
+  - path: fixtures/valid/technology-0-81/.nourd/knowledge/freshness/baseline.yaml
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/.nourd/knowledge/records/realization.yaml
+  - path: fixtures/valid/technology-0-81/.nourd/knowledge/records/realization.yaml
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/.nourd/knowledge/records/specification.yaml
+  - path: fixtures/valid/technology-0-81/.nourd/knowledge/records/specification.yaml
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/.nourd/knowledge/records/technology.yaml
+  - path: fixtures/valid/technology-0-81/.nourd/knowledge/records/technology.yaml
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/decisions/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/decisions/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/designs/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/designs/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/designs/by-disposition/active.md
+  - path: fixtures/valid/technology-0-81/knowledge/designs/by-disposition/active.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/designs/by-disposition/adopted.md
+  - path: fixtures/valid/technology-0-81/knowledge/designs/by-disposition/adopted.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/designs/by-disposition/rejected.md
+  - path: fixtures/valid/technology-0-81/knowledge/designs/by-disposition/rejected.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/designs/by-disposition/superseded.md
+  - path: fixtures/valid/technology-0-81/knowledge/designs/by-disposition/superseded.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/designs/by-disposition/withdrawn.md
+  - path: fixtures/valid/technology-0-81/knowledge/designs/by-disposition/withdrawn.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/evidence/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/evidence/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/realizations/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/realizations/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/realizations/current-system.md
+  - path: fixtures/valid/technology-0-81/knowledge/realizations/current-system.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/specifications/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/specifications/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/specifications/specification.md
+  - path: fixtures/valid/technology-0-81/knowledge/specifications/specification.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/tasks/README.md
+  - path: fixtures/valid/technology-0-81/knowledge/tasks/README.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/tasks/by-state/active.md
+  - path: fixtures/valid/technology-0-81/knowledge/tasks/by-state/active.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/tasks/by-state/cancelled.md
+  - path: fixtures/valid/technology-0-81/knowledge/tasks/by-state/cancelled.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/tasks/by-state/completed.md
+  - path: fixtures/valid/technology-0-81/knowledge/tasks/by-state/completed.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/tasks/by-state/deferred.md
+  - path: fixtures/valid/technology-0-81/knowledge/tasks/by-state/deferred.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/tasks/items/task.md
+  - path: fixtures/valid/technology-0-81/knowledge/tasks/items/task.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/knowledge/technology.md
+  - path: fixtures/valid/technology-0-81/knowledge/technology.md
     class: technology-fixture
     mode: "0644"
-  - path: fixtures/valid/technology-0-8/src/example.ts
+  - path: fixtures/valid/technology-0-81/src/example.ts
     class: technology-fixture
     mode: "0644"
   - path: knowledge/specifications/nkf-0.81.md

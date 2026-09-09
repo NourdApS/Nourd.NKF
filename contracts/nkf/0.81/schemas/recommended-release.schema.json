@@ -199,6 +199,7 @@
   "allOf": [
     {
       "if": {
+        "type": "object",
         "properties": {
           "channel": {
             "const": "internal-exact-candidate"
@@ -206,8 +207,10 @@
         }
       },
       "then": {
+        "type": "object",
         "properties": {
           "release": {
+            "type": "object",
             "properties": {
               "visibility": {
                 "const": "unpublished"
@@ -218,6 +221,7 @@
             }
           },
           "archive": {
+            "type": "object",
             "properties": {
               "url": {
                 "type": "null"
@@ -229,6 +233,7 @@
     },
     {
       "if": {
+        "type": "object",
         "properties": {
           "channel": {
             "const": "internal-private-github-prerelease"
@@ -236,8 +241,10 @@
         }
       },
       "then": {
+        "type": "object",
         "properties": {
           "release": {
+            "type": "object",
             "properties": {
               "visibility": {
                 "const": "private"
@@ -265,6 +272,7 @@
     },
     {
       "if": {
+        "type": "object",
         "properties": {
           "channel": {
             "const": "public-github-prerelease"
@@ -272,8 +280,10 @@
         }
       },
       "then": {
+        "type": "object",
         "properties": {
           "release": {
+            "type": "object",
             "properties": {
               "visibility": {
                 "const": "public"
@@ -288,6 +298,7 @@
     },
     {
       "if": {
+        "type": "object",
         "properties": {
           "channel": {
             "const": "public-github-release"
@@ -295,8 +306,10 @@
         }
       },
       "then": {
+        "type": "object",
         "properties": {
           "release": {
+            "type": "object",
             "properties": {
               "visibility": {
                 "const": "public"

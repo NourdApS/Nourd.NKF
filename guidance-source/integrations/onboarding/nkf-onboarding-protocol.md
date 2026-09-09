@@ -111,7 +111,15 @@ Inspection must leave the project unchanged. It emits `inspection.json`,
 `plan.yaml`, and exact candidate copies of every Markdown file under the
 selected knowledge root. The inspection contains a complete project entry
 manifest, excluding top-level `.git` implementation metadata, plus relevant
-integration surfaces and Git-root and branch observations.
+integration surfaces and Git-root and branch observations. Regular files whose
+basename is exactly `.DS_Store`, `Thumbs.db`, or `desktop.ini`, at any depth,
+are listed with the classification `volatile`: the accepted contract's closed
+registry of operating-system metadata. They stay visible to your review, but
+the snapshot digest the plan binds excludes them, so a file browser rewriting
+one between inspection and adoption does not make the plan stale. The registry
+admits no other name, no glob, no project-declared addition, and nothing from
+`.gitignore`; a directory, symbolic link, or special file with a registered
+name is captured and protected like every other entry.
 
 Require `mechanically_ready: true`. A blocked result is a mechanical failure,
 not a category decision. Compare the manifest with the entries used in the
