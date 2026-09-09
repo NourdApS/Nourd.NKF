@@ -570,3 +570,68 @@ documentation promotion, and live producer adoption have not been performed.
 The published live support window is now exactly 0.81 plus 0.8; 0.71 is
 stepping-stone history. These observations do not alter accepted meaning or
 upgrade the living Realization's partial confirmation status.
+
+
+## Recommendation Producer Adoption And Public Documentation Completion
+
+The Human Product Owner then directed: "recommendation and producer adoption
+must select the latest version. always", and asked about public documentation.
+The owning [Task](../../tasks/items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md)
+records the execution plan; the producer's [AGENTS instructions](../../../AGENTS.md#producer-release-completion)
+record this standing release-completion direction. Earlier publication-only
+observations above remain dated history. They no longer describe the selected
+producer state.
+
+The recommendation now selects the exact published and confirmed 0.81 archive,
+`a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3`, with
+`public-github-prerelease` channel and public visibility. Its accepting and
+confirming registry bindings name
+[ADR 0143](../../decisions/0143-bind-the-predecessor-repair-promotion.md) and
+[ADR 0144](../../decisions/0144-confirm-the-repaired-nkf-0-81-candidate.md).
+The released adopter performed the accepted
+`postpublication-ordinary-public-self-adopt-by-exact-live-producer` stage using
+the published archive and explicitly supplied exact recommendation. The first
+invocation generated the delta template and stopped; after semantic review,
+the next invocation returned `updated`, with full-bundle conformance passed
+and readiness ready. It created the native accepted 0.81 Specification record,
+removed its candidate Evidence representation, performed exactly one fresh
+Specification judgment, and carried 359 unchanged judgments. The resulting
+graph revision was
+`50b0ee277f6ecbe2194c336e19f3e7046b352d4284597f0a141bbec209985da7`.
+
+A repeat ordinary Adopt returned `current`. The installed pin declares 0.81,
+archive `a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3`,
+checker `1a268c93d9f484389885c02336ebd8464718967249036e79de03ddf7cd775008`,
+adopter `12272609c5d0ca7bcc6d5bc67b919f86f1dfee1a1d53409f10549e419c32ffa5`,
+and host-superset integration revision five. Independent
+`npm run verify:recommended-release` passed. The adopted guidance roots were
+regenerated from the single authored source at the declared 0.81 version.
+Accepted authority and all published release archives remain unchanged.
+
+### Exact Public Documentation Publication
+
+The deterministic staging script verified the public documentation and staged
+its 62 members plus one generated publication manifest from clean producer
+commit `2e3fde4246e7e80db838a5acf7225145b4e7ae47`. Each of the 62 public member
+bytes was compared directly with the verified published archive before push.
+
+| Observation | Value |
+| --- | --- |
+| Public repository | [Nourd.NKF.Docs](https://github.com/NourdApS/Nourd.NKF.Docs) |
+| Previous published commit | `b953e7bacca9db119a084b1021d418900699484b`, NKF 0.8 |
+| Published 0.81 commit | `38cca8aa9978bba9ba43620446bbb40833304e8d` |
+| Publication manifest SHA-256 | `1a70859090b9eaa5894c4188e71e69565e5c61e6c270bdddba9112525e464884` |
+| Manifest version / visibility / channel | `0.81` / `public` / `public-github-prerelease` |
+| Total published files | 63: 62 digest-bound members plus manifest |
+| Fresh-clone comparison | All 63 bytes match staging; no unexpected files |
+| Recomputed member digests | All 62 match the publication manifest |
+| Anonymous HTTPS manifest and adopter | Match staging and the recommended adopter SHA-256 |
+
+The public normative mirror, adoption guide, examples, protocols, portable
+skills, and adopter now serve 0.81. The manifest binds the exact published
+release source commit and archive; its separate projection source commit
+records the recommendation and producer upgrade. GitHub owns subsequent remote
+state and the release-completion PR's required checks and merge. These
+operations implement the standing direction for this producer without
+accepting another consumer's meaning or upgrading the broader Realization's
+partial confirmation status.

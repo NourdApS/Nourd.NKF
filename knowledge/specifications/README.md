@@ -124,12 +124,12 @@ ordinary reviewed delta update.
 
 - [NKF 0.8 — Product And Technology Knowledge Format](nkf-0.8.md)
 
-NKF 0.8 is accepted, technically confirmed, published, recommended, and
-producer-adopted, and is the live-supported predecessor to published 0.81. Its authority set is accepted by
+NKF 0.8 is accepted, technically confirmed, published, and the live-supported
+predecessor to recommended and producer-adopted 0.81. Its authority set is accepted by
 [ADR 0134](../decisions/0134-accept-the-nkf-0-8-authority-set.md), its exact
 release candidate is confirmed by
 [ADR 0135](../decisions/0135-confirm-the-nkf-0-8-release-candidate.md), and
-this producer declares, pins, and installs it under
+this producer previously adopted it under
 [NKF-035](../tasks/items/NKF-035-adopt-the-producer-to-published-nkf-0-8.md).
 Live support is exactly NKF 0.81 plus NKF 0.8.
 
@@ -161,8 +161,8 @@ with public channel values, plain HTTPS adoption, the adopter-obtaining step,
 the closed volatile-metadata registry, and the checker's recompute of the
 delta-review closure; the 0.8-to-0.81 upgrade is non-breaking. The exact confirmed archive is now published, with anonymous re-download
 verification in the [publication Evidence](../evidence/release/nkf-038-nkf-0-81-release-audit.md#authorized-public-publication-and-re-download).
-Until separately authorized producer promotion, the Specification remains
-represented here as Evidence rather than a native record. This repository
-continues to declare, pin, and install NKF 0.8, which the catalog still
-recommends. Live support is exactly NKF 0.81 plus NKF 0.8, and a 0.71
+The producer now declares, pins, and installs the exact published 0.81 archive,
+which the catalog recommends. The reviewed producer promotion created the
+native accepted 0.81 Specification declaration and removed its candidate
+Evidence representation. Live support is exactly NKF 0.81 plus NKF 0.8; a 0.71
 repository steps through the published 0.8 archive.

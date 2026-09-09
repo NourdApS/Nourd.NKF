@@ -732,3 +732,20 @@ publication or enforcement state are unchanged by this repair.
 | Every sweep finding is repaired or reclassified and a repeat sweep of living surfaces is clean | proven | runtime-behaviour | none |
 | The corrected 0.8-to-0.81 producer upgrade is proven on an independently verified digest-bound delta claim in an isolated exercise | proven | runtime-behaviour | none |
 | No 0.8 or earlier published byte, accepted immutable record, or 0.8 catalog literal changes before promotion, and the gate passes at every handoff | proven | runtime-behaviour | none |
+
+
+## Authorized Release Completion Result
+
+The standing Human Product Owner direction above supersedes the publication-only
+handoff's operational hold on recommendation, producer promotion, and public
+documentation. The recommendation selects the exact published NKF 0.81 archive;
+the producer's ordinary published-adopter promotion returned `updated`, repeat
+Adopt returned `current`, and independent recommendation verification passed.
+The 0.81 documentation and exact adopter are published and fresh-clone verified
+at public documentation commit `38cca8aa9978bba9ba43620446bbb40833304e8d`, with
+all 62 digest-bound members and their manifest matching deterministic staging.
+The [completion Evidence](../../evidence/release/nkf-038-nkf-0-81-release-audit.md#recommendation-producer-adoption-and-public-documentation-completion)
+records the observed facts. This completed implementation Task owns the
+release follow-through; no lifecycle transition is repeated. Required CI and
+the final default-branch merge remain GitHub operational facts, verified there
+before the completed release is reported.
