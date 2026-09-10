@@ -23,7 +23,7 @@ brand system, change normative NKF meaning, or confirm the whole Realization.
 ## Scope And Boundaries
 
 Build a static Astro Starlight website in `website/`, with one Start Here
-section and five readable pages: overview, problem, audience, fit, and operation.
+section and six readable pages: overview, problem, audience, fit, operation, and mechanics.
 Use the current Nourd SVG and accepted Philosopher display typeface. Apply the
 navy, cream, and orange treatment evidenced by the Company website as this
 sample's visual treatment; the Company colour system is still a proposal.
@@ -79,7 +79,7 @@ sections, adoption commands, or speculative capabilities in this iteration.
    brand source. Create this initial active Task declaration and its Task branch;
    generate navigation using the adopter's deterministic renderer. This is new
    Task creation, not a lifecycle transition of an existing deferred Task.
-2. Build five Start Here pages and a restrained branded Starlight shell with
+2. Build the Start Here pages and a restrained branded Starlight shell with
    working built-in controls. Copy only approved public brand assets and licenses.
 3. Build and review the rendered sample on desktop and mobile; exercise search,
    theme persistence, navigation, and keyboard access, and correct observed issues.
@@ -115,3 +115,39 @@ information". Each Start Here page therefore includes a diagram: an overview
 connection, scattered versus connected knowledge, a participant map, a
 conceptual-fit matrix, or the export example's lifecycle. Visuals supplement
 readable text, keep authority distinctions explicit, and make no new format rules.
+
+## Mechanics Page Direction
+
+The Human Product Owner added: "i need another page explaning the mechanics
+of NKF, only the high levels and in there i would like to have more diagrams
+and charts". The approved section therefore includes a sixth page, The
+Mechanics. It explains bundle layers, identity versus revision fingerprints,
+knowledge relationships, the review baseline, and validation using three
+diagrams. It is conceptual explanation, not a procedural adoption tutorial.
+
+## Implementation Review
+
+The six-page website and its diagrams were reviewed against the current
+Specification and the authoring protocol. Each visual has a readable text
+equivalent. Fingerprints in the mechanics diagram are explicitly illustrative;
+the graph describes declared knowledge, and no diagram supplies acceptance or
+claims to model unobserved runtime behavior. The promoted logo and font hashes
+match the reviewed Company assets. The complete font license is distributed.
+
+The initial five-page browser suite passed all five scenarios; the expanded
+suite covers the six-page section. A footer link initially relied on colour
+alone and was corrected to remain underlined. Mobile menu checks target visible
+links because the native navigation wrapper uses display contents. The actual
+menu, light theme, and phone-size diagrams were directly observed.
+
+The first hosted install exposed an incomplete optional-dependency entry in the
+locally regenerated lockfile. It was replaced through a clean network-backed
+install using the hosted Node/npm generation, followed by a clean npm ci check.
+
+The existing repository instruction-discovery verifier treats a third-party
+CLAUDE.md under nested website/node_modules as an undeclared project adapter.
+Canonical repository checks therefore run without those generated website
+dependencies present, matching the NKF CI job; website CI installs and tests its
+independent package in a separate job. No checker or enforcement rule is changed.
+A sandboxed full test run reached 280 passing tests and one localhost-listen
+EPERM failure; the required final run uses authorized localhost access.

@@ -1,0 +1,68 @@
+---
+title: The mechanics, at a glance.
+description: A visual explanation of NKF bundles, Markdown and declarations, record identities, revision fingerprints, knowledge graphs, and validation.
+---
+import MechanicsDiagram from '../../../components/MechanicsDiagram.astro';
+
+<p className="lede">Readable knowledge, connected by precise references.</p>
+
+NKF combines the meaning people write with declarations that tools can inspect.
+Those declarations make it possible to identify knowledge, connect it, bind it
+to exact revisions, and check a particular snapshot.
+
+## 1. A bundle brings the pieces together
+
+A **knowledge bundle** has a declared root and follows a selected NKF contract.
+Its Markdown sources carry the human-readable account. YAML declarations
+identify the documents and records that participate and describe the structure
+the contract requires.
+
+<MechanicsDiagram kind="bundle" />
+
+A Decision, a Specification, and a Realization have different responsibilities.
+Their declarations make those roles explicit to tools. A Task carries work
+intent as a document rather than becoming an accepted normative record.
+
+## 2. Identity and revision answer different questions
+
+An **identity** tells you which record or document you are referring to. A
+**revision fingerprint**, or digest, binds a reference to exact content. Change
+the bytes and the fingerprint changes, even if the identity stays the same.
+
+<MechanicsDiagram kind="graph" />
+
+Declared relationships form a knowledge graph: for example, a decision provides
+the rationale for a requirement, and a Realization describes its implementation.
+This graph is derived from declared knowledge. It is not an inferred model of
+everything the software does.
+
+A fingerprint can establish a content binding. It does not establish that the
+content is correct or that someone with authority accepted it.
+
+## 3. Changes need an explicit review path
+
+A reviewed baseline binds review judgments to an exact graph revision. When
+the knowledge changes, NKF uses its declared evaluation policy and relationships
+to determine which judgments can carry forward and which need fresh review.
+
+<MechanicsDiagram kind="change" />
+
+The review assesses meaning and applicability; the tooling performs the
+mechanical checks and binding. If an affected claim remains unknown, a gate that
+requires that claim cannot treat it as proven. A review seal records the review
+of a snapshot—it supplies no acceptance by itself.
+
+## 4. The selected version defines the checks
+
+A repository adopts a particular NKF release. That release supplies a supported
+contract and checker, so validation has a definite reference point. A newer
+recommendation does not silently replace an existing consumer’s selected version.
+
+The checker can examine required structure, identities, relationships, source
+bindings, and other rules its contract supports. Its result concerns the
+observed snapshot. People remain responsible for acceptance, and code tests
+and operational observations remain necessary to establish real behavior.
+
+The [released documentation](https://github.com/NourdApS/Nourd.NKF.Docs)
+contains the exact rules. This page explains the mechanism without replacing
+that normative reference.

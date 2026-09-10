@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const root = '/Nourd.NKF/';
-const pages = ['', 'start-here/the-problem/', 'start-here/who-it-helps/', 'start-here/when-it-fits/', 'start-here/how-it-works/'];
+const pages = ['', 'start-here/the-problem/', 'start-here/who-it-helps/', 'start-here/when-it-fits/', 'start-here/how-it-works/', 'start-here/mechanics/'];
 
 for (const theme of ['light', 'dark'] as const) {
   test(`all Start Here pages remain readable and accessible in ${theme}`, async ({ page }) => {
@@ -62,6 +62,8 @@ test('mobile menu, theme persistence, page navigation, and skip link work', asyn
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.getByRole('link', { name: 'Next How it works' }).click();
   await expect(page.locator('h1')).toHaveText('From an intention to an implementation.');
+  await page.getByRole('link', { name: 'Next The mechanics' }).click();
+  await expect(page.locator('h1')).toHaveText('The mechanics, at a glance.');
 });
 
 test('every internal link and static asset resolves under the GitHub project base path', async ({ page, request }) => {

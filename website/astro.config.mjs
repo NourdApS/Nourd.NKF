@@ -24,6 +24,7 @@ export default defineConfig({
         { label: 'Who it helps', slug: 'start-here/who-it-helps' },
         { label: 'When it fits', slug: 'start-here/when-it-fits' },
         { label: 'How it works', slug: 'start-here/how-it-works' },
+        { label: 'The mechanics', slug: 'start-here/mechanics' },
       ],
     }],
     tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 2 },

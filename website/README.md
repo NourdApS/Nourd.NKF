@@ -1,7 +1,7 @@
 # NKF website
 
 The first public website sample contains only **Start Here**: an introduction,
-the problem, audience, conceptual fit, and how NKF works. Every page includes a
+the problem, audience, conceptual fit, how NKF works, and its high-level mechanics. Every page includes a
 diagram with a text explanation. Astro Starlight supplies search, responsive
 navigation, theme selection, table of contents, and previous/next links.
 
@@ -24,7 +24,7 @@ npm run preview
 
 The preview is under `/Nourd.NKF/`. Search is indexed at build time, so test
 it in the built preview, not the development server. The browser suite checks
-all five pages, light/dark accessibility, widths down to 320px, search-result
+all six pages, light/dark accessibility, widths down to 320px, search-result
 navigation, mobile menu, theme persistence, skip link, and internal resources.
 Automated accessibility checks supplement visual review; they are not a full
 accessibility certification.

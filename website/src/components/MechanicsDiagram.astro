@@ -1,0 +1,48 @@
+---
+interface Props { kind: 'bundle' | 'graph' | 'change'; }
+const { kind } = Astro.props;
+---
+{kind === 'bundle' && <figure class="explainer mechanics-bundle">
+  <p class="diagram-label">Inside a knowledge bundle</p>
+  <div class="bundle-boundary">
+    <span class="bundle-caption">One declared root · One selected NKF contract</span>
+    <div class="bundle-layers">
+      <div class="bundle-layer"><span class="layer-number">01</span><div><strong>Readable knowledge</strong><span>Markdown carries the meaning people author and review.</span><div class="document-chips"><span>Decisions</span><span>Specifications</span><span>Realizations</span></div></div></div>
+      <span class="layer-connection" aria-hidden="true">↕</span>
+      <div class="bundle-layer"><span class="layer-number">02</span><div><strong>Explicit declarations</strong><span>YAML identifies the sources, their roles, relationships, and exact revisions.</span><div class="document-chips"><span>Identity</span><span>Role</span><span>Revision</span></div></div></div>
+      <span class="layer-connection" aria-hidden="true">↓</span>
+      <div class="bundle-layer"><span class="layer-number">03</span><div><strong>A checkable snapshot</strong><span>The selected checker evaluates the bundle against its supported contract.</span><div class="document-chips"><span>Structure</span><span>Connections</span><span>Bindings</span></div></div></div>
+    </div>
+  </div>
+  <figcaption>Declarations make the written knowledge checkable. The checker evaluates the selected snapshot; it does not become the authority for its meaning.</figcaption>
+</figure>}
+
+{kind === 'graph' && <figure class="explainer mechanics-graph">
+  <p class="diagram-label">Identity stays. Revisions change. Connections remain explicit.</p>
+  <div class="revision-example">
+    <div class="stable-identity"><small>Same record identity</small><strong>Export requirement</strong></div>
+    <div class="revision-pair"><div><small>Earlier revision</small><span class="fingerprint"><i aria-hidden="true"></i>Fingerprint A</span></div><span class="revision-arrow" aria-hidden="true">→</span><div><small>Later revision</small><span class="fingerprint successor"><i aria-hidden="true"></i>Fingerprint B</span></div></div>
+  </div>
+  <div class="graph-connection" aria-hidden="true">↓</div>
+  <div class="relationship-map">
+    <div><strong>Decision</strong><span>Why this direction?</span></div>
+    <span class="edge-label">rationale for →</span>
+    <div class="graph-selected"><strong>Requirement</strong><span>What must hold?</span></div>
+    <span class="edge-label">← realized by</span>
+    <div><strong>Implementation account</strong><span>How is it built?</span></div>
+  </div>
+  <figcaption>The graph connects declared knowledge. Revision fingerprints bind exact bytes, so a changed source cannot silently stand in for a previously reviewed revision. The fingerprints shown here are illustrative labels.</figcaption>
+</figure>}
+
+{kind === 'change' && <figure class="explainer mechanics-change">
+  <p class="diagram-label">What happens when knowledge changes?</p>
+  <ol class="change-track">
+    <li><span class="change-marker">1</span><div><strong>Edit the source</strong><span>The written account changes.</span></div></li>
+    <li><span class="change-marker">2</span><div><strong>Observe the new revision</strong><span>The content fingerprint changes with the bytes.</span></div></li>
+    <li><span class="change-marker">3</span><div><strong>Identify affected knowledge</strong><span>Declared relationships and the evaluation policy determine what needs fresh review.</span></div></li>
+    <li class="human-review-step"><span class="change-marker">4</span><div><strong>Review meaning and applicability</strong><span>A reviewer assesses the changed account and the affected judgments.</span></div></li>
+    <li><span class="change-marker">5</span><div><strong>Seal and check the snapshot</strong><span>Bind the review to its exact graph revision and validate the resulting state.</span></div></li>
+  </ol>
+  <div class="check-boundary"><span class="boundary-pass">Conformance result</span><span aria-hidden="true">≠</span><span>Acceptance, implementation confirmation, or deployment</span></div>
+  <figcaption>An unchanged judgment carries only when the contract's identity and dependency conditions permit it. Unresolved required review cannot become a ready result merely by updating a digest.</figcaption>
+</figure>}

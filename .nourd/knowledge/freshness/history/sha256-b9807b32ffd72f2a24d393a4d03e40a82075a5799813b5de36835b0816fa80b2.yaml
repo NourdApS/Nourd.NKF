@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: c562a75c10d5266dc18d492cbefbfdfeae7366ced0f6bbd1c3038b45ecf1e0ae
+  value: 053f2dd7d33e0566e02c7109e833e0ed9ad37067be388e9ac211c9e8cd40e7c8
 policy:
   id: nkf.freshness-policy.0.81
   digest:
@@ -237,7 +237,7 @@ node_revisions:
       id: NKF-039
     revision:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
   - node:
       kind: record
       id: adr-0001
@@ -7684,10 +7684,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
     basis_digest:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
     provenance:
       performed: true
   - node:
@@ -7707,10 +7707,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
     basis_digest:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
     provenance:
       performed: true
   - node:
@@ -7730,10 +7730,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
     basis_digest:
       algorithm: sha-256
-      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
+      value: 50bfd02824c24325a1627c8148386bcd317080294b1ebc7a41e2d2b3a1117588
     provenance:
       performed: true
   - node:
@@ -43814,7 +43814,7 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-09-10T11:42:49.539Z
+  reviewed_at: 2026-09-10T11:33:53.090Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
@@ -43836,12 +43836,12 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: Reviewed the explicitly requested sixth Mechanics page scope, its bundle, revision-graph and change-review diagrams, the Task implementation account, and the preserved distinction between explanatory publication and accepted NKF meaning.
+      finding: Reviewed the initial Start Here Task and declaration, generated navigation, explicit sample-publication and visual-explanation scope, current decision applicability, direct browser checks, and preservation of accepted and published NKF boundaries.
   limitations:
     - Local NKF-039 authoring review under explicit direction to implement and publish a Start Here sample. Website publication is authorized; sample styling is not global Company brand acceptance, and no whole-Realization confirmation or release change is claimed.
   disputed: false
 predecessor:
-  path: .nourd/knowledge/freshness/history/sha256-b9807b32ffd72f2a24d393a4d03e40a82075a5799813b5de36835b0816fa80b2.yaml
+  path: .nourd/knowledge/freshness/history/sha256-7c05692c12d9ed85913d1bc7ef41c121b338fd229b7f70674a69ccaf23c313c2.yaml
   digest:
     algorithm: sha-256
-    value: b9807b32ffd72f2a24d393a4d03e40a82075a5799813b5de36835b0816fa80b2
+    value: 7c05692c12d9ed85913d1bc7ef41c121b338fd229b7f70674a69ccaf23c313c2

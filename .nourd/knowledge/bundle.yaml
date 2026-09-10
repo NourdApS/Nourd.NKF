@@ -1666,7 +1666,7 @@ non_records:
       stable_path: tasks/items/NKF-039-publish-the-start-here-website.md
       digest:
         algorithm: sha-256
-        value: "e5f6aec6a5af04777817bc18f0413a78c4bf340e4cb6390e5c18e6a66e8362ce"
+        value: "e372e83514d3ccb87174781874f7e9d7fbb3c3fac89ff858f439ce0e42cd4e4a"
       state:
         vocabulary: task-status
         value: active
