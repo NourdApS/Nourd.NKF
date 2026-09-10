@@ -1,0 +1,23 @@
+{
+  "name": "@nourd/nkf-website",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.0",
+    "astro": "7.3.2"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0"
+  }
+}

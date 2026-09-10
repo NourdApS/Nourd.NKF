@@ -1659,6 +1659,22 @@ non_records:
         - NKF-018
         - NKF-036
       relationships: []
+  - path: tasks/items/NKF-039-publish-the-start-here-website.md
+    kind: task
+    document:
+      id: NKF-039
+      stable_path: tasks/items/NKF-039-publish-the-start-here-website.md
+      digest:
+        algorithm: sha-256
+        value: "e5f6aec6a5af04777817bc18f0413a78c4bf340e4cb6390e5c18e6a66e8362ce"
+      state:
+        vocabulary: task-status
+        value: active
+      owner: Nourd ApS
+      decision_authority: Human Product Owner for direction and acceptance; Codex technical reviewer for implementation, verification, and sample publication under explicit direction
+      related_tasks:
+        - NKF-038
+      relationships: []
   - path: tasks/README.md
     kind: navigation
   - path: decisions/0122-accept-the-nkf-0-6-authority-set.md

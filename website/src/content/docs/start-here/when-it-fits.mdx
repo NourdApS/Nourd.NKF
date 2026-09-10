@@ -1,0 +1,58 @@
+---
+title: Use it where the reasoning needs to last.
+description: Decide whether NKF fits the lifetime, collaboration needs, and maintenance commitment of your project.
+---
+import Explainer from '../../../components/Explainer.astro';
+
+
+<p class="lede">The value grows when decisions outlive the conversation.</p>
+
+NKF adds structure and review obligations to project knowledge. That investment
+makes sense when losing context has a real cost and someone will maintain the
+account as the project changes.
+
+<Explainer kind="fit" />
+
+## Signs it may help
+
+- The project will evolve beyond its first implementation or original author.
+- Different contributors need to distinguish current requirements from ideas.
+- Changes need a traceable reason and a clear decision owner.
+- People or AI assistants repeatedly reconstruct context from scattered notes.
+- The team wants a reviewable connection between meaning and implementation.
+
+A shared technology used by several products is one example: future maintainers
+need to understand which promises it makes, why those promises exist, and how
+the code implements them.
+
+## The commitment it asks for
+
+Someone must own acceptance decisions. Contributors must update the relevant
+knowledge when meaning or implementation changes. Reviews must assess the truth
+of the account as well as the checker’s output.
+
+NKF uses readable Markdown and explicit machine-readable declarations. It still
+requires learning its roles and following the adopted version’s contract.
+Passing validation is one part of that work.
+
+## When a simpler approach is enough
+
+A short-lived experiment with little handover may need only a clear README.
+A personal notebook may not need formal acceptance or implementation mappings.
+If the team cannot maintain project knowledge, adding a format will not solve
+that ownership problem.
+
+NKF also does not replace an issue tracker, a deployment system, source control,
+or the external systems that own your operational data.
+
+## Check the adoption boundary
+
+Conceptual fit and supported onboarding are separate questions. The current
+guided onboarding path is scoped to assessed **Empty or Tiny Knowledge Product
+or Technology repositories**. Larger existing knowledge estates need a deliberate
+assessment; they are not automatically covered by that path.
+
+NKF is pre-stable. Review the
+[current release documentation](https://github.com/NourdApS/Nourd.NKF.Docs)
+before adopting, and treat a later version as a deliberate upgrade rather than
+an automatic change to an existing repository’s contract.

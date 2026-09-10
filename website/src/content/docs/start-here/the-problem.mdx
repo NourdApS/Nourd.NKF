@@ -1,0 +1,53 @@
+---
+title: When context gets lost.
+description: NKF addresses the gap between scattered project documents and a dependable account of what applies and why.
+---
+import Explainer from '../../../components/Explainer.astro';
+
+
+<p class="lede">The documents are there. The story between them is missing.</p>
+
+A project can have a thorough README, plenty of tickets, architecture notes,
+and a long chat history—and still leave a new contributor guessing.
+Which proposal became a decision? Does the specification describe today’s
+system? Why was an apparently simpler approach rejected?
+
+<Explainer kind="problem" />
+
+## The gap between documents
+
+Imagine a team adding an export feature. A conversation proposes exporting
+everything. A later review limits the export to information the user owns.
+The code changes, but the first proposal is still easy to find.
+
+Months later, a developer or an AI assistant reads that proposal and treats it
+as the requirement. The words were preserved; their authority and relationship
+to the current implementation were not clear enough.
+
+This is the problem NKF is designed to address: **project knowledge that is
+available but hard to trust in context.**
+
+## Make the distinctions visible
+
+NKF gives different kinds of knowledge distinct roles:
+
+- **Intent:** the outcome a piece of work is trying to deliver.
+- **Proposal:** a possible direction, with alternatives and trade-offs.
+- **Decision:** the chosen direction and its reasons.
+- **Specification:** the accepted meaning and requirements.
+- **Realization:** how that meaning maps to the implementation.
+- **Validation:** what checks found about a particular snapshot.
+
+Explicit identities, relationships, and revision bindings connect these roles.
+Readers can follow the reasoning instead of guessing from filenames or the
+date of the last edit.
+
+## Keep the next change grounded
+
+For the export feature, a contributor can follow the selected decision to the
+requirement it establishes and then to the implementation that claims to meet
+it. A future change can preserve that rationale or deliberately replace it.
+
+The checker helps detect supported structural and consistency problems. People
+still review whether the account is true and whether a proposed change should
+be accepted. That responsibility is essential to making the knowledge useful.
