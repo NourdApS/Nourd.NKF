@@ -1669,7 +1669,7 @@ non_records:
         value: "969413dfdf7d15ff1575b01e995929d1c065a65eb8099a277715923c50a603c8"
       state:
         vocabulary: task-status
-        value: active
+        value: "completed"
       owner: Nourd ApS
       decision_authority: Human Product Owner for direction and acceptance; Codex technical reviewer for implementation, verification, and sample publication under explicit direction
       related_tasks:
