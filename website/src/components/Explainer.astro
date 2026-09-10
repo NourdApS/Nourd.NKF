@@ -1,0 +1,55 @@
+---
+interface Props { kind: 'problem' | 'people' | 'fit' | 'flow'; }
+const { kind } = Astro.props;
+---
+{kind === 'problem' && <figure class="explainer problem-diagram">
+  <div class="comparison-side">
+    <p class="diagram-label">Scattered context</p>
+    <div class="loose-notes" aria-label="A proposal, a requirement, and code with unclear relationships">
+      <span>Proposal</span><span class="question" aria-hidden="true">?</span><span>Code</span><span>Requirement</span>
+    </div>
+    <p class="diagram-note">Which one describes what applies?</p>
+  </div>
+  <div class="comparison-side connected-side">
+    <p class="diagram-label">Explicit connections</p>
+    <div class="connected-notes"><span>Chosen decision</span><span class="connector" aria-hidden="true">↓</span><span>Accepted requirement</span><span class="connector" aria-hidden="true">↓</span><span>Implementation account</span></div>
+    <p class="diagram-note">Follow the reason through to the result.</p>
+  </div>
+  <figcaption>NKF makes the roles and relationships explicit. People still review whether the account is true.</figcaption>
+</figure>}
+
+{kind === 'people' && <figure class="explainer people-diagram">
+  <div class="people-row"><div class="role-node"><strong>Decision makers</strong><span>Choose and accept meaning</span></div><div class="role-node"><strong>Engineers</strong><span>Implement and maintain</span></div></div>
+  <div class="people-connectors" aria-hidden="true"><span>↘</span><span>↙</span></div>
+  <div class="shared-reference"><span class="diagram-label">A connected reference</span><strong>Purpose · Decisions · Meaning · Realization</strong></div>
+  <div class="people-connectors" aria-hidden="true"><span>↗</span><span>↖</span></div>
+  <div class="people-row"><div class="role-node"><strong>Newcomers & reviewers</strong><span>Understand and assess</span></div><div class="role-node"><strong>AI assistants</strong><span>Read and contribute within bounds</span></div></div>
+  <figcaption>Everyone can use the same account. Each participant keeps a distinct responsibility; the shared reference does not grant decision authority.</figcaption>
+</figure>}
+
+{kind === 'fit' && <figure class="explainer fit-diagram">
+  <p class="diagram-label">A guide to the investment</p>
+  <div class="fit-axis"><span>Short-lived work</span><span>Long-lived work →</span></div>
+  <div class="fit-grid">
+    <div><strong>A small experiment</strong><span>A clear README may be enough.</span></div>
+    <div><strong>An evolving solo project</strong><span>Preserving the reasoning can help your future self.</span></div>
+    <div><strong>A shared prototype</strong><span>Clear choices help handover; keep the structure proportionate.</span></div>
+    <div class="fit-emphasis"><span class="fit-tag">Stronger case for NKF</span><strong>A shared, evolving system</strong><span>More changes and handovers make connected knowledge valuable.</span></div>
+  </div>
+  <p class="fit-bottom-axis">Moving down: more shared context and handover needs</p>
+  <figcaption>Conceptual fit is a guide to value, not onboarding eligibility. Supported onboarding and the willingness to maintain knowledge still need assessment.</figcaption>
+</figure>}
+
+{kind === 'flow' && <figure class="explainer flow-diagram">
+  <p class="diagram-label">An export feature, from intent to evidence</p>
+  <ol class="flow-stages">
+    <li><span class="flow-dot">1</span><div><strong>Task</strong><span>“Let people download their information.”</span></div><small>Intent</small></li>
+    <li><span class="flow-dot">2</span><div><strong>Design</strong><span>Compare export approaches and trade-offs.</span></div><small>Proposal</small></li>
+    <li class="flow-authority"><span class="flow-dot">3</span><div><strong>Decision</strong><span>The responsible authority chooses the direction.</span></div><small>Choice</small></li>
+    <li><span class="flow-dot">4</span><div><strong>Specification</strong><span>Define what the accepted export must contain.</span></div><small>Meaning</small></li>
+    <li><span class="flow-dot">5</span><div><strong>Realization</strong><span>Map the requirement to code and evidence.</span></div><small>Implementation account</small></li>
+    <li><span class="flow-dot">6</span><div><strong>Validation & review</strong><span>Check the snapshot and assess the account.</span></div><small>Assessment</small></li>
+  </ol>
+  <div class="review-loop"><span aria-hidden="true">↶</span><span>Findings can lead back to a deliberate revision.</span></div>
+  <figcaption>This example connects the roles; it is not an automatic approval pipeline. A passing check cannot accept meaning or confirm implementation.</figcaption>
+</figure>}

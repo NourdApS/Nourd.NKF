@@ -12,6 +12,10 @@ NKF defines format, declaration, compatibility, and conformance contracts. A
 repository or other eligible subject that adopts NKF remains authoritative for
 its own meaning, acceptance decisions, and operational state.
 
+**New to NKF?** Visit the [Start Here website](https://nourdaps.github.io/Nourd.NKF/)
+for visual introductions to the problem, audience, fit, and workflow, or explore
+[the mechanics](https://nourdaps.github.io/Nourd.NKF/start-here/mechanics/).
+
 ## Repository Identity
 
 | Property | Value |

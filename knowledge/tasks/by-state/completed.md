@@ -26,3 +26,4 @@
 - [NKF-036](../items/NKF-036-reconcile-the-producer-record-and-republish-the-public-projection.md)
 - [NKF-037](../items/NKF-037-make-the-nkf-repository-public.md)
 - [NKF-038](../items/NKF-038-release-nkf-0-81-for-public-adoption-and-reconcile-the-record.md)
+- [NKF-039](../items/NKF-039-publish-the-start-here-website.md)

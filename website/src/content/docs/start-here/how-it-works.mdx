@@ -1,0 +1,70 @@
+---
+title: From an intention to an implementation.
+description: Follow a small example through NKF’s knowledge roles, readable sources, declarations, and validation boundaries.
+---
+import Explainer from '../../../components/Explainer.astro';
+
+
+<p class="lede">Write the meaning. Make its relationships explicit. Review the change.</p>
+
+Consider a team adding an export feature. It needs to preserve what the feature
+is for, what was decided, and how the resulting system meets the requirement.
+NKF gives each part of that account a place and a role.
+
+<Explainer kind="flow" />
+
+## Follow one change
+
+1. **State the intent in a Task.** People need a way to download information
+   they own. Record the intended outcome, constraints, and acceptance criteria.
+2. **Explore the direction in a Design.** Compare approaches, describe
+   trade-offs, and keep the proposed direction visibly distinct from a decision.
+3. **Record the chosen direction in a Decision.** The responsible authority
+   chooses the approach and records why. Acceptance concerns exact revisions;
+   a proposal does not become normative merely because it was discussed.
+4. **Express the requirement in a Specification.** Define which information
+   the export includes and the behavior the feature must provide.
+5. **Map it to implementation in a Realization.** Connect those requirements
+   to the relevant code, interfaces, and evidence. Keep the current account
+   aligned with what has actually been implemented and confirmed.
+6. **Validate and review the snapshot.** Run the supported NKF checks, review
+   the meaning, and use appropriate software tests and observations to assess
+   the implementation.
+
+This example explains the roles. It is not a new export policy or a claim that
+every change needs an identical sequence of new documents.
+
+## Readable meaning, explicit declarations
+
+The human-readable source is Markdown. Alongside it, YAML declarations identify
+the knowledge bundle, its documents and records, and the relationships and
+revision bindings the adopted contract requires.
+
+These declarations give tools something precise to check. They support the
+written meaning; they cannot silently redefine it. A profile provides the
+requirements for a supported kind of root, such as a Product or Technology.
+
+## Four questions that stay separate
+
+| Question | What answers it |
+| --- | --- |
+| Has this exact meaning been accepted? | The responsible authority’s acceptance and its provenance. |
+| Is this implementation account confirmed? | The applicable Realization confirmation and its exact scope. |
+| Does this snapshot conform to the adopted NKF contract? | Validation against the supported contract and declared inputs. |
+| Is the feature deployed and working? | The operational system, tests, and relevant runtime observations. |
+
+A successful check answers the third question within its scope. It cannot
+supply the other three answers.
+
+## Keep change deliberate
+
+When requirements evolve, preserve accepted history and make the successor
+meaning explicit. When implementation changes, update the current account and
+review the affected relationships. An existing consumer keeps its selected
+release until its authority deliberately approves an upgrade.
+
+That is the central habit NKF supports: keep the reason, the accepted meaning,
+and the implementation connected as the work changes.
+
+For the precise rules and adoption guidance, continue to the
+[released documentation and normative reference](https://github.com/NourdApS/Nourd.NKF.Docs).

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="185" height="88" viewBox="0 -2 185 88" fill="none" role="img" aria-label="Nourd">
+  <title>Nourd golden-gap refinement v7</title>
+  <desc>Four complete orange shapes with a slightly wider principal gap inside an exact golden-ratio construction frame.</desc>
+  <metadata>
+    Status: working candidate; not canonical, accepted, published, or deployable.
+    Geometric source: outer-segment continuity refinement v6.
+    Shape order from left to right: A, B, C, D.
+    Principal-shape stroke width: 6.0.
+    Additional B-C separation from v6: 1.0.
+    Primary B+C construction frame: x=16.9, y=-4.9733695495, width=151.2, height=93.4467390990, ratio=phi.
+    Frame role: non-rendering optical construction enclosing the visible B+C contour.
+  </metadata>
+
+  <defs>
+    <path id="shape-b" fill-rule="evenodd" clip-rule="evenodd" d="M83.25 0.4L87.45 1.5C89.1004 6.83202 88.1855 13.0623 86.6021 19.3974C84.3964 28.6157 81.553 38.4002 71.8892 47.5079C62.5525 56.2813 46.797 64.7173 20.6975 71.7078C19.9972 71.8948 19.3309 72.0769 18.688 72.2539C17.1 72.69 15.4 72.8 14.4 72.1L14.75 64.8C15.1 61.9 15.7 59.4 17.4585 57.3315C18.2285 56.3329 19.4121 55.763 20.5448 55.6432C36.2289 53.9834 52.5221 51.3328 61.0582 47.3958C71.5987 42.4913 76.0655 36.2323 78.6509 29.197C82.2352 19.3408 80.7732 9.11533 80.3 4.4L83.25 0.4Z"/>
+    <path id="shape-c" fill-rule="evenodd" clip-rule="evenodd" d="M82.85 75C81.5 75 80.6 74.1 80.2 72.9C78.4308 68.6817 79.3457 62.4514 80.9291 56.1163C83.1348 46.898 85.9783 37.1135 95.642 28.0058C104.979 19.2324 120.734 10.7964 146.834 3.80591C147.534 3.6189 148.2 3.43672 148.843 3.25981C150.4 2.83 152.1 2.7 153.1 3.4L152.75 10.7C152.4 13.6 151.8 16.1 150.073 18.1822C149.303 19.1807 148.119 19.7506 146.986 19.8705C131.302 21.5303 115.009 24.1809 106.473 28.1178C95.9326 33.0224 91.4658 39.2814 88.8803 46.3167C85.2961 56.1729 86.7581 66.3983 87.2 71.1L82.85 75Z"/>
+    <path id="shape-a" d="M2.1 74.3H7.95C8.95 74.3 9.85 73.65 10.05 72.75C11.45 66.65 12.55 60.55 13.3 54C13.45 52.95 12.65 52.1 11.55 52.1H5.75C4.75 52.1 3.85 52.75 3.65 53.65C2.25 59.75 1.45 65.85 0.8 72.4C0.65 73.45 1.4 74.3 2.1 74.3Z"/>
+    <path id="shape-d" d="M171.6 1.7H165.8C164.8 1.7 163.9 2.35 163.7 3.25C162.3 9.35 161.2 15.45 160.45 22C160.3 23.05 161.1 23.9 162.2 23.9H168C169 23.9 169.9 23.25 170.1 22.35C171.5 16.25 172.3 10.15 172.95 3.6C173.1 2.55 172.35 1.7 171.6 1.7Z"/>
+  </defs>
+
+  <rect id="primary-golden-construction-frame" x="16.9" y="-4.9733695495" width="151.2" height="93.4467390990" display="none"/>
+
+  <g transform="translate(8.75 4)" fill="#FF8A3D" shape-rendering="geometricPrecision">
+    <use id="a-left-outer-segment" href="#shape-a" transform="translate(-6.75 5)"/>
+    <use id="b-left-principal-curve" href="#shape-b" transform="translate(-2.75 5)" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <use id="c-right-principal-curve" href="#shape-c" transform="translate(2.75 -5)" stroke="#FF8A3D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <use id="d-right-outer-segment" href="#shape-d" transform="translate(0.5 -5)"/>
+  </g>
+</svg>
