@@ -31,17 +31,26 @@ accessibility certification.
 
 ## Publication
 
-The intended public address is <https://nourdaps.github.io/Nourd.NKF/>.
+The public address is <https://nourdaps.github.io/Nourd.NKF/>.
 `.github/workflows/nkf-website.yml` builds and tests the site for pull requests,
 then publishes the built artifact on changes to `master` using GitHub Pages.
 Pages must use the **GitHub Actions** build source. Deployment permissions are
 limited to the deployment job. The repository's NKF validation gate is unchanged.
 
-The initial sample may be published from the owning Task branch under the
-Human Product Owner's explicit sample-publication direction. That temporary
-bootstrap trigger is removed once the initial sample is verified; normal
-subsequent publication follows `master`. GitHub's deployment record identifies
-the exact published source. Merging remains the repository's review act.
+The initial sample was published from the owning Task branch under the
+Human Product Owner's explicit sample-publication direction, from source
+`79c896f3120ca61c8cee47c3723867efa97e37f0`, by
+[the verified deployment](https://github.com/NourdApS/Nourd.NKF/actions/runs/34472798967).
+The temporary bootstrap trigger is now removed; subsequent publication follows
+`master`. GitHub's deployment record identifies the exact published source.
+Merging remains the repository's review act.
+
+Run the root `npm run nkf:check` in a checkout without generated
+`website/node_modules` installed, as the NKF CI job does. The existing root
+instruction-discovery verifier otherwise treats a dependency's `CLAUDE.md` as
+a project adapter. Website CI installs its independent dependencies and runs
+the build/browser suite in a separate job. This iteration changes no NKF
+checker or enforcement rule.
 
 ## Nourd brand provenance
 

@@ -55,8 +55,8 @@ sections, adoption commands, or speculative capabilities in this iteration.
 | Exact promoted Nourd logo and licensed Philosopher font are preserved; desktop and mobile sample styling reviewed directly | proven | human-experience | none |
 | Start Here explains problem, audience, fit, and operation; every page has a diagram and was reviewed against current NKF boundaries | proven | data-validity | none |
 | Desktop and mobile navigation, search, theme persistence, keyboard access, and responsive reading layout pass direct browser checks | proven | runtime-behaviour | none |
-| The complete static website is publicly reachable on GitHub Pages | unknown | none | none |
-| The coherent repository change passes the supported authoring gate and preserves released bytes | unknown | none | none |
+| The complete six-page website is publicly reachable on GitHub Pages; live search reaches the Mechanics explanation and served brand hashes match | proven | runtime-behaviour | none |
+| The canonical authoring gate passes all 281 tests and full-bundle conformance; released bytes remain unchanged | proven | runtime-behaviour | none |
 
 ## Acceptance Criteria
 
@@ -151,3 +151,52 @@ dependencies present, matching the NKF CI job; website CI installs and tests its
 independent package in a separate job. No checker or enforcement rule is changed.
 A sandboxed full test run reached 280 passing tests and one localhost-listen
 EPERM failure; the required final run uses authorized localhost access.
+
+## Completion Result
+
+Under the Human Product Owner's explicit implementation and sample-publication
+direction, the Codex technical reviewer verified the delivered acceptance
+criteria. The site is publicly readable at
+[Start Here](https://nourdaps.github.io/Nourd.NKF/), including
+[The Mechanics](https://nourdaps.github.io/Nourd.NKF/start-here/mechanics/).
+Six pages carry eight diagrams. The scope remains Start Here; no additional
+documentation sections or adoption tutorial were introduced.
+
+The clean locked install, production build, and five browser scenarios passed
+across all six pages. Checks cover both themes, widths of 1440, 768, 390, and
+320 pixels without horizontal overflow, WCAG A/AA automated checks, search
+result navigation, mobile menu links, persistent theme choice, keyboard skip
+link, pagination through Mechanics, and internal links and assets. Visual
+review additionally covered the branded desktop layout, phone-size menu,
+before-and-after diagram, lifecycle, and Mechanics page. These checks are
+bounded evidence, not an accessibility certification or a claim that every
+browser or assistive technology has been exercised.
+
+[GitHub Pages deployment 34472798967](https://github.com/NourdApS/Nourd.NKF/actions/runs/34472798967)
+built, tested, and published source
+`79c896f3120ca61c8cee47c3723867efa97e37f0`. Anonymous HTTPS requests returned
+the introduction and Mechanics pages. The deployed logo and font reproduced
+their exact recorded hashes. Live browser search for `fingerprint` returned
+the Mechanics page and followed its revision explanation. GitHub reported
+public Pages with enforced HTTPS. The temporary Task-branch publication
+trigger is removed after this verified sample; subsequent deployments follow
+protected `master` through the committed workflow.
+
+The authorized `npm run nkf:check` completed successfully: 281 tests in 29
+files, deterministic build/adopter/public-docs verification, and full-bundle
+conformance with no diagnostics. The final authored completion and Realization
+mapping are reviewed and sealed before the deterministic close, whose own
+successor transition is subject to the same required remote canonical gate.
+Generated website dependencies are absent during the root check, as in its CI
+job. No contract, checker, archive, or enforcement rule was weakened.
+
+A comparison against the predecessor master commit found no change to
+`public-docs/`, `distribution/`, `contracts/`, checker source, scripts,
+integrations, installed release bytes, pin, recommendation, or release
+licensing set. The 0.81 archive still hashes to
+`a27cb34350e5a27efd835825f7255528a61d937fcd1180c7db56119e689682e3`.
+
+The sample visual direction is available for the Human Product Owner's review.
+Its publication and technical verification do not accept a global Company
+palette, establish new normative NKF meaning, or confirm the whole current
+Realization. GitHub owns deployment, pull-request, check, and merge state.

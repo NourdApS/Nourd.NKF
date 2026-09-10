@@ -1666,7 +1666,7 @@ non_records:
       stable_path: tasks/items/NKF-039-publish-the-start-here-website.md
       digest:
         algorithm: sha-256
-        value: "e372e83514d3ccb87174781874f7e9d7fbb3c3fac89ff858f439ce0e42cd4e4a"
+        value: "969413dfdf7d15ff1575b01e995929d1c065a65eb8099a277715923c50a603c8"
       state:
         vocabulary: task-status
         value: active
@@ -3215,7 +3215,7 @@ governed_artifacts:
     path: README.md
     digest:
       algorithm: sha-256
-      value: "f93b7da7156310480a3b8e70f70094582ceb0d3bae5f1d7325dd616839e4bc8b"
+      value: "51c4c74cf079866aa7f42b12e33fc60ca86e50f6be94a345017b1a12f026fad1"
     record: nkf-current-system
     source_section: durable-mapping
   - id: artifact-release-recommended-json

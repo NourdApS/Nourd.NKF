@@ -5,8 +5,7 @@ on:
     branches: [master]
     paths: ["website/**", ".github/workflows/nkf-website.yml"]
   push:
-    # Initial authorized sample publication; remove Task branch after verification.
-    branches: [master, task/NKF-039]
+    branches: [master]
     paths: ["website/**", ".github/workflows/nkf-website.yml"]
   workflow_dispatch:
 
@@ -42,7 +41,7 @@ jobs:
   deploy:
     name: Publish Website
     needs: build
-    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/task/NKF-039')
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

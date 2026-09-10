@@ -4,7 +4,7 @@ bundle: nourd-knowledge-format
 profile: nkf.profile.technology
 graph_revision:
   algorithm: sha-256
-  value: 400a6070907507d6c05fdcc7d0f261b7525a5bf560c24c4117cba7c408852c34
+  value: c562a75c10d5266dc18d492cbefbfdfeae7366ced0f6bbd1c3038b45ecf1e0ae
 policy:
   id: nkf.freshness-policy.0.81
   digest:
@@ -237,7 +237,7 @@ node_revisions:
       id: NKF-039
     revision:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
   - node:
       kind: record
       id: adr-0001
@@ -2181,7 +2181,7 @@ node_revisions:
       id: nkf-current-system
     revision:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
 authored_edges:
   - source:
       kind: record
@@ -7684,10 +7684,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
     basis_digest:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
     provenance:
       performed: true
   - node:
@@ -7707,10 +7707,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
     basis_digest:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
     provenance:
       performed: true
   - node:
@@ -7730,10 +7730,10 @@ applicability_coverage:
           occurrence: 1
     revision:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
     basis_digest:
       algorithm: sha-256
-      value: 2e6a4207c3b2ef7ce87a14915d69f43f09805e6b19ae50b1c41632569c067a79
+      value: a776cc95cc537ffe1537a584bf2be469dd7acbcda40d8107c4aac43a729491f6
     provenance:
       performed: true
   - node:
@@ -34015,12 +34015,18 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
     basis_digest:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 72dd068bcf3da5dfd933fe68d2749ed7bf14d4e2e790ad1e46018dd04157fbf7
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
   - node:
       kind: record
       id: nkf-current-system
@@ -34035,12 +34041,18 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
     basis_digest:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 72dd068bcf3da5dfd933fe68d2749ed7bf14d4e2e790ad1e46018dd04157fbf7
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
   - node:
       kind: record
       id: nkf-current-system
@@ -34055,12 +34067,18 @@ applicability_coverage:
         section: realization-identity-and-kind
     revision:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
     basis_digest:
       algorithm: sha-256
-      value: da3f5de35f5d866e6ea2480a4e0afebcf7b51922bd3de82a786aa688a4ecf1d0
+      value: 662f016f81c1ff1ea057542ec44c4e10b39b0281fdcdc10e8af0392c077f64e5
     provenance:
-      performed: true
+      carried:
+        performed_in_graph_revision:
+          algorithm: sha-256
+          value: 72dd068bcf3da5dfd933fe68d2749ed7bf14d4e2e790ad1e46018dd04157fbf7
+        performing_reviewer:
+          kind: agent
+          id: codex-technical-reviewer
 decision_classifications:
   - decision: adr-0001
     purpose: change-impact
@@ -43796,18 +43814,14 @@ confirmation:
   reviewer:
     kind: agent
     id: codex-technical-reviewer
-  reviewed_at: 2026-09-10T11:48:22.725Z
+  reviewed_at: 2026-09-10T11:42:49.539Z
   claim: semantically-reviewed-delta
   computed_closure:
     - kind: document
       id: NKF-039
-    - kind: record
-      id: nkf-current-system
   performed_set:
     - kind: document
       id: NKF-039
-    - kind: record
-      id: nkf-current-system
   observations:
     - id: review-observation
       subject:
@@ -43822,12 +43836,12 @@ confirmation:
             heading_path:
               - 'title: "NKF-003: Establish Independent NKF Authority"summary: Establish Nourd Knowledge Format as independent Company-owned Shared Technology, migrate its accepted specification and implementation provenance without rewriting history, and create one authoritative path for NKF specifications, profiles, contracts, conformance, compatibility, and releases.created_at: 2026-07-28T22:01:17Ztask_id: NKF-003task_status: completedowner: Nourd ApSdecision_authority: Human Product Owner, Nourd ApS'
             occurrence: 1
-      finding: Reviewed the delivered six-page Start Here sample and eight diagrams, successful clean build and browser checks, exact public Pages source and brand verification, live Mechanics search navigation, canonical 281-test conformance evidence, truthful completion limitations, unchanged frozen release boundaries, and the explanatory website addition to the current-system mapping.
+      finding: Reviewed the explicitly requested sixth Mechanics page scope, its bundle, revision-graph and change-review diagrams, the Task implementation account, and the preserved distinction between explanatory publication and accepted NKF meaning.
   limitations:
     - Local NKF-039 authoring review under explicit direction to implement and publish a Start Here sample. Website publication is authorized; sample styling is not global Company brand acceptance, and no whole-Realization confirmation or release change is claimed.
   disputed: false
 predecessor:
-  path: .nourd/knowledge/freshness/history/sha256-09c9f8915a1bd1d49defbaa5571c899b068396de561c6ca96e011e68d8c95832.yaml
+  path: .nourd/knowledge/freshness/history/sha256-b9807b32ffd72f2a24d393a4d03e40a82075a5799813b5de36835b0816fa80b2.yaml
   digest:
     algorithm: sha-256
-    value: 09c9f8915a1bd1d49defbaa5571c899b068396de561c6ca96e011e68d8c95832
+    value: b9807b32ffd72f2a24d393a4d03e40a82075a5799813b5de36835b0816fa80b2
